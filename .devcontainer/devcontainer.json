@@ -1,0 +1,85 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+  "name": "Audit Éco Tools Box",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  // "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "lighthousedevcontainer",
+  "workspaceFolder": "/workspace",
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/rio/features/chezmoi:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'initializeCommand' A command string or list of command arguments to run on the host machine before the container is created.
+  // "initializeCommand": {}
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": {
+    "add-ssh-keys": "sh /workspace/.devcontainer/postCreateCommand/_add-ssh-keys.sh",
+    "custom-cmd": "sh /workspace/.devcontainer/postCreateCommand/custom.sh"
+  },
+
+  // Use 'postStartCommand' to run commands each time the container is successfully started..
+  // https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
+  "postStartCommand": {
+    "git.config.safe.directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+    "git.config.pull.rebase": "git config pull.rebase false",
+    "chmod 666 docker.sock": "sudo chmod 666 /var/run/docker.sock",
+    // "add-ssh-keys-to-agent": "sh /workspace/.devcontainer/postStartCommand/_add-ssh-keys-to-agent.sh",
+    "custom-cmd": "sh /workspace/.devcontainer/postStartCommand/custom.sh"
+  },
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "oderwat.indent-rainbow",
+        "esbenp.prettier-vscode",
+        "amatiasq.sort-imports",
+        "vscode-icons-team.vscode-icons",
+        "dbaeumer.vscode-eslint",
+        "formulahendry.auto-rename-tag",
+        "mutantdino.resourcemonitor",
+        "yzhang.markdown-all-in-one",
+        "adam-bender.commit-message-editor",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "ritwickdey.LiveServer"
+      ],
+      "settings": {
+        "prettier.prettierPath": "node_modules/prettier",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.resolveGlobalModules": true,
+        "dotfiles.targetPath": "~/dotfiles",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "/bin/zsh",
+            "icon": "terminal-powershell"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true
+      }
+    }
+  }
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
