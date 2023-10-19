@@ -1,0 +1,24 @@
+{
+  "type": "module",
+  "name": "lighthouse-ecoindex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
+    "lighthouse": "^10.4.0",
+    "open": "^9.1.0",
+    "pptr-testing-library": "^0.7.0",
+    "prettier": "^3.0.3",
+    "puppeteer": "^20.9.0",
+    "puppeteer-autoscroll-down": "^1.1.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

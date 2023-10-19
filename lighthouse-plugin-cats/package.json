@@ -1,0 +1,12 @@
+{
+    "name": "lighthouse-plugin-cats",
+    "main": "./plugin.js",
+    "version": "0.0.1",
+    "type": "module",
+    "peerDependencies": {
+      "lighthouse": "^10.4.0"
+    },
+    "devDependencies": {
+      "lighthouse": "^10.4.0"
+    }
+  }
