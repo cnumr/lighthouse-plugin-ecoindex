@@ -1,5 +1,5 @@
 {
-    "name": "lighthouse-plugin-cats",
+    "name": "lighthouse-plugin-ecoindex",
     "main": "./plugin.js",
     "version": "0.0.1",
     "type": "module",

@@ -8,18 +8,13 @@ import { writeFileSync } from 'fs'
 //import CatAudit from './lighthouse-plugin-cats/plugin.js'
 //import SoftNavigationPlugin from './lighthouse-plugin-soft-navigation/plugin.js'
 
+console.log(`Script launched 🚀`)
 // Setup the browser and Lighthouse.
 const PUPPETEER_OPTIONS = {
   headless: 'new',
-  // executablePath: process.env.CHROMIUM_PATH,
+  executablePath: process.env.CHROME_PATH,
   args: ['--no-sandbox --enable-experimental-web-platform-features'],
 }
-// const browser = await puppeteer.use(StealthPlugin()).launch({
-//   headless: false,
-//   executablePath: process.env.CHROME_PATH,
-//   args: ['--enable-experimental-web-platform-features'],
-// })
-console.log(`Script launched 🚀`)
 const browser = await puppeteer.use(StealthPlugin()).launch(PUPPETEER_OPTIONS)
 console.log(`Create new page ⌛`)
 const page = await browser.newPage()
@@ -41,7 +36,7 @@ const options = {
     },
   },
   extends: 'lighthouse:default',
-  plugins: ['lighthouse-plugin-cats'],
+  plugins: ['lighthouse-plugin-ecoindex'],
 }
 
 //const flow = await startFlow(page, {

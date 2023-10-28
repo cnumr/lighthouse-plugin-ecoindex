@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "lighthouse-ecoindex",
+  "name": "lighthouse-plugin-ecoindex-playground",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
