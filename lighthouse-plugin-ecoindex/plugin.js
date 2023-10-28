@@ -4,6 +4,10 @@ export default {
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-score.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-grade.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-water.js' },
+    { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-ghg.js' },
+    { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-nodes.js' },
+    { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-size.js' },
+    { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-requests.js' },
   ],
   groups: {
     ecologic: {
@@ -23,6 +27,10 @@ export default {
       { id: 'eco-index-score', weight: 1, group: 'ecologic' },
       { id: 'eco-index-grade', weight: 0, group: 'ecologic' },
       { id: 'eco-index-water', weight: 0, group: 'ecologic' },
+      { id: 'eco-index-ghg', weight: 0, group: 'ecologic' },
+      { id: 'eco-index-nodes', weight: 0, group: 'technic' },
+      { id: 'eco-index-size', weight: 0, group: 'technic' },
+      { id: 'eco-index-requests', weight: 0, group: 'technic' },
     ],
   },
 }

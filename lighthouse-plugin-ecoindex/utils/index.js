@@ -4,7 +4,7 @@ import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import { getEcoindex } from 'ecoindex'
 import  round  from 'lodash.round'
 
-export async function  getLoadingExperience (artifacts, context) {
+export async function  getLoadingExperience (artifacts, context, isTechnical = false) {
   const domSize = artifacts.DOMStats.totalBodyElements
 
   // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61
@@ -28,7 +28,13 @@ export async function  getLoadingExperience (artifacts, context) {
     totalCompressedSize += result.totalBytes
     requestCount += 1
   })
-
+  if(isTechnical) {
+    return {
+      nodes:domSize,
+      requests:requestCount,
+      size:totalCompressedSize,
+    }
+  }
   const ecoIndexScore = getEcoindexResults(
     domSize,
     requestCount,
@@ -39,12 +45,32 @@ export async function  getLoadingExperience (artifacts, context) {
 
 export function createValueResult (metricValue, metric, isPercentile = false) {
   let numericValue = undefined
-  if(metric != 'grade') {
-    numericValue = normalizeMetricValue(metric, isPercentile ? metricValue[metric] * 100 : metricValue[metric])
+  let score = undefined
+  switch (metric) {
+    case 'grade':
+      numericValue = undefined
+      score = metricValue['score']/100
+      break;
+    case 'nodes':
+      numericValue = undefined
+      score = getScore(metric, metricValue[metric])
+      break;
+    case 'size':
+      numericValue = undefined
+      score = getScore(metric, metricValue[metric])
+      break;
+    case 'requests':
+      numericValue = undefined
+      score = getScore(metric, metricValue[metric])
+      break;
+    default:
+      numericValue = normalizeMetricValue(metric, isPercentile ? metricValue[metric] * 100 : metricValue[metric])
+      score = getScore(metric, metricValue[metric])
+      break;
   }
   const result= {
     numericValue,
-    score: numericValue == undefined ? metricValue['score']/100 : getScore(metric, metricValue[metric]),
+    score: score,
     numericUnit: getMetricNumericUnit(metric),
     displayValue: formatMetric(metric, metricValue[metric]),
     details: createInformationsTable(metric, metricValue[metric], isPercentile),
@@ -61,6 +87,14 @@ function getScore(metric, value){
       return value == 'A' ? 1 : 0 
     case 'water':
       return estimateMetricScore(getMetricRange(metric), value)
+    case 'ghg':
+      return estimateMetricScore(getMetricRange(metric), value)
+    case 'nodes':
+      return estimateMetricScore(getMetricRange(metric), value)
+    case 'size':
+      return estimateMetricScore(getMetricRange(metric), value)
+    case 'requests':
+      return estimateMetricScore(getMetricRange(metric), value)
     default:
       throw new Error(`Invalid metric score: ${metric}`)
   }
@@ -72,12 +106,20 @@ function getScore(metric, value){
  */
 function getMetricRange(metric) {
   switch (metric) {
-    case 'water':
-      return { good: 0.5, poor: 1 }
     case 'score':
       return { good: .9, poor: 0.7 }
     case 'grade':
       return { good: 'B', poor: 'D' }
+    case 'water':
+      return { good: 0.5, poor: 1 }
+    case 'ghg':
+      return { good: 0.5, poor: 1 }
+    case 'nodes':
+      return { good: 600, poor: 1000 }
+    case 'size':
+      return { good: 20000, poor: 60000 }
+    case 'requests':
+      return { good: 20000, poor: 60000 }
     default:
       throw new Error(`Invalid metric range: ${metric}`)
   }
@@ -101,12 +143,20 @@ function estimateMetricScore({ good, poor }, value) {
 /** @param {Metric} metric, @param {number} value */
 function formatMetric(metric, value) {
   switch (metric) {
+    case 'score':
+      return (value).toFixed(0) + '/100'
+    case 'grade':
+      return value + ''
     case 'water':
       return value + ' cl'
-      case 'score':
-        return (value).toFixed(0) + '/100'
-      case 'grade':
-        return value + ''
+    case 'ghg':
+      return value + ' eqCO2'
+    case 'nodes':
+      return value + ' DOM elements'
+    case 'size':
+      return value + ' ko'
+    case 'requests':
+      return value + ' requests'
     default:
       throw new Error(`Invalid metric format: ${metric}`)
   }
@@ -115,11 +165,19 @@ function formatMetric(metric, value) {
 /** @param {Metric} metric @param {number} value */
 function normalizeMetricValue(metric, value) {
   switch (metric) {
-    case 'water':
-      return value
     case 'score':
       return value / 100
     case 'grade':
+      return value
+    case 'water':
+      return value
+    case 'ghg':
+      return value
+    case 'nodes':
+      return value
+    case 'size':
+      return value
+    case 'requests':
       return value
     default:
       throw new Error(`Invalid metric when normalize: ${metric}`)
@@ -129,12 +187,20 @@ function normalizeMetricValue(metric, value) {
 /** @param {Metric} metric */
 function getMetricNumericUnit(metric) {
   switch (metric) {
-    case 'water':
-      return 'cl'
     case 'score':
       return ''
     case 'grade':
       return ''
+    case 'water':
+      return 'cl'
+    case 'ghg':
+      return 'eqCO2'
+    case 'nodes':
+      return 'DOM elements'
+    case 'size':
+      return 'ko'
+    case 'requests':
+      return 'requests'
     default:
       throw new Error(`Invalid metric unit: ${metric}`)
   }
@@ -148,12 +214,6 @@ function createInformationsTable(metric, value, isPercentile = false) {
   const items = []
   
   switch (metric) {
-    case "water":
-      items.push({
-          label: 'Water Consumption',
-          data: `${value} ${getMetricNumericUnit(metric)}`,
-        })
-      break;
     case "score":
       items.push({
           label: 'Ecoindex Score',
@@ -166,7 +226,36 @@ function createInformationsTable(metric, value, isPercentile = false) {
           data: value,
         })
       break;
-  
+    case "water":
+      items.push({
+          label: 'Water Consumption',
+          data: `${value} ${getMetricNumericUnit(metric)}`,
+        })
+      break;
+    case "ghg":
+      items.push({
+          label: 'Greenhouse Gas Emission',
+          data: `${value} ${getMetricNumericUnit(metric)}`,
+        })
+      break;
+    case "nodes":
+      items.push({
+          label: 'DOM elements',
+          data: `${value} ${getMetricNumericUnit(metric)}`,
+        })
+      break;
+    case "size":
+      items.push({
+          label: 'Size of the page',
+          data: `${value} ${getMetricNumericUnit(metric)}`,
+        })
+      break;
+    case "requests":
+      items.push({
+          label: 'Number of requests',
+          data: `${value} ${getMetricNumericUnit(metric)}`,
+        })
+      break;
     default:
       break;
   }
