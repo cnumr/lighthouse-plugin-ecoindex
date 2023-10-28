@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { desktopConfig, startFlow } from 'lighthouse'
 
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
@@ -31,8 +32,8 @@ console.log(`Create new page ⌛`)
 const page = await browser.newPage()
 
 await page.setViewport({
-  width: 1024,
-  height: 768,
+  width: 1920,
+        height: 1080,
 })
 
 const options = {
@@ -47,7 +48,7 @@ const options = {
     },
   },
   extends: 'lighthouse:default',
-  // plugins: ['lighthouse-plugin-ecoindex'],
+  plugins: ['lighthouse-plugin-ecoindex'],
 }
 
 console.log(`startFlow ⌛`)
