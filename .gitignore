@@ -1,3 +1,6 @@
+*.report.html
 .cache
 node_modules
 reports/*
+
+lighthouse-plugin-example

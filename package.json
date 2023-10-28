@@ -21,6 +21,10 @@
     "puppeteer": "^20.9.0",
     "puppeteer-autoscroll-down": "^1.1.2",
     "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2"
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0"
   }
 }
