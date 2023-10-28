@@ -1,6 +1,6 @@
 export default {
   // Additional audits to run on information Lighthouse gathered.
-  audits: [{ path: 'lighthouse-plugin-ecoindex/audits/has-cats-images.js' }],
+  audits: [{ path: 'lighthouse-plugin-ecoindex/audits/ecoindex.js' }],
 
   // A new category in the report for the plugin output.
   category: {
