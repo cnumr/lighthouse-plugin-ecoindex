@@ -53,7 +53,7 @@ class EcoindexRequestsAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const ecoIndexScore = await getLoadingExperience(artifacts, context, true)
-      console.log('requests', ecoIndexScore.requests)
+      // console.log('requests', ecoIndexScore.requests)
       return createValueResult(ecoIndexScore, 'requests', false, true)
     } catch (error) {
       createErrorResult(error)

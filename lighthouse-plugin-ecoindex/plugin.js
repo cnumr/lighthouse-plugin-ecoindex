@@ -21,8 +21,9 @@ export default {
   },
   // A new category in the report for the plugin output.
   category: {
-    title: 'Ecoindex by GreenIT.fr',
-    description: 'Ecoindex revealant metrics',
+    title: 'Ecoindex',
+    description:
+      '[Ecoindex®](https://www.ecoindex.fr/) revealant metrics, by [GreenIT.fr®](https://www.greenit.fr).',
     auditRefs: [
       { id: 'eco-index-score', weight: 1, group: 'ecologic' },
       { id: 'eco-index-grade', weight: 0, group: 'ecologic' },

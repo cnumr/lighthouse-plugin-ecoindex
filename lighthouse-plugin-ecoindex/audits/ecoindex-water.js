@@ -53,7 +53,7 @@ class EcoindexWaterConsumptionAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const ecoIndexScore = await getLoadingExperience(artifacts, context)
-      console.log('water', ecoIndexScore.water)
+      // console.log('water', ecoIndexScore.water)
       return createValueResult(ecoIndexScore, 'water')
     } catch (error) {
       createErrorResult(error)

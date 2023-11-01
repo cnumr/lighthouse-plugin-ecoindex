@@ -54,7 +54,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const ecoIndexScore = await getLoadingExperience(artifacts, context)
-      console.log('ghg', ecoIndexScore.ghg)
+      // console.log('ghg', ecoIndexScore.ghg)
       return createValueResult(ecoIndexScore, 'ghg')
     } catch (error) {
       createErrorResult(error)

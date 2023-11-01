@@ -1,105 +1,80 @@
-/* eslint-disable no-undef */
-import { desktopConfig, startFlow } from 'lighthouse'
-
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
-import puppeteer from 'puppeteer-extra'
-import { scrollPageToBottom } from 'puppeteer-autoscroll-down'
+import puppeteer from 'puppeteer'
+import { startFlow } from 'lighthouse'
 import { writeFileSync } from 'fs'
 
-//import CatAudit from './lighthouse-plugin-cats/plugin.js'
-//import SoftNavigationPlugin from './lighthouse-plugin-soft-navigation/plugin.js'
+async function captureReport() {
+  const browser = await puppeteer.launch({
+    headless: false,
+    args: [
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+      '--disable-setuid-sandbox',
+      '--no-sandbox',
+    ],
+  })
 
-console.log(`Script launched 🚀`)
-// Setup the browser and Lighthouse.
-const PUPPETEER_OPTIONS = {
-  headless: false,
-  executablePath: process.env.CHROME_PATH,
-  args: ['--enable-experimental-web-platform-features'],
-}
-const PUPPETEER_HEADLESS_OPTIONS = {
-  headless: 'new',
-  executablePath: process.env.CHROME_PATH,
-  args: ['--no-sandbox --enable-experimental-web-platform-features'],
-}
-const browser = await puppeteer
-  .use(StealthPlugin())
-  .launch(
-    process.env.CHROME_PATH == '/usr/bin/google-chrome-stable'
-      ? PUPPETEER_HEADLESS_OPTIONS
-      : PUPPETEER_OPTIONS,
-  )
-console.log(`Create new page ⌛`)
-const page = await browser.newPage()
+  const page = await browser.newPage()
+  // Get a session handle to be able to send protocol commands to the page.
+  const session = await page.target().createCDPSession()
 
-await page.setViewport({
-  width: 1920,
-        height: 1080,
-})
-
-const options = {
-  configContext: {
-    settingsOverrides: {
-      screenEmulation: {
-        mobile: false,
-        width: 1920,
-        height: 1080,
+  const config = {
+    configContext: {
+      settingsOverrides: {
+        screenEmulation: {
+          mobile: false,
+          width: 1920,
+          height: 1080,
+        },
+        formFactor: 'desktop',
       },
-      formFactor: 'desktop',
     },
-  },
-  extends: 'lighthouse:default',
-  plugins: ['lighthouse-plugin-ecoindex'],
+    extends: 'lighthouse:default',
+    plugins: ['lighthouse-plugin-ecoindex'],
+  }
+  const testUrl = 'https://www.ecoindex.fr'
+  const flow = await startFlow(page, { config })
+  // Navigate with a URL
+  // await flow.navigate('https://example.com');
+  await flow.navigate(testUrl)
+
+  // await flow.navigate(async () => {
+  //     await page.click('#didomi-notice-agree-button');
+  // });
+  // Interaction-initiated navigation via a callback function
+  // await flow.navigate(async () => {
+  //     await page.click('a');
+  // });
+
+  // Navigate with startNavigation/endNavigation
+  await flow.startTimespan()
+  await page.goto(testUrl, { waitUntil: 'networkidle0' })
+  await new Promise(r => setTimeout(r, 3 * 1000))
+  // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
+  // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
+  await session.send('Input.synthesizeScrollGesture', {
+    x: 100,
+    y: 600,
+    yDistance: -2500,
+    speed: 1000,
+  })
+  // await page.click('#didomi-notice-agree-button');
+  await new Promise(r => setTimeout(r, 3 * 1000))
+  await flow.endTimespan()
+
+  await browser.close()
+
+  // Get the comprehensive flow report.
+  const reportHtmlPath = './reports/lighthouse_report.html'
+  writeFileSync(reportHtmlPath, await flow.generateReport())
+  // Save results as JSON.
+  const reportJsonPath = './reports/lighthouse_report.json'
+  writeFileSync(
+    reportJsonPath,
+    JSON.stringify(await flow.createFlowResult(), null, 2),
+  )
+
+  // console.log('Rapport HTML enregistré à :', reportHtmlPath);
+  // console.log('Rapport JSON enregistré à :', reportJsonPath);
 }
 
-console.log(`startFlow ⌛`)
-const flow = await startFlow(page, options)
-console.log(`startFlow navigate ⌛`)
-await flow.navigate(
-  'https://www.manomano.fr/p/piscine-tubulaire-bestway-power-steel-549-x-274-x-122-m-30636057',
-  options,
-)
-// Phase 1 - Start the process.
-console.log(`startFlow startNavigation ⌛`)
-await flow.startNavigation()
-// Phase 2 - Emulate click on cookie warning (not mandatory).
-console.log(`page.click ⌛`)
-await page.click('#didomi-notice-agree-button')
-//await flow.endTimespan();
-
-// Phase 3 - Analyze the new state.
-//await flow.snapshot();
-console.log(`scrollPageToBottom ⌛`)
-// let lastPosition = await scrollPageToBottom(page, {
-//   size: 1000,
-//   delay: 300,
-// })
-
-// await flow.navigate(async () => {
-//   let lastPosition = await scrollPageToBottom(page, {
-//     size: 1000,
-//     delay: 300,
-//   })
-// })
-
-// await flow.snapshot()
-console.log(`startFlow endNavigation ⌛`)
-await flow.endNavigation()
-// Get the comprehensive flow report.
-const reportHtmlPath = './reports/lighthouse_report.html'
-console.log(`generateReport HTML ⌛`)
-writeFileSync(reportHtmlPath, await flow.generateReport())
-console.log('Rapport HTML enregistré à :', reportHtmlPath)
-// Save results as JSON.
-const reportJsonPath = './reports/lighthouse_report.json'
-console.log(`generateReport JSON ⌛`)
-writeFileSync(
-  reportJsonPath,
-  JSON.stringify(await flow.createFlowResult(), null, 2),
-)
-
-console.log('Rapport JSON enregistré à :', reportJsonPath)
-
-// Cleanup.
-await browser.close()
-console.log(`Script ended 👋`)
-//open(reportHtmlPath, {wait: false});
+captureReport()

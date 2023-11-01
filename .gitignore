@@ -2,5 +2,8 @@
 .cache
 node_modules
 reports/*
+!reports/.gitkeep
+.lighthouseci/*
+!.lighthouseci/.gitkeep
 
 lighthouse-plugin-example
