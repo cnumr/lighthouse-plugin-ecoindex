@@ -23,7 +23,8 @@ export default {
   category: {
     title: 'Ecoindex',
     description:
-      '[Ecoindex®](https://www.ecoindex.fr/) revealant metrics, by [GreenIT.fr®](https://www.greenit.fr).',
+      '[Ecoindex®](https://www.ecoindex.fr/) revealant metrics, by [GreenIT.fr®](https://www.greenit.fr).  ' +
+      '[GitHub](https://github.com/NovaGaia/lighthouse-plugin-ecoindex)',
     auditRefs: [
       { id: 'eco-index-score', weight: 1, group: 'ecologic' },
       { id: 'eco-index-grade', weight: 0, group: 'ecologic' },
