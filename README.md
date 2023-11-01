@@ -11,11 +11,15 @@ This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](ht
 Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠  
 On peut surement simplifier des choses dans le code, mais ça fonctionne.
 
-### Script (test sur une page)
+### LHCI (Lighthouse CI) - Fonctionnel (hors ou dans le devcontainer) 🔥
 
-Le script de lancement `script.js` fonctionne, il faut valider que les temps d'attentes fonctionnent bien.
+> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
 
-### LHCI (Lighthouse CI)
+Prérequis hors devcontainer + Chrome installé :
+
+```bash
+npm install -g @lhci/cli@0.12.0
+```
 
 Deux fichiers servent à configurer **Lighthouse-ci** `.lighthouserc.json` et `.puppeteerrc.js` afin de générer un rapport HTML et un fichier JSON, dans le dossier d'output `.lighthouseci`.
 
@@ -31,6 +35,38 @@ lhci collect
 lhci collect --numberOfRuns=5 --url=https://www.yahoo.fr
 # Run on multiple URLs
 lhci collect --url=https://example-1.com --url=https://example-2.com
+```
+
+### Script node (test sur une page) - ⚠️ ne fonctionne plus
+
+> Ne marche pas dans un devcontainer.  
+> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
+
+```bash
+npm i
+```
+
+Le script de lancement `script.js`.
+
+```bash
+# ne fonctionne plus ⚠️
+node script.js
+```
+
+### Script sh (test sur une page) - Fonctionnel, dans le devcontainer 🔥
+
+> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
+
+Prérequis hors devcontainer + Chrome installé :
+
+```bash
+npm install -g lighthouse
+```
+
+Le script de lancement `script.sh`.
+
+```bash
+sh script.sh
 ```
 
 ### Suite...
@@ -52,31 +88,6 @@ cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleC
 4. Scroller en bas de page
 5. Attendre de nouveau 3 secondes
 6. Fermer la page
-```
-
-## Informations
-
-### Hors du devcontainer (recommandé)
-
-Il faut faire `npm i`
-
-#### Run qui ne marche pas dans un devcontainer, avec puppeteer
-
-```bash
-node script.js
-```
-
-### Dans devcontainer (pas recommandé)
-
-Cet environnement de développement peut être lancé dans un container docker de VSCode (devcontainer).
-Un **chromium** et un **google-chrome-stable** sont installés dans le devcontainer, ainsi que `lighthouse` et `puppeteer`.
-
-#### Run qui marche dans un devcontainer, mais sans puppeteer
-
-> Il génère le rapport d'audit du site ecoindex.fr au format html, mais ne fait pas les process demandé par le site ecoindex.fr que doit faire poppeteer.
-
-```bash
-sh script.sh
 ```
 
 ---
