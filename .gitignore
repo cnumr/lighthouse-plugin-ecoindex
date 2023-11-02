@@ -3,7 +3,19 @@
 node_modules
 reports/*
 !reports/.gitkeep
-.lighthouseci/*
-!.lighthouseci/.gitkeep
 
 lighthouse-plugin-example
+
+# lhci
+.lighthouseci/*
+!.lighthouseci/.gitkeep
+tests/lhci/.lighthouseci/*
+!tests/lhci/.lighthouseci/.gitkeep
+
+# script.sh
+tests/script.sh/reports/*
+!tests/script.sh/reports/.gitkeep
+
+# script.js
+tests/script.js/reports/*
+!tests/script.js/reports/.gitkeep

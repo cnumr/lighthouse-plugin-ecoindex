@@ -4,82 +4,14 @@
 
 This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md).
 
-## Etat d'avancement
+## Objectifs du plugin
 
-### Plugin
+Générer un rapport lighthouse avec les mesures ecoindex.
 
-Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠  
-On peut surement simplifier des choses dans le code, mais ça fonctionne.
+Ces mesures et ce rapport émule le comportement d'un utilisateur sur une page web (voir ci-dessous).
 
-### LHCI (Lighthouse CI) - Fonctionnel (hors ou dans le devcontainer) 🔥
+Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lighthouse Ecoindex.
 
-> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
-
-Prérequis hors devcontainer + Chrome installé :
-
-```bash
-npm install -g @lhci/cli@0.12.0
-```
-
-Deux fichiers servent à configurer **Lighthouse-ci** `.lighthouserc.json` et `.puppeteerrc.js` afin de générer un rapport HTML et un fichier JSON, dans le dossier d'output `.lighthouseci`.
-
-- `.lighthouserc.json` sert à configurer le process de mesure par défaut et à ajouter le plugin `lighthouse-plugin-ecoindex` ;
-- `.puppeteerrc.js` sert à réaliser le process de navigation interne de la page.
-
-**Utilisation** :
-
-```bash
-# Use the default config : --numberOfRuns=1 --url=https://www.ecoindex.fr
-lhci collect
-# Basic usage
-lhci collect --numberOfRuns=5 --url=https://www.yahoo.fr
-# Run on multiple URLs
-lhci collect --url=https://example-1.com --url=https://example-2.com
-```
-
-### Script node (test sur une page) - ⚠️ ne fonctionne plus
-
-> Ne marche pas dans un devcontainer.  
-> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
-
-```bash
-npm i
-```
-
-Le script de lancement `script.js`.
-
-```bash
-# ne fonctionne plus ⚠️
-node script.js
-```
-
-### Script sh (test sur une page) - Fonctionnel, dans le devcontainer 🔥
-
-> il faut valider que les temps d'attentes Puppeteer fonctionnent bien.
-
-Prérequis hors devcontainer + Chrome installé :
-
-```bash
-npm install -g lighthouse
-```
-
-Le script de lancement `script.sh`.
-
-```bash
-sh script.sh
-```
-
-### Suite...
-
-Je ne pense pas qu'on puisse aller au-dela en tant que plugin seul, il faut y ajouter puppeteer pour faire les actions demandées (voir [Objectifs](#Objectifs)) par ecoindex.fr.  
-cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#comparing-a-plugin-vs-custom-config).
-
-> **🔴 ATTENTION 🔴** :  
-> Les notes du plugins ne sont pas cohérentes avec les notes générées sur le site ecoindex.fr. Est-ce que les quantiles et autres méthodes venant de https://github.com/cnumr/ecoindex_node/tarball/master sont bons ? 🙃
-
-## Objectifs
-
-Émuler le comportement d'un utilisateur sur une page web avec Lighthouse et Puppeteer, avec le plugin lighthouse.
 
 ```
 1. Lancer un navigateur Chrome headless avec les options no-sandbox, disable-dev-shm-usage et les capacités goog:loggingPrefs à {"performance": "ALL"}
@@ -89,6 +21,31 @@ cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleC
 5. Attendre de nouveau 3 secondes
 6. Fermer la page
 ```
+
+## Etat d'avancement
+
+### Plugin
+
+Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠  
+On peut surement simplifier des choses dans le code, mais ça fonctionne.
+
+### Utilisation / tests
+
+Voir les readme dans `tests/`.
+
+- [lighthouse-ci](tests/lighthouse-ci/README.md)
+- [script.sh](tests/script.sh/README.md)
+- [script.js](tests/script.js/README.md)
+
+### Suite...
+
+Je ne pense pas qu'on puisse aller au-dela en tant que plugin seul, il faut y ajouter puppeteer pour faire les actions demandées (voir [Objectifs](#Objectifs)) par ecoindex.fr.  
+cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#comparing-a-plugin-vs-custom-config).
+
+> **🔴 ATTENTION 🔴** :  
+> Les notes du plugins ne sont pas cohérentes avec les notes générées sur le site ecoindex.fr. Est-ce que les quantiles et autres méthodes venant de https://github.com/cnumr/ecoindex_node/tarball/master sont bons ? 🙃
+
+
 
 ---
 
