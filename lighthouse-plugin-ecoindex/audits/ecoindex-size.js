@@ -10,8 +10,8 @@ class EcoindexSizeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-size',
-      title: 'Page size in kilobytes',
-      failureTitle: 'Page size in kilobytes, your page is too heavy',
+      title: 'Page size in Megaoctets',
+      failureTitle: 'Page size in Megaoctets, your page is too heavy',
       description:
         'Pages should be lightweight in order to be more sustainable.',
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
@@ -42,7 +42,7 @@ class EcoindexSizeAudit extends Audit {
       },
       {
         id: 'eco-index-size',
-        title: 'Page size in kilobytes',
+        title: 'Page size in Megaoctets',
         description:
           'The EcoIndex score evaluating the environmental impact of the page.',
         scoreDisplayMode: 'numeric',
