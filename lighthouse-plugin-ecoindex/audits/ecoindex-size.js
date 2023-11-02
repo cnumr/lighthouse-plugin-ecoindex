@@ -54,7 +54,7 @@ class EcoindexSizeAudit extends Audit {
     try {
       const ecoIndexScore = await getLoadingExperience(artifacts, context, true)
       // console.log('size', ecoIndexScore.size)
-      return createValueResult(ecoIndexScore, 'size', false, true)
+      return createValueResult(ecoIndexScore, 'size')
     } catch (error) {
       createErrorResult(error)
     }

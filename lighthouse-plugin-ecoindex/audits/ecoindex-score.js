@@ -11,7 +11,7 @@ class EcoindexScoreAudit extends Audit {
     return {
       id: 'eco-index-score',
       title: 'Ecoindex revealant metrics',
-      failureTitle: 'Ecoindex, your page has a big impact',
+      failureTitle: 'Ecoindex, your page has an impact',
       description:
         'Pages should be lightweight in order to be more sustainable.',
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
@@ -55,7 +55,7 @@ class EcoindexScoreAudit extends Audit {
       const ecoIndexScore = await getLoadingExperience(artifacts, context)
 
       // console.log('score', ecoIndexScore.score)
-      return createValueResult(ecoIndexScore, 'score', true)
+      return createValueResult(ecoIndexScore, 'score')
     } catch (error) {
       createErrorResult(error)
     }

@@ -4,7 +4,7 @@ import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import { getEcoindex } from 'ecoindex'
 import round from 'lodash.round'
 
-const KO_TO_MO = 10000
+const KO_TO_MO = 1000000
 
 export async function getLoadingExperience(
   artifacts,
@@ -34,6 +34,9 @@ export async function getLoadingExperience(
     totalCompressedSize += result.totalBytes
     requestCount += 1
   })
+  // console.log(`{domSize:${domSize}},`)
+  // console.log(`{size:${totalCompressedSize}},`)
+  // console.log(`{requests:${requestCount}},`)
   if (isTechnical) {
     return {
       nodes: domSize,
@@ -46,16 +49,18 @@ export async function getLoadingExperience(
     requestCount,
     totalCompressedSize,
   )
+  // console.log(`{ecoIndexScore:${JSON.stringify(ecoIndexScore)}},`)
   return ecoIndexScore
 }
 
-export function createValueResult(metricValue, metric, isPercentile = false) {
+export function createValueResult(metricValue, metric) {
   let numericValue = undefined
   let score = undefined
   switch (metric) {
     case 'grade':
       numericValue = undefined
-      score = metricValue['score'] / 100
+      // score = metricValue['score'] / 100
+      score = getScore(metric, metricValue['score'])
       break
     case 'nodes':
       numericValue = undefined
@@ -70,10 +75,7 @@ export function createValueResult(metricValue, metric, isPercentile = false) {
       score = getScore(metric, metricValue[metric])
       break
     default:
-      numericValue = normalizeMetricValue(
-        metric,
-        isPercentile ? metricValue[metric] * 100 : metricValue[metric],
-      )
+      numericValue = normalizeMetricValue(metric, metricValue[metric])
       score = getScore(metric, metricValue[metric])
       break
   }
@@ -82,7 +84,7 @@ export function createValueResult(metricValue, metric, isPercentile = false) {
     score: score,
     numericUnit: getMetricNumericUnit(metric),
     displayValue: formatMetric(metric, metricValue[metric]),
-    details: createInformationsTable(metric, metricValue[metric], isPercentile),
+    details: createInformationsTable(metric, metricValue[metric]),
   }
   // console.log('result', result)
   return result
@@ -93,7 +95,7 @@ function getScore(metric, value) {
     case 'score':
       return value / 100
     case 'grade':
-      return value == 'A' ? 1 : 0
+      return estimateMetricScore(getMetricRange(metric), value)
     case 'water':
       return estimateMetricScore(getMetricRange(metric), value)
     case 'ghg':
@@ -116,19 +118,23 @@ function getScore(metric, value) {
 function getMetricRange(metric) {
   switch (metric) {
     case 'score':
-      return { good: 0.9, poor: 0.7 }
+      return { good: 76, poor: 51, lowIsBeter: false }
     case 'grade':
-      return { good: 'B', poor: 'D' }
+      return { good: 76, poor: 51, lowIsBeter: false }
     case 'water':
-      return { good: 0.5, poor: 1 }
+      return { good: 2, poor: 1, lowIsBeter: true }
     case 'ghg':
-      return { good: 0.5, poor: 1 }
+      return { good: 2, poor: 1, lowIsBeter: true }
     case 'nodes':
-      return { good: 600, poor: 1000 }
+      return { good: 1000, poor: 600, lowIsBeter: true }
     case 'size':
-      return { good: (2 * 10000) / KO_TO_MO, poor: (4 * 10000) / KO_TO_MO }
+      return {
+        good: (560 * 100) / KO_TO_MO,
+        poor: (235 * 100) / KO_TO_MO,
+        lowIsBeter: true,
+      }
     case 'requests':
-      return { good: 20000, poor: 60000 }
+      return { good: 35, poor: 30, lowIsBeter: true }
     default:
       throw new Error(`Invalid metric range: ${metric}`)
   }
@@ -142,10 +148,20 @@ function getMetricRange(metric) {
  * @param {number} value
  */
 
-function estimateMetricScore({ good, poor }, value) {
-  if (value <= good) return 1
-  if (value > poor) return 0
-  const linearScore = round((poor - value) / (poor - good), 2)
+function estimateMetricScore({ good, poor, lowIsBeter }, value) {
+  // console.log(
+  //   JSON.stringify({ range: { good: good, poor: poor }, value: value }),
+  // )
+  let linearScore = undefined
+  if (lowIsBeter) {
+    if (value <= good) return 1
+    if (value > poor) return 0
+    linearScore = round((poor - value) / (poor - good), 2)
+  } else {
+    if (value >= good) return 1
+    if (value < poor) return 0
+    linearScore = round((good - value) / (good - poor), 2)
+  }
   return linearScore
 }
 
@@ -163,7 +179,7 @@ function formatMetric(metric, value) {
     case 'nodes':
       return value + ' DOM elements'
     case 'size':
-      return (value / KO_TO_MO).toFixed(3) + ' Ko'
+      return (value / KO_TO_MO).toFixed(3) + ' Mo'
     case 'requests':
       return value + ' requests'
     default:
@@ -207,7 +223,7 @@ function getMetricNumericUnit(metric) {
     case 'nodes':
       return 'DOM elements'
     case 'size':
-      return 'Ko'
+      return 'Mo'
     case 'requests':
       return 'requests'
     default:
@@ -270,29 +286,60 @@ function createInformationsTable(metric, value, isPercentile = false) {
     default:
       break
   }
-  if (metric == 'grade') {
+  if (getMetricRange(metric).lowIsBeter) {
     items.push({
       label: 'Good',
-      data: `less than ${getMetricRange(metric).good}`,
+      data: `less than ${
+        getMetricRange(metric).poor * (isPercentile ? 100 : 1)
+      }`,
     })
     items.push({
       label: 'Poor',
-      data: `less than ${getMetricRange(metric).poor}`,
+      data: `less than ${
+        getMetricRange(metric).good * (isPercentile ? 100 : 1)
+      }`,
     })
   } else {
     items.push({
       label: 'Good',
-      data: `less than ${
+      data: `more than ${
         getMetricRange(metric).good * (isPercentile ? 100 : 1)
       } ${getMetricNumericUnit(metric)}`,
     })
     items.push({
       label: 'Poor',
-      data: `less than ${
+      data: `more than ${
         getMetricRange(metric).poor * (isPercentile ? 100 : 1)
       } ${getMetricNumericUnit(metric)}`,
     })
   }
+  // if (metric == 'grade' || metric == 'score') {
+  //   items.push({
+  //     label: !getMetricRange(metric).lowIsBeter ? 'Good' : 'Poor',
+  //     data: `less than ${
+  //       getMetricRange(metric).good * (isPercentile ? 100 : 1)
+  //     }`,
+  //   })
+  //   items.push({
+  //     label: !getMetricRange(metric).lowIsBeter ? 'Poor' : 'Good',
+  //     data: `less than ${
+  //       getMetricRange(metric).poor * (isPercentile ? 100 : 1)
+  //     }`,
+  //   })
+  // } else {
+  //   items.push({
+  //     label: !getMetricRange(metric).lowIsBeter ? 'Poor' : 'Good',
+  //     data: `less than ${
+  //       getMetricRange(metric).poor * (isPercentile ? 100 : 1)
+  //     } ${getMetricNumericUnit(metric)}`,
+  //   })
+  //   items.push({
+  //     label: !getMetricRange(metric).lowIsBeter ? 'Good' : 'Poor',
+  //     data: `less than ${
+  //       getMetricRange(metric).good * (isPercentile ? 100 : 1)
+  //     } ${getMetricNumericUnit(metric)}`,
+  //   })
+  // }
 
   return Audit.makeTableDetails(headings, items)
 }
@@ -321,6 +368,14 @@ function getEcoindexResults(domSize, requestCount, totalCompressedSize) {
   // Add your custom EcoIndex calculation logic here based on the provided metrics.
   // The EcoIndex score should be a value between 0 and 100, where 100 represents the most eco-friendly page.
   // This is just a placeholder, and you should replace it with a proper calculation.
-  const value = getEcoindex(domSize, requestCount, totalCompressedSize)
+  const value = getEcoindex(domSize, requestCount, totalCompressedSize / 1000)
+  // console.log(
+  //   JSON.stringify({
+  //     size: totalCompressedSize / 1000,
+  //     node: domSize,
+  //     requests: requestCount,
+  //   }),
+  // )
+  // console.log(`{ecoIndexScore:${JSON.stringify(value)}},`)
   return value
 }
