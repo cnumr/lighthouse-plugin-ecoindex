@@ -1,13 +1,24 @@
 {
   "name": "lighthouse-plugin-ecoindex",
+  "description": "Lighthouse plugin that include Ecoindex results.",
+  "homepage": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex",
+  "bugs": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex.git"
+  },
   "main": "./plugin.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "peerDependencies": {
     "lighthouse": "^10.4.0"
   },
+  "scripts": {
+    "release": "release-it"
+  },
   "devDependencies": {
-    "lighthouse": "^10.4.0"
+    "lighthouse": "^10.4.0",
+    "release-it": "*"
   },
   "dependencies": {
     "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
