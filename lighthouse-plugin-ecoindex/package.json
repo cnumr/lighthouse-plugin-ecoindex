@@ -18,12 +18,12 @@
   },
   "devDependencies": {
     "lighthouse": "^10.4.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3",
     "release-it": "*"
   },
   "dependencies": {
     "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
-    "lodash.round": "^4.0.4",
-    "prettier": "^3.0.3",
-    "prettier-plugin-organize-imports": "^3.2.3"
+    "lodash.round": "^4.0.4"
   }
 }
