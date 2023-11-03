@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex
 
+Résumé des resultats
+![Résumé des resultats](lighthouse-plugin-ecoindex/docs/ecoindex-intro.png)
+
+Détails des résultats du plugin
+![Détails des résultats du plugin](lighthouse-plugin-ecoindex/docs/ecoindex-results.png)
+
 ## Description
 
 This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md).
@@ -11,7 +17,6 @@ Générer un rapport lighthouse avec les mesures ecoindex.
 Ces mesures et ce rapport émule le comportement d'un utilisateur sur une page web (voir ci-dessous).
 
 Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lighthouse Ecoindex.
-
 
 ```
 1. Lancer un navigateur Chrome headless avec les options no-sandbox, disable-dev-shm-usage et les capacités goog:loggingPrefs à {"performance": "ALL"}
@@ -25,6 +30,8 @@ Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lightho
 ## Etat d'avancement
 
 ### Plugin
+
+[Plugin](lighthouse-plugin-ecoindex/README.md)
 
 Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠  
 On peut surement simplifier des choses dans le code, mais ça fonctionne.
@@ -44,8 +51,6 @@ cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleC
 
 > **🔴 ATTENTION 🔴** :  
 > Les notes du plugins ne sont pas cohérentes avec les notes générées sur le site ecoindex.fr. Est-ce que les quantiles et autres méthodes venant de https://github.com/cnumr/ecoindex_node/tarball/master sont bons ? 🙃
-
-
 
 ---
 
