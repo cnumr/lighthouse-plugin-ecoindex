@@ -14,13 +14,13 @@
   "dependencies": {
     "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
     "lighthouse": "^10.4.0",
-    "open": "^9.1.0",
     "puppeteer": "^20.9.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "eslint": "^8.52.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-organize-imports": "^3.2.3",
-    "eslint": "^8.52.0"
+    "prettier-plugin-organize-imports": "^3.2.3"
   }
 }

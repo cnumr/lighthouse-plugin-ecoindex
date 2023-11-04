@@ -19,7 +19,12 @@ npm i
 ## 3. Utilisation
 
 ```bash
+# test with predefined url
 node script.js
+# test with custom urls
+node script-with-args.js --urls=https://www.ecoindex.fr/,https://www.example.com/
+# test with urls from a file, see example-urls-list
+node script-with-args.js --urls-file=example-urls-list
 ```
 
 Les rapports sont générés dans `reports`.

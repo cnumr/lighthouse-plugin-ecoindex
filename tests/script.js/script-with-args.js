@@ -1,8 +1,77 @@
+#!/usr/bin/env node
+
+import fs, { writeFileSync } from 'fs'
+
+import { hideBin } from 'yargs/helpers'
+import path from 'path'
 import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
-import { writeFileSync } from 'fs'
+import yargs from 'yargs'
 
-async function captureReport() {
+async function generateReport() {
+  const argv = yargs(hideBin(process.argv))
+    .option('urls-file', {
+      alias: 'i',
+      type: 'string',
+      description: 'Input file path'
+    })
+    .option('urls', {
+      alias: 'u',
+      type: 'string',
+      description: 'URLs to process'
+    })
+    .help()
+    .argv;
+  const reportName = new Date().toISOString()
+  const reports = []
+
+  const filePath = argv['urls-file']
+  const urls = argv['urls'] ? argv['urls'].split(',') : null
+
+  if (!filePath && !urls) {
+    console.error('Please provide a file path (--urls-file=) or URLs (--urls=https://www.example.com,https://www.example1.com) as an argument')
+    process.exit(1)
+  }
+
+  if (filePath) {
+    const resolvedPath = path.resolve(filePath)
+
+    fs.readFile(resolvedPath, 'utf8', async (err, data) => {
+      // Make this function async
+      if (err) {
+        console.error(`Error reading file from disk: ${err}`)
+      } else {
+        const fileUrls = data.split('\n')
+
+        for (let index = 0; index < fileUrls.length; index++) {
+          const url = fileUrls[index]
+          if (url.trim() !== '') {
+            console.log(`URL ${index + 1}: ${url}`)
+            reports.push(await captureReport(url, reportName))
+          }
+        }
+      }
+    })
+  } else {
+    for (let index = 0; index < urls.length; index++) {
+      const url = urls[index]
+      if (url.trim() !== '') {
+        console.log(`URL ${index + 1}: ${url}`)
+        reports.push(await captureReport(url, reportName))
+      }
+    }
+  }
+  console.log(`reports`, reports);
+  const reportJsonPath = `./reports/${reportName}-lighthouse_summary.json`
+  writeFileSync(
+    reportJsonPath,
+    JSON.stringify(reports, null, 2),
+  )
+}
+
+generateReport()
+
+async function captureReport(url, reportName) {
   const browser = await puppeteer.launch({
     headless: false,
     args: [
@@ -18,23 +87,13 @@ async function captureReport() {
   const session = await page.target().createCDPSession()
 
   const config = {
-    configContext: {
-      settingsOverrides: {
-        screenEmulation: {
-          mobile: false,
-          width: 1920,
-          height: 1080,
-        },
-        formFactor: 'desktop',
-      },
-    },
     extends: 'lighthouse:default',
     plugins: ['lighthouse-plugin-ecoindex'],
   }
-  const testUrl = 'https://www.ecoindex.fr'
-  const flow = await startFlow(page, { config })
+  const testUrl = url
+  const flow = await startFlow(page, { config, flags: {screenEmulation: {disabled: true}}, })
   // Navigate with a URL
-  // await flow.navigate('https://example.com');
+  await page.setViewport({width: 1920, height: 1080});
   await flow.navigate(testUrl)
 
   // await flow.navigate(async () => {
@@ -72,19 +131,17 @@ async function captureReport() {
   await flow.endTimespan()
 
   await browser.close()
-
+  
   // Get the comprehensive flow report.
-  const reportHtmlPath = './reports/lighthouse_report.html'
+  const reportHtmlPath = `./reports/${reportName}-lighthouse_report.html`
   writeFileSync(reportHtmlPath, await flow.generateReport())
   // Save results as JSON.
-  const reportJsonPath = './reports/lighthouse_report.json'
+  const reportJsonPath = `./reports/${reportName}-lighthouse_report.json`
   writeFileSync(
     reportJsonPath,
     JSON.stringify(await flow.createFlowResult(), null, 2),
   )
-
+  return JSON.stringify(await flow.createFlowResult(), null, 2)
   // console.log('Rapport HTML enregistré à :', reportHtmlPath);
   // console.log('Rapport JSON enregistré à :', reportJsonPath);
 }
-
-captureReport()

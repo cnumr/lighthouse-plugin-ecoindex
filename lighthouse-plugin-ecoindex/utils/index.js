@@ -58,20 +58,20 @@ export function createValueResult(metricValue, metric) {
   let score = undefined
   switch (metric) {
     case 'grade':
-      numericValue = undefined
+      numericValue = metricValue[metric]
       // score = metricValue['score'] / 100
       score = getScore(metric, metricValue['score'])
       break
     case 'nodes':
-      numericValue = undefined
+      numericValue = metricValue[metric]
       score = getScore(metric, metricValue[metric])
       break
     case 'size':
-      numericValue = undefined
+      numericValue = metricValue[metric]
       score = getScore(metric, metricValue[metric])
       break
     case 'requests':
-      numericValue = undefined
+      numericValue = metricValue[metric]
       score = getScore(metric, metricValue[metric])
       break
     default:

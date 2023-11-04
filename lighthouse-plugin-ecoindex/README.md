@@ -33,7 +33,9 @@ Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lightho
 npm i lighthouse-plugin-ecoindex
 ```
 
-### 1. Créer ou adapater le fichier `.lighthouserc.json`
+### Usage avec LHCI
+
+#### 1. Créer ou adapater le fichier `.lighthouserc.json`
 
 > Inspirez-vous de ce contenu.
 
@@ -69,7 +71,7 @@ npm i lighthouse-plugin-ecoindex
 }
 ```
 
-### 2. Créer le fichier `.puppeteerrc.js`
+#### 2. Créer le fichier `.puppeteerrc.js`
 
 Ajouter ce contenu :
 
@@ -100,3 +102,7 @@ module.exports = async (browser, context) => {
   await page.close()
 }
 ```
+
+### Usage avec lighthouse (`npm` ou `npx`)
+
+### Usage d'un script `JavaScript`
