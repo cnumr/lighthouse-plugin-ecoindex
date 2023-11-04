@@ -41,11 +41,15 @@ On peut surement simplifier des choses dans le code, mais ça fonctionne.
 Voir les readme dans `tests/`.
 
 - Avec scenario Puppeteer 🟢 :
-  - [lighthouse-ci](tests/lhci/README.md) ← **recommandé**
-  - [script-2.js](tests/script-2.js/README.md)
-  - [script.js](tests/script.js/README.md)
-- Sans scénario Puppeteer 🟠 :
-  - [script.sh](tests/script.sh/README.md)
+  - [lighthouse-ci](tests/lighthouse-ci/README.md) ← **recommandé**
+- Pour tester en local, avec scenario Puppeteer 🟢 :
+  - [lighthouse-ci](tests/lhci/README.md)
+- Anciennes methodes à supprimer :
+  - Avec scenario Puppeteer 🟢 :
+    - [script-2.js](tests/script-2.js/README.md)
+    - [script.js](tests/script.js/README.md)
+  - Sans scénario Puppeteer 🟠 :
+    - [script.sh](tests/script.sh/README.md)
 
 ### Suite...
 

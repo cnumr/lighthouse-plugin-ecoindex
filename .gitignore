@@ -12,6 +12,8 @@ lighthouse-plugin-example
 !.lighthouseci/.gitkeep
 tests/lhci/.lighthouseci/*
 !tests/lhci/.lighthouseci/.gitkeep
+tests/lighthouse-ci/.lighthouseci/*
+!tests/lighthouse-ci/.lighthouseci/.gitkeep
 
 # script.sh
 tests/script.sh/reports/*

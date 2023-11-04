@@ -1,0 +1,23 @@
+{
+  "type": "commonjs",
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lhci": "lhci",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@lhci/cli": "^0.12.0",
+    "lighthouse-plugin-ecoindex": "*"
+  },
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3"
+  }
+}
