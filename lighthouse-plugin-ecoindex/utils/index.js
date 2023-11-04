@@ -103,7 +103,7 @@ function getScore(metric, value) {
     case 'nodes':
       return estimateMetricScore(getMetricRange(metric), value)
     case 'size':
-      return estimateMetricScore(getMetricRange(metric), value)
+      return estimateMetricScore(getMetricRange(metric), value / KO_TO_MO)
     case 'requests':
       return estimateMetricScore(getMetricRange(metric), value)
     default:
