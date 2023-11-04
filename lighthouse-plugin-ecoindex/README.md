@@ -1,10 +1,10 @@
 # lighthouse-plugin-ecoindex
 
 Résumé des resultats
-![Résumé des resultats](https://raw.githubusercontent.com/NovaGaia/lighthouse-plugin-ecoindex/main/lighthouse-plugin-ecoindex/docs/ecoindex-intro.png?token=GHSAT0AAAAAACEL5E4EZXHI275NKSOZMJBGZKEZIFQ)
+![Résumé des resultats](https://github.com/NovaGaia/lighthouse-plugin-ecoindex/raw/main/docs/ecoindex-intro.png)
 
 Détails des résultats du plugin
-![Détails des résultats du plugin](https://raw.githubusercontent.com/NovaGaia/lighthouse-plugin-ecoindex/main/lighthouse-plugin-ecoindex/docs/ecoindex-results.png?token=GHSAT0AAAAAACEL5E4FUG7P7HDNTHKXYXVYZKEZIQQ)
+![Détails des résultats du plugin](https://github.com/NovaGaia/lighthouse-plugin-ecoindex/raw/main/docs/ecoindex-results.png)
 
 ## Description
 

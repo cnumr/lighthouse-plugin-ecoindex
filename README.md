@@ -1,10 +1,10 @@
 # lighthouse-plugin-ecoindex
 
 Résumé des resultats
-![Résumé des resultats](lighthouse-plugin-ecoindex/docs/ecoindex-intro.png)
+![Résumé des resultats](docs/ecoindex-intro.png)
 
 Détails des résultats du plugin
-![Détails des résultats du plugin](lighthouse-plugin-ecoindex/docs/ecoindex-results.png)
+![Détails des résultats du plugin](docs/ecoindex-results.png)
 
 ## Description
 
