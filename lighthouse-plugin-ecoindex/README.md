@@ -1,10 +1,10 @@
 # lighthouse-plugin-ecoindex
 
 Résumé des resultats
-![Résumé des resultats](https://github.com/NovaGaia/lighthouse-plugin-ecoindex/raw/main/docs/ecoindex-intro.png)
+![Résumé des resultats](docs/ecoindex-intro.png)
 
 Détails des résultats du plugin
-![Détails des résultats du plugin](https://github.com/NovaGaia/lighthouse-plugin-ecoindex/raw/main/docs/ecoindex-results.png)
+![Détails des résultats du plugin](docs/ecoindex-results.png)
 
 ## Description
 
