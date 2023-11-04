@@ -41,7 +41,7 @@ On peut surement simplifier des choses dans le code, mais ça fonctionne.
 Voir les readme dans `tests/`.
 
 - Avec scenario Puppeteer 🟢 :
-  - [lighthouse-ci](tests/lighthouse-ci/README.md)
+  - [lighthouse-ci](tests/lhci/README.md)
   - [script-2.js](tests/script-2.js/README.md)
   - [script.js](tests/script.js/README.md)
 - Sans scénario Puppeteer 🟠 :
