@@ -1,6 +1,6 @@
 # test avec script.js
 
-> Ne fonctionne pas dans le devcontainer.  
+> Fonctionne dans le devcontainer.  
 > Fonctionne avec Chrome d'installé sur son poste (en local, hors devcontainer).  
 > Utilise Puppeteer pour gérer le processus de navigation recommandé.  
 > Testé en node 20.
@@ -19,13 +19,13 @@ npm i
 
 ## 3. Utilisation
 
+> 🔴 Attention 🔴 le seul output qui fonctionne pour le moment est `html`.
+
 ```bash
-# test with predefined url
-node script.js
-# test with custom urls
-node script-with-args.js --urls=https://www.ecoindex.fr/,https://www.example.com/
-# test with urls from a file, see example-urls-list
-node script-with-args.js --urls-file=example-urls-list
+# Avec une serie d'URLs
+node script.js --urls=https://www.ecoindex.fr/,https://novagaia.fr/
+# Avec un fichier d'URLs
+node script.js --urls-file=example-urls-list
 ```
 
-Les rapports sont générés dans `reports`.
+Les rapports sont générés à la racine .

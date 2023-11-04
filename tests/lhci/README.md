@@ -1,7 +1,9 @@
 # test avec Lighthouse-ci
 
 > Fonctionne dans le devcontainer.  
-> Fonctionne avec Chrome d'installé sur son poste.
+> Fonctionne avec Chrome d'installé sur son poste (en local, hors devcontainer).  
+> Utilise Puppeteer pour gérer le processus de navigation recommandé.  
+> Testé en node 20.
 
 ## 1. Création du lien symbolique si il a sauté
 
