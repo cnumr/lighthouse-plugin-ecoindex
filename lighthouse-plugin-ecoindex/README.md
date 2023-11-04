@@ -33,7 +33,13 @@ Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lightho
 npm i lighthouse-plugin-ecoindex
 ```
 
-### Usage avec LHCI
+## Full documentation and examples of usage on GitHub
+
+https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
+
+## Quick documentation
+
+### Configuration
 
 #### 1. Créer ou adapater le fichier `.lighthouserc.json`
 
@@ -62,7 +68,10 @@ npm i lighthouse-plugin-ecoindex
       }
     },
     "assert": {
-      "preset": "lighthouse:default"
+      "preset": "lighthouse:default",
+      "assertions": {
+        "categories:lighthouse-plugin-ecoindex": ["error", { "minScore": 50 }]
+      }
     },
     "upload": {
       "target": "temporary-public-storage"
@@ -88,12 +97,22 @@ module.exports = async (browser, context) => {
   const session = await page.target().createCDPSession()
   await page.goto(url, { waitUntil: 'networkidle0' })
   await new Promise(r => setTimeout(r, 3 * 1000))
+  const dimensions = await page.evaluate(() => {
+    var body = document.body, html = document.documentElement;
+
+    var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+    return {
+      width: document.documentElement.clientWidth,
+      height: height,
+      deviceScaleFactor: window.devicePixelRatio,
+    }
+  })
   // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
   // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
   await session.send('Input.synthesizeScrollGesture', {
     x: 100,
     y: 600,
-    yDistance: -2500,
+    yDistance: -dimensions.height,
     speed: 1000,
   })
   // await page.click('#didomi-notice-agree-button');
@@ -101,8 +120,19 @@ module.exports = async (browser, context) => {
   // close session for next run
   await page.close()
 }
+
+}
 ```
 
-### Usage avec lighthouse (`npm` ou `npx`)
+#### 3. Utilisation
 
-### Usage d'un script `JavaScript`
+```bash
+# Use the default config : --numberOfRuns=1 --url=https://www.ecoindex.fr
+npm run lhci collect
+# Basic usage
+npm run lhci collect -- --numberOfRuns=5 --url=https://www.yahoo.fr
+# Run on multiple URLs
+npm run lhci collect -- --url=https://example-1.com --url=https://example-2.com
+# Run on URLs from a file see on https://github.com/NovaGaia/lighthouse-plugin-ecoindex/blob/main/tests/lighthouse-ci/script.sh
+sh script.sh example-urls-list
+```
