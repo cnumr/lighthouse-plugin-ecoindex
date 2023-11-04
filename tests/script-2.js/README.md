@@ -1,4 +1,4 @@
-# test avec script.js
+# test avec script.js (in tests/script-2/script.js)
 
 > Fonctionne dans le devcontainer.  
 > Fonctionne avec Chrome d'installé sur son poste (en local, hors devcontainer).  
