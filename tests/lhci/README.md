@@ -28,6 +28,8 @@ lhci collect
 lhci collect --numberOfRuns=5 --url=https://www.yahoo.fr
 # Run on multiple URLs
 lhci collect --url=https://example-1.com --url=https://example-2.com
+# Run on URLs from a file
+# do a script.sh to generate the command
 ```
 
 Les rapports sont générés dans `.lighthouseci`.
