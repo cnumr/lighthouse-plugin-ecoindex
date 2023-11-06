@@ -10,11 +10,10 @@ class EcoindexNodesAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-nodes',
-      title: 'DOM elements (nodes)',
-      failureTitle: 'DOM elements (nodes), your page is too complex',
-      description:
-        'Pages should be lightweight in order to be more sustainable.',
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      title: 'Ecoindex DOM elements (nodes)',
+      failureTitle: 'Ecoindex DOM elements (nodes), your page is too complex',
+      description: 'The number of HTML elements in the DOM.',
+      requiredArtifacts: ['NodesMinusSvgsGatherer', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

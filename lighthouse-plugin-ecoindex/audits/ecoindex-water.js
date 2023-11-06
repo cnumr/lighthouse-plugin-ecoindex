@@ -12,8 +12,7 @@ class EcoindexWaterConsumptionAudit extends Audit {
       id: 'eco-index-water',
       title: 'Water Consumption (cl)',
       failureTitle: 'Water Consumption (cl), your page consumes a lot of water',
-      description:
-        'Pages should be lightweight in order to be more sustainable.',
+      description: 'The quantity of water consumed by the page.',
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
@@ -43,8 +42,7 @@ class EcoindexWaterConsumptionAudit extends Audit {
       {
         id: 'eco-index-water',
         title: 'Water Consumption',
-        description:
-          'The EcoIndex score evaluating the environmental impact of the page.',
+        description: 'The quantity of water consumed by the page.',
         scoreDisplayMode: 'numeric',
       },
     ]

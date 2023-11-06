@@ -11,7 +11,16 @@ export async function getLoadingExperience(
   context,
   isTechnical = false,
 ) {
-  const domSize = artifacts.DOMStats.totalBodyElements
+  let domSize = -1
+  try {
+    if (artifacts.NodesMinusSvgsGatherer) {
+      domSize = artifacts.NodesMinusSvgsGatherer.value
+    } else {
+      domSize = artifacts.DOMStats.totalBodyElements
+    }
+  } catch (error) {
+    throw new Error('NodesMinusSvgsGatherer not found')
+  }
 
   // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61
   const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]

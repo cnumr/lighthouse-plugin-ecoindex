@@ -6,15 +6,20 @@ import {
 
 import { Audit } from 'lighthouse'
 
-class EcoindexScoreAudit extends Audit {
+/**
+ * @deprecated use lighthouse-plugin-ecoindex/audits/ecoindex-nodes.js
+ */
+class LighthouseNodesAudit extends Audit {
   static get meta() {
     return {
-      id: 'eco-index-score',
-      title: 'Ecoindex revealant metrics',
-      failureTitle: 'Ecoindex, your page has an impact',
+      id: 'lighthouse-nodes',
+      title: 'LH DOM elements (nodes)',
+      failureTitle: 'LH DOM elements (nodes), your page is too complex',
       description:
-        'The EcoIndex score evaluating the environmental impact of the page.',
+        'Pages should be lightweight in order to be more sustainable.',
+      // desabled because we don't need to run this audit if we don't have the NodesMinusSvgsGatherer
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }
@@ -41,8 +46,8 @@ class EcoindexScoreAudit extends Audit {
         scoreDisplayMode: 'numeric',
       },
       {
-        id: 'eco-index-score',
-        title: 'EcoIndex Score',
+        id: 'eco-index-nodes',
+        title: 'DOM elements',
         description:
           'The EcoIndex score evaluating the environmental impact of the page.',
         scoreDisplayMode: 'numeric',
@@ -51,15 +56,18 @@ class EcoindexScoreAudit extends Audit {
   }
 
   static async audit(artifacts, context) {
+    console.log('artifacts', JSON.stringify(artifacts))
+    if (artifacts['NodesMinusSvgsGatherer']) {
+      return { score: null, notApplicable: true }
+    }
     try {
-      const ecoIndexScore = await getLoadingExperience(artifacts, context)
-
-      // console.log('score', ecoIndexScore.score)
-      return createValueResult(ecoIndexScore, 'score')
+      const ecoIndexScore = await getLoadingExperience(artifacts, context, true)
+      // console.log('nodes', ecoIndexScore.nodes)
+      return createValueResult(ecoIndexScore, 'nodes', false, true)
     } catch (error) {
       createErrorResult(error)
     }
   }
 }
 
-export default EcoindexScoreAudit
+export default LighthouseNodesAudit

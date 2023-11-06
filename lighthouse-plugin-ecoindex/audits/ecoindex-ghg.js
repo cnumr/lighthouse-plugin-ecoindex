@@ -13,8 +13,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
       title: 'Greenhouse Gas Emission (eqCO2)',
       failureTitle:
         'Greenhouse Gas Emission (eqCO2), your page generates a lot of greenhouse gas',
-      description:
-        'Pages should be lightweight in order to be more sustainable.',
+      description: 'Greenhouse Gas Emission (eqCO2) of your page.',
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
@@ -44,8 +43,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
       {
         id: 'eco-index-ghg',
         title: 'Greenhouse Gas Emission',
-        description:
-          'The EcoIndex score evaluating the environmental impact of the page.',
+        description: 'Greenhouse Gas Emission (eqCO2) of your page.',
         scoreDisplayMode: 'numeric',
       },
     ]

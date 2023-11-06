@@ -13,7 +13,7 @@ class EcoindexGradeAudit extends Audit {
       title: 'Grade',
       failureTitle: 'Grade, your page has a big impact',
       description:
-        'Pages should be lightweight in order to be more sustainable.',
+        'The EcoIndex score evaluating the environmental impact of the page.',
       requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
