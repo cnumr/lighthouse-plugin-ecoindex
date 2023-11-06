@@ -133,10 +133,10 @@ async function captureReport(url, reportName) {
   await browser.close()
   
   // Get the comprehensive flow report.
-  const reportHtmlPath = `./reports/${reportName}-lighthouse_report.html`
+  const reportHtmlPath = `./reports/${reportName}.report.html`
   writeFileSync(reportHtmlPath, await flow.generateReport())
   // Save results as JSON.
-  const reportJsonPath = `./reports/${reportName}-lighthouse_report.json`
+  const reportJsonPath = `./reports/${reportName}.report.json`
   writeFileSync(
     reportJsonPath,
     JSON.stringify(await flow.createFlowResult(), null, 2),

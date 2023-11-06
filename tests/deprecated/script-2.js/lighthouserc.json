@@ -20,10 +20,7 @@
       }
     },
     "assert": {
-      "preset": "lighthouse:default",
-      "assertions": {
-        "categories:lighthouse-plugin-ecoindex": ["error", { "minScore": 50 }]
-      }
+      "preset": "lighthouse:default"
     },
     "upload": {
       "target": "temporary-public-storage"

@@ -50,9 +50,16 @@ async function captureReport() {
   await page.goto(testUrl, { waitUntil: 'networkidle0' })
   await new Promise(r => setTimeout(r, 3 * 1000))
   const dimensions = await page.evaluate(() => {
-    var body = document.body, html = document.documentElement;
+    var body = document.body,
+      html = document.documentElement
 
-    var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    )
     return {
       width: document.documentElement.clientWidth,
       height: height,
@@ -72,12 +79,12 @@ async function captureReport() {
   await flow.endTimespan()
 
   await browser.close()
-
+  const reportName = new Date().toISOString()
   // Get the comprehensive flow report.
-  const reportHtmlPath = './reports/lighthouse_report.html'
+  const reportHtmlPath = `./reports/${reportName}.report.html`
   writeFileSync(reportHtmlPath, await flow.generateReport())
   // Save results as JSON.
-  const reportJsonPath = './reports/lighthouse_report.json'
+  const reportJsonPath = `./reports/${reportName}.report.json`
   writeFileSync(
     reportJsonPath,
     JSON.stringify(await flow.createFlowResult(), null, 2),
