@@ -40,24 +40,17 @@ On peut surement simplifier des choses dans le code, mais ça fonctionne.
 
 Voir les readme dans `tests/`.
 
-- Avec scenario Puppeteer 🟢 :
-  - [lighthouse-ci](tests/lighthouse-ci/README.md) ← **recommandé**
-- Pour tester en local, avec scenario Puppeteer 🟢 :
-  - [lighthouse-ci](tests/lhci/README.md)
+- Avec scenario Puppeteer et `NodesMinusSvgsGatherer` 🟢 :
+  - [lighthouse](tests/script.js/README.md) ← **recommandé**
 - Anciennes methodes à supprimer :
-  - Avec scenario Puppeteer 🟢 :
-    - [script-2.js](tests/script-2.js/README.md)
-    - [script.js](tests/script.js/README.md)
-  - Sans scénario Puppeteer 🟠 :
+  - Avec scenario Puppeteer sans `NodesMinusSvgsGatherer` 🟠 :
+    - [lighthouse-ci](tests/lhci/README.md)
+    - [lighthouse-ci](tests/lighthouse-ci/README.md)
+  - Sans scénario Puppeteer et sans `NodesMinusSvgsGatherer` 🔴 :
     - [script.sh](tests/script.sh/README.md)
-
-### Suite...
-
-Je ne pense pas qu'on puisse aller au-dela en tant que plugin seul, il faut y ajouter puppeteer pour faire les actions demandées (voir [Objectifs](#Objectifs)) par ecoindex.fr.  
-cf. cette note [Comparing a Plugin vs. Custom Config](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md#comparing-a-plugin-vs-custom-config).
-
-> **🔴 ATTENTION 🔴** :  
-> Les notes du plugins ne sont pas cohérentes avec les notes générées sur le site ecoindex.fr. Est-ce que les quantiles et autres méthodes venant de https://github.com/cnumr/ecoindex_node/tarball/master sont bons ? 🙃
+  - Deprecated (ne fonctionne plus) 🔴 :
+    - [deprecated/script-2.js](tests/deprecated/script-2.js/README.md)
+    - [deprecated/script.js](tests/deprecated/script.js/README.md)
 
 ---
 

@@ -3,7 +3,8 @@
 > Fonctionne dans le devcontainer.  
 > Fonctionne avec Chrome d'installé sur son poste (en local, hors devcontainer).  
 > 🔴 N'utilise pas Puppeteer pour gérer le processus de navigation recommandé. 🔴  
-> Testé en node 20.
+> Utilise pas `NodesMinusSvgsGatherer` pour obtenir le nombre de nodes comme `ecoindex-cli`  
+> Testé en node 18/20.
 
 ## 1. Création du lien symbolique si il a sauté
 

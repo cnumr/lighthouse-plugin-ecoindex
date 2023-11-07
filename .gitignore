@@ -1,5 +1,7 @@
 *.report.html
 *.report.json
+flags-*
+lhr-*
 .cache
 node_modules
 reports/*

@@ -3,7 +3,8 @@
 > Fonctionne dans le devcontainer.  
 > Fonctionne avec Chrome d'installé sur son poste (en local, hors devcontainer).  
 > Utilise Puppeteer pour gérer le processus de navigation recommandé.  
-> Testé en node 20.
+> 🔴 N'utilise pas `NodesMinusSvgsGatherer` pour obetenir le nombre de nodes comme `ecoindex-cli`, n'affiche plus le résultat du nb de nodes. 🔴  
+> Testé en node 18/20.
 
 ## 2. Installation de lhci
 

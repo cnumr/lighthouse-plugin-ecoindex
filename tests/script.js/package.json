@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "description": "Test du script lighthouse-plugin-ecoindex",
+  "main": "script.js",
+  "scripts": {
+    "test.js": "node ./script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse": "^11.3.0",
+    "lighthouse-plugin-ecoindex": "*",
+    "yargs": "^17.7.2"
+  }
+}
