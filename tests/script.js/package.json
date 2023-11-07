@@ -5,7 +5,8 @@
   "description": "Test du script lighthouse-plugin-ecoindex",
   "main": "script.js",
   "scripts": {
-    "test.js": "node ./script.js"
+    "test": "node ./script.js",
+    "help": "node ./script.js --help"
   },
   "author": "",
   "license": "ISC",

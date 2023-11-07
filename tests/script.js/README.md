@@ -38,6 +38,20 @@ node script.js --urls=https://www.ecoindex.fr/,https://www.ecoindex.fr/comment-c
 node script.js --urls-file=example-urls-list
 ```
 
+<!-- copier/coller ici le résultat de la command `node ./script.js --help` -->
+
+```bash
+Options:
+      --version       Show version number                              [boolean]
+  -d, --demo          Use demo URLs.                  [boolean] [default: false]
+  -f, --urls-file     Input file path. 1 url per line.                  [string]
+  -u, --urls          URLs to process. Comma separated.                 [string]
+  -o, --output        Output folder.             [string] [default: "./reports"]
+  -c, --extra-header  Extra object config for Lighthouse. JSON string.
+                                                        [string] [default: null]
+      --help          Show help                                        [boolean]
+```
+
 ## Objectifs :
 
 - [x] Pouvoir passer des urls en argument ;

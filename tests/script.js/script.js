@@ -68,7 +68,7 @@ async function endEcoindexPageMesure() {
  * @param {boolean} isWarm
  * @returns {lighthouse.Config}
  */
-function getConfig(isWarm = false, extraConfig = {}) {
+function getConfig(isWarm = false) {
   return {
     name: isWarm ? 'Warm navigation' : 'Cold navigation',
     config: {
@@ -92,7 +92,6 @@ function getConfig(isWarm = false, extraConfig = {}) {
             'lighthouse-plugin-ecoindex/gatherers/nodes-minus-svg-gatherer',
         },
       ],
-      ...extraConfig,
     },
   }
 }
@@ -125,9 +124,10 @@ async function captureReport() {
       default: './reports',
       description: 'Output folder.',
     })
-    .option('extra-config', {
+    .option('extra-header', {
       alias: 'c',
       type: 'string',
+      default: null,
       description: 'Extra object config for Lighthouse. JSON string.',
     })
     .help().argv
@@ -135,9 +135,7 @@ async function captureReport() {
   const filePath = argv['urls-file']
   const isDemoMode = argv['demo']
   const output = argv['output']
-  const extraConfig = argv['extra-config']
-    ? JSON.parse(argv['extra-config'])
-    : null
+  const extraHeader = argv['extra-header']
   let urls = argv['urls'] ? argv['urls'].split(',') : null
 
   if (!filePath && !urls && !isDemoMode) {
@@ -156,7 +154,7 @@ async function captureReport() {
         console.error(`Error reading file from disk: ${err}`)
         process.exit(1)
       } else {
-        console.log(`File readed.`)
+        console.log(`File ${filePath} readed.`)
         urls = data.split('\n')
         if (urls[urls.length - 1] === '') {
           urls.pop()
@@ -164,6 +162,30 @@ async function captureReport() {
       }
     })
   }
+  let extraHeaderObj = null
+  if (extraHeader && typeof extraHeader === 'string') {
+    console.log(`Parsing extra-header JSON...`)
+    try {
+      extraHeaderObj = JSON.stringify(JSON.parse(extraHeader))
+      console.log(`Parsing extra-header JSON as a string.`)
+    } catch (e) {
+      // console.error(`Error parsing extra-header JSON: ${e}`)
+      console.log(`Reading file ${extraHeader}...`)
+      const resolvedPath = await path.resolve(extraHeader)
+
+      await fs.readFile(resolvedPath, 'utf8', async (err, data) => {
+        // Make this function async
+        if (err) {
+          console.error(`Error reading file from disk: ${err}`)
+          process.exit(1)
+        } else {
+          console.log(`File ${extraHeader} readed.`)
+          extraHeaderObj = JSON.stringify(JSON.parse(data))
+        }
+      })
+    }
+  }
+
   await new Promise(r => setTimeout(r, 3 * 1000))
   console.log(`Mesure(s) start 🚀`)
 
@@ -171,8 +193,6 @@ async function captureReport() {
     console.log('No URL provided, using default URL')
     urls = DEFAULT_URLS
   }
-  console.log('Reports', urls)
-  console.log(SEPARATOR)
 
   // Launch a headless browser.
   const browser = await puppeteer.launch({
@@ -187,10 +207,18 @@ async function captureReport() {
 
   // Create a new page.
   const page = await browser.newPage()
+  console.log('Reports', urls)
+  console.log(SEPARATOR)
+  if (extraHeaderObj) {
+    console.log(`Setting extra-header...`)
+    console.log(`extra-header`, extraHeaderObj)
+    await page.setExtraHTTPHeaders(extraHeaderObj)
+    console.log(SEPARATOR)
+  }
   // Get a session handle to be able to send protocol commands to the page.
   const session = await page.target().createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
-  const flow = await startFlow(page, getConfig(false, extraConfig))
+  const flow = await startFlow(page, getConfig(false))
 
   console.log(`Mesuring...`)
   console.log(`Mesure 0: ${urls[0]}`)
@@ -207,7 +235,7 @@ async function captureReport() {
   for (var i = 1; i < urls.length; i++) {
     if (urls[i].trim() !== '') {
       console.log(`Mesure ${i}: ${urls[i]}`)
-      await flow.navigate(urls[i], getConfig(true, extraConfig))
+      await flow.navigate(urls[i], getConfig(true))
       await startEcoindexPageMesure(page, session)
       await endEcoindexPageMesure()
     }
