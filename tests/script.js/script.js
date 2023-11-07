@@ -125,7 +125,7 @@ async function captureReport() {
       description: 'Output folder.',
     })
     .option('extra-header', {
-      alias: 'c',
+      alias: 'h',
       type: 'string',
       default: null,
       description:
