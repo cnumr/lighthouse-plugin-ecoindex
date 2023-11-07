@@ -128,7 +128,8 @@ async function captureReport() {
       alias: 'c',
       type: 'string',
       default: null,
-      description: 'Extra object config for Lighthouse. JSON string.',
+      description:
+        'Extra object config for Lighthouse. JSON string or path to a JSON file.',
     })
     .help().argv
 

@@ -47,8 +47,8 @@ Options:
   -f, --urls-file     Input file path. 1 url per line.                  [string]
   -u, --urls          URLs to process. Comma separated.                 [string]
   -o, --output        Output folder.             [string] [default: "./reports"]
-  -c, --extra-header  Extra object config for Lighthouse. JSON string.
-                                                        [string] [default: null]
+  -c, --extra-header  Extra object config for Lighthouse. JSON string or path to
+                       a JSON file.                     [string] [default: null]
       --help          Show help                                        [boolean]
 ```
 
