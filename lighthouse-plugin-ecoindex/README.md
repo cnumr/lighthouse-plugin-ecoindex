@@ -35,4 +35,8 @@ npm i lighthouse-plugin-ecoindex
 
 ## Full documentation and examples of usage on GitHub
 
-https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
+- https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
+
+## Other informations
+
+- https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md
