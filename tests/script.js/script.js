@@ -59,8 +59,9 @@ async function startEcoindexPageMesure(page, session) {
 /**
  * End Ecoindex flow. Wait 3s.
  */
-async function endEcoindexPageMesure() {
+async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
   await new Promise(r => setTimeout(r, 3 * 1000))
+  if (snapshotEnabled) await flow.snapshot()
 }
 
 /**
@@ -68,12 +69,23 @@ async function endEcoindexPageMesure() {
  * @param {boolean} isWarm
  * @returns {lighthouse.Config}
  */
-function getConfig(isWarm = false) {
+function getConfig(
+  isWarm = false,
+  stepName = `undefined`,
+  onlyCategories = [
+    'performance',
+    'seo',
+    'accessibility',
+    'best-practices',
+    'lighthouse-plugin-ecoindex',
+  ],
+) {
   return {
-    name: isWarm ? 'Warm navigation' : 'Cold navigation',
+    name: stepName,
     config: {
       extends: 'lighthouse:default',
       settings: {
+        onlyCategories: onlyCategories,
         formFactor: 'desktop',
         throttling: constants.throttling.desktopDense4G,
         screenEmulation: {
@@ -82,6 +94,7 @@ function getConfig(isWarm = false) {
           height: 1080,
         },
         emulatedUserAgent: constants.userAgents.desktop,
+        maxWaitForLoad: 60 * 1000,
         disableStorageReset: isWarm,
       },
       plugins: ['lighthouse-plugin-ecoindex'],
@@ -108,21 +121,15 @@ async function captureReport() {
       default: false,
       description: 'Use demo URLs.',
     })
+    .option('urls', {
+      alias: 'u',
+      type: 'array',
+      description: 'URLs to process. Comma separated.',
+    })
     .option('urls-file', {
       alias: 'f',
       type: 'string',
-      description: 'Input file path. 1 url per line.',
-    })
-    .option('urls', {
-      alias: 'u',
-      type: 'string',
-      description: 'URLs to process. Comma separated.',
-    })
-    .option('output', {
-      alias: 'o',
-      type: 'string',
-      default: './reports',
-      description: 'Output folder.',
+      describe: 'Input file path. 1 url per line.',
     })
     .option('extra-header', {
       alias: 'h',
@@ -131,17 +138,36 @@ async function captureReport() {
       description:
         'Extra object config for Lighthouse. JSON string or path to a JSON file.',
     })
+    .option('output-path', {
+      alias: 'p',
+      type: 'string',
+      default: './reports',
+      coerce: coerceOutputPath,
+      description: 'Output folder.',
+    })
+    .option('output', {
+      alias: 'o',
+      type: 'string',
+      default: /** @type {const} */ (['html']),
+      coerce: coerceOutput,
+      description:
+        'Reporter for the results, supports multiple values. choices: "json", "html". Ex: json,html. WARN: "csv" is not avalailable with flow.',
+    })
+    .epilogue(
+      'For more information on this Lighthouse Ecoindex script helper, see https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme',
+    )
     .help().argv
 
   const filePath = argv['urls-file']
   const isDemoMode = argv['demo']
-  const output = argv['output']
+  const outputPath = argv['output-path']
+  let outputModes = argv['output']
   const extraHeader = argv['extra-header']
-  let urls = argv['urls'] ? argv['urls'].split(',') : null
+  let urls = argv['urls']
 
   if (!filePath && !urls && !isDemoMode) {
     console.error(
-      'Use`--demo=true` or please provide a file path (--urls-file=) or URLs (--urls=https://www.example.com,https://www.example1.com) as an argument',
+      'Use`--demo true` or please provide a file path (--urls-file) or URLs (--urls https://www.example.com --urls https://www.example1.com) as an argument',
     )
     process.exit(1)
   }
@@ -208,7 +234,7 @@ async function captureReport() {
 
   // Create a new page.
   const page = await browser.newPage()
-  console.log('Reports', urls)
+  console.log('List of urls:', urls)
   console.log(SEPARATOR)
   if (extraHeaderObj) {
     console.log(`Setting extra-header...`)
@@ -219,26 +245,32 @@ async function captureReport() {
   // Get a session handle to be able to send protocol commands to the page.
   const session = await page.target().createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
-  const flow = await startFlow(page, getConfig(false))
+  const flow = await startFlow(
+    page,
+    getConfig(false, `Warm Navigation: ${urls[0]}`),
+  )
 
   console.log(`Mesuring...`)
   console.log(`Mesure 0: ${urls[0]}`)
 
   // Navigate with first URL
   await flow.navigate(urls[0], {
-    stepName: 'Cold navigation',
+    stepName: urls[0],
   })
 
   await startEcoindexPageMesure(page, session)
-  await endEcoindexPageMesure()
+  await endEcoindexPageMesure(flow)
 
   // Navigate with next URLs
   for (var i = 1; i < urls.length; i++) {
     if (urls[i].trim() !== '') {
       console.log(`Mesure ${i}: ${urls[i]}`)
-      await flow.navigate(urls[i], getConfig(true))
+      await flow.navigate(
+        urls[i],
+        getConfig(true, `Cold Navigation: ${urls[i]}`),
+      )
       await startEcoindexPageMesure(page, session)
-      await endEcoindexPageMesure()
+      await endEcoindexPageMesure(flow)
     }
   }
 
@@ -248,21 +280,85 @@ async function captureReport() {
   await browser.close()
   console.log(SEPARATOR)
   console.log(`Generating report...`)
+  if (typeof outputModes === 'string') outputModes = [outputModes]
+  console.log(`outputModes`, outputModes)
   // Save results as reports.
   const reportName = new Date().toISOString()
+  // Create the output folder if it doesn't exist.
+  await fs.mkdirSync(outputPath, { recursive: true })
   // Get the comprehensive flow report.
-  const reportHtmlPath = `./${output}/${reportName}.report.html`
-  writeFileSync(reportHtmlPath, await flow.generateReport())
-  console.log(`Report generated: ${reportHtmlPath}`)
-  // Save results as JSON.
-  const reportJsonPath = `./${output}/${reportName}.report.json`
-  writeFileSync(
-    reportJsonPath,
-    JSON.stringify(await flow.createFlowResult(), null, 2),
-  )
-  console.log(`Report generated: ${reportJsonPath}`)
+  outputModes.map(async outputMode => {
+    // HTML report.
+    if (outputMode === 'html') {
+      const reportHtmlPath = `${outputPath}/${reportName}.report.html`
+      writeFileSync(reportHtmlPath, await flow.generateReport())
+      console.log(`Report generated: ${reportHtmlPath}`)
+    }
+
+    // Save results as JSON.
+    if (outputMode === 'json') {
+      const reportJsonPath = `${outputPath}/${reportName}.report.json`
+      writeFileSync(
+        reportJsonPath,
+        JSON.stringify(await flow.createFlowResult(), null, 2),
+      )
+      console.log(`Report generated: ${reportJsonPath}`)
+    }
+  })
   console.log(SEPARATOR)
   console.log(`Mesure(s) finished 👋`)
 }
 
 captureReport()
+
+/**
+ * Coerce output CLI input to `LH.SharedFlagsSettings['output']` or throw if not possible.
+ * @param {Array<unknown>} values
+ * @return {Array<LH.OutputMode>}
+ */
+// eslint-disable-next-line no-unused-vars
+function coerceOutput(values) {
+  const outputTypes = ['json', 'html']
+  const errorHint = `Argument 'output' must be an array from choices "${outputTypes.join(
+    '", "',
+  )}"`
+  if (
+    !values.every(
+      /** @return {item is string} */ item => typeof item === 'string',
+    )
+  ) {
+    throw new Error('Invalid values. ' + errorHint)
+  }
+  // Allow parsing of comma-separated values.
+  const strings = values.flatMap(value => value.split(','))
+  const validValues = strings.filter(
+    /** @return {str is LH.OutputMode} */ str => {
+      if (!outputTypes.includes(str)) {
+        throw new Error(`"${str}" is not a valid 'output' value. ` + errorHint)
+      }
+      return true
+    },
+  )
+
+  return validValues
+}
+
+/**
+ * Verifies outputPath is something we can actually write to.
+ * @param {unknown=} value
+ * @return {string=}
+ */
+// eslint-disable-next-line no-unused-vars
+function coerceOutputPath(value) {
+  if (value === undefined) return
+
+  if (
+    typeof value !== 'string' ||
+    !value ||
+    !fs.existsSync(path.dirname(value))
+  ) {
+    throw new Error(`--output-path (${value}) cannot be written to`)
+  }
+
+  return value
+}

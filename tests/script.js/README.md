@@ -27,15 +27,15 @@ npm run test -- --help
 node script.js --help
 
 # 1. Test with predefined urls (mode demo).
-npm run test -- --demo=true
-# or
-node script.js -d=true
+npm run test -- --demo true
+# or directely, with alias usage
+node script.js -d true
 
 # 2. Mesure with custom urls.
-node script.js --urls=https://www.ecoindex.fr/,https://www.ecoindex.fr/comment-ca-marche/
+node script.js --urls https://www.ecoindex.fr/ --urls https://www.ecoindex.fr/comment-ca-marche/
 
 # 3. Mesure with urls from a file, see example-urls-list
-node script.js --urls-file=example-urls-list
+node script.js --urls-file example-urls-list
 ```
 
 <!-- copier/coller ici le résultat de la command `node ./script.js --help` -->
@@ -44,11 +44,14 @@ node script.js --urls-file=example-urls-list
 Options:
       --version       Show version number                              [boolean]
   -d, --demo          Use demo URLs.                  [boolean] [default: false]
+  -u, --urls          URLs to process. Comma separated.                  [array]
   -f, --urls-file     Input file path. 1 url per line.                  [string]
-  -u, --urls          URLs to process. Comma separated.                 [string]
-  -o, --output        Output folder.             [string] [default: "./reports"]
   -h, --extra-header  Extra object config for Lighthouse. JSON string or path to
                        a JSON file.                     [string] [default: null]
+  -p, --output-path   Output folder.             [string] [default: "./reports"]
+  -o, --output        Reporter for the results, supports multiple values. choice
+                      s: "json", "html". Ex: json,html. WARN: "csv" is not avala
+                      ilable with flow.             [string] [default: ["html"]]
       --help          Show help                                        [boolean]
 ```
 
