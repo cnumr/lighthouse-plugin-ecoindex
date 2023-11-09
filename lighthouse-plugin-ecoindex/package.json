@@ -3,6 +3,12 @@
   "description": "Lighthouse plugin that include Ecoindex results.",
   "homepage": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme",
   "bugs": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex/issues",
+  "keywords": [
+    "lighthouse",
+    "plugin",
+    "ecoindex",
+    "GreenIT.fr"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex.git"
