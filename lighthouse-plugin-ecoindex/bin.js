@@ -309,7 +309,7 @@ async function captureReport() {
   console.log(`Mesure(s) finished 👋`)
 }
 
-export { captureReport }
+captureReport()
 
 /**
  * Coerce output CLI input to `LH.SharedFlagsSettings['output']` or throw if not possible.
