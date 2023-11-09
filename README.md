@@ -27,30 +27,37 @@ Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lightho
 6. Fermer la page
 ```
 
-## Etat d'avancement
-
-### Plugin
+## Etat d'avancement / Reste à faire
 
 [Plugin](lighthouse-plugin-ecoindex/README.md)
 
-Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠  
-On peut surement simplifier des choses dans le code, mais ça fonctionne.
+Le plugin est quasi OK (voir le attention plus bas), il faut juste peaufiner des valeurs pour indiquer les seuils de performance Good et Poor. Il faut aussi regarder les wording, ajouter des tests, des traductions, etc. 🫠
 
-### Utilisation / tests
+- [x] ~~[Plugin](lighthouse-plugin-ecoindex/README.md)~~
+- [x] [npx-example](npx-example/README.md)
+- [ ] Mettre à jour les Good et Poor thresholds ;
+- [ ] Traductions.
 
-Voir les readme dans `tests/`.
+## Usage
 
-- Avec scenario Puppeteer et `NodesMinusSvgsGatherer` 🟢 :
-  - [lighthouse](tests/script.js/README.md) ← **recommandé**
-- Anciennes methodes à supprimer :
-  - Avec scenario Puppeteer sans `NodesMinusSvgsGatherer` 🟠 :
-    - [lighthouse-ci](tests/lhci/README.md)
-    - [lighthouse-ci](tests/lighthouse-ci/README.md)
-  - Sans scénario Puppeteer et sans `NodesMinusSvgsGatherer` 🔴 :
-    - [script.sh](tests/script.sh/README.md)
-  - Deprecated (ne fonctionne plus) 🔴 :
-    - [deprecated/script-2.js](tests/deprecated/script-2.js/README.md)
-    - [deprecated/script.js](tests/deprecated/script.js/README.md)
+```bash
+npx lighthouse-plugin-ecoindex --help
+```
+
+```bash
+Options:
+      --version       Show version number                              [boolean]
+  -d, --demo          Use demo URLs.                  [boolean] [default: false]
+  -u, --urls          URLs to process. Comma separated.                  [array]
+  -f, --urls-file     Input file path. 1 url per line.                  [string]
+  -h, --extra-header  Extra object config for Lighthouse. JSON string or path to
+                       a JSON file.                     [string] [default: null]
+  -p, --output-path   Output folder.             [string] [default: "./reports"]
+  -o, --output        Reporter for the results, supports multiple values. choice
+                      s: "json", "html". Ex: json,html. WARN: "csv" is not avala
+                      ilable with flow.             [string] [default: ["html"]]
+      --help          Show help                                        [boolean]
+```
 
 ---
 

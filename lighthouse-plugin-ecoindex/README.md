@@ -27,12 +27,6 @@ Cette génération de rapport utilise Lighthouse, Puppeteer et le plugin lightho
 6. Fermer la page
 ```
 
-## Installation
-
-```bash
-npm i lighthouse-plugin-ecoindex
-```
-
 ## Usage
 
 ```bash
