@@ -1,0 +1,17 @@
+{
+  "name": "npx-example",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lhei:demo": "npx lighthouse-ecoindex -d",
+    "lhei:help": "npx lighthouse-ecoindex --help",
+    "lhei:file": "npx lighthouse-ecoindex -f example-urls-list -o json -o html",
+    "lhei:file:header": "npx lighthouse-ecoindex -f example-urls-list -h extra-headers.json -o json -o html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse-plugin-ecoindex": "^0.3.2"
+  }
+}
