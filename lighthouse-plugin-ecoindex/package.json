@@ -8,7 +8,7 @@
     "url": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex.git"
   },
   "main": "./plugin.js",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "peerDependencies": {
     "lighthouse": "^11.3.0"
