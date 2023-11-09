@@ -37,18 +37,18 @@ npx lighthouse-plugin-ecoindex --help
 Options:
       --version       Show version number                              [boolean]
   -d, --demo          Use demo URLs.                  [boolean] [default: false]
-  -u, --urls          URLs to process. Comma separated.                  [array]
+  -u, --url           URL to process, supports multiple values           [array]
   -f, --urls-file     Input file path. 1 url per line.                  [string]
   -h, --extra-header  Extra object config for Lighthouse. JSON string or path to
                        a JSON file.                     [string] [default: null]
   -p, --output-path   Output folder.             [string] [default: "./reports"]
   -o, --output        Reporter for the results, supports multiple values. choice
-                      s: "json", "html". Ex: json,html. WARN: "csv" is not avala
-                      ilable with flow.             [string] [default: ["html"]]
+                      s: "json", "html". WARN: "csv" is not avalailable with flo
+                      w.                            [string] [default: ["html"]]
       --help          Show help                                        [boolean]
 ```
 
-## Full documentation and examples of usage on GitHub
+## Full documentation and examples of usage on GitHub.
 
 - https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
 
