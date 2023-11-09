@@ -1,3 +1,4 @@
+import captureReport from './index.js'
 export default {
   // Additional audits to run on information Lighthouse gathered.
   audits: [
@@ -42,3 +43,4 @@ export default {
     ],
   },
 }
+export { captureReport as helper }
