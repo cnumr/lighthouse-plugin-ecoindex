@@ -121,10 +121,10 @@ async function captureReport() {
       default: false,
       description: 'Use demo URLs.',
     })
-    .option('urls', {
+    .option('url', {
       alias: 'u',
       type: 'array',
-      description: 'URLs to process. Comma separated.',
+      description: 'URL to process, supports multiple values',
     })
     .option('urls-file', {
       alias: 'f',
@@ -151,7 +151,7 @@ async function captureReport() {
       default: /** @type {const} */ (['html']),
       coerce: coerceOutput,
       description:
-        'Reporter for the results, supports multiple values. choices: "json", "html". Ex: json,html. WARN: "csv" is not avalailable with flow.',
+        'Reporter for the results, supports multiple values. choices: "json", "html". WARN: "csv" is not avalailable with flow.',
     })
     .epilogue(
       'For more information on this Lighthouse Ecoindex script helper, see https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme',
@@ -163,7 +163,7 @@ async function captureReport() {
   const outputPath = argv['output-path']
   let outputModes = argv['output']
   const extraHeader = argv['extra-header']
-  let urls = argv['urls']
+  let urls = argv['url']
 
   if (!filePath && !urls && !isDemoMode) {
     console.error(
