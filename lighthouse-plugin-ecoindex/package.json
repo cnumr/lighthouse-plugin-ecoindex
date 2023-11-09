@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
-    "lodash.round": "^4.0.4"
+    "lodash.round": "^4.0.4",
+    "yargs": "^17.7.2"
   }
 }
