@@ -14,7 +14,8 @@
   "version": "0.3.2",
   "type": "module",
   "peerDependencies": {
-    "lighthouse": "^11.3.0"
+    "lighthouse": "^11.3.0",
+    "puppeteer": "^21.5.1"
   },
   "scripts": {
     "release": "release-it"
