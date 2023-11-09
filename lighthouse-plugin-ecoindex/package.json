@@ -11,7 +11,7 @@
   "bin": {
     "lighthouse-ecoindex": "./index.js"
   },
-  "version": "0.2.6",
+  "version": "0.3.0",
   "type": "module",
   "peerDependencies": {
     "lighthouse": "^11.3.0"
