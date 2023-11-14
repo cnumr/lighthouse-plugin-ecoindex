@@ -1,4 +1,9 @@
-import { getEcoindex } from 'ecoindex'
+import {
+  computeEcoIndex,
+  computeGreenhouseGasesEmissionfromEcoIndex,
+  computeWaterConsumptionfromEcoIndex,
+  getEcoIndexGrade,
+} from 'ecoindex'
 
 const input = {
   width: 1920,
@@ -18,7 +23,7 @@ const input = {
 // {domSize:205},
 // {size:31245},
 // {requests:5},
-const result = getEcoindex(input.nodes, input.requests, input.size)
+const ecoindex = computeEcoIndex(input.nodes, input.requests, input.size)
 console.log(`Inputs`)
 console.log(
   JSON.stringify({
@@ -28,4 +33,11 @@ console.log(
   }),
 )
 console.log(`Outputs`)
-console.log(JSON.stringify(result))
+console.log(
+  JSON.stringify({
+    ecoindex: ecoindex,
+    grade: getEcoIndexGrade(ecoindex),
+    ghg: computeGreenhouseGasesEmissionfromEcoIndex(ecoindex),
+    water: computeWaterConsumptionfromEcoIndex(ecoindex),
+  }),
+)

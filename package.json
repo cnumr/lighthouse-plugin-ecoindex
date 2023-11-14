@@ -10,9 +10,10 @@
     "release": "cd lighthouse-plugin-ecoindex && npm run release"
   },
   "devDependencies": {
+    "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "eslint": "^8.52.0",
-    "release-it": "*"
+    "release-it": "*",
+    "ecoindex": "^1.0.5"
   }
 }
