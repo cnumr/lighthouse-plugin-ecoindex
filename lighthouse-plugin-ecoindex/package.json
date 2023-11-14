@@ -33,7 +33,7 @@
     "release-it": "*"
   },
   "dependencies": {
-    "ecoindex": "https://github.com/cnumr/ecoindex_node/tarball/master",
+    "ecoindex": "^1.0.5",
     "lodash.round": "^4.0.4",
     "yargs": "^17.7.2"
   }
