@@ -1,5 +1,7 @@
 # lighthouse-plugin-ecoindex
 
+![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
+
 Résumé des resultats
 ![Résumé des resultats](docs/ecoindex-intro.png)
 

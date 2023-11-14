@@ -1,5 +1,7 @@
 # lighthouse-plugin-ecoindex
 
+![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
+
 Summary of results
 ![Summary of results](docs/ecoindex-intro.png)
 
@@ -29,7 +31,9 @@ This report generation uses Lighthouse, Puppeteer and the lighthouse Ecoindex pl
 6. Close page
 ```
 
-## Usage
+## Usages
+
+### Command line with npm/npx
 
 ```bash
 npx lighthouse-plugin-ecoindex --help
@@ -50,6 +54,17 @@ Options:
       --help          Show help                                        [boolean]
 ```
 
+### Add it as a plugin in a lighthouse config file (lighthouserc.json)
+
+> Use it in CI/CD in GitHub Actions for example.
+> **Without puppeteer workflow. `To test`.**
+
+```json
+{
+  "plugins": ["lighthouse-plugin-ecoindex"]
+}
+```
+
 ## Best practices implemented
 
 - [ ] Add expires or cache-control headers
@@ -68,7 +83,7 @@ Options:
 - [ ] Optimize bitmap images
 - [ ] Optimize svg images
 - [ ] Do not use plugins
-- [x] Provide print stylesheet
+- [x] Provide print stylesheet (test: https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/)
 - [ ] Do not use standarts social button
 - [ ] Limit Stylesheet files (<=10)
 - [ ] Use HTTP/2 instead of HTTP/1
