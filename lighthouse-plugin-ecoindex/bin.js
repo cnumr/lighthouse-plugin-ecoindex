@@ -4,6 +4,7 @@ import * as constants from 'lighthouse/core/config/constants.js'
 
 import fs, { writeFileSync } from 'fs'
 
+import CustomArtifacts from './gatherers/index.js'
 import { hideBin } from 'yargs/helpers'
 import path from 'path'
 import puppeteer from 'puppeteer'
@@ -98,13 +99,7 @@ function getConfig(
         disableStorageReset: isWarm,
       },
       plugins: ['lighthouse-plugin-ecoindex'],
-      artifacts: [
-        {
-          id: 'NodesMinusSvgsGatherer',
-          gatherer:
-            'lighthouse-plugin-ecoindex/gatherers/nodes-minus-svg-gatherer',
-        },
-      ],
+      artifacts: CustomArtifacts,
     },
   }
 }
