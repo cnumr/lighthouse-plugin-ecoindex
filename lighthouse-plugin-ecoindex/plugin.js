@@ -15,8 +15,8 @@ export default {
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-ghg.js' },
     // technic
     // eco-index-nodes is deprecated, see warn-nodes-count
-    // { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-nodes.js' },
-    { path: 'lighthouse-plugin-ecoindex/audits/lighthouse-nodes.js' },
+    // { path: 'lighthouse-plugin-ecoindex/audits/lighthouse-nodes.js' },
+    { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-nodes.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-size.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-requests.js' },
     // best-practices
