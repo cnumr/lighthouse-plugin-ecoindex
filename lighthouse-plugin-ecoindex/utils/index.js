@@ -1,7 +1,12 @@
 import { Audit, NetworkRecords } from 'lighthouse'
+import {
+  computeEcoIndex,
+  computeGreenhouseGasesEmissionfromEcoIndex,
+  computeWaterConsumptionfromEcoIndex,
+  getEcoIndexGrade,
+} from 'ecoindex'
 
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import { getEcoindex } from 'ecoindex'
 import round from 'lodash.round'
 
 const KO_TO_MO = 1000000
@@ -377,7 +382,17 @@ function getEcoindexResults(domSize, requestCount, totalCompressedSize) {
   // Add your custom EcoIndex calculation logic here based on the provided metrics.
   // The EcoIndex score should be a value between 0 and 100, where 100 represents the most eco-friendly page.
   // This is just a placeholder, and you should replace it with a proper calculation.
-  const value = getEcoindex(domSize, requestCount, totalCompressedSize / 1000)
+  const _ecoindex = computeEcoIndex(
+    domSize,
+    requestCount,
+    totalCompressedSize / 1000,
+  )
+  const value = {
+    score: _ecoindex,
+    grade: getEcoIndexGrade(_ecoindex),
+    water: computeWaterConsumptionfromEcoIndex(_ecoindex),
+    ghg: computeGreenhouseGasesEmissionfromEcoIndex(_ecoindex),
+  }
   // console.log(
   //   JSON.stringify({
   //     size: totalCompressedSize / 1000,
