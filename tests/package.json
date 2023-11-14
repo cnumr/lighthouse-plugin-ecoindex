@@ -1,0 +1,18 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "1. Création du lien symbolique si il a sauté",
+  "main": "./lightouse-plugin-ecoindex/bin.js",
+  "scripts": {
+    "test": "node ./lighthouse-plugin-ecoindex/bin.js -u https://www.ecoindex.fr",
+    "help": "node ./lighthouse-plugin-ecoindex/bin.js --help"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lighthouse": "^11.3.0",
+    "lodash.round": "^4.0.4",
+    "puppeteer": "^21.5.1",
+    "yargs": "^17.7.2"
+  }
+}
