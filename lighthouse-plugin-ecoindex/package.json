@@ -27,7 +27,6 @@
     "release": "release-it"
   },
   "devDependencies": {
-    "lighthouse": "^11.3.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
     "release-it": "*"
@@ -35,6 +34,8 @@
   "dependencies": {
     "ecoindex": "^1.0.5",
     "lodash.round": "^4.0.4",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "lighthouse": "^11.3.0",
+    "puppeteer": "^21.5.1"
   }
 }
