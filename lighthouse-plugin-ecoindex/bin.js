@@ -313,14 +313,18 @@ await captureReport()
  */
 // eslint-disable-next-line no-unused-vars
 function coerceOutput(values) {
+  // console.log(`values`, values)
+  // console.log(`typeof values`, typeof values)
+  // console.log(`Array.isArray(values)`, Array.isArray(values))
   const outputTypes = ['json', 'html']
   const errorHint = `Argument 'output' must be an array from choices "${outputTypes.join(
     '", "',
   )}"`
+  if (!Array.isArray(values)) {
+    values = [values]
+  }
   if (
-    !values.every(
-      /** @return {item is string} */ item => typeof item === 'string',
-    )
+    !values.every(/** @return {boolean} */ item => typeof item === 'string')
   ) {
     throw new Error('Invalid values. ' + errorHint)
   }
