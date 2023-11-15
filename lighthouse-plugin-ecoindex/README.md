@@ -8,21 +8,26 @@ Summary of results
 Details of plugin results
 ![Details of plugin results](docs/ecoindex-results.png)
 
-## Description
-
-This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md).
-
-It's using [EcoIndex - JS](https://github.com/tsecher/ecoindex_js#readme) / [npm package](https://www.npmjs.com/package/ecoindex) to generate the report.
-
 ## Plugin objectives
 
-Generate a lighthouse report with ecoindex metrics.
+1. With this lighthouse plugin, you can generate a report with ecoindex metrics.
+2. You can use it :
 
-This report emulates user behavior on a web page (see below).
+   1. As a plugin in a lighthouse config file (lighthouserc.json), without puppeteer workflow.
+   2. As a puppeteer workflow, launched with command line with npm/npx.
 
-This report generation uses Lighthouse, Puppeteer and the lighthouse Ecoindex plugin.
+### As a plugin in a lighthouse config file (lighthouserc.json)
+
+You can add it to your CI/CD.
+
+### Puppeteer workflow, launched with command line with npm/npx
+
+With Puppeter workflow, this report emulates user behavior on a web page (see below).  
+In this mode, your workflow start with an empty cache, cookies, localstorage, etc. on the next pages, you will reuse your cache, cookies, localstorage, etc. as a real user.
 
 ```
+👉 User behavior
+
 1. Launch a headless Chrome browser with no-sandbox, disable-dev-shm-usage and goog:loggingPrefs capabilities set to {"performance": "ALL"}.
 2. Open the page without local data (cache, cookies, localstorage...) at 1920 × 1080px resolution.
 3. Wait 3 seconds
@@ -30,6 +35,12 @@ This report generation uses Lighthouse, Puppeteer and the lighthouse Ecoindex pl
 5. Wait another 3 seconds
 6. Close page
 ```
+
+## Description
+
+This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md).
+
+It's using [EcoIndex - JS](https://github.com/tsecher/ecoindex_js#readme) / [npm package](https://www.npmjs.com/package/ecoindex) to generate the report.
 
 ## Usages
 
@@ -64,6 +75,15 @@ Options:
   "plugins": ["lighthouse-plugin-ecoindex"]
 }
 ```
+
+## Next steps
+
+- [x] ~~Plugin~~ ;
+- [x] ~~npx-example~~ ;
+- [x] ~~test (local)~~ ;
+- [ ] Update Good and Poor thresholds ;
+- [ ] Implement Best practices ;
+- [ ] i18n.
 
 ## Best practices implemented
 
