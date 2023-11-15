@@ -7,6 +7,8 @@ node_modules
 reports/*
 !reports/.gitkeep
 
+example-urls-list*
+
 lighthouse-plugin-example
 
 # lhci
@@ -17,3 +19,4 @@ tests/deprecated/lhci/.lighthouseci/*
 tests/deprecated/lighthouse-ci/.lighthouseci/*
 !tests/deprecated/lighthouse-ci/.lighthouseci/.gitkeep
 
+tests/.lighthouserc.js

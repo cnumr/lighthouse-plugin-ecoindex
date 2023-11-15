@@ -1,0 +1,9 @@
+module.exports = {
+  ci: {
+    upload: {
+      target: 'lhci',
+      serverBaseUrl: 'http://localhost:9001',
+      token: 'xxx', // The Lighthouse CI server build token for the project
+    },
+  },
+}
