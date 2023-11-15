@@ -83,6 +83,7 @@ Options:
 - [x] ~~test (local)~~ ;
 - [ ] Update Good and Poor thresholds ;
 - [ ] Implement Best practices ;
+- [ ] Create test site with node serveur ;
 - [ ] i18n.
 
 ## Best practices implemented
