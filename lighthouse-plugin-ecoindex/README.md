@@ -117,3 +117,4 @@ Options:
 ## Other informations
 
 - https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md
+- https://engineering.q42.nl/making-a-lighthouse-plugin-work-with-lighthouse-ci/
