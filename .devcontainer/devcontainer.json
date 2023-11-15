@@ -18,7 +18,7 @@
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
+  "forwardPorts": [9001],
 
   // Use 'initializeCommand' A command string or list of command arguments to run on the host machine before the container is created.
   // "initializeCommand": {}
