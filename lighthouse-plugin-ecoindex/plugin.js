@@ -14,7 +14,7 @@ export default {
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-water.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-ghg.js' },
     // technic
-    // eco-index-nodes is deprecated, see warn-nodes-count
+    // lighthouse-nodes is deprecated, see warn-nodes-count
     // { path: 'lighthouse-plugin-ecoindex/audits/lighthouse-nodes.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-nodes.js' },
     { path: 'lighthouse-plugin-ecoindex/audits/ecoindex-size.js' },
@@ -54,9 +54,9 @@ export default {
       { id: 'eco-index-water', weight: 0, group: 'ecologic' },
       { id: 'eco-index-ghg', weight: 0, group: 'ecologic' },
       // technic
-      // eco-index-nodes is deprecated, see warn-nodes-count
-      // { id: 'eco-index-nodes', weight: 0, group: 'technic' },
-      { id: 'lighthouse-nodes', weight: 0, group: 'technic' },
+      // lighthouse-nodes is deprecated, see warn-nodes-count
+      // { id: 'lighthouse-nodes', weight: 0, group: 'technic' },
+      { id: 'eco-index-nodes', weight: 0, group: 'technic' },
       { id: 'eco-index-size', weight: 0, group: 'technic' },
       { id: 'eco-index-requests', weight: 0, group: 'technic' },
       // best-practices
