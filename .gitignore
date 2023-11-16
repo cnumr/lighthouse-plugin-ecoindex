@@ -1,22 +1,17 @@
+.cache
+node_modules
+
+# output files and folders
 *.report.html
 *.report.json
 flags-*
 lhr-*
-.cache
-node_modules
 reports/*
 !reports/.gitkeep
-
-example-urls-list*
-
-lighthouse-plugin-example
-
-# lhci
 .lighthouseci/*
-!.lighthouseci/.gitkeep
-tests/deprecated/lhci/.lighthouseci/*
-!tests/deprecated/lhci/.lighthouseci/.gitkeep
-tests/deprecated/lighthouse-ci/.lighthouseci/*
-!tests/deprecated/lighthouse-ci/.lighthouseci/.gitkeep
+**/.lighthouseci/links.json
+!**/.lighthouseci/.gitkeep
 
-tests/.lighthouserc.js
+
+# input files to keep locally
+example-urls-list*

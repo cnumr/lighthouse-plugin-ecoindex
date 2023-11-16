@@ -5,3 +5,4 @@ yarn.lock
 paskage-lock.json
 mocking-assets
 .prettierrc.json
+CHANGELOG.md
