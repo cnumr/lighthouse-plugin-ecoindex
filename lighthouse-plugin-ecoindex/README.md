@@ -46,9 +46,13 @@ It's using [EcoIndex - JS](https://github.com/tsecher/ecoindex_js#readme) / [npm
 
 ### Command line with npm/npx
 
+> see [examples/npx](examples/npx/README.md)
+
+````bash
+
 ```bash
 npx lighthouse-plugin-ecoindex --help
-```
+````
 
 ```bash
 Options:
@@ -65,10 +69,10 @@ Options:
       --help          Show help                                        [boolean]
 ```
 
-### Add it as a plugin in a lighthouse config file (lighthouserc.json)
+### Add it as a plugin in a lighthouse config file (lighthouserc.json) **WIP**
 
 > Use it in CI/CD in GitHub Actions for example.
-> **Without puppeteer workflow. `To test`.**
+> see [examples/lhci](examples/lhci/README.md) > **Without puppeteer workflow. `To test`.**
 
 ```json
 {
