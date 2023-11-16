@@ -1,0 +1,33 @@
+module.exports = {
+  ci: {
+    collect: {
+      // url: ['https://www.ecoindex.fr/'],
+      numberOfRuns: 1,
+      settings: {
+        puppeteerScript: './.puppeteerrc.js',
+        puppeteerLaunchOptions: {
+          defaultViewport: {
+            isMobile: false,
+            width: 1920,
+            height: 1080,
+          },
+          formFactor: 'desktop',
+        },
+        plugins: ['lighthouse-plugin-ecoindex'],
+        disableStorageReset: true,
+        preset: 'desktop',
+        chromeFlags:
+          '--disable-gpu --disable-dev-shm-usage --disable-setuid-sandbox --no-sandbox',
+      },
+    },
+    assert: {
+      preset: 'lighthouse:default',
+    },
+    upload: {
+      target: 'lhci',
+      serverBaseUrl: 'http://localhost:9001', // use server enabled by devcontainer. Do an `npx lhci wizard` in docker container.
+      token: 'xxx', // The Lighthouse CI server build token for the project
+      ignoreDuplicateBuildFailure: true,
+    },
+  },
+}
