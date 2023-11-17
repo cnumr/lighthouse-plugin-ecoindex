@@ -5,6 +5,7 @@
  */
 
 import { Audit } from 'lighthouse'
+import { JSDOM } from 'jsdom'
 
 class WarnNodesCount extends Audit {
   static get meta() {
@@ -17,7 +18,7 @@ class WarnNodesCount extends Audit {
         'Explication: In Ecoindex, we count all HTML nodes, withouts SVGs content.',
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['NodesMinusSvgsGatherer', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
     }
   }
 
@@ -51,17 +52,19 @@ class WarnNodesCount extends Audit {
   }
 
   static audit(artifacts) {
-    const value = artifacts.NodesMinusSvgsGatherer.value
+    const MainDocumentContent = artifacts.MainDocumentContent
+    const dom = new JSDOM(MainDocumentContent)
+    const allNodes = dom.window.document.querySelectorAll('*').length
+    // const svgNodes = dom.window.document.querySelectorAll('svg').length
+    const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+    const value = allNodes - svgContentNodes
     const DOMStats = artifacts.DOMStats.totalBodyElements
-    // const success = isNaN(value) && value >= 0
 
     return {
-      numericValue: value,
-      // Cast true/false to 1/0
       score: 0.8,
       displayValue: `Ecoindex: ${value} - Lighthouse: ${DOMStats}`,
+      numericValue: value,
       numericUnit: 'DOM elements',
-      // displayValue: value,
     }
   }
 }

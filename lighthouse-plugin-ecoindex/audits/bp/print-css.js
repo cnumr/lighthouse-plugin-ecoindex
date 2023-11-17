@@ -16,7 +16,7 @@ class BPPrintCSS extends Audit {
       description: `A print css must be implemented to hide useless elements when printing. [See CNUMR BP_027](${refCnumr.bp_027.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['PrintCssGatherer', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['LinkElements', 'DOMStats', 'devtoolsLogs'],
     }
   }
 
@@ -50,16 +50,14 @@ class BPPrintCSS extends Audit {
   }
 
   static audit(artifacts) {
-    const value = artifacts.PrintCssGatherer.value
-    // const success = isNaN(value) && value >= 0
-    // console.log(
-    //   'artifacts.PrintCssGatherer.value',
-    //   artifacts.PrintCssGatherer.value,
-    // )
+    const stylesheets = artifacts.LinkElements.filter(
+      link =>
+        link.rel === 'stylesheet' && link?.node?.snippet.match(/media="print"/),
+    )
     return {
-      score: value > 0 ? 1 : 0,
-      displayValue: `Print CSS count: ${value}`,
-      numericValue: value,
+      score: stylesheets.length > 0 ? 1 : 0,
+      displayValue: `Print CSS count: ${stylesheets.length}`,
+      numericValue: stylesheets.length,
     }
   }
 }

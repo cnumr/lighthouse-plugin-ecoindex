@@ -4,5 +4,14 @@
   },
   "hooks": {
     "after:bump": "npx auto-changelog -p"
+  },
+  "plugins": {
+    "@j-ulrich/release-it-regex-bumper": {
+      "out": {
+        "file": "../examples/*/package.json",
+        "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
+        "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
+      }
+    }
   }
 }
