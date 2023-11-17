@@ -1,10 +1,3 @@
-const { startFlow } = import('lighthouse')
-
-const CustomGatherers = [
-  './lighthouse-plugin-ecoindex/gatherers/nodes-minus-svg-gatherer.js',
-  './lighthouse-plugin-ecoindex/gatherers/bp/print-css-gatherer.js',
-  // ... ajoutez d'autres gatherers personnalisés si nécessaire
-]
 // https://pptr.dev/guides/configuration
 // https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#puppeteerscript
 /**
@@ -13,15 +6,9 @@ const CustomGatherers = [
  */
 module.exports = async (browser, context) => {
   // launch browser for LHCI
-  const page = await browser.newPage()
+  const page = await browser.newPage(context.options)
   const session = await page.target().createCDPSession()
-  const flow = await startFlow(page, {
-    passes: [{ passName: 'defaultPass', gatherers: CustomGatherers }],
-  })
-  await flow.navigate(urls[0], {
-    stepName: urls[0],
-  })
-  //   await page.goto(url, { waitUntil: 'networkidle0' })
+  await page.goto(context.url, { waitUntil: 'networkidle0' })
   await startEcoindexPageMesure(page, session)
   await endEcoindexPageMesure()
   // close session for next run
@@ -66,5 +53,5 @@ async function startEcoindexPageMesure(page, session) {
  * End Ecoindex flow. Wait 3s.
  */
 async function endEcoindexPageMesure() {
-  await new Promise(r => setTimeout(r, 3 * 1000))
+  await new Promise(r => setTimeout(r, 15 * 1000))
 }

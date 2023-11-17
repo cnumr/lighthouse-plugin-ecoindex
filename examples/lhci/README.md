@@ -6,4 +6,8 @@
 
 2. launch test
 
-`node lightouse-plugin-ecoindex/bin.js -u https://www.ecoindex.fr`
+- `lhci collect --url https://www.ecoindex.fr/`
+- `lhci upload`
+- `npm run lhci:collect`
+- `npm run lhci:upload`
+- `npm run lhci` = collect + upload

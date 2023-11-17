@@ -40,10 +40,17 @@ module.exports = {
         plugins: ['lighthouse-plugin-ecoindex'],
         disableStorageReset: true,
         preset: 'desktop',
-        puppeteerScript: './.puppeteerrc.js',
-        chromeFlags:
-          '--disable-gpu --disable-dev-shm-usage --disable-setuid-sandbox --no-sandbox',
       },
+      puppeteerLaunchOptions: {
+        headless: 'new',
+        args: [
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--disable-setuid-sandbox',
+          '--no-sandbox',
+        ],
+      },
+      puppeteerScript: '.puppeteerrc.js',
     },
     assert: {
       preset: 'lighthouse:default',

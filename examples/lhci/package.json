@@ -4,14 +4,15 @@
   "version": "1.0.0",
   "description": "Test with lhci",
   "scripts": {
-    "collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
-    "upload": "lhci upload"
+    "lhci": "npm run lhci:collect && npm run lhci:upload",
+    "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
+    "lhci:upload": "lhci upload"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@lhci/cli": "^0.12.0",
     "lighthouse": "^11.3.0",
-    "lighthouse-plugin-ecoindex": "^1.0.7"
+    "lighthouse-plugin-ecoindex": "1.0.8"
   }
 }
