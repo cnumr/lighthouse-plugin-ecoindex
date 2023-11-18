@@ -1,23 +1,9 @@
-# npx-example
-
-## Usage
-
-```bash
-npx lighthouse-plugin-ecoindex --help
-```
-
-## Full documentation and examples of usage.
-
-- https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
--
+# test-local (dev and debug)
 
 ## Examples
 
-- help: `npx lighthouse-ecoindex --help`
-- demo: `npx lighthouse-ecoindex -d`
-- urls: `npx lighthouse-ecoindex -u https://www.ecoindex.fr`
-- urls: `npx lighthouse-ecoindex -u https://www.ecoindex.fr -u https://www.ecoindex.fr/comment-ca-marche/`
-- urls-file: `npx lighthouse-ecoindex -f ./example-urls-list`
-- urls-file + extra-header: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json`
-- urls-file + extra-header + output-path: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path`
-- urls-file + extra-header + output-path + output: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path -o json -o html`
+- `npm run lhei:help`: "node lighthouse-plugin-ecoindex/helpers/bin.js --help",
+- `npm run lhei:demo`: "node lighthouse-plugin-ecoindex/helpers/bin.js -d",
+- `npm run lhei:print`: "node lighthouse-plugin-ecoindex/helpers/bin.js -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html",
+- `npm run lhei:file`: "node lighthouse-plugin-ecoindex/helpers/bin.js -f example-urls-list -o json -o html",
+- `npm run lhei:file:header`: "node lighthouse-plugin-ecoindex/helpers/bin.js -f example-urls-list -h extra-headers.json -o json -o html"
