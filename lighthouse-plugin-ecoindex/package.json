@@ -3,6 +3,10 @@
   "description": "Lighthouse plugin that include Ecoindex results.",
   "homepage": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme",
   "bugs": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex/issues",
+  "author": {
+    "name": "Renaud Héluin",
+    "email": "rheluin@synapsis-conseil.com"
+  },
   "keywords": [
     "lighthouse",
     "plugin",
