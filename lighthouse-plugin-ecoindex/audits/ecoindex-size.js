@@ -5,6 +5,7 @@ import {
 } from '../utils/index.js'
 
 import { Audit } from 'lighthouse'
+import refCnumr from './bp/ref-cnumr.js'
 
 class EcoindexSizeAudit extends Audit {
   static get meta() {
@@ -12,41 +13,41 @@ class EcoindexSizeAudit extends Audit {
       id: 'eco-index-size',
       title: 'Page size in Megaoctets',
       failureTitle: 'Page size in Megaoctets, your page is too heavy',
-      description: 'The total size of all assets and page, in bytes.',
+      description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [See Ecoindex, Analysis methodology](${refCnumr.ecoindex_method.en})`,
       requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }
   }
 
-  static get metrics() {
-    return [
-      {
-        id: 'dom-size',
-        title: 'DOM Size',
-        description: 'The size of the DOM in bytes.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'request-count',
-        title: 'Request Count',
-        description: 'The number of network requests made by the page.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'total-compressed-size',
-        title: 'Total Compressed Size',
-        description: 'The total size of all compressed responses in bytes.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'eco-index-size',
-        title: 'Page size in Megaoctets',
-        description: 'The total size of all assets and page, in bytes.',
-        scoreDisplayMode: 'numeric',
-      },
-    ]
-  }
+  // static get metrics() {
+  //   return [
+  //     {
+  //       id: 'dom-size',
+  //       title: 'DOM Size',
+  //       description: 'The size of the DOM in bytes.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'request-count',
+  //       title: 'Request Count',
+  //       description: 'The number of network requests made by the page.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'total-compressed-size',
+  //       title: 'Total Compressed Size',
+  //       description: 'The total size of all compressed responses in bytes.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'eco-index-size',
+  //       title: 'Page size in Megaoctets',
+  //       description: 'The total size of all assets and page, in bytes.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //   ]
+  // }
 
   static async audit(artifacts, context) {
     try {
