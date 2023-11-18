@@ -6,7 +6,7 @@
 npx lighthouse-plugin-ecoindex --help
 ```
 
-## Full documentation and examples of usage.
+## More documentation and examples of usage.
 
 - https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme
 
