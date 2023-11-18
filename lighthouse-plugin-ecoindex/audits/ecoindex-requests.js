@@ -13,7 +13,7 @@ class EcoindexRequestsAudit extends Audit {
       title: 'Number of requests',
       failureTitle: 'Number of requests, your page calls too many resources',
       description: 'The number of network requests made by the page.',
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

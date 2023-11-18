@@ -6,25 +6,35 @@ import {
   getEcoIndexGrade,
 } from 'ecoindex'
 
+import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import round from 'lodash.round'
 
 const KO_TO_MO = 1000000
+
+/**
+ * Calculate the number of DOM elements without SVGs content.
+ * @param {LH.Artifacts} artifacts
+ * @returns number
+ */
+export async function getEcoindexNodes(artifacts) {
+  const MainDocumentContent = artifacts.MainDocumentContent
+  const dom = new JSDOM(MainDocumentContent)
+  const allNodes = dom.window.document.querySelectorAll('*').length
+  const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+  return allNodes - svgContentNodes
+}
 
 export async function getLoadingExperience(
   artifacts,
   context,
   isTechnical = false,
 ) {
-  let domSize = -1
-  try {
-    if (artifacts.NodesMinusSvgsGatherer) {
-      domSize = artifacts.NodesMinusSvgsGatherer.value
-    } else {
-      domSize = artifacts.DOMStats.totalBodyElements
-    }
-  } catch (error) {
-    throw new Error('NodesMinusSvgsGatherer not found')
+  let domSize = await getEcoindexNodes(artifacts)
+  if (!artifacts.MainDocumentContent) {
+    throw new Error(
+      "MainDocumentContent not found, EcoindexNodes can't be calculated.",
+    )
   }
 
   // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61

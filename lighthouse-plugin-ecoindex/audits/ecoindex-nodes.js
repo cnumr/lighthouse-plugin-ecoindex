@@ -13,7 +13,7 @@ class EcoindexNodesAudit extends Audit {
       title: 'Ecoindex DOM elements (nodes)',
       failureTitle: 'Ecoindex DOM elements (nodes), your page is too complex',
       description: 'The number of HTML elements in the DOM.',
-      requiredArtifacts: ['NodesMinusSvgsGatherer', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

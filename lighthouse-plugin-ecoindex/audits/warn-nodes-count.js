@@ -5,7 +5,7 @@
  */
 
 import { Audit } from 'lighthouse'
-import { JSDOM } from 'jsdom'
+import { getEcoindexNodes } from '../utils/index.js'
 
 class WarnNodesCount extends Audit {
   static get meta() {
@@ -51,13 +51,13 @@ class WarnNodesCount extends Audit {
     ]
   }
 
-  static audit(artifacts) {
-    const MainDocumentContent = artifacts.MainDocumentContent
-    const dom = new JSDOM(MainDocumentContent)
-    const allNodes = dom.window.document.querySelectorAll('*').length
-    // const svgNodes = dom.window.document.querySelectorAll('svg').length
-    const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-    const value = allNodes - svgContentNodes
+  static async audit(artifacts) {
+    // const MainDocumentContent = artifacts.MainDocumentContent
+    // const dom = new JSDOM(MainDocumentContent)
+    // const allNodes = dom.window.document.querySelectorAll('*').length
+    // // const svgNodes = dom.window.document.querySelectorAll('svg').length
+    // const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+    const value = await getEcoindexNodes(artifacts)
     const DOMStats = artifacts.DOMStats.totalBodyElements
 
     return {

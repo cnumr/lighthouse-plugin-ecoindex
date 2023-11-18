@@ -14,7 +14,7 @@ class EcoindexScoreAudit extends Audit {
       failureTitle: 'Ecoindex, your page has an impact',
       description:
         'The EcoIndex score evaluating the environmental impact of the page.',
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

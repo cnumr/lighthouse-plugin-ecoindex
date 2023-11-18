@@ -14,7 +14,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
       failureTitle:
         'Greenhouse Gas Emission (eqCO2), your page generates a lot of greenhouse gas',
       description: 'Greenhouse Gas Emission (eqCO2) of your page.',
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

@@ -13,7 +13,7 @@ class EcoindexSizeAudit extends Audit {
       title: 'Page size in Megaoctets',
       failureTitle: 'Page size in Megaoctets, your page is too heavy',
       description: 'The total size of all assets and page, in bytes.',
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }
