@@ -8,7 +8,7 @@ _Summary of results_
 ![Details of plugin results](docs/ecoindex-results.png)
 _Details of plugin results_
 
-> CHANGELOG: [CHANGELOG.md](CHANGELOG.md)
+> CHANGELOG: [CHANGELOG.md](./lighthouse-plugin-ecoindex/CHANGELOG.md)
 
 ## Description
 
