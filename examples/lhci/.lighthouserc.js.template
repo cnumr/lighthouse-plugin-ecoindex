@@ -37,7 +37,7 @@ module.exports = {
           '--no-sandbox',
         ],
       },
-      puppeteerScript: '.puppeteerrc.js',
+      puppeteerScript: './node_modules/lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs',
     },
     assert: {
       preset: 'lighthouse:default',
