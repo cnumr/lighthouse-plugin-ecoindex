@@ -5,8 +5,19 @@
   "bugs": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex/issues",
   "author": {
     "name": "Renaud Héluin",
-    "email": "rheluin@synapsis-conseil.com"
+    "email": "renaud.heluin@novagaia.fr",
+    "url": "https://novagaia.fr"
   },
+  "contributors": [
+    {
+      "name": "Renaud Héluin",
+      "email": "rheluin@synapsis-conseil.com"
+    },
+    {
+      "name": "Jérôme Moly @capybarbu",
+      "email": "jerome@capybara.consulting"
+    }
+  ],
   "keywords": [
     "lighthouse",
     "plugin",
