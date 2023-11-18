@@ -2,7 +2,7 @@
 
 ## Usage
 
-> see [examples/lhci](#Examples).
+> see [examples](#Examples).
 
 This example is using lighthouse-ci to run with puppeteer.
 
