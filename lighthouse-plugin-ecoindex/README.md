@@ -8,6 +8,8 @@ _Summary of results_
 ![Details of plugin results](docs/ecoindex-results.png)
 _Details of plugin results_
 
+> CHANGELOG: [CHANGELOG.md](CHANGELOG.md)
+
 ## Description
 
 This plugin is a wrapper of [ecoindex](https://ecoindex.fr/) for [lighthouse](https://github.com/GoogleChrome/lighthouse/blob/main/docs/plugins.md).
