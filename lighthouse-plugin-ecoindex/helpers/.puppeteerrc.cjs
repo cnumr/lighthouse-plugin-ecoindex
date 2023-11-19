@@ -53,5 +53,5 @@ async function startEcoindexPageMesure(page, session) {
  * End Ecoindex flow. Wait 3s.
  */
 async function endEcoindexPageMesure() {
-  await new Promise(r => setTimeout(r, 15 * 1000))
+  await new Promise(r => setTimeout(r, 3 * 1000))
 }
