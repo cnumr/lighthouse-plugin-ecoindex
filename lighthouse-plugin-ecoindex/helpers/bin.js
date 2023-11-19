@@ -269,8 +269,6 @@ async function captureReport() {
 
   console.log(SEPARATOR)
   console.log(`Mesure(s) ended 🎉`)
-  // Close the browser.
-  await browser.close()
   console.log(SEPARATOR)
   console.log(`Generating report...`)
   if (typeof outputModes === 'string') outputModes = [outputModes]
@@ -280,24 +278,22 @@ async function captureReport() {
   // Create the output folder if it doesn't exist.
   await fs.mkdirSync(outputPath, { recursive: true })
   // Get the comprehensive flow report.
-  outputModes.map(async outputMode => {
-    // HTML report.
-    if (outputMode === 'html') {
-      const reportHtmlPath = `${outputPath}/${reportName}.report.html`
-      writeFileSync(reportHtmlPath, await flow.generateReport())
-      console.log(`Report generated: ${reportHtmlPath}`)
-    }
-
-    // Save results as JSON.
-    if (outputMode === 'json') {
-      const reportJsonPath = `${outputPath}/${reportName}.report.json`
-      writeFileSync(
-        reportJsonPath,
-        JSON.stringify(await flow.createFlowResult(), null, 2),
-      )
-      console.log(`Report generated: ${reportJsonPath}`)
-    }
-  })
+  // Save results as HTML.
+  if (outputModes.includes('html')) {
+    const reportHtmlPath = `${outputPath}/${reportName}.report.html`
+    const flowReport = await flow.generateReport()
+    writeFileSync(reportHtmlPath, flowReport)
+    console.log(`Report generated: ${reportHtmlPath}`)
+  }
+  // Save results as JSON.
+  if (outputModes.includes('json')) {
+    const reportJsonPath = `${outputPath}/${reportName}.report.json`
+    const flowResult = JSON.stringify(await flow.createFlowResult(), null, 2)
+    writeFileSync(reportJsonPath, flowResult)
+    console.log(`Report generated: ${reportJsonPath}`)
+  }
+  // Close the browser.
+  await browser.close()
   console.log(SEPARATOR)
   console.log(`Mesure(s) finished 👋`)
 }
