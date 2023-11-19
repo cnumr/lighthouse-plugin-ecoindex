@@ -20,34 +20,34 @@ class BPPrintCSS extends Audit {
     }
   }
 
-  static get metrics() {
-    return [
-      {
-        id: 'dom-size',
-        title: 'DOM Size',
-        description: 'The size of the DOM in bytes.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'request-count',
-        title: 'Request Count',
-        description: 'The number of network requests made by the page.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'total-compressed-size',
-        title: 'Total Compressed Size',
-        description: 'The total size of all compressed responses in bytes.',
-        scoreDisplayMode: 'numeric',
-      },
-      {
-        id: 'print-css-audit',
-        title: 'print-css-audit',
-        description: 'print-css-audit.',
-        scoreDisplayMode: 'numeric',
-      },
-    ]
-  }
+  // static get metrics() {
+  //   return [
+  //     {
+  //       id: 'dom-size',
+  //       title: 'DOM Size',
+  //       description: 'The size of the DOM in bytes.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'request-count',
+  //       title: 'Request Count',
+  //       description: 'The number of network requests made by the page.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'total-compressed-size',
+  //       title: 'Total Compressed Size',
+  //       description: 'The total size of all compressed responses in bytes.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //     {
+  //       id: 'print-css-audit',
+  //       title: 'print-css-audit',
+  //       description: 'print-css-audit.',
+  //       scoreDisplayMode: 'numeric',
+  //     },
+  //   ]
+  // }
 
   static audit(artifacts) {
     const stylesheets = artifacts.LinkElements.filter(
