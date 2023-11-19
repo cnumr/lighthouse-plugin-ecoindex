@@ -1,4 +1,12 @@
 export default {
+  greenwebfoundation: {
+    fr: 'https://www.thegreenwebfoundation.org/',
+    en: 'https://www.thegreenwebfoundation.org/',
+  },
+  greenwebfoundation_API: {
+    fr: 'https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/',
+    en: 'https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/',
+  },
   ecoindex_method: {
     fr: 'https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse',
     en: 'https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse',

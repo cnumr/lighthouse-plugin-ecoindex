@@ -23,6 +23,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/print-css.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/thegreenwebfoundation.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -61,6 +64,7 @@ export default {
       { id: 'eco-index-requests', weight: 0, group: 'technic' },
       // best-practices
       { id: 'bp-print-css', weight: 0, group: 'best-practices' },
+      { id: 'bp-thegreenwebfoundation', weight: 0, group: 'best-practices' },
     ],
   },
 }

@@ -129,7 +129,7 @@ We used those thresholds to define Good and Poor thresholds.
 
 > See lighthouse [gatherers and audits for more informations and help](https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers).
 
-- [ ] Test url with [thegreenwebfoundation.org/api](https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/) `https://api.thegreenwebfoundation.org/api/v3/greencheck/${domain}`
+- [x] Test url with [thegreenwebfoundation.org/api](https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/) `https://api.thegreenwebfoundation.org/api/v3/greencheck/${domain}`
 - [ ] Add expires or cache-control headers
 - [ ] Compress ressources (>= 95%)
 - [ ] Limit the number of domains (<6)
