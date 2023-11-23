@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Test with npx/npm",
   "scripts": {
-    "lhei:help": "npx lighthouse-ecoindex@latest --help",
-    "lhei:demo": "npx lighthouse-ecoindex@latest -d",
-    "lhei:file": "npx lighthouse-ecoindex@latest -f example-urls-list -o json -o html",
-    "lhei:file:header": "npx lighthouse-ecoindex@latest -f example-urls-list -h extra-headers.json -o json -o html"
+    "lhei:help": "npx lighthouse-ecoindex --help",
+    "lhei:demo": "npx lighthouse-ecoindex -d",
+    "lhei:file": "npx lighthouse-ecoindex -f example-urls-list -o json -o html",
+    "lhei:file:header": "npx lighthouse-ecoindex -f example-urls-list -h extra-header.json -o json -o html"
   },
   "keywords": [],
   "author": "",
