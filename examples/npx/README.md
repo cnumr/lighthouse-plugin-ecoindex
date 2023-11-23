@@ -12,11 +12,11 @@ npx lighthouse-plugin-ecoindex --help
 
 ## Examples
 
-- help: `npx lighthouse-ecoindex@latest --help`
-- demo: `npx lighthouse-ecoindex@latest -d`
-- urls: `npx lighthouse-ecoindex@latest -u https://www.ecoindex.fr`
-- urls: `npx lighthouse-ecoindex@latest -u https://www.ecoindex.fr -u https://www.ecoindex.fr/comment-ca-marche/`
-- urls-file: `npx lighthouse-ecoindex@latest -f ./example-urls-list`
-- urls-file + extra-header: `npx lighthouse-ecoindex@latest -f ./example-urls-list -h ./example-extra-header.json`
-- urls-file + extra-header + output-path: `npx lighthouse-ecoindex@latest -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path`
-- urls-file + extra-header + output-path + output: `npx lighthouse-ecoindex@latest -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path -o json -o html`
+- help: `npx lighthouse-ecoindex --help`
+- demo: `npx lighthouse-ecoindex -d`
+- urls: `npx lighthouse-ecoindex -u https://www.ecoindex.fr`
+- urls: `npx lighthouse-ecoindex -u https://www.ecoindex.fr -u https://www.ecoindex.fr/comment-ca-marche/`
+- urls-file: `npx lighthouse-ecoindex -f ./example-urls-list`
+- urls-file + extra-header: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json`
+- urls-file + extra-header + output-path: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path`
+- urls-file + extra-header + output-path + output: `npx lighthouse-ecoindex -f ./example-urls-list -h ./example-extra-header.json -p ./example-output-path -o json -o html`

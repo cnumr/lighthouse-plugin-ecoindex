@@ -7,7 +7,7 @@
     "lhei:demo": "node lighthouse-plugin-ecoindex/helpers/bin.js -d",
     "lhei:print": "node lighthouse-plugin-ecoindex/helpers/bin.js -u  https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html",
     "lhei:file": "node lighthouse-plugin-ecoindex/helpers/bin.js -f example-urls-list -o json -o html",
-    "lhei:file:header": "node lighthouse-plugin-ecoindex/helpers/bin.js -f example-urls-list -h extra-headers.json -o json -o html"
+    "lhei:file:header": "node lighthouse-plugin-ecoindex/helpers/bin.js -f example-urls-list -h extra-header.json -o json -o html"
   },
   "keywords": [],
   "author": "",
