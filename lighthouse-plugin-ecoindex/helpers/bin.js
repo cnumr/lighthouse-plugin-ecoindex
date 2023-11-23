@@ -188,6 +188,7 @@ async function captureReport() {
     try {
       extraHeaderObj = JSON.stringify(JSON.parse(extraHeader))
       console.log(`Parsing extra-header JSON as a string.`)
+      // console.log(`extra-header`, extraHeaderObj)
     } catch (e) {
       // console.error(`Error parsing extra-header JSON: ${e}`)
       console.log(`Reading file ${extraHeader}...`)
@@ -200,7 +201,9 @@ async function captureReport() {
           process.exit(1)
         } else {
           console.log(`File ${extraHeader} readed.`)
-          extraHeaderObj = JSON.stringify(JSON.parse(data))
+          // extraHeaderObj = JSON.stringify(JSON.parse(data))
+          extraHeaderObj = JSON.parse(data)
+          // console.log(`extra-header`, extraHeaderObj)
         }
       })
     }
