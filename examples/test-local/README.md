@@ -1,5 +1,9 @@
 # test-local (dev and debug)
 
+## Intialization
+
+do `npm i` in ./lighthouse-plugin-ecoindex
+
 ## Examples
 
 - `npm run lhei:help`: "node lighthouse-plugin-ecoindex/helpers/bin.js --help",
