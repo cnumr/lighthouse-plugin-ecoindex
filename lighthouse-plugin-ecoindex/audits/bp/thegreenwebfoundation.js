@@ -1,6 +1,6 @@
 import { Audit } from 'lighthouse'
 import { createErrorResult } from '../../utils/index.js'
-import refCnumr from './ref-cnumr.js'
+import refsURLS from './refs-urls.js'
 
 function makeTableDetails(domain, jsonResponse) {
   const { hosted_by, hosted_by_website, modified, supporting_documents } =
@@ -26,7 +26,7 @@ function makeTableDetails(domain, jsonResponse) {
   ]
   const moreInfo = {
     label: `more info on The Green Web Foundation API v3`,
-    data: `see ${refCnumr.greenwebfoundation_API.en}`,
+    data: `see ${refsURLS.greenwebfoundation.api_doc.en}`,
   }
   switch (jsonResponse['data']) {
     case false:
@@ -96,7 +96,7 @@ class TheGreenWebFoundation extends Audit {
       id: 'bp-thegreenwebfoundation',
       title: 'The Green Web Foundation',
       failureTitle: 'Your website is not hosted on a green web host.',
-      description: `The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refCnumr.greenwebfoundation.en})`,
+      description: `The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refsURLS.greenwebfoundation.home.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: ['URL', 'devtoolsLogs'],
@@ -109,7 +109,7 @@ class TheGreenWebFoundation extends Audit {
         id: 'bp-thegreenwebfoundation',
         title: 'The Green Web Foundation',
         description:
-          'The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refCnumr.greenwebfoundation.en})',
+          'The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refsURLS.greenwebfoundation.home.en})',
         scoreDisplayMode: 'manual',
       },
     ]

@@ -30,16 +30,25 @@ export default {
   groups: {
     ecologic: {
       title: 'Ecoindex results',
-      description: 'Ecoindex revealant metrics',
+      description: 'Ecoindex revealant metrics.',
     },
     technic: {
       title: 'Technical results',
-      description: 'Technical metrics',
+      description: 'Technical metrics.',
     },
     'best-practices': {
-      title: 'Best practices',
+      title: '#RWEB web eco-design: 115 best practices',
       description:
         'CNUMR (Collectif Conception Numérique Responsable) "115 best practices" reference framework.',
+    },
+    'rgesn-practices': {
+      title:
+        '#RGESN General eco-design guidelines for digital servicesBest practices',
+      description: 'General eco-design guidelines for digital services.',
+    },
+    'other-practices': {
+      title: 'Other ecodesign best practices',
+      description: 'Various best practices in eco-design.',
     },
   },
   // A new category in the report for the plugin output.
@@ -64,7 +73,7 @@ export default {
       { id: 'eco-index-requests', weight: 0, group: 'technic' },
       // best-practices
       { id: 'bp-print-css', weight: 0, group: 'best-practices' },
-      { id: 'bp-thegreenwebfoundation', weight: 0, group: 'best-practices' },
+      { id: 'bp-thegreenwebfoundation', weight: 0, group: 'other-practices' },
     ],
   },
 }
