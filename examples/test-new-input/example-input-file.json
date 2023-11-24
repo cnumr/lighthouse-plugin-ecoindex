@@ -1,0 +1,37 @@
+{
+    "extra-header": {
+        "Cookie": "monster=blue",
+        "x-men": "wolverine"
+    },
+    "output": [
+        "html",
+        "json"
+    ],
+    "output-path": "./reports/multi",
+    "output-name": "ecoindex",
+    "parcours": [
+        {
+            "name": "Découvrir ecoindex et l'écoconception",
+            "urls": [
+                "https://www.ecoindex.fr/",
+                "https://www.ecoindex.fr/comment-ca-marche/",
+                "https://www.ecoindex.fr/ecoconception/"
+            ]
+        },
+        {
+            "name": "Rejoindre la communauté",
+            "urls": [
+                "https://www.ecoindex.fr/",
+                "https://www.ecoindex.fr/a-propos/",
+                "https://www.ecoindex.fr/nous-rejoindre/"
+            ]
+        },
+        {
+            "name": "Revoir d'anciens résultats",
+            "urls": [
+                "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+                "https://www.ecoindex.fr/"
+            ]
+        }
+    ]
+}

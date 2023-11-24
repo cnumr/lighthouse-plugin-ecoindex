@@ -1,0 +1,16 @@
+{
+  "name": "test-header",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lh": "lighthouse https://www.manomano.fr/p/yaheetech-bureau-gaming-110x70cm-bureau-gamer-ergonomique-table-de-jeu-pour-ordinateur-pc-domicile-avec-support-de-moniteur-porte-gobelet-support-de-poignee-34076805?model_id=34040847 --chrome-flags=\"--disable-gpu --disable-dev-shm-usage --disable-setuid-sandbox --no-sandbox --headless\" --extra-headers=./extra-header.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse": "^11.3.0"
+  }
+}
