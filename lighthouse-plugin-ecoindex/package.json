@@ -1,8 +1,8 @@
 {
   "name": "lighthouse-plugin-ecoindex",
   "description": "Lighthouse plugin that include Ecoindex results.",
-  "homepage": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex#readme",
-  "bugs": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex/issues",
+  "homepage": "https://github.com/cnumr/lighthouse-plugin-ecoindex#readme",
+  "bugs": "https://github.com/cnumr/lighthouse-plugin-ecoindex/issues",
   "author": {
     "name": "Renaud Héluin",
     "email": "renaud.heluin@novagaia.fr",
@@ -26,11 +26,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/NovaGaia/lighthouse-plugin-ecoindex.git"
+    "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git"
   },
   "main": "./plugin.js",
   "bin": {
-    "lighthouse-ecoindex": "./helpers/bin.js"
+    "lighthouse-ecoindex": "./helpers/bin.js",
+    "lighthouse-ecoindex-cli": "./cli/index.js"
   },
   "version": "1.2.1",
   "type": "module",
