@@ -4,11 +4,11 @@ import * as constants from 'lighthouse/core/config/constants.js'
 
 import fs, { writeFileSync } from 'fs'
 
-import { hideBin } from 'yargs/helpers'
+import { startFlow } from 'lighthouse'
 import path from 'path'
 import puppeteer from 'puppeteer'
-import { startFlow } from 'lighthouse'
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
 const SEPARATOR = '\n---------------------------------\n'
 
@@ -160,7 +160,7 @@ async function captureReport() {
 
   if (!filePath && !urls && !isDemoMode) {
     console.error(
-      'Use`--demo true` or please provide a file path (--urls-file) or URLs (--urls https://www.example.com --urls https://www.example1.com) as an argument',
+      'Use`--demo true` or please provide a file path (--urls-file) or URLs (--url https://www.example.com --url https://www.example1.com) as an argument',
     )
     process.exit(1)
   }

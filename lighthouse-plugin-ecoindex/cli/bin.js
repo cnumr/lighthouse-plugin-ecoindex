@@ -1,5 +1,7 @@
+import logSymbols from 'log-symbols'
 import { getFlags } from './cli-flags.js'
 import { listAudits } from './commands.js'
+import { generateEnvironmentalStatement, runCourses } from './run.js'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -14,13 +16,27 @@ import { listAudits } from './commands.js'
  *               cli-flags        lh-core/index
  */
 
+/**
+ * @return {Promise<void>}
+ */
 async function begin() {
   const cliFlags = getFlags()
 
-  // Process terminating command
-  //   if (cliFlags.listAllAudits) {
-  listAudits()
-  //   }
+  if (cliFlags._[0] === 'collect' || cliFlags._[0] === 'convert') {
+    if (cliFlags.listAllAudits) {
+      listAudits()
+    }
+    console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
+    if (cliFlags._[0] === 'collect') {
+      return runCourses(cliFlags)
+    } else if (cliFlags._[0] === 'convert') {
+      return generateEnvironmentalStatement(cliFlags)
+    }
+  }
+  console.error(
+    `${logSymbols.error} The command \`${cliFlags._[0]}\` is not supported.`,
+  )
+  process.exit(1)
 }
 
 export { begin }

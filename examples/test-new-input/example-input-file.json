@@ -5,7 +5,8 @@
     },
     "output": [
         "html",
-        "json"
+        "json",
+        "statement"
     ],
     "output-path": "./reports/multi",
     "output-name": "ecoindex",
