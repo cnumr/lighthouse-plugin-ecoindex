@@ -1,7 +1,9 @@
-import logSymbols from 'log-symbols'
+import { generateEnvironmentalStatement, runCourses } from './run.js'
+
 import { getFlags } from './cli-flags.js'
 import { listAudits } from './commands.js'
-import { generateEnvironmentalStatement, runCourses } from './run.js'
+import logSymbols from 'log-symbols'
+import { print } from './printer.js'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -16,6 +18,11 @@ import { generateEnvironmentalStatement, runCourses } from './run.js'
  *               cli-flags        lh-core/index
  */
 
+const DEMO_INPUT_FILE_PATH =
+  'lighthouse-plugin-ecoindex/demo/example-input-file.json'
+
+const SEPARATOR = '\n---------------------------------\n'
+
 /**
  * @return {Promise<void>}
  */
@@ -26,12 +33,21 @@ async function begin() {
     if (cliFlags.listAllAudits) {
       listAudits()
     }
+    if (cliFlags['demo']) {
+      console.log(`${logSymbols.warning} Demo mode enabled.`)
+      cliFlags['json-file'] = DEMO_INPUT_FILE_PATH
+    }
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
     if (cliFlags._[0] === 'collect') {
-      return runCourses(cliFlags)
+      await runCourses(cliFlags)
     } else if (cliFlags._[0] === 'convert') {
-      return generateEnvironmentalStatement(cliFlags)
+      await generateEnvironmentalStatement(cliFlags)
     }
+    // Generate Reports
+    await print(cliFlags)
+
+    console.log(SEPARATOR)
+    console.log(`${logSymbols.success} Mesure(s) finished 👋`)
   }
   console.error(
     `${logSymbols.error} The command \`${cliFlags._[0]}\` is not supported.`,

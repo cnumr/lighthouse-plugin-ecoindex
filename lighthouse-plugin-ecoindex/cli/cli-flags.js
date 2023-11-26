@@ -1,8 +1,10 @@
+import * as yargsHelpers from 'yargs/helpers'
+
 import fs from 'fs'
 import path from 'path'
-
 import yargs from 'yargs'
-import * as yargsHelpers from 'yargs/helpers'
+/* eslint-disable-next-line */
+import jsonPackage from '../package.json' assert { type: 'json' }
 
 const EPILOGUE_STRING =
   'For more information on this Lighthouse Ecoindex script helper, see https://github.com/cnumr/lighthouse-plugin-ecoindex#readme'
@@ -11,13 +13,14 @@ const EPILOGUE_STRING =
  * @param {string=} manualArgv
  */
 function getYargsParser(manualArgv) {
+  // console.log(jsonPackage.version)
   const y = manualArgv
     ? // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
       yargs(manualArgv)
     : yargs(yargsHelpers.hideBin(process.argv))
   return y
     .help('help')
-    .version(JSON.parse(fs.readFileSync(`../package.json`, 'utf-8')).version)
+    .version(jsonPackage.version)
     .showHelpOnFail(false, 'Specify --help for available options')
     .usage('lighthouse-ecoindex <command> <options>')
     .example(
@@ -148,7 +151,11 @@ function getFlags(manualArgv, options = {}) {
     if (v === undefined) delete cliFlags[k]
   }
 
+  // Display referenced audits
   cliFlags['listAllAudits'] = false
+
+  // create memory flows
+  cliFlags['reportsFlows'] = []
 
   return cliFlags
 }

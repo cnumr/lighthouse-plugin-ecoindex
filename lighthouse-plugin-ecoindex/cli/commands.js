@@ -1,3 +1,5 @@
+import * as constants from 'lighthouse/core/config/constants.js'
+
 import fs from 'fs'
 import logSymbols from 'log-symbols'
 import path from 'path'
@@ -30,6 +32,10 @@ async function listAudits() {
   //   process.exit(0)
 }
 
+/**
+ * Read en config JSON file
+ * @param {*} cliFlags
+ */
 async function readJSONFile(cliFlags) {
   const filePath = cliFlags['json-file']
   if (filePath) {
@@ -48,6 +54,10 @@ async function readJSONFile(cliFlags) {
   }
 }
 
+/**
+ * Read en extra-heder JSON file
+ * @param {*} cliFlags
+ */
 async function readExtraHeaderFile(cliFlags) {
   const extraHeader = cliFlags['extra-header']
   if (extraHeader && typeof extraHeader === 'string') {
@@ -76,4 +86,107 @@ async function readExtraHeaderFile(cliFlags) {
   }
 }
 
-export { listAudits, readExtraHeaderFile, readJSONFile }
+/**
+ * Init Ecoindex flow. Wait 3s, then navigate to bottom of page.
+ * @param {puppeteer.Page} page
+ * @param {lighthouse.UserFlow} session
+ */
+async function startEcoindexPageMesure(page, session) {
+  page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  await new Promise(r => setTimeout(r, 3 * 1000))
+  const dimensions = await page.evaluate(() => {
+    var body = document.body,
+      html = document.documentElement
+
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    )
+    return {
+      width: document.documentElement.clientWidth,
+      height: height,
+      deviceScaleFactor: window.devicePixelRatio,
+    }
+  })
+  // console.log('dimensions', dimensions)
+  // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
+  // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
+  await session.send('Input.synthesizeScrollGesture', {
+    x: 100,
+    y: 600,
+    yDistance: -dimensions.height,
+    speed: 1000,
+  })
+}
+
+/**
+ * End Ecoindex flow. Wait 3s.
+ */
+async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
+  await new Promise(r => setTimeout(r, 3 * 1000))
+  if (snapshotEnabled) await flow.snapshot()
+}
+
+/**
+ * Return config for Lighthouse
+ * @param {boolean} isWarm
+ * @returns {lighthouse.Config}
+ */
+function getLighthouseConfig(
+  isWarm = false,
+  stepName = `undefined`,
+  onlyCategories = [
+    'performance',
+    'seo',
+    'accessibility',
+    'best-practices',
+    'lighthouse-plugin-ecoindex',
+  ],
+) {
+  return {
+    name: stepName,
+    config: {
+      extends: 'lighthouse:default',
+      settings: {
+        onlyCategories: onlyCategories,
+        formFactor: 'desktop',
+        throttling: constants.throttling.desktopDense4G,
+        screenEmulation: {
+          mobile: false,
+          width: 1920,
+          height: 1080,
+        },
+        emulatedUserAgent: constants.userAgents.desktop,
+        maxWaitForLoad: 60 * 1000,
+        disableStorageReset: isWarm,
+      },
+      plugins: ['lighthouse-plugin-ecoindex'],
+    },
+  }
+}
+
+const getPuppeteerConfig = {
+  headless: 'new',
+  args: [
+    '--disable-gpu',
+    '--disable-dev-shm-usage',
+    '--disable-setuid-sandbox',
+    '--no-sandbox',
+  ],
+}
+
+export {
+  endEcoindexPageMesure,
+  getLighthouseConfig,
+  getPuppeteerConfig,
+  listAudits,
+  readExtraHeaderFile,
+  readJSONFile,
+  startEcoindexPageMesure,
+}
