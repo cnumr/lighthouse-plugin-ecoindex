@@ -1,5 +1,6 @@
 import * as constants from 'lighthouse/core/config/constants.js'
 
+import _slugify from 'slugify'
 import fs from 'fs'
 import logSymbols from 'log-symbols'
 import path from 'path'
@@ -181,6 +182,47 @@ const getPuppeteerConfig = {
   ],
 }
 
+const normalizeSlug = str => {
+  if (str === ``) {
+    throw new Error(`Object or String argument can't be empty.`)
+  }
+  let output = ``
+
+  if (typeof str === 'object') {
+    if (Array.isArray(str)) {
+      str.forEach(child => {
+        output = output + normalizeSlug(child)
+      })
+      return output
+    } else if (str.props && str.props.children) {
+      return normalizeSlug(str.props.children)
+    }
+  }
+
+  try {
+    output = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  } catch (error) {
+    console.warn(error)
+    console.warn(`str`, str)
+  }
+  return output
+}
+
+/**
+ * Méthode pour slugifier un object ou une string
+ * @param {*} children
+ * @returns {String} Object or String mith slug format.
+ */
+const slugify = children => {
+  let slug = ``
+
+  slug = normalizeSlug(children).replace(/\W/g, '-')
+
+  return _slugify(slug, {
+    lower: true,
+  })
+}
+
 export {
   endEcoindexPageMesure,
   getLighthouseConfig,
@@ -188,5 +230,6 @@ export {
   listAudits,
   readExtraHeaderFile,
   readJSONFile,
+  slugify,
   startEcoindexPageMesure,
 }

@@ -3,7 +3,7 @@ import { generateEnvironmentalStatement, runCourses } from './run.js'
 import { getFlags } from './cli-flags.js'
 import { listAudits } from './commands.js'
 import logSymbols from 'log-symbols'
-import { print } from './printer.js'
+import { printEnvStatementReport } from './printer.js'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -40,14 +40,17 @@ async function begin() {
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
     if (cliFlags._[0] === 'collect') {
       await runCourses(cliFlags)
+      if (cliFlags['output'].includes('statement')) {
+        await printEnvStatementReport(cliFlags)
+      }
     } else if (cliFlags._[0] === 'convert') {
       await generateEnvironmentalStatement(cliFlags)
     }
-    // Generate Reports
-    await print(cliFlags)
 
     console.log(SEPARATOR)
-    console.log(`${logSymbols.success} Mesure(s) finished 👋`)
+
+    console.log(`${logSymbols.success} Mesure(s) and report(s) finished 👋`)
+    process.exit(0)
   }
   console.error(
     `${logSymbols.error} The command \`${cliFlags._[0]}\` is not supported.`,

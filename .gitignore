@@ -4,6 +4,7 @@ node_modules
 # output files and folders
 *.report.html
 *.report.json
+ecoindex-environmental-statement.json
 flags-*
 lhr-*
 reports/*

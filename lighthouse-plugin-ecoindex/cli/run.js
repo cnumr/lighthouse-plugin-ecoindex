@@ -4,18 +4,22 @@ import {
   getPuppeteerConfig,
   readExtraHeaderFile,
   readJSONFile,
+  slugify,
   startEcoindexPageMesure,
 } from './commands.js'
 
 import logSymbols from 'log-symbols'
+import { print } from './printer.js'
 import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
 
 const SEPARATOR = '\n---------------------------------\n'
 
-async function runCourse(urls, cliFlags) {
-  console.log(`${logSymbols.info} Mesure(s) start 🚀`)
-  // console.log(`cliFlags`, cliFlags)
+async function runCourse(urls, cliFlags, name = undefined, type = undefined) {
+  console.log(SEPARATOR)
+  console.log(
+    `${logSymbols.info} Mesure(s) start${name ? ', course: ' + name : ''} 🚀`,
+  )
 
   // Launch a headless browser.
   const browser = await puppeteer.launch(getPuppeteerConfig)
@@ -67,10 +71,13 @@ async function runCourse(urls, cliFlags) {
     }
   }
 
+  console.log(`${logSymbols.success} Mesure(s) ended`)
   console.log(SEPARATOR)
-  console.log(`${logSymbols.success} Mesure(s) ended 🎉`)
-  console.log(SEPARATOR)
-  cliFlags['reportsFlows'].push(flow)
+
+  // Generate Reports
+  console.log(`${logSymbols.info} Generating report(s)...`)
+  await print(cliFlags, flow, name ? slugify(name) : undefined, type)
+  console.log(`${logSymbols.success} Generating report(s) ended 🎉`)
   // Close the browser.
   await browser.close()
 }
@@ -94,25 +101,26 @@ async function runCourses(cliFlags) {
   await readJSONFile(cliFlags)
   // Read extra-header file
   await readExtraHeaderFile(cliFlags)
-  // validate no conflict options
-  if (cliFlags['jsonFileObj']?.['extra-header'] && cliFlags['extraHeaderObj']) {
-    console.error(
-      `${logSymbols.error} You can not use \`--json-file\` with an \`extra-header\` attribute and \`--extra-header\` options at the same time.`,
-    )
-    process.exit(1)
-  }
   // save `extra-header` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['extra-header']) {
+    console.log(
+      `${logSymbols.warning} Extra-header overrided by \`example-input-file.json\` file.`,
+    )
     cliFlags['extraHeaderObj'] = cliFlags['jsonFileObj']?.['extra-header']
+  }
+  // save `output` from input file in specific var.
+  if (cliFlags['jsonFileObj']?.['output']) {
+    console.log(
+      `${logSymbols.warning} Output overrided by \`example-input-file.json\` file.`,
+    )
+    cliFlags['output'] = cliFlags['jsonFileObj']?.['output']
   }
   // send to the right workflow
   if (cliFlags['url']) {
     console.log(`${logSymbols.info} Course an array of urls`)
-    // console.log(`urls`, cliFlags['url'])
     await runCourse(cliFlags['url'], cliFlags)
   } else if (cliFlags['jsonFileObj']?.parcours.length === 1) {
     console.log(`${logSymbols.info} One course in the json file`)
-    // console.log(`jsonFileObj`, cliFlags['jsonFileObj'])
     await runCourse(cliFlags['jsonFileObj'].parcours[0].urls, cliFlags)
   } else {
     console.log(`${logSymbols.info} Multiples courses in the json file`)
@@ -122,7 +130,12 @@ async function runCourses(cliFlags) {
       index++
     ) {
       const parcours = cliFlags['jsonFileObj'].parcours[index]
-      await runCourse(parcours.urls, cliFlags)
+      await runCourse(
+        parcours.urls,
+        cliFlags,
+        parcours.name,
+        parcours['is-best-pages'],
+      )
     }
   }
 }

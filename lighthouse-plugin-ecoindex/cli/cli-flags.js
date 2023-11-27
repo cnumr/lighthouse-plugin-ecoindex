@@ -154,8 +154,13 @@ function getFlags(manualArgv, options = {}) {
   // Display referenced audits
   cliFlags['listAllAudits'] = false
 
-  // create memory flows
-  cliFlags['reportsFlows'] = []
+  // Save results as reports.
+  cliFlags['reportName'] = new Date().toISOString()
+
+  // Prepare statements reports name
+  if (!cliFlags['input-report']) {
+    cliFlags['input-report'] = []
+  }
 
   return cliFlags
 }
