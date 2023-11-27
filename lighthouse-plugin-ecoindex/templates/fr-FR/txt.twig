@@ -1,9 +1,9 @@
 Déclaration environnementale de ce site web
 Niveau d’écoconception du site web
 ￼
-	•	Note Ecoindex : [à modifier]/100
-	•	Consommation d'eau moyenne rapportée à 1 000 utilisateurs (en litres) : [à modifier] (soit [à modifier] packs d'eau minérale).*
-	•	Émission de Gaz à Effet de Serre (GES) moyenne rapportée à 1 000 utilisateurs (kilos CO2e) : [à modifier] (soit un trajet de [à modifier] kms en voiture à énergie thermique).*
+	•	Note Ecoindex : {{ summary.ecoindexAVG['eco-index-score'] }}/100
+	•	Consommation d'eau moyenne rapportée à 1 000 utilisateurs (en litres) : {{ summary.ecoindexAVG['eco-index-water'] }} (soit {{ summary.ecoindexAVG['eco-index-water-equivalent'] }} packs d'eau minérale).*
+	•	Émission de Gaz à Effet de Serre (GES) moyenne rapportée à 1 000 utilisateurs (kilos CO2e) : {{ summary.ecoindexAVG['eco-index-ghg'] }} (soit un trajet de {{ summary.ecoindexAVG['eco-index-ghg-equivalent'] }} kms en voiture à énergie thermique).*
 Méthode d'évaluation
 Comme toute production numérique, ce site web a un impact environnemental que nous vous présentons sur cette page à l’aide d’indicateurs standardisés.
 Nous utilisons le référentiel EcoIndex proposé par le collectif GreenIT.fr, pour évaluer la performance environnementale de ce site web. Celui-ci est quantifié grâce à deux types d'indicateurs :

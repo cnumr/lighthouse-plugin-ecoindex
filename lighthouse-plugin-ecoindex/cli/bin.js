@@ -1,9 +1,12 @@
 import { generateEnvironmentalStatement, runCourses } from './run.js'
 
+import logSymbols from 'log-symbols'
 import { getFlags } from './cli-flags.js'
 import { listAudits } from './commands.js'
-import logSymbols from 'log-symbols'
-import { printEnvStatementReport } from './printer.js'
+import {
+  printEnvStatementDocuments,
+  printEnvStatementReport,
+} from './printer.js'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -20,8 +23,6 @@ import { printEnvStatementReport } from './printer.js'
 
 const DEMO_INPUT_FILE_PATH =
   'lighthouse-plugin-ecoindex/demo/example-input-file.json'
-
-const SEPARATOR = '\n---------------------------------\n'
 
 /**
  * @return {Promise<void>}
@@ -42,12 +43,11 @@ async function begin() {
       await runCourses(cliFlags)
       if (cliFlags['output'].includes('statement')) {
         await printEnvStatementReport(cliFlags)
+        await printEnvStatementDocuments(cliFlags)
       }
     } else if (cliFlags._[0] === 'convert') {
       await generateEnvironmentalStatement(cliFlags)
     }
-
-    console.log(SEPARATOR)
 
     console.log(`${logSymbols.success} Mesure(s) and report(s) finished 👋`)
     process.exit(0)

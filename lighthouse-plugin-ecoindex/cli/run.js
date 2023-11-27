@@ -8,10 +8,10 @@ import {
   startEcoindexPageMesure,
 } from './commands.js'
 
-import logSymbols from 'log-symbols'
-import { print } from './printer.js'
-import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
+import logSymbols from 'log-symbols'
+import puppeteer from 'puppeteer'
+import { print } from './printer.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 
@@ -75,9 +75,7 @@ async function runCourse(urls, cliFlags, name = undefined, type = undefined) {
   console.log(SEPARATOR)
 
   // Generate Reports
-  console.log(`${logSymbols.info} Generating report(s)...`)
   await print(cliFlags, flow, name ? slugify(name) : undefined, type)
-  console.log(`${logSymbols.success} Generating report(s) ended 🎉`)
   // Close the browser.
   await browser.close()
 }

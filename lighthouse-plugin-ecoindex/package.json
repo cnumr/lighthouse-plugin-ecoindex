@@ -57,6 +57,7 @@
     "lodash.round": "^4.0.4",
     "puppeteer": "^21.5.1",
     "slugify": "^1.6.6",
+    "twig": "^1.17.1",
     "yargs": "^17.7.2"
   }
 }
