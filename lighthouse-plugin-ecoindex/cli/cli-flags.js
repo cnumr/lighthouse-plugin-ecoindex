@@ -155,12 +155,12 @@ function getFlags(manualArgv, options = {}) {
   cliFlags['listAllAudits'] = false
 
   // Save results as reports.
-  cliFlags['reportName'] = new Date().toISOString()
+  cliFlags['generationDate'] = new Date().toISOString()
 
   // Prepare statements reports name
-  if (!cliFlags['input-report']) {
-    cliFlags['input-report'] = []
-  }
+  // if (!cliFlags['input-report']) {
+  //   cliFlags['input-report'] = []
+  // }
 
   return cliFlags
 }

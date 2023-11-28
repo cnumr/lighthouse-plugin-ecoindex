@@ -4,7 +4,6 @@ import {
   getPuppeteerConfig,
   readExtraHeaderFile,
   readJSONFile,
-  slugify,
   startEcoindexPageMesure,
 } from './commands.js'
 
@@ -15,10 +14,12 @@ import { print } from './printer.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 
-async function runCourse(urls, cliFlags, name = undefined, type = undefined) {
+async function runCourse(urls, cliFlags, course = undefined) {
   console.log(SEPARATOR)
   console.log(
-    `${logSymbols.info} Mesure(s) start${name ? ', course: ' + name : ''} 🚀`,
+    `${logSymbols.info} Mesure(s) start${
+      course.name ? ', course: ' + course.name : ''
+    } 🚀`,
   )
 
   // Launch a headless browser.
@@ -75,7 +76,7 @@ async function runCourse(urls, cliFlags, name = undefined, type = undefined) {
   console.log(SEPARATOR)
 
   // Generate Reports
-  await print(cliFlags, flow, name ? slugify(name) : undefined, type)
+  await print(cliFlags, flow, course)
   // Close the browser.
   await browser.close()
 }
@@ -117,23 +118,18 @@ async function runCourses(cliFlags) {
   if (cliFlags['url']) {
     console.log(`${logSymbols.info} Course an array of urls`)
     await runCourse(cliFlags['url'], cliFlags)
-  } else if (cliFlags['jsonFileObj']?.parcours.length === 1) {
+  } else if (cliFlags['jsonFileObj']?.courses.length === 1) {
     console.log(`${logSymbols.info} One course in the json file`)
-    await runCourse(cliFlags['jsonFileObj'].parcours[0].urls, cliFlags)
+    await runCourse(cliFlags['jsonFileObj'].courses[0].urls, cliFlags)
   } else {
     console.log(`${logSymbols.info} Multiples courses in the json file`)
     for (
       let index = 0;
-      index < cliFlags['jsonFileObj'].parcours.length;
+      index < cliFlags['jsonFileObj'].courses.length;
       index++
     ) {
-      const parcours = cliFlags['jsonFileObj'].parcours[index]
-      await runCourse(
-        parcours.urls,
-        cliFlags,
-        parcours.name,
-        parcours['is-best-pages'],
-      )
+      const courses = cliFlags['jsonFileObj'].courses[index]
+      await runCourse(courses.urls, cliFlags, courses)
     }
   }
 }

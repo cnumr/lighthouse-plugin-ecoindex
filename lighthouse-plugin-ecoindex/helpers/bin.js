@@ -277,20 +277,20 @@ async function captureReport() {
   if (typeof outputModes === 'string') outputModes = [outputModes]
   console.log(`outputModes`, outputModes)
   // Save results as reports.
-  const reportName = new Date().toISOString()
+  const generationDate = new Date().toISOString()
   // Create the output folder if it doesn't exist.
   await fs.mkdirSync(outputPath, { recursive: true })
   // Get the comprehensive flow report.
   // Save results as HTML.
   if (outputModes.includes('html')) {
-    const reportHtmlPath = `${outputPath}/${reportName}.report.html`
+    const reportHtmlPath = `${outputPath}/${generationDate}.report.html`
     const flowReport = await flow.generateReport()
     writeFileSync(reportHtmlPath, flowReport)
     console.log(`Report generated: ${reportHtmlPath}`)
   }
   // Save results as JSON.
   if (outputModes.includes('json')) {
-    const reportJsonPath = `${outputPath}/${reportName}.report.json`
+    const reportJsonPath = `${outputPath}/${generationDate}.report.json`
     const flowResult = JSON.stringify(await flow.createFlowResult(), null, 2)
     writeFileSync(reportJsonPath, flowResult)
     console.log(`Report generated: ${reportJsonPath}`)

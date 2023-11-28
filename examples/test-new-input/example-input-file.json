@@ -10,7 +10,7 @@
     ],
     "output-path": "./reports/multi",
     "output-name": "ecoindex",
-    "parcours": [
+    "courses": [
         {
             "name": "Découvrir ecoindex et l'écoconception",
             "urls": [
