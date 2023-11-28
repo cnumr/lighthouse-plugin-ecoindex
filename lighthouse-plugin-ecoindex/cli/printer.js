@@ -1,10 +1,14 @@
 import fs, { writeFileSync } from 'fs'
-import Twig from 'twig'
+import Handlebars from 'handlebars'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 import logSymbols from 'log-symbols'
 import { slugify } from './commands.js'
 import { convertCourseResults } from './converters.js'
+
 const SEPARATOR = '\n---------------------------------\n'
+const __dirname = fileURLToPath(dirname(import.meta.url))
 
 /**
  * Prepare folder and naming files.
@@ -25,7 +29,6 @@ async function preparareReports(cliFlags, course = undefined) {
       statements: {
         json: `${exportPath}/statements/ecoindex-environmental-statement.json`,
         html: `${exportPath}/statements/ecoindex-environmental-statement.html`,
-        txt: `${exportPath}/statements/ecoindex-environmental-statement.txt`,
         md: `${exportPath}/statements/ecoindex-environmental-statement.md`,
       },
     }
@@ -79,13 +82,12 @@ async function printEnvStatementReport(cliFlags) {
 
   const output = {
     date: cliFlags['generationDate'],
-    'best-pages': {},
+    best_pages: {},
     courses: [],
   }
 
   const envStatementsObj = cliFlags['envStatementsObj']
 
-  console.log(`envStatementsObj`, JSON.stringify(envStatementsObj))
   for (let index = 0; index < envStatementsObj.courses.length; index++) {
     // 1. Read JSON files
     const jsonFile = fs.readFileSync(
@@ -97,7 +99,7 @@ async function printEnvStatementReport(cliFlags) {
 
     if (envStatementsObj.courses[index].type === 'best-pages') {
       // 3.1.a. Best pages of the site part
-      output['best-pages'] = {
+      output.best_pages = {
         ...convertCourseResults(flows, envStatementsObj.courses[index]),
       }
     } else {
@@ -123,59 +125,46 @@ async function printEnvStatementReport(cliFlags) {
   console.log(SEPARATOR)
 }
 
+/**
+ * Generate Environmental Statement Documents from JSON and Twig templates
+ * @param {*} cliFlags
+ */
 async function printEnvStatementDocuments(cliFlags) {
   const envStatementsObj = cliFlags['envStatementsObj']
   console.log(
     `${logSymbols.info} Generating Environnemental statement documents...`,
   )
   const jsonFile = fs.readFileSync(envStatementsObj.statements.json, 'utf8')
-  console.log(jsonFile)
 
   // Markdown
-  await Twig.renderFile(
-    '../templates/fr-FR/markdown.twig',
-    JSON.parse(jsonFile),
-    (err, md) => {
-      if (err) console.error(err)
-      else {
-        console.log(md)
-        writeFileSync(envStatementsObj.statements.md, md)
-      }
-    },
+  try {
+    const sourceMD = fs.readFileSync(
+      path.join(__dirname, `templates/fr_FR/markdown.handlebars`),
+      'utf8',
+    )
+    const templateMD = Handlebars.compile(sourceMD)
+    const mdContent = templateMD(JSON.parse(jsonFile))
+    writeFileSync(envStatementsObj.statements.html, mdContent)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.md}`,
-    ),
-  )
-  // HTML
-  await Twig.renderFile(
-    '../templates/fr-FR/html.twig',
-    JSON.parse(jsonFile),
-    (err, html) => {
-      if (err) console.error(err)
-      else {
-        console.log(html)
-        writeFileSync(envStatementsObj.statements.html, html)
-      }
-    },
+    )
+  } catch (error) {
+    console.error(`${logSymbols.error} ${error}`)
+  }
+  try {
+    const sourceHTML = fs.readFileSync(
+      path.join(__dirname, `templates/fr_FR/html.handlebars`),
+      'utf8',
+    )
+    const templateHTML = Handlebars.compile(sourceHTML)
+    const htmlContent = templateHTML(JSON.parse(jsonFile))
+    writeFileSync(envStatementsObj.statements.html, htmlContent)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.html}`,
-    ),
-  )
-  // TXT
-  await Twig.renderFile(
-    '../templates/fr-FR/txt.twig',
-    jsonFile,
-    (err, txt) => {
-      if (err) console.error(err)
-      else {
-        console.log(txt)
-        writeFileSync(envStatementsObj.statements.txt, txt)
-      }
-    },
-    console.log(
-      `Environnemental statement generated: ${envStatementsObj.statements.txt}`,
-    ),
-  )
+    )
+  } catch (error) {
+    console.error(`${logSymbols.error} ${error}`)
+  }
   console.log(
     `${logSymbols.success} Generating Environnemental documents ended 🎉`,
   )

@@ -11,15 +11,37 @@ const base = {
     description:
       '(Data > Datasets > 3. Indirect emissions from transport > Passenger transport > Passenger transport - Road > Passenger car > Fleet average - all engines (9) > Average car/engine/2018',
   },
+  waterToPack: {
+    label:
+      'Converting water consumption (expressed in liters) into packs of mineral water of 6 bottles of 1.5 liters',
+    coef: 9,
+    description:
+      'https://www.ecoindex.fr/ecoconception/ecoindex/ecoindex-2-1/#water',
+  },
 }
 
 /**
- * Convert GHGs (expressed in eqCo2) into kilometers traveled in a combustion-powered car
- * @param number ges
- * @returns number
+ * Converter helper
+ * @param string type
+ * @param number value
+ * @returns
  */
-const gesToKm = ges => {
-  return ges * base.gesToKm.coef
+function convert(type, value) {
+  switch (type) {
+    case 'water-to-pack':
+      return Math.round(Number(value) / base.waterToPack.coef)
+    case 'ges-to-km':
+      return Math.round(Number(value) / base.gesToKm.coef)
+    case 'cl-to-l':
+      return Number(value).toFixed(2)
+    case 'round0':
+      return Math.round(Number(value))
+    case 'fixed2':
+      return Number(value).toFixed(2)
+    default:
+      console.warn('Converter not found')
+      break
+  }
 }
 
 function convertCourseResults(flows, course) {
@@ -40,30 +62,30 @@ function convertCourseResults(flows, course) {
     obj.pages.reduce((a, audit) => a + audit['eco-index-score'], 0) /
       obj.pages.length,
   )
-  obj.summary['eco-index-score'] = Math.round(
+  obj.summary['eco-index-score'] = convert(
+    'round0',
     obj.pages.reduce((a, audit) => a + audit['eco-index-score'], 0) /
       obj.pages.length,
   )
-  obj.summary['eco-index-water'] = (
-    (obj.pages.reduce((a, audit) => a + audit['eco-index-water'], 0) /
-      obj.pages.length) *
-    10
-  ).toFixed(2)
-  obj.summary['eco-index-water-equivalent'] = Math.round(
-    ((obj.pages.reduce((a, audit) => a + audit['eco-index-water'], 0) /
-      obj.pages.length) *
-      10) /
-      9,
+  obj.summary['eco-index-water'] = convert(
+    'cl-to-l',
+    obj.pages.reduce((a, audit) => a + Number(audit['eco-index-water']), 0) /
+      obj.pages.length,
   )
-  obj.summary['eco-index-ghg'] = (
-    obj.pages.reduce((a, audit) => a + audit['eco-index-ghg'], 0) /
-    obj.pages.length
-  ).toFixed(2)
-  obj.summary['eco-index-ghg-equivalent'] = Math.round(
-    gesToKm(
-      obj.pages.reduce((a, audit) => a + audit['eco-index-ghg'], 0) /
-        obj.pages.length,
-    ),
+  obj.summary['eco-index-water-equivalent'] = convert(
+    'water-to-pack',
+    obj.pages.reduce((a, audit) => a + Number(audit['eco-index-water']), 0) /
+      obj.pages.length,
+  )
+  obj.summary['eco-index-ghg'] = convert(
+    'fixed2',
+    obj.pages.reduce((a, audit) => a + Number(audit['eco-index-ghg']), 0) /
+      obj.pages.length,
+  )
+  obj.summary['eco-index-ghg-equivalent'] = convert(
+    'ges-to-km',
+    obj.pages.reduce((a, audit) => a + Number(audit['eco-index-ghg']), 0) /
+      obj.pages.length,
   )
 
   return obj
@@ -75,12 +97,29 @@ function convertPagesResults(lhr) {
   return {
     requestedUrl: lhr.requestedUrl,
     'eco-index-grade': audits['eco-index-grade'].numericValue,
-    'eco-index-score': Math.round(
+    'eco-index-score': convert(
+      'round0',
       Number(audits['eco-index-score'].numericValue) * 100,
-      2,
     ),
-    'eco-index-ghg': Number(audits['eco-index-ghg'].numericValue),
-    'eco-index-water': Number(audits['eco-index-water'].numericValue),
+    // Émission de GES rapportée à 1 000 utilisateurs (kilos CO2e)
+    'eco-index-ghg': convert(
+      'fixed2',
+      Number(audits['eco-index-ghg'].numericValue),
+    ),
+    'eco-index-ghg-equivalent': convert(
+      'ges-to-km',
+      Number(audits['eco-index-ghg'].numericValue),
+    ),
+    // Consommation d'eau rapportée à 1 000 utilisateurs (en litres)
+    'eco-index-water': convert(
+      'fixed2',
+      Number(audits['eco-index-water'].numericValue) * 10,
+    ),
+    // Conversion en packs d'eau minérale de 6 bouteilles de 1,5 litre
+    'eco-index-water-equivalent': convert(
+      'water-to-pack',
+      Number(audits['eco-index-water'].numericValue) * 10,
+    ),
     'eco-index-nodes': Number(audits['eco-index-nodes'].numericValue),
     'eco-index-size': Number(audits['eco-index-size'].numericValue),
     'eco-index-requests': Number(audits['eco-index-requests'].numericValue),
