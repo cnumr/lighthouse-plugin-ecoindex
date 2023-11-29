@@ -30,9 +30,22 @@ async function preparareReports(cliFlags, course = undefined) {
   // Create the output folder if it doesn't exist.
   let exportPath = `${cliFlags['output-path']}/${cliFlags['generationDate']}`
 
-  await fs.mkdirSync(`${exportPath}/statements`, {
-    recursive: true,
-  })
+  if (course) {
+    await fs.mkdirSync(`${exportPath}/statements`, {
+      recursive: true,
+    })
+  } else {
+    await fs.mkdirSync(`${exportPath}`, {
+      recursive: true,
+    })
+    console.log(
+      `${logSymbols.info} With \`url\` option, generic report(s) are generated.`,
+    )
+    return {
+      html: `${exportPath}/generic.report.html`,
+      json: `${exportPath}/generic.report.json`,
+    }
+  }
 
   if (cliFlags['envStatementsObj'] === undefined) {
     cliFlags['envStatementsObj'] = {
@@ -77,9 +90,14 @@ async function printJSONReport(flow, path) {
  * @param {string} paths
  */
 async function printHTMLReport(flow, path) {
-  const flowReport = await flow.generateReport()
-  writeFileSync(path, flowReport)
-  console.log(`Report generated: ${path}`)
+  try {
+    const flowReport = await flow.generateReport()
+    writeFileSync(path, flowReport)
+    console.log(`Report generated: ${path}`)
+  } catch (error) {
+    console.log(path)
+    console.error(`${logSymbols.error} ${error}`)
+  }
 }
 
 /**

@@ -40,8 +40,16 @@ async function begin() {
     }
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
     if (cliFlags._[0] === 'collect') {
+      if (cliFlags['url'] !== null) {
+        console.log(
+          `${logSymbols.warning} Using \`url\` option disable \`Environnemental Statement\` documents generation. Use \`json-file\` to enable it.`,
+        )
+      }
       await runCourses(cliFlags)
-      if (cliFlags['output'].includes('statement')) {
+      if (
+        cliFlags['output'].includes('statement') &&
+        cliFlags['url'] === null
+      ) {
         await printEnvStatementReport(cliFlags)
         await printEnvStatementDocuments(cliFlags)
       }
