@@ -16,11 +16,15 @@ const SEPARATOR = '\n---------------------------------\n'
 
 async function runCourse(urls, cliFlags, course = undefined) {
   console.log(SEPARATOR)
-  console.log(
-    `${logSymbols.info} Mesure(s) start${
-      course.name ? ', course: ' + course.name : ''
-    } 🚀`,
-  )
+  if (course) {
+    console.log(
+      `${logSymbols.info} Mesure(s) start${
+        course.name ? ', course: ' + course.name : ''
+      } 🚀`,
+    )
+  } else {
+    console.log(`${logSymbols.info} Mesure(s) start 🚀`)
+  }
 
   // Launch a headless browser.
   const browser = await puppeteer.launch(getPuppeteerConfig)

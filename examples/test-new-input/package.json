@@ -7,7 +7,7 @@
     "version": "node lighthouse-plugin-ecoindex/cli/index.js --version",
     "help": "node lighthouse-plugin-ecoindex/cli/index.js --help",
     "collect:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
-    "collect:urls": "node lighthouse-plugin-ecoindex/cli/index.js collect --url http://www.ecoindex.fr/",
+    "collect:urls": "node lighthouse-plugin-ecoindex/cli/index.js collect --url http://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
     "collect:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect --demo"
   },
   "keywords": [],
