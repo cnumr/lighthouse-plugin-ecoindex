@@ -10,6 +10,17 @@ import { convertCourseResults } from './converters.js'
 const SEPARATOR = '\n---------------------------------\n'
 const __dirname = fileURLToPath(dirname(import.meta.url))
 
+Handlebars.registerHelper('toDateString', function (date) {
+  const _date = new Date(date)
+  return _date.toDateString()
+})
+Handlebars.registerHelper('plus1', function (n) {
+  return Number(n) + 1
+})
+Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this)
+})
+
 /**
  * Prepare folder and naming files.
  * @param {object} cliFlags
@@ -144,7 +155,8 @@ async function printEnvStatementDocuments(cliFlags) {
     )
     const templateMD = Handlebars.compile(sourceMD)
     const mdContent = templateMD(JSON.parse(jsonFile))
-    writeFileSync(envStatementsObj.statements.html, mdContent)
+    console.log(`mdContent`, mdContent)
+    writeFileSync(envStatementsObj.statements.md, mdContent)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.md}`,
     )
