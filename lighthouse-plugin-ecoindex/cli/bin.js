@@ -1,8 +1,4 @@
 import { generateEnvironmentalStatement, runCourses } from './run.js'
-import {
-  printEnvStatementDocuments,
-  printEnvStatementReport,
-} from './printer.js'
 
 import { getFlags } from './cli-flags.js'
 import { listAudits } from './commands.js'
@@ -46,13 +42,6 @@ async function begin() {
         )
       }
       await runCourses(cliFlags)
-      if (
-        cliFlags['output'].includes('statement') &&
-        cliFlags['url'] === undefined
-      ) {
-        await printEnvStatementReport(cliFlags)
-        await printEnvStatementDocuments(cliFlags)
-      }
     } else if (cliFlags._[0] === 'convert') {
       await generateEnvironmentalStatement(cliFlags)
     }

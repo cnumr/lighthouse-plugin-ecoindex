@@ -1,11 +1,11 @@
 import fs, { writeFileSync } from 'fs'
+import { getEnvStatementsObj, slugify } from './commands.js'
 import path, { dirname } from 'path'
 
 import Handlebars from 'handlebars'
 import { convertCourseResults } from './converters.js'
 import { fileURLToPath } from 'url'
 import logSymbols from 'log-symbols'
-import { slugify } from './commands.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 const __dirname = fileURLToPath(dirname(import.meta.url))
@@ -48,14 +48,7 @@ async function preparareReports(cliFlags, course = undefined) {
   }
 
   if (cliFlags['envStatementsObj'] === undefined) {
-    cliFlags['envStatementsObj'] = {
-      courses: [],
-      statements: {
-        json: `${exportPath}/statements/ecoindex-environmental-statement.json`,
-        html: `${exportPath}/statements/ecoindex-environmental-statement.html`,
-        md: `${exportPath}/statements/ecoindex-environmental-statement.md`,
-      },
-    }
+    cliFlags['envStatementsObj'] = getEnvStatementsObj(exportPath)
   }
   const courseName = slugify(course?.name)
   const output = {
@@ -104,7 +97,35 @@ async function printHTMLReport(flow, path) {
  * Generate Environmental Statement JSON Output
  * @param {*} cliFlags
  */
-async function printEnvStatementReport(cliFlags) {
+async function printEnvStatementReport(cliFlags, type = 'json-file') {
+  if (type === 'input-report') {
+    const filesPath = cliFlags['input-report']
+    const outputReportsPath = cliFlags['output-path']
+    await fs.mkdirSync(`${outputReportsPath}`, {
+      recursive: true,
+    })
+    cliFlags['envStatementsObj'] = getEnvStatementsObj(outputReportsPath, false)
+    if (filesPath && filesPath.length > 0) {
+      console.log(`${logSymbols.info} Reading Lighthouse report file(s)`)
+      for (let index = 0; index < filesPath.length; index++) {
+        const lighthouseReport = filesPath[index]
+        cliFlags['envStatementsObj'].courses.push({
+          id: undefined,
+          type: index === 0 ? 'best-pages' : 'course',
+          target: '[À MODIFIER]',
+          name: '[À MODIFIER]',
+          course: '[À MODIFIER]',
+          reports: {
+            json: lighthouseReport,
+          },
+        })
+      }
+      console.log(SEPARATOR)
+    } else {
+      console.error(`${logSymbols.error} No Lighthouse report file(s) found.`)
+      process.exit(0)
+    }
+  }
   console.log(
     `${logSymbols.info} Generating Environnemental statement report...`,
   )

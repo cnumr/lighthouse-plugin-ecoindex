@@ -176,6 +176,20 @@ const getPuppeteerConfig = {
   ],
 }
 
+function getEnvStatementsObj(exportPath, withStatement = true) {
+  const _exportPath = withStatement
+    ? `${exportPath}/statements`
+    : `${exportPath}`
+  return {
+    courses: [],
+    statements: {
+      json: `${_exportPath}/ecoindex-environmental-statement.json`,
+      html: `${_exportPath}/ecoindex-environmental-statement.html`,
+      md: `${_exportPath}/ecoindex-environmental-statement.md`,
+    },
+  }
+}
+
 const normalizeSlug = str => {
   if (str === ``) {
     throw new Error(`Object or String argument can't be empty.`)
@@ -219,6 +233,7 @@ const slugify = children => {
 
 export {
   endEcoindexPageMesure,
+  getEnvStatementsObj,
   getLighthouseConfig,
   getPuppeteerConfig,
   listAudits,

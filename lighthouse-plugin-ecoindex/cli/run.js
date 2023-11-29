@@ -6,14 +6,24 @@ import {
   readJSONFile,
   startEcoindexPageMesure,
 } from './commands.js'
+import {
+  print,
+  printEnvStatementDocuments,
+  printEnvStatementReport,
+} from './printer.js'
 
 import logSymbols from 'log-symbols'
-import { print } from './printer.js'
 import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
 
 const SEPARATOR = '\n---------------------------------\n'
 
+/**
+ * Run a course of URLs.
+ * @param {*} urls
+ * @param {*} cliFlags
+ * @param {*} course
+ */
 async function runCourse(urls, cliFlags, course = undefined) {
   console.log(SEPARATOR)
   if (course) {
@@ -93,6 +103,10 @@ async function runCourse(urls, cliFlags, course = undefined) {
   await browser.close()
 }
 
+/**
+ * Run courses from CLI flags.
+ * @param {*} cliFlags
+ */
 async function runCourses(cliFlags) {
   // validate minimum options
   if (!cliFlags['json-file'] && !cliFlags['url'] && !cliFlags['demo']) {
@@ -109,7 +123,7 @@ async function runCourses(cliFlags) {
     process.exit(1)
   }
   // Read config file
-  await readJSONFile(cliFlags)
+  await readJSONFile(cliFlags, 'json-file')
   // Read extra-header file
   await readExtraHeaderFile(cliFlags)
   // save `extra-header` from input file in specific var.
@@ -144,14 +158,26 @@ async function runCourses(cliFlags) {
       await runCourse(courses.urls, cliFlags, courses)
     }
   }
+  if (
+    cliFlags['output'].includes('statement') &&
+    cliFlags['url'] === undefined
+  ) {
+    await printEnvStatementReport(cliFlags)
+    await printEnvStatementDocuments(cliFlags)
+  }
 }
 
+/**
+ * Generate Environmental Statement
+ * @param {*} cliFlags
+ */
 async function generateEnvironmentalStatement(cliFlags) {
   console.log(`${logSymbols.info} generateEnvironmentalStatement`)
   // 1. Lire les fichiers JSON
   // 2. Générer le fichier JSON de sortie
+  await printEnvStatementReport(cliFlags, 'input-report')
   // 3. Générer MD et HTML
-  console.log(`cliFlags`, cliFlags)
+  await printEnvStatementDocuments(cliFlags)
 }
 
 export { generateEnvironmentalStatement, runCourses }
