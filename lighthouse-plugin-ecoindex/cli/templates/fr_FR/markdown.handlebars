@@ -3,8 +3,27 @@
 Mesure effectuée le {{ toDateString date }}.
 
 ## Niveau d’écoconception du site web
-    {{!<image||tableau />}}
-* {{ best_pages.summary.[eco-index-grade] }}
+{{#ifEquals best_pages.summary.[eco-index-grade] "A"}}
+![Note A](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-A.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "B"}}
+![Note B](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-B.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "C"}}
+![Note C](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-C.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "D"}}
+![Note D](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-D.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "E"}}
+![Note E](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-E.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "F"}}
+![Note F](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-F.webp)
+{{/ifEquals}}
+{{#ifEquals best_pages.summary.[eco-index-grade] "G"}}
+![Note G](https://raw.githubusercontent.com/cnumr/lighthouse-plugin-ecoindex/feat/new-bin/assets/Note-G.webp)
+{{/ifEquals}}
 * Note Ecoindex : **{{ best_pages.summary.[eco-index-score] }}/100**
 * Consommation d'eau moyenne rapportée à 1 000 utilisateurs (en litres) : **{{ best_pages.summary.[eco-index-water] }} litres, (soit {{ best_pages.summary.[eco-index-water-equivalent] }} packs d'eau minérale).*** 
 * Émission de Gaz à Effet de Serre (GES) moyenne rapportée à 1 000 utilisateurs (kilos CO2e) : **{{ best_pages.summary.[eco-index-ghg] }} kilos CO2e (soit un trajet de {{ best_pages.summary.[eco-index-ghg-equivalent] }} kms en voiture à énergie thermique).***
