@@ -7,10 +7,10 @@ import {
   startEcoindexPageMesure,
 } from './commands.js'
 
-import { startFlow } from 'lighthouse'
 import logSymbols from 'log-symbols'
-import puppeteer from 'puppeteer'
 import { print } from './printer.js'
+import puppeteer from 'puppeteer'
+import { startFlow } from 'lighthouse'
 
 const SEPARATOR = '\n---------------------------------\n'
 
@@ -49,7 +49,11 @@ async function runCourse(urls, cliFlags, course = undefined) {
   // Get a flow handle to be able to send protocol commands to the page.
   const flow = await startFlow(
     page,
-    getLighthouseConfig(false, `Warm Navigation: ${urls[0]}`),
+    getLighthouseConfig(
+      false,
+      `Warm Navigation: ${urls[0]}`,
+      cliFlags['audit-category'],
+    ),
   )
 
   console.log(`${logSymbols.info} Mesuring...`)
@@ -69,7 +73,11 @@ async function runCourse(urls, cliFlags, course = undefined) {
       console.log(`Mesure ${i}: ${urls[i]}`)
       await flow.navigate(
         urls[i],
-        getLighthouseConfig(true, `Cold Navigation: ${urls[i]}`),
+        getLighthouseConfig(
+          true,
+          `Cold Navigation: ${urls[i]}`,
+          cliFlags['audit-category'],
+        ),
       )
       await startEcoindexPageMesure(page, session)
       await endEcoindexPageMesure(flow)
@@ -140,6 +148,9 @@ async function runCourses(cliFlags) {
 
 async function generateEnvironmentalStatement(cliFlags) {
   console.log(`${logSymbols.info} generateEnvironmentalStatement`)
+  // 1. Lire les fichiers JSON
+  // 2. Générer le fichier JSON de sortie
+  // 3. Générer MD et HTML
   console.log(`cliFlags`, cliFlags)
 }
 

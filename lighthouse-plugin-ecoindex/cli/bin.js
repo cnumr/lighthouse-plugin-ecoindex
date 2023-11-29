@@ -1,12 +1,12 @@
 import { generateEnvironmentalStatement, runCourses } from './run.js'
-
-import logSymbols from 'log-symbols'
-import { getFlags } from './cli-flags.js'
-import { listAudits } from './commands.js'
 import {
   printEnvStatementDocuments,
   printEnvStatementReport,
 } from './printer.js'
+
+import { getFlags } from './cli-flags.js'
+import { listAudits } from './commands.js'
+import logSymbols from 'log-symbols'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -40,7 +40,7 @@ async function begin() {
     }
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
     if (cliFlags._[0] === 'collect') {
-      if (cliFlags['url'] !== null) {
+      if (cliFlags['url'] !== undefined) {
         console.log(
           `${logSymbols.warning} Using \`url\` option disable \`Environnemental Statement\` documents generation. Use \`json-file\` to enable it.`,
         )
@@ -48,7 +48,7 @@ async function begin() {
       await runCourses(cliFlags)
       if (
         cliFlags['output'].includes('statement') &&
-        cliFlags['url'] === null
+        cliFlags['url'] === undefined
       ) {
         await printEnvStatementReport(cliFlags)
         await printEnvStatementDocuments(cliFlags)

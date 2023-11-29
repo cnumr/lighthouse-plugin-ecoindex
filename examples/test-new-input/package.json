@@ -8,7 +8,8 @@
     "help": "node lighthouse-plugin-ecoindex/cli/index.js --help",
     "collect:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
     "collect:urls": "node lighthouse-plugin-ecoindex/cli/index.js collect --url http://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
-    "collect:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect --demo"
+    "collect:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect --demo",
+    "collect:demo2": "node lighthouse-plugin-ecoindex/cli/index.js collect --demo -a lighthouse-plugin-ecoindex"
   },
   "keywords": [],
   "author": "",

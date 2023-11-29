@@ -1,11 +1,11 @@
 import fs, { writeFileSync } from 'fs'
-import Handlebars from 'handlebars'
 import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
 
+import Handlebars from 'handlebars'
+import { convertCourseResults } from './converters.js'
+import { fileURLToPath } from 'url'
 import logSymbols from 'log-symbols'
 import { slugify } from './commands.js'
-import { convertCourseResults } from './converters.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 const __dirname = fileURLToPath(dirname(import.meta.url))
@@ -173,7 +173,6 @@ async function printEnvStatementDocuments(cliFlags) {
     )
     const templateMD = Handlebars.compile(sourceMD)
     const mdContent = templateMD(JSON.parse(jsonFile))
-    console.log(`mdContent`, mdContent)
     writeFileSync(envStatementsObj.statements.md, mdContent)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.md}`,

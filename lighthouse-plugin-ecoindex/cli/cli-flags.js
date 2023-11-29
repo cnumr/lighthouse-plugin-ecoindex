@@ -2,9 +2,11 @@ import * as yargsHelpers from 'yargs/helpers'
 
 import fs from 'fs'
 import path from 'path'
+import { readFile } from 'node:fs/promises'
 import yargs from 'yargs'
-/* eslint-disable-next-line */
-import jsonPackage from '../package.json' assert { type: 'json' }
+
+const fileUrl = new URL('../package.json', import.meta.url)
+const jsonPackage = JSON.parse(await readFile(fileUrl, 'utf8'))
 
 const EPILOGUE_STRING =
   'For more information on this Lighthouse Ecoindex script helper, see https://github.com/cnumr/lighthouse-plugin-ecoindex#readme'
@@ -96,6 +98,18 @@ function buildCommand(yargs) {
       coerce: coerceOutput,
       description:
         'Reporter for the results, supports multiple values. choices: "json", "html", "statement". WARN: "csv" is not avalailable with flow.',
+    })
+    .option('audit-category', {
+      alias: 'a',
+      type: 'array',
+      default: /** @type {const} */ ([
+        'performance',
+        'seo',
+        'accessibility',
+        'best-practices',
+        'lighthouse-plugin-ecoindex',
+      ]),
+      description: 'Audit to run, supports multiple values.',
     })
     .epilogue(EPILOGUE_STRING)
 }

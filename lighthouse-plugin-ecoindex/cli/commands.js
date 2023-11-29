@@ -142,13 +142,7 @@ async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
 function getLighthouseConfig(
   isWarm = false,
   stepName = `undefined`,
-  onlyCategories = [
-    'performance',
-    'seo',
-    'accessibility',
-    'best-practices',
-    'lighthouse-plugin-ecoindex',
-  ],
+  onlyCategories = ['lighthouse-plugin-ecoindex'],
 ) {
   return {
     name: stepName,
