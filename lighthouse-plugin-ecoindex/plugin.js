@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import * as i18n from 'lighthouse/core/lib/i18n/i18n.js'
 
 /** @type {LH.Config.Plugin} */

@@ -4,11 +4,11 @@ import * as constants from 'lighthouse/core/config/constants.js'
 
 import fs, { writeFileSync } from 'fs'
 
-import { hideBin } from 'yargs/helpers'
+import { startFlow } from 'lighthouse'
 import path from 'path'
 import puppeteer from 'puppeteer'
-import { startFlow } from 'lighthouse'
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
 const SEPARATOR = '\n---------------------------------\n'
 
@@ -160,7 +160,7 @@ async function captureReport() {
 
   if (!filePath && !urls && !isDemoMode) {
     console.error(
-      'Use`--demo true` or please provide a file path (--urls-file) or URLs (--urls https://www.example.com --urls https://www.example1.com) as an argument',
+      'Use`--demo true` or please provide a file path (--urls-file) or URLs (--url https://www.example.com --url https://www.example1.com) as an argument',
     )
     process.exit(1)
   }
@@ -277,20 +277,20 @@ async function captureReport() {
   if (typeof outputModes === 'string') outputModes = [outputModes]
   console.log(`outputModes`, outputModes)
   // Save results as reports.
-  const reportName = new Date().toISOString()
+  const generationDate = new Date().toISOString()
   // Create the output folder if it doesn't exist.
   await fs.mkdirSync(outputPath, { recursive: true })
   // Get the comprehensive flow report.
   // Save results as HTML.
   if (outputModes.includes('html')) {
-    const reportHtmlPath = `${outputPath}/${reportName}.report.html`
+    const reportHtmlPath = `${outputPath}/${generationDate}.report.html`
     const flowReport = await flow.generateReport()
     writeFileSync(reportHtmlPath, flowReport)
     console.log(`Report generated: ${reportHtmlPath}`)
   }
   // Save results as JSON.
   if (outputModes.includes('json')) {
-    const reportJsonPath = `${outputPath}/${reportName}.report.json`
+    const reportJsonPath = `${outputPath}/${generationDate}.report.json`
     const flowResult = JSON.stringify(await flow.createFlowResult(), null, 2)
     writeFileSync(reportJsonPath, flowResult)
     console.log(`Report generated: ${reportJsonPath}`)
