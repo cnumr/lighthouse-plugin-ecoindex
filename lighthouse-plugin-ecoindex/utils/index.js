@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import round from 'lodash.round'
 
-const KO_TO_MO = 1000000
+const KO_TO_MO = 10000
 
 /**
  * Calculate the number of DOM elements without SVGs content.
@@ -153,8 +153,8 @@ function getMetricRange(metric) {
       return { good: 1000, poor: 600, lowIsBeter: true }
     case 'size':
       return {
-        good: (560 * 100) / KO_TO_MO,
-        poor: (235 * 100) / KO_TO_MO,
+        good: 56000 / KO_TO_MO,
+        poor: 23500 / KO_TO_MO,
         lowIsBeter: true,
       }
     case 'requests':
@@ -315,13 +315,13 @@ function createInformationsTable(metric, value, isPercentile = false) {
       label: 'Good',
       data: `less than ${
         getMetricRange(metric).poor * (isPercentile ? 100 : 1)
-      }`,
+      } ${getMetricNumericUnit(metric)}`,
     })
     items.push({
       label: 'Poor',
       data: `less than ${
         getMetricRange(metric).good * (isPercentile ? 100 : 1)
-      }`,
+      } ${getMetricNumericUnit(metric)}`,
     })
   } else {
     items.push({
@@ -337,33 +337,6 @@ function createInformationsTable(metric, value, isPercentile = false) {
       } ${getMetricNumericUnit(metric)}`,
     })
   }
-  // if (metric == 'grade' || metric == 'score') {
-  //   items.push({
-  //     label: !getMetricRange(metric).lowIsBeter ? 'Good' : 'Poor',
-  //     data: `less than ${
-  //       getMetricRange(metric).good * (isPercentile ? 100 : 1)
-  //     }`,
-  //   })
-  //   items.push({
-  //     label: !getMetricRange(metric).lowIsBeter ? 'Poor' : 'Good',
-  //     data: `less than ${
-  //       getMetricRange(metric).poor * (isPercentile ? 100 : 1)
-  //     }`,
-  //   })
-  // } else {
-  //   items.push({
-  //     label: !getMetricRange(metric).lowIsBeter ? 'Poor' : 'Good',
-  //     data: `less than ${
-  //       getMetricRange(metric).poor * (isPercentile ? 100 : 1)
-  //     } ${getMetricNumericUnit(metric)}`,
-  //   })
-  //   items.push({
-  //     label: !getMetricRange(metric).lowIsBeter ? 'Good' : 'Poor',
-  //     data: `less than ${
-  //       getMetricRange(metric).good * (isPercentile ? 100 : 1)
-  //     } ${getMetricNumericUnit(metric)}`,
-  //   })
-  // }
 
   return Audit.makeTableDetails(headings, items)
 }
@@ -381,7 +354,6 @@ export function createErrorResult(err) {
     errorMessage: err.toString(),
   }
 }
-
 /**
  * @param {number} dom Number of DOM elements
  * @param {number} req Number of HTTP requests
