@@ -50,7 +50,7 @@ async function preparareReports(cliFlags, course = undefined) {
   if (cliFlags['envStatementsObj'] === undefined) {
     cliFlags['envStatementsObj'] = getEnvStatementsObj(exportPath)
   }
-  const courseName = slugify(course?.name)
+  const courseName = slugify(course?.name || 'best-pages')
   const output = {
     id: courseName,
     type: course['is-best-pages'] ? 'best-pages' : 'course',
@@ -58,8 +58,12 @@ async function preparareReports(cliFlags, course = undefined) {
     name: course.name,
     course: course.course,
     reports: {
-      html: `${exportPath}/${courseName ? courseName : ''}.report.html`,
-      json: `${exportPath}/${courseName ? courseName : ''}.report.json`,
+      html: `${exportPath}/${
+        courseName ? courseName : 'best-pages'
+      }.report.html`,
+      json: `${exportPath}/${
+        courseName ? courseName : 'best-pages'
+      }.report.json`,
     },
   }
   cliFlags['envStatementsObj'].courses.push(output)
@@ -184,6 +188,28 @@ async function printEnvStatementDocuments(cliFlags) {
   console.log(
     `${logSymbols.info} Generating Environnemental statement documents...`,
   )
+  // Add informations documents and assets
+  let exportPath = `${cliFlags['output-path']}/${cliFlags['generationDate']}`
+  try {
+    await fs.mkdirSync(`${exportPath}/assets`, {
+      recursive: true,
+    })
+    await fs.copyFileSync(
+      path.join(__dirname, `templates/fr_FR/docs/README.md`),
+      `${exportPath}/README.md`,
+    )
+    await fs.copyFileSync(
+      path.join(__dirname, `templates/fr_FR/docs/assets/eco-conception.png`),
+      `${exportPath}/assets/eco-conception.png`,
+    )
+    await fs.copyFileSync(
+      path.join(__dirname, `templates/fr_FR/docs/assets/logo-asso-greenit.svg`),
+      `${exportPath}/assets/logo-asso-greenit.svg`,
+    )
+  } catch (error) {
+    console.error(`${logSymbols.error} ${error}`)
+  }
+
   const jsonFile = fs.readFileSync(envStatementsObj.statements.json, 'utf8')
 
   // Markdown
