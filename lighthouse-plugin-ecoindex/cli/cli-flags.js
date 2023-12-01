@@ -51,7 +51,7 @@ function collectCommand(yargs) {
   return yargs
     .example(
       'lighthouse-ecoindex collect --demo',
-      'Generates a report for the demo URLs.',
+      'Generates a report with the demo file.',
     )
     .example(
       'lighthouse-ecoindex collect --json-file ./input-file.json',
@@ -59,13 +59,13 @@ function collectCommand(yargs) {
     )
     .example(
       'lighthouse-ecoindex collect --url https://ecoindex.fr/ ',
-      'Generates multiples reports for multiples courses.',
+      'Generates one report for one URL.',
     )
     .option('demo', {
       alias: 'd',
       type: 'boolean',
       default: false,
-      description: 'Use demo URLs.',
+      description: 'Use demo File.',
     })
     .option('url', {
       alias: 'u',
@@ -97,7 +97,7 @@ function collectCommand(yargs) {
       default: /** @type {const} */ (['html']),
       coerce: coerceOutput,
       description:
-        'Reporter for the results, supports multiple values. choices: "json", "html", "statement". WARN: "csv" is not avalailable with flow.',
+        'Reporter for the results, supports multiple values. choices: "json", "html", "statement". WARN: "csv" is not avalailable.',
     })
     .option('audit-category', {
       alias: 'a',
