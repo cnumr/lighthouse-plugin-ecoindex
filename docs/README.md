@@ -12,7 +12,7 @@ order: 900
 
 ## Introduction
 
-Ce plugin permet d'ajouter un audit EcoIndex à Lighthouse.
+Ce plugin permet d'ajouter un audit EcoIndex® à Lighthouse®.
 
 Il peut être utilisé de trois manières différentes :
 

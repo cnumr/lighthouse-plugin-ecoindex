@@ -6,9 +6,11 @@ order: 200
 
 # Référentiel général d'écoconception de services numériques (RGESN)
 
+> Liste des critères du RGESN possiblement mesurables avec lighthouse-ecoindex
+
 [!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/)
 
-> Liste des critères du RGESN possiblement mesurables avec lighthouse-ecoindex
+## Liste (partielle) des critères RGESN
 
 - [ ] 4.1 Le service numérique est-il utilisable via une connexion bas débit ?
 - [ ] 4.10 Le service numérique utilise-t-il majoritairement des polices de caractères du système d'exploitation ?

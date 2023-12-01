@@ -4,9 +4,13 @@ icon: file-badge
 order: 300
 ---
 
-# #RWEB - Les bonnes pratiques GreenIT
+# #RWEB - Les « 115 bonnes pratiques » du Collectif GreenIT
 
-> Listes des bonnes pratiques GreenIT opposables, présente dans l'outil **GreenIT analysis**.
+> Listes des bonnes pratiques GreenIT opposables, présentent dans l'outil **GreenIT analysis**.
+
+[!ref icon="file-badge" target="blank" text="Les 115 bonnes pratiques"](https://github.com/cnumr/best-practices)
+
+## Liste des bonnes pratiques GreenIT
 
 - [x] Vérifier si le site fonctionne à l'énergie verte avec [thegreenwebfoundation.org/api](https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/) `https://api.thegreenwebfoundation.org/api/v3/greencheck/${domaine}`
 - [ ] Ajouter des en-têtes expires ou cache-control
