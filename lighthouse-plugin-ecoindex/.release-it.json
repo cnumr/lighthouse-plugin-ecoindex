@@ -10,7 +10,7 @@
       "out": {
         "files": [
           "../examples/*/package.json",
-          "../../docs/retype.yml"
+          "../docs/retype.yml"
         ],
         "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
         "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
