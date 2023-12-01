@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754786090676">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754786923084">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,11 +31,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/greenit_icone_intro.svg" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.754786090676" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.754786923084" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.754786090676" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.754786923084" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.754786090676" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.754786923084" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -56,7 +56,7 @@
                                 <img class="max-h-10 hidden dark:inline-block" src="../static/greenit_icone_intro.svg">
                             </span>
                             <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Plugin Ecoindex Lighthouse</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">2.0.1</span>
+                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">2.0.2</span>
                     </div>
         
                     <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
@@ -322,12 +322,29 @@
     </div>
 </div>
 <ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des audits</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Continuer à documenter le projet</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des bonnes pratiques</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Localiser le plugin</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des tests unitaires</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>Plugin</del> ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>npx-example</del> ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>test lighthouse-ci</del> ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>test lightouse CLI</del> ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>test (local)</del> ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des audits ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Continuer à documenter le projet ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Valider les Good and Poor thresholds voir [lighthouse-plugin-ecoindex/utils/index.js#getMetricRange()] ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des bonnes pratiques ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Localiser le plugin i18n ;</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ajouter des tests unitaires ;</li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> ...</li>
+</ul>
+<doc-anchor-target id="sources-daides-et-dinspirations">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sources-daides-et-dinspirations">#</doc-anchor-trigger>
+        <span>Sources d&#x27;aides et d&#x27;inspirations</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><a href="https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md">https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md</a></li>
+<li><a href="https://engineering.q42.nl/making-a-lighthouse-plugin-work-with-lighthouse-ci/">https://engineering.q42.nl/making-a-lighthouse-plugin-work-with-lighthouse-ci/</a></li>
+<li><a href="https://github.com/googleads/publisher-ads-lighthouse-plugin">https://github.com/googleads/publisher-ads-lighthouse-plugin</a></li>
 </ul>
 
                                 
