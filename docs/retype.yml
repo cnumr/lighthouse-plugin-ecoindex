@@ -31,3 +31,8 @@ footer:
       link: https://asso.ecoindex.fr/
       target: blank
       icon: icon-organization
+edit:
+  repo: 'https://github.com/cnumr/lighthouse-plugin-ecoindex' # The URL to source files for this project
+  base: './docs' # Optional base path to a directory within repo
+  branch: 'main' # Point to a custom branch within the repo
+  label: 'Edit this page' # A custom label for the generated link
