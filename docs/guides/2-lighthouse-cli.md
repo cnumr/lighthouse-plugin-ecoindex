@@ -1,5 +1,6 @@
 ---
-label: CLI `lighthouse`
+label: Lighthouse CLI
+icon: terminal
 ---
 
 # Utilisation avec lighthouse CLI

@@ -5,7 +5,7 @@ icon: home
 
 ![](./ecoindex-intro.png)
 
-# Plugin [Ecoindex(https://www.ecoindex.fr)] pour [Lighthouse](https://developers.google.com/web/tools/lighthouse)
+# Plugin [Ecoindex](https://www.ecoindex.fr) pour [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 
 ![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
 
