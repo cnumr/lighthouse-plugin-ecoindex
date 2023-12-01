@@ -1,7 +1,7 @@
 ---
 label: Home
 icon: home
-order: 900
+order: 1000
 ---
 
 ![](./ecoindex-intro.png)
@@ -25,11 +25,15 @@ Afin d'obtenir :
 - Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr®
 - Ajouter ces résultats dans votre CI/CD ou un à serveur Lighthouse.
 
+!!!info Déclaration Environnementale de GreenIT.fr®
+[!button target="blank" icon="checklist" iconAlign="right" text="Découvir"](https://declaration.greenit.fr/)
+!!!
+
 ## Récapitulatif des fonctionnalités
 
-> **cli (int)**: client interne `npx lighthouse-ecoindex <command> <options>` ;  
-> **cli (lh)**: client Lighthouse `npm lighthouse <url> <options>` ;  
-> **CI**: Lighthouse CI
+- [!button size="xs" text="cli (int)"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;  
+- [!button size="xs" text="cli (lh)"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;  
+- [!button size="xs" text="CI"](./guides/3-lighthouse-ci.md) Lighthouse CI
 
 | Fonctionnalités                                          | cli(int) | cli (lh) | CI  |
 | :------------------------------------------------------- | -------- | -------- | --- |
@@ -40,9 +44,9 @@ Afin d'obtenir :
 
 ## Documentation des usages
 
-[!ref CLI `lighthouse-ecoindex`](/guides/1-lighthouse-ecoindex-cli.md)
-[!ref CLI `lighthouse`](/guides/2-lighthouse-cli.md)
-[!ref `lighthouse-ci`](/guides/3-lighthouse-ci.md)
+[!ref lighthouse-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
+[!ref Lighthouse CLI](/guides/2-lighthouse-cli.md)
+[!ref Lighthouse CI](/guides/3-lighthouse-ci.md)
 
 ![Details of plugin results](./ecoindex-results.png)
 

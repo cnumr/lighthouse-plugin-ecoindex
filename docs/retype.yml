@@ -25,12 +25,12 @@ footer:
   copyright: '&copy; Copyright {{ year }}. All rights reserved to GreenIT.fr.'
   links:
     - text: License
-      link: ./license.md
+      link: ./licence.md
       icon: shield
     - text: Association GreenIT.fr
       link: https://asso.greenit.fr/
       target: blank
-      icon: icon-organization
+      icon: organization
 edit:
   repo: 'https://github.com/cnumr/lighthouse-plugin-ecoindex' # The URL to source files for this project
   base: './docs' # Optional base path to a directory within repo
