@@ -8,7 +8,10 @@
   "plugins": {
     "@j-ulrich/release-it-regex-bumper": {
       "out": {
-        "file": "../examples/*/package.json",
+        "files": [
+          "../examples/*/package.json",
+          "../../docs/retype.yml"
+        ],
         "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
         "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
       }
