@@ -15,8 +15,8 @@
         },
         {
           "file": "../docs/retype.yml",
-          "search": "\"label\":\\s*\"([0-9.]+)\"",
-          "replace": "\"label\": \"{{version}}\""
+          "search": "\"label\":\\s*([0-9.]+)",
+          "replace": "\"label\": {{version}}"
         }
       ]
     }
