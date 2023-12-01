@@ -13,6 +13,6 @@
   "dependencies": {
     "@lhci/cli": "^0.12.0",
     "lighthouse": "^11.3.0",
-    "lighthouse-plugin-ecoindex": "2.0.1"
+    "lighthouse-plugin-ecoindex": "2.0.2"
   }
 }
