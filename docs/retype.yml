@@ -1,9 +1,11 @@
 input: .
 branding:
-  title: Ecoindex with LightHouse
+  title: Ecoindex & LightHouse
   label: 2.0.0
 links:
   - text: Ecoindex
     link: https://www.ecoindex.fr/
+  - text: Association GreenIT.fr
+    link: https://asso.ecoindex.fr/
 footer:
   copyright: '&copy; Copyright {{ year }}. All rights reserved.'
