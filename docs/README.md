@@ -34,7 +34,7 @@ Ce plugin permet d'ajouter un audit EcoIndex® à Lighthouse®.
 - Une taille d'écran spécifique (1920 × 1080px).
 - Une configuration de navigateur spécifique (voir ci-dessous).
 
-### Worflow Puppeteer/lighthouse
+### Worflow Puppeteer & lighthouse
 
 !!!success 👉 Comportement de l'utilisateur
 1. Lancez un navigateur Chrome sans tête avec les capacités no-sandbox, disable-dev-shm-usage et goog:loggingPrefs définies sur {"performance" : "ALL"}.
@@ -47,11 +47,11 @@ Ce plugin permet d'ajouter un audit EcoIndex® à Lighthouse®.
 
 ## Récapitulatif des fonctionnalités
 
-- [!button size="xs" text="cli (int)"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;  
-- [!button size="xs" text="cli (lh)"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;  
-- [!button size="xs" text="CI"](./guides/3-lighthouse-ci.md) Lighthouse CI
+- [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;  
+- [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;  
+- [!button size="xs" text="CI" icon="pulse"](./guides/3-lighthouse-ci.md) Lighthouse CI
 
-| Fonctionnalités                                          | cli(int) | cli (lh) | CI  |
+| Fonctionnalités                                          | :icon-terminal: cli(int) | :icon-terminal: cli(lh) | :icon-pulse: CI  |
 | :------------------------------------------------------- | -------- | -------- | --- |
 | Rapports Lighthouse avec les audits ecoindex             | ✅       | ✅       | ✅  |
 | Bonnes pratiques Green IT                                | ✅       | ✅       | ✅  |
