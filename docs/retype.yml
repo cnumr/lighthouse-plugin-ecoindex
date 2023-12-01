@@ -8,11 +8,11 @@ links:
   - text: Association GreenIT
     link: https://asso.greenit.fr/
     target: blank
+    icon: organization
   - text: Ecoindex
     link: https://www.ecoindex.fr/
     target: blank
     icon: info
-    icon: organization
   - text: NPM
     link: https://www.npmjs.com/package/lighthouse-plugin-ecoindex
     target: blank
