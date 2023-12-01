@@ -3,7 +3,7 @@ favicon: static/greenit_icone_intro.svg
 branding:
   title: Plugin Ecoindex Lighthouse
   logo: static/greenit_icone_intro.svg
-  label: 2.0.0
+  label: 2.0.1
 links:
   - text: Association GreenIT
     link: https://asso.greenit.fr/
