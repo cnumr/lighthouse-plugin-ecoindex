@@ -1,4 +1,5 @@
 input: .
+favicon: static/greenit_icone_intro.svg
 branding:
   title: Plugin Ecoindex Lighthouse
   logo: ./static/logo-asso-greenit.svg
