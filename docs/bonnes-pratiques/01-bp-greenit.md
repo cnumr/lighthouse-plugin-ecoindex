@@ -1,0 +1,32 @@
+---
+label: BP GreenIT
+icon: file-badge
+order: 300
+---
+
+# #RWEB - Les bonnes pratiques GreenIT
+
+> Listes des bonnes pratiques GreenIT opposables, présente dans l'outil **GreenIT analysis**.
+
+- [x] Vérifier si le site fonctionne à l'énergie verte avec [thegreenwebfoundation.org/api](https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/) `https://api.thegreenwebfoundation.org/api/v3/greencheck/${domaine}`
+- [ ] Ajouter des en-têtes expires ou cache-control
+- [ ] Compresser les ressources (>= 95%)
+- [ ] Limiter le nombre de domaines (<6)
+- [ ] Ne pas redimensionner l'image dans le navigateur
+- [ ] Externaliser css et js
+- [ ] Éviter les erreurs de requête HTTP
+- [ ] Limiter le nombre de requêtes HTTP (<27)
+- [ ] Ne pas télécharger d'images inutiles
+- [ ] Valider les js
+- [ ] Longueur maximale des cookies (<512 octets)
+- [ ] Minification des css et js
+- [ ] Pas de cookie pour les ressources statiques
+- [ ] Éviter les redirections
+- [ ] Optimiser les images bitmap
+- [ ] Optimiser les images svg
+- [ ] Ne pas utiliser de plugins
+- [x] Fournir une feuille de style pour l'impression (test : https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/)
+- [ ] Ne pas utiliser de bouton social standard
+- [ ] Limiter les fichiers de feuilles de style (<=10)
+- [ ] Utiliser HTTP/2 au lieu de HTTP/1
+- [ ] Utiliser des polices de caractères standard
