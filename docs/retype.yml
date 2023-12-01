@@ -2,7 +2,7 @@ input: .
 favicon: static/greenit_icone_intro.svg
 branding:
   title: Plugin Ecoindex Lighthouse
-  logo: ./static/logo-asso-greenit.svg
+  logo: static/greenit_icone_intro.svg
   label: 2.0.0
 links:
   - text: Association GreenIT

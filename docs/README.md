@@ -8,6 +8,8 @@ order: 900
 
 # Plugin [Ecoindex](https://www.ecoindex.fr) pour [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 
+![](./static/logo-asso-greenit.svg)
+
 ![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
 
 ## Introduction
