@@ -7,14 +7,18 @@
   },
   "plugins": {
     "@j-ulrich/release-it-regex-bumper": {
-      "out": {
-        "files": [
-          "../examples/*/package.json",
-          "../docs/retype.yml"
-        ],
-        "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
-        "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
-      }
+      "out": [
+        {
+          "file": "../examples/*/package.json",
+          "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
+          "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
+        },
+        {
+          "file": "../docs/retype.yml",
+          "search": "\"label\":\\s*\"([0-9.]+)\"",
+          "replace": "\"label\": \"{{version}}\""
+        }
+      ]
     }
   }
 }
