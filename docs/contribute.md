@@ -11,6 +11,7 @@ Ils restent encore beaucoup de choses à faire pour améliorer ce projet. Vous p
 ## Comment contribuer ?
 
 Vous pouvez contribuer de différentes manières :
+
 - En ouvrant une [issue](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues)
 - En proposant une [pull request](https://github.com/cnumr/lighthouse-plugin-ecoindex/pulls)
 
@@ -21,6 +22,7 @@ L'usage du devcontainer n'est pas obligatoire pour le développement.
 !!!
 
 Un devcontainers à été mis en place pour faciliter le développement. Il suffit d'installer [Docker](https://www.docker.com/) et [Visual Studio Code](https://code.visualstudio.com/) et de suivre les étapes suivantes :
+
 - Cloner le projet
 - Ouvrir le projet dans Visual Studio Code
 - Ouvrir le dossier `.devcontainer` et cliquer sur le bouton `Reopen in Container`
@@ -33,12 +35,24 @@ Ce devcontainer contient notamment un serveur Lighthouse pour tester le plugin e
 
 !!!warning Ne pas utiliser de `gatherers` custom pour les audits
 Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux audits sont déjà disponibles dans Lighthouse, il faut donc les utiliser.  
-[!button text="Voir les gatherers officiels Lighthouse"]([button.md](https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers))
+[!button text="Voir les gatherers officiels Lighthouse"](<[button.md](https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers)>)
 !!!
 
-- [ ] Ajouter des audits
-- [ ] Continuer à documenter le projet
-- [ ] Ajouter des bonnes pratiques
-- [ ] Localiser le plugin
-- [ ] Ajouter des tests unitaires
+- [x] ~~Plugin~~ ;
+- [x] ~~npx-example~~ ;
+- [x] ~~test lighthouse-ci~~ ;
+- [x] ~~test lightouse CLI~~ ;
+- [x] ~~test (local)~~ ;
+- [ ] Ajouter des audits ;
+- [ ] Continuer à documenter le projet ;
+- [ ] Valider les Good and Poor thresholds voir [lighthouse-plugin-ecoindex/utils/index.js#getMetricRange()] ;
+- [ ] Ajouter des bonnes pratiques ;
+- [ ] Localiser le plugin i18n ;
+- [ ] Ajouter des tests unitaires ;
 - [ ] ...
+
+## Sources d'aides et d'inspirations
+
+- https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md
+- https://engineering.q42.nl/making-a-lighthouse-plugin-work-with-lighthouse-ci/
+- https://github.com/googleads/publisher-ads-lighthouse-plugin
