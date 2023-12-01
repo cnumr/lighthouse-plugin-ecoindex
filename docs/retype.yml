@@ -5,13 +5,13 @@ branding:
   logo: ./static/logo-asso-greenit.svg
   label: 2.0.0
 links:
+  - text: Association GreenIT
+    link: https://asso.ecoindex.fr/
+    target: blank
   - text: Ecoindex
     link: https://www.ecoindex.fr/
     target: blank
     icon: info
-  - text: Association GreenIT.fr
-    link: https://asso.ecoindex.fr/
-    target: blank
     icon: organization
   - text: NPM
     link: https://www.npmjs.com/package/lighthouse-plugin-ecoindex
@@ -26,7 +26,7 @@ footer:
   links:
     - text: License
       link: ./license.md
-      icon: icon-shield
+      icon: shield
     - text: Association GreenIT.fr
       link: https://asso.ecoindex.fr/
       target: blank
