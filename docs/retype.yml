@@ -6,7 +6,7 @@ branding:
   label: 2.0.0
 links:
   - text: Association GreenIT
-    link: https://asso.ecoindex.fr/
+    link: https://asso.greenit.fr/
     target: blank
   - text: Ecoindex
     link: https://www.ecoindex.fr/
@@ -28,7 +28,7 @@ footer:
       link: ./license.md
       icon: shield
     - text: Association GreenIT.fr
-      link: https://asso.ecoindex.fr/
+      link: https://asso.greenit.fr/
       target: blank
       icon: icon-organization
 edit:
