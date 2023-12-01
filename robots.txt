@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: /./retype.yml/sitemap.xml.gz
+Sitemap: /./docs/sitemap.xml.gz
