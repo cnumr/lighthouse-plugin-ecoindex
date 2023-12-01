@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754739069914">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754741057553">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Plugin EcoIndex pour Lighthouse</title>
-    <meta name="title" content="Plugin EcoIndex pour Lighthouse">
+    <title>Plugin [Ecoindex(https://www.ecoindex.fr)] pour Lighthouse</title>
+    <meta name="title" content="Plugin [Ecoindex(https://www.ecoindex.fr)] pour Lighthouse">
     <meta name="description" content="npm GitHub License">
 
     <!-- Canonical -->
@@ -19,24 +19,25 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="/">
-    <meta property="og:title" content="Plugin EcoIndex pour Lighthouse">
+    <meta property="og:title" content="Plugin [Ecoindex(https://www.ecoindex.fr)] pour Lighthouse">
     <meta property="og:description" content="npm GitHub License">
     <meta property="og:image" content="/ecoindex-intro.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="/">
-    <meta property="twitter:title" content="Plugin EcoIndex pour Lighthouse">
+    <meta property="twitter:title" content="Plugin [Ecoindex(https://www.ecoindex.fr)] pour Lighthouse">
     <meta property="twitter:description" content="npm GitHub License">
     <meta property="twitter:image" content="/ecoindex-intro.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="resources/css/retype.css?v=3.5.0.754739069914" rel="stylesheet">
+    <link href="static/greenit_icone_intro.svg" rel="icon">
+    <link href="resources/css/retype.css?v=3.5.0.754741057553" rel="stylesheet">
 
-    <script data-cfasync="false" src="resources/js/config.js?v=3.5.0.754739069914" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="resources/js/config.js?v=3.5.0.754741057553" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="resources/js/lunr.js?v=3.5.0.754739069914" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="resources/js/lunr.js?v=3.5.0.754741057553" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -206,22 +207,121 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="plugin-ecoindex-pour-lighthouse" class="break-words">
+<doc-anchor-target id="plugin-ecoindexhttpswwwecoindexfr-pour-lighthouse" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#plugin-ecoindex-pour-lighthouse">#</doc-anchor-trigger>
-        <span>Plugin EcoIndex pour Lighthouse</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#plugin-ecoindexhttpswwwecoindexfr-pour-lighthouse">#</doc-anchor-trigger>
+        <span>Plugin [Ecoindex(https://www.ecoindex.fr)] pour <a href="https://developers.google.com/web/tools/lighthouse">Lighthouse</a></span>
     </h1>
 </doc-anchor-target>
 <p><img src="https://img.shields.io/npm/v/lighthouse-plugin-ecoindex" alt="npm" /> <img src="https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex" alt="GitHub License" /></p>
+<doc-anchor-target id="introduction">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction">#</doc-anchor-trigger>
+        <span>Introduction</span>
+    </h2>
+</doc-anchor-target>
 <p>Ce plugin permet d&#x27;ajouter un audit EcoIndex à Lighthouse.</p>
 <p>Il peut être utilisé de trois manières différentes :</p>
 <ul>
-<li>en ligne de commande <code v-pre>npm lighthouse-ecoindex &lt;command&gt; [options]</code></li>
-<li>Avec Lighthouse CI</li>
-<li>Avec ligthouse cli</li>
+<li>En ligne de commande <code v-pre>npx lighthouse-ecoindex &lt;command&gt; &lt;options&gt;</code> avec le cli fourni par le plugin ;</li>
+<li>Avec <a href="https://github.com/GoogleChrome/lighthouse#using-the-node-cli">Lighthouse cli</a> <code v-pre>npm lighthouse &lt;url&gt; &lt;options&gt;</code>.</li>
+<li>Avec <a href="https://github.com/GoogleChrome/lighthouse-ci#readme">Lighthouse CI</a> ;</li>
 </ul>
-<p>Pour obtenir des rapports HTML, JSON, la Déclaration Environnementale de votre site (Environmental Impact Statement (EIS)) de GreenIT.fr (c)</p>
+<p>Afin d&#x27;obtenir avec notre cli <code v-pre>npx lighthouse-ecoindex &lt;command&gt; &lt;options&gt;</code> et des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr (c)</p>
 <p>Ou pour afficher ces résultats dans votre CI/CD ou un serveur Lighthouse.</p>
+<doc-anchor-target id="récapitulatif-des-fonctionnalités">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#récapitulatif-des-fonctionnalités">#</doc-anchor-trigger>
+        <span>Récapitulatif des fonctionnalités</span>
+    </h2>
+</doc-anchor-target>
+<blockquote>
+<p><strong>cli (int)</strong>: client interne <code v-pre>npx lighthouse-ecoindex &lt;command&gt; &lt;options&gt;</code> ;<br />
+<strong>cli (lh)</strong>: client Lighthouse <code v-pre>npm lighthouse &lt;url&gt; &lt;options&gt;</code> ;<br />
+<strong>CI</strong>: Lighthouse CI</p>
+</blockquote>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th style="text-align: left;">Fonctionnalités</th>
+<th>cli(int)</th>
+<th>cli (lh)</th>
+<th>CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rapports Lighthouse avec les audits ecoindex</td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Bonnes pratiques Green IT</td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Déclaration Environnementale (EIS)</td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+<td><span class="docs-emoji">&#x274C;</span></td>
+<td><span class="docs-emoji">&#x274C;</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Publication des données d&#x27;audits à un serveur Lighthouse</td>
+<td><span class="docs-emoji">&#x274C;</span></td>
+<td><span class="docs-emoji">&#x274C;</span></td>
+<td><span class="docs-emoji">&#x2705;</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="documentation-des-usages">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#documentation-des-usages">#</doc-anchor-trigger>
+        <span>Documentation des usages</span>
+    </h2>
+</doc-anchor-target>
+<p>
+<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
+    <div class="flex items-center text-blue-500 dark:text-blue-400">
+        <span class="inline-block mb-px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
+        </span>
+        <span class="inline-block font-medium ml-2">CLI <code v-pre>lighthouse-ecoindex</code></span>
+    </div>
+    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
+        <span>guides/1-lighthouse-ecoindex-cli/</span>
+    </div>
+    <a href="guides/1-lighthouse-ecoindex-cli/" class="absolute block inset-0"></a>
+</div>
+<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
+    <div class="flex items-center text-blue-500 dark:text-blue-400">
+        <span class="inline-block mb-px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
+        </span>
+        <span class="inline-block font-medium ml-2">CLI <code v-pre>lighthouse</code></span>
+    </div>
+    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
+        <span>guides/2-lighthouse-cli/</span>
+    </div>
+    <a href="guides/2-lighthouse-cli/" class="absolute block inset-0"></a>
+</div>
+<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
+    <div class="flex items-center text-blue-500 dark:text-blue-400">
+        <span class="inline-block mb-px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
+        </span>
+        <span class="inline-block font-medium ml-2"><code v-pre>lighthouse-ci</code></span>
+    </div>
+    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
+        <span>guides/3-lighthouse-ci/</span>
+    </div>
+    <a href="guides/3-lighthouse-ci/" class="absolute block inset-0"></a>
+</div>
+</p>
 <p><figure class="content-center">
     <img src="ecoindex-results.png" alt="Details of plugin results">
     <figcaption class="caption">Details of plugin results</figcaption>
@@ -239,10 +339,10 @@
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l rounded-r-lg transition-colors duration-150 relative hover:z-5" href="licence/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l rounded-r-lg transition-colors duration-150 relative hover:z-5" href="guides/2-lighthouse-cli/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">Licence</span>
+                                                <span class="block mt-1">CLI lighthouse</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
