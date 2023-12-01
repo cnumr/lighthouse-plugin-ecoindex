@@ -8,8 +8,6 @@ order: 900
 
 # Plugin [Ecoindex](https://www.ecoindex.fr) pour [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 
-![](./static/logo-asso-greenit.svg)
-
 ![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
 
 ## Introduction
@@ -22,9 +20,10 @@ Il peut être utilisé de trois manières différentes :
 - Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>`.
 - Avec [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) ;
 
-Afin d'obtenir avec notre cli `npx lighthouse-ecoindex <command> <options>` et des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr (c)
+Afin d'obtenir :
 
-Ou pour afficher ces résultats dans votre CI/CD ou un serveur Lighthouse.
+- Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr®
+- Ajouter ces résultats dans votre CI/CD ou un à serveur Lighthouse.
 
 ## Récapitulatif des fonctionnalités
 
@@ -46,4 +45,5 @@ Ou pour afficher ces résultats dans votre CI/CD ou un serveur Lighthouse.
 [!ref `lighthouse-ci`](/guides/3-lighthouse-ci.md)
 
 ![Details of plugin results](./ecoindex-results.png)
-_Details of plugin results_
+
+[![](./static/logo-asso-greenit.svg "Aller sur le site de l'association")](https://asso.greenit.fr/)
