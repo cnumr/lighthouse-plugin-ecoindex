@@ -2,6 +2,7 @@
 label: LICENSE
 icon: shield
 visibility: hidden
+order: -1000
 ---
 
                     GNU AFFERO GENERAL PUBLIC LICENSE

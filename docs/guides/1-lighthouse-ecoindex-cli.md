@@ -1,7 +1,7 @@
 ---
 label: lighthouse-ecoindex CLI
 icon: terminal
-order: 100
+order: 300
 expanded: true
 ---
 

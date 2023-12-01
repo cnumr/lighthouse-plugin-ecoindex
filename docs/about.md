@@ -1,7 +1,7 @@
 ---
 label: A propos
 icon: info
-order: 900
+order: 100
 ---
 
 # A propos de ce projet

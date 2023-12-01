@@ -1,7 +1,7 @@
 ---
 label: Home
 icon: home
-order: 100
+order: 900
 ---
 
 ![](./ecoindex-intro.png)

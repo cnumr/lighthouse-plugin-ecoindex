@@ -1,7 +1,7 @@
 ---
 label: Lighthouse CI
 icon: pulse
-order: 300
+order: 100
 expanded: true
 ---
 
