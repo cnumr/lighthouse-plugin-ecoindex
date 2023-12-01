@@ -1,0 +1,9 @@
+input: .
+branding:
+  title: Ecoindex with LightHouse
+  label: 2.0.0
+links:
+  - text: Ecoindex
+    link: https://www.ecoindex.fr/
+footer:
+  copyright: '&copy; Copyright {{ year }}. All rights reserved.'
