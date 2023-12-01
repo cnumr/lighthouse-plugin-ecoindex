@@ -19,7 +19,7 @@ jobs:
 
       - uses: retypeapp/action-build@latest
         with:
-          base: ./retype.yml
+          base: ./docs
 
       - uses: retypeapp/action-github-pages@latest
         with:
