@@ -1,6 +1,8 @@
 ---
 label: Lighthouse CLI
 icon: terminal
+order: 200
+expanded: true
 ---
 
 # Utilisation avec lighthouse CLI

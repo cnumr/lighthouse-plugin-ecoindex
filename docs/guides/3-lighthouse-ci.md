@@ -1,6 +1,8 @@
 ---
 label: Lighthouse CI
-icon: icon-pulse
+icon: pulse
+order: 300
+expanded: true
 ---
 
 # Utilisation avec Lighthouse CI
