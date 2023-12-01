@@ -1,11 +1,32 @@
 input: .
 branding:
-  title: Ecoindex & LightHouse
+  title: Plugin Ecoindex Lighthouse
+  logo: ./static/logo-asso-greenit.svg
   label: 2.0.0
 links:
   - text: Ecoindex
     link: https://www.ecoindex.fr/
+    target: blank
+    icon: icon-info
   - text: Association GreenIT.fr
     link: https://asso.ecoindex.fr/
+    target: blank
+    icon: icon-organization
+  - text: NPM
+    link: https://www.npmjs.com/package/lighthouse-plugin-ecoindex
+    target: blank
+    icon: icon-package
+  - text: GitHub
+    link: https://github.com/cnumr/lighthouse-plugin-ecoindex#readme
+    target: blank
+    icon: mark-github
 footer:
-  copyright: '&copy; Copyright {{ year }}. All rights reserved.'
+  copyright: '&copy; Copyright {{ year }}. All rights reserved to GreenIT.fr.'
+  links:
+    - text: License
+      link: ./license.md
+      icon: icon-shield
+    - text: Association GreenIT.fr
+      link: https://asso.ecoindex.fr/
+      target: blank
+      icon: icon-organization
