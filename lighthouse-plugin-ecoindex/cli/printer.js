@@ -135,6 +135,7 @@ async function printEnvStatementReport(cliFlags, type = 'json-file') {
   )
 
   const output = {
+    version_api: '1.0.0',
     date: cliFlags['generationDate'],
     best_pages: {},
     courses: [],
