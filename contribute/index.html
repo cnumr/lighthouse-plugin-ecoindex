@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754786923084">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.754820858569">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Contribuer &#224; ce projet</title>
-    <meta name="title" content="Contribuer à ce projet">
+    <title>Contribuer &#224; ce projet - Ecoindex Lighthouse Plugin</title>
+    <meta name="title" content="Contribuer à ce projet - Ecoindex Lighthouse Plugin">
     <meta name="description" content="Ils restent encore beaucoup de choses à faire pour améliorer ce projet. Vous pouvez nous aider en contribuant à ce projet.">
 
     <!-- Canonical -->
@@ -19,23 +19,23 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="/contribute/">
-    <meta property="og:title" content="Contribuer à ce projet">
+    <meta property="og:title" content="Contribuer à ce projet - Ecoindex Lighthouse Plugin">
     <meta property="og:description" content="Ils restent encore beaucoup de choses à faire pour améliorer ce projet. Vous pouvez nous aider en contribuant à ce projet.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="/contribute/">
-    <meta property="twitter:title" content="Contribuer à ce projet">
+    <meta property="twitter:title" content="Contribuer à ce projet - Ecoindex Lighthouse Plugin">
     <meta property="twitter:description" content="Ils restent encore beaucoup de choses à faire pour améliorer ce projet. Vous pouvez nous aider en contribuant à ce projet.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/greenit_icone_intro.svg" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.754786923084" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.754820858569" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.754786923084" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.754820858569" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.754786923084" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.754820858569" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -291,15 +291,31 @@
 <li>Ouvrir un terminal et lancer la commande <code v-pre>npm install</code></li>
 <li>Consulter les sous-dossiers de <code v-pre>examples</code> pour voir les exemples d&#x27;utilisation et suivre les <code v-pre>README.md</code> pour les lancer.</li>
 </ul>
-<p>Ce devcontainer contient notamment un serveur Lighthouse pour tester le plugin en mode <a href="../guides/3-lighthouse-ci/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-600 bg-blue-100 border border-blue-100 hover:border-blue-300 dark:hover:bg-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+<p>Ce devcontainer contient notamment un <a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md">serveur Lighthouse</a> pour tester le plugin en mode <a href="../guides/3-lighthouse-ci/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-600 bg-blue-100 border border-blue-100 hover:border-blue-300 dark:hover:bg-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
     <span><svg xmlns="http://www.w3.org/2000/svg" class="mb-px inline-flex mr-2" width="18" height="18" viewBox="0 0 24 24" role="presentation"><g fill="currentColor"><path d="M9.002 2.5a.75.75 0 0 1 .691.464l6.302 15.305 2.56-6.301a.75.75 0 0 1 .695-.468h4a.75.75 0 0 1 0 1.5h-3.495l-3.06 7.532a.75.75 0 0 1-1.389.004L8.997 5.21l-3.054 7.329A.75.75 0 0 1 5.25 13H.75a.75.75 0 0 1 0-1.5h4l3.558-8.538a.75.75 0 0 1 .694-.462Z"/></g></svg></span>
     <span>Lighthouse CI</span>
 </a></p>
-<doc-anchor-target id="reste-à-faire">
+<doc-anchor-target id="lighthouse-server">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#lighthouse-server">#</doc-anchor-trigger>
+        <span>Lighthouse server</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>En mode <code v-pre>devcontainer</code> connectez-vous au container Docker via sa ligne de commande et faites <code v-pre>lhci wizard</code> pour configurer le serveur Lighthouse. Reportez cette configuration dans le fichier <code v-pre>.lighthouserc.js</code> à la racine du projet.</li>
+<li>Sans <code v-pre>devcontainer</code> vous pouvez installer le serveur Lighthouse en suivant la <a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md">documentation officielle</a></li>
+</ul>
+<doc-anchor-target id="point-dattention">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#reste-à-faire">#</doc-anchor-trigger>
-        <span>Reste à faire</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#point-dattention">#</doc-anchor-trigger>
+        <span>Point d&#x27;attention</span>
     </h2>
+</doc-anchor-target>
+<doc-anchor-target id="contraintes-de-développement">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#contraintes-de-développement">#</doc-anchor-trigger>
+        <span>Contraintes de développement</span>
+    </h3>
 </doc-anchor-target>
 <div class="flex mb-6">
     <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
@@ -314,13 +330,19 @@
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Ne pas utiliser de <code v-pre>gatherers</code> custom pour les audits</h5>
-<p>Les <code v-pre>gatherers</code> custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux audits sont déjà disponibles dans Lighthouse, il faut donc les utiliser.<br />
+<p>Les <code v-pre>gatherers</code> custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux <code v-pre>gatherers</code> sont déjà disponibles dans Lighthouse, il faut donc les utiliser.<br />
 <a href="%5Bbutton.md%5D(https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers)" class="no-link inline-flex align-middle items-center font-medium cursor-pointer transition-colors duration-200 ease-out focus:outline-none bg-blue-500 hover:bg-blue-700 text-white px-4 h-10 text-sm rounded-md">
     <span>Voir les gatherers officiels Lighthouse</span>
 </a></p>
         </div>
     </div>
 </div>
+<doc-anchor-target id="liste-des-tâches">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#liste-des-tâches">#</doc-anchor-trigger>
+        <span>Liste des tâches</span>
+    </h2>
+</doc-anchor-target>
 <ul class="contains-task-list">
 <li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>Plugin</del> ;</li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>npx-example</del> ;</li>
