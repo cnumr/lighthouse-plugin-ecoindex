@@ -17,3 +17,5 @@ reports/*
 # input files to keep locally
 example-urls-list*
 !example-urls-list
+
+private-*.json
