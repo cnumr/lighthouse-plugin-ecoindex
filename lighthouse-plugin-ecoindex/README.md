@@ -5,9 +5,9 @@
 ![Summary of results](docs/ecoindex-intro.png)
 _Summary of results_
 
-![Details of plugin results](docs/ecoindex-results.png)
-_Details of plugin results_
+[Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
 
 > CHANGELOG: [CHANGELOG.md](./lighthouse-plugin-ecoindex/CHANGELOG.md)
 
-[Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
+![Details of plugin results](docs/ecoindex-results.png)
+_Details of plugin results_

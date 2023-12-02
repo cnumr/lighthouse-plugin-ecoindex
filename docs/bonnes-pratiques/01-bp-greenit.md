@@ -12,7 +12,6 @@ order: 300
 
 ## Liste des bonnes pratiques GreenIT
 
-- [x] Vérifier si le site fonctionne à l'énergie verte avec [thegreenwebfoundation.org/api](https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/) `https://api.thegreenwebfoundation.org/api/v3/greencheck/${domaine}`
 - [ ] Ajouter des en-têtes expires ou cache-control
 - [ ] Compresser les ressources (>= 95%)
 - [ ] Limiter le nombre de domaines (<6)
