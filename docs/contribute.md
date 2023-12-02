@@ -29,7 +29,12 @@ Un devcontainers à été mis en place pour faciliter le développement. Il suff
 - Ouvrir un terminal et lancer la commande `npm install`
 - Consulter les sous-dossiers de `examples` pour voir les exemples d'utilisation et suivre les `README.md` pour les lancer.
 
-Ce devcontainer contient notamment un serveur Lighthouse pour tester le plugin en mode [!badge text="Lighthouse CI" icon="pulse"](./guides/3-lighthouse-ci.md)
+Ce devcontainer contient notamment un [serveur Lighthouse](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md) pour tester le plugin en mode [!badge text="Lighthouse CI" icon="pulse"](./guides/3-lighthouse-ci.md)
+
+### Lighthouse server
+
+- En mode `devcontainer` connectez-vous au container Docker via sa ligne de commande et faites `lhci wizard` pour configurer le serveur Lighthouse. Reportez cette configuration dans le fichier `.lighthouserc.js` à la racine du projet.
+- Sans `devcontainer` vous pouvez installer le serveur Lighthouse en suivant la [documentation officielle](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md)
 
 ## Point d'attention
 
