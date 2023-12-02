@@ -19,3 +19,4 @@ example-urls-list*
 !example-urls-list
 
 private-*.json
+private-*/
