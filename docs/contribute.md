@@ -31,12 +31,16 @@ Un devcontainers à été mis en place pour faciliter le développement. Il suff
 
 Ce devcontainer contient notamment un serveur Lighthouse pour tester le plugin en mode [!badge text="Lighthouse CI" icon="pulse"](./guides/3-lighthouse-ci.md)
 
-## Reste à faire
+## Point d'attention
+
+### Contraintes de développement
 
 !!!warning Ne pas utiliser de `gatherers` custom pour les audits
-Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux audits sont déjà disponibles dans Lighthouse, il faut donc les utiliser.  
+Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux `gatherers` sont déjà disponibles dans Lighthouse, il faut donc les utiliser.  
 [!button text="Voir les gatherers officiels Lighthouse"](<[button.md](https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers)>)
 !!!
+
+## Liste des tâches
 
 - [x] ~~Plugin~~ ;
 - [x] ~~npx-example~~ ;
