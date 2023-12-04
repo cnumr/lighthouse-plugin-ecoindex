@@ -12,51 +12,60 @@ order: 1000
 
 ## Introduction
 
-Ce plugin permet d'ajouter un audit EcoIndex® à Lighthouse®.
+Ce plugin ajoute EcoIndex® à Lighthouse®.
 
-**Il peut être utilisé de trois manières différentes** :
+### Il permet d'obtenir :
+
+- Les mesures d'impact environnementale multicritères de votre site ;
+- Une évalation de la mise en oeuvre des bonnes pratiques du Green IT ;
+
+### En générant :
+
+- Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr®
+- Ajouter ces résultats dans votre CI/CD ou un à serveur Lighthouse.
+
+### Il peut être utilisé de trois manières différentes :
 
 - En ligne de commande `npx lighthouse-ecoindex <command> <options>` avec le cli fourni par le plugin ;
 - Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>`.
 - Avec [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) ;
 
-**Afin d'obtenir** :
+### En respectant des contraintes permettant :
 
-- Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr®
-- Ajouter ces résultats dans votre CI/CD ou un à serveur Lighthouse.
+- D'avoir des mesures réalistes et où les éléments des pages sont chargés (images, scripts, polices, etc.) ;
+- D'avoir des mesures normalisées entre chaque exécution ;
+- D'obtenir des mesures comparables entre les sites.
 
-!!!info Déclaration Environnementale de GreenIT.fr®
-[!button target="blank" icon="checklist" iconAlign="right" text="Découvir"](https://declaration.greenit.fr/)
-!!!
-
-**En respectant** :
-- Un enchainement d'actions normalisé afin de pouvoir comparer les résultats entre eux et les autres sites.
-- Une taille d'écran spécifique (1920 × 1080px).
-- Une configuration de navigateur spécifique (voir ci-dessous).
-
-### Worflow Puppeteer & lighthouse
+### Les contraintes / process reproductible :
 
 !!!success 👉 Comportement de l'utilisateur
+
 1. Lancez un navigateur Chrome sans tête avec les capacités no-sandbox, disable-dev-shm-usage et goog:loggingPrefs définies sur {"performance" : "ALL"}.
 2. Ouvrez la page sans données locales (cache, cookies, localstorage...) à une résolution de 1920 × 1080px.
 3. Attendez 3 secondes
 4. Faites défiler la page jusqu'en bas
 5. Attendez encore 3 secondes
 6. Fermer la page
+   !!!
+
+> Lors de la mesure d'un parcours utilisateur, le cache est vide au début du parcours, mais est conservé et réutilisé tout au long du parcours, si il est mise en place par le site (Bonne pratique).
+
+!!!info Déclaration Environnementale de GreenIT.fr®
+[!button target="blank" icon="checklist" iconAlign="right" text="Découvir"](https://declaration.greenit.fr/)
 !!!
 
 ## Récapitulatif des fonctionnalités
 
-- [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;  
-- [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;  
+- [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;
+- [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;
 - [!button size="xs" text="CI" icon="pulse"](./guides/3-lighthouse-ci.md) Lighthouse CI
 
-| Fonctionnalités                                          | :icon-terminal: cli(int) | :icon-terminal: cli(lh) | :icon-pulse: CI  |
-| :------------------------------------------------------- | -------- | -------- | --- |
-| Rapports Lighthouse avec les audits ecoindex             | ✅       | ✅       | ✅  |
-| Bonnes pratiques Green IT                                | ✅       | ✅       | ✅  |
-| Déclaration Environnementale (EIS)                       | ✅       | ❌       | ❌  |
-| Publication des données d'audits à un serveur Lighthouse | ❌       | ❌       | ✅  |
+| Fonctionnalités                                          | :icon-terminal: cli(int) | :icon-terminal: cli(lh) | :icon-pulse: CI |
+| :------------------------------------------------------- | ------------------------ | ----------------------- | --------------- |
+| Rapports Lighthouse avec les audits ecoindex             | ✅                       | ✅                      | ✅              |
+| Bonnes pratiques Green IT                                | ✅                       | ✅                      | ✅              |
+| Déclaration Environnementale (EIS)                       | ✅                       | ❌                      | ❌              |
+| Publication des données d'audits à un serveur Lighthouse | ❌                       | ❌                      | ✅              |
 
 ## Documentation des usages
 

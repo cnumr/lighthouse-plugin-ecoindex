@@ -14,6 +14,8 @@ Cet utilitaire en ligne de commande (cli) permet, au travers de Lighthouse, d'ob
 - une liste d'URLs ;
 - une URL unique.
 
+En respectant des contraintes permettant d'avoir des mesures réalistes et où les éléments des pages sont chargés (images, scripts, polices, etc.), normalisées entre chaque exécution et comparables entre les sites [!button Voir les explications](../README.md#les-contraintes--process-reproductible).
+
 A la sortie, vous obtiendrez :
 
 - Des rapports d'audits Lighthouse avec les audits EcoIndex et les bonnes pratiques, au format HTML et/ou JSON ;
@@ -81,20 +83,22 @@ Le format du fichier doit être respecté !
 #### Exemples
 
 Génère un rapport avec le fichier de démonstration.
+
 ```shell
 npx lighthouse-ecoindex collect --demo
 ```
 
 Génère des plusieurs rapports pour de multiples parcours.
+
 ```shell
 npx lighthouse-ecoindex collect --json-file ./input-file.json
 ```
 
 Génère un rapport pour une URL.
+
 ```shell
 npx lighthouse-ecoindex collect --url https://ecoindex.fr/
 ```
-
 
 ### command `convert`
 
@@ -111,6 +115,7 @@ Sert à générer la Déclaration Environnementale de votre site – Environment
 #### Exemples
 
 Convertir le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichier de déclaration environnementale.
+
 ```shell
 npx lighthouse-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
 ```

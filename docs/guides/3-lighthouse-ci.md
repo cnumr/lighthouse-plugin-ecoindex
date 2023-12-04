@@ -17,6 +17,7 @@ order: 100
 Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.
 
 Vous pourrez ainsi :
+
 - Publier les résultats des audits Lighthouse et EcoIndex® dans votre CI/CD ;
 - Publier les résultats des audits Lighthouse et EcoIndex® dans un serveur Lighthouse.
 
@@ -25,7 +26,6 @@ Vous pourrez ainsi :
 !!!warning
 Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dessous) et Puppeteer (présent dans le plugin) pour pouvoir utiliser le plugin lighthouse-ecoindex.
 !!!
-
 
 ```bash
 npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
@@ -47,7 +47,7 @@ Le fichier de configuration Puppeteer est indiqué dans `puppeteerScript` du fic
 !!!
 !!!danger
 Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spécifiques (ex. Fermeture de popin pour validation de cookies). Conserver le process en place pour avoir des mesures normalisée.  
-[!button Voir les explications](../README.md#worflow-puppeteer--lighthouse)
+[!button Voir les explications](../README.md#les-contraintes--process-reproductible)
 !!!
 ==- Modèle de fichier de configuration de Puppeteer
 :::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
@@ -90,6 +90,7 @@ lhci:
     - npm install -g @lhci/cli@0.12.x
     - lhci autorun --upload.target=temporary-public-storage --collect.settings.chromeFlags="--no-sandbox" || echo "LHCI failed!"
 ```
+
 +++ CircleCI
 
 `.circleci/config.yml`
@@ -110,7 +111,8 @@ jobs:
       - run: npm run build
       - run: sudo npm install -g @lhci/cli@0.12.x
       - run: lhci autorun
-````
+```
+
 +++ Jenkins (Ubuntu-based)
 
 `machine-setup.sh`
@@ -148,6 +150,4 @@ export LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL="$BUILD_URL"
 
 npm install -g @lhci/cli@0.12.x
 lhci autorun
-````
-
-
+```
