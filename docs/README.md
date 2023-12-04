@@ -21,7 +21,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 ### En générant :
 
-- Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr®
+- Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – une initiative de GreenIT.fr®
 - Des résultats automatiquement ajoutés à votre CI/CD ou un à serveur Lighthouse.
 
 ### Il peut être utilisé de trois manières différentes :
@@ -50,7 +50,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 > Lors de la mesure d'un parcours utilisateur, le cache est vide au début du parcours, mais est conservé et réutilisé tout au long du parcours, si il est mise en place par le site (Bonne pratique).
 
-!!!info Déclaration Environnementale de GreenIT.fr®
+!!!info Déclaration Environnementale, l'initiative de GreenIT.fr®
 [!button target="blank" icon="checklist" iconAlign="right" text="Découvir"](https://declaration.greenit.fr/)
 !!!
 
@@ -64,7 +64,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 | :------------------------------------------------------- | ------------------------ | ----------------------- | --------------- |
 | Rapports Lighthouse avec les audits ecoindex             | ✅                       | ✅                      | ✅              |
 | Bonnes pratiques Green IT                                | ✅                       | ✅                      | ✅              |
-| Déclaration Environnementale (EIS)                       | ✅                       | ❌                      | ❌              |
+| Déclaration Environnementale                             | ✅                       | ❌                      | ❌              |
 | Publication des données d'audits à un serveur Lighthouse | ❌                       | ❌                      | ✅              |
 
 ## Documentation des usages

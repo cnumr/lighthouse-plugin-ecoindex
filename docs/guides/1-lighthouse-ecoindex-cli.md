@@ -19,7 +19,7 @@ En respectant des contraintes permettant d'avoir des mesures réalistes et où l
 A la sortie, vous obtiendrez :
 
 - Des rapports d'audits Lighthouse avec les audits EcoIndex et les bonnes pratiques, au format HTML et/ou JSON ;
-- Une Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr® au format JSON, HTML et Markdown.
+- Une Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr®, au format JSON, HTML et Markdown.
 
 ## Installation
 
@@ -43,11 +43,11 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 
 `npx lighthouse-ecoindex convert <options>`
 
-Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
+Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
 
 +++
 
-!!!info Déclaration Environnementale de GreenIT.fr®
+!!!info Déclaration Environnementale, l'initiative de GreenIT.fr®
 [!button target="blank" icon="checklist" iconAlign="right" text="Découvir"](https://declaration.greenit.fr/)
 !!!
 
@@ -104,7 +104,7 @@ npx lighthouse-ecoindex collect --url https://ecoindex.fr/
 
 `npx lighthouse-ecoindex convert <options>`
 
-Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
+Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
 
 #### Options
 
