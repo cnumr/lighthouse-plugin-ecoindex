@@ -47,7 +47,7 @@ Le fichier de configuration Puppeteer est indiqué dans `puppeteerScript` du fic
 !!!
 !!!danger
 Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spécifiques (ex. Fermeture de popin pour validation de cookies). Conserver le process en place pour avoir des mesures normalisée.  
-[!button Voir les explications](../README.md#les-contraintes--process-reproductible)
+[!button text="Voir les explications" icon="checklist"](../README.md#les-contraintes--process-reproductible)
 !!!
 ==- Modèle de fichier de configuration de Puppeteer
 :::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
