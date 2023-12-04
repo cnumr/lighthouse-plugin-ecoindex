@@ -36,8 +36,8 @@ footer: 'Association Green IT november@2023'
 ## Comment?
 
 - On peut l'utiliser de deux manières :
-  - C'est un utilitaire autonome en ligne de commande basé sur Lighthouse;
-  - C'est un plugin pour Lighthouse CLI et Lihthouse CI.
+  - En tant qu'utilitaire autonome en ligne de commande basé sur Lighthouse;
+  - En tant que plugin pour Lighthouse CLI et Lighthouse CI.
 
 ---
 
@@ -47,7 +47,7 @@ footer: 'Association Green IT november@2023'
 | :------------------------------------------------------- | -------- | ------- | --- |
 | Rapports Lighthouse avec les audits ecoindex             | ✅       | ✅      | ✅  |
 | Bonnes pratiques Green IT                                | ✅       | ✅      | ✅  |
-| Déclaration Environnementale (EIS)                       | ✅       | ❌      | ❌  |
+| Déclaration Environnementale                             | ✅       | ❌      | ❌  |
 | Publication des données d'audits à un serveur Lighthouse | ❌       | ❌      | ✅  |
 
 ---
@@ -83,7 +83,7 @@ footer: 'Association Green IT november@2023'
 
 ### <!-- fit --> `lighthouse-ecoindex collect`
 
-> Exécute Lighthouse et enregistre les résultats dans un dossier local, pour une série d'URL pour obtenir un aperçu de l'impact environnemental d'un site web.
+> Exécute Lighthouse et enregistre les résultats dans un dossier local, pour une série d'URL afin d'obtenir un aperçu de l'impact environnemental d'un site web.
 
 ---
 
@@ -94,8 +94,8 @@ footer: 'Association Green IT november@2023'
 > _Suivant les paramètres passés en ligne de commande_
 
 - cette commande lance la mesure :
-  - pour une seule URL ou pour plusieurs URL ;
-  - pour une ou plusieurs listes d'URL référencées dans un fichier JSON ;
+  - pour une seule URL ou pour plusieurs URLs ;
+  - pour une ou plusieurs listes d'URLs référencées dans un fichier JSON ;
 - les rapports sont générés en HTML et en JSON ;
 - et peut générer une déclaration environnementale standardisée (EIS) respectant l'initiative de Green IT®.
 
@@ -206,7 +206,7 @@ ub.com/cnumr/lighthouse-plugin-ecoindex#readme
 
 <!-- _class: invert -->
 
-## <!-- fit --> **FOCUS**:<br/> La Déclaration environnementale de GreenIT.fr®,<br/> qu'est ce que c'est ?
+## <!-- fit --> **FOCUS**:<br/> La Déclaration environnementale, l'initiative de GreenIT.fr®,<br/> qu'est ce que c'est ?
 
 > Environmental Impact Statement (EIS)
 
