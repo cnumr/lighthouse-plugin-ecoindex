@@ -35,8 +35,8 @@ order: 200
 
 [!ref icon="file-badge" target="blank" text="Référentiel RGESN à télécharger (data.gouv)"](https://www.data.gouv.fr/fr/datasets/referentiel-general-decoconception-de-services-numeriques/)
 
+==- RGESN v1 au format "JSON"
+
 > https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1
 
-==- RGESN au format "JSON"
-:::code source="./02-rgesn_v1.json" :::
-===
+# :::code source="./02-rgesn_v1.json" :::
