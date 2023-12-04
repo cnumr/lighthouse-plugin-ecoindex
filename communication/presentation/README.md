@@ -9,55 +9,68 @@ footer: 'Association Green IT november@2023'
 
 # <!-- fit --> ECOINDEX + WEB PERF ⇒ PLUGIN LIGHTHOUSE
 
-> A suite of tools to mesure the environnemetal performance, inside the web development workflow.
+> Résultats et bonnes pratiques écologique ajoutés aux rapports Lighthouse.
 
 ---
 
-## What it is?
+## Que fait le plugin ?
 
-- a runner/cli that can be used as a standalone tool ;
-- a lighthouse plugin that can be used with the lighthouse cli and lighthouse CI with some helpers..
+(1/2)
+
+- des mesures d'impact environnementale multicritères de Ecoindex, en respectant un process défini ;
+- check si les bonnes pratiques sont appliquées ;
+- génère la Déclaration environnementale du site proposée par le Collectif Green IT® ;
 
 ---
 
-- it add ecoindex audits to Lighthouse reports and display GHG and water consumption ;
-- it add Green IT Best-practices to lighthouse ;
-- it generate a standardized Environmental Impact Statement (EIS) from Green IT® ;
-- it implement a workflow to mesure the page as a user.
+## Que fait le plugin ?
+
+(2/2)
+
+- Tout ce que permet Lighthouse :
+  - génère un rapport Lighthouse avec les résultats de l'ecoindex et les bonnes pratiques sur des parcours utilisateurs (UF) ;
+  - exporte les résultats dans un serveur Lighthouse.
+
+---
+
+## Comment?
+
+On peut l'utiliser de deux manières :
+
+- C'est un utilitaire autonome en ligne de commande basé sur Lighthouse;
+- C'est un plugin pour Lighthouse CLI et Lihthouse CI.
 
 ---
 
 ## Features
 
-| Feature                              | cli | CI  |
-| :----------------------------------- | --- | --- |
-| Lighthouse report w/ ecoindex audits | ✅  | ✅  |
-| Green IT Best-practices              | ✅  | ✅  |
-| Environmental Impact Statement (EIS) | ✅  | ❌  |
-| Send result to Lighthouse server     | ❌  | ✅  |
+| Fonctionnalités                                          | cli(int) | cli(lh) | CI  |
+| :------------------------------------------------------- | -------- | ------- | --- |
+| Rapports Lighthouse avec les audits ecoindex             | ✅       | ✅      | ✅  |
+| Bonnes pratiques Green IT                                | ✅       | ✅      | ✅  |
+| Déclaration Environnementale (EIS)                       | ✅       | ❌      | ❌  |
+| Publication des données d'audits à un serveur Lighthouse | ❌       | ❌      | ✅  |
 
 ---
 
 ## What's in the box?
 
 - `lighthouse-ecoindex` cli ;
-- `lighthouse-plugin-ecoindex` plugin ;
-- `.puppeteerrc.js` Puppeteer script to mesure the page as a user ;
-- `.lighthouserc.js` Lightouse config to mesure and add the ecoindex audits ;
+- Modules à utiliser avec `lighthouse cli` et `lighthouse-ci` ;
+  - `lighthouse-plugin-ecoindex` plugin ;
+  - `.puppeteerrc.js`, un script Puppeteer pour interagir avec la page suivant un process défini ;
+  - `.lighthouserc.js` un script de configuration pour Lighthouse pour utiliser le plugin et le script Puppeteer.
 
 ---
 
-## Human workflow emulated by `Puppeteer`
+## <!-- fit --> 👉 Comportement de l'utilisateur émulé
 
-```txt
-1. Launch a headless Chrome browser with
-no-sandbox, disable-dev-shm-usage and goog:loggingPrefs capabilities set to {"performance": "ALL"}.
-2. Open the page without local data (cache, cookies, localstorage...) at 1920 × 1080px resolution.
-3. Wait 3 seconds
-4. Scroll to bottom of page
-5. Wait another 3 seconds
-6. Close page
-```
+1. Lancez un navigateur Chrome headless avec les capacités no-sandbox, disable-dev-shm-usage et goog:loggingPrefs définies sur {"performance" : "ALL"}.
+2. Ouvrez la page sans données locales (cache, cookies, localstorage...) à une résolution de 1920 × 1080px.
+3. Attendez 3 secondes
+4. Faites défiler la page jusqu'en bas
+5. Attendez encore 3 secondes
+6. Fermer la page
 
 ---
 
@@ -71,20 +84,21 @@ no-sandbox, disable-dev-shm-usage and goog:loggingPrefs capabilities set to {"pe
 
 ### <!-- fit --> `lighthouse-ecoindex collect`
 
-> Run Lighthouse and save the results to a local folder.
-> Mesure a course of URLs to get an overview of the environmental impact of a website.
+> Exécutez Lighthouse et enregistrez les résultats dans un dossier local. Mesurez une série d'URL pour obtenir un aperçu de l'impact environnemental d'un site web.
 
 ---
 
 <!-- _class: invert -->
 
-## What you can do with
+## Que fait cette commande ?
 
-- generate a report
-  - for a single URL or a list of URLs ;
-  - for a list of URLs from a JSON file ;
-- reports are generated in HTML and JSON ;
-- generate a standardized Environmental Impact Statement (EIS) from Green IT® ;
+> Suivant les paramètres passés en ligne de commande
+
+- elle lance la mesure :
+  - pour une seule URL ou pour plusieurs URL ;
+  - pour une ou plusieurs listes d'URL référencées dans un fichier JSON ;
+- les rapports sont générés en HTML et en JSON ;
+- et peut générer une déclaration environnementale standardisée (EIS) respectant l'initiative de Green IT®.
 
 ---
 
@@ -142,7 +156,7 @@ ub.com/cnumr/lighthouse-plugin-ecoindex#readme
 
 ### <!-- fit --> `lighthouse-ecoindex convert`
 
-> Convert JSON report(s) generated by `lighthouse-ecoindex` to Environmental Statement file.
+> Convertit le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichier de déclaration environnementale (EIS) respectant l'initiative de Green IT®.
 
 ---
 
@@ -185,23 +199,22 @@ ub.com/cnumr/lighthouse-plugin-ecoindex#readme
 
 <!-- _class: invert -->
 
-## `lighthouse-ecoindex cli` Exports
+## <!-- fit --> **FOCUS**:<br/> La Déclaration environnementale de GreenIT.fr®,<br/> qu'est ce que c'est ?
 
-### Reports
+> Environmental Impact Statement (EIS)
 
-- Multiples HTML & JSON Lighthouse report ;
-- A report display the mesure of each courses.
+C'est une manière de déclarer l'impact environnemental d'un site web, en respectant un format et une méthode standardisé.
+
+https://declaration.greenit.fr/
 
 ---
 
 <!-- _class: invert -->
 
-## `lighthouse-ecoindex cli` Exports
+## <!-- fit --> La Déclaration environnementale,<br/> généré par cet utilitaire
 
-### Environmental Impact Statement (EIS)
-
-- A JSON standardized Environmental Impact Statement (EIS) file (as sitemap or robots.txt) ;
-- HTML and Markdown human readable output, to add easely to your website.
+- Un fichier de déclaration environnementale normalisé JSON (comme sitemap ou robots.txt) ;
+- Une sortie HTML et Markdown lisible par l'homme, à ajouter facilement à votre site web.
 
 ---
 
@@ -212,36 +225,35 @@ ub.com/cnumr/lighthouse-plugin-ecoindex#readme
 
 ---
 
-## What you can do with
+## Que pouvez-vous en faire avec `lighthouse-ci` ?
 
-> Use lighthouse-ci with your GitHub Actions (or other CI) to generate a report for each pull request.
-
-- generate a reports as artifacts and display them in the GitHub/GitLab/... UI ;
-- send the results to a Lighthouse server.
-
----
-
-## How to use it?
-
-- Add our `lighthouserc.js` config to your project ;
-- Add our `puppeteer.js` script to your project (allready added in our `lighthouserc.js` config).
+- Utilisez lighthouse-ci avec vos `GitHub Actions` (ou autre CI) pour générer un rapport à chaque pull request pour :
+  - les afficher dans l'interface utilisateur GitHub/GitLab/... UI ;
+  - envoyer les résultats à un serveur Lighthouse.
 
 ---
 
-## What you can do with?
+## Que pouvez-vous en faire avec `lighthouse` cli ?
 
-- generate a reports as artifacts and display them in the GitHub/GitLab/... UI ;
-- send the results to a Lighthouse server.
+- Utilisez lighthouse cli pour générer un ou plusieurs rapport.
+
+---
+
+## Comment l'utiliser ?
+
+- Ajouter le plugin `lighthouse-plugin-ecoindex` à votre projet ;
+- Utiliser notre configuration `lighthouserc.js` à votre projet ;
+- Utiliser notre script `.puppeteerrc.cjs` à votre projet (déjà ajouté dans notre configuration `lighthouserc.js` ou `.lighthouserc.cjs`).
 
 ---
 
 <!-- _class: invert -->
 
-## <!-- fit --> What's next?
+## What's next?
 
-> We need your help to make it better!
+> Nous avons besoin de votre aide pour améliorer le projet !
 
-- [ ] Add localizations ;
-- [ ] Add more audits and Best-practices ;
-- [ ] Add more documentation and more tests ;
-- [ ] Add more ...
+- [ ] Localiser le plugin i18n ;
+- [ ] Ajouter plus d'audits et plus de bonnes pratiques ;
+- [ ] Ajouter plus de documentation et plus de tests ;
+- [ ] Ajouter plus de (ici, mettre vos idées) ;
