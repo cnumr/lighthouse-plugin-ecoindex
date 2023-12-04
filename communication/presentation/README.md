@@ -35,10 +35,9 @@ footer: 'Association Green IT november@2023'
 
 ## Comment?
 
-On peut l'utiliser de deux manières :
-
-- C'est un utilitaire autonome en ligne de commande basé sur Lighthouse;
-- C'est un plugin pour Lighthouse CLI et Lihthouse CI.
+- On peut l'utiliser de deux manières :
+  - C'est un utilitaire autonome en ligne de commande basé sur Lighthouse;
+  - C'est un plugin pour Lighthouse CLI et Lihthouse CI.
 
 ---
 
@@ -84,17 +83,17 @@ On peut l'utiliser de deux manières :
 
 ### <!-- fit --> `lighthouse-ecoindex collect`
 
-> Exécutez Lighthouse et enregistrez les résultats dans un dossier local. Mesurez une série d'URL pour obtenir un aperçu de l'impact environnemental d'un site web.
+> Exécute Lighthouse et enregistre les résultats dans un dossier local, pour une série d'URL pour obtenir un aperçu de l'impact environnemental d'un site web.
 
 ---
 
 <!-- _class: invert -->
 
-## Que fait cette commande ?
+## Plus précisement
 
-> Suivant les paramètres passés en ligne de commande
+> _Suivant les paramètres passés en ligne de commande_
 
-- elle lance la mesure :
+- cette commande lance la mesure :
   - pour une seule URL ou pour plusieurs URL ;
   - pour une ou plusieurs listes d'URL référencées dans un fichier JSON ;
 - les rapports sont générés en HTML et en JSON ;
@@ -157,6 +156,14 @@ ub.com/cnumr/lighthouse-plugin-ecoindex#readme
 ### <!-- fit --> `lighthouse-ecoindex convert`
 
 > Convertit le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichier de déclaration environnementale (EIS) respectant l'initiative de Green IT®.
+
+---
+
+<!-- _class: invert -->
+
+## Plus précisement
+
+Cette commande permet de générer un fichier de déclaration environnementale (EIS) respectant l'initiative de Green IT® en utilisant d'ancien rapports JSON qui incluent les données du `plugin-lighthouse-greenit`.
 
 ---
 
