@@ -169,7 +169,7 @@ function getFlags(manualArgv, options = {}) {
   cliFlags['listAllAudits'] = false
 
   // Save results as reports.
-  cliFlags['generationDate'] = new Date().toISOString().replaceAll(':', '_')
+  cliFlags['generationDate'] = new Date().toISOString()
 
   // Prepare statements reports name
   // if (!cliFlags['input-report']) {

@@ -1,5 +1,5 @@
+import { dateToFileString, getEnvStatementsObj, slugify } from './commands.js'
 import fs, { writeFileSync } from 'fs'
-import { getEnvStatementsObj, slugify } from './commands.js'
 import path, { dirname } from 'path'
 
 import Handlebars from 'handlebars'
@@ -28,7 +28,9 @@ Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
  */
 async function preparareReports(cliFlags, course = undefined) {
   // Create the output folder if it doesn't exist.
-  let exportPath = `${cliFlags['output-path']}/${cliFlags['generationDate']}`
+  let exportPath = `${cliFlags['output-path']}/${await dateToFileString(
+    cliFlags['generationDate'],
+  )}`
 
   if (course) {
     await fs.mkdirSync(`${exportPath}/statements`, {

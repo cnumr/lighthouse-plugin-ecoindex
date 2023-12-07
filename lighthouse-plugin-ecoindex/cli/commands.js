@@ -2,6 +2,7 @@ import * as constants from 'lighthouse/core/config/constants.js'
 
 import _slugify from 'slugify'
 import fs from 'fs'
+import { isDate } from 'util/types'
 import logSymbols from 'log-symbols'
 import path from 'path'
 
@@ -31,6 +32,13 @@ async function listAudits() {
   process.stdout.write(JSON.stringify({ audits }, null, 2))
   process.stdout.write('\n')
   //   process.exit(0)
+}
+
+async function dateToFileString(date) {
+  if (isDate(date)) {
+    return date.toISOString().replace(/:/g, '-')
+  }
+  return date.replace(/:/g, '-')
 }
 
 /**
@@ -232,6 +240,7 @@ const slugify = children => {
 }
 
 export {
+  dateToFileString,
   endEcoindexPageMesure,
   getEnvStatementsObj,
   getLighthouseConfig,
