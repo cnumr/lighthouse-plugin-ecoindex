@@ -14,12 +14,13 @@ Cet utilitaire en ligne de commande (cli) permet, au travers de Lighthouse, d'ob
 - une liste d'URLs ;
 - une URL unique.
 
-En respectant des contraintes permettant d'avoir des mesures réalistes et où les éléments des pages sont chargés (images, scripts, polices, etc.), normalisées entre chaque exécution et comparables entre les sites [!button size="xs" text="Voir les explications" icon="checklist"](../README.md#les-contraintes--process-reproductible-).
+En respectant des contraintes permettant d'avoir des mesures réalistes et où les éléments des pages sont chargés (images, scripts, polices, etc.), normalisées entre chaque exécution et comparables entre les sites.
 
 A la sortie, vous obtiendrez :
 
 - Des rapports d'audits Lighthouse avec les audits EcoIndex et les bonnes pratiques, au format HTML et/ou JSON ;
 - Une Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr®, au format JSON, HTML et Markdown.
+[!button size="xs" text="Plus d'informations" icon="checklist"](../rapport-environnemental.md)
 
 ## Installation
 

@@ -4,7 +4,7 @@ icon: home
 order: 1000
 ---
 
-![](./ecoindex-intro.png)
+![](./static/ecoindex-intro.png)
 
 # Plugin [Ecoindex](https://www.ecoindex.fr) pour [Lighthouse](https://github.com/GoogleChrome/lighthouse)
 
@@ -73,6 +73,6 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 [!ref Lighthouse CLI](/guides/2-lighthouse-cli.md)
 [!ref Lighthouse CI](/guides/3-lighthouse-ci.md)
 
-![Details of plugin results](./ecoindex-results.png)
+![Details of plugin results](./static/ecoindex-results.png)
 
 [![](./static/logo-asso-greenit.svg "Aller sur le site de l'association")](https://asso.greenit.fr/)

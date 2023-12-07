@@ -1,8 +1,8 @@
 input: .
-favicon: static/greenit_icone_intro.svg
+favicon: static/greenit_icone_intro-alt.png
 branding:
   title: Plugin Ecoindex Lighthouse
-  logo: static/greenit_icone_intro.svg
+  logo: static/greenit_icone_intro-alt.png
   label: 2.0.2
 meta:
   title: " - Ecoindex Lighthouse Plugin"
@@ -37,4 +37,4 @@ edit:
   repo: 'https://github.com/cnumr/lighthouse-plugin-ecoindex' # The URL to source files for this project
   base: './docs' # Optional base path to a directory within repo
   branch: 'main' # Point to a custom branch within the repo
-  label: 'Edit this page' # A custom label for the generated link
+  label: 'Modifier sur GitHub' # A custom label for the generated link
