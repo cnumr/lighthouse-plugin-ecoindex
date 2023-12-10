@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.755541960405">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.755542811651">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.755541960405" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.755542811651" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.755541960405" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.755542811651" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.755541960405" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.755541960405" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.755542811651" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.755542811651" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -58,7 +58,7 @@
                                 <img class="max-h-10 hidden dark:inline-block" src="../../static/greenit_icone_intro-alt.png">
                             </span>
                             <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Plugin Ecoindex Lighthouse</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">2.0.4</span>
+                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">3.0.0</span>
                     </div>
         
                     <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
@@ -292,18 +292,18 @@ npm install --save-dev lighthouse-plugin-ecoindex</code></pre>
     </h2>
 </doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-ecoindex &lt;command&gt; &lt;options&gt;</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex &lt;command&gt; &lt;options&gt;</code></pre>
 </doc-codeblock></div>
 <p>Commandes disponibles :</p>
 <doc-tabs>
 <doc-tab v-cloak id="collect">
 <template #title>collect</template>
-<p><code v-pre>npx lighthouse-ecoindex collect &lt;options&gt;</code></p>
+<p><code v-pre>npx lighthouse-plugin-ecoindex collect &lt;options&gt;</code></p>
 <p>Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options passées en paramètres.</p>
 </doc-tab>
 <doc-tab v-cloak id="convert">
 <template #title>convert</template>
-<p><code v-pre>npx lighthouse-ecoindex convert &lt;options&gt;</code></p>
+<p><code v-pre>npx lighthouse-plugin-ecoindex convert &lt;options&gt;</code></p>
 <p>Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l&#x27;initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n&#x27;a pas été générée lors de la collecte.</p>
 </doc-tab>
 </doc-tabs>
@@ -334,7 +334,7 @@ npm install --save-dev lighthouse-plugin-ecoindex</code></pre>
         <span>command <code v-pre>collect</code></span>
     </h3>
 </doc-anchor-target>
-<p><code v-pre>npx lighthouse-ecoindex collect &lt;options&gt;</code></p>
+<p><code v-pre>npx lighthouse-plugin-ecoindex collect &lt;options&gt;</code></p>
 <p>Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options passées en paramètres.</p>
 <doc-anchor-target id="options">
     <h4>
@@ -435,15 +435,15 @@ npm install --save-dev lighthouse-plugin-ecoindex</code></pre>
 </doc-anchor-target>
 <p>Génère un rapport avec le fichier de démonstration.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-ecoindex collect --demo</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex collect --demo</code></pre>
 </doc-codeblock></div>
 <p>Génère des plusieurs rapports pour de multiples parcours.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-ecoindex collect --json-file ./input-file.json</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex collect --json-file ./input-file.json</code></pre>
 </doc-codeblock></div>
 <p>Génère un rapport pour une URL.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-ecoindex collect --url https://ecoindex.fr/</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="command-convert">
     <h3>
@@ -451,7 +451,7 @@ npm install --save-dev lighthouse-plugin-ecoindex</code></pre>
         <span>command <code v-pre>convert</code></span>
     </h3>
 </doc-anchor-target>
-<p><code v-pre>npx lighthouse-ecoindex convert &lt;options&gt;</code></p>
+<p><code v-pre>npx lighthouse-plugin-ecoindex convert &lt;options&gt;</code></p>
 <p>Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l&#x27;initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n&#x27;a pas été générée lors de la collecte.</p>
 <doc-anchor-target id="options-1">
     <h4>
@@ -472,7 +472,7 @@ npm install --save-dev lighthouse-plugin-ecoindex</code></pre>
 </doc-anchor-target>
 <p>Convertir le(s) rapport(s) JSON généré(s) par <code v-pre>lighthouse-ecoindex</code> en fichier de déclaration environnementale.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json</code></pre>
 </doc-codeblock></div>
 
                                 
