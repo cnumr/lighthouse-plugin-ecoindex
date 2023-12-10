@@ -30,8 +30,8 @@
   },
   "main": "./plugin.js",
   "bin": {
-    "lighthouse-ecoindex": "./helpers/bin.js",
-    "lighthouse-ecoindex-cli": "./cli/index.js"
+    "lighthouse-ecoindex": "./cli/index.js",
+    "lighthouse-plugin-ecoindex": "./cli/index.js"
   },
   "version": "2.0.4",
   "type": "module",
@@ -45,13 +45,13 @@
   "devDependencies": {
     "@j-ulrich/release-it-regex-bumper": "^5.1.0",
     "auto-changelog": "^2.4.0",
-    "log-symbols": "^6.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
     "release-it": "^17.0.0"
   },
   "dependencies": {
     "ecoindex": "^1.0.5",
+    "log-symbols": "^6.0.0",
     "handlebars": "^4.7.8",
     "jsdom": "^22.1.0",
     "lighthouse": "^11.3.0",

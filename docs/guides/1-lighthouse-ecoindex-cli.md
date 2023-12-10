@@ -36,20 +36,20 @@ npm install --save-dev lighthouse-plugin-ecoindex
 ## Utilisation
 
 ```bash
-npx lighthouse-ecoindex <command> <options>
+npx lighthouse-plugin-ecoindex <command> <options>
 ```
 
 Commandes disponibles :
 
 +++ collect
 
-`npx lighthouse-ecoindex collect <options>`
+`npx lighthouse-plugin-ecoindex collect <options>`
 
 Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options passées en paramètres.
 
 +++ convert
 
-`npx lighthouse-ecoindex convert <options>`
+`npx lighthouse-plugin-ecoindex convert <options>`
 
 Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
 
@@ -61,7 +61,7 @@ Sert à générer la Déclaration Environnementale de votre site – Environment
 
 ### command `collect`
 
-`npx lighthouse-ecoindex collect <options>`
+`npx lighthouse-plugin-ecoindex collect <options>`
 
 Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options passées en paramètres.
 
@@ -93,24 +93,24 @@ Le format du fichier doit être respecté !
 Génère un rapport avec le fichier de démonstration.
 
 ```shell
-npx lighthouse-ecoindex collect --demo
+npx lighthouse-plugin-ecoindex collect --demo
 ```
 
 Génère des plusieurs rapports pour de multiples parcours.
 
 ```shell
-npx lighthouse-ecoindex collect --json-file ./input-file.json
+npx lighthouse-plugin-ecoindex collect --json-file ./input-file.json
 ```
 
 Génère un rapport pour une URL.
 
 ```shell
-npx lighthouse-ecoindex collect --url https://ecoindex.fr/
+npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/
 ```
 
 ### command `convert`
 
-`npx lighthouse-ecoindex convert <options>`
+`npx lighthouse-plugin-ecoindex convert <options>`
 
 Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
 
@@ -125,5 +125,5 @@ Sert à générer la Déclaration Environnementale de votre site – Environment
 Convertir le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichier de déclaration environnementale.
 
 ```shell
-npx lighthouse-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
+npx lighthouse-plugin-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
 ```

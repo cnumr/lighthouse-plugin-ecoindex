@@ -26,7 +26,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 ### Il peut être utilisé de trois manières différentes :
 
-- En ligne de commande `npx lighthouse-ecoindex <command> <options>` avec le cli fourni par le plugin ;
+- En ligne de commande `npx lighthouse-plugin-ecoindex <command> <options>` avec le cli fourni par le plugin ;
 - Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>`.
 - Avec [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) ;
 
@@ -56,7 +56,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 ## Récapitulatif des fonctionnalités
 
-- [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-ecoindex <command> <options>` ;
+- [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-plugin-ecoindex <command> <options>` ;
 - [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;
 - [!button size="xs" text="CI" icon="pulse"](./guides/3-lighthouse-ci.md) Lighthouse CI
 
@@ -69,7 +69,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 ## Documentation des usages
 
-[!ref lighthouse-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
+[!ref lighthouse-plugin-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
 [!ref Lighthouse CLI](/guides/2-lighthouse-cli.md)
 [!ref Lighthouse CI](/guides/3-lighthouse-ci.md)
 
