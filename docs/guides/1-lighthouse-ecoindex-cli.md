@@ -24,6 +24,10 @@ A la sortie, vous obtiendrez :
 
 ## Installation
 
+!!!warning
+Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`.
+!!!
+
 Installer le plugin via npm :
 
 ```bash

@@ -65,3 +65,9 @@ Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il fau
 - https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md
 - https://engineering.q42.nl/making-a-lighthouse-plugin-work-with-lighthouse-ci/
 - https://github.com/googleads/publisher-ads-lighthouse-plugin
+
+## Contributeurs
+
+<a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=cnumr/lighthouse-plugin-ecoindex" />
+</a>
