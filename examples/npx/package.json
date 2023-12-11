@@ -12,6 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lighthouse-plugin-ecoindex": "3.0.0"
+    "lighthouse-plugin-ecoindex": "3.0.1"
   }
 }
