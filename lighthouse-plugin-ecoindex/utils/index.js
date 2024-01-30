@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import round from 'lodash.round'
 
-const KO_TO_MO = 10000
+const B_TO_KB = 1000
 
 /**
  * Calculate the number of DOM elements without SVGs content.
@@ -58,6 +58,9 @@ export async function getLoadingExperience(
     totalCompressedSize += result.totalBytes
     requestCount += 1
   })
+  // console.log(`{totalCompressedSize kB:${totalCompressedSize / 1000}},`)
+  // console.log(`{totalCompressedSize MB:${totalCompressedSize / 1000000}},`)
+
   // console.log(`{domSize:${domSize}},`)
   // console.log(`{size:${totalCompressedSize}},`)
   // console.log(`{requests:${requestCount}},`)
@@ -127,7 +130,7 @@ function getScore(metric, value) {
     case 'nodes':
       return estimateMetricScore(getMetricRange(metric), value)
     case 'size':
-      return estimateMetricScore(getMetricRange(metric), value / KO_TO_MO)
+      return estimateMetricScore(getMetricRange(metric), value / B_TO_KB)
     case 'requests':
       return estimateMetricScore(getMetricRange(metric), value)
     default:
@@ -153,8 +156,8 @@ function getMetricRange(metric) {
       return { good: 1000, poor: 600, lowIsBeter: true }
     case 'size':
       return {
-        good: 56000 / KO_TO_MO,
-        poor: 23500 / KO_TO_MO,
+        good: 56000 / B_TO_KB,
+        poor: 23500 / B_TO_KB,
         lowIsBeter: true,
       }
     case 'requests':
@@ -203,7 +206,7 @@ function formatMetric(metric, value) {
     case 'nodes':
       return value + ' DOM elements'
     case 'size':
-      return (value / KO_TO_MO).toFixed(3) + ' Mo'
+      return (value / B_TO_KB).toFixed(3) + ' kB (transfered)'
     case 'requests':
       return value + ' requests'
     default:
@@ -247,7 +250,7 @@ function getMetricNumericUnit(metric) {
     case 'nodes':
       return 'DOM elements'
     case 'size':
-      return 'Mo'
+      return 'kB (transfered)'
     case 'requests':
       return 'requests'
     default:
@@ -296,9 +299,7 @@ function createInformationsTable(metric, value, isPercentile = false) {
     case 'size':
       items.push({
         label: 'Size of the page',
-        data: `${(value / KO_TO_MO).toFixed(3)} ${getMetricNumericUnit(
-          metric,
-        )}`,
+        data: `${(value / B_TO_KB).toFixed(3)} ${getMetricNumericUnit(metric)}`,
       })
       break
     case 'requests':
