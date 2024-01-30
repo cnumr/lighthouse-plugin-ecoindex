@@ -192,7 +192,9 @@ async function printEnvStatementDocuments(cliFlags) {
     `${logSymbols.info} Generating Environnemental statement documents...`,
   )
   // Add informations documents and assets
-  let exportPath = `${cliFlags['output-path']}/${cliFlags['generationDate']}`
+  let exportPath = `${cliFlags['output-path']}/${await dateToFileString(
+    cliFlags['generationDate'],
+  )}`
   try {
     await fs.mkdirSync(`${exportPath}/assets`, {
       recursive: true,
