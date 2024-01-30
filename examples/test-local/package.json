@@ -5,11 +5,11 @@
   "scripts": {
     "lhei:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
     "lhei:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",
-    "lhei:file": "node lighthouse-plugin-ecoindex/cli/index.js collect -f ./reports/input-file.json",
+    "lhei:file": "node lighthouse-plugin-ecoindex/cli/index.js collect --json-file ./input-file.json",
     "lhei:page": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.ecoindex.fr/",
     "lhei:print": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html",
     "lhei:mano": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.manomano.fr/p/piscine-tubulaire-bestway-power-steel-549-x-274-x-122-m-30636057 -u https://www.manomano.fr/p/tapis-de-sol-bleu-pour-piscine-summer-waves-482-x-482-m-pour-piscine-396-m-427-m-32127067?model_id=32107982 -u https://www.manomano.fr/p/intex-06412-bac-pediluve-bleu-20087519 -o json -o html",
-    "lhei:file:header": "node lighthouse-plugin-ecoindex/cli/index.js collect -f example-urls-list -h extra-header.json -o json -o html"
+    "lhei:file:header": "node lighthouse-plugin-ecoindex/cli/index.js collect -j ./input-file.json -h extra-header.json -o json -o html"
   },
   "keywords": [],
   "author": "",
