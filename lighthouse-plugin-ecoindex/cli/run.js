@@ -10,6 +10,7 @@ import {
   print,
   printEnvStatementDocuments,
   printEnvStatementReport,
+  printSummary,
 } from './printer.js'
 
 import logSymbols from 'log-symbols'
@@ -164,6 +165,12 @@ async function runCourses(cliFlags) {
   ) {
     await printEnvStatementReport(cliFlags)
     await printEnvStatementDocuments(cliFlags)
+  }
+   if (
+    cliFlags['output'].includes('json') &&
+    cliFlags['url'] === undefined
+  ) {
+    await printSummary(cliFlags)
   }
 }
 

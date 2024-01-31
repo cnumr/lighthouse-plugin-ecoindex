@@ -1,5 +1,5 @@
-import { dateToFileString, getEnvStatementsObj, slugify } from './commands.js'
 import fs, { writeFileSync } from 'fs'
+import { getEnvStatementsObj, slugify } from './commands.js'
 import path, { dirname } from 'path'
 
 import Handlebars from 'handlebars'
@@ -28,9 +28,7 @@ Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
  */
 async function preparareReports(cliFlags, course = undefined) {
   // Create the output folder if it doesn't exist.
-  let exportPath = `${cliFlags['output-path']}/${await dateToFileString(
-    cliFlags['generationDate'],
-  )}`
+  let exportPath = cliFlags['exportPath']
 
   if (course) {
     await fs.mkdirSync(`${exportPath}/statements`, {
@@ -104,6 +102,7 @@ async function printHTMLReport(flow, path) {
  * @param {*} cliFlags
  */
 async function printEnvStatementReport(cliFlags, type = 'json-file') {
+  cliFlags['outputFiles'] === undefined && (cliFlags['outputFiles'] = {})
   if (type === 'input-report') {
     const filesPath = cliFlags['input-report']
     const outputReportsPath = cliFlags['output-path']
@@ -173,6 +172,9 @@ async function printEnvStatementReport(cliFlags, type = 'json-file') {
     envStatementsObj.statements.json,
     JSON.stringify(output, null, '\t'),
   )
+  cliFlags['outputFiles']['statements'] === undefined &&
+    (cliFlags['outputFiles']['statements'] = [])
+  cliFlags['outputFiles']['statements'].push(envStatementsObj.statements.json)
   console.log(
     `Environnemental statement generated: ${envStatementsObj.statements.json}`,
   )
@@ -188,13 +190,12 @@ async function printEnvStatementReport(cliFlags, type = 'json-file') {
  */
 async function printEnvStatementDocuments(cliFlags) {
   const envStatementsObj = cliFlags['envStatementsObj']
+  cliFlags['outputFiles'] === undefined && (cliFlags['outputFiles'] = {})
   console.log(
     `${logSymbols.info} Generating Environnemental statement documents...`,
   )
   // Add informations documents and assets
-  let exportPath = `${cliFlags['output-path']}/${await dateToFileString(
-    cliFlags['generationDate'],
-  )}`
+  let exportPath = cliFlags['exportPath']
   try {
     await fs.mkdirSync(`${exportPath}/assets`, {
       recursive: true,
@@ -226,6 +227,9 @@ async function printEnvStatementDocuments(cliFlags) {
     const templateMD = Handlebars.compile(sourceMD)
     const mdContent = templateMD(JSON.parse(jsonFile))
     writeFileSync(envStatementsObj.statements.md, mdContent)
+    cliFlags['outputFiles']['statements'] === undefined &&
+      (cliFlags['outputFiles']['statements'] = [])
+    cliFlags['outputFiles']['statements'].push(envStatementsObj.statements.md)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.md}`,
     )
@@ -240,6 +244,9 @@ async function printEnvStatementDocuments(cliFlags) {
     const templateHTML = Handlebars.compile(sourceHTML)
     const htmlContent = templateHTML(JSON.parse(jsonFile))
     writeFileSync(envStatementsObj.statements.html, htmlContent)
+    cliFlags['outputFiles']['statements'] === undefined &&
+      (cliFlags['outputFiles']['statements'] = [])
+    cliFlags['outputFiles']['statements'].push(envStatementsObj.statements.html)
     console.log(
       `Environnemental statement generated: ${envStatementsObj.statements.html}`,
     )
@@ -253,24 +260,109 @@ async function printEnvStatementDocuments(cliFlags) {
 }
 
 /**
+ * Generate Summary report from JSON
+ * @param {*} cliFlags
+ */
+async function printSummary(cliFlags) {
+  console.log(`${logSymbols.info} Generating Summary report...`)
+  const jsonFiles = cliFlags['outputFiles']['json']
+  const output = []
+  jsonFiles.forEach(jsonFile => {
+    const json = fs.readFileSync(jsonFile, 'utf8')
+    const o = JSON.parse(json)
+    const datas = []
+    o.steps.forEach(item => {
+      const it = {
+        url: item.lhr.finalDisplayedUrl,
+        score: 0,
+        detail: {},
+        ecoindex: {},
+      }
+      const categories = Object.values(item.lhr.categories)
+      categories.forEach(category => {
+        it.detail[category.id] = category.score
+      })
+      it.score = (
+        (it.detail['best-practices'] +
+          it.detail['seo'] +
+          it.detail['accessibility'] +
+          it.detail['performance']) /
+        4
+      ).toFixed(2)
+      it.ecoindex = {
+        'eco-index-score': {
+          score: item.lhr.audits['eco-index-score'].numericValue.toFixed(2),
+          displayValue: item.lhr.audits['eco-index-score'].displayValue,
+        },
+        'eco-index-grade': {
+          score: item.lhr.audits['eco-index-grade'].numericValue,
+          displayValue: item.lhr.audits['eco-index-grade'].displayValue,
+        },
+        'eco-index-water': {
+          score: item.lhr.audits['eco-index-water'].numericValue,
+          displayValue: item.lhr.audits['eco-index-water'].displayValue,
+        },
+        'eco-index-ghg': {
+          score: item.lhr.audits['eco-index-ghg'].numericValue,
+          displayValue: item.lhr.audits['eco-index-ghg'].displayValue,
+        },
+        'eco-index-nodes': {
+          score: item.lhr.audits['eco-index-nodes'].numericValue,
+          displayValue: item.lhr.audits['eco-index-nodes'].displayValue,
+        },
+        'eco-index-size': {
+          score: item.lhr.audits['eco-index-size'].numericValue,
+          displayValue: item.lhr.audits['eco-index-size'].displayValue,
+        },
+        'eco-index-requests': {
+          score: item.lhr.audits['eco-index-requests'].numericValue,
+          displayValue: item.lhr.audits['eco-index-requests'].displayValue,
+        },
+      }
+      datas.push(it)
+    })
+    output.push(datas)
+  })
+  let exportPath = cliFlags['exportPath']
+  writeFileSync(
+    `${exportPath}/summary.report.json`,
+    JSON.stringify(output, null, '\t'),
+  )
+  console.log(`Summary report generated: ${exportPath}/summary.report.json`)
+  console.log(`${logSymbols.success} Generating Summary report ended 🎉`)
+}
+
+/**
  * Print All
  * @param {*} cliFlags
  */
 async function print(cliFlags, flow, course = undefined) {
   console.log(`${logSymbols.info} Generating report(s)...`)
+  cliFlags['outputFiles'] === undefined && (cliFlags['outputFiles'] = {})
   const paths = await preparareReports(cliFlags, course)
   let outputModes = cliFlags['output']
   if (typeof outputModes === 'string') outputModes = [outputModes]
   console.log(`Output(s)`, outputModes)
 
   if (outputModes.includes('html')) {
+    cliFlags['outputFiles']['html'] === undefined &&
+      (cliFlags['outputFiles']['html'] = [])
+    cliFlags['outputFiles']['html'].push(paths.html)
     await printHTMLReport(flow, paths.html)
   }
   if (outputModes.includes('json') || outputModes.includes('statement')) {
+    cliFlags['outputFiles']['json'] === undefined &&
+      (cliFlags['outputFiles']['json'] = [])
+    cliFlags['outputFiles']['json'].push(paths.json)
     await printJSONReport(flow, paths.json)
   }
   console.log(`${logSymbols.success} Generating report(s) ended 🎉`)
   console.log(SEPARATOR)
 }
 
-export { print, printEnvStatementDocuments, printEnvStatementReport }
+export {
+  print,
+  printEnvStatementDocuments,
+  printEnvStatementReport,
+  printSummary,
+}

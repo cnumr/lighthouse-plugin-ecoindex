@@ -1,7 +1,7 @@
+import { dateToFileString, listAudits } from './commands.js'
 import { generateEnvironmentalStatement, runCourses } from './run.js'
 
 import { getFlags } from './cli-flags.js'
-import { listAudits } from './commands.js'
 import logSymbols from 'log-symbols'
 
 /**
@@ -25,6 +25,11 @@ const DEMO_INPUT_FILE_PATH =
  */
 async function begin() {
   const cliFlags = getFlags()
+
+  // Prepare output path
+  cliFlags['exportPath'] = `${cliFlags['output-path']}/${await dateToFileString(
+    cliFlags['generationDate'],
+  )}`
 
   if (cliFlags._[0] === 'collect' || cliFlags._[0] === 'convert') {
     if (cliFlags.listAllAudits) {

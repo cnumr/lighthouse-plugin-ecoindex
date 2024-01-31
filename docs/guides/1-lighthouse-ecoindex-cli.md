@@ -18,7 +18,7 @@ En respectant des contraintes permettant d'avoir des mesures réalistes et où l
 
 A la sortie, vous obtiendrez :
 
-- Des rapports d'audits Lighthouse avec les audits EcoIndex et les bonnes pratiques, au format HTML et/ou JSON ;
+- Des rapports d'audits Lighthouse avec les audits EcoIndex et les bonnes pratiques, au format HTML et/ou JSON + un summary des résultats au format json
 - Une Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr®, au format JSON, HTML et Markdown.
   [!button size="xs" text="Plus d'informations" icon="checklist"](../rapport-environnemental.md)
 
