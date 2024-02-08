@@ -65,7 +65,7 @@ function collectCommand(yargs) {
       alias: 'd',
       type: 'boolean',
       default: false,
-      description: 'Use demo File.',
+      description: 'Use demo collect configuration.',
     })
     .option('url', {
       alias: 'u',
@@ -87,7 +87,7 @@ function collectCommand(yargs) {
     .option('output-path', {
       alias: 'p',
       type: 'string',
-      default: './reports',
+      default: './reports/<date-time>',
       coerce: coerceOutputPath,
       description: 'Output folder.',
     })
@@ -97,7 +97,7 @@ function collectCommand(yargs) {
       default: /** @type {const} */ (['html']),
       coerce: coerceOutput,
       description:
-        'Reporter for the results, supports multiple values. choices: "json", "html", "statement". WARN: "csv" is not avalailable.',
+        'Reporter for the results, supports multiple values. choices: "json", "html", "statement". WARN: "statement" need "json", "csv" is not avalailable.',
     })
     .option('audit-category', {
       alias: 'a',
@@ -123,7 +123,8 @@ function convertCommand(yargs) {
     .option('input-report', {
       alias: 'i',
       type: 'array',
-      describe: 'JSON file generate by `lighthouse-ecoindex`.',
+      describe:
+        'JSON file generate by `lighthouse-ecoindex`. WARN: first is Best pages.',
     })
     .option('output-path', {
       alias: 'p',
