@@ -87,9 +87,9 @@ function collectCommand(yargs) {
     .option('output-path', {
       alias: 'p',
       type: 'string',
-      default: './reports/<date-time>',
+      default: './reports',
       coerce: coerceOutputPath,
-      description: 'Output folder.',
+      description: 'Output folder. Default is "./reports/<date-time>".',
     })
     .option('output', {
       alias: 'o',
