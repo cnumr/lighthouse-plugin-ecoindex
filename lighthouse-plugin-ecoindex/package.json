@@ -33,7 +33,7 @@
     "lighthouse-ecoindex": "./cli/index.js",
     "lighthouse-plugin-ecoindex": "./cli/index.js"
   },
-  "version": "3.1.1",
+  "version": "3.1.2",
   "type": "module",
   "peerDependencies": {
     "lighthouse": "^11.3.0",
