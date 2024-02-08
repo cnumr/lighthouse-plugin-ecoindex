@@ -2,6 +2,7 @@ import fs, { writeFileSync } from 'fs'
 import { getEnvStatementsObj, slugify } from './commands.js'
 import path, { dirname } from 'path'
 
+import { B_TO_KB } from '../utils/index.js'
 import Handlebars from 'handlebars'
 import { convertCourseResults } from './converters.js'
 import { fileURLToPath } from 'url'
@@ -19,6 +20,9 @@ Handlebars.registerHelper('plus1', function (n) {
 })
 Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this)
+})
+Handlebars.registerHelper('convertPageSize', function (size) {
+  return (size / B_TO_KB).toFixed(3)
 })
 
 /**

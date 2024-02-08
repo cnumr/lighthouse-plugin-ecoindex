@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import round from 'lodash.round'
 
-const B_TO_KB = 1000
+export const B_TO_KB = 1000
 
 /**
  * Calculate the number of DOM elements without SVGs content.

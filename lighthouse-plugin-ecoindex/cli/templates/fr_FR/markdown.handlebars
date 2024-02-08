@@ -48,7 +48,7 @@ L'analyse indiquée a été effectuée le {{ toDateString date }}, elle est susc
 
 |Grade|Ecoindex|Eau (cl)|GES (gCO2e)|Nb de requêtes|Taille de la page (Ko)|Taille du DOM|
 |---|---|---|---|---|---|---|
-|{{ this.[eco-index-grade] }}|{{ this.[eco-index-score] }}/100|{{ this.[eco-index-water] }}|{{ this.[eco-index-ghg] }}|{{ this.[eco-index-requests] }}|{{ this.[eco-index-size] }}|{{ this.[eco-index-nodes] }}|
+|{{ this.[eco-index-grade] }}|{{ this.[eco-index-score] }}/100|{{ this.[eco-index-water] }}|{{ this.[eco-index-ghg] }}|{{ this.[eco-index-requests] }}|{{ convertPageSize this.[eco-index-size] }}|{{ this.[eco-index-nodes] }}|
 
 
 * Consommation d'eau rapportée à 1 000 utilisateurs (en litres) : {{ this.[eco-index-water] }} (soit {{ this.[eco-index-water-equivalent] }} packs d'eau minérale).
@@ -64,7 +64,7 @@ L'analyse indiquée a été effectuée le {{ toDateString date }}, elle est susc
 |Page|Grade|Ecoindex|Eau (cl)|GES (gCO2e)|Nb de requêtes|Taille de la course (Ko)|Taille du DOM|
 |---|---|---|---|---|---|---|---|
 {{#each this.pages}}
-|{{ this.[requestedUrl] }}|{{ this.[eco-index-grade] }}|{{ this.[eco-index-score] }}/100|{{ this.[eco-index-water] }}|{{ this.[eco-index-ghg] }}|{{ this.[eco-index-requests] }}|{{ this.[eco-index-size] }}|{{ this.[eco-index-nodes] }}|
+|{{ this.[requestedUrl] }}|{{ this.[eco-index-grade] }}|{{ this.[eco-index-score] }}/100|{{ this.[eco-index-water] }}|{{ this.[eco-index-ghg] }}|{{ this.[eco-index-requests] }}|{{ convertPageSize this.[eco-index-size] }}|{{ this.[eco-index-nodes] }}|
 {{/each}}
 
 * Consommation d'eau rapportée à 1 000 utilisateurs (en litres) : {{ this.summary.[eco-index-water] }} (soit {{ this.summary.[eco-index-water-equivalent] }} packs d'eau minérale).
