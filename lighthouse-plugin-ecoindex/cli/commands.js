@@ -151,6 +151,7 @@ function getLighthouseConfig(
   isWarm = false,
   stepName = `undefined`,
   onlyCategories = ['lighthouse-plugin-ecoindex'],
+  userAgent
 ) {
   return {
     name: stepName,
@@ -165,7 +166,7 @@ function getLighthouseConfig(
           width: 1920,
           height: 1080,
         },
-        emulatedUserAgent: userAgentStrings[Math.floor(Math.random() * userAgentStrings.length)],
+        emulatedUserAgent: userAgent === "random" ? userAgentStrings[Math.floor(Math.random() * userAgentStrings.length)] : userAgent,
         maxWaitForLoad: 60 * 1000,
         disableStorageReset: isWarm,
       },

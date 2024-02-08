@@ -6,6 +6,7 @@
   "output": ["html", "json", "statement"],
   "output-path": "./reports/multi",
   "output-name": "ecoindex",
+  "user-agent": "random",
   "courses": [
     {
       "name": "Découvrir ecoindex et l'écoconception",

@@ -3,11 +3,8 @@
     "Cookie": "monster=blue",
     "x-men": "wolverine"
   },
-  "output": [
-    "html",
-    "json",
-    "statement"
-  ],
+  "output": ["html", "json", "statement"],
+  "user-agent": "random",
   "output-path": "./reports/multi",
   "output-name": "ecoindex",
   "courses": [

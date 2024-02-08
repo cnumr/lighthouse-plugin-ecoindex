@@ -78,6 +78,7 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `-p, --output-path` : Dossier de sortie.
 - `-o, --output` : Rapporteur pour les résultats, supporte plusieurs valeurs. Choix : "json", "html", "statement". ATTENTION : "csv" n'est pas disponible.
 - `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs.
+- `--user-agent` : User-Agent à utiliser pour les requêtes.
 - `--help` : Affiche l'aide.
 
 #### Fichier de configuration JSON
@@ -104,6 +105,14 @@ Génère des plusieurs rapports pour de multiples parcours.
 
 ```shell
 npx lighthouse-plugin-ecoindex collect --json-file ./input-file.json
+```
+
+Génère des rapports pour plusieurs URLs avec un user-agent spécifique.
+
+```shell
+npx lighthouse-plugin-ecoindex collect --json-file ./input-file.json --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299"
+# ou
+npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://www.greenit.fr/ --user-agent "lighthouse"
 ```
 
 Génère un rapport pour une URL.

@@ -111,6 +111,13 @@ function collectCommand(yargs) {
       ]),
       description: 'Audit to run, supports multiple values.',
     })
+    .option('user-agent', {
+      // alias: 'ua',
+      type: 'string',
+      default: 'random',
+      description:
+        'User agent to use for the browser. Default is "random" to help by-pass anti-bots.',
+    })
     .epilogue(EPILOGUE_STRING)
 }
 

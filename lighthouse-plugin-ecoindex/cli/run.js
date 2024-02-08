@@ -64,6 +64,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
       false,
       `Warm Navigation: ${urls[0]}`,
       cliFlags['audit-category'],
+      cliFlags['user-agent'],
     ),
   )
 
@@ -88,6 +89,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
           true,
           `Cold Navigation: ${urls[i]}`,
           cliFlags['audit-category'],
+          cliFlags['user-agent'],
         ),
       )
       await startEcoindexPageMesure(page, session)
@@ -130,16 +132,22 @@ async function runCourses(cliFlags) {
   // save `extra-header` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['extra-header']) {
     console.log(
-      `${logSymbols.warning} Extra-header overrided by \`example-input-file.json\` file.`,
+      `${logSymbols.warning} Extra-header overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['extraHeaderObj'] = cliFlags['jsonFileObj']?.['extra-header']
   }
   // save `output` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['output']) {
     console.log(
-      `${logSymbols.warning} Output overrided by \`example-input-file.json\` file.`,
+      `${logSymbols.warning} Output overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['output'] = cliFlags['jsonFileObj']?.['output']
+  }
+  if (cliFlags['jsonFileObj']?.['user-agent']) {
+    console.log(
+      `${logSymbols.warning} user-agent overrided by \`${cliFlags['json-file']}\` file.`,
+    )
+    cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
   }
   if (
     !cliFlags['output'].includes('json') &&
