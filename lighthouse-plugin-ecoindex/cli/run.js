@@ -145,9 +145,15 @@ async function runCourses(cliFlags) {
     !cliFlags['output'].includes('json') &&
     cliFlags['output'].includes('statement')
   ) {
-    console.log(
-      `${logSymbols.error} Statement files need json file. Use \`--output json --output statement\``,
-    )
+    if (cliFlags['jsonFileObj']?.['output']) {
+      console.log(
+        `${logSymbols.error} Statement files need json file. Use \`"output": ["json", "statement"]\` in input file.`,
+      )
+    } else {
+      console.log(
+        `${logSymbols.error} Statement files need json file. Use \`--output json --output statement\``,
+      )
+    }
     process.exit(1)
   }
   // send to the right workflow
