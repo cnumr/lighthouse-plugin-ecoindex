@@ -141,6 +141,15 @@ async function runCourses(cliFlags) {
     )
     cliFlags['output'] = cliFlags['jsonFileObj']?.['output']
   }
+  if (
+    !cliFlags['output'].includes('json') &&
+    cliFlags['output'].includes('statement')
+  ) {
+    console.log(
+      `${logSymbols.error} Statement files need json file. Use \`--output json --output statement\``,
+    )
+    process.exit(1)
+  }
   // send to the right workflow
   if (cliFlags['url']) {
     console.log(`${logSymbols.info} Course an array of urls`)
@@ -160,16 +169,14 @@ async function runCourses(cliFlags) {
     }
   }
   if (
+    cliFlags['output'].includes('json') &&
     cliFlags['output'].includes('statement') &&
     cliFlags['url'] === undefined
   ) {
     await printEnvStatementReport(cliFlags)
     await printEnvStatementDocuments(cliFlags)
   }
-   if (
-    cliFlags['output'].includes('json') &&
-    cliFlags['url'] === undefined
-  ) {
+  if (cliFlags['output'].includes('json') && cliFlags['url'] === undefined) {
     await printSummary(cliFlags)
   }
 }
