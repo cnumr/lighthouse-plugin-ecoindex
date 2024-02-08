@@ -6,7 +6,8 @@
     "lhei:help": "npx lighthouse-plugin-ecoindex --help",
     "lhei:demo": "npx lighthouse-plugin-ecoindex -d",
     "lhei:file": "npx lighthouse-plugin-ecoindex -j ./input-file.json -o json -o html",
-    "lhei:file:header": "npx lighthouse-plugin-ecoindex -j ./input-file.json -h extra-header.json -o json -o html"
+    "lhei:file:header": "npx lighthouse-plugin-ecoindex -j ./input-file.json -h extra-header.json -o json -o html",
+    "serve": "npx http-server -o reports --no-dotfiles"
   },
   "keywords": [],
   "author": "",
