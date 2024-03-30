@@ -38,7 +38,7 @@ Utilisation d'un `.puppeteerrc.cjs` custom.
 module.exports = async (browser, context) => {
   // launch browser for LHCI
   const page = await browser.newPage(context.options)
-  page.authenticate({ username: '<to update>', password: '<to update>' })
+  page.authenticate({ username: '<to adapte>', password: '<to adapte>' })
   const session = await page.target().createCDPSession()
   await page.goto(context.url, { waitUntil: 'networkidle0' })
   await startEcoindexPageMesure(page, session)

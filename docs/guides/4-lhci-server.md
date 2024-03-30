@@ -53,7 +53,7 @@ const definitions = {
 
 !!! warning
 **Si vous utilisez Docker, cette configuration sera parfois perdue**.  
-Pour palier à ce problème, vous pouvez créer un script qui modifie/rempalce le fichier de configuration à chaque redémarrage du conteneur.
+Pour palier à ce problème, vous pouvez créer un script qui modifie/remplace le fichier de configuration à chaque redémarrage du conteneur.
 !!!
 
 ==- `statistic-definitions.js` sans les modifications
