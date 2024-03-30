@@ -1,7 +1,7 @@
 ---
 label: Lighthouse CLI
 icon: terminal
-order: 200
+order: 900
 ---
 
 # Utilisation avec lighthouse CLI

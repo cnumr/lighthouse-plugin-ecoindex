@@ -1,7 +1,7 @@
 ---
 label: Lighthouse CI
 icon: pulse
-order: 100
+order: 800
 ---
 
 # Utilisation avec Lighthouse CI

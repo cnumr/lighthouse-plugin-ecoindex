@@ -1,7 +1,7 @@
 ---
 label: lighthouse-ecoindex CLI
 icon: terminal
-order: 300
+order: 1000
 ---
 
 # Utilisation de lighthouse-ecoindex
