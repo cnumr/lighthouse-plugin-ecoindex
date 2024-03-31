@@ -16,7 +16,7 @@ order: 300
 - [ ] Compresser les ressources (>= 95%)
 - [ ] Limiter le nombre de domaines (<6)
 - [ ] Ne pas redimensionner l'image dans le navigateur
-- [ ] Externaliser css et js
+- [x] Externaliser css et js
 - [ ] Éviter les erreurs de requête HTTP
 - [ ] Limiter le nombre de requêtes HTTP (<27)
 - [ ] Ne pas télécharger d'images inutiles

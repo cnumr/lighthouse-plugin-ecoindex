@@ -30,6 +30,12 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/add-headers-expire-and-cache-control.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/unminified-css.js',
+    },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/unminified-javascript.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -79,6 +85,16 @@ export default {
       { id: 'bp-print-css', weight: 0, group: 'best-practices' },
       {
         id: 'bp-add-headers-expire-and-cache-control',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-unminified-css',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-unminified-javascript',
         weight: 0,
         group: 'best-practices',
       },
