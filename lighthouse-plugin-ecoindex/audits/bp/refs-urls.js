@@ -32,5 +32,13 @@ export default {
       fr: 'https://github.com/cnumr/best-practices/blob/main/chapters/BP_027_fr.md',
       en: 'https://github.com/cnumr/best-practices/blob/main/chapters/BP_027_en.md',
     },
+    bp_0101: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0101-ajouter-des-entetes-expires-ou-cache-control.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0101-ajouter-des-entetes-expires-ou-cache-control.html',
+    },
+    bp_0077: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0077-minifier-les-fichiers-css-javascript-html-et-svg.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0077-minifier-les-fichiers-css-javascript-html-et-svg.html',
+    },
   },
 }

@@ -27,6 +27,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/thegreenwebfoundation.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/add-headers-expire-and-cache-control.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -74,6 +77,11 @@ export default {
       { id: 'eco-index-requests', weight: 0, group: 'technic' },
       // best-practices
       { id: 'bp-print-css', weight: 0, group: 'best-practices' },
+      {
+        id: 'bp-add-headers-expire-and-cache-control',
+        weight: 0,
+        group: 'best-practices',
+      },
       { id: 'bp-thegreenwebfoundation', weight: 0, group: 'other-practices' },
     ],
   },
