@@ -1,0 +1,15 @@
+{
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "description": "Test locally",
+  "scripts": {
+    "lhei:bp_0027": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "lhei:bp_0101": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "lhei:bp_0077:css": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "lhei:bp_0077:js": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "serve": "npx http-server -o reports --no-dotfiles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
