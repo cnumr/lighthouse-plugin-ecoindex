@@ -11,9 +11,9 @@ class BPPrintCSS extends Audit {
   static get meta() {
     return {
       id: 'bp-print-css',
-      title: '#RWEB_027 - Print CSS',
-      failureTitle: '#RWEB_027 - No print css implemented.',
-      description: `A print css must be implemented to hide useless elements when printing. [See #RWEB_027](${refsURLS.rweb.bp_027.en})`,
+      title: '#RWEB_0027 - Print CSS',
+      failureTitle: '#RWEB_0027 - No print css implemented.',
+      description: `A print css must be implemented to hide useless elements when printing. [See #RWEB_0027](${refsURLS.rweb.bp_0027.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: ['LinkElements', 'DOMStats', 'devtoolsLogs'],
