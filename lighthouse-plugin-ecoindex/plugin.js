@@ -46,6 +46,9 @@ export default {
       path: 'lighthouse-plugin-ecoindex/audits/bp/redirects.js',
     },
     {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/no-document-write.js',
+    },
+    {
       path: 'lighthouse-plugin-ecoindex/audits/bp/uses-text-compression.js',
     },
   ],
@@ -127,6 +130,11 @@ export default {
       },
       {
         id: 'bp-uses-text-compression',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-no-document-write',
         weight: 0,
         group: 'best-practices',
       },

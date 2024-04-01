@@ -11,6 +11,7 @@
     "lhei:bp_0070": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.marmiton.org/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
     "lhei:bp_0095": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://spie.com/en/journalists/profile-key-figures/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
     "lhei:bp_0078": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://spie.com/en/journalists/profile-key-figures/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "lhei:bp_0041": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.marmiton.org/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
     "serve": "npx http-server -o reports --no-dotfiles"
   },
   "keywords": [],

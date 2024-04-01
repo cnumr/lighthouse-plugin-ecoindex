@@ -56,5 +56,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0078-compresser-les-fichiers-css-javascript-html-et-svg.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0078-compresser-les-fichiers-css-javascript-html-et-svg.html',
     },
+    bp_0041: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0041-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0041-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse.html',
+    },
   },
 }

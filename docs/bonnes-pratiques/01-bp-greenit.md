@@ -35,3 +35,4 @@ order: 300
 - [ ] Limiter les fichiers de feuilles de style (<=10)
 - [x] Utiliser HTTP/2 au lieu de HTTP/1
 - [ ] Utiliser des polices de caractères standard
+- [x] Ne pas faire de modification du DOM lorsqu’on le traverse
