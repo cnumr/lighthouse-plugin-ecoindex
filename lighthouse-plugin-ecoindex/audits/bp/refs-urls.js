@@ -52,5 +52,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0095-eviter-les-redirections.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0095-eviter-les-redirections.html',
     },
+    bp_0078: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0078-compresser-les-fichiers-css-javascript-html-et-svg.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0078-compresser-les-fichiers-css-javascript-html-et-svg.html',
+    },
   },
 }

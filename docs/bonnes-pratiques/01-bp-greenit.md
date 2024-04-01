@@ -12,8 +12,10 @@ order: 300
 
 ## Liste des bonnes pratiques GreenIT
 
+> Mis à jour 01/04/2024
+
 - [x] Ajouter des en-têtes expires ou cache-control
-- [ ] Compresser les ressources (>= 95%)
+- [x] Compresser les ressources (>= 95%)
 - [ ] Limiter le nombre de domaines (<6)
 - [ ] Ne pas redimensionner l'image dans le navigateur
 - [ ] Externaliser css et js
