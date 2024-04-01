@@ -29,7 +29,7 @@ order: 300
 - [x] Éviter les redirections
 - [ ] Optimiser les images bitmap
 - [ ] Optimiser les images svg
-- [ ] Ne pas utiliser de plugins
+- [x] Ne pas utiliser de plugins
 - [x] Fournir une feuille de style pour l'impression (test : https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/)
 - [ ] Ne pas utiliser de bouton social standard
 - [ ] Limiter les fichiers de feuilles de style (<=10)

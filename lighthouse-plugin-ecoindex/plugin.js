@@ -51,6 +51,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/uses-text-compression.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/plugins.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -135,6 +138,11 @@ export default {
       },
       {
         id: 'bp-no-document-write',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-plugins',
         weight: 0,
         group: 'best-practices',
       },
