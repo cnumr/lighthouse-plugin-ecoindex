@@ -16,13 +16,13 @@ order: 300
 - [ ] Compresser les ressources (>= 95%)
 - [ ] Limiter le nombre de domaines (<6)
 - [ ] Ne pas redimensionner l'image dans le navigateur
-- [x] Externaliser css et js
+- [ ] Externaliser css et js
 - [ ] Éviter les erreurs de requête HTTP
 - [ ] Limiter le nombre de requêtes HTTP (<27)
 - [ ] Ne pas télécharger d'images inutiles
 - [ ] Valider les js
 - [ ] Longueur maximale des cookies (<512 octets)
-- [ ] Minification des css et js
+- [x] Minification des css et js
 - [ ] Pas de cookie pour les ressources statiques
 - [ ] Éviter les redirections
 - [ ] Optimiser les images bitmap
