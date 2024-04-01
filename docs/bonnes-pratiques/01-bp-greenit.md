@@ -31,5 +31,5 @@ order: 300
 - [x] Fournir une feuille de style pour l'impression (test : https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/)
 - [ ] Ne pas utiliser de bouton social standard
 - [ ] Limiter les fichiers de feuilles de style (<=10)
-- [ ] Utiliser HTTP/2 au lieu de HTTP/1
+- [x] Utiliser HTTP/2 au lieu de HTTP/1
 - [ ] Utiliser des polices de caractères standard

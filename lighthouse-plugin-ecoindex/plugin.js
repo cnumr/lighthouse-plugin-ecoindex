@@ -36,6 +36,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/unminified-javascript.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/uses-http2.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -95,6 +98,11 @@ export default {
       },
       {
         id: 'bp-unminified-javascript',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-uses-http2',
         weight: 0,
         group: 'best-practices',
       },

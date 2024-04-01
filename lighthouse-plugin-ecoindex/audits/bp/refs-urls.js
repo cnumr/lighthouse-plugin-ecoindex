@@ -40,5 +40,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0077-minifier-les-fichiers-css-javascript-html-et-svg.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0077-minifier-les-fichiers-css-javascript-html-et-svg.html',
     },
+    bp_4006: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_4006-privilegier-http2-a-http1.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_4006-privilegier-http2-a-http1.html',
+    },
   },
 }
