@@ -24,7 +24,7 @@ order: 300
 - [ ] Longueur maximale des cookies (<512 octets)
 - [x] Minification des css et js
 - [ ] Pas de cookie pour les ressources statiques
-- [ ] Éviter les redirections
+- [x] Éviter les redirections
 - [ ] Optimiser les images bitmap
 - [ ] Optimiser les images svg
 - [ ] Ne pas utiliser de plugins

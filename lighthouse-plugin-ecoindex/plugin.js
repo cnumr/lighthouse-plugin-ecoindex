@@ -42,6 +42,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/errors-in-console.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/redirects.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -111,6 +114,11 @@ export default {
       },
       {
         id: 'bp-errors-in-console',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-redirects',
         weight: 0,
         group: 'best-practices',
       },

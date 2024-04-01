@@ -48,5 +48,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0070-supprimer-tous-les-warnings-et-toutes-les-notices.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0070-supprimer-tous-les-warnings-et-toutes-les-notices.html',
     },
+    bp_0095: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0095-eviter-les-redirections.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0095-eviter-les-redirections.html',
+    },
   },
 }
