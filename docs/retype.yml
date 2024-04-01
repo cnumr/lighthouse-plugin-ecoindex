@@ -4,7 +4,7 @@ url: https://cnumr.github.io/lighthouse-plugin-ecoindex
 branding:
   title: Plugin Ecoindex Lighthouse
   logo: static/greenit_icone_intro-alt.png
-  label: 3.2.0
+  label: 3.3.0
 meta:
   title: ' - Ecoindex Lighthouse Plugin'
 links:
