@@ -18,9 +18,9 @@ order: 300
 - [ ] Ne pas redimensionner l'image dans le navigateur
 - [ ] Externaliser css et js
 - [ ] Éviter les erreurs de requête HTTP
-- [ ] Limiter le nombre de requêtes HTTP (<27)
+- [x] Limiter le nombre de requêtes HTTP (<27) - core ecoindex
 - [ ] Ne pas télécharger d'images inutiles
-- [ ] Valider les js
+- [x] Valider les js
 - [ ] Longueur maximale des cookies (<512 octets)
 - [x] Minification des css et js
 - [ ] Pas de cookie pour les ressources statiques

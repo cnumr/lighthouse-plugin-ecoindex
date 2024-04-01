@@ -44,5 +44,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_4006-privilegier-http2-a-http1.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_4006-privilegier-http2-a-http1.html',
     },
+    bp_0070: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0070-supprimer-tous-les-warnings-et-toutes-les-notices.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0070-supprimer-tous-les-warnings-et-toutes-les-notices.html',
+    },
   },
 }

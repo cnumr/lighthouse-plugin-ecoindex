@@ -39,6 +39,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/uses-http2.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/errors-in-console.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -103,6 +106,11 @@ export default {
       },
       {
         id: 'bp-uses-http2',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-errors-in-console',
         weight: 0,
         group: 'best-practices',
       },
