@@ -17,7 +17,7 @@ order: 300
 - [x] Ajouter des en-têtes expires ou cache-control
 - [x] Compresser les ressources (>= 95%)
 - [ ] Limiter le nombre de domaines (<6)
-- [ ] Ne pas redimensionner l'image dans le navigateur
+- [x] Ne pas redimensionner l'image dans le navigateur
 - [ ] Externaliser css et js
 - [ ] Éviter les erreurs de requête HTTP
 - [x] Limiter le nombre de requêtes HTTP (<27) - core ecoindex

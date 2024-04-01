@@ -54,6 +54,9 @@ export default {
     {
       path: 'lighthouse-plugin-ecoindex/audits/bp/plugins.js',
     },
+    {
+      path: 'lighthouse-plugin-ecoindex/audits/bp/image-size-responsive.js',
+    },
   ],
   groups: {
     ecologic: {
@@ -143,6 +146,11 @@ export default {
       },
       {
         id: 'bp-plugins',
+        weight: 0,
+        group: 'best-practices',
+      },
+      {
+        id: 'bp-image-size-responsive',
         weight: 0,
         group: 'best-practices',
       },

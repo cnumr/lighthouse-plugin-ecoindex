@@ -60,5 +60,9 @@ export default {
       fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0041-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse.html',
       en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0041-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse.html',
     },
+    bp_0034: {
+      fr: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0034-ne-pas-redimensionner-les-images-cote-navigateur.html',
+      en: 'https://ref.greenit.fr/rweb/fr/fiches/rweb_0034-ne-pas-redimensionner-les-images-cote-navigateur.html',
+    },
   },
 }
