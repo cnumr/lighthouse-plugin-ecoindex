@@ -12,16 +12,47 @@ import round from 'lodash.round'
 
 export const B_TO_KB = 1000
 
+function resolveJSDOMFromURL(artifacts) {
+  console.log('resolveJSDOMFromURL')
+  return new Promise(resolve => {
+    JSDOM.fromURL(artifacts.URL.finalDisplayedUrl, {
+      runScripts: 'dangerously',
+      pretendToBeVisual: true,
+      includeNodeLocations: true,
+      // resources: 'usable',
+    }).then(dom => {
+      resolve(dom)
+    })
+  })
+}
 /**
  * Calculate the number of DOM elements without SVGs content.
  * @param {LH.Artifacts} artifacts
  * @returns number
  */
-export async function getEcoindexNodes(artifacts) {
+export async function getEcoindexNodes(artifacts, context) {
+  console.log('getEcoindexNodes')
+  const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
+  // const fetchedDom = await resolveJSDOMFromURL(artifacts)
+  // const allNodesFetched =
+  //   fetchedDom.window.document.querySelectorAll('*').length
+  // console.log('allNodesFetched', allNodesFetched)
+  const totalBodyElements = artifacts.DOMStats.totalBodyElements
   const MainDocumentContent = artifacts.MainDocumentContent
   const dom = new JSDOM(MainDocumentContent)
   const allNodes = dom.window.document.querySelectorAll('*').length
+  const allBodyNodes = dom.window.document
+    .getElementsByTagName('body')[0]
+    .querySelectorAll('*').length
   const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+  const svgContentBodyNodes = dom.window.document
+    .getElementsByTagName('body')[0]
+    .querySelectorAll('svg *').length
+  console.log('totalBodyElements', totalBodyElements)
+  console.log('allNodesFromMainDocumentContent', allNodes)
+  console.log('allBodyNodesFromMainDocumentContent', allBodyNodes)
+  console.log('svgContentNodesFromMainDocumentContent', svgContentNodes)
+  console.log('svgContentBodyNodesFromMainDocumentContent', svgContentBodyNodes)
   return allNodes - svgContentNodes
 }
 
@@ -30,7 +61,7 @@ export async function getLoadingExperience(
   context,
   isTechnical = false,
 ) {
-  let domSize = await getEcoindexNodes(artifacts)
+  let domSize = await getEcoindexNodes(artifacts, context)
   if (!artifacts.MainDocumentContent) {
     throw new Error(
       "MainDocumentContent not found, EcoindexNodes can't be calculated.",

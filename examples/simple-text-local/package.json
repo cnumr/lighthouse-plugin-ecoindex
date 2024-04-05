@@ -1,6 +1,7 @@
 {
   "name": "lighthouse-plugin-ecoindex-playground",
   "version": "1.0.0",
+  "type": "module",
   "description": "Test locally",
   "scripts": {
     "lhei:bp_0027": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.creastuces.com/des-styles-css-pour-optimiser-limpression-papier/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
@@ -13,6 +14,7 @@
     "lhei:bp_0078": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://spie.com/en/journalists/profile-key-figures/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
     "lhei:bp_0041": "echo 'No test' && exit 1",
     "lhei:bp_0034": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.marmiton.org/ -o json -o html --audit-category=lighthouse-plugin-ecoindex",
+    "lhei:issue_12": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.spie.com/en/about-us/spie-around-world -o html --audit-category=lighthouse-plugin-ecoindex",
     "lhei:bp_Plugins": "echo 'No test' && exit 1",
     "serve": "npx http-server -o reports --no-dotfiles"
   },

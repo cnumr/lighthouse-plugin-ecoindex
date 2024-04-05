@@ -18,17 +18,24 @@ class WarnNodesCount extends Audit {
       description: `Explication: Counting all the DOM nodes on the page, excluding the child nodes of \`svg\` elements, gives us the number of DOM elements on the page. This method encourages you not to replace a complex svg with an image, simply to obtain a better score. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: [
+        'MainDocumentContent',
+        'DOMStats',
+        'devtoolsLogs',
+        'URL',
+        'settings',
+        'DOMInformations',
+      ],
     }
   }
 
-  static async audit(artifacts) {
+  static async audit(artifacts, context) {
     // const MainDocumentContent = artifacts.MainDocumentContent
     // const dom = new JSDOM(MainDocumentContent)
     // const allNodes = dom.window.document.querySelectorAll('*').length
     // // const svgNodes = dom.window.document.querySelectorAll('svg').length
     // const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-    const value = await getEcoindexNodes(artifacts)
+    const value = await getEcoindexNodes(artifacts, context)
     const DOMStats = artifacts.DOMStats.totalBodyElements
 
     return {

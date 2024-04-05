@@ -18,7 +18,14 @@ class LighthouseNodesAudit extends Audit {
       description:
         'Pages should be lightweight in order to be more sustainable.',
       // desabled because we don't need to run this audit if we don't have the NodesMinusSvgsGatherer
-      requiredArtifacts: ['DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: [
+        'MainDocumentContent',
+        'DOMStats',
+        'devtoolsLogs',
+        'URL',
+        'settings',
+        'DOMInformations',
+      ],
 
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
@@ -56,7 +63,6 @@ class LighthouseNodesAudit extends Audit {
   }
 
   static async audit(artifacts, context) {
-    console.log('artifacts', JSON.stringify(artifacts))
     if (artifacts['NodesMinusSvgsGatherer']) {
       return { score: null, notApplicable: true }
     }

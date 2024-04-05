@@ -14,7 +14,14 @@ class EcoindexScoreAudit extends Audit {
       title: 'Ecoindex revealant metrics',
       failureTitle: 'Ecoindex, your page has an impact',
       description: `The EcoIndex score evaluating the environmental impact of the page. [See Ecoindex, Calculating the EcoIndex](${refsURLS.ecoindex.score.en})`,
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: [
+        'MainDocumentContent',
+        'DOMStats',
+        'devtoolsLogs',
+        'URL',
+        'settings',
+        'DOMInformations',
+      ],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

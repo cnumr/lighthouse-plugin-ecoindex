@@ -14,7 +14,14 @@ class EcoindexWaterConsumptionAudit extends Audit {
       title: 'Water Consumption (cl)',
       failureTitle: 'Water Consumption (cl), your page consumes a lot of water',
       description: `The quantity of water consumed by the page. [See Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: [
+        'MainDocumentContent',
+        'DOMStats',
+        'devtoolsLogs',
+        'URL',
+        'settings',
+        'DOMInformations',
+      ],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

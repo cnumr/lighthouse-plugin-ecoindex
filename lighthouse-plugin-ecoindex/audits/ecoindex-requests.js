@@ -15,7 +15,14 @@ class EcoindexRequestsAudit extends Audit {
       failureTitle:
         'Number of requests, your page calls too many external resources',
       description: `The number of \`Network.loadingFinished\` logs indicates the number of requests made to external resources. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: [
+        'MainDocumentContent',
+        'DOMStats',
+        'devtoolsLogs',
+        'URL',
+        'settings',
+        'DOMInformations',
+      ],
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }
