@@ -8,7 +8,7 @@
     "lhei:demo": "npx lighthouse-plugin-ecoindex -d",
     "lhei:issue_12": "npx lighthouse-plugin-ecoindex collect -u https://www.spie.com/en/about-us/spie-around-world -o html",
     "serve": "npx http-server -o reports --no-dotfiles",
-    "clean": "rm -rf reports/* && touch reports/.geetkeep"
+    "clean": "rm -rf reports/* && touch reports/.gitkeep"
   },
   "keywords": [],
   "author": "",
