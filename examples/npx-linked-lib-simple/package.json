@@ -1,0 +1,16 @@
+{
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Test locally `npx-linked-lib-simple`",
+  "scripts": {
+    "lhei:help": "npx lighthouse-plugin-ecoindex --help",
+    "lhei:demo": "npx lighthouse-plugin-ecoindex -d",
+    "lhei:issue_12": "npx lighthouse-plugin-ecoindex collect -u https://www.spie.com/en/about-us/spie-around-world -o html",
+    "serve": "npx http-server -o reports --no-dotfiles",
+    "clean": "rm -rf reports/* && touch reports/.geetkeep"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

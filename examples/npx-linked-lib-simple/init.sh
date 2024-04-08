@@ -1,0 +1,1 @@
+npm link lighthouse-plugin-ecoindex
