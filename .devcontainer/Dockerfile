@@ -30,3 +30,4 @@ RUN npm install -g lighthouse
 
 # Install puppeteer
 RUN npm install -g puppeteer
+RUN npx puppeteer browsers install chrome

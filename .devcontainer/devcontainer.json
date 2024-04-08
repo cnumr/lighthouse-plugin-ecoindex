@@ -26,7 +26,8 @@
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": {
     "add-ssh-keys": "sh /workspace/.devcontainer/postCreateCommand/_add-ssh-keys.sh",
-    "custom-cmd": "sh /workspace/.devcontainer/postCreateCommand/custom.sh"
+    "custom-cmd": "sh /workspace/.devcontainer/postCreateCommand/custom.sh",
+    "link plugin": "cd /workspace/lighthouse-plugin-ecoindex && npm link",
   },
 
   // Use 'postStartCommand' to run commands each time the container is successfully started..
@@ -50,15 +51,11 @@
 		"amatiasq.sort-imports",
 		"vscode-icons-team.vscode-icons",
 		"dbaeumer.vscode-eslint",
-		"formulahendry.auto-rename-tag",
 		"mutantdino.resourcemonitor",
 		"yzhang.markdown-all-in-one",
 		"adam-bender.commit-message-editor",
 		"mhutchie.git-graph",
-		"eamodio.gitlens",
 		"ms-azuretools.vscode-docker",
-		"ritwickdey.LiveServer",
-		"marp-team.marp-vscode"
 	],
       "settings": {
         "prettier.prettierPath": "node_modules/prettier",
