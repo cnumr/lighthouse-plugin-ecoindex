@@ -3,6 +3,8 @@ import { generateEnvironmentalStatement, runCourses } from './run.js'
 
 import { getFlags } from './cli-flags.js'
 import logSymbols from 'log-symbols'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -17,8 +19,8 @@ import logSymbols from 'log-symbols'
  *               cli-flags        lh-core/index
  */
 
-const DEMO_INPUT_FILE_PATH =
-  'lighthouse-plugin-ecoindex/demo/example-input-file.json'
+const DEMO_INPUT_FILE_PATH = '/../demo/example-input-file.json'
+  
 
 /**
  * @return {Promise<void>}
@@ -37,7 +39,9 @@ async function begin() {
     }
     if (cliFlags['demo']) {
       console.log(`${logSymbols.warning} Demo mode enabled.`)
-      cliFlags['json-file'] = DEMO_INPUT_FILE_PATH
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      cliFlags['json-file'] = path.normalize(__dirname + DEMO_INPUT_FILE_PATH)
     }
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)
     if (cliFlags._[0] === 'collect') {
