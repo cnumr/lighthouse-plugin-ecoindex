@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "description": "Test with the Node CLI",
+  "scripts": {
+    "lighthouse": "lighthouse",
+    "cli": "npm run cli:collect",
+    "cli:collect": "CHROME_PATH=$(which chromium) lighthouse --verbose --config-path=\"./custom-config.js\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world",
+    "serve": "npx http-server -o reports --no-dotfiles",
+    "clean": "rm -rf reports/* && touch reports/.gitkeep"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse": "^11.3.0"
+  }
+}
