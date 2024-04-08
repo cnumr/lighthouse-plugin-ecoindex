@@ -1,8 +1,10 @@
 import {
-createErrorResult,
-createValueResult,
-getLoadingExperience,
+  createErrorResult,
+  createValueResult,
+  getLoadingExperience,
 } from '../utils/index.js'
+
+import commons from './commons.js'
 
 import { Audit } from 'lighthouse'
 import refsURLS from './bp/refs-urls.js'
@@ -15,14 +17,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
       failureTitle:
         'Greenhouse Gas Emission (eqCO2), your page generates a lot of greenhouse gas',
       description: `Greenhouse Gas Emission (eqCO2) of your page. [See Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
-      requiredArtifacts: [
-        'MainDocumentContent',
-        'DOMStats',
-        'devtoolsLogs',
-        'URL',
-        'settings',
-        'DOMInformations',
-      ],
+      requiredArtifacts: commons.requiredArtifacts,
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

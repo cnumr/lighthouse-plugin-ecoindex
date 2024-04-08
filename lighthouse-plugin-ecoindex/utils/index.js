@@ -1,10 +1,10 @@
-import { Audit, NetworkRecords } from 'lighthouse'
 import {
   computeEcoIndex,
   computeGreenhouseGasesEmissionfromEcoIndex,
   computeWaterConsumptionfromEcoIndex,
   getEcoIndexGrade,
 } from 'ecoindex'
+import { Audit, NetworkRecords } from 'lighthouse'
 
 import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
@@ -12,48 +12,25 @@ import round from 'lodash.round'
 
 export const B_TO_KB = 1000
 
-function resolveJSDOMFromURL(artifacts) {
-  console.log('resolveJSDOMFromURL')
-  return new Promise(resolve => {
-    JSDOM.fromURL(artifacts.URL.finalDisplayedUrl, {
-      runScripts: 'dangerously',
-      pretendToBeVisual: true,
-      includeNodeLocations: true,
-      // resources: 'usable',
-    }).then(dom => {
-      resolve(dom)
-    })
-  })
-}
 /**
  * Calculate the number of DOM elements without SVGs content.
  * @param {LH.Artifacts} artifacts
  * @returns number
  */
-export async function getEcoindexNodes(artifacts, context) {
-  console.log('getEcoindexNodes')
-  const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
-  // const fetchedDom = await resolveJSDOMFromURL(artifacts)
-  // const allNodesFetched =
-  //   fetchedDom.window.document.querySelectorAll('*').length
-  // console.log('allNodesFetched', allNodesFetched)
-  const totalBodyElements = artifacts.DOMStats.totalBodyElements
-  const MainDocumentContent = artifacts.MainDocumentContent
-  const dom = new JSDOM(MainDocumentContent)
-  const allNodes = dom.window.document.querySelectorAll('*').length
-  const allBodyNodes = dom.window.document
-    .getElementsByTagName('body')[0]
-    .querySelectorAll('*').length
-  const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-  const svgContentBodyNodes = dom.window.document
-    .getElementsByTagName('body')[0]
-    .querySelectorAll('svg *').length
-  console.log('totalBodyElements', totalBodyElements)
-  console.log('allNodesFromMainDocumentContent', allNodes)
-  console.log('allBodyNodesFromMainDocumentContent', allBodyNodes)
-  console.log('svgContentNodesFromMainDocumentContent', svgContentNodes)
-  console.log('svgContentBodyNodesFromMainDocumentContent', svgContentBodyNodes)
-  return allNodes - svgContentNodes
+export async function getEcoindexNodes(artifacts) {
+  if (!artifacts.DOMInformations) {
+    // throw new Error(
+    //   "DOMInformations not found, EcoindexNodes can't be calculated.",
+    // )
+    const MainDocumentContent = artifacts.MainDocumentContent
+    const dom = new JSDOM(MainDocumentContent)
+    const allNodes = dom.window.document.querySelectorAll('*').length
+    const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+    return allNodes - svgContentNodes
+  }
+  const domInformations = artifacts.DOMInformations
+  console.debug(`domInformations`, domInformations)
+  return domInformations.nodesBodyWithoutSVGChildsCount
 }
 
 export async function getLoadingExperience(
@@ -62,11 +39,6 @@ export async function getLoadingExperience(
   isTechnical = false,
 ) {
   let domSize = await getEcoindexNodes(artifacts, context)
-  if (!artifacts.MainDocumentContent) {
-    throw new Error(
-      "MainDocumentContent not found, EcoindexNodes can't be calculated.",
-    )
-  }
 
   // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61
   const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]

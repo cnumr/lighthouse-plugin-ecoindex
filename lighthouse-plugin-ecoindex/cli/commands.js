@@ -160,7 +160,7 @@ function getLighthouseConfig(
       artifacts: [
         {
           id: 'DOMInformations',
-          gatherer: 'dom-informations',
+          gatherer: 'lighthouse-plugin-ecoindex/gatherers/dom-informations',
         },
       ],
       settings: {

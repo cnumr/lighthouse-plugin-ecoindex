@@ -4,6 +4,8 @@ import {
   getLoadingExperience,
 } from '../utils/index.js'
 
+import commons from './commons.js'
+
 import { Audit } from 'lighthouse'
 import refsURLS from './bp/refs-urls.js'
 
@@ -14,14 +16,7 @@ class EcoindexGradeAudit extends Audit {
       title: 'Grade',
       failureTitle: 'Grade, your page has a big impact',
       description: `The EcoIndex score evaluating the environmental impact of the page. [See Ecoindex, Calculating the score](${refsURLS.ecoindex.grade.en})`,
-      requiredArtifacts: [
-        'MainDocumentContent',
-        'DOMStats',
-        'devtoolsLogs',
-        'URL',
-        'settings',
-        'DOMInformations',
-      ],
+      requiredArtifacts: commons.requiredArtifacts,
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

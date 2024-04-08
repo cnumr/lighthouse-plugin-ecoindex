@@ -6,6 +6,7 @@
 
 import { Audit } from 'lighthouse'
 import { getEcoindexNodes } from '../utils/index.js'
+import commons from './commons.js'
 import refsURLS from './bp/refs-urls.js'
 
 class WarnNodesCount extends Audit {
@@ -18,14 +19,7 @@ class WarnNodesCount extends Audit {
       description: `Explication: Counting all the DOM nodes on the page, excluding the child nodes of \`svg\` elements, gives us the number of DOM elements on the page. This method encourages you not to replace a complex svg with an image, simply to obtain a better score. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: [
-        'MainDocumentContent',
-        'DOMStats',
-        'devtoolsLogs',
-        'URL',
-        'settings',
-        'DOMInformations',
-      ],
+      requiredArtifacts: commons.requiredArtifacts,
     }
   }
 

@@ -4,6 +4,8 @@ import {
   getLoadingExperience,
 } from '../utils/index.js'
 
+import commons from './commons.js'
+
 import { Audit } from 'lighthouse'
 
 /**
@@ -18,14 +20,7 @@ class LighthouseNodesAudit extends Audit {
       description:
         'Pages should be lightweight in order to be more sustainable.',
       // desabled because we don't need to run this audit if we don't have the NodesMinusSvgsGatherer
-      requiredArtifacts: [
-        'MainDocumentContent',
-        'DOMStats',
-        'devtoolsLogs',
-        'URL',
-        'settings',
-        'DOMInformations',
-      ],
+      requiredArtifacts: commons.requiredArtifacts,
 
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',

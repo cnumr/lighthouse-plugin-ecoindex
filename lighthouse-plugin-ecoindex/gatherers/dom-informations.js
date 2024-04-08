@@ -11,8 +11,8 @@ class DOMInformations extends Gatherer {
 
     function getDOMInformations() {
       // all
-      const nodesCount = document.querySelectorAll('*').length
-      const nodesSVGChildsCount = document.querySelectorAll('svg *').length
+      // const nodesCount = document.querySelectorAll('*').length
+      // const nodesSVGChildsCount = document.querySelectorAll('svg *').length
 
       // body
       const nodesBodyCount = document
@@ -23,13 +23,14 @@ class DOMInformations extends Gatherer {
         .querySelectorAll('svg *').length
 
       return {
-        nodesCount: nodesCount,
+        'lighthouse-plugin-ecoindex': '3.3.0',
+        // nodesCount: nodesCount,
         nodesBodyCount: nodesBodyCount,
-        nodesSVGChildsCount: nodesSVGChildsCount,
+        // nodesSVGChildsCount: nodesSVGChildsCount,
         nodesBodySVGChildsCount: nodesBodySVGChildsCount,
         nodesBodyWithoutSVGChildsCount:
           nodesBodyCount - nodesBodySVGChildsCount,
-        nodesWithoutSVGChildsCount: nodesCount - nodesSVGChildsCount,
+        // nodesWithoutSVGChildsCount: nodesCount - nodesSVGChildsCount,
       }
     }
 
