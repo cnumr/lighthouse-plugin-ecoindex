@@ -9,10 +9,8 @@ node_modules
 flags-*
 lhr-*
 reports/*
-!reports/.gitkeep
 .lighthouseci/*
 **/.lighthouseci/links.json
-!**/.lighthouseci/.gitkeep
 
 
 # input files to keep locally
