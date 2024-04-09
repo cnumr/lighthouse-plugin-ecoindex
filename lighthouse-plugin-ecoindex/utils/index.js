@@ -18,18 +18,18 @@ export const B_TO_KB = 1000
  * @returns number
  */
 export async function getEcoindexNodes(artifacts) {
-  if (!artifacts.DOMInformations) {
-    // throw new Error(
-    //   "DOMInformations not found, EcoindexNodes can't be calculated.",
-    // )
-    const MainDocumentContent = artifacts.MainDocumentContent
-    const dom = new JSDOM(MainDocumentContent)
-    const allNodes = dom.window.document.querySelectorAll('*').length
-    const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-    return allNodes - svgContentNodes
-  }
+  // if (!artifacts.DOMInformations) {
+  //   throw new Error(
+  //     "DOMInformations not found, EcoindexNodes can't be calculated.",
+  //   )
+  //   const MainDocumentContent = artifacts.MainDocumentContent
+  //   const dom = new JSDOM(MainDocumentContent)
+  //   const allNodes = dom.window.document.querySelectorAll('*').length
+  //   const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+  //   return allNodes - svgContentNodes
+  // }
   const domInformations = artifacts.DOMInformations
-  console.debug(`domInformations`, domInformations)
+  // console.debug(`domInformations`, domInformations)
   return domInformations.nodesBodyWithoutSVGChildsCount
 }
 

@@ -1,8 +1,8 @@
 export default {
-    requiredArtifacts: [
-        'MainDocumentContent',
-        'DOMStats',
-        'devtoolsLogs',
-        'DOMInformations',
-      ]
+  requiredArtifacts: [
+    'MainDocumentContent',
+    'DOMStats',
+    'devtoolsLogs',
+    'DOMInformations',
+  ],
 }
