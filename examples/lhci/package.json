@@ -6,7 +6,8 @@
   "scripts": {
     "lhci": "npm run lhci:collect && npm run lhci:upload",
     "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
-    "lhci:upload": "lhci upload"
+    "lhci:upload": "lhci upload",
+    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep"
   },
   "author": "",
   "license": "ISC",
