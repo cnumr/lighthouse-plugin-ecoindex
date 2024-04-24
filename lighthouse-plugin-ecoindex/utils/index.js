@@ -30,7 +30,7 @@ export async function getEcoindexNodes(artifacts) {
   // }
   const domInformations = artifacts.DOMInformations
   // console.debug(`domInformations`, domInformations)
-  return domInformations.nodesBodyWithoutSVGChildsCount
+  return domInformations.nodesWithoutSVGChildsCount
 }
 
 export async function getLoadingExperience(

@@ -1,6 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 import * as i18n from 'lighthouse/core/lib/i18n/i18n.js'
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path'
 
+function getVersion(){
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const rawdata = fs.readFileSync(__dirname + '/package.json');
+  const pluginPackage = JSON.parse(rawdata);
+  return pluginPackage.version;
+}
 /** @type {LH.Config.Plugin} */
 export default {
   // Additional audits to run on information Lighthouse gathered.
@@ -87,7 +97,7 @@ export default {
     title: 'Ecoindex',
     description:
       '[Ecoindex®](https://www.ecoindex.fr/) revealant metrics, by [GreenIT.fr®](https://www.greenit.fr).  ' +
-      '[GitHub](https://github.com/NovaGaia/lighthouse-plugin-ecoindex)',
+      '[GitHub](https://github.com/NovaGaia/lighthouse-plugin-ecoindex). Version: ' + getVersion(),
     auditRefs: [
       // no category audit, warn on nodes count
       { id: 'warn-nodes-count', weight: 0 },
