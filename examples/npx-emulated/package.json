@@ -2,7 +2,7 @@
   "name": "lighthouse-plugin-ecoindex-playground",
   "version": "1.0.0",
   "type": "module",
-  "description": "Test locally `npx-linked-lib-simple`",
+  "description": "Test locally `npx-emulated`",
   "scripts": {
     "direct:help": "node lighthouse-plugin-ecoindex/cli/index.js --help",
     "direct:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",

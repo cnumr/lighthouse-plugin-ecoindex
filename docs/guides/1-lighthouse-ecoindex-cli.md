@@ -28,6 +28,12 @@ A la sortie, vous obtiendrez :
 Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`.
 !!!
 
+Nécessite `puppeteer` et Chrome à la version `121.0.6167.85`
+
+```bash
+npx puppeteer browsers install chrome@121.0.6167.85
+```
+
 Installer le plugin via npm :
 
 ```bash

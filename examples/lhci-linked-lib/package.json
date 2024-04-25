@@ -11,7 +11,7 @@
     "lhci:healthcheck": "lhci healthcheck",
     "serve": "npx http-server -o .lighthouseci --no-dotfiles",
     "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep",
-    "postinstall": "patch-package"
+    "patch-package": "patch-package"
   },
   "author": "",
   "license": "ISC",

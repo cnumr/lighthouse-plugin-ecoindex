@@ -6,7 +6,7 @@
   "scripts": {
     "lighthouse": "lighthouse",
     "cli": "npm run cli:collect",
-    "cli:collect": "CHROME_PATH=$(which chromium) lighthouse --verbose --config-path=\"./custom-config.js\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world",
+    "cli:collect": "CHROME_PATH=$(which chromium) lighthouse --config-path=\"./custom-config.js\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world",
     "cli:collect:debug": "CHROME_PATH=$(which chromium) lighthouse --verbose --config-path=\"./custom-config.js\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world  2>&1| tee debug.log",
     "serve": "npx http-server -o reports --no-dotfiles",
     "clean": "rm -rf reports/* && touch reports/.gitkeep",

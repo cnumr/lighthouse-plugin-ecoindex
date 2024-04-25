@@ -1,13 +1,13 @@
 {
-  "recommendations": ["oderwat.indent-rainbow",
-		"esbenp.prettier-vscode",
-		"amatiasq.sort-imports",
-		"vscode-icons-team.vscode-icons",
-		"dbaeumer.vscode-eslint",
-		"formulahendry.auto-rename-tag",
-		"mutantdino.resourcemonitor",
-		"yzhang.markdown-all-in-one",
-		"adam-bender.commit-message-editor",
-		"mhutchie.git-graph",
+  "recommendations": [
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "amatiasq.sort-imports",
+    "vscode-icons-team.vscode-icons",
+    "dbaeumer.vscode-eslint",
+    "mutantdino.resourcemonitor",
+    "yzhang.markdown-all-in-one",
+    "adam-bender.commit-message-editor",
+    "mhutchie.git-graph"
   ]
 }

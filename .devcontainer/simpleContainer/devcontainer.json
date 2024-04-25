@@ -1,43 +1,34 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-  "name": "lighthouse-plugin-ecoindex (with Dockerfile)",
+  "name": "lighthouse-plugin-ecoindex (docker-compose, Node.js & TypeScript)",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  // "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+  // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
   "dockerComposeFile": ["docker-compose.yml"],
-  "service": "lighthousedevcontainer",
+  "service": "lighthousedevcontainersimple",
   "workspaceFolder": "/workspace",
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": {
+    "updateContentCommand": "sh /workspace/.devcontainer/simpleContainer/updateContentCommand/updateContentCommand.sh"
+  },
 
   // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/rio/features/chezmoi:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [9001],
 
-  // Use 'initializeCommand' A command string or list of command arguments to run on the host machine before the container is created.
-  // "initializeCommand": {}
-
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": {
-    "add-ssh-keys": "sh /workspace/.devcontainer/postCreateCommand/_add-ssh-keys.sh",
-    "custom-cmd": "sh /workspace/.devcontainer/postCreateCommand/custom.sh",
-    "link plugin": "cd /workspace/lighthouse-plugin-ecoindex && npm link"
-  },
+  "postCreateCommand": {},
 
   // Use 'postStartCommand' to run commands each time the container is successfully started..
   // https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
   "postStartCommand": {
     "git.config.safe.directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-    "git.config.pull.rebase": "git config pull.rebase false",
-    "chmod 666 docker.sock": "sudo chmod 666 /var/run/docker.sock",
-    // "add-ssh-keys-to-agent": "sh /workspace/.devcontainer/postStartCommand/_add-ssh-keys-to-agent.sh",
-    "custom-cmd": "sh /workspace/.devcontainer/postStartCommand/custom.sh"
+    "git.config.pull.rebase": "git config pull.rebase false"
   },
 
   // Configure tool-specific properties.
