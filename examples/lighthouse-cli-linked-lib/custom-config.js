@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import DOMInformations from 'lighthouse-plugin-ecoindex/gatherers/dom-informations.js';
 /** @type {LH.Config} */
 const config = {
   formFactor: 'desktop',
@@ -28,10 +29,7 @@ const config = {
   preset: 'desktop',
   extends: "lighthouse:default",
   artifacts: [
-    {
-      id: 'DOMInformations',
-      gatherer: 'lighthouse-plugin-ecoindex/gatherers/dom-informations',
-    },
+    {id: 'DOMInformations', gatherer: DOMInformations},
   ],
 }
 
