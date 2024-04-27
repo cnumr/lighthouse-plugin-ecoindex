@@ -2,7 +2,7 @@
   "type": "module",
   "name": "lighthouse-plugin-ecoindex-playground",
   "version": "1.0.0",
-  "description": "Test with lhci",
+  "description": "Test with lhci w/linked lib (for developpement purpose only)",
   "scripts": {
     "lhci": "npm run lhci:healthcheck && npm run lhci:collect && npm run lhci:upload",
     "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
