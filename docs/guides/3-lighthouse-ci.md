@@ -6,12 +6,6 @@ order: 800
 
 # Utilisation avec Lighthouse CI
 
-## Documentation externe des dépendances
-
-[!ref target="blank" text="Lighthouse CI"](https://github.com/GoogleChrome/lighthouse-ci#readme)
-
-[!ref target="blank" text="Puppeteer"](https://pptr.dev/)
-
 ## Objectifs
 
 Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.
@@ -36,14 +30,13 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
 Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.
 
 ==- Modèle de fichier de configuration de Lighthouse
-:::code source="../static/.lighthouserc.js" :::
+:::code source="../../lighthouse-plugin-ecoindex/demo/example-lhci-config.js" :::
 ===
-[!file Télécharger](../static/.lighthouserc.js)
 
 [!badge text="Tip" icon="light-bulb"] Placer le fichier `.lighthouserc.js` à la racine de votre projet.
 
 !!!
-Le fichier de configuration Puppeteer est indiqué dans `puppeteerScript` du fichier. Si besoin, adapter le chemin.
+Le fichier de configuration Puppeteer est indiqué dans `puppeteerScript` du fichier. Si besoin, adapter le chemin qui doit être en absolu, obligatoire avec `lhci`.
 !!!
 !!!danger
 Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spécifiques (ex. Fermeture de popin pour validation de cookies). Conserver le process en place pour avoir des mesures normalisée.  
@@ -53,7 +46,7 @@ Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spé
 :::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
 ===
 
-## Exemples
+## Exemples à adapter
 
 [!button text="Informations" icon="book"](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md#configure-your-ci-provider)
 
@@ -151,3 +144,11 @@ export LHCI_BUILD_CONTEXT__EXTERNAL_BUILD_URL="$BUILD_URL"
 npm install -g @lhci/cli@0.12.x
 lhci autorun
 ```
+
++++
+
+## Documentation externe des dépendances
+
+[!ref target="blank" text="Lighthouse CI"](https://github.com/GoogleChrome/lighthouse-ci#readme)
+
+[!ref target="blank" text="Puppeteer"](https://pptr.dev/)

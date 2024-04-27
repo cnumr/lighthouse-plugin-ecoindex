@@ -7,11 +7,13 @@ order: 900
 # Que mesure lighthouse-ecoindex ?
 
 Le plugin lighthouse-ecoindex mesure les critères suivants :
-- Le nombres d'élements HTML (DOM) ;
+
+- Le nombres d'élements HTML (DOM), auquels sont retirés les sous-éléments des `<svg>` ;
 - Le nombre de requêtes HTTP ;
 - Le poids total des ressources téléchargées.
 
 On peut donc en déduire :
+
 - Un score EcoIndex®, noté de 0 à 100 ;
 - Une note EcoIndex®, noté de A à E ;
 - Les émissions de CO2 ;

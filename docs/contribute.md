@@ -36,15 +36,6 @@ Ce devcontainer contient notamment un [serveur Lighthouse](https://github.com/Go
 - En mode `devcontainer` connectez-vous au container Docker via sa ligne de commande et faites `lhci wizard` pour configurer le serveur Lighthouse. Reportez cette configuration dans le fichier `.lighthouserc.js` à la racine du projet.
 - Sans `devcontainer` vous pouvez installer le serveur Lighthouse en suivant la [documentation officielle](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md)
 
-## Point d'attention
-
-### Contraintes de développement
-
-!!!warning Ne pas utiliser de `gatherers` custom pour les audits
-Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il faut donc trouver une autre solution pour les audits. De nombreux `gatherers` sont déjà disponibles dans Lighthouse, il faut donc les utiliser.  
-[!button text="Voir les gatherers officiels Lighthouse"](<[button.md](https://github.com/GoogleChrome/lighthouse/tree/main/core/gather/gatherers)>)
-!!!
-
 ## Liste des tâches
 
 - [x] ~~Plugin~~ ;
@@ -52,10 +43,9 @@ Les `gatherers` custom ne peuvent pas être utilisés avec Lighthouse CI. Il fau
 - [x] ~~test lighthouse-ci~~ ;
 - [x] ~~test lightouse CLI~~ ;
 - [x] ~~test (local)~~ ;
-- [ ] Ajouter des audits ;
 - [ ] Continuer à documenter le projet ;
 - [ ] Valider les Good and Poor thresholds voir [lighthouse-plugin-ecoindex/utils/index.js#getMetricRange()] ;
-- [ ] Ajouter des bonnes pratiques ;
+- [ ] Ajouter des bonnes pratiques, avec des audits ;
 - [ ] Localiser le plugin i18n ;
 - [ ] Ajouter des tests unitaires ;
 - [ ] ...
