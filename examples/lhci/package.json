@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Test with lhci",
   "scripts": {
-    "lhci": "npm run lhci:collect && npm run lhci:upload",
+    "lhci": "npm run lhci:healthcheck && npm run lhci:collect && npm run lhci:upload",
     "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
     "lhci:upload": "lhci upload",
     "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep"

@@ -1,3 +1,5 @@
 .lighthouserc.js
+.lighthouserc.cjs
+.lighthouserc.mjs
 lighthouse-plugin-ecoindex
 !.lighthouseci/.gitkeep
