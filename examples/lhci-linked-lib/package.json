@@ -10,14 +10,12 @@
     "lhci:upload": "lhci upload",
     "lhci:healthcheck": "lhci healthcheck",
     "serve": "npx http-server -o .lighthouseci --no-dotfiles",
-    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep",
-    "patch-package": "patch-package"
+    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@lhci/cli": "^0.13.0",
-    "lighthouse": "^11.7.0",
-    "patch-package": "^8.0.0"
+    "lighthouse": "^11.7.0"
   }
 }
