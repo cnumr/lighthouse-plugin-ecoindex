@@ -1,5 +1,5 @@
 ---
-label: lighthouse-ecoindex CLI
+label: lighthouse-ecoindex CLI 🟢
 icon: terminal
 order: 1000
 ---
@@ -159,3 +159,5 @@ Convertir le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichie
 ```shell
 npx lighthouse-plugin-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
 ```
+
+[!ref target="blank" text="Projet example pour `npx lighthouse-plugin-ecoindex`"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/npx)

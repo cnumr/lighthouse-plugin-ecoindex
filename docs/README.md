@@ -66,6 +66,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 | Bonnes pratiques Green IT                                | ✅                       | ✅                      | ✅              |
 | Déclaration Environnementale                             | ✅                       | ❌                      | ❌              |
 | Publication des données d'audits à un serveur Lighthouse | ❌                       | ❌                      | ✅              |
+| Puppeteer                                                | ✅                       | ❌                      | ✅              |
 
 ## Documentation des usages
 

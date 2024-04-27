@@ -1,5 +1,5 @@
 ---
-label: Lighthouse CI
+label: Lighthouse CI 🟢
 icon: pulse
 order: 800
 ---
@@ -46,7 +46,11 @@ Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spé
 :::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
 ===
 
-## Exemples à adapter
+## Exemple
+
+[!ref target="blank" text="Projet example pour lighthouse-ci"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lhci)
+
+## Exemples à adapter suivant votre CI/CD
 
 [!button text="Informations" icon="book"](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md#configure-your-ci-provider)
 
