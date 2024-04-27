@@ -8,6 +8,7 @@
   "description": "",
   "scripts": {
     "release": "cd lighthouse-plugin-ecoindex && npm run release",
+    "doc": "cd docs && retype start",
     "test": "mocha"
   },
   "devDependencies": {
