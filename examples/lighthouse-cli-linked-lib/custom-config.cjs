@@ -3,10 +3,15 @@
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-
-import DOMInformations from 'lighthouse-plugin-ecoindex/gatherers/dom-informations.js';
+const path = require('path');
+function getGatherersPath(file) {
+  return path.join(
+    require.resolve('lighthouse-plugin-ecoindex'),
+    '../gatherers/' + file,
+  )
+}
 /** @type {LH.Config} */
-const config = {
+module.exports = {
   formFactor: 'desktop',
   // https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js
   throttling: {
@@ -29,8 +34,6 @@ const config = {
   preset: 'desktop',
   extends: "lighthouse:default",
   artifacts: [
-    {id: 'DOMInformations', gatherer: DOMInformations},
+    {id: 'DOMInformations', gatherer: getGatherersPath('dom-informations')},
   ],
 }
-
-export default config

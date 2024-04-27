@@ -6,8 +6,8 @@
   "scripts": {
     "lighthouse": "lighthouse",
     "cli": "npm run cli:collect",
-    "cli:collect": "lighthouse --config-path=\"./custom-config.mjs\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world",
-    "cli:collect:debug": "lighthouse --verbose --config-path=\"./custom-config.mjs\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world  2>&1| tee debug.log",
+    "cli:collect": "lighthouse --config-path=\"./custom-config.cjs\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world",
+    "cli:collect:debug": "lighthouse --verbose --config-path=\"./custom-config.cjs\" --chrome-flags=\"--headless\" --output json --output html --output-path=./reports/report.json https://www.spie.com/en/about-us/spie-around-world  2>&1| tee debug.log",
     "serve": "npx http-server -o reports --no-dotfiles",
     "clean": "rm -rf reports/* && touch reports/.gitkeep"
   },
