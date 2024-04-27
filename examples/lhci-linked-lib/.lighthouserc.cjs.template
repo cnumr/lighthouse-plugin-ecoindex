@@ -1,3 +1,18 @@
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const path = require('path');
+function getLighthouseConfig(){
+  return path.join(
+      require.resolve('lighthouse-plugin-ecoindex'), 
+      '../helpers/lhci/custom-config.cjs'
+    )
+}
+function getPuppeteerConfig(){
+  return 'node_modules/lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs'
+}
 module.exports = {
   ci: {
     collect: {
@@ -8,7 +23,7 @@ module.exports = {
       numberOfRuns: 1,
       settings: {
         // must adapte the path to the custom-config.js file, it must be an absolute path
-        configPath: '/workspace/examples/lhci-linked-lib/custom-config.js',
+        configPath: getLighthouseConfig(),
       },
       puppeteerLaunchOptions: {
         headless: 'new',
@@ -19,7 +34,8 @@ module.exports = {
           '--no-sandbox',
         ],
       },
-      puppeteerScript: './node_modules/lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs',
+      puppeteerScript:
+        getPuppeteerConfig(),
     },
     assert: {
       preset: 'lighthouse:default',

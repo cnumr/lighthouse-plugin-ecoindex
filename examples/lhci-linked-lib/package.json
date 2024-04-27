@@ -1,5 +1,5 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "name": "lighthouse-plugin-ecoindex-playground",
   "version": "1.0.0",
   "description": "Test with lhci",
