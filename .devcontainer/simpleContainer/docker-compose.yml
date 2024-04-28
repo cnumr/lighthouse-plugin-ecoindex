@@ -26,13 +26,17 @@ services:
 
   lhserver:
     platform: linux/amd64
-    image: patrickhulce/lhci-server
+    # image: patrickhulce/lhci-server
+    build:
+      context: ./lhci-server
+      dockerfile: Dockerfile.lhci-server
     network_mode: service:lighthousedevcontainersimple
     command: sleep infinity
     # ports:
     #   - '9001:9001'
     volumes:
-      - lhci-data-simple:/data
+      # - lhci-data-simple:/data
+      - ./lhci-data:/data
 
 volumes:
   lhci-data-simple:

@@ -1,0 +1,22 @@
+diff --git a/node_modules/@lhci/server/src/api/statistic-definitions.js b/node_modules/@lhci/server/src/api/statistic-definitions.js
+index 3408f54..bcf93ed 100644
+--- a/node_modules/@lhci/server/src/api/statistic-definitions.js
++++ b/node_modules/@lhci/server/src/api/statistic-definitions.js
+@@ -119,6 +119,17 @@ function auditGroupCountOfMedianLhr(groupId, type) {
+ 
+ /** @type {Record<LHCI.ServerCommand.StatisticName, StatisticFn>} */
+ const definitions = {
++  'category_lighthouse-plugin-ecoindex_median': categoryScoreMedian(
++    'lighthouse-plugin-ecoindex',
++  ),
++  'category_lighthouse-plugin-ecoindex_min': categoryScoreMinOrMax(
++    'lighthouse-plugin-ecoindex',
++    'min',
++  ),
++  'category_lighthouse-plugin-ecoindex_max': categoryScoreMinOrMax(
++    'lighthouse-plugin-ecoindex',
++    'max',
++  ),
+   meta_lighthouse_version: metaLighthouseVersion(),
+   audit_interactive_median: auditNumericValueMedian('interactive'),
+   'audit_speed-index_median': auditNumericValueMedian('speed-index'),
