@@ -10,7 +10,8 @@
     "lhci:upload": "lhci upload",
     "lhci:healthcheck": "lhci healthcheck",
     "serve": "npx http-server -o .lighthouseci --no-dotfiles",
-    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep"
+    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep",
+    "test": "lhci collect --url https://novagaia.fr/ --url https://novagaia.fr/a-propos/ && npm run serve"
   },
   "author": "",
   "license": "ISC",

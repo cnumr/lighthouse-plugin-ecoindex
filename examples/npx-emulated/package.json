@@ -8,7 +8,8 @@
     "direct:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",
     "direct:issue_12": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.spie.com/en/about-us/spie-around-world -o html",
     "serve": "npx http-server -o reports --no-dotfiles",
-    "clean": "rm -rf reports/* && touch reports/.gitkeep"
+    "clean": "rm -rf reports/* && touch reports/.gitkeep",
+    "test": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://novagaia.fr/ -u https://novagaia.fr/a-propos/ -o html && npm run serve"
   },
   "keywords": [],
   "author": "",
