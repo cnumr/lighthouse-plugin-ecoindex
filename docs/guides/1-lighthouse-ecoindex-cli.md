@@ -1,5 +1,5 @@
 ---
-label: lighthouse-ecoindex CLI 🟢
+label: 🟢 lighthouse-ecoindex CLI
 icon: terminal
 order: 1000
 ---

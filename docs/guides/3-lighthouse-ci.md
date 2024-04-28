@@ -1,5 +1,5 @@
 ---
-label: Lighthouse CI 🟢
+label: 🟢 Lighthouse CI
 icon: pulse
 order: 800
 ---

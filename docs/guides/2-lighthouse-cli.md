@@ -1,5 +1,5 @@
 ---
-label: Lighthouse CLI 🟠
+label: 🟠 Lighthouse CLI
 icon: terminal
 order: 500
 ---
@@ -12,9 +12,8 @@ Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.
 
 ## Recommandation
 
-!!!danger
-Comme le lighthouse en mode cli ne permet pas d'utiliser le scénatio de navigation `Puppeteer`, il est recommandé d'utiliser le client interne fourni par le plugin.
-!!!
+!!!warning
+Comme lighthouse en mode cli ne permet pas d'utiliser le scénario de navigation `Puppeteer` et ne permet de lancer l'analyse que d'une seule page à fois (_sans mettre à jour le fichier de configuration_), **il est recommandé d'utiliser le client interne fourni par le plugin**.
 
 ```bash
 npx lighthouse <url> --config-path=./custom-config.cjs
@@ -25,6 +24,7 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/
 ```
 
 [!ref lighthouse-plugin-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
+!!!
 
 ## Installation
 
