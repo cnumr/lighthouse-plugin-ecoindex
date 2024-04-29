@@ -1,29 +1,39 @@
 ---
-label: Lighthouse CLI
+label: 🟠 Lighthouse CLI
 icon: terminal
-order: 900
+order: 500
 ---
 
 # Utilisation avec lighthouse CLI
-
-## Documentation externe des dépendances
-
-[!ref target="blank" text="lighthouse CLI"](https://github.com/GoogleChrome/lighthouse#using-the-node-cli)
-
-[!ref target="blank" text="Puppeteer"](https://pptr.dev/)
 
 ## Objectifs
 
 Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.
 
+## Recommandation
+
+!!!warning
+Comme lighthouse en mode cli ne permet pas d'utiliser le scénario de navigation `Puppeteer` et ne permet de lancer l'analyse que d'une seule page à fois (_sans mettre à jour le fichier de configuration_), **il est recommandé d'utiliser le client interne fourni par le plugin**.
+
+```bash
+npx lighthouse <url> --config-path=./custom-config.cjs
+# equivaut à
+npx lighthouse-plugin-ecoindex <command> <options>
+# soit
+npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/
+```
+
+[!ref lighthouse-plugin-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
+!!!
+
 ## Installation
 
 !!!warning
-Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dessous) et Puppeteer (présent dans le plugin) pour pouvoir utiliser le plugin lighthouse-ecoindex.
+Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dessous) pour pouvoir utiliser le plugin lighthouse-ecoindex.
 !!!
 
 ```bash
-npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
+npm install -g lighthouse lighthouse-plugin-ecoindex --save-dev
 ```
 
 ## Utilisation
@@ -31,31 +41,25 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
 Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.
 
 ==- Modèle de fichier de configuration de Lighthouse
-:::code source="../static/.lighthouserc.js" :::
+:::code source="../../lighthouse-plugin-ecoindex/demo/example-lighthouse-cli-custom-config.cjs" :::
 ===
-[!file Télécharger](../static/.lighthouserc.js)
 
 ```bash
-npx lighthouse <url> --config-path=./.lighthouserc.js
+npx lighthouse <url> --config-path=./custom-config.cjs
 ```
-
-[!badge text="Tip" icon="light-bulb"] Placer le fichier `.lighthouserc.js` à la racine de votre projet suffit, il n'est pas forcement nécessaire de l'appeler dans la commande.
-
-!!!
-Le fichier de configuration Puppeteer est indiqué dans `puppeteerScript` du fichier. Si besoin, adapter le chemin.
-!!!
-!!!danger
-Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spécifiques (ex. Fermeture de popin pour validation de cookies). Conserver le process en place pour avoir des mesures normalisée.  
-[!button text="Voir les explications" icon="checklist"](../README.md#les-contraintes--process-reproductible-)
-!!!
-==- Modèle de fichier de configuration de Puppeteer
-:::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
-===
 
 ## Exemples
 
 Lancer la mesure sur une URL :
 
 ```bash
-npx lighthouse https://novagaia.fr --config-path=./.lighthouserc.js
+npx lighthouse https://novagaia.fr --config-path=./custom-config.cjs
 ```
+
+[!ref target="blank" text="Projet example pour lighthouse CLI"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lighthouse-cli)
+
+## Documentation externe des dépendances
+
+[!ref target="blank" text="lighthouse CLI"](https://github.com/GoogleChrome/lighthouse#using-the-node-cli)
+
+[!ref target="blank" text="Puppeteer"](https://pptr.dev/)

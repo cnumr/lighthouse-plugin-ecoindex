@@ -4,6 +4,8 @@ import {
   getLoadingExperience,
 } from '../utils/index.js'
 
+import commons from './commons.js'
+
 import { Audit } from 'lighthouse'
 import refsURLS from './bp/refs-urls.js'
 
@@ -15,7 +17,7 @@ class EcoindexRequestsAudit extends Audit {
       failureTitle:
         'Number of requests, your page calls too many external resources',
       description: `The number of \`Network.loadingFinished\` logs indicates the number of requests made to external resources. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: commons.requiredArtifacts,
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

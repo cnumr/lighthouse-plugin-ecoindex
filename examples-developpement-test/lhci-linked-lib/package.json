@@ -1,0 +1,24 @@
+{
+  "type": "module",
+  "name": "lighthouse-plugin-ecoindex-playground",
+  "version": "1.0.0",
+  "description": "Test with lhci w/linked lib (for developpement purpose only)",
+  "scripts": {
+    "init": "sh init.sh",
+    "lhci": "npm run lhci:healthcheck && npm run lhci:collect && npm run lhci:upload",
+    "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
+    "lhci:collect2": "lhci collect --url https://www.spie.com/en/about-us/spie-around-world",
+    "lhci:upload": "lhci upload",
+    "lhci:healthcheck": "export CHROME_PATH=$(which google-chrome) && lhci healthcheck",
+    "serve": "npx http-server -o .lighthouseci --no-dotfiles",
+    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep",
+    "test": "lhci collect --url https://novagaia.fr/ --url https://novagaia.fr/a-propos/ && npm run serve",
+    "postinstall": "sh init.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lhci/cli": "^0.13.0",
+    "lighthouse": "^11.7.0"
+  }
+}

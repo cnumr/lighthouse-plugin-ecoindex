@@ -1,0 +1,71 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+  "name": "lighthouse-plugin-ecoindex (Intel processor)",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "lighthousedevcontainerintel",
+  "workspaceFolder": "/workspace",
+  "waitFor": "postCreateCommand",
+  "onCreateCommand": {
+    // "onCreateCommand": "sh /workspace/.devcontainer/commons/updateContentCommand/updateContentCommand.sh"
+  },
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/rio/features/chezmoi:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [9001],
+
+  "portsAttributes": {
+    "9001": {
+      "label": "Lighthouse CI server"
+    }
+  },
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": {
+    "git.config.safe.directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+    "git.config.pull.rebase": "git config pull.rebase false",
+    ".nvmrc": "echo $(node --version) > .nvmrc",
+    "todo": "echo '👋 to finish dependencies installation, do: sh /workspace/.devcontainer/commons/updateContentCommand/updateContentCommand.sh'"
+  },
+
+  // Use 'postStartCommand' to run commands each time the container is successfully started..
+  // https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
+  "postStartCommand": {},
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      "settings": {
+        // https://github.com/microsoft/vscode/issues/174632
+        "extensions.verifySignature": false,
+        "prettier.prettierPath": "node_modules/prettier",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.resolveGlobalModules": true,
+        "dotfiles.targetPath": "~/dotfiles",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "/bin/zsh",
+            "icon": "terminal-powershell"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true
+      }
+    }
+  }
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}

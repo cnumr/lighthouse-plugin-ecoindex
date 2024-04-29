@@ -4,15 +4,16 @@
   "version": "1.0.0",
   "description": "Test with lhci",
   "scripts": {
-    "lhci": "npm run lhci:collect && npm run lhci:upload",
+    "lhci": "npm run lhci:healthcheck && npm run lhci:collect && npm run lhci:upload",
     "lhci:collect": "lhci collect --url https://www.ecoindex.fr/ --url https://www.ecoindex.fr/comment-ca-marche/",
-    "lhci:upload": "lhci upload"
+    "lhci:upload": "lhci upload",
+    "clean": "rm -rf .lighthouseci/* && touch .lighthouseci/.gitkeep"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@lhci/cli": "^0.12.0",
     "lighthouse": "^11.3.0",
-    "lighthouse-plugin-ecoindex": "3.3.0"
+    "lighthouse-plugin-ecoindex": "4.0.0-beta.0"
   }
 }

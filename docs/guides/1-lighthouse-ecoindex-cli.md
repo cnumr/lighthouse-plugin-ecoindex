@@ -1,5 +1,5 @@
 ---
-label: lighthouse-ecoindex CLI
+label: 🟢 lighthouse-ecoindex CLI
 icon: terminal
 order: 1000
 ---
@@ -24,11 +24,16 @@ A la sortie, vous obtiendrez :
 
 ## Installation
 
-!!!warning
-Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`.
+!!!info
+Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`, mais il écessite `puppeteer` et Chrome à la version `121.0.6167.85`.
 !!!
 
-Installer le plugin via npm :
+```bash
+# Installation de `puppeteer` et de Chrome
+npx puppeteer browsers install chrome@121.0.6167.85
+```
+
+Si vous le désirez, vous pouvez installer le plugin via npm :
 
 ```bash
 # en global
@@ -81,18 +86,6 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `--user-agent` : User-Agent à utiliser pour les requêtes.
 - `--help` : Affiche l'aide.
 
-#### Fichier de configuration JSON
-
-!!!warning
-Le format du fichier doit être respecté !
-!!!
-
-==- Modèle de fichier JSON
-:::code source="../../lighthouse-plugin-ecoindex/demo/example-input-file.json" :::
-===
-
-<!-- [!file Sample](../../lighthouse-plugin-ecoindex/demo/example-input-file.json) -->
-
 #### Exemples
 
 Génère un rapport avec le fichier de démonstration.
@@ -121,6 +114,32 @@ Génère un rapport pour une URL.
 npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/
 ```
 
+#### Utilisation d'un fichier de configuration JSON
+
+!!!warning
+Le format du fichier doit être respecté !
+!!!
+
+==- Modèle de fichier JSON
+:::code source="../../lighthouse-plugin-ecoindex/demo/example-input-file.json" :::
+===
+
+##### Explications
+
+| Propriété               | Type      | Description                                                                                                                |
+| ----------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `extra-header`          | `object`  | Les informations nécessaires pour votre audit (authentification, cookies, etc).                                            |
+| `output`                | `array`   | Les types d'export souhaités : `"html", "json", "statement"` (statement = déclation environnementale).                     |
+| `user-agent`            | `string`  | `"random"` ou un user agent spécifique. Utilisez `"random"` pour ne pas vous faire détecter et bloquer par les anti-bot.   |
+| `output-path`           | `string`  | Dossier ou exporter les rapports.                                                                                          |
+| `output-name`           | `string`  | _je ne sais plus._ :)                                                                                                      |
+| `courses`               | `array`   | Les parcours à auditer.                                                                                                    |
+| `courses.name`          | `string`  | nom du parcours, qui sera affiché dans la déclaration en environnementale.                                                 |
+| `courses.target`        | `string`  | Objectif du parcours, qui sera affiché dans la déclaration en environnementale.                                            |
+| `courses.course`        | `string`  | Parcours cible. Rapide liste des pages parcourues, qui sera affichée dans la déclaration en environnementale.              |
+| `courses.is-best-pages` | `boolean` | Indique si ce parcours est celui utilisé dans la déclaration environnementale comme les 5 pages les plus visitées du site. |
+| `courses.urls`          | `array`   | Liste des urls à mesurer.                                                                                                  |
+
 ### command `convert`
 
 `npx lighthouse-plugin-ecoindex convert <options>`
@@ -140,3 +159,5 @@ Convertir le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichie
 ```shell
 npx lighthouse-plugin-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
 ```
+
+[!ref target="blank" text="Projet example pour `npx lighthouse-plugin-ecoindex`"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/npx)

@@ -47,3 +47,7 @@ module.exports = async (browser, context) => {
   await page.close()
 }
 ```
+
+==- Modèle de fichier de configuration de Puppeteer (complet) sans authentification
+:::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
+===

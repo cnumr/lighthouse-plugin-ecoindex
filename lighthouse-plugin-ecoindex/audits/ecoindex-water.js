@@ -4,6 +4,8 @@ import {
   getLoadingExperience,
 } from '../utils/index.js'
 
+import commons from './commons.js'
+
 import { Audit } from 'lighthouse'
 import refsURLS from './bp/refs-urls.js'
 
@@ -14,7 +16,7 @@ class EcoindexWaterConsumptionAudit extends Audit {
       title: 'Water Consumption (cl)',
       failureTitle: 'Water Consumption (cl), your page consumes a lot of water',
       description: `The quantity of water consumed by the page. [See Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
-      requiredArtifacts: ['MainDocumentContent', 'DOMStats', 'devtoolsLogs'],
+      requiredArtifacts: commons.requiredArtifacts,
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       scoreDisplayMode: 'numeric',
     }

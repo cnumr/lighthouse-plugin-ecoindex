@@ -151,12 +151,18 @@ function getLighthouseConfig(
   isWarm = false,
   stepName = `undefined`,
   onlyCategories = ['lighthouse-plugin-ecoindex'],
-  userAgent
+  userAgent,
 ) {
   return {
     name: stepName,
     config: {
       extends: 'lighthouse:default',
+      artifacts: [
+        {
+          id: 'DOMInformations',
+          gatherer: 'lighthouse-plugin-ecoindex/gatherers/dom-informations',
+        },
+      ],
       settings: {
         onlyCategories: onlyCategories,
         formFactor: 'desktop',
@@ -166,7 +172,12 @@ function getLighthouseConfig(
           width: 1920,
           height: 1080,
         },
-        emulatedUserAgent: userAgent === "random" ? userAgentStrings[Math.floor(Math.random() * userAgentStrings.length)] : userAgent,
+        emulatedUserAgent:
+          userAgent === 'random'
+            ? userAgentStrings[
+                Math.floor(Math.random() * userAgentStrings.length)
+              ]
+            : userAgent,
         maxWaitForLoad: 60 * 1000,
         disableStorageReset: isWarm,
       },
@@ -180,7 +191,7 @@ const userAgentStrings = [
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.3497.92 Safari/537.36',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-];
+]
 
 const getPuppeteerConfig = {
   headless: 'new',

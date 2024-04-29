@@ -1,10 +1,10 @@
-import { Audit, NetworkRecords } from 'lighthouse'
 import {
   computeEcoIndex,
   computeGreenhouseGasesEmissionfromEcoIndex,
   computeWaterConsumptionfromEcoIndex,
   getEcoIndexGrade,
 } from 'ecoindex'
+import { Audit, NetworkRecords } from 'lighthouse'
 
 import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
@@ -18,11 +18,19 @@ export const B_TO_KB = 1000
  * @returns number
  */
 export async function getEcoindexNodes(artifacts) {
-  const MainDocumentContent = artifacts.MainDocumentContent
-  const dom = new JSDOM(MainDocumentContent)
-  const allNodes = dom.window.document.querySelectorAll('*').length
-  const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-  return allNodes - svgContentNodes
+  // if (!artifacts.DOMInformations) {
+  //   throw new Error(
+  //     "DOMInformations not found, EcoindexNodes can't be calculated.",
+  //   )
+  //   const MainDocumentContent = artifacts.MainDocumentContent
+  //   const dom = new JSDOM(MainDocumentContent)
+  //   const allNodes = dom.window.document.querySelectorAll('*').length
+  //   const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
+  //   return allNodes - svgContentNodes
+  // }
+  const domInformations = artifacts.DOMInformations
+  // console.debug(`domInformations`, domInformations)
+  return domInformations.nodesWithoutSVGChildsCount
 }
 
 export async function getLoadingExperience(
@@ -30,12 +38,7 @@ export async function getLoadingExperience(
   context,
   isTechnical = false,
 ) {
-  let domSize = await getEcoindexNodes(artifacts)
-  if (!artifacts.MainDocumentContent) {
-    throw new Error(
-      "MainDocumentContent not found, EcoindexNodes can't be calculated.",
-    )
-  }
+  let domSize = await getEcoindexNodes(artifacts, context)
 
   // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61
   const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
