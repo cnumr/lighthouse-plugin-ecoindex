@@ -1,16 +1,15 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-  "name": "lighthouse-plugin-ecoindex (docker-compose, Node.js & TypeScript)",
+  "name": "lighthouse-plugin-ecoindex (Intel processor)",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
   "dockerComposeFile": ["docker-compose.yml"],
-  "service": "lighthousedevcontainersimple",
+  "service": "lighthousedevcontainerintel",
   "workspaceFolder": "/workspace",
   "waitFor": "postCreateCommand",
   "onCreateCommand": {
-    "todo": "echo '👋 to finish dependencies installation, do: sh /workspace/.devcontainer/simpleContainer/updateContentCommand/updateContentCommand.sh'"
-    // "onCreateCommand": "sh /workspace/.devcontainer/simpleContainer/updateContentCommand/updateContentCommand.sh"
+    // "onCreateCommand": "sh /workspace/.devcontainer/commons/updateContentCommand/updateContentCommand.sh"
   },
 
   // Features to add to the dev container. More info: https://containers.dev/features.
@@ -33,7 +32,7 @@
     "git.config.safe.directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
     "git.config.pull.rebase": "git config pull.rebase false",
     ".nvmrc": "echo $(node --version) > .nvmrc",
-    "prettier": "npm i -g prettier"
+    "todo": "echo '👋 to finish dependencies installation, do: sh /workspace/.devcontainer/commons/updateContentCommand/updateContentCommand.sh'"
   },
 
   // Use 'postStartCommand' to run commands each time the container is successfully started..

@@ -129,6 +129,7 @@ function auditGroupCountOfMedianLhr(groupId, type) {
 
 /** @type {Record<LHCI.ServerCommand.StatisticName, StatisticFn>} */
 const definitions = {
+  // custom statistics
   'category_lighthouse-plugin-ecoindex_median': categoryScoreMedian(
     'lighthouse-plugin-ecoindex',
   ),
@@ -140,6 +141,67 @@ const definitions = {
     'lighthouse-plugin-ecoindex',
     'max',
   ),
+  'auditgroup_ecoindex-ecologic_pass': auditGroupCountOfMedianLhr(
+    'ecoindex-ecologic',
+    'pass',
+  ),
+  'auditgroup_ecoindex-ecologic_fail': auditGroupCountOfMedianLhr(
+    'ecoindex-ecologic',
+    'fail',
+  ),
+  'auditgroup_ecoindex-ecologic_na': auditGroupCountOfMedianLhr(
+    'ecoindex-ecologic',
+    'na',
+  ),
+  'auditgroup_ecoindex-technic_pass': auditGroupCountOfMedianLhr(
+    'ecoindex-technic',
+    'pass',
+  ),
+  'auditgroup_ecoindex-technic_fail': auditGroupCountOfMedianLhr(
+    'ecoindex-technic',
+    'fail',
+  ),
+  'auditgroup_ecoindex-technic_na': auditGroupCountOfMedianLhr(
+    'ecoindex-technic',
+    'na',
+  ),
+  'auditgroup_ecoindex-best-practices_pass': auditGroupCountOfMedianLhr(
+    'ecoindex-best-practices',
+    'pass',
+  ),
+  'auditgroup_ecoindex-best-practices_fail': auditGroupCountOfMedianLhr(
+    'ecoindex-best-practices',
+    'fail',
+  ),
+  'auditgroup_ecoindex-best-practices_na': auditGroupCountOfMedianLhr(
+    'ecoindex-best-practices',
+    'na',
+  ),
+  'auditgroup_ecoindex-rgesn-practices_pass': auditGroupCountOfMedianLhr(
+    'ecoindex-rgesn-practices',
+    'pass',
+  ),
+  'auditgroup_ecoindex-rgesn-practices_fail': auditGroupCountOfMedianLhr(
+    'ecoindex-rgesn-practices',
+    'fail',
+  ),
+  'auditgroup_ecoindex-rgesn-practices_na': auditGroupCountOfMedianLhr(
+    'ecoindex-rgesn-practices',
+    'na',
+  ),
+  'auditgroup_ecoindex-other-practices_pass': auditGroupCountOfMedianLhr(
+    'ecoindex-other-practices',
+    'pass',
+  ),
+  'auditgroup_ecoindex-other-practices_fail': auditGroupCountOfMedianLhr(
+    'ecoindex-other-practices',
+    'fail',
+  ),
+  'auditgroup_ecoindex-other-practices_na': auditGroupCountOfMedianLhr(
+    'ecoindex-other-practices',
+    'na',
+  ),
+  // end of custom statistics
   meta_lighthouse_version: metaLighthouseVersion(),
   audit_interactive_median: auditNumericValueMedian('interactive'),
   'audit_speed-index_median': auditNumericValueMedian('speed-index'),
