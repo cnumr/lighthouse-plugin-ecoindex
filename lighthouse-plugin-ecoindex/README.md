@@ -8,6 +8,7 @@ _Summary of results_
 [Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
 
 > CHANGELOG: [CHANGELOG.md](./lighthouse-plugin-ecoindex/CHANGELOG.md)
+> CONTRIBUTING: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ![Details of plugin results](docs/static/ecoindex-results.png)
 _Details of plugin results_
