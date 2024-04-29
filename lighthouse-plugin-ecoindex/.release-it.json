@@ -14,6 +14,11 @@
           "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
         },
         {
+          "file": "../examples-developpement-test/*/package.json",
+          "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.]+)\"",
+          "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
+        },
+        {
           "file": "../docs/retype.yml",
           "search": "label: ([0-9.]+)",
           "replace": "label: {{version}}"
