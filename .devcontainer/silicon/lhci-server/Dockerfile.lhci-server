@@ -7,7 +7,6 @@ WORKDIR /usr/src/lhci
 COPY package.json .
 COPY lighthouserc.json .
 COPY .npmrc .
-COPY statistic-definitions.js .
 COPY patches/ patches/
 RUN npm install
 # COPY statistic-definitions.js /usr/src/lhci/node_modules/@lhci/server/src/api/statistic-definitions.js
