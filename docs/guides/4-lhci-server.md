@@ -24,6 +24,8 @@ Suivre le documentations de **LHCI Server** pour l'installation.
 
 ### `IMPORTANT` Configuration pour afficher les résultats des audits EcoIndex dans les graphs
 
+[!ref target="blank" text="Exemple d'un `LHCI Server Docker`, avec ecoindex"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/.devcontainer/intel/lhci-server)
+
 !!! warning
 A faire avant d'uploader les audits EcoIndex !
 !!!
@@ -51,13 +53,13 @@ const definitions = {
 
 !!! warning
 **Si vous utilisez Docker, cette configuration sera parfois perdue**.  
-Pour palier à ce problème, vous pouvez créer un script qui modifie/remplace le fichier de configuration à chaque redémarrage du conteneur.
+Pour palier à ce problème, vous pouvez créer un script qui modifie/remplace le fichier de configuration à chaque redémarrage du conteneur, ou utiliser `patch-package` pour patcher le fichier de configuration (cf. [Exemple d'un `LHCI Server Docker`, avec ecoindex](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/.devcontainer/intel/lhci-server)).
 !!!
 
-==- `statistic-definitions.js` sans les modifications
+==- `statistic-definitions.js` sans les modifications 🟠
 :::code source="default.statistic-definitions.js" :::
 ===
-==- `statistic-definitions.js` avec les modifications
+==- `statistic-definitions.js` avec les modifications 🟢
 :::code source="ecoindex.statistic-definitions.js" :::
 ===
 
