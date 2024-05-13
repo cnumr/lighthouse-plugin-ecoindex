@@ -20,7 +20,7 @@
         },
         {
           "file": "../docs/retype.yml",
-          "search": "label: ([0-9.a-zA-Z]+)",
+          "search": "label: ([0-9.a-zA-Z-]+)",
           "replace": "label: {{version}}"
         }
       ]
