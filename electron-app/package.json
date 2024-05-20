@@ -1,5 +1,5 @@
 {
-  "name": "electron-app",
+  "name": "ecoindex-lighthouse-app",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -13,5 +13,8 @@
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
     "electron": "^30.0.6"
+  },
+  "dependencies": {
+    "lighthouse-plugin-ecoindex": "^4.0.1"
   }
 }
