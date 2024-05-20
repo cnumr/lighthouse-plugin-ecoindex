@@ -1,0 +1,15 @@
+FROM --platform=linux/amd64 node:18-bullseye-slim
+
+# Install utilities
+RUN apt-get update --fix-missing && apt-get install -y python build-essential git && apt-get clean
+
+WORKDIR /usr/src/lhci
+COPY package.json .
+COPY lighthouserc.json .
+COPY .npmrc .
+COPY patches/ patches/
+RUN npm install
+# COPY statistic-definitions.js /usr/src/lhci/node_modules/@lhci/server/src/api/statistic-definitions.js
+
+EXPOSE 9001
+ENTRYPOINT [ "npm", "start" ]
