@@ -19,11 +19,6 @@
           "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
         },
         {
-          "file": "../electron-app/*/package.json",
-          "search": "\"lighthouse-plugin-ecoindex\":\\s*\"([0-9.a-zA-Z-]+)\"",
-          "replace": "\"lighthouse-plugin-ecoindex\": \"{{version}}\""
-        },
-        {
           "file": "../docs/retype.yml",
           "search": "label: ([0-9.a-zA-Z-]+)",
           "replace": "label: {{version}}"
