@@ -7,6 +7,12 @@ function App() {
   window.electronAPI.onUpdateCounter((value: number) => {
     setCounter(counter + value)
   })
+  window.electronAPI.onMenuInstallPuppeteerBrowser((value: string) => {
+    window.electronAPI.handleInstallPuppeteerBrowser()
+  })
+  window.electronAPI.onMenuSetFolderOuput((value: string) => {
+    window.electronAPI.handleSetFolderOuput()
+  })
 
   return (
     <div className="flex h-full w-full flex-col place-content-center place-items-center gap-8 p-8 text-center">
@@ -33,7 +39,7 @@ function App() {
         </Button>
         <Button
           onClick={async () => {
-            const filePath = await window.electronAPI.openFolder()
+            const filePath = await window.electronAPI.handleSetFolderOuput()
             if (filePath) {
               alert('The file that you selected is:\n\n' + filePath)
             }
@@ -43,7 +49,8 @@ function App() {
         </Button>
         <Button
           onClick={async () => {
-            const temps = await window.electronAPI.launchEcoindexSimpleCollect()
+            const temps =
+              await window.electronAPI.handleLaunchEcoindexSimpleCollect()
             if (temps) {
               alert('Pouet:\n\n' + temps)
             }
@@ -53,13 +60,14 @@ function App() {
         </Button>
         <Button
           onClick={async () => {
-            const temps = await window.electronAPI.installPuppeteerBrowser()
+            const temps =
+              await window.electronAPI.handleInstallPuppeteerBrowser()
             if (temps) {
               alert('Pouet:\n\n' + temps)
             }
           }}
         >
-          installPuppeteerBrowser
+          Install Puppeteer Chrome Browser
         </Button>
         <div>
           Go to the top left menu bar to update counter! (main to renderer)

@@ -8,10 +8,19 @@ contextBridge.exposeInMainWorld('versions', {
 
 contextBridge.exposeInMainWorld('electronAPI', {
   setTitle: (title: string) => ipcRenderer.send('set-title', title),
-  openFolder: () => ipcRenderer.invoke('dialog:openFolder'),
-  launchEcoindexSimpleCollect: () =>
-    ipcRenderer.invoke('launchEcoindexSimpleCollect'),
-  installPuppeteerBrowser: () => ipcRenderer.invoke('installPuppeteerBrowser'),
+  handleSetFolderOuput: () => ipcRenderer.invoke('dialog:handleSetFolderOuput'),
+  handleLaunchEcoindexSimpleCollect: () =>
+    ipcRenderer.invoke('handleLaunchEcoindexSimpleCollect'),
+  handleInstallPuppeteerBrowser: () =>
+    ipcRenderer.invoke('handleInstallPuppeteerBrowser'),
+  onMenuInstallPuppeteerBrowser: (callback: (value: string) => void) =>
+    ipcRenderer.on('menu-install-puppeteer-browser', (_event, value: string) =>
+      callback(value),
+    ),
+  onMenuSetFolderOuput: (callback: (value: string) => void) =>
+    ipcRenderer.on('menu-set-folder-output', (_event, value: string) =>
+      callback(value),
+    ),
   onUpdateCounter: (callback: (value: number) => void) =>
     ipcRenderer.on('update-counter', (_event, value: number) =>
       callback(value),

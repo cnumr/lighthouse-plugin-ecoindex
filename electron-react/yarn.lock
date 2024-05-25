@@ -2464,6 +2464,15 @@ electron-installer-redhat@^3.2.0:
     word-wrap "^1.2.3"
     yargs "^16.0.2"
 
+electron-settings@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/electron-settings/-/electron-settings-4.0.4.tgz"
+  integrity sha512-yR6ByH3hHqDgbcQ9y5foA2Pr2fSMIggFDMsHe71z1Og6myw7vxMlrkIzenmmrmZHeFLlvQyt7+gTZCH8BywHBw==
+  dependencies:
+    lodash "^4.17.21"
+    mkdirp "^1.0.4"
+    write-file-atomic "^3.0.3"
+
 electron-squirrel-startup@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz"
@@ -2489,7 +2498,7 @@ electron-winstaller@^5.3.0:
   optionalDependencies:
     "@electron/windows-sign" "^1.1.2"
 
-electron@30.0.2:
+"electron@>= 2", electron@30.0.2:
   version "30.0.2"
   resolved "https://registry.npmjs.org/electron/-/electron-30.0.2.tgz"
   integrity sha512-zv7T+GG89J/hyWVkQsLH4Y/rVEfqJG5M/wOBIGNaDdqd8UV9/YZPdS7CuFeaIj0H9LhCt95xkIQNpYB/3svOkQ==
@@ -5341,7 +5350,7 @@ punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@^22.5.0:
+puppeteer-core@^22.5.0, puppeteer-core@22.10.0:
   version "22.10.0"
   resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-22.10.0.tgz"
   integrity sha512-I54J4Vy4I07UHsgB1QSmuFoF7KNQjJWcvFBPhtY+ezMdBfwgGDr8dzYrJa11aPgP9kxIUHjhktcMmmfJkOAtTw==
@@ -5372,6 +5381,16 @@ puppeteer@^21.11.0:
     "@puppeteer/browsers" "1.9.1"
     cosmiconfig "9.0.0"
     puppeteer-core "21.11.0"
+
+puppeteer@^22.10.0:
+  version "22.10.0"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.10.0.tgz"
+  integrity sha512-ZOkZd6a6t0BdKcWb0wAYHWQqCfdlN1PPnXOmg/XNrbo6gJhYWFX4qCNb6ahSn8TpAqBqLCoD4Q010F7GwOM7mA==
+  dependencies:
+    "@puppeteer/browsers" "2.2.3"
+    cosmiconfig "9.0.0"
+    devtools-protocol "0.0.1286932"
+    puppeteer-core "22.10.0"
 
 qs@6.11.0:
   version "6.11.0"
@@ -6819,7 +6838,7 @@ wrappy@1:
   resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-write-file-atomic@^3.0.0:
+write-file-atomic@^3.0.0, write-file-atomic@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-3.0.3.tgz"
   integrity sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q==

@@ -1,9 +1,39 @@
-import { BrowserWindow, Menu, MenuItem, app, dialog, ipcMain } from 'electron'
+import {
+  BrowserWindow,
+  Menu,
+  MenuItem,
+  Notification,
+  app,
+  dialog,
+  ipcMain,
+} from 'electron'
+import { executablePath, default as puppeteer } from 'puppeteer'
 
 import { spawn } from 'child_process'
+import settings from 'electron-settings'
 import { IpcMainEvent } from 'electron/main'
+import os from 'os'
 import path from 'path'
 import { updateElectronApp } from 'update-electron-app'
+
+console.log('File used for Persisting Data - ' + settings.file())
+
+function welcomeNotification() {
+  if (Notification.isSupported()) {
+    const initNotif = new Notification()
+    initNotif.title = 'Ecoindex App is started!'
+    initNotif.body = 'Hello 👋'
+    initNotif.silent = true
+    initNotif.show()
+  }
+}
+
+function showNotification(title = 'Hello', body = 'Hello, world!') {
+  const startNotif = new Notification()
+  startNotif.title = title
+  startNotif.body = body
+  startNotif.show()
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -16,7 +46,7 @@ function handleSetTitle(event: IpcMainEvent, title: string) {
   win.setTitle(title)
 }
 
-async function handleFolderOpen() {
+async function handleFolderOuputSelector() {
   const { canceled, filePaths } = await dialog.showOpenDialog({
     properties: ['openDirectory'],
   })
@@ -24,7 +54,50 @@ async function handleFolderOpen() {
     return filePaths[0]
   }
 }
-async function installPuppeteerBrowser() {
+async function handleInstallPuppeteerBrowser() {
+  async function checkPuppeteerBrowserVersion(version: string) {
+    console.log('targetVersion', version)
+
+    console.log('defaultPath', executablePath())
+    const path = executablePath().replace(
+      /(\d+\.)(\d+\.)(\d+\.)(\d+)/gm,
+      versionToCheck,
+    )
+    console.log('newPath', path)
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      product: 'chrome',
+      executablePath: path,
+    })
+
+    const installedVersion = await browser.version()
+    console.log('installedVersion', installedVersion)
+
+    await browser.close()
+
+    return installedVersion === `Chrome/${version}`
+  }
+
+  const versionToCheck = '121.0.6167.85'
+  const isInstalled = await checkPuppeteerBrowserVersion(versionToCheck)
+  console.log(
+    `Puppeteer browser version ${versionToCheck} is installed: ${isInstalled}`,
+  )
+  if (isInstalled) {
+    showNotification(
+      `Warning`,
+      `Puppeteer browser version ${versionToCheck} is already installed`,
+    )
+    return
+  }
+
+  console.log('installPuppeteerBrowser')
+  showNotification(
+    'Puppeteer browser installation started...',
+    'This process may take a few minutes',
+  )
+
   const ls = spawn('npx', [
     'puppeteer',
     'browsers',
@@ -44,7 +117,12 @@ async function installPuppeteerBrowser() {
   })
 }
 
-async function launchEcoindexSimpleCollect() {
+async function handleLaunchEcoindexSimpleCollect() {
+  showNotification(
+    'Collect Ecoindex is started...',
+    'This process may take a few minutes',
+  )
+  return
   const ls = spawn('npx', ['lighthouse-plugin-ecoindex', 'collect', '-d'])
   ls.stdout.on('data', function (data) {
     console.log(data.toString())
@@ -70,42 +148,43 @@ const createWindow = () => {
     },
   })
 
-  const menu = Menu.buildFromTemplate([
-    {
-      label: 'Counter',
-      submenu: [
-        {
-          click: () => mainWindow.webContents.send('update-counter', 1),
-          label: 'Increment',
-        },
-        {
-          click: () => mainWindow.webContents.send('update-counter', -1),
-          label: 'Decrement',
-        },
-      ],
-    },
-  ])
-  // Menu.setApplicationMenu(menu)
   const myMenuItem = new MenuItem({
-    label: 'Counter',
+    label: 'Actions',
     submenu: [
       {
-        click: () => mainWindow.webContents.send('update-counter', 1),
-        label: 'Increment',
+        type: 'normal',
+        enabled: false,
+        label: 'Todo once',
       },
       {
-        click: () => mainWindow.webContents.send('update-counter', -1),
-        label: 'Decrement',
+        click: () =>
+          mainWindow.webContents.send('menu-install-puppeteer-browser'),
+        label: 'Install puppeteer browser (chrome@121.0.6167.85)',
       },
       {
-        click: () => mainWindow.webContents.send('installPuppeteerBrowser'),
-        label: 'Install puppeteer browser',
+        type: 'separator',
       },
+      {
+        type: 'normal',
+        enabled: false,
+        label: 'Configurations',
+      },
+      {
+        click: () => mainWindow.webContents.send('menu-set-folder-output'),
+        label: 'Set folder output',
+      },
+      // {
+      //   click: () => mainWindow.webContents.send('update-counter', 1),
+      //   label: 'Increment',
+      // },
+      // {
+      //   click: () => mainWindow.webContents.send('update-counter', -1),
+      //   label: 'Decrement',
+      // },
     ],
   })
   const myMenu = Menu.getApplicationMenu()
   myMenu.insert(1, myMenuItem)
-  // myMenu.append(myMenuItem)
   Menu.setApplicationMenu(myMenu)
 
   // and load the index.html of the app.
@@ -125,10 +204,14 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.on('set-title', handleSetTitle)
-  ipcMain.handle('installPuppeteerBrowser', installPuppeteerBrowser)
-  ipcMain.handle('launchEcoindexSimpleCollect', launchEcoindexSimpleCollect)
-  ipcMain.handle('dialog:openFolder', handleFolderOpen)
+  ipcMain.handle('handleInstallPuppeteerBrowser', handleInstallPuppeteerBrowser)
+  ipcMain.handle(
+    'handleLaunchEcoindexSimpleCollect',
+    handleLaunchEcoindexSimpleCollect,
+  )
+  ipcMain.handle('dialog:handleSetFolderOuput', handleFolderOuputSelector)
   ipcMain.handle('ping', () => 'pong')
+  welcomeNotification()
   createWindow()
   app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
