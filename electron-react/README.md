@@ -1,22 +1,9 @@
-### electron-react-starter
+# ELECTON-REACT-APP (ecoindex)
 
-This is a starter template that I made for myself while learning electron. It is a modified version of the [Vite + Typescript](https://www.electronforge.io/templates/vite-+-typescript) template from electron-forge.
+> https://github.com/mongj/electron-react-starter
 
-In addition to the template, React has been added to the renderer. TailwindCSS and shadcn-ui have also been set up.
+## TODO
 
-To install the depencies and run the app in dev mode:
-
-```
-yarn
-yarn start
-```
-
-To package and distribute the app:
-
-```
-yarn package
-yarn make
-yarn publish
-```
-
-This corresponds to the 3 build commands available via electron-forge CLI. For more information, see electron-forge's [documentation](https://www.electronforge.io/core-concepts/build-lifecycle).
+- [ ] enregistrer le chemin de base, mettre un chemin par défaut ~/ecoindex-exports
+- [ ] Faire une version simple, multiple urls
+- [ ] Faire une version complexe, avec des options

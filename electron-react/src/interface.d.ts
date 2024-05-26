@@ -12,6 +12,10 @@ export interface IElectronAPI {
   onMenuInstallPuppeteerBrowser: (callback: (value: string) => void) => void
   onMenuSetFolderOuput: (callback: (value: string) => void) => void
   onUpdateCounter: (callback: (value: number) => void) => void
+  doNotification: (
+    callback: (title: string, body: string, silent: boolean) => void,
+  ) => void
+  notificationApi: { sendNotification: (message: string) => void }
 }
 
 declare global {

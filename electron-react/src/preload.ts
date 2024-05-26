@@ -7,6 +7,13 @@ contextBridge.exposeInMainWorld('versions', {
 })
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  // to test
+  notificationApi: {
+    sendNotification(message: string) {
+      console.log(message)
+      ipcRenderer.send('notify', message)
+    },
+  },
   setTitle: (title: string) => ipcRenderer.send('set-title', title),
   handleSetFolderOuput: () => ipcRenderer.invoke('dialog:handleSetFolderOuput'),
   handleLaunchEcoindexSimpleCollect: () =>
@@ -14,6 +21,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   handleInstallPuppeteerBrowser: () =>
     ipcRenderer.invoke('handleInstallPuppeteerBrowser'),
   onMenuInstallPuppeteerBrowser: (callback: (value: string) => void) =>
+    ipcRenderer.on('menu-install-puppeteer-browser', (_event, value: string) =>
+      callback(value),
+    ),
+  doNotification: (callback: (value: string) => void) =>
     ipcRenderer.on('menu-install-puppeteer-browser', (_event, value: string) =>
       callback(value),
     ),

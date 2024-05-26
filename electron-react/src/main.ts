@@ -12,7 +12,6 @@ import { executablePath, default as puppeteer } from 'puppeteer'
 import { spawn } from 'child_process'
 import settings from 'electron-settings'
 import { IpcMainEvent } from 'electron/main'
-import os from 'os'
 import path from 'path'
 import { updateElectronApp } from 'update-electron-app'
 
@@ -20,19 +19,20 @@ console.log('File used for Persisting Data - ' + settings.file())
 
 function welcomeNotification() {
   if (Notification.isSupported()) {
-    const initNotif = new Notification()
-    initNotif.title = 'Ecoindex App is started!'
-    initNotif.body = 'Hello 👋'
-    initNotif.silent = true
-    initNotif.show()
+    showNotification('Ecoindex App is started!', 'Hello 👋', true)
   }
 }
 
-function showNotification(title = 'Hello', body = 'Hello, world!') {
-  const startNotif = new Notification()
-  startNotif.title = title
-  startNotif.body = body
-  startNotif.show()
+function showNotification(
+  title = 'Hello',
+  body = 'Hello, world!',
+  silent = false,
+) {
+  // new window.Notification(title, {
+  //   body: body,
+  //   silent,
+  // })
+  new Notification({ title, body, silent }).show()
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -46,7 +46,7 @@ function handleSetTitle(event: IpcMainEvent, title: string) {
   win.setTitle(title)
 }
 
-async function handleFolderOuputSelector() {
+async function handleFolderOuputSelector(event: IpcMainEvent) {
   const { canceled, filePaths } = await dialog.showOpenDialog({
     properties: ['openDirectory'],
   })
@@ -54,15 +54,15 @@ async function handleFolderOuputSelector() {
     return filePaths[0]
   }
 }
-async function handleInstallPuppeteerBrowser() {
-  async function checkPuppeteerBrowserVersion(version: string) {
-    console.log('targetVersion', version)
+async function handleInstallPuppeteerBrowser(event: IpcMainEvent) {
+  console.log('handleInstallPuppeteerBrowser')
 
-    console.log('defaultPath', executablePath())
+  async function checkPuppeteerBrowserVersion(version: string) {
     const path = executablePath().replace(
       /(\d+\.)(\d+\.)(\d+\.)(\d+)/gm,
       versionToCheck,
     )
+    console.log('defaultPath', executablePath())
     console.log('newPath', path)
 
     const browser = await puppeteer.launch({
@@ -72,7 +72,6 @@ async function handleInstallPuppeteerBrowser() {
     })
 
     const installedVersion = await browser.version()
-    console.log('installedVersion', installedVersion)
 
     await browser.close()
 
@@ -92,13 +91,13 @@ async function handleInstallPuppeteerBrowser() {
     return
   }
 
-  console.log('installPuppeteerBrowser')
   showNotification(
     'Puppeteer browser installation started...',
     'This process may take a few minutes',
   )
 
   const ls = spawn('npx', [
+    ' --yes',
     'puppeteer',
     'browsers',
     'install',
@@ -117,13 +116,19 @@ async function handleInstallPuppeteerBrowser() {
   })
 }
 
-async function handleLaunchEcoindexSimpleCollect() {
+async function handleLaunchEcoindexSimpleCollect(event: IpcMainEvent) {
+  console.log('handleLaunchEcoindexSimpleCollect')
   showNotification(
     'Collect Ecoindex is started...',
     'This process may take a few minutes',
   )
-  return
-  const ls = spawn('npx', ['lighthouse-plugin-ecoindex', 'collect', '-d'])
+  // return
+  const ls = spawn('npx', [
+    '--yes',
+    'lighthouse-plugin-ecoindex',
+    'collect',
+    '-d',
+  ])
   ls.stdout.on('data', function (data) {
     console.log(data.toString())
   })
@@ -144,6 +149,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -203,6 +209,10 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  ipcMain.on('notify', (_event, message) => {
+    new Notification({ title: 'Notification', body: message }).show()
+    // showNotification('Notification', message)
+  })
   ipcMain.on('set-title', handleSetTitle)
   ipcMain.handle('handleInstallPuppeteerBrowser', handleInstallPuppeteerBrowser)
   ipcMain.handle(
