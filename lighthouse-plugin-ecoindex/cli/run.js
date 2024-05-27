@@ -1,4 +1,5 @@
 import {
+  dateToFileString,
   endEcoindexPageMesure,
   getLighthouseConfig,
   getPuppeteerConfig,
@@ -136,6 +137,15 @@ async function runCourses(cliFlags) {
     )
     cliFlags['extraHeaderObj'] = cliFlags['jsonFileObj']?.['extra-header']
   }
+  // save `output-path` from input file in specific var.
+  if (cliFlags['jsonFileObj']?.['output-path']) {
+    console.log(
+      `${logSymbols.warning} Output-path overrided by \`${cliFlags['json-file']}\` file.`,
+    )
+    cliFlags['exportPath'] = `${
+      cliFlags['jsonFileObj']?.['output-path']
+    }/${await dateToFileString(cliFlags['generationDate'])}`
+  }
   // save `output` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['output']) {
     console.log(
@@ -145,7 +155,7 @@ async function runCourses(cliFlags) {
   }
   if (cliFlags['jsonFileObj']?.['user-agent']) {
     console.log(
-      `${logSymbols.warning} user-agent overrided by \`${cliFlags['json-file']}\` file.`,
+      `${logSymbols.warning} User-agent overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
   }
