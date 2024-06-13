@@ -4,17 +4,16 @@ import {
   getLoadingExperience,
 } from '../utils/index.js'
 
-import commons from './commons.js'
-
 import { Audit } from 'lighthouse'
+import commons from './commons.js'
 import refsURLS from './bp/refs-urls.js'
 
 class EcoindexSizeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-size',
-      title: 'Page size in Megaoctets',
-      failureTitle: 'Page size in Megaoctets, your page is too heavy',
+      title: 'Page size in kilobytes',
+      failureTitle: 'Page size in kilobytes, your page is too heavy',
       description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: ['navigation', 'timespan', 'snapshot'],
