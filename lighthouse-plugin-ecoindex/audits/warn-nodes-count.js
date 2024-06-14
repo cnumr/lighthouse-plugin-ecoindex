@@ -5,8 +5,8 @@
  */
 
 import { Audit } from 'lighthouse'
-import { getEcoindexNodes } from '../utils/index.js'
 import commons from './commons.js'
+import { getEcoindexNodes } from '../utils/index.js'
 import refsURLS from './bp/refs-urls.js'
 
 class WarnNodesCount extends Audit {
@@ -24,11 +24,6 @@ class WarnNodesCount extends Audit {
   }
 
   static async audit(artifacts, context) {
-    // const MainDocumentContent = artifacts.MainDocumentContent
-    // const dom = new JSDOM(MainDocumentContent)
-    // const allNodes = dom.window.document.querySelectorAll('*').length
-    // // const svgNodes = dom.window.document.querySelectorAll('svg').length
-    // const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
     const value = await getEcoindexNodes(artifacts, context)
     const DOMStats = artifacts.DOMStats.totalBodyElements
 
