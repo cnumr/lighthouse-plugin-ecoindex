@@ -34,10 +34,8 @@ export async function getLoadingExperience(
   const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
 
   const records = await NetworkRecords.request(devtoolsLog, context)
-  const { numericValue: totalByteWeight } = await TotalByteWeight.audit(
-    artifacts,
-    context,
-  )
+  const { numericValue: totalByteWeight, details: totalByteDetails } =
+    await TotalByteWeight.audit(artifacts, context)
 
   let totalCompressedSize = 0
   let requestCount = 0
@@ -67,6 +65,7 @@ export async function getLoadingExperience(
       nodes: domSize,
       requests: requestCount,
       size: totalByteWeight,
+      sizeDetails: totalByteDetails,
     }
   }
   const ecoIndexScore = getEcoindexResults(
