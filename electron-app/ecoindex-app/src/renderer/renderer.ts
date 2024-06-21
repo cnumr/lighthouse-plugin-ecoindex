@@ -29,4 +29,11 @@ import './index.tsx'
  * ```
  */
 
+window.electronAPI.sendLogToFront((message:string)=>{
+    console.log(message)
+    const textArea = document.getElementById('echo') as HTMLTextAreaElement;
+    textArea.value = textArea.value + "\n" + message;
+    textArea.scrollTop = textArea.scrollHeight
+});
+
 console.log('👋 This message is being logged by "renderer.js", included via webpack');

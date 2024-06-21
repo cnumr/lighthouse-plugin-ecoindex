@@ -3,7 +3,9 @@ import './index.css';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import { channels } from '../shared/constants';
 import icon from '../../assets/icon.svg';
+import { ipcRenderer } from 'electron';
 
 function Hello() {
   const [data, setdata] = useState("")
@@ -29,6 +31,10 @@ const setTitle = () => {
     // const filePathElement = document.getElementById('filePath') as HTMLElement;
     // filePathElement.innerText = filePath
 }
+const setLog = (value:string) => {
+  const echoElement = document.getElementById('echo') as HTMLElement;
+  echoElement.innerText = value;
+}
 
 useEffect(() => {
   const fetchNodeVersion = async () => {
@@ -41,11 +47,11 @@ useEffect(() => {
     // const filePathElement = document.getElementById('filePath') as HTMLElement;
     // filePathElement.innerText = result
   };
+  
 
   fetchNodeVersion();
   fetchWorkDir();
 }, []);
-
 
   return (
     <div>
@@ -69,7 +75,7 @@ useEffect(() => {
           <button id="btn-fake" onClick={fakeMesure} className='btn btn-red'>Fake Measure</button>
           {/* display here the echoReadable line */}
           <p className='text-sm text-gray-500 font-medium'>console</p>
-          <p id="echo" className='echo h-24'  ></p>
+          <textarea id="echo" className='echo h-24' readOnly></textarea>
       </div>
       <div className='text-sm text-center'>
         <p className='text-xs text-gray-500'>Host Informations : Node.js({data ? data : 'loading...'})</p>

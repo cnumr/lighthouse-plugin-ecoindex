@@ -2,6 +2,8 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from 'electron'
 
+import { channels } from '../shared/constants';
+
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
@@ -15,6 +17,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   handleSelectFolder: () => ipcRenderer.invoke('dialog:select-folder'),
   // run runFakeMesure on click on button fake
   runFakeMesure: () => ipcRenderer.invoke('run-fake-mesure'),
-  getWorkDir: (newDir:string) => ipcRenderer.invoke('get-work-dir', newDir)
-  // getNodeVersion: () => ipcRenderer.invoke('get-node-version')
+  getWorkDir: (newDir:string) => ipcRenderer.invoke('get-work-dir', newDir),
+  sendLogToFront: (callback:any) => ipcRenderer.on(channels.ASYNCHRONOUS_LOG, (_event, value) => callback(value)),
 })

@@ -1,12 +1,11 @@
 import { BrowserWindow, IpcMainEvent, app, dialog, ipcMain } from 'electron';
-import { ChildProcess, execFile, fork, spawn } from 'child_process';
+import { ChildProcess, spawn } from 'child_process';
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
+import { channels } from '../shared/constants';
 import fixPath from 'fix-path';
 import fs from 'fs';
-import path from 'node:path'
 import {shellEnv} from 'shell-env';
-import util from 'node:util';
 
 // const execFile = util.promisify(_execFile);
 
@@ -51,11 +50,7 @@ app.on('ready', () => {
   ipcMain.handle('dialog:select-folder', handleSelectFolder)
   ipcMain.handle('get-node-version', getNodeVersion)
   ipcMain.handle('get-work-dir', handleWorkDir)
-  ipcMain.on('chomp', (event, line) => {
-    const result = chomp(line);
-    // Send the result back to the renderer process
-    event.sender.send('chomp-result', result);
-  })
+
   _createWindow()
 });
 
@@ -88,7 +83,7 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
     // ipcRenderer.send('chomp', line);
     // i want to send to front the content of the line
     // I want to listen echo from main.ts and display it in the p tag without removing the previous content
-    win.webContents.send('chomp', line)
+    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(line))
   }
 }
 const _createWindow = (): void => {
@@ -183,12 +178,12 @@ async function handleRunFakeMesure(event: IpcMainEvent) {
   if (!_workDir || _workDir === "") {
     throw new Error("Work dir not found");
   }
-  _isDev() && console.log(`Work dir: ${_workDir}`);
+  console.log(`Work dir: ${_workDir}`);
   const logFilePath = `${_workDir}/logfile.txt`;
   const logStream = fs.createWriteStream(logFilePath);
   logStream.write('fake mesure start...\n');
   try {
-    const _shellEnv = await shellEnv();
+    // const _shellEnv = await shellEnv();
     // logStream.write(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}\n`);
     
     const nodeDir = await _getNodeDir();
@@ -201,16 +196,7 @@ async function handleRunFakeMesure(event: IpcMainEvent) {
     
     // Fake mesure and path. TODO: use specified path and urls
     const childProcess: ChildProcess = spawn(`${nodeDir}`, [`${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`, 'collect', '-u', 'https://novagaia.fr/', '-u', 'https://novagaia.fr/a-propos/', '-o', 'html', '--output-path', _workDir],
-      // const childProcess: ChildProcess = spawn('npx', ['lighthouse-plugin-ecoindex', 'collect', '-u', 'https://www.adipso.com/', '-u', 'https://www.adipso.com/projets', '-u', 'https://www.adipso.com/equipe', '-u', 'https://www.adipso.com/agence-strasbourg', '--output-path', '/Users/renaudheluin/DEV/test'],
       { stdio: ['pipe', 'pipe', process.stderr], shell: true });
-    // const childProcess = fork('.', ['npx','lighthouse-plugin-ecoindex', 'collect', '-u', 'https://www.adipso.com/', '-u', 'https://www.adipso.com/projets', '-u', 'https://www.adipso.com/equipe', '-u', 'https://www.adipso.com/agence-strasbourg', '--output-path', '/Users/renaudheluin/DEV/test'],
-    //    {
-    //   // if you need to exchange between processes data types, 
-    //   // like BigInt, Typed Arrays, Map, Set, etc
-    //   serialization: 'advanced',
-    //   // needed for get access to child process stdout and stderr
-    //   stdio: 'pipe'
-    // });
 
     childProcess.on('exit', (code, signal) => {
       logStream.write(`Child process exited with code ${code} and signal ${signal}\n`);

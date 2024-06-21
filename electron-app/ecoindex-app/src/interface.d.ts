@@ -11,6 +11,7 @@ export interface IElectronAPI {
   handleSelectFolder: () => Promise<string>
   getWorkDir: (newDir:string) => Promise<string>
   runFakeMesure: () => void
+  sendLogToFront: (callback) => string
 }
 
 declare global {
