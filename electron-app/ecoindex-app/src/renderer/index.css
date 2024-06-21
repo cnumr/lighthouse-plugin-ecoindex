@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded border border-transparent max-w-fit;
+  }
+  .btn-red {
+    @apply border border-red-300 py-2 px-4 rounded hover:bg-red-500 font-medium hover:text-white;
+  }
+  .echo {
+    @apply text-sm font-mono text-blue-500 border border-blue-300 w-full;
+}
+}
