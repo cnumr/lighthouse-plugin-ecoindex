@@ -42,10 +42,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
         hidden: !visible,
       })}
     >
-      <hr className="border-ecoindex-green-400 border w-full my-2" />
-      <h2 className="text-ecoindex-green font-medium text-lg">
-        2. Urls to mesure
-      </h2>
+      <h2>2. Urls to mesure</h2>
 
       {urlsList.map((urlItem, index) => (
         <div className="flex gap-4 items-center w-2/3" key={index}>
@@ -74,7 +71,6 @@ export const SimpleUrlsList: FC<ILayout> = ({
         <FaPlusCircle className="size-6" />
         Add Field
       </button>
-      <hr className="border-ecoindex-green-400 border w-full my-2" />
     </div>
   )
 }

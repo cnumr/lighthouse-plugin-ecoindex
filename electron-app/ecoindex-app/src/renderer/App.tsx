@@ -1,18 +1,21 @@
 import './index.css'
 
-import { useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-import iconAsso from '../../assets/asso.svg'
 import { AlertBox } from './components/Alert'
+import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
-import { SimpleUrlsList } from './components/simple-urls'
+import { SimplePanMesure } from './components/simple-pan'
+import { cn } from '../shared/tailwind-helper'
+import iconAsso from '../../assets/asso.svg'
 
 type InputField = {
   value: string
 }
 
 function Hello() {
+  const [tabSelected, setTabSelected] = useState(0)
   const [nodeVersion, setNodeVersion] = useState('')
   // let nodeVersion = 'loading...'
   const [workDir, setWorkDir] = useState('chargement...')
@@ -119,9 +122,7 @@ function Hello() {
             <span className="logo-ecoindex logo-ecoindex__eco">eco</span>
             <span className="logo-ecoindex logo-ecoindex__index">Index</span>
           </div>
-          <h1 className="font-black text-xl text-ecoindex-green">
-            Mesures launcher 👋
-          </h1>
+          <h1>Mesures launcher 👋</h1>
           <AlertBox visible={!isLighthouseEcoindexPluginInstalled}>
             <span>Lighthouse Ecoindex plugin is not installed!</span>
             <button className="btn btn-green-outlined">Install</button>
@@ -130,9 +131,7 @@ function Hello() {
             <span>Node is not installed!</span>
             <button className="btn btn-green-outlined">Install</button>
           </AlertBox>
-          <h2 className="text-ecoindex-green font-medium text-lg">
-            1. Select ouput folder
-          </h2>
+          <h2>1. Select ouput folder</h2>
           <div className="flex gap-2 items-center w-full">
             <p id="filePath" className="echo min-h-8 grid place-items-center">
               {workDir}
@@ -147,23 +146,41 @@ function Hello() {
               Browse
             </button>
           </div>
-          <SimpleUrlsList
-            urlsList={urlsList}
-            setUrlsList={setUrlsList}
-            visible={true}
-          />
-          <h2 className="text-ecoindex-green font-medium text-lg">
-            3. Launch the mesures
-          </h2>
-          <button
-            type="button"
-            id="btn-simple-mesures"
-            disabled={!appReady}
-            onClick={simpleMesures}
-            className="btn btn-green"
-          >
-            Mesures
-          </button>
+          <div className="w-full">
+            <div className="w-full flex gap-1">
+              <button
+                className={cn('tab', { active: tabSelected === 0 })}
+                onClick={() => setTabSelected(0)}
+              >
+                Simple Mesure(s)
+              </button>
+              <button
+                className={cn('tab', { active: tabSelected === 1 })}
+                onClick={() => setTabSelected(1)}
+              >
+                Courses Mesure
+              </button>
+            </div>
+            <SimplePanMesure
+              appReady={appReady}
+              simpleMesures={simpleMesures}
+              urlsList={urlsList}
+              setUrlsList={setUrlsList}
+              className={cn(
+                'tab-content',
+                { hidden: tabSelected !== 0 },
+                { flex: tabSelected === 0 },
+              )}
+            />
+            <JsonPanMesure
+              appReady={appReady}
+              className={cn(
+                'tab-content',
+                { hidden: tabSelected !== 1 },
+                { flex: tabSelected === 1 },
+              )}
+            />
+          </div>
           {/* display here the echoReadable line */}
           <p className="text-sm text-ecoindex-green font-medium">console</p>
           <textarea id="echo" className="echo h-36" readOnly></textarea>

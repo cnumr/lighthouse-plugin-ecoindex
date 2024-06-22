@@ -7,6 +7,12 @@
   body {
     @apply text-ecoindex-green-950;
   }
+  h1 {
+    @apply font-black text-xl text-ecoindex-green;
+  }
+  h2 {
+    @apply text-ecoindex-green font-medium text-lg;
+  }
 }
 
 @layer components {
@@ -39,5 +45,14 @@
   }
   .logo-ecoindex__index {
     @apply bg-white text-ecoindex-green;
+  }
+  .tab {
+    @apply grid place-items-center max-w-fit py-2 px-4 font-bold border-2 border-b-0 rounded-md rounded-b-none bg-ecoindex-green-500 text-ecoindex-green-950 border-ecoindex-green-500 hover:bg-ecoindex-green-600 hover:border-ecoindex-green-600 -mb-[2px];
+  }
+  .tab.active {
+    @apply bg-white text-ecoindex-green-600 border-ecoindex-green-500;
+  }
+  .tab-content {
+    @apply w-full items-center flex-col gap-4 border-2 border-ecoindex-green-500 p-4;
   }
 }
