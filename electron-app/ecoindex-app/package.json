@@ -2,7 +2,7 @@
   "name": "ecoindex-app",
   "productName": "Ecoindex mesures launcher",
   "version": "1.0.0",
-  "description": "An application to measure the ecoindex of a website with LightHouse & Ecoindex.",
+  "description": "An application to mesure the ecoindex of a website with LightHouse & Ecoindex.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",

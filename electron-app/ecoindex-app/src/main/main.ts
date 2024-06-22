@@ -46,7 +46,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
 // This method will be called when Electron has finished
@@ -106,9 +106,11 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
     win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(line))
   }
 }
+
+let mainWindow: BrowserWindow = null
 const _createWindow = (): void => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     icon: '/assets/app-ico.png',
@@ -121,12 +123,17 @@ const _createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools({ mode: 'detach' })
+}
+
+const _sendMessageToFrontLog = (message: any) => {
+  mainWindow.webContents.send(channels.HOST_INFORMATIONS, message)
 }
 
 const _getHomeDir = async () => {
   fixPath()
   const _shellEnv = await shellEnv()
+  _sendMessageToFrontLog(_shellEnv)
   return _shellEnv.HOME
 }
 

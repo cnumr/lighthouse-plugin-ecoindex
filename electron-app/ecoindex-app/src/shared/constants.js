@@ -7,5 +7,6 @@ module.exports = {
     SELECT_FOLDER: 'dialog:select-folder',
     IS_LIGHTHOUSE_ECOINDEX_INSTALLED: 'is-lighthouse-ecoindex-installed',
     IS_NODE_INSTALLED: 'is-node-installed',
+    HOST_INFORMATIONS: 'host-informations',
   },
 }

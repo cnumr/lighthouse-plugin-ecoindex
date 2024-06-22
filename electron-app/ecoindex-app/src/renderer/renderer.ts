@@ -36,6 +36,10 @@ window.electronAPI.sendLogToFront((message: string) => {
   textArea.scrollTop = textArea.scrollHeight
 })
 
+window.electronAPI.sendHostInfoToFront((obj: object) => {
+  console.log(`Host informations:`, obj)
+})
+
 console.log('👋 Welcome to Ecoindex mesures launcher!')
 console.log(
   '💡 More informations : https://cnumr.github.io/lighthouse-plugin-ecoindex/ and https://www.ecoindex.fr/',
