@@ -45,7 +45,7 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  ipcMain.handle(channels.FAKE_RUN, handleRunFakeMesure)
+  ipcMain.handle(channels.SIMPLE_MESURES, handlerSimpleMesures)
   ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
   ipcMain.handle(channels.GET_NODE_VERSION, getNodeVersion)
   ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
@@ -198,8 +198,15 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   return await workDir
 }
 
-async function handleRunFakeMesure(event: IpcMainEvent) {
+async function handlerSimpleMesures(
+  event: IpcMainEvent,
+  urlsList: SimpleUrlInput[],
+) {
+  if (!urlsList || urlsList.length === 0) {
+    throw new Error('Urls list is empty')
+  }
   console.log('fake mesure start...')
+
   // create stream to log the output. TODO: use specified path
   const _workDir = await workDir
   if (!_workDir || _workDir === '') {
@@ -209,6 +216,9 @@ async function handleRunFakeMesure(event: IpcMainEvent) {
   const logFilePath = `${_workDir}/logfile.txt`
   const logStream = fs.createWriteStream(logFilePath)
   logStream.write('fake mesure start...\n')
+  console.log(`Urls list: ${JSON.stringify(urlsList)}`)
+  logStream.write(`Urls list: ${urlsList}`)
+
   try {
     const _shellEnv = await shellEnv()
     logStream.write(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}\n`)
@@ -221,23 +231,25 @@ async function handleRunFakeMesure(event: IpcMainEvent) {
     logStream.write(`Npm dir: ${npmDir}\n`)
     console.log(`Npm dir: ${npmDir}`)
 
+    const command = [
+      `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
+      'collect',
+    ]
+    urlsList.forEach(url => {
+      if (url.value) {
+        command.push('-u')
+        command.push(url.value)
+      }
+    })
+    command.push('-o')
+    command.push('html')
+    command.push('--output-path')
+    command.push(_workDir)
     // Fake mesure and path. TODO: use specified path and urls
-    const childProcess: ChildProcess = spawn(
-      `${nodeDir}`,
-      [
-        `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
-        'collect',
-        '-u',
-        'https://novagaia.fr/',
-        '-u',
-        'https://novagaia.fr/a-propos/',
-        '-o',
-        'html',
-        '--output-path',
-        _workDir,
-      ],
-      { stdio: ['pipe', 'pipe', process.stderr], shell: true },
-    )
+    const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
+      stdio: ['pipe', 'pipe', process.stderr],
+      shell: true,
+    })
 
     childProcess.on('exit', (code, signal) => {
       logStream.write(

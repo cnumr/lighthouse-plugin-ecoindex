@@ -4,23 +4,37 @@ import { useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 
 import iconAsso from '../../assets/asso.svg'
-import icon from '../../assets/icon.svg'
-import { cn } from '../shared/tailwind-helper'
 import { AlertBox } from './components/Alert'
+import { PopinLoading } from './components/loading-popin'
+import { SimpleUrlsList } from './components/simple-urls'
+
+type InputField = {
+  value: string
+}
 
 function Hello() {
-  const [data, setdata] = useState('')
+  const [nodeVersion, setNodeVersion] = useState('')
+  // let nodeVersion = 'loading...'
   const [workDir, setWorkDir] = useState('chargement...')
   const [appReady, setAppReady] = useState(false)
+  // let appReady = false
+  let loadingScreen = 0
+  const [urlsList, setUrlsList] = useState<InputField[]>([
+    { value: 'https://www.ecoindex.fr/' },
+    { value: 'https://www.ecoindex.fr/a-propos/' },
+  ])
   const [
     isLighthouseEcoindexPluginInstalled,
     setIsLighthouseEcoindexPluginInstalled,
   ] = useState(true)
+  // let isLighthouseEcoindexPluginInstalled = false
   const [isNodeInstalled, setIsNodeInstalled] = useState(true)
+  // let isNodeInstalled = false
+
   // Run runFakeMesure on click on button fake
-  const fakeMesure = () => {
-    console.log('fake button clicked')
-    window.electronAPI.runFakeMesure()
+  const simpleMesures = () => {
+    console.log('Simple mesures clicked')
+    window.electronAPI.simpleMesures(urlsList)
   }
 
   const openFile = async () => {
@@ -32,24 +46,45 @@ function Hello() {
     echoElement.innerText = value
   }
 
+  const increment = () => {
+    console.log('increment')
+    loadingScreen = loadingScreen + 1
+    const counter = document.getElementById('counter') as HTMLElement
+    counter.innerText = `Loading... ${loadingScreen}/4`
+    const loadingPopin = document.getElementById('loadingPopin') as HTMLElement
+    if (loadingScreen === 4) {
+      loadingPopin.style.display = 'none'
+    }
+  }
+
   useEffect(() => {
     const fetchNodeVersion = async () => {
       const result = await window.versions.getNodeVersion()
-      setdata(result)
+      setNodeVersion(result)
+      // nodeVersion = result
+      increment()
     }
     const fetchWorkDir = async () => {
       const result = await window.electronAPI.getWorkDir('')
       setWorkDir(result)
+      increment()
     }
     const fetchNodeInstalled = async () => {
       const result = await window.electronAPI.isNodeInstalled()
       setIsNodeInstalled(result)
+      // isNodeInstalled = result
+      setAppReady(result && isLighthouseEcoindexPluginInstalled)
+
+      increment()
     }
 
     const fetchLighthouseEcoindexPluginInstalled = async () => {
       const result =
         await window.electronAPI.isLighthouseEcoindexPluginInstalled()
       setIsLighthouseEcoindexPluginInstalled(result)
+      // isLighthouseEcoindexPluginInstalled = result
+      setAppReady(result && isNodeInstalled)
+      increment()
     }
 
     fetchNodeVersion()
@@ -59,7 +94,7 @@ function Hello() {
   }, [])
 
   useEffect(() => {
-    setAppReady(isLighthouseEcoindexPluginInstalled && isNodeInstalled)
+    // setAppReady(isLighthouseEcoindexPluginInstalled && isNodeInstalled)
     console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
     console.log('isNodeInstalled', isNodeInstalled)
     console.log(
@@ -67,7 +102,7 @@ function Hello() {
       isLighthouseEcoindexPluginInstalled,
     )
     console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-  }, [isLighthouseEcoindexPluginInstalled, isNodeInstalled])
+  }, [isNodeInstalled, isLighthouseEcoindexPluginInstalled])
 
   useEffect(() => {
     console.log(`************************************`)
@@ -76,7 +111,7 @@ function Hello() {
   }, [appReady])
 
   return (
-    <div>
+    <div className="relative">
       <main className="flex flex-col justify-between p-4 h-screen">
         <div className="flex flex-col gap-2 items-center">
           <div className="logo-ecoindex">
@@ -87,15 +122,6 @@ function Hello() {
           <h1 className="font-black text-xl text-ecoindex-green">
             Mesures launcher 👋
           </h1>
-          {/* <div className="flex gap-2 items-center text-sm text-gray-500 font-medium">
-            <p>
-              Plugin installed:{' '}
-              <span id="isLighthouseEcoindexPluginInstalled"></span>
-            </p>
-            <p>
-              Node installed: <span id="isNodeInstalled"></span>
-            </p>
-          </div> */}
           <AlertBox visible={!isLighthouseEcoindexPluginInstalled}>
             <span>Lighthouse Ecoindex plugin is not installed!</span>
             <button className="btn btn-green-outlined">Install</button>
@@ -104,6 +130,9 @@ function Hello() {
             <span>Node is not installed!</span>
             <button className="btn btn-green-outlined">Install</button>
           </AlertBox>
+          <h2 className="text-ecoindex-green font-medium text-lg">
+            1. Select ouput folder
+          </h2>
           <div className="flex gap-2 items-center w-full">
             <p id="filePath" className="echo min-h-8 grid place-items-center">
               {workDir}
@@ -115,17 +144,25 @@ function Hello() {
               onClick={openFile}
               className="btn btn-green whitespace-nowrap"
             >
-              Select output folder
+              Browse
             </button>
           </div>
+          <SimpleUrlsList
+            urlsList={urlsList}
+            setUrlsList={setUrlsList}
+            visible={true}
+          />
+          <h2 className="text-ecoindex-green font-medium text-lg">
+            3. Launch the mesures
+          </h2>
           <button
             type="button"
-            id="btn-fake"
+            id="btn-simple-mesures"
             disabled={!appReady}
-            onClick={fakeMesure}
+            onClick={simpleMesures}
             className="btn btn-green"
           >
-            Fake Measure
+            Mesures
           </button>
           {/* display here the echoReadable line */}
           <p className="text-sm text-ecoindex-green font-medium">console</p>
@@ -133,7 +170,8 @@ function Hello() {
         </div>
         <div className="text-sm text-center">
           <p className="text-xs">
-            Host Informations : Node.js({data ? data : 'loading...'})
+            Host Informations : Node.js(
+            {nodeVersion ? nodeVersion : 'loading...'})
           </p>
           <p className="text-xs">
             Internal Electron informations : Chrome (v{window.versions.chrome()}
@@ -154,6 +192,9 @@ function Hello() {
           </p>
         </div>
       </main>
+      <PopinLoading id="loadingPopin">
+        <p id="counter">Loading... 0/4</p>
+      </PopinLoading>
     </div>
   )
 }

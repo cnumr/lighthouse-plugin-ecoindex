@@ -1,0 +1,3 @@
+type SimpleUrlInput = {
+  value: string
+}

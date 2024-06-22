@@ -13,8 +13,14 @@
   .btn {
     @apply font-bold py-2 px-4 rounded-lg border border-transparent max-w-fit;
   }
+  .btn-square {
+    @apply font-bold p-2 rounded-lg border border-transparent max-w-fit;
+  }
   .btn-green {
     @apply border bg-ecoindex-green-500 text-ecoindex-green-950 hover:bg-ecoindex-green-600 disabled:border-transparent disabled:bg-ecoindex-green-100 disabled:text-ecoindex-green-400 disabled:cursor-not-allowed active:bg-ecoindex-green active:text-ecoindex-green-950;
+  }
+  .btn-red {
+    @apply border bg-ecoindex-red-500 text-ecoindex-red-950 hover:bg-ecoindex-red-600 disabled:border-transparent disabled:bg-ecoindex-red-100 disabled:text-ecoindex-red-400 disabled:cursor-not-allowed active:bg-ecoindex-red active:text-ecoindex-red-950;
   }
   .btn-green-outlined {
     @apply border bg-transparent text-ecoindex-green-600 border-ecoindex-green-600 hover:border-ecoindex-green hover:text-ecoindex-green disabled:border-transparent disabled:border-ecoindex-green-300 disabled:text-ecoindex-green-300 disabled:cursor-not-allowed active:border-ecoindex-green-800 active:text-ecoindex-green-800;

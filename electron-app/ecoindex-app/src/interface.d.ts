@@ -12,7 +12,7 @@ export interface IElectronAPI {
   getWorkDir: (newDir: string) => Promise<string>
   isNodeInstalled: () => Promise<boolean>
   isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
-  runFakeMesure: () => void
+  simpleMesures: (urlsList: SimpleUrlInput[]) => void
 }
 
 declare global {

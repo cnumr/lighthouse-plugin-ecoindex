@@ -15,7 +15,8 @@ contextBridge.exposeInMainWorld('versions', {
 contextBridge.exposeInMainWorld('electronAPI', {
   handleSelectFolder: () => ipcRenderer.invoke(channels.SELECT_FOLDER),
   // run runFakeMesure on click on button fake
-  runFakeMesure: () => ipcRenderer.invoke(channels.FAKE_RUN),
+  simpleMesures: (urlsList: SimpleUrlInput[]) =>
+    ipcRenderer.invoke(channels.SIMPLE_MESURES, urlsList),
   getWorkDir: (newDir: string) =>
     ipcRenderer.invoke(channels.GET_WORKDIR, newDir),
   sendLogToFront: (callback: any) =>
