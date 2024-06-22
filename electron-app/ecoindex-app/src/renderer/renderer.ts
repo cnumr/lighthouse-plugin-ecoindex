@@ -36,6 +36,7 @@ window.electronAPI.sendLogToFront((message: string) => {
   textArea.scrollTop = textArea.scrollHeight
 })
 
+console.log('👋 Welcome to Ecoindex mesures launcher!')
 console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack',
+  '💡 More informations : https://cnumr.github.io/lighthouse-plugin-ecoindex/ and https://www.ecoindex.fr/',
 )

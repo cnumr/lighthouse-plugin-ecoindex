@@ -40,32 +40,16 @@ function Hello() {
     const fetchWorkDir = async () => {
       const result = await window.electronAPI.getWorkDir('')
       setWorkDir(result)
-      // const filePathElement = document.getElementById('filePath') as HTMLElement;
-      // filePathElement.innerText = result
     }
     const fetchNodeInstalled = async () => {
       const result = await window.electronAPI.isNodeInstalled()
       setIsNodeInstalled(result)
-      // const el = document.getElementById('isNodeInstalled') as HTMLElement
-      // el.innerText = result.toString()
-      if (isLighthouseEcoindexPluginInstalled && isNodeInstalled) {
-        setAppReady(true)
-      }
-      console.log(`NodeInstalled: ${result}`)
     }
 
     const fetchLighthouseEcoindexPluginInstalled = async () => {
       const result =
         await window.electronAPI.isLighthouseEcoindexPluginInstalled()
       setIsLighthouseEcoindexPluginInstalled(result)
-      // const el = document.getElementById(
-      //   'isLighthouseEcoindexPluginInstalled',
-      // ) as HTMLElement
-      // el.innerText = result.toString()
-      if (isLighthouseEcoindexPluginInstalled && isNodeInstalled) {
-        setAppReady(true)
-      }
-      console.log(`LighthouseEcoindexPluginInstalled: ${result}`)
     }
 
     fetchNodeVersion()
@@ -73,6 +57,23 @@ function Hello() {
     fetchLighthouseEcoindexPluginInstalled()
     fetchNodeInstalled()
   }, [])
+
+  useEffect(() => {
+    setAppReady(isLighthouseEcoindexPluginInstalled && isNodeInstalled)
+    console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+    console.log('isNodeInstalled', isNodeInstalled)
+    console.log(
+      'isLighthouseEcoindexPluginInstalled',
+      isLighthouseEcoindexPluginInstalled,
+    )
+    console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+  }, [isLighthouseEcoindexPluginInstalled, isNodeInstalled])
+
+  useEffect(() => {
+    console.log(`************************************`)
+    console.log('appReady', appReady)
+    console.log(`************************************`)
+  }, [appReady])
 
   return (
     <div>
@@ -110,30 +111,31 @@ function Hello() {
             <button
               type="button"
               id="btn-file"
+              disabled={!appReady}
               onClick={openFile}
-              disabled={appReady}
               className="btn btn-green whitespace-nowrap"
             >
               Select output folder
             </button>
           </div>
           <button
+            type="button"
             id="btn-fake"
-            disabled={appReady}
+            disabled={!appReady}
             onClick={fakeMesure}
             className="btn btn-green"
           >
             Fake Measure
           </button>
           {/* display here the echoReadable line */}
-          <p className="text-sm text-gray-500 font-medium">console</p>
+          <p className="text-sm text-ecoindex-green font-medium">console</p>
           <textarea id="echo" className="echo h-36" readOnly></textarea>
         </div>
         <div className="text-sm text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs">
             Host Informations : Node.js({data ? data : 'loading...'})
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs">
             Internal Electron informations : Chrome (v{window.versions.chrome()}
             ), Node.js (v
             {window.versions.node()}), and Electron (v

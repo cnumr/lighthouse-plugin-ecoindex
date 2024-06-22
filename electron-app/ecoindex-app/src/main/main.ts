@@ -100,8 +100,8 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
 const _createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    width: 1000,
+    height: 800,
     icon: '/assets/app-ico.png',
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
