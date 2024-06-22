@@ -4,12 +4,27 @@
 
 @layer components {
   .btn {
-    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded border border-transparent max-w-fit;
+    @apply font-bold py-2 px-4 rounded-lg border border-transparent max-w-fit;
   }
-  .btn-red {
-    @apply border border-red-300 py-2 px-4 rounded hover:bg-red-500 font-medium hover:text-white;
+  .btn-green {
+    @apply border bg-ecoindex-green-500 text-ecoindex-green-950 hover:bg-ecoindex-green-600 disabled:border-transparent disabled:bg-ecoindex-green-100 disabled:text-ecoindex-green-400 disabled:cursor-not-allowed active:bg-ecoindex-green active:text-ecoindex-green-950;
+  }
+  .btn-green-outlined {
+    @apply border bg-transparent text-ecoindex-green-600 border-ecoindex-green-600 hover:border-ecoindex-green hover:text-ecoindex-green disabled:border-transparent disabled:border-ecoindex-green-300 disabled:text-ecoindex-green-300 disabled:cursor-not-allowed active:border-ecoindex-green-800 active:text-ecoindex-green-800;
   }
   .echo {
-    @apply text-sm font-mono text-blue-500 border border-blue-300 w-full;
-}
+    @apply text-sm font-mono text-ecoindex-green-500 border border-ecoindex-green-600 w-full;
+  }
+  .logo-ecoindex {
+    @apply flex justify-center;
+    & > span {
+      @apply grid place-items-center py-[.1rem] px-[.5rem] font-medium text-3xl;
+    }
+  }
+  .logo-ecoindex__eco {
+    @apply bg-ecoindex-green text-white;
+  }
+  .logo-ecoindex__index {
+    @apply bg-white text-ecoindex-green;
+  }
 }

@@ -6,12 +6,13 @@ export interface IVersionsAPI {
 }
 
 export interface IElectronAPI {
-  setTitle: (title: string) => void
+  sendLogToFront: (callback) => string
   handleSetFolderOuput: () => Promise<string>
   handleSelectFolder: () => Promise<string>
-  getWorkDir: (newDir:string) => Promise<string>
+  getWorkDir: (newDir: string) => Promise<string>
+  isNodeInstalled: () => Promise<boolean>
+  isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
   runFakeMesure: () => void
-  sendLogToFront: (callback) => string
 }
 
 declare global {
