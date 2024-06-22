@@ -9,6 +9,8 @@ import { PopinLoading } from './components/loading-popin'
 import { SimplePanMesure } from './components/simple-pan'
 import { cn } from '../shared/tailwind-helper'
 import iconAsso from '../../assets/asso.svg'
+import packageJson from '../../package.json'
+import path from 'path'
 
 type InputField = {
   value: string
@@ -49,6 +51,11 @@ function Hello() {
     echoElement.innerText = value
   }
 
+  const showNotification = (title: string, options: any) => {
+    const _t = title === '' ? packageJson.productName : title
+    new window.Notification(_t, options)
+  }
+
   const increment = () => {
     console.log('increment')
     loadingScreen = loadingScreen + 1
@@ -57,6 +64,11 @@ function Hello() {
     const loadingPopin = document.getElementById('loadingPopin') as HTMLElement
     if (loadingScreen === 4) {
       loadingPopin.style.display = 'none'
+      const _n: any = {}
+      _n.body = 'Application succefully loaded.\nWelcome 👋'
+      _n.subtitle = 'You can now start mesures'
+      _n.priority = 'critical'
+      showNotification('', _n)
     }
   }
 

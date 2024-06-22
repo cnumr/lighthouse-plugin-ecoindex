@@ -1,12 +1,20 @@
-import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
+import {
+  BrowserWindow,
+  IpcMainEvent,
+  Notification,
+  app,
+  dialog,
+  ipcMain,
+} from 'electron'
 import { ChildProcess, spawn } from 'child_process'
-import { BrowserWindow, IpcMainEvent, app, dialog, ipcMain } from 'electron'
+import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
+import { channels } from '../shared/constants'
 import fixPath from 'fix-path'
 import fs from 'fs'
-import { shellEnv } from 'shell-env'
 import packageJson from '../../package.json'
-import { channels } from '../shared/constants'
+import path from 'path'
+import { shellEnv } from 'shell-env'
 
 // const execFile = util.promisify(_execFile);
 
@@ -61,6 +69,7 @@ app.on('ready', () => {
     credits: packageJson.description,
     copyright: packageJson.publisher,
   })
+  // showNotification()
   _createWindow()
 })
 
@@ -205,7 +214,11 @@ async function handlerSimpleMesures(
   if (!urlsList || urlsList.length === 0) {
     throw new Error('Urls list is empty')
   }
-  console.log('fake mesure start...')
+  showNotification({
+    body: 'Process intialization 🧩',
+    subtitle: 'Simple mesures',
+  })
+  console.log('Simple mesure start...')
 
   // create stream to log the output. TODO: use specified path
   const _workDir = await workDir
@@ -246,6 +259,10 @@ async function handlerSimpleMesures(
     command.push('--output-path')
     command.push(_workDir)
     // Fake mesure and path. TODO: use specified path and urls
+    showNotification({
+      body: 'Mesures started 🚀',
+      subtitle: 'Simple mesures',
+    })
     const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
       stdio: ['pipe', 'pipe', process.stderr],
       shell: true,
@@ -259,7 +276,7 @@ async function handlerSimpleMesures(
 
     childProcess.on('close', code => {
       logStream.write(`Child process close with code ${code}\n`)
-      logStream.write('fake mesure done 🚀\n')
+      logStream.write('Simple mesure done 🚀\n')
     })
 
     childProcess.stdout.on('data', data => {
@@ -283,7 +300,11 @@ async function handlerSimpleMesures(
     await _echoReadable(event, childProcess.stdout)
     // process.stdout.write(data)
     // console.log(result.stdout.toString());
-    console.log('fake mesure done 🚀')
+    showNotification({
+      body: `Mesures done, you can consult reports in\n${_workDir}`,
+      subtitle: 'Simple mesures',
+    })
+    console.log('Simple mesure done 🚀')
     return 'mesure done'
   } catch (error) {
     logStream.write(`stderr: ${error}\n`)
@@ -304,6 +325,20 @@ async function handleSelectFolder() {
 
 async function getNodeVersion() {
   return await _getNodeVersion()
+}
+
+function showNotification(options: any) {
+  if (!options) {
+    options = {
+      body: 'Notification body',
+      subtitle: 'Notification subtitle',
+    }
+  }
+  if (!options.title || options.title === '') {
+    options.title = packageJson.productName
+  }
+  const customNotification = new Notification(options)
+  customNotification.show()
 }
 
 // #endregion

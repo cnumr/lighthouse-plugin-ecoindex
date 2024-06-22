@@ -56,9 +56,10 @@ export const SimpleUrlsList: FC<ILayout> = ({
 
           <button
             className="btn-square btn-red"
+            title="delete"
             onClick={() => handleRemoveFields(index)}
           >
-            <RiDeleteBin5Line className="size-6" />
+            <RiDeleteBin5Line className="size-6" aria-label="delete" />
             <span className="sr-only">delete</span>
           </button>
         </div>
@@ -66,10 +67,11 @@ export const SimpleUrlsList: FC<ILayout> = ({
 
       <button
         className="btn btn-green-outlined flex gap-2"
+        title="add"
         onClick={handleAddFields}
       >
-        <FaPlusCircle className="size-6" />
-        Add Field
+        <FaPlusCircle className="size-6" aria-label="add" />
+        Add an URL
       </button>
     </div>
   )

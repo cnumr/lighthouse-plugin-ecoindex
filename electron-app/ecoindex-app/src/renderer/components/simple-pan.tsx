@@ -28,6 +28,7 @@ export const SimplePanMesure: FC<ILayout> = ({
       <button
         type="button"
         id="btn-simple-mesures"
+        title="Launch the mesures"
         disabled={!appReady}
         onClick={simpleMesures}
         className="btn btn-green"
