@@ -209,7 +209,7 @@ function Hello() {
             {window.versions.electron()})
           </p>
           <p className="mt-2">© 2024 - Made with ❤️ and 🌱 by</p>
-          <p className="mt-2 grid place-content-center">
+          <p className="my-4 grid place-content-center">
             <a href="https://asso.greenit.fr">
               <img
                 width="100"

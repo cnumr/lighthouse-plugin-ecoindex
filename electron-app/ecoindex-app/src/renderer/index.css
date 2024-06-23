@@ -31,6 +31,9 @@
   .btn-green-outlined {
     @apply border bg-transparent text-ecoindex-green-600 border-ecoindex-green-600 hover:border-ecoindex-green hover:text-ecoindex-green disabled:border-transparent disabled:border-ecoindex-green-300 disabled:text-ecoindex-green-300 disabled:cursor-not-allowed active:border-ecoindex-green-800 active:text-ecoindex-green-800;
   }
+  .btn-small {
+    @apply text-sm py-1 px-2;
+  }
   .echo {
     @apply text-sm font-mono text-ecoindex-green-500 border border-ecoindex-green-600 w-full;
   }
@@ -54,5 +57,42 @@
   }
   .tab-content {
     @apply w-full items-center flex-col gap-4 border-2 border-ecoindex-green-500 p-4;
+  }
+  #json-form {
+    @apply grid grid-cols-1 space-y-2 w-full;
+    label {
+      @apply font-bold text-ecoindex-green;
+      &:has(input) {
+        @apply flex gap-2 items-center;
+      }
+    }
+    p {
+      @apply text-ecoindex-green-600 text-xs italic mb-2;
+    }
+    input[type='text'],
+    textarea {
+      @apply border block w-full rounded-md bg-ecoindex-green-100 border-transparent focus:border-ecoindex-green focus:bg-white focus:ring-0;
+    }
+    input[type='checkbox'] {
+      @apply border border-ecoindex-green-500 rounded-md p-2 checked:bg-ecoindex-green-300;
+    }
+    .mandatory {
+      @apply relative after:text-ecoindex-red-500 after:content-['*'] after:absolute after:-right-2 after:text-xs after:font-bold;
+    }
+    fieldset {
+      @apply border border-ecoindex-green-500 rounded-md p-4;
+      legend {
+        @apply font-bold text-ecoindex-green px-2 flex gap-2 items-center;
+      }
+      p {
+        @apply text-ecoindex-green-600 text-xs italic mb-2;
+      }
+      div {
+        @apply flex gap-2 items-center;
+      }
+      button {
+        @apply flex gap-2 items-center;
+      }
+    }
   }
 }
