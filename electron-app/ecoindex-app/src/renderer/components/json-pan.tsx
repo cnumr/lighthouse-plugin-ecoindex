@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { ChangeEvent, FC, ReactNode, useEffect, useState } from 'react'
 import { RiDeleteBin5Line, RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
 import { FaPlusCircle } from 'react-icons/fa'
@@ -20,11 +20,11 @@ export const JsonPanMesure: FC<ILayout> = ({
   const handlerAddCourse = () => {
     console.log('add course')
     const newCourse = {
-      name: '',
-      target: '',
-      course: '',
+      name: 'TBD',
+      target: 'TBD',
+      course: 'TBD',
       'is-best-pages': false,
-      urls: [''],
+      urls: ['https://www.ecoindex.fr/'],
     }
     setJsonDatas?.({
       ...jsonDatas,
@@ -38,15 +38,27 @@ export const JsonPanMesure: FC<ILayout> = ({
       courses: jsonDatas.courses.filter((_, index) => index !== key),
     })
   }
-  const handlerOnSave = () => {
-    console.log('save')
+  const handlerOnSave = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    console.log('handlerOnSave', e.target)
   }
-  const handlerOnChange = (e: any) => {
-    console.log('change', e.target.value)
+  const handlerOnChange = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    console.log('handlerOnChange', e.target)
   }
-  const handlerOnReload = (e: any) => {
-    console.log('change', e.target.value)
+  const handlerOnReload = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    console.log('handlerOnReload', e.target)
   }
+  const handlerOnSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    console.log('event', event)
+  }
+
   return (
     <div className={className}>
       <h2>2. Configuration of the courses</h2>
@@ -220,7 +232,7 @@ export const JsonPanMesure: FC<ILayout> = ({
             id="btn-simple-mesures"
             title="Launch the mesures"
             disabled={!appReady}
-            // onClick={simpleMesures}
+            onClick={handlerOnSubmit}
             className="btn btn-green"
           >
             Mesures
