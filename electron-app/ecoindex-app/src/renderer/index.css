@@ -17,7 +17,7 @@
 
 @layer components {
   .btn {
-    @apply font-bold py-2 px-4 rounded-lg border border-transparent max-w-fit;
+    @apply font-bold py-2 px-4 rounded-lg border border-transparent max-w-fit flex gap-2 items-center;
   }
   .btn-square {
     @apply font-bold p-2 rounded-lg border border-transparent max-w-fit;
@@ -50,7 +50,7 @@
     @apply bg-white text-ecoindex-green;
   }
   .tab {
-    @apply grid place-items-center max-w-fit py-2 px-4 font-bold border-2 border-b-0 rounded-md rounded-b-none bg-ecoindex-green-500 text-ecoindex-green-950 border-ecoindex-green-500 hover:bg-ecoindex-green-600 hover:border-ecoindex-green-600 -mb-[2px];
+    @apply grid place-items-center max-w-fit py-2 px-4 leading-8 font-bold border-2 border-b-0 rounded-md rounded-b-none bg-ecoindex-green-500 text-ecoindex-green-950 border-ecoindex-green-500 hover:bg-ecoindex-green-600 hover:border-ecoindex-green-600 -mb-[2px];
   }
   .tab.active {
     @apply bg-white text-ecoindex-green-600 border-ecoindex-green-500;
@@ -77,12 +77,15 @@
       @apply border border-ecoindex-green-500 rounded-md p-2 checked:bg-ecoindex-green-300;
     }
     .mandatory {
-      @apply relative after:text-ecoindex-red-500 after:content-['*'] after:absolute after:-right-2 after:text-xs after:font-bold;
+      @apply relative after:text-ecoindex-red-500 after:content-['*'] after:absolute after:top-[.1rem] after:-right-[.4rem] after:text-xs after:font-bold;
     }
     fieldset {
-      @apply border border-ecoindex-green-500 rounded-md p-4;
+      @apply border border-ecoindex-green-500 rounded-md p-4 flex flex-col gap-2;
       legend {
         @apply font-bold text-ecoindex-green px-2 flex gap-2 items-center;
+        &.mandatory {
+          @apply after:right-[.1rem] after:top-[.1rem];
+        }
       }
       p {
         @apply text-ecoindex-green-600 text-xs italic mb-2;

@@ -1,8 +1,7 @@
 import { FC } from 'react'
 import { SimpleUrlsList } from './simple-urls'
-import { cn } from '../../shared/tailwind-helper'
 
-export interface ILayout {
+export interface ISimpleMesureLayout {
   appReady: boolean
   simpleMesures: () => void
   urlsList: SimpleUrlInput[]
@@ -10,7 +9,7 @@ export interface ILayout {
   className: string
 }
 
-export const SimplePanMesure: FC<ILayout> = ({
+export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
   appReady,
   simpleMesures,
   urlsList,
