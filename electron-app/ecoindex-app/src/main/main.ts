@@ -126,23 +126,33 @@ const _createWindow = (): void => {
   // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
-const _sendMessageToFrontLog = (message: any) => {
-  mainWindow.webContents.send(channels.HOST_INFORMATIONS, message)
+const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
+  mainWindow.webContents.send(
+    channels.HOST_INFORMATIONS,
+    message,
+    optionalParams,
+  )
 }
 
 const _getHomeDir = async () => {
   fixPath()
   const _shellEnv = await shellEnv()
-  _sendMessageToFrontLog(_shellEnv)
-  return _shellEnv.HOME
+  const home = _shellEnv.HOME
+  if (!home) {
+    _sendMessageToFrontLog('ERROR', 'Home dir not found in PATH', _shellEnv)
+    throw new Error('Home dir not found in PATH')
+  }
+  return home
 }
 
 const _getNodeVersion = async () => {
   fixPath()
   const _shellEnv = await shellEnv()
-  const nodeDir = _shellEnv.NODE || _shellEnv.npm_node_execpath
+  const nodeDir =
+    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
   const nodeVersion = nodeDir?.match(/v\d+\.\d+\.\d+/)?.[0]
   if (!nodeVersion) {
+    _sendMessageToFrontLog('ERROR', 'Node dir not found in PATH', _shellEnv)
     throw new Error('Node version not found in PATH')
   }
   return nodeVersion
@@ -152,8 +162,10 @@ const _getNodeDir = async () => {
   fixPath()
   const _shellEnv = await shellEnv()
   // console.log(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`);
-  const nodeDir = _shellEnv.NODE || _shellEnv.npm_node_execpath
+  const nodeDir =
+    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
   if (!nodeDir) {
+    _sendMessageToFrontLog('ERROR', 'Node dir not found in PATH', _shellEnv)
     throw new Error('Node dir not found in PATH')
   }
   // console.log(`Node dir: ${nodeDir}`);
@@ -167,11 +179,13 @@ const _getNpmDir = async () => {
 
   const npmBinDir = _shellEnv.NVM_BIN || _shellEnv.npm_config_prefix + '/bin'
   if (!npmBinDir) {
+    _sendMessageToFrontLog('ERROR', 'Npm dir not found in PATH', _shellEnv)
     throw new Error('Npm dir not found in PATH')
   }
   const updatedNpmBinDir = npmBinDir?.replace(/\/bin$/, '')
   // console.log(`Npm dir: ${npmDir}`);
   // console.log(`Updated npm dir: ${updatedNpmBinDir}`);
+
   return updatedNpmBinDir + '/lib/node_modules'
 }
 

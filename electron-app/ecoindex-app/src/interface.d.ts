@@ -7,7 +7,7 @@ export interface IVersionsAPI {
 
 export interface IElectronAPI {
   sendLogToFront: (callback) => string
-  sendHostInfoToFront: (callback) => object
+  sendMessageToFrontLog: (callback) => object
   handleSetFolderOuput: () => Promise<string>
   handleSelectFolder: () => Promise<string>
   getWorkDir: (newDir: string) => Promise<string>

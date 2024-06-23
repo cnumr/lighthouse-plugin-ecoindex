@@ -23,9 +23,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on(channels.ASYNCHRONOUS_LOG, (_event, value) =>
       callback(value),
     ),
-  sendHostInfoToFront: (callback: any) =>
-    ipcRenderer.on(channels.HOST_INFORMATIONS, (_event, value) =>
-      callback(value),
+  sendMessageToFrontLog: (callback: any) =>
+    ipcRenderer.on(
+      channels.HOST_INFORMATIONS,
+      (_event, message, optionalParams) => callback(message, optionalParams),
     ),
   isLighthouseEcoindexPluginInstalled: () =>
     ipcRenderer.invoke(channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED),
