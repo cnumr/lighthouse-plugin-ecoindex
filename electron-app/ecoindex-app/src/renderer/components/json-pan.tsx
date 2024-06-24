@@ -6,21 +6,30 @@ import { SimpleUrlsList } from './simple-urls'
 
 export interface ILayout {
   appReady: boolean
+  isJsonFromDisk: boolean
+  language: string
   setJsonDatas?: (jsonDatas: IJsonMesureData) => void
   jsonDatas?: IJsonMesureData
   className: string
-}
-type ExtendedHtmlElement = {
-  checked: boolean
-  id: string
+  save: () => void
+  reload: () => void
+  mesure: () => void
+  notify: (subTitle: string, message: string) => void
 }
 
 export const JsonPanMesure: FC<ILayout> = ({
   appReady,
+  isJsonFromDisk,
+  language,
   setJsonDatas,
   jsonDatas,
   className,
+  save,
+  reload,
+  mesure,
+  notify,
 }) => {
+  const [updated, setUpdated] = useState(false)
   const handlerAddCourse = () => {
     console.log('add course')
     const newCourse = {
@@ -34,6 +43,8 @@ export const JsonPanMesure: FC<ILayout> = ({
       ...jsonDatas,
       courses: [...jsonDatas.courses, newCourse],
     })
+    notify('Courses Mesure (Full mode)', 'Course added')
+    setUpdated(true)
   }
   const handlerDeleteCourse = (_: any, key: number) => {
     console.log('delete course', key)
@@ -41,12 +52,10 @@ export const JsonPanMesure: FC<ILayout> = ({
       ...jsonDatas,
       courses: jsonDatas.courses.filter((_, index) => index !== key),
     })
+    notify('Courses Mesure (Full mode)', `Course ${key + 1} deleted`)
+    setUpdated(true)
   }
-  const handlerOnSave = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    console.log('handlerOnSave', e.target)
-  }
+
   const handlerOnChange = (
     course: number,
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -112,17 +121,29 @@ export const JsonPanMesure: FC<ILayout> = ({
       )
     }
 
-    console.log(`jsonDatas`, jsonDatas)
+    // console.log(`jsonDatas`, jsonDatas)
+    setUpdated(true)
   }
   const handlerOnReload = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     console.log('handlerOnReload', e.target)
+    reload()
+    setUpdated(false)
   }
   const handlerOnSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     console.log('event', event)
+    mesure()
+    setUpdated(false)
+  }
+  const handlerOnSave = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    console.log('handlerOnSave', e.target)
+    save()
+    setUpdated(false)
   }
 
   const convertJSONOrStringToString = (value: object | string) => {
@@ -140,7 +161,7 @@ export const JsonPanMesure: FC<ILayout> = ({
           type="button"
           id="btn-reload-json"
           title="Reload the configuration"
-          disabled={true}
+          disabled={!appReady || !updated}
           className="btn btn-green btn-small"
           onClick={handlerOnReload}
         >
@@ -151,7 +172,7 @@ export const JsonPanMesure: FC<ILayout> = ({
           type="button"
           id="btn-save-json"
           title="Save the configuration"
-          disabled={!appReady}
+          disabled={!appReady || !updated}
           className="btn btn-green btn-small"
           onClick={handlerOnSave}
         >

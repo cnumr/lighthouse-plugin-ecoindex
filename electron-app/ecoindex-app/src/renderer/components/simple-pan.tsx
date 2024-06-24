@@ -3,6 +3,7 @@ import { SimpleUrlsList } from './simple-urls'
 
 export interface ISimpleMesureLayout {
   appReady: boolean
+  language: string
   simpleMesures: () => void
   urlsList: SimpleUrlInput[]
   setUrlsList: (urlsList: SimpleUrlInput[]) => void
@@ -11,6 +12,7 @@ export interface ISimpleMesureLayout {
 
 export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
   appReady,
+  language,
   simpleMesures,
   urlsList,
   setUrlsList,
@@ -22,6 +24,7 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
         urlsList={urlsList}
         setUrlsList={setUrlsList}
         visible={true}
+        language={language}
       />
       <h2>3. Launch the mesures</h2>
       <button

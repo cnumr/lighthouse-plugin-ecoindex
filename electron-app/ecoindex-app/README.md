@@ -14,6 +14,7 @@
 - [ ] Translate
 - [x] Create simple mesure
 - [ ] Create complex mesure
-  - [ ] Generate JSON
-  - [ ] Read JSON
-  - [ ] Use JSON
+  - [ ] Save JSON on disk
+  - [ ] Read JSON from disk
+  - [ ] Use JSON to display data
+  - [ ] Launch mesure from JSON (save before)

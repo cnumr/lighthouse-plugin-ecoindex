@@ -5,12 +5,14 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { cn } from '../../shared/tailwind-helper'
 
 export interface ILayout {
+  language: string
   visible: boolean
   urlsList: SimpleUrlInput[]
   setUrlsList: (urlsList: SimpleUrlInput[]) => void
 }
 
 export const SimpleUrlsList: FC<ILayout> = ({
+  language,
   urlsList = [{ value: '' }],
   visible = false,
   setUrlsList,

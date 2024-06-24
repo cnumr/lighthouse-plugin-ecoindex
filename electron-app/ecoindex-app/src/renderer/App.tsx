@@ -9,9 +9,11 @@ import { PopinLoading } from './components/loading-popin'
 import { SimplePanMesure } from './components/simple-pan'
 import { cn } from '../shared/tailwind-helper'
 import iconAsso from '../../assets/asso.svg'
+import { labels } from '../shared/constants'
 import packageJson from '../../package.json'
 
 function Hello() {
+  const [language, setLanguage] = useState('en')
   const [tabSelected, setTabSelected] = useState(0)
   const [nodeVersion, setNodeVersion] = useState('')
   // let nodeVersion = 'loading...'
@@ -30,7 +32,7 @@ function Hello() {
       Authorization: 'Basic c3BpZTpFaXBzRXJnb1N1bTQyJA==',
       'config-source': 'input-file.json',
     },
-    output: ['html', 'json', 'statement'],
+    output: ['json', 'statement'],
     'output-path': './reports',
     'user-agent': 'insights',
     'output-name': 'ecoindex',
@@ -114,9 +116,41 @@ function Hello() {
   // let isNodeInstalled = false
 
   // Run runFakeMesure on click on button fake
-  const simpleMesures = () => {
+  const runSimpleMesure = () => {
     console.log('Simple mesures clicked')
-    window.electronAPI.simpleMesures(urlsList)
+    window.electronAPI.runSimpleMesures(urlsList)
+  }
+
+  const runJsonMesures = () => {
+    console.log('Json mesures clicked')
+    showNotification('', {
+      body: 'Json mesures clicked',
+      subtitle: 'Courses Mesure (Full mode)',
+    })
+    // window.electronAPI.runJsonMesures(jsonDatas)
+  }
+
+  const runJsonReload = () => {
+    console.log('Json reload clicked')
+    showNotification('', {
+      body: 'Json reload clicked',
+      subtitle: 'Courses Mesure (Full mode)',
+    })
+    // window.electronAPI.runJsonReload(jsonDatas)
+  }
+
+  const runJsonSave = () => {
+    console.log('Json save clicked')
+    showNotification('', {
+      body: 'Json save clicked',
+      subtitle: 'Courses Mesure (Full mode)',
+    })
+    // window.electronAPI.runJsonSave(jsonDatas)
+  }
+
+  const handlerJsonNotify = (title: string, message: string) => {
+    console.log('Json notify clicked')
+    showNotification('', { body: message, subtitle: title })
   }
 
   const openFile = async () => {
@@ -186,6 +220,10 @@ function Hello() {
   }, [])
 
   useEffect(() => {
+    console.log('language', language)
+  }, [language])
+
+  useEffect(() => {
     // setAppReady(isLighthouseEcoindexPluginInstalled && isNodeInstalled)
     console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
     console.log('isNodeInstalled', isNodeInstalled)
@@ -242,23 +280,24 @@ function Hello() {
                   active: tabSelected === 0,
                 })}
                 onClick={() => setTabSelected(0)}
-                title="Url(s) Mesure (Simple mode)"
+                title={labels[language]['simple-mesures-label']}
               >
-                Url(s) Mesure (Simple mode)
+                {labels[language]['simple-mesures-label']}
               </button>
               <button
                 className={cn('tab line-clamp-1', {
                   active: tabSelected === 1,
                 })}
                 onClick={() => setTabSelected(1)}
-                title="Courses Mesure (Full mode)"
+                title={labels[language]['full-mesures-label']}
               >
-                Courses Mesure (Full mode)
+                {labels[language]['full-mesures-label']}
               </button>
             </div>
             <SimplePanMesure
               appReady={appReady}
-              simpleMesures={simpleMesures}
+              language={language}
+              simpleMesures={runSimpleMesure}
               urlsList={urlsList}
               setUrlsList={setUrlsList}
               className={cn(
@@ -269,8 +308,15 @@ function Hello() {
             />
             <JsonPanMesure
               appReady={appReady}
+              // TODO: isJsonFromDisk={false}
+              isJsonFromDisk={false}
+              language={language}
               jsonDatas={jsonDatas}
               setJsonDatas={setJsonDatas}
+              mesure={runJsonMesures}
+              reload={runJsonReload}
+              save={runJsonSave}
+              notify={handlerJsonNotify}
               className={cn(
                 'tab-content',
                 { hidden: tabSelected !== 1 },
