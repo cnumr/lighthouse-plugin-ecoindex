@@ -10,6 +10,10 @@ export interface ILayout {
   jsonDatas?: IJsonMesureData
   className: string
 }
+type ExtendedHtmlElement = {
+  checked: boolean
+  id: string
+}
 
 export const JsonPanMesure: FC<ILayout> = ({
   appReady,
@@ -44,9 +48,71 @@ export const JsonPanMesure: FC<ILayout> = ({
     console.log('handlerOnSave', e.target)
   }
   const handlerOnChange = (
+    course: number,
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    console.log('handlerOnChange', e.target)
+    const updateGeneric = (
+      type: string,
+      id: string,
+      name: string,
+      value: string | boolean,
+      _c: number,
+    ) => {
+      console.log('updateGeneric', type, id, name, value, _c)
+      if (_c === -1) {
+        setJsonDatas?.({
+          ...jsonDatas,
+          [id]: value,
+        })
+      } else {
+        setJsonDatas?.({
+          ...jsonDatas,
+          courses: jsonDatas.courses.map((course, index) => {
+            if (index === _c) {
+              return {
+                ...course,
+                [id]: value,
+              }
+            }
+            return course
+          }),
+        })
+      }
+    }
+
+    if (e.target.type === 'checkbox' && e.target.name === 'output') {
+      const output = jsonDatas.output
+      if ((e.target as HTMLInputElement).checked) {
+        output.push(e.target.id)
+      } else {
+        const index = output.indexOf(e.target.id)
+        output.splice(index, 1)
+      }
+      setJsonDatas?.({
+        ...jsonDatas,
+        output: output,
+      })
+    }
+
+    if (e.target.type === 'checkbox') {
+      updateGeneric(
+        e.target.type,
+        e.target.id,
+        e.target.name,
+        (e.target as HTMLInputElement).checked,
+        course,
+      )
+    } else {
+      updateGeneric(
+        e.target.type,
+        e.target.id,
+        e.target.name,
+        e.target.value,
+        course,
+      )
+    }
+
+    console.log(`jsonDatas`, jsonDatas)
   }
   const handlerOnReload = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -57,6 +123,13 @@ export const JsonPanMesure: FC<ILayout> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     console.log('event', event)
+  }
+
+  const convertJSONOrStringToString = (value: object | string) => {
+    if (value instanceof Object) {
+      return JSON.stringify(value)
+    }
+    return value.toString()
   }
 
   return (
@@ -100,10 +173,10 @@ export const JsonPanMesure: FC<ILayout> = ({
               placeholder="Extra header"
               value={
                 jsonDatas?.['extra-header']
-                  ? JSON.stringify(jsonDatas['extra-header'])
+                  ? convertJSONOrStringToString(jsonDatas['extra-header'])
                   : ''
               }
-              onChange={handlerOnChange}
+              onChange={e => handlerOnChange(-1, e)}
             ></textarea>
           </div>
         </fieldset>
@@ -116,8 +189,8 @@ export const JsonPanMesure: FC<ILayout> = ({
               type="checkbox"
               id="html"
               name="output"
-              checked
-              onChange={handlerOnChange}
+              checked={jsonDatas?.output.includes('html')}
+              onChange={e => handlerOnChange(-1, e)}
             />
             <label htmlFor="html">HTML</label>
           </div>
@@ -126,7 +199,8 @@ export const JsonPanMesure: FC<ILayout> = ({
               type="checkbox"
               id="json"
               name="output"
-              onChange={handlerOnChange}
+              checked={jsonDatas?.output.includes('json')}
+              onChange={e => handlerOnChange(-1, e)}
             />
             <label htmlFor="json">JSON</label>
           </div>
@@ -135,7 +209,8 @@ export const JsonPanMesure: FC<ILayout> = ({
               type="checkbox"
               id="statement"
               name="output"
-              onChange={handlerOnChange}
+              checked={jsonDatas?.output.includes('statement')}
+              onChange={e => handlerOnChange(-1, e)}
             />
             <label htmlFor="statement">
               Statement <em className="text-xs">(JSON output mandatory)</em>
@@ -175,50 +250,50 @@ export const JsonPanMesure: FC<ILayout> = ({
                   </button>
                 </legend>
                 <div className="flex-col !items-start">
-                  <label htmlFor="course-name" className="mandatory">
+                  <label htmlFor="name" className="mandatory">
                     Course name
                   </label>
                   <input
                     type="text"
-                    name="course-name"
-                    id="course-name"
+                    name="name"
+                    id="name"
                     value={course.name}
-                    onChange={handlerOnChange}
+                    onChange={e => handlerOnChange(index, e)}
                   />
                 </div>
                 <div className="flex-col !items-start">
-                  <label htmlFor="course-target" className="">
+                  <label htmlFor="target" className="">
                     Target
                   </label>
                   <input
                     type="text"
-                    name="course-target"
-                    id="course-target"
+                    name="target"
+                    id="target"
                     value={course.target}
-                    onChange={handlerOnChange}
+                    onChange={e => handlerOnChange(index, e)}
                   />
                 </div>
                 <div className="flex-col !items-start">
-                  <label htmlFor="course-description" className="">
+                  <label htmlFor="course" className="">
                     Description
                   </label>
                   <input
                     type="text"
-                    name="course-description"
-                    id="course-description"
+                    name="course"
+                    id="course"
                     value={course.course}
-                    onChange={handlerOnChange}
+                    onChange={e => handlerOnChange(index, e)}
                   />
                 </div>
                 <div>
                   <input
                     type="checkbox"
-                    id="is-best-page"
-                    name="is-best-page"
+                    id="is-best-pages"
+                    name="is-best-pages"
                     checked={course['is-best-pages']}
-                    onChange={handlerOnChange}
+                    onChange={e => handlerOnChange(index, e)}
                   />
-                  <label htmlFor="is-best-page">Is best pages?</label>
+                  <label htmlFor="is-best-pages">Is best pages?</label>
                 </div>
                 <div>{/* <SimpleUrlsList visible={true} /> */}</div>
               </fieldset>
