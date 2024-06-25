@@ -13,8 +13,10 @@ export interface IElectronAPI {
   getWorkDir: (newDir: string) => Promise<string>
   isNodeInstalled: () => Promise<boolean>
   isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
-  runSimpleMesures: (urlsList: SimpleUrlInput[]) => void
-  runJsonMesures: (json: IJsonMesureData) => void
+  handleSimpleMesures: (urlsList: SimpleUrlInput[]) => void
+  handleJsonMesures: (json: IJsonMesureData) => void
+  handleJsonSave: (json: IJsonMesureData) => void
+  handleJsonReadAndReload: () => void
 }
 
 declare global {

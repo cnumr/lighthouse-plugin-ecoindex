@@ -7,9 +7,9 @@ import {
   ipcMain,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
+import { channels, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
-import { channels } from '../shared/constants'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import packageJson from '../../package.json'
@@ -53,9 +53,15 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  ipcMain.handle(channels.SIMPLE_MESURES, handlerSimpleMesures)
-  ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
+  // simple handlers
+  ipcMain.handle(channels.SIMPLE_MESURES, handleSimpleMesures)
+  // json handlers
+  ipcMain.handle(channels.JSON_MESURES, handleJsonMesures)
+  ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSave)
+  ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
+  // communs handlers and getters
   ipcMain.handle(channels.GET_NODE_VERSION, getNodeVersion)
+  ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
   ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
   ipcMain.handle(
     channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED,
@@ -224,11 +230,11 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   } else {
     workDir = await _getHomeDir()
   }
-  console.log(`workDir: ${workDir}`)
+  // console.log(`workDir: ${workDir}`)
   return await workDir
 }
 
-async function handlerSimpleMesures(
+async function handleSimpleMesures(
   event: IpcMainEvent,
   urlsList: SimpleUrlInput[],
 ) {
@@ -331,6 +337,82 @@ async function handlerSimpleMesures(
     logStream.write(`stderr: ${error}\n`)
   }
   // alert process done
+}
+
+const handleJsonMesures = async (
+  event: IpcMainEvent,
+  jsonDatas: IJsonMesureData,
+) => {
+  if (!jsonDatas) {
+    throw new Error('Json data is empty')
+  }
+  showNotification({
+    body: 'Process intialization 🧩',
+    subtitle: 'Json mesures handler',
+  })
+}
+
+const handleJsonSave = async (
+  event: IpcMainEvent,
+  jsonDatas: IJsonMesureData,
+) => {
+  if (!jsonDatas) {
+    throw new Error('Json data is empty')
+  }
+  // console.log(`Json data: ${JSON.stringify(jsonDatas)}`)
+
+  showNotification({
+    body: 'Process intialization 🧩',
+    subtitle: 'Json save handler',
+  })
+  try {
+    const _workDir = await workDir
+    if (!_workDir || _workDir === '') {
+      throw new Error('Work dir not found')
+    }
+    console.log(`Work dir: ${_workDir}`)
+    const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
+    const jsonStream = fs.createWriteStream(jsonFilePath)
+    jsonStream.write(JSON.stringify(jsonDatas))
+    showNotification({
+      body: 'Json file saved 📁',
+      subtitle: 'Json save handler',
+    })
+  } catch (error) {
+    _sendMessageToFrontLog('ERROR', 'Json file not saved', error)
+    showNotification({
+      body: 'Json file not saved 📁',
+      subtitle: 'Json save handler',
+    })
+  }
+}
+
+const handleJsonReadAndReload = async (event: IpcMainEvent) => {
+  showNotification({
+    body: 'Process intialization 🧩',
+    subtitle: 'Json read and reload handler',
+  })
+  try {
+    const _workDir = await workDir
+    if (!_workDir || _workDir === '') {
+      throw new Error('Work dir not found')
+    }
+    console.log(`Work dir: ${_workDir}`)
+    const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
+    const jsonStream = fs.createReadStream(jsonFilePath)
+    const jsonDatas = JSON.stringify(jsonStream)
+    showNotification({
+      body: 'Json file read and reloaded 📁',
+      subtitle: 'Json read and reload handler',
+    })
+    return jsonDatas
+  } catch (error) {
+    _sendMessageToFrontLog('ERROR', 'Json file not read and reloaded', error)
+    showNotification({
+      body: 'Json file not read and reloaded 📁',
+      subtitle: 'Json read and reload handler',
+    })
+  }
 }
 
 async function handleSelectFolder() {

@@ -116,36 +116,56 @@ function Hello() {
   // let isNodeInstalled = false
 
   // Run runFakeMesure on click on button fake
-  const runSimpleMesure = () => {
+  const runSimpleMesures = () => {
     console.log('Simple mesures clicked')
-    window.electronAPI.runSimpleMesures(urlsList)
+    try {
+      window.electronAPI.handleSimpleMesures(urlsList)
+    } catch (error) {
+      console.error('Error on runSimpleMesures', error)
+      showNotification('', {
+        body: 'Error on runSimpleMesures',
+        subtitle: 'Courses Mesure (Simple mode)',
+      })
+    }
   }
 
   const runJsonMesures = () => {
     console.log('Json mesures clicked')
-    showNotification('', {
-      body: 'Json mesures clicked',
-      subtitle: 'Courses Mesure (Full mode)',
-    })
-    // window.electronAPI.runJsonMesures(jsonDatas)
+    try {
+      window.electronAPI.handleJsonMesures(jsonDatas)
+    } catch (error) {
+      console.error('Error on runJsonMesures', error)
+      showNotification('', {
+        body: 'Error on runJsonMesures',
+        subtitle: 'Courses Mesure (Full mode)',
+      })
+    }
   }
 
-  const runJsonReload = () => {
-    console.log('Json reload clicked')
-    showNotification('', {
-      body: 'Json reload clicked',
-      subtitle: 'Courses Mesure (Full mode)',
-    })
-    // window.electronAPI.runJsonReload(jsonDatas)
+  const runJsonReadAndReload = () => {
+    console.log('Json read and reload clicked')
+    try {
+      window.electronAPI.handleJsonReadAndReload()
+    } catch (error) {
+      console.error('Error on runJsonReadAndReload', error)
+      showNotification('', {
+        body: 'Error on runJsonReadAndReload',
+        subtitle: 'Courses Mesure (Full mode)',
+      })
+    }
   }
 
   const runJsonSave = () => {
     console.log('Json save clicked')
-    showNotification('', {
-      body: 'Json save clicked',
-      subtitle: 'Courses Mesure (Full mode)',
-    })
-    // window.electronAPI.runJsonSave(jsonDatas)
+    try {
+      window.electronAPI.handleJsonSave(jsonDatas)
+    } catch (error) {
+      console.error('Error on runJsonSave', error)
+      showNotification('', {
+        body: 'Error on runJsonSave',
+        subtitle: 'Courses Mesure (Full mode)',
+      })
+    }
   }
 
   const handlerJsonNotify = (title: string, message: string) => {
@@ -297,7 +317,7 @@ function Hello() {
             <SimplePanMesure
               appReady={appReady}
               language={language}
-              simpleMesures={runSimpleMesure}
+              simpleMesures={runSimpleMesures}
               urlsList={urlsList}
               setUrlsList={setUrlsList}
               className={cn(
@@ -314,7 +334,7 @@ function Hello() {
               jsonDatas={jsonDatas}
               setJsonDatas={setJsonDatas}
               mesure={runJsonMesures}
-              reload={runJsonReload}
+              reload={runJsonReadAndReload}
               save={runJsonSave}
               notify={handlerJsonNotify}
               className={cn(

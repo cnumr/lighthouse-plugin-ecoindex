@@ -13,8 +13,13 @@
 - [ ] Auto build with CI/CD
 - [ ] Translate
 - [x] Create simple mesure
+- [ ] Fix not showing buttons to install plugin
+  - [ ] handler for install plugin
+- [ ] Fix not showing buttons to install Node
+  - [ ] handler for install Node
 - [ ] Create complex mesure
-  - [ ] Save JSON on disk
-  - [ ] Read JSON from disk
+  - [x] Save JSON on disk
+    - [ ] Fix extra-header not JSON (todo)
+  - [ ] Read/Reload JSON from disk (doing)
   - [ ] Use JSON to display data
   - [ ] Launch mesure from JSON (save before)
