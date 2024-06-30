@@ -1,6 +1,7 @@
 import './index.css'
 
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
+import { labels, utils } from '../shared/constants'
 import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
@@ -9,10 +10,9 @@ import { PopinLoading } from './components/loading-popin'
 import { SimplePanMesure } from './components/simple-pan'
 import { cn } from '../shared/tailwind-helper'
 import iconAsso from '../../assets/asso.svg'
-import { labels } from '../shared/constants'
 import packageJson from '../../package.json'
 
-function Hello() {
+function TheApp() {
   const [language, setLanguage] = useState('en')
   const [tabSelected, setTabSelected] = useState(0)
   const [nodeVersion, setNodeVersion] = useState('')
@@ -25,88 +25,9 @@ function Hello() {
     { value: 'https://www.ecoindex.fr/' },
     { value: 'https://www.ecoindex.fr/a-propos/' },
   ])
-  const [jsonDatas, setJsonDatas] = useState<IJsonMesureData>({
-    'extra-header': {
-      Cookie: 'monster=blue',
-      'x-men': 'wolverine',
-      Authorization: 'Basic c3BpZTpFaXBzRXJnb1N1bTQyJA==',
-      'config-source': 'input-file.json',
-    },
-    output: ['json', 'statement'],
-    'output-path': './reports',
-    'user-agent': 'insights',
-    'output-name': 'ecoindex',
-    courses: [
-      {
-        name: 'BEST PAGES',
-        target: 'TBD.',
-        course:
-          'Visiter les données financières, les résultats financiers, les informations réglementées, la page finance',
-        'is-best-pages': true,
-        urls: [
-          'https://www-pp.spie.com/fr',
-          'https://www-pp.spie.com/fr/rejoindre-spie',
-          'https://www-pp.spie.com/fr/investisseurs/cours-de-laction',
-          'https://www-pp.spie.com/fr/rejoindre-spie/vous-aussi-rejoignez-spie',
-          'https://www-pp.spie.com/en',
-        ],
-      },
-      {
-        name: 'INVESTORS',
-        target: 'TBD.',
-        course:
-          'Visiter les données financières, les résultats financiers, les informations réglementées, la page finance',
-        'is-best-pages': false,
-        urls: [
-          'https://www-pp.spie.com/en',
-          'https://www-pp.spie.com/en/about-spie',
-          'https://www-pp.spie.com/en/about-us/spie-around-world',
-          'https://www-pp.spie.com/en/investors/share-price',
-          'https://www-pp.spie.com/en/investors',
-          'https://www-pp.spie.com/en/journalists/profile-key-figures',
-          'https://www-pp.spie.com/en/investors/financial-results',
-          'https://www-pp.spie.com/en/regulated-information',
-          'https://www-pp.spie.com/en/finance',
-        ],
-      },
-      {
-        name: 'CLIENTS',
-        target: 'TBD.',
-        course:
-          'Consulter les offres, les solutions et les expertises, les secteurs, les réalisations',
-        'is-best-pages': false,
-        urls: [
-          'https://www-pp.spie.com/fr',
-          'https://www-pp.spie.com/fr/spie-France',
-          'https://www-pp.spie.com/fr/propos/spie-dans-le-monde',
-          'https://www-pp.spie.com/fr/journalistes/profil-chiffres-cles',
-          'https://www-pp.spie.com/fr/decouvrez-nos-offres-solutions-et-expertises',
-          'https://www-pp.spie.com/fr/decouvrez-nos-offres-solutions-et-expertises/secteurs/energies/nucleaire',
-          'https://www-pp.spie.com/fr/realisations',
-          'https://www-pp.spie.com/fr/actualites',
-          'https://www-pp.spie.com/fr/actualites/resultats-annuels-2022',
-        ],
-      },
-      {
-        name: 'CANDIDATS',
-        target: 'TBD.',
-        course:
-          "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
-        'is-best-pages': false,
-        urls: [
-          'https://www-pp.spie.com/fr/',
-          'https://www-pp.spie.com/fr/rejoindre-spie',
-          'https://www-pp.spie.com/fr/rejoindre-spie/vous-aussi-rejoignez-spie',
-          'https://www-pp.spie.com/fr/a-propos-de-spie',
-          'https://www-pp.spie.com/fr/rejoindre-spie/actionnariat-salarie',
-          'https://www-pp.spie.com/fr/rejoindre-spie/7-bonnes-raisons-de-nous-rejoindre',
-          'https://www-pp.spie.com/fr/rejoindre-spie/7-bonnes-raisons-de-nous-rejoindre/partager-des-valeurs-qui-ont-du-sens',
-          'https://www-pp.spie.com/fr/temoignages-collaborateurs',
-          'https://www-pp.spie.com/fr/developpement-durable',
-        ],
-      },
-    ],
-  })
+  const [jsonDatas, setJsonDatas] = useState<IJsonMesureData>(
+    utils.DEFAULT_JSON_DATA,
+  )
   const [
     isLighthouseEcoindexPluginInstalled,
     setIsLighthouseEcoindexPluginInstalled,
@@ -129,10 +50,13 @@ function Hello() {
     }
   }
 
-  const runJsonReadAndReload = () => {
-    console.log('Json read and reload clicked')
+  const runJsonReadAndReload = async () => {
+    console.log('Json read and reload')
     try {
-      window.electronAPI.handleJsonReadAndReload()
+      const _jsonDatas: IJsonMesureData =
+        await window.electronAPI.handleJsonReadAndReload()
+      console.log(`runJsonReadAndReload`, _jsonDatas)
+      if (_jsonDatas) setJsonDatas(_jsonDatas)
     } catch (error) {
       console.error('Error on runJsonReadAndReload', error)
       showNotification('', {
@@ -160,10 +84,11 @@ function Hello() {
     showNotification('', { body: message, subtitle: title })
   }
 
-  const openFile = async () => {
+  const selectWorkingFolder = async () => {
     const filePath = await window.electronAPI.handleSelectFolder()
     setWorkDir(filePath)
   }
+
   const setLog = (value: string) => {
     const echoElement = document.getElementById('echo') as HTMLElement
     echoElement.innerText = value
@@ -188,6 +113,13 @@ function Hello() {
       _n.priority = 'critical'
       showNotification('', _n)
     }
+  }
+
+  const isJsonConfigFileExist = async () => {
+    const result = await window.electronAPI.handleIsJsonConfigFileExist(workDir)
+    console.log(`isJsonConfigFileExist`, result)
+
+    result && runJsonReadAndReload()
   }
 
   useEffect(() => {
@@ -247,6 +179,14 @@ function Hello() {
     console.log(`************************************`)
   }, [appReady])
 
+  useEffect(() => {
+    isJsonConfigFileExist()
+  }, [workDir])
+
+  // useEffect(() => {
+  //   console.log(`jsonDatas`, jsonDatas)
+  // }, [jsonDatas])
+
   return (
     <div className="relative">
       <main className="flex flex-col justify-between p-4 h-screen">
@@ -274,7 +214,7 @@ function Hello() {
               type="button"
               id="btn-file"
               disabled={!appReady}
-              onClick={openFile}
+              onClick={selectWorkingFolder}
               className="btn btn-green whitespace-nowrap"
             >
               Browse
@@ -370,7 +310,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<TheApp />} />
       </Routes>
     </Router>
   )

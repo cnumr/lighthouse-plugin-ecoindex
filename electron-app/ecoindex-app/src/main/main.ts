@@ -13,7 +13,6 @@ import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import packageJson from '../../package.json'
-import path from 'path'
 import { shellEnv } from 'shell-env'
 
 // const execFile = util.promisify(_execFile);
@@ -67,6 +66,10 @@ app.on('ready', () => {
     handlePluginInstalled,
   )
   ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)
+  ipcMain.handle(
+    channels.IS_JSON_CONFIG_FILE_EXIST,
+    handleIsJsonConfigFileExist,
+  )
   app.setAboutPanelOptions({
     applicationName: packageJson.productName,
     applicationVersion: packageJson.name,
@@ -231,6 +234,25 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   }
   // console.log(`workDir: ${workDir}`)
   return await workDir
+}
+
+const handleIsJsonConfigFileExist = async (
+  event: IpcMainEvent,
+  workDir: string,
+) => {
+  if (workDir === 'chargement...' || workDir === 'loading...') return
+  const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`
+  console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
+  try {
+    fs.accessSync(jsonConfigFile, fs.constants.F_OK)
+    showNotification({
+      body: 'Config file founded 👀',
+      subtitle: 'loading file content...',
+    })
+    return true
+  } catch (error) {
+    return false
+  }
 }
 
 async function prepareJsonCollect(): Promise<{
@@ -467,13 +489,19 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
     }
     console.log(`Work dir: ${_workDir}`)
     const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
-    const jsonStream = fs.createReadStream(jsonFilePath)
-    const jsonDatas = JSON.stringify(jsonStream)
-    showNotification({
-      body: 'Json file read and reloaded 📁',
-      subtitle: 'Json read and reload handler',
+    return new Promise((resolve, reject) => {
+      const jsonStream = fs.createReadStream(jsonFilePath)
+      jsonStream.on('data', function (chunk) {
+        const jsonDatas = JSON.parse(chunk.toString())
+        // console.log(`jsonDatas`, jsonDatas)
+
+        showNotification({
+          body: 'Json file read and reloaded 📁',
+          subtitle: 'Json read and reload handler',
+        })
+        resolve(jsonDatas as IJsonMesureData)
+      })
     })
-    return jsonDatas
   } catch (error) {
     _sendMessageToFrontLog('ERROR', 'Json file not read and reloaded', error)
     showNotification({

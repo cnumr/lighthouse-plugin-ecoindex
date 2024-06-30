@@ -3,7 +3,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 import { channels } from '../shared/constants'
-import { json } from 'react-router-dom'
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -31,6 +30,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   isLighthouseEcoindexPluginInstalled: () =>
     ipcRenderer.invoke(channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED),
   isNodeInstalled: () => ipcRenderer.invoke(channels.IS_NODE_INSTALLED),
+  handleIsJsonConfigFileExist: (workDir: string) =>
+    ipcRenderer.invoke(channels.IS_JSON_CONFIG_FILE_EXIST, workDir),
 
   // Main → Front
   sendLogToFront: (callback: any) =>

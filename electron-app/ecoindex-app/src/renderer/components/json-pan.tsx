@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { RiDeleteBin5Line, RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
 import { FaPlusCircle } from 'react-icons/fa'
@@ -170,7 +170,12 @@ export const JsonPanMesure: FC<ILayout> = ({
     }
     return value.toString()
   }
-
+  // return (
+  //   <>
+  //     <p>Waiting fix reload JSON...</p>
+  //     <pre>{JSON.stringify(jsonDatas, null, 2)}</pre>
+  //   </>
+  // )
   return (
     <div className={className}>
       <h2>2. Configuration of the courses</h2>
