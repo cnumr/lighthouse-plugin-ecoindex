@@ -8,7 +8,9 @@ export interface ILayout {
   language: string
   visible: boolean
   urlsList: SimpleUrlInput[]
-  setUrlsList: (urlsList: SimpleUrlInput[]) => void
+  setUrlsList?: (urlsList: SimpleUrlInput[]) => void
+  title?: string
+  isFullWidth?: boolean
 }
 
 export const SimpleUrlsList: FC<ILayout> = ({
@@ -16,17 +18,28 @@ export const SimpleUrlsList: FC<ILayout> = ({
   urlsList = [{ value: '' }],
   visible = false,
   setUrlsList,
+  title = 'Urls to mesure',
+  isFullWidth = false,
 }) => {
+  const Tag = isFullWidth ? 'strong' : 'h2'
   // Function to add a new input field
   const handleAddFields = () => {
-    setUrlsList([...urlsList, { value: '' }])
+    try {
+      setUrlsList([...urlsList, { value: '' }])
+    } catch (error) {
+      console.error('Error adding a new input field', error)
+    }
   }
 
   // Function to remove an input field by index
   const handleRemoveFields = (index: number) => {
     const newInputFields = [...urlsList]
     newInputFields.splice(index, 1)
-    setUrlsList(newInputFields)
+    try {
+      setUrlsList(newInputFields)
+    } catch (error) {
+      console.error('Error removing an input field', error)
+    }
   }
 
   // Function to update the value of an input field
@@ -36,18 +49,37 @@ export const SimpleUrlsList: FC<ILayout> = ({
   ) => {
     const values = [...urlsList]
     values[index].value = event.target.value
-    setUrlsList(values)
+    try {
+      setUrlsList(values)
+    } catch (error) {
+      console.error('Error updating the value of an input field', error)
+    }
   }
   return (
     <div
-      className={cn('flex flex-col items-center gap-4 w-full', {
+      className={cn('flex flex-col gap-4 w-full', {
         hidden: !visible,
+        '!items-center': !isFullWidth,
+        '!items-start': isFullWidth,
       })}
     >
-      <h2>2. Urls to mesure</h2>
+      <Tag
+        className={cn({
+          'text-ecoindex-green max-w-fit': isFullWidth,
+          'text-center': !isFullWidth,
+        })}
+      >
+        {title}
+      </Tag>
 
       {urlsList.map((urlItem, index) => (
-        <div className="flex gap-4 items-center w-2/3" key={index}>
+        <div
+          className={cn('flex gap-4 items-center', {
+            'w-full': isFullWidth,
+            'w-2/3': !isFullWidth,
+          })}
+          key={index}
+        >
           <input
             type="text"
             placeholder="Enter an url"
@@ -57,6 +89,8 @@ export const SimpleUrlsList: FC<ILayout> = ({
           />
 
           <button
+            type="button"
+            id="btn-remove-url"
             className="btn-square btn-red"
             title="delete"
             onClick={() => handleRemoveFields(index)}
@@ -68,6 +102,8 @@ export const SimpleUrlsList: FC<ILayout> = ({
       ))}
 
       <button
+        type="button"
+        id="btn-add-url"
         className="btn btn-green-outlined flex gap-2"
         title="add"
         onClick={handleAddFields}

@@ -25,6 +25,7 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
         setUrlsList={setUrlsList}
         visible={true}
         language={language}
+        title="2. Urls to mesure"
       />
       <h2>3. Launch the mesures</h2>
       <button

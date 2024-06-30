@@ -54,10 +54,9 @@ const createWindow = (): void => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   // simple handlers
-  ipcMain.handle(channels.SIMPLE_MESURES, handleSimpleMesures)
+  ipcMain.handle(channels.SIMPLE_MESURES, handleSimpleCollect)
   // json handlers
-  ipcMain.handle(channels.JSON_MESURES, handleJsonMesures)
-  ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSave)
+  ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSaveAndCollect)
   ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
   // communs handlers and getters
   ipcMain.handle(channels.GET_NODE_VERSION, getNodeVersion)
@@ -234,32 +233,22 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   return await workDir
 }
 
-async function handleSimpleMesures(
-  event: IpcMainEvent,
-  urlsList: SimpleUrlInput[],
-) {
-  if (!urlsList || urlsList.length === 0) {
-    throw new Error('Urls list is empty')
-  }
-  showNotification({
-    body: 'Process intialization 🧩',
-    subtitle: 'Simple mesures',
-  })
-  console.log('Simple mesure start...')
-
+async function prepareJsonCollect(): Promise<{
+  logStream: fs.WriteStream
+  command: string[]
+  nodeDir: string
+  workDir: string
+}> {
   // create stream to log the output. TODO: use specified path
-  const _workDir = await workDir
-  if (!_workDir || _workDir === '') {
-    throw new Error('Work dir not found')
-  }
-  console.log(`Work dir: ${_workDir}`)
-  const logFilePath = `${_workDir}/logfile.txt`
-  const logStream = fs.createWriteStream(logFilePath)
-  logStream.write('fake mesure start...\n')
-  console.log(`Urls list: ${JSON.stringify(urlsList)}`)
-  logStream.write(`Urls list: ${urlsList}`)
-
   try {
+    const _workDir = await workDir
+    if (!_workDir || _workDir === '') {
+      throw new Error('Work dir not found')
+    }
+    console.log(`Work dir: ${_workDir}`)
+    const logFilePath = `${_workDir}/logfile.txt`
+    const logStream = fs.createWriteStream(logFilePath)
+
     const _shellEnv = await shellEnv()
     logStream.write(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}\n`)
 
@@ -275,6 +264,79 @@ async function handleSimpleMesures(
       `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
       'collect',
     ]
+    return { logStream, command, nodeDir, workDir: _workDir }
+  } catch (error) {
+    console.error('Error', error)
+  }
+}
+
+async function runJsonCollect(
+  command: string[],
+  nodeDir: string,
+  event: IpcMainEvent,
+  logStream: fs.WriteStream,
+): Promise<string> {
+  const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
+    stdio: ['pipe', 'pipe', process.stderr],
+    shell: true,
+  })
+
+  childProcess.on('exit', (code, signal) => {
+    logStream.write(
+      `Child process exited with code ${code} and signal ${signal}\n`,
+    )
+  })
+
+  childProcess.on('close', code => {
+    logStream.write(`Child process close with code ${code}\n`)
+    logStream.write('Mesure done 🚀\n')
+  })
+
+  childProcess.stdout.on('data', data => {
+    logStream.write(`stdout: ${data}\n`)
+  })
+
+  if (childProcess.stderr) {
+    childProcess.stderr.on('data', data => {
+      logStream.write(`stderr: ${data.toString()}\n`)
+    })
+  }
+
+  childProcess.on('disconnect', () => {
+    logStream.write('Child process disconnected\n')
+  })
+
+  childProcess.on('message', (message, sendHandle) => {
+    logStream.write(`Child process message: ${message}\n`)
+  })
+
+  await _echoReadable(event, childProcess.stdout)
+  return 'mesure done'
+}
+
+async function handleSimpleCollect(
+  event: IpcMainEvent,
+  urlsList: SimpleUrlInput[],
+) {
+  if (!urlsList || urlsList.length === 0) {
+    throw new Error('Urls list is empty')
+  }
+  showNotification({
+    body: 'Process intialization 🧩',
+    subtitle: 'Simple mesures',
+  })
+  console.log('Simple mesure start...')
+
+  const {
+    command,
+    logStream,
+    nodeDir,
+    workDir: _workDir,
+  } = await prepareJsonCollect()
+  logStream.write('Simple mesure start...\n')
+  console.log(`Urls list: ${JSON.stringify(urlsList)}`)
+  logStream.write(`Urls list: ${urlsList}`)
+  try {
     urlsList.forEach(url => {
       if (url.value) {
         command.push('-u')
@@ -290,41 +352,11 @@ async function handleSimpleMesures(
       body: 'Mesures started 🚀',
       subtitle: 'Simple mesures',
     })
-    const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
-      stdio: ['pipe', 'pipe', process.stderr],
-      shell: true,
-    })
-
-    childProcess.on('exit', (code, signal) => {
-      logStream.write(
-        `Child process exited with code ${code} and signal ${signal}\n`,
-      )
-    })
-
-    childProcess.on('close', code => {
-      logStream.write(`Child process close with code ${code}\n`)
-      logStream.write('Simple mesure done 🚀\n')
-    })
-
-    childProcess.stdout.on('data', data => {
-      logStream.write(`stdout: ${data}\n`)
-    })
-
-    if (childProcess.stderr) {
-      childProcess.stderr.on('data', data => {
-        logStream.write(`stderr: ${data.toString()}\n`)
-      })
+    try {
+      await runJsonCollect(command, nodeDir, event, logStream)
+    } catch (error) {
+      throw new Error('Simple collect error')
     }
-
-    childProcess.on('disconnect', () => {
-      logStream.write('Child process disconnected\n')
-    })
-
-    childProcess.on('message', (message, sendHandle) => {
-      logStream.write(`Child process message: ${message}\n`)
-    })
-
-    await _echoReadable(event, childProcess.stdout)
     // process.stdout.write(data)
     // console.log(result.stdout.toString());
     showNotification({
@@ -339,22 +371,10 @@ async function handleSimpleMesures(
   // alert process done
 }
 
-const handleJsonMesures = async (
+const handleJsonSaveAndCollect = async (
   event: IpcMainEvent,
   jsonDatas: IJsonMesureData,
-) => {
-  if (!jsonDatas) {
-    throw new Error('Json data is empty')
-  }
-  showNotification({
-    body: 'Process intialization 🧩',
-    subtitle: 'Json mesures handler',
-  })
-}
-
-const handleJsonSave = async (
-  event: IpcMainEvent,
-  jsonDatas: IJsonMesureData,
+  andCollect: boolean,
 ) => {
   if (!jsonDatas) {
     throw new Error('Json data is empty')
@@ -373,17 +393,65 @@ const handleJsonSave = async (
     console.log(`Work dir: ${_workDir}`)
     const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
     const jsonStream = fs.createWriteStream(jsonFilePath)
-    jsonStream.write(JSON.stringify(jsonDatas))
+    if (jsonDatas['extra-header']) {
+      try {
+        jsonDatas['extra-header'] = JSON.parse(
+          Object(jsonDatas['extra-header']),
+        )
+        String(jsonDatas['extra-header']).replace(/\\/g, '')
+      } catch (error) {
+        console.error(`extra-header is not in Json format.`, error)
+        jsonDatas['extra-header'] = {}
+      }
+    }
+    jsonStream.write(JSON.stringify(jsonDatas, null, 2))
     showNotification({
       body: 'Json file saved 📁',
       subtitle: 'Json save handler',
     })
+    if (andCollect) {
+      showNotification({
+        body: 'Process intialization 🧩',
+        subtitle: 'Json mesures handler',
+      })
+      console.log('Json mesure start...')
+
+      const {
+        command,
+        logStream,
+        nodeDir,
+        workDir: _workDir,
+      } = await prepareJsonCollect()
+      logStream.write('Json mesure start...\n')
+      logStream.write(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}\n`)
+      command.push('--json-file')
+      command.push(_workDir + '/' + utils.JSON_FILE_NAME)
+      console.log(command)
+      try {
+        await runJsonCollect(command, nodeDir, event, logStream)
+      } catch (error) {
+        throw new Error('Simple collect error')
+      }
+      showNotification({
+        body: `Mesures done, you can consult reports in\n${_workDir}`,
+        subtitle: 'Json mesures',
+      })
+      console.log('Json mesure done 🚀')
+      return 'mesure done'
+    }
   } catch (error) {
-    _sendMessageToFrontLog('ERROR', 'Json file not saved', error)
-    showNotification({
-      body: 'Json file not saved 📁',
-      subtitle: 'Json save handler',
-    })
+    if (!andCollect) {
+      _sendMessageToFrontLog('ERROR', 'Json file not saved', error)
+      showNotification({
+        body: 'Json file not saved 📁',
+        subtitle: 'Json save handler',
+      })
+    } else {
+      showNotification({
+        body: 'Json file not saved or collect 📁',
+        subtitle: 'Json save and collect handler',
+      })
+    }
   }
 }
 

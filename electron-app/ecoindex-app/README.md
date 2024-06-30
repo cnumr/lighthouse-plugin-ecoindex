@@ -13,13 +13,14 @@
 - [ ] Auto build with CI/CD
 - [ ] Translate
 - [x] Create simple mesure
-- [ ] Fix not showing buttons to install plugin
+- [ ] Use path /usr/bin and /usr/bin/which to launch node `/usr/bin/which node` and npm `/usr/bin/which npm` action
+- [x] Fix not showing buttons to install plugin
   - [ ] handler for install plugin
 - [ ] Fix not showing buttons to install Node
   - [ ] handler for install Node
 - [ ] Create complex mesure
   - [x] Save JSON on disk
-    - [ ] Fix extra-header not JSON (todo)
+    - [x] Fix extra-header not JSON
   - [ ] Read/Reload JSON from disk (doing)
   - [ ] Use JSON to display data
-  - [ ] Launch mesure from JSON (save before)
+  - [x] Launch mesure from JSON (save before)

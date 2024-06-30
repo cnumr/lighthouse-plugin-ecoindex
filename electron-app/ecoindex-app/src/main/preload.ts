@@ -19,10 +19,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   handleSimpleMesures: (urlsList: SimpleUrlInput[]) =>
     ipcRenderer.invoke(channels.SIMPLE_MESURES, urlsList),
   // json handlers
-  handleJsonMesures: (jsonDatas: IJsonMesureData) =>
-    ipcRenderer.invoke(channels.JSON_MESURES, jsonDatas),
-  handleJsonSave: (jsonDatas: IJsonMesureData) =>
-    ipcRenderer.invoke(channels.SAVE_JSON_FILE, jsonDatas),
+  handleJsonSaveAndCollect: (jsonDatas: IJsonMesureData, andCollect: boolean) =>
+    ipcRenderer.invoke(channels.SAVE_JSON_FILE, jsonDatas, andCollect),
   handleJsonReadAndReload: () =>
     ipcRenderer.invoke(channels.READ_RELOAD_JSON_FILE),
 

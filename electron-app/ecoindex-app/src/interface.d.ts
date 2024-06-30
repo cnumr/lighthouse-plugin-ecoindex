@@ -14,8 +14,7 @@ export interface IElectronAPI {
   isNodeInstalled: () => Promise<boolean>
   isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
   handleSimpleMesures: (urlsList: SimpleUrlInput[]) => void
-  handleJsonMesures: (json: IJsonMesureData) => void
-  handleJsonSave: (json: IJsonMesureData) => void
+  handleJsonSaveAndCollect: (json: IJsonMesureData, andCollect: boolean) => void
   handleJsonReadAndReload: () => void
 }
 

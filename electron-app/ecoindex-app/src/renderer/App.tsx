@@ -129,19 +129,6 @@ function Hello() {
     }
   }
 
-  const runJsonMesures = () => {
-    console.log('Json mesures clicked')
-    try {
-      window.electronAPI.handleJsonMesures(jsonDatas)
-    } catch (error) {
-      console.error('Error on runJsonMesures', error)
-      showNotification('', {
-        body: 'Error on runJsonMesures',
-        subtitle: 'Courses Mesure (Full mode)',
-      })
-    }
-  }
-
   const runJsonReadAndReload = () => {
     console.log('Json read and reload clicked')
     try {
@@ -155,14 +142,14 @@ function Hello() {
     }
   }
 
-  const runJsonSave = () => {
+  const runJsonSaveAndCollect = (saveAndCollect = false) => {
     console.log('Json save clicked')
     try {
-      window.electronAPI.handleJsonSave(jsonDatas)
+      window.electronAPI.handleJsonSaveAndCollect(jsonDatas, saveAndCollect)
     } catch (error) {
-      console.error('Error on runJsonSave', error)
+      console.error('Error on runJsonSaveAndCollect', error)
       showNotification('', {
-        body: 'Error on runJsonSave',
+        body: 'Error on runJsonSaveAndCollect',
         subtitle: 'Courses Mesure (Full mode)',
       })
     }
@@ -188,8 +175,8 @@ function Hello() {
   }
 
   const increment = () => {
-    console.log('increment')
     loadingScreen = loadingScreen + 1
+    console.log(`Verify configuration step ${loadingScreen}/4`)
     const counter = document.getElementById('counter') as HTMLElement
     counter.innerText = `Loading... ${loadingScreen}/4`
     const loadingPopin = document.getElementById('loadingPopin') as HTMLElement
@@ -333,9 +320,9 @@ function Hello() {
               language={language}
               jsonDatas={jsonDatas}
               setJsonDatas={setJsonDatas}
-              mesure={runJsonMesures}
+              mesure={() => runJsonSaveAndCollect(true)}
               reload={runJsonReadAndReload}
-              save={runJsonSave}
+              save={runJsonSaveAndCollect}
               notify={handlerJsonNotify}
               className={cn(
                 'tab-content',

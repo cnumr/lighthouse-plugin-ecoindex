@@ -55,7 +55,25 @@ export const JsonPanMesure: FC<ILayout> = ({
     notify('Courses Mesure (Full mode)', `Course ${key + 1} deleted`)
     setUpdated(true)
   }
-
+  const handlerOnUpdateSimpleUrlsList = (
+    course: number,
+    urlsList: SimpleUrlInput[],
+  ) => {
+    console.log('handlerOnUpdateSimpleUrlsList', course, urlsList)
+    setJsonDatas?.({
+      ...jsonDatas,
+      courses: jsonDatas.courses.map((c, index) => {
+        if (index === course) {
+          return {
+            ...c,
+            urls: urlsList.map(url => url.value),
+          }
+        }
+        return c
+      }),
+    })
+    setUpdated(true)
+  }
   const handlerOnChange = (
     course: number,
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -254,6 +272,17 @@ export const JsonPanMesure: FC<ILayout> = ({
             </button>
           </legend>
           {jsonDatas?.courses.map((course, index) => {
+            const [innerUrlsList, setInnerUrlsList] = useState([])
+            const innerSetUrlsList = (urlsList: SimpleUrlInput[]) => {
+              handlerOnUpdateSimpleUrlsList(index, urlsList)
+            }
+            useEffect(() => {
+              const _u = course.urls.map(url => {
+                return { value: url }
+              })
+              setInnerUrlsList(_u)
+            }, [course])
+
             return (
               <fieldset key={index}>
                 <legend>
@@ -316,7 +345,17 @@ export const JsonPanMesure: FC<ILayout> = ({
                   />
                   <label htmlFor="is-best-pages">Is best pages?</label>
                 </div>
-                <div>{/* <SimpleUrlsList visible={true} /> */}</div>
+                <div>
+                  {innerUrlsList && (
+                    <SimpleUrlsList
+                      setUrlsList={innerSetUrlsList}
+                      language={language}
+                      urlsList={innerUrlsList}
+                      visible={true}
+                      isFullWidth
+                    />
+                  )}
+                </div>
               </fieldset>
             )
           })}
