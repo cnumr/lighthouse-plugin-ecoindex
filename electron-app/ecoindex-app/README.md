@@ -18,9 +18,9 @@
   - [ ] handler for install plugin
 - [ ] Fix not showing buttons to install Node
   - [ ] handler for install Node
-- [ ] Create complex mesure
+- [x] Create complex mesure
   - [x] Save JSON on disk
     - [x] Fix extra-header not JSON
-  - [ ] Read/Reload JSON from disk (doing)
-  - [ ] Use JSON to display data
+  - [x] Read/Reload JSON from disk (doing)
+  - [x] Use JSON to display data
   - [x] Launch mesure from JSON (save before)

@@ -393,6 +393,45 @@ async function handleSimpleCollect(
   // alert process done
 }
 
+// useEffect(() => {
+//   const _u = course.urls.map(url => {
+//     return { value: url }
+//   })
+//   setInnerUrlsList(_u)
+// }, [course])
+/**
+ * SimpleUrlInput[] -> string[]
+ * @param jsonDatas with urls SimpleUrlInput[]
+ */
+const _convertJSONDatasFromSimpleUrlInput = (
+  jsonDatas: IJsonMesureData,
+): IJsonMesureData => {
+  const output = jsonDatas
+  jsonDatas.courses.forEach((course, index) => {
+    const urls: string[] = course.urls.map((url: any) => url.value)
+    jsonDatas.courses[index].urls = urls
+  })
+  return output
+}
+/**
+ * string[] -> SimpleUrlInput[]
+ * @param jsonDatas with urls string[]
+ */
+const _convertJSONDatasFromString = (
+  jsonDatas: IJsonMesureData,
+): IJsonMesureData => {
+  const output = jsonDatas
+  jsonDatas.courses.forEach((course, index) => {
+    const urls: SimpleUrlInput[] = course.urls.map((url: any) => {
+      return {
+        value: url,
+      }
+    })
+    jsonDatas.courses[index].urls = urls
+  })
+  return output
+}
+
 const handleJsonSaveAndCollect = async (
   event: IpcMainEvent,
   jsonDatas: IJsonMesureData,
@@ -426,7 +465,9 @@ const handleJsonSaveAndCollect = async (
         jsonDatas['extra-header'] = {}
       }
     }
-    jsonStream.write(JSON.stringify(jsonDatas, null, 2))
+    jsonStream.write(
+      JSON.stringify(_convertJSONDatasFromSimpleUrlInput(jsonDatas), null, 2),
+    )
     showNotification({
       body: 'Json file saved 📁',
       subtitle: 'Json save handler',
@@ -499,7 +540,7 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
           body: 'Json file read and reloaded 📁',
           subtitle: 'Json read and reload handler',
         })
-        resolve(jsonDatas as IJsonMesureData)
+        resolve(_convertJSONDatasFromString(jsonDatas) as IJsonMesureData)
       })
     })
   } catch (error) {

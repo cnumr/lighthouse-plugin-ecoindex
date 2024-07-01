@@ -33,8 +33,11 @@ declare global {
     target: string
     course: string
     'is-best-pages': boolean
-    urls: string[]
+    urls: string[] | SimpleUrlInput[]
     urlSelector?: SimpleUrlInput[]
+  }
+  export interface SimpleUrlInput {
+    value: string
   }
   interface Window {
     versions: IVersionsAPI
