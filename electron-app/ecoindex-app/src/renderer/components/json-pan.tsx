@@ -119,22 +119,14 @@ export const JsonPanMesure: FC<ILayout> = ({
         ...jsonDatas,
         output: output,
       })
-    }
-
-    if (e.target.type === 'checkbox') {
-      updateGeneric(
-        e.target.type,
-        e.target.id,
-        e.target.name,
-        (e.target as HTMLInputElement).checked,
-        course,
-      )
     } else {
       updateGeneric(
         e.target.type,
         e.target.id,
         e.target.name,
-        e.target.value,
+        e.target.type === 'checkbox'
+          ? (e.target as HTMLInputElement).checked
+          : e.target.value,
         course,
       )
     }
@@ -143,23 +135,23 @@ export const JsonPanMesure: FC<ILayout> = ({
     setUpdated(true)
   }
   const handlerOnReload = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    console.log('handlerOnReload', e.target)
+    // console.log('handlerOnReload', event.target)
     reload()
     setUpdated(false)
   }
   const handlerOnSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    console.log('event', event)
+    // console.log('handlerOnSubmit', event.target)
     mesure()
     setUpdated(false)
   }
   const handlerOnSave = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    console.log('handlerOnSave', e.target)
+    // console.log('handlerOnSave', event.target)
     save()
     setUpdated(false)
   }
@@ -176,6 +168,10 @@ export const JsonPanMesure: FC<ILayout> = ({
   //     <pre>{JSON.stringify(jsonDatas, null, 2)}</pre>
   //   </>
   // )
+  useEffect(() => {
+    console.log(JSON.stringify(jsonDatas, null, 2))
+  }, [jsonDatas])
+
   return (
     <div className={className}>
       <h2>2. Configuration of the courses</h2>

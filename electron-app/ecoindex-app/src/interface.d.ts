@@ -13,6 +13,7 @@ export interface IElectronAPI {
   getWorkDir: (newDir: string) => Promise<string>
   isNodeInstalled: () => Promise<boolean>
   isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
+  handleLighthouseEcoindexPluginInstall: () => Promise<boolean>
   handleSimpleMesures: (urlsList: SimpleUrlInput[]) => void
   handleJsonSaveAndCollect: (json: IJsonMesureData, andCollect: boolean) => void
   handleJsonReadAndReload: () => Promise<IJsonMesureData>
@@ -23,9 +24,9 @@ declare global {
   export interface IJsonMesureData {
     'extra-header': object | null
     output: string[]
-    'output-path': string
-    'user-agent': string
-    'output-name': string
+    'output-path'?: string
+    'user-agent'?: string
+    'output-name'?: string
     courses: ICourse[]
   }
   export interface ICourse {

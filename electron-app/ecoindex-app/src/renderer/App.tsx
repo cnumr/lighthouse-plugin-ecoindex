@@ -14,6 +14,7 @@ import packageJson from '../../package.json'
 
 function TheApp() {
   const [language, setLanguage] = useState('en')
+  const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
   const [tabSelected, setTabSelected] = useState(0)
   const [nodeVersion, setNodeVersion] = useState('')
   // let nodeVersion = 'loading...'
@@ -56,12 +57,17 @@ function TheApp() {
       const _jsonDatas: IJsonMesureData =
         await window.electronAPI.handleJsonReadAndReload()
       console.log(`runJsonReadAndReload`, _jsonDatas)
-      if (_jsonDatas) setJsonDatas(_jsonDatas)
+      if (_jsonDatas) {
+        setJsonDatas(_jsonDatas)
+        setIsJsonFromDisk(true)
+      } else {
+        setIsJsonFromDisk(false)
+      }
     } catch (error) {
       console.error('Error on runJsonReadAndReload', error)
       showNotification('', {
+        subtitle: '🚫 Courses Mesure (Full mode)',
         body: 'Error on runJsonReadAndReload',
-        subtitle: 'Courses Mesure (Full mode)',
       })
     }
   }
@@ -69,12 +75,14 @@ function TheApp() {
   const runJsonSaveAndCollect = (saveAndCollect = false) => {
     console.log('Json save clicked')
     try {
+      console.log(`jsonDatas`, jsonDatas)
+      console.log(`saveAndCollect`, saveAndCollect)
       window.electronAPI.handleJsonSaveAndCollect(jsonDatas, saveAndCollect)
     } catch (error) {
       console.error('Error on runJsonSaveAndCollect', error)
       showNotification('', {
+        subtitle: '🚫 Courses Mesure (Full mode)',
         body: 'Error on runJsonSaveAndCollect',
-        subtitle: 'Courses Mesure (Full mode)',
       })
     }
   }
@@ -86,7 +94,8 @@ function TheApp() {
 
   const selectWorkingFolder = async () => {
     const filePath = await window.electronAPI.handleSelectFolder()
-    setWorkDir(filePath)
+
+    if (filePath !== undefined) setWorkDir(filePath)
   }
 
   const setLog = (value: string) => {
@@ -115,11 +124,12 @@ function TheApp() {
     }
   }
 
-  const isJsonConfigFileExist = async () => {
-    const result = await window.electronAPI.handleIsJsonConfigFileExist(workDir)
-    console.log(`isJsonConfigFileExist`, result)
-
-    result && runJsonReadAndReload()
+  const installNode = () => {
+    window.open(`https://nodejs.org/en/download/prebuilt-installer`, `_blank`)
+  }
+  const installEcoindexPlugin = async () => {
+    await window.electronAPI.handleLighthouseEcoindexPluginInstall()
+    // window.open(`https://nodejs.org/en/download/prebuilt-installer`, `_blank`)
   }
 
   useEffect(() => {
@@ -180,12 +190,15 @@ function TheApp() {
   }, [appReady])
 
   useEffect(() => {
+    const isJsonConfigFileExist = async () => {
+      const result =
+        await window.electronAPI.handleIsJsonConfigFileExist(workDir)
+      console.log(`isJsonConfigFileExist`, result)
+
+      result && runJsonReadAndReload()
+    }
     isJsonConfigFileExist()
   }, [workDir])
-
-  // useEffect(() => {
-  //   console.log(`jsonDatas`, jsonDatas)
-  // }, [jsonDatas])
 
   return (
     <div className="relative">
@@ -197,14 +210,28 @@ function TheApp() {
             <span className="logo-ecoindex logo-ecoindex__index">Index</span>
           </div>
           <h1>Mesures launcher 👋</h1>
-          <AlertBox visible={!isLighthouseEcoindexPluginInstalled}>
-            <span>Lighthouse Ecoindex plugin is not installed!</span>
-            <button className="btn btn-green-outlined">Install</button>
-          </AlertBox>
           <AlertBox visible={!isNodeInstalled}>
             <span>Node is not installed!</span>
-            <button className="btn btn-green-outlined">Install</button>
+            <button
+              id="bt-install-node"
+              onClick={installNode}
+              className="btn btn-green-outlined"
+            >
+              Install
+            </button>
           </AlertBox>
+          {isNodeInstalled && (
+            <AlertBox visible={isLighthouseEcoindexPluginInstalled}>
+              <span>Lighthouse Ecoindex plugin is not installed!</span>
+              <button
+                id="bt-install-ecoindex"
+                onClick={installEcoindexPlugin}
+                className="btn btn-green-outlined"
+              >
+                Install
+              </button>
+            </AlertBox>
+          )}
           <h2>1. Select ouput folder</h2>
           <div className="flex gap-2 items-center w-full">
             <p id="filePath" className="echo min-h-8 grid place-items-center">
@@ -255,8 +282,7 @@ function TheApp() {
             />
             <JsonPanMesure
               appReady={appReady}
-              // TODO: isJsonFromDisk={false}
-              isJsonFromDisk={false}
+              isJsonFromDisk={isJsonFromDisk}
               language={language}
               jsonDatas={jsonDatas}
               setJsonDatas={setJsonDatas}

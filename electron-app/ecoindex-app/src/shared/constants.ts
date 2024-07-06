@@ -17,6 +17,7 @@ const constants: IConstants = {
     IS_LIGHTHOUSE_ECOINDEX_INSTALLED: 'is-lighthouse-ecoindex-installed',
     IS_NODE_INSTALLED: 'is-node-installed',
     IS_JSON_CONFIG_FILE_EXIST: 'is-json-config-file-exist',
+    INSTALL_ECOINDEX_PLUGIN: 'install-ecoindex-plugin',
     HOST_INFORMATIONS: 'host-informations',
   },
   labels: {
@@ -34,8 +35,7 @@ const constants: IConstants = {
         Authorization: 'Basic c3BpZTpFaXBzRXJnb1N1bTQyJA==',
         'config-source': 'input-file.json',
       },
-      output: ['json', 'statement'],
-      'output-path': './reports',
+      output: ['html'],
       'user-agent': 'insights',
       'output-name': 'ecoindex',
       courses: [
