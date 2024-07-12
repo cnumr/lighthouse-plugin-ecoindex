@@ -15,6 +15,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
     icon: '/assets/app-ico',
+    extraResource: ['./src/extraResources'],
   },
   rebuildConfig: {},
   makers: [

@@ -1,3 +1,5 @@
+import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
+import { ChildProcess, spawn } from 'child_process'
 import {
   BrowserWindow,
   IpcMainEvent,
@@ -6,16 +8,13 @@ import {
   dialog,
   ipcMain,
 } from 'electron'
-import { ChildProcess, fork, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
-import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
 import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
-import packageJson from '../../package.json'
 import { shellEnv } from 'shell-env'
-import shelljs from 'shelljs'
+import packageJson from '../../package.json'
 
 // const execFile = util.promisify(_execFile);
 
@@ -32,9 +31,6 @@ const runfixPath = () => {
   fixPath()
   const { shell } = os.userInfo()
   console.log(`shell`, shell)
-  console.log('shelljs.config.execPath', shelljs.config.execPath) // return null
-  shelljs.config.execPath = shell
-  console.log('shelljs.config.execPath', shelljs.config.execPath) // return null
 }
 
 runfixPath()
@@ -121,16 +117,20 @@ app.on('activate', () => {
 
 // #region Helpers
 
+/**
+ * Send message to log zone in front of the app
+ * @param event
+ * @param readable
+ */
 async function _echoReadable(event: IpcMainEvent, readable: any) {
   const webContents = event.sender
   const win = BrowserWindow.fromWebContents(webContents)
   for await (const line of chunksToLinesAsync(readable)) {
     // (C)
     console.log('> ' + chomp(line))
-    // ipcRenderer.send('chomp', line);
-    // i want to send to front the content of the line
-    // I want to listen echo from main.ts and display it in the p tag without removing the previous content
-    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(line))
+    // eslint-disable-next-line no-control-regex, no-useless-escape
+    const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
+    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(line.replace(gm, '')))
   }
 }
 
@@ -153,6 +153,11 @@ const _createWindow = (): void => {
   // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
+/**
+ * Send message to DEV consol log
+ * @param message
+ * @param optionalParams
+ */
 const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
   mainWindow.webContents.send(
     channels.HOST_INFORMATIONS,
@@ -162,17 +167,24 @@ const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
 }
 
 let logStream: fs.WriteStream = null
-async function _sendMessageToBackLog(message?: any, ...optionalParams: any[]) {
+/**
+ * Write a log file in output dir / workDir
+ * @param message string
+ * @param optionalParams string[]
+ */
+async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   if (!workDir) {
     workDir = await _getHomeDir()
   }
   const logFilePath = `${workDir}/logfile.txt`
   if (!logStream) {
     logStream = fs.createWriteStream(logFilePath)
-    logStream.write(' ')
+    logStream.write('')
   }
-
-  logStream.write(message + ' ' + optionalParams.map(str => str) + '\n')
+  const stout = message + ' ' + optionalParams.map(str => str)
+  // eslint-disable-next-line no-control-regex, no-useless-escape
+  const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
+  logStream.write(stout.replace(gm, '') + '\n')
 }
 
 const _getHomeDir = async () => {
@@ -309,14 +321,14 @@ async function _prepareJsonCollect(): Promise<{
     // const logStream = fs.createWriteStream(logFilePath)
 
     const _shellEnv = await shellEnv()
-    _sendMessageToBackLog(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
+    _sendMessageToLogFile(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
 
     const nodeDir = await _getNodeDir()
-    _sendMessageToBackLog(`Node dir: ${nodeDir}`)
+    _sendMessageToLogFile(`Node dir: ${nodeDir}`)
     console.log(`Node dir: ${nodeDir}`)
 
     const npmDir = await _getNpmDir()
-    _sendMessageToBackLog(`Npm dir: ${npmDir}`)
+    _sendMessageToLogFile(`Npm dir: ${npmDir}`)
     console.log(`Npm dir: ${npmDir}`)
 
     const command = [
@@ -335,7 +347,7 @@ async function _runCollect(
   event: IpcMainEvent,
   logStream: fs.WriteStream,
 ): Promise<string> {
-  _sendMessageToBackLog(
+  _sendMessageToLogFile(
     `runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`,
   )
   const controller = new AbortController()
@@ -347,32 +359,32 @@ async function _runCollect(
   })
 
   childProcess.on('exit', (code, signal) => {
-    _sendMessageToBackLog(
+    _sendMessageToLogFile(
       `Child process exited with code ${code} and signal ${signal}`,
     )
   })
 
   childProcess.on('close', code => {
-    _sendMessageToBackLog(`Child process close with code ${code}`)
-    _sendMessageToBackLog('Mesure done 🚀')
+    _sendMessageToLogFile(`Child process close with code ${code}`)
+    _sendMessageToLogFile('Mesure done 🚀')
   })
 
   childProcess.stdout.on('data', data => {
-    _sendMessageToBackLog(`stdout: ${data}`)
+    _sendMessageToLogFile(`stdout: ${data}`)
   })
 
   if (childProcess.stderr) {
     childProcess.stderr.on('data', data => {
-      _sendMessageToBackLog(`stderr: ${data.toString()}`)
+      _sendMessageToLogFile(`stderr: ${data.toString()}`)
     })
   }
 
   childProcess.on('disconnect', () => {
-    _sendMessageToBackLog('Child process disconnected')
+    _sendMessageToLogFile('Child process disconnected')
   })
 
   childProcess.on('message', (message, sendHandle) => {
-    _sendMessageToBackLog(`Child process message: ${message}`)
+    _sendMessageToLogFile(`Child process message: ${message}`)
   })
 
   await _echoReadable(event, childProcess.stdout)
@@ -399,9 +411,9 @@ async function handleSimpleCollect(
     workDir: _workDir,
   } = await _prepareJsonCollect()
   console.log('Simple mesure start, process intialization...')
-  _sendMessageToBackLog('Simple mesure start, process intialization...')
+  _sendMessageToLogFile('Simple mesure start, process intialization...')
   console.log(`Urls list: ${JSON.stringify(urlsList)}`)
-  _sendMessageToBackLog(`Urls list: ${JSON.stringify(urlsList)}`)
+  _sendMessageToLogFile(`Urls list: ${JSON.stringify(urlsList)}`)
   try {
     urlsList.forEach(url => {
       if (url.value) {
@@ -436,7 +448,7 @@ async function handleSimpleCollect(
     console.log('Simple collect done 🚀')
     return 'collect done'
   } catch (error) {
-    _sendMessageToBackLog(`stderr: ${error}`)
+    _sendMessageToLogFile(`stderr: ${error}`)
   }
   // alert process done
 }
@@ -488,7 +500,7 @@ const handleJsonSaveAndCollect = async (
     body: 'Process intialization.',
   })
   console.log('Json save or/and collect start...')
-  _sendMessageToBackLog('Json save or/and collect start...')
+  _sendMessageToLogFile('Json save or/and collect start...')
 
   try {
     const _workDir = await workDir
@@ -537,7 +549,7 @@ const handleJsonSaveAndCollect = async (
         subtitle: andCollect ? '🚫 JSON save and collect' : '🚫 JSON save',
         body: 'Json file not saved.',
       })
-      _sendMessageToBackLog(`Error writing JSON file. ${error}`)
+      _sendMessageToLogFile(`Error writing JSON file. ${error}`)
       throw new Error(`Error writing JSON file. ${error}`)
     }
     if (!andCollect) {
@@ -554,8 +566,8 @@ const handleJsonSaveAndCollect = async (
         nodeDir,
         workDir: _workDir,
       } = await _prepareJsonCollect()
-      _sendMessageToBackLog('Json mesure start...')
-      _sendMessageToBackLog(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
+      _sendMessageToLogFile('Json mesure start...')
+      _sendMessageToLogFile(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
       command.push('--json-file')
       command.push(_workDir + '/' + utils.JSON_FILE_NAME)
       command.push('--output-path')
@@ -569,7 +581,7 @@ const handleJsonSaveAndCollect = async (
         subtitle: '🎉 JSON collect',
         body: `Mesures done, you can consult reports in\n${_workDir}`,
       })
-      _sendMessageToBackLog('Json collect done 🚀')
+      _sendMessageToLogFile('Json collect done 🚀')
       console.log('Json collect done 🚀')
       return 'mesure done'
     }
@@ -627,89 +639,60 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
 
 async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
   console.log(`handleLighthouseEcoindexPluginInstall`)
-  _sendMessageToBackLog(`handleLighthouseEcoindexPluginInstall started 🚀`)
+  _sendMessageToLogFile(`handleLighthouseEcoindexPluginInstall started 🚀`)
 
-  const _shellEnv = await shellEnv()
-  _sendMessageToBackLog(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
+  const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
 
-  const nodeDir = await _getNodeDir()
-  _sendMessageToBackLog(`Node dir: ${nodeDir}`)
-  console.log(`Node dir: ${nodeDir}`)
-
-  const npmDir = await _getNpmDir()
-  const [nmpRun] = npmDir.split('lib')
-  _sendMessageToBackLog(`Npm dir: ${npmDir}`)
-  _sendMessageToBackLog(`Npm runner: ${nmpRun}bin/npm`)
-  console.log(`Npm dir: ${npmDir}`)
-  console.log(`Npm runner: ${nmpRun}bin/npm`)
-  const controller = new AbortController()
-  const { signal } = controller
-  // const command = [`${__dirname}/install-plugin.sh`]
-  const command = ['i', '-g', 'lighthouse-plugin-ecoindex']
-
-  // if (!shelljs.which('node')) {
-  //   shelljs.echo('Sorry, this script requires node')
-  //   shelljs.exit(1)
-  // } else {
-  //   console.log(`shelljs.which('npm')`, shelljs.which('npm'))
-  // }
   const { shell } = os.userInfo()
   const env = {
     ...process.env,
-    PATH: `${process.env.PATH}:/usr/local/bin:/${shell}`,
+    PATH: `${process.env.PATH}:/opt/homebrew/bin:/usr/local/bin:${shell}`,
   }
-  // shelljs.config.execPath = nodeDir
-  console.log(`shelljs.config.execPath`, shelljs.config.execPath)
+  let runner = ''
+  if (shell === '/bin/zsh') {
+    runner = 'zsh'
+  }
 
-  if (!shelljs.which('node')) {
-    shelljs.echo('Sorry, this script requires node')
-    shelljs.exit(1)
-  }
-  try {
-    shelljs.exec('npm i -g lighthouse-plugin-ecoindex')
-  } catch (error) {
-    console.error(error)
-  }
-  process.noAsar = true
-  const childProcess: ChildProcess = spawn(`npm`, command, {
-    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-    env: env,
-    // signal,
-    shell: true,
-  })
-  // const childProcess: ChildProcess = spawn('ls', ['-lh', __dirname])
+  const childProcess: ChildProcess = spawn(
+    runner,
+    ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
+    {
+      stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
+      env: process.env,
+      // shell: shell,
+    },
+  )
 
-  childProcess.on('exit', (code, signal) => {
-    _sendMessageToBackLog(
-      `Child process exited with code ${code} and signal ${signal}`,
-    )
-  })
+  // childProcess.on('exit', (code, signal) => {
+  //   _sendMessageToLogFile(
+  //     `Child process exited with code ${code} and signal ${signal}`,
+  //   )
+  // })
 
   childProcess.on('close', code => {
-    _sendMessageToBackLog(`Child process close with code ${code}`)
-    _sendMessageToBackLog('Installation done 🚀')
+    // _sendMessageToLogFile(`Child process close with code ${code}`)
+    _sendMessageToLogFile('Installation done 🚀')
   })
 
   childProcess.stdout.on('data', data => {
-    _sendMessageToBackLog(`stdout: ${data}`)
+    _sendMessageToLogFile(data)
   })
 
   if (childProcess.stderr) {
     childProcess.stderr.on('data', data => {
-      _sendMessageToBackLog(`stderr: ${data.toString()}`)
+      _sendMessageToLogFile(`stderr: ${data.toString()}`)
     })
   }
 
-  childProcess.on('disconnect', () => {
-    _sendMessageToBackLog('Child process disconnected')
-  })
+  // childProcess.on('disconnect', () => {
+  //   _sendMessageToLogFile('Child process disconnected')
+  // })
 
   childProcess.on('message', (message, sendHandle) => {
-    _sendMessageToBackLog(`Child process message: ${message}`)
+    _sendMessageToLogFile(`Child process message: ${message}`)
   })
 
   await _echoReadable(event, childProcess.stdout)
-  controller.abort()
   return 'Installation done'
 }
 
