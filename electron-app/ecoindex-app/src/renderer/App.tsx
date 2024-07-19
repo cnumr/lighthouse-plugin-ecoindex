@@ -128,8 +128,11 @@ function TheApp() {
     window.open(`https://nodejs.org/en/download/prebuilt-installer`, `_blank`)
   }
   const installEcoindexPlugin = async () => {
-    await window.electronAPI.handleLighthouseEcoindexPluginInstall()
-    // window.open(`https://nodejs.org/en/download/prebuilt-installer`, `_blank`)
+    try {
+      await window.electronAPI.handleLighthouseEcoindexPluginInstall()
+    } catch (error) {
+      console.error(`installEcoindexPlugin`, error)
+    }
   }
 
   useEffect(() => {

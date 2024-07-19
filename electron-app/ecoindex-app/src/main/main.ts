@@ -1,5 +1,3 @@
-import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
-import { ChildProcess, spawn } from 'child_process'
 import {
   BrowserWindow,
   IpcMainEvent,
@@ -8,13 +6,16 @@ import {
   dialog,
   ipcMain,
 } from 'electron'
+import { ChildProcess, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
+import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
 import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
-import { shellEnv } from 'shell-env'
 import packageJson from '../../package.json'
+import path from 'path'
+import { shellEnv } from 'shell-env'
 
 // const execFile = util.promisify(_execFile);
 
@@ -153,6 +154,11 @@ const _createWindow = (): void => {
   // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
+const _debugLogs = (message?: any, ...optionalParams: any[]) => {
+  _sendMessageToFrontLog(message, ...optionalParams)
+  _sendMessageToLogFile(message, ...optionalParams)
+}
+
 /**
  * Send message to DEV consol log
  * @param message
@@ -181,10 +187,25 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
     logStream = fs.createWriteStream(logFilePath)
     logStream.write('')
   }
-  const stout = message + ' ' + optionalParams.map(str => str)
-  // eslint-disable-next-line no-control-regex, no-useless-escape
-  const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
-  logStream.write(stout.replace(gm, '') + '\n')
+  const toStr = (inp: any) => {
+    try {
+      if (typeof inp !== 'string') {
+        return JSON.stringify(inp, null, 2)
+      }
+      return inp
+    } catch (error) {
+      return JSON.stringify(error, null, 2)
+    }
+  }
+  try {
+    const stout = toStr(message) + ' ' + optionalParams.map(str => toStr(str))
+    // eslint-disable-next-line no-control-regex, no-useless-escape
+    const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
+    // logStream.write(stout.replace(gm, '') + '\n')
+    logStream.write(stout + '\n')
+  } catch (error) {
+    logStream.write(JSON.stringify(error, null, 2))
+  }
 }
 
 const _getHomeDir = async () => {
@@ -192,7 +213,7 @@ const _getHomeDir = async () => {
   const _shellEnv = await shellEnv()
   const home = _shellEnv.HOME
   if (!home) {
-    _sendMessageToFrontLog('ERROR', 'Home dir not found in PATH', _shellEnv)
+    _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
     throw new Error('Home dir not found in PATH')
   }
   return home
@@ -205,7 +226,7 @@ const _getNodeVersion = async () => {
     _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
   const nodeVersion = nodeDir?.match(/v\d+\.\d+\.\d+/)?.[0]
   if (!nodeVersion) {
-    _sendMessageToFrontLog('ERROR', 'Node dir not found in PATH', _shellEnv)
+    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
     throw new Error('Node version not found in PATH')
   }
   return nodeVersion
@@ -218,7 +239,7 @@ const _getNodeDir = async () => {
   const nodeDir =
     _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
   if (!nodeDir) {
-    _sendMessageToFrontLog('ERROR', 'Node dir not found in PATH', _shellEnv)
+    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
     throw new Error('Node dir not found in PATH')
   }
   // console.log(`Node dir: ${nodeDir}`);
@@ -232,7 +253,7 @@ const _getNpmDir = async () => {
 
   const npmBinDir = _shellEnv.NVM_BIN || _shellEnv.npm_config_prefix + '/bin'
   if (!npmBinDir) {
-    _sendMessageToFrontLog('ERROR', 'Npm dir not found in PATH', _shellEnv)
+    _debugLogs('ERROR', 'Npm dir not found in PATH', _shellEnv)
     throw new Error('Npm dir not found in PATH')
   }
   const updatedNpmBinDir = npmBinDir?.replace(/\/bin$/, '')
@@ -321,14 +342,14 @@ async function _prepareJsonCollect(): Promise<{
     // const logStream = fs.createWriteStream(logFilePath)
 
     const _shellEnv = await shellEnv()
-    _sendMessageToLogFile(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
+    _debugLogs(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
 
     const nodeDir = await _getNodeDir()
-    _sendMessageToLogFile(`Node dir: ${nodeDir}`)
+    _debugLogs(`Node dir: ${nodeDir}`)
     console.log(`Node dir: ${nodeDir}`)
 
     const npmDir = await _getNpmDir()
-    _sendMessageToLogFile(`Npm dir: ${npmDir}`)
+    _debugLogs(`Npm dir: ${npmDir}`)
     console.log(`Npm dir: ${npmDir}`)
 
     const command = [
@@ -347,9 +368,7 @@ async function _runCollect(
   event: IpcMainEvent,
   logStream: fs.WriteStream,
 ): Promise<string> {
-  _sendMessageToLogFile(
-    `runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`,
-  )
+  _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
   const controller = new AbortController()
   const { signal } = controller
   const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
@@ -359,32 +378,30 @@ async function _runCollect(
   })
 
   childProcess.on('exit', (code, signal) => {
-    _sendMessageToLogFile(
-      `Child process exited with code ${code} and signal ${signal}`,
-    )
+    _debugLogs(`Child process exited with code ${code} and signal ${signal}`)
   })
 
   childProcess.on('close', code => {
-    _sendMessageToLogFile(`Child process close with code ${code}`)
-    _sendMessageToLogFile('Mesure done 🚀')
+    _debugLogs(`Child process close with code ${code}`)
+    _debugLogs('Mesure done 🚀')
   })
 
   childProcess.stdout.on('data', data => {
-    _sendMessageToLogFile(`stdout: ${data}`)
+    _debugLogs(`stdout: ${data}`)
   })
 
   if (childProcess.stderr) {
     childProcess.stderr.on('data', data => {
-      _sendMessageToLogFile(`stderr: ${data.toString()}`)
+      _debugLogs(`stderr: ${data.toString()}`)
     })
   }
 
   childProcess.on('disconnect', () => {
-    _sendMessageToLogFile('Child process disconnected')
+    _debugLogs('Child process disconnected')
   })
 
   childProcess.on('message', (message, sendHandle) => {
-    _sendMessageToLogFile(`Child process message: ${message}`)
+    _debugLogs(`Child process message: ${message}`)
   })
 
   await _echoReadable(event, childProcess.stdout)
@@ -411,9 +428,9 @@ async function handleSimpleCollect(
     workDir: _workDir,
   } = await _prepareJsonCollect()
   console.log('Simple mesure start, process intialization...')
-  _sendMessageToLogFile('Simple mesure start, process intialization...')
+  _debugLogs('Simple mesure start, process intialization...')
   console.log(`Urls list: ${JSON.stringify(urlsList)}`)
-  _sendMessageToLogFile(`Urls list: ${JSON.stringify(urlsList)}`)
+  _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
   try {
     urlsList.forEach(url => {
       if (url.value) {
@@ -448,7 +465,7 @@ async function handleSimpleCollect(
     console.log('Simple collect done 🚀')
     return 'collect done'
   } catch (error) {
-    _sendMessageToLogFile(`stderr: ${error}`)
+    _debugLogs(`stderr: ${error}`)
   }
   // alert process done
 }
@@ -500,7 +517,7 @@ const handleJsonSaveAndCollect = async (
     body: 'Process intialization.',
   })
   console.log('Json save or/and collect start...')
-  _sendMessageToLogFile('Json save or/and collect start...')
+  _debugLogs('Json save or/and collect start...')
 
   try {
     const _workDir = await workDir
@@ -549,7 +566,7 @@ const handleJsonSaveAndCollect = async (
         subtitle: andCollect ? '🚫 JSON save and collect' : '🚫 JSON save',
         body: 'Json file not saved.',
       })
-      _sendMessageToLogFile(`Error writing JSON file. ${error}`)
+      _debugLogs(`Error writing JSON file. ${error}`)
       throw new Error(`Error writing JSON file. ${error}`)
     }
     if (!andCollect) {
@@ -566,8 +583,8 @@ const handleJsonSaveAndCollect = async (
         nodeDir,
         workDir: _workDir,
       } = await _prepareJsonCollect()
-      _sendMessageToLogFile('Json mesure start...')
-      _sendMessageToLogFile(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
+      _debugLogs('Json mesure start...')
+      _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
       command.push('--json-file')
       command.push(_workDir + '/' + utils.JSON_FILE_NAME)
       command.push('--output-path')
@@ -581,7 +598,7 @@ const handleJsonSaveAndCollect = async (
         subtitle: '🎉 JSON collect',
         body: `Mesures done, you can consult reports in\n${_workDir}`,
       })
-      _sendMessageToLogFile('Json collect done 🚀')
+      _debugLogs('Json collect done 🚀')
       console.log('Json collect done 🚀')
       return 'mesure done'
     }
@@ -637,63 +654,133 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
   }
 }
 
-async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
-  console.log(`handleLighthouseEcoindexPluginInstall`)
-  _sendMessageToLogFile(`handleLighthouseEcoindexPluginInstall started 🚀`)
+async function test_handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
+  try {
+    const { shell, homedir } = os.userInfo()
+    let runner = ''
+    if (shell === '/bin/zsh') {
+      runner = 'zsh'
+    }
+    // const filePath = path.join(
+    //   __dirname,
+    //   'scripts',
+    //   os.platform(),
+    //   'install-plugin.sh',
+    // )
+    // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
 
-  const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
+    const filePath = [
+      `${
+        process.env['WEBPACK_SERVE'] === 'true'
+          ? __dirname
+          : process.resourcesPath
+      }/scripts/${os.platform()}/install-plugin.sh`,
+    ]
+    _debugLogs(`filePath: ${filePath}`)
+    return new Promise((resolve, reject) => {
+      const options = {
+        name: 'Electron App',
+      }
+      // Execute the script
+      const install = spawn('zsh', [
+        '-c',
+        `chmod +x ${filePath} && ${runner} ${filePath}`,
+      ])
 
-  const { shell } = os.userInfo()
-  const env = {
-    ...process.env,
-    PATH: `${process.env.PATH}:/opt/homebrew/bin:/usr/local/bin:${shell}`,
-  }
-  let runner = ''
-  if (shell === '/bin/zsh') {
-    runner = 'zsh'
-  }
+      install.stdout.on('data', data => {
+        console.log(`stdout: ${data}`)
+        _debugLogs(`stdout: ${data}`)
+      })
 
-  const childProcess: ChildProcess = spawn(
-    runner,
-    ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
-    {
-      stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-      env: process.env,
-      // shell: shell,
-    },
-  )
-
-  // childProcess.on('exit', (code, signal) => {
-  //   _sendMessageToLogFile(
-  //     `Child process exited with code ${code} and signal ${signal}`,
-  //   )
-  // })
-
-  childProcess.on('close', code => {
-    // _sendMessageToLogFile(`Child process close with code ${code}`)
-    _sendMessageToLogFile('Installation done 🚀')
-  })
-
-  childProcess.stdout.on('data', data => {
-    _sendMessageToLogFile(data)
-  })
-
-  if (childProcess.stderr) {
-    childProcess.stderr.on('data', data => {
-      _sendMessageToLogFile(`stderr: ${data.toString()}`)
+      install.stderr.on('data', data => {
+        console.error(`stderr: ${data}`)
+        _debugLogs(`stderr: ${data}`)
+      })
+      install.on(`exit`, (code, signal) => {
+        _debugLogs(`Intallation exited: ${code}; signal: ${signal}`)
+        if (code === 0) {
+          _debugLogs(`Intallation done 🚀`)
+          resolve(`Intallation done 🚀`)
+        } else {
+          _debugLogs(`Intallation failed 🚫`)
+          reject(`Intallation failed 🚫`)
+        }
+      })
     })
+  } catch (error) {
+    _debugLogs(`error`, JSON.stringify(error, null, 2))
   }
+}
+async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
+  try {
+    console.log(`handleLighthouseEcoindexPluginInstall`)
+    _debugLogs(`handleLighthouseEcoindexPluginInstall started 🚀`)
 
-  // childProcess.on('disconnect', () => {
-  //   _sendMessageToLogFile('Child process disconnected')
-  // })
+    // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
+    const filePath = [
+      `${
+        process.env['WEBPACK_SERVE'] === 'true'
+          ? __dirname
+          : process.resourcesPath
+      }/scripts/${os.platform()}/install-plugin.sh`,
+    ]
+    const { shell, homedir } = os.userInfo()
+    let runner = ''
+    if (shell === '/bin/zsh') {
+      runner = 'zsh'
+    }
+    const o = { shell, runner, filePath, __dirname, homedir }
+    _debugLogs(`informations`, JSON.stringify(o, null, 2))
+    _debugLogs(`Try childProcess on`, filePath)
+    return new Promise((resolve, reject) => {
+      const childProcess: ChildProcess = spawn(
+        runner,
+        ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
+        {
+          stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
+          env: process.env,
+          // shell: shell,
+        },
+      )
 
-  childProcess.on('message', (message, sendHandle) => {
-    _sendMessageToLogFile(`Child process message: ${message}`)
-  })
+      childProcess.on('exit', (code, signal) => {
+        _debugLogs(`Intallation exited: ${code}; signal: ${signal}`)
+      })
 
-  await _echoReadable(event, childProcess.stdout)
-  return 'Installation done'
+      childProcess.on('close', code => {
+        _debugLogs(`Intallation closed: ${code}`)
+        if (code === 0) {
+          // _sendMessageToFrontLog(`Intallation done 🚀`)
+          _debugLogs(`Intallation done 🚀`)
+          resolve(`Installation done 🚀`)
+        } else {
+          // _sendMessageToFrontLog(`Intallation failed 🚫`)
+          _debugLogs(`Intallation failed 🚫`)
+          reject(`Installation failed 🚫`)
+        }
+      })
+
+      if (childProcess.stderr) {
+        childProcess.stderr.on('data', data => {
+          console.error(`Installation stderr: ${data}`)
+          _debugLogs(`Installation stderr: ${data}`)
+        })
+      }
+
+      childProcess.on('disconnect', () => {
+        _debugLogs('Installation Child process disconnected')
+      })
+
+      childProcess.on('message', (message, sendHandle) => {
+        _debugLogs(`Installation Child process message: ${message}`)
+      })
+
+      if (childProcess.stdout) _echoReadable(event, childProcess.stdout)
+    })
+  } catch (error) {
+    _debugLogs(`error`, JSON.stringify(error, null, 2))
+    return 'Installation failed'
+  }
 }
 
 async function handleSelectFolder() {

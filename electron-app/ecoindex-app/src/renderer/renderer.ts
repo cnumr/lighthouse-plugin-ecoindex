@@ -1,6 +1,8 @@
 import './index.css'
 import './index.tsx'
 
+import { cleanLogString } from '../main/utils'
+
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
  * To learn more about the differences between the "main" and the "renderer" context in
@@ -38,7 +40,12 @@ window.electronAPI.sendLogToFront((message: string) => {
 
 window.electronAPI.sendMessageToFrontLog(
   (message?: any, ...optionalParams: any[]) => {
-    console.log(message, ...optionalParams)
+    if (optionalParams && optionalParams.length > 1)
+      console.log(
+        message,
+        optionalParams.map(out => cleanLogString(out)),
+      )
+    else console.log(cleanLogString(message))
   },
 )
 

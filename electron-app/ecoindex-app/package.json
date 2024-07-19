@@ -1,6 +1,8 @@
 {
-  "name": "ecoindex-app",
-  "productName": "Ecoindex mesures launcher",
+  "name": "ecoindex-lighthouse",
+  "displayName": "EcoindexLighthouse",
+  "productName": "EcoindexLighthouse",
+  "private": true,
   "version": "1.0.0",
   "description": "An application to mesure the ecoindex of a website with LightHouse & Ecoindex.",
   "main": ".webpack/main",

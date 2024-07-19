@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Install plugin launched..."
+echo "Install plugin launched 🚀"
 unset npm_config_prefix > /dev/null 2>&1
 source ~/.zshrc > /dev/null 2>&1
 
@@ -10,4 +10,4 @@ echo "which node : $(which node)"
 echo "npm install -g lighthouse-plugin-ecoindex"
 npm install -g lighthouse-plugin-ecoindex > /dev/null 2>&1
 
-echo "Install puppeteer browser and plugin done."
+echo "Install puppeteer browser and plugin done. 🎉"
