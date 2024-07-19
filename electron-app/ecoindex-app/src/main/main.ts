@@ -10,20 +10,27 @@ import { ChildProcess, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
+  cleanLogString,
+  convertJSONDatasFromSimpleUrlInput,
+  convertJSONDatasFromString,
+} from './utils'
+import {
   getHomeDir,
   getLogFilePathFromDir,
   getLogSteam,
   getMainWindow,
+  getNodeDir,
+  getNodeV,
+  getNpmDir,
   getWorkDir,
   setLogStream,
   setMainWindow,
   setNodeDir,
-  setNodeVersion,
+  setNodeV,
   setNpmDir,
   setWorkDir,
 } from '../shared/memory'
 
-import { cleanLogString } from './utils'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
@@ -38,20 +45,25 @@ import { shellEnv } from 'shell-env'
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
-const runfixPath = () => {
+/**
+ * Helpers, Fix Path
+ */
+const _runfixPath = () => {
   console.log(`RUN fixPath and shellEnv`)
   fixPath()
   const { shell } = os.userInfo()
   console.log(`shell`, shell)
 }
-
-runfixPath()
+_runfixPath()
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
+/**
+ * Electron, Create Windows
+ */
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -103,7 +115,7 @@ app.on('ready', () => {
     credits: packageJson.description,
     copyright: packageJson.publisher,
   })
-  // showNotification()
+  // _showNotification()
   _createWindow()
 })
 
@@ -116,6 +128,7 @@ app.on('window-all-closed', () => {
   }
 })
 
+// Electron, Create Window
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -130,21 +143,8 @@ app.on('activate', () => {
 // #region Helpers
 
 /**
- * Send message to log zone in front of the app
- * @param event
- * @param readable
+ * Helpers, Window Creation
  */
-async function _echoReadable(event: IpcMainEvent, readable: any) {
-  const webContents = event.sender
-  const win = BrowserWindow.fromWebContents(webContents)
-  for await (const line of chunksToLinesAsync(readable)) {
-    // (C)
-    console.log('> ' + chomp(line))
-    // eslint-disable-next-line no-control-regex, no-useless-escape
-    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(cleanLogString(line)))
-  }
-}
-
 const _createWindow = (): void => {
   // Create the browser window.
   setMainWindow(
@@ -165,6 +165,11 @@ const _createWindow = (): void => {
   // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
+/**
+ * Helpers, Launch Multi Debug
+ * @param message any
+ * @param optionalParams any
+ */
 const _debugLogs = (message?: any, ...optionalParams: any[]) => {
   _sendMessageToFrontLog(message, ...optionalParams)
   _sendMessageToLogFile(message, ...optionalParams)
@@ -216,122 +221,22 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   }
 }
 
-const _getNodeVersion = async () => {
-  // fixPath()
-  const _shellEnv = await shellEnv()
-  const nodeDir =
-    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
-  const nodeVersion = nodeDir?.match(/v\d+\.\d+\.\d+/)?.[0]
-  if (!nodeVersion) {
-    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
-    throw new Error('Node version not found in PATH')
-  }
-  setNodeVersion(nodeVersion)
-  return nodeVersion
-}
-
-const _getNodeDir = async () => {
-  // fixPath()
-  const _shellEnv = await shellEnv()
-  // console.log(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`);
-  const nodeDir =
-    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
-  if (!nodeDir) {
-    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
-    throw new Error('Node dir not found in PATH')
-  }
-  // console.log(`Node dir: ${nodeDir}`);
-  setNodeDir(nodeDir)
-  return nodeDir
-}
-
-const _getNpmDir = async () => {
-  // fixPath()
-  const _shellEnv = await shellEnv()
-  // console.log(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`);
-
-  const npmBinDir = _shellEnv.NVM_BIN || _shellEnv.npm_config_prefix + '/bin'
-  if (!npmBinDir) {
-    _debugLogs('ERROR', 'Npm dir not found in PATH', _shellEnv)
-    throw new Error('Npm dir not found in PATH')
-  }
-  const updatedNpmBinDir = npmBinDir?.replace(/\/bin$/, '')
-  // console.log(`Npm dir: ${npmDir}`);
-  // console.log(`Updated npm dir: ${updatedNpmBinDir}`);
-
-  const npmDir = updatedNpmBinDir + '/lib/node_modules'
-  setNpmDir(npmDir)
-  return npmDir
-}
-
-// #endregion
-
-// #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
-
-const handleNodeInstalled = async (event: IpcMainEvent) => {
-  const nodeDir = await _getNodeDir()
-  try {
-    fs.accessSync(nodeDir, fs.constants.F_OK)
-    return true
-  } catch (error) {
-    return false
-  }
-}
-
-const handlePluginInstalled = async (event: IpcMainEvent) => {
-  const npmDir = await _getNpmDir()
-  const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`
-  try {
-    fs.accessSync(pluginDir, fs.constants.F_OK)
-    return true
-  } catch (error) {
-    return false
-  }
-}
-
-const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
-  // console.log(`newDir`, newDir)
-  if (newDir) {
-    // logStream = null
-    setLogStream(getLogFilePathFromDir(newDir))
-    // console.log(`Reset logStream`)
-
-    setWorkDir(newDir)
-  } else {
-    setWorkDir(await getHomeDir())
-  }
-  // console.log(`workDir: ${workDir}`)
-  return await getWorkDir()
-}
-
-const handleIsJsonConfigFileExist = async (
-  event: IpcMainEvent,
-  workDir: string,
-) => {
-  if (workDir === 'chargement...' || workDir === 'loading...') return
-  const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`
-  console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
-  try {
-    fs.accessSync(jsonConfigFile, fs.constants.F_OK)
-    showNotification({
-      body: 'Config file founded 👀',
-      subtitle: 'loading file content...',
-    })
-    return true
-  } catch (error) {
-    return false
-  }
-}
-
+/**
+ * Utils prepare Json Collect.
+ * @returns Promise<{
+  command: string[]
+  nodeDir: string
+  workDir: string
+}>
+ */
 async function _prepareJsonCollect(): Promise<{
-  logStream: fs.WriteStream
   command: string[]
   nodeDir: string
   workDir: string
 }> {
   // create stream to log the output. TODO: use specified path
   try {
-    const _workDir = await getWorkDir()
+    const _workDir = getWorkDir()
     if (!_workDir || _workDir === '') {
       throw new Error('Work dir not found')
     }
@@ -339,11 +244,11 @@ async function _prepareJsonCollect(): Promise<{
     const _shellEnv = await shellEnv()
     _debugLogs(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
 
-    const nodeDir = await _getNodeDir()
+    const nodeDir = getNodeDir()
     _debugLogs(`Node dir: ${nodeDir}`)
     console.log(`Node dir: ${nodeDir}`)
 
-    const npmDir = await _getNpmDir()
+    const npmDir = getNpmDir()
     _debugLogs(`Npm dir: ${npmDir}`)
     console.log(`Npm dir: ${npmDir}`)
 
@@ -351,17 +256,58 @@ async function _prepareJsonCollect(): Promise<{
       `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
       'collect',
     ]
-    return { logStream: getLogSteam(), command, nodeDir, workDir: _workDir }
+    return { command, nodeDir, workDir: _workDir }
   } catch (error) {
     console.error('Error', error)
   }
 }
 
+/**
+ * Send message to log zone in front of the app
+ * @param event
+ * @param readable
+ */
+async function _echoReadable(event: IpcMainEvent, readable: any) {
+  const webContents = event.sender
+  const win = BrowserWindow.fromWebContents(webContents)
+  for await (const line of chunksToLinesAsync(readable)) {
+    // (C)
+    console.log('> ' + chomp(line))
+    // eslint-disable-next-line no-control-regex, no-useless-escape
+    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(cleanLogString(line)))
+  }
+}
+
+/**
+ * Utils, Show Notification
+ * @param options
+ */
+function _showNotification(options: any) {
+  if (!options) {
+    options = {
+      body: 'Notification body',
+      subtitle: 'Notification subtitle',
+    }
+  }
+  if (!options.title || options.title === '') {
+    options.title = packageJson.productName
+  }
+  const customNotification = new Notification(options)
+  customNotification.show()
+}
+
+/**
+ * Utils, Collect
+ * @param command string[]
+ * @param nodeDir string
+ * @param event IpcMainEvent
+ * @param logStream
+ * @returns string
+ */
 async function _runCollect(
   command: string[],
   nodeDir: string,
   event: IpcMainEvent,
-  logStream: fs.WriteStream,
 ): Promise<string> {
   _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
   const controller = new AbortController()
@@ -404,6 +350,117 @@ async function _runCollect(
   return 'mesure done'
 }
 
+// #endregion
+
+// #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
+
+/**
+ * Handlers, Test get NodeDir, NpmDir and NodeVersion.
+ * @param event IpcMainEvent
+ * @returns boolean
+ */
+const handleNodeInstalled = async (event: IpcMainEvent) => {
+  const _shellEnv = await shellEnv()
+  // console.log(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`);
+  const nodeDir =
+    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
+  if (!nodeDir) {
+    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
+    throw new Error('Node dir not found in PATH')
+  }
+  // console.log(`Node dir: ${nodeDir}`);
+  setNodeDir(nodeDir)
+  const npmBinDir = _shellEnv.NVM_BIN || _shellEnv.npm_config_prefix + '/bin'
+  if (!npmBinDir) {
+    _debugLogs('ERROR', 'Npm dir not found in PATH', _shellEnv)
+    throw new Error('Npm dir not found in PATH')
+  }
+  const updatedNpmBinDir = npmBinDir?.replace(/\/bin$/, '')
+
+  setNpmDir(updatedNpmBinDir + '/lib/node_modules')
+
+  const nodeVersion = nodeDir?.match(/v\d+\.\d+\.\d+/)?.[0]
+  if (!nodeVersion) {
+    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
+    throw new Error('Node version not found in PATH')
+  }
+  setNodeV(nodeVersion)
+  try {
+    fs.accessSync(getNodeDir(), fs.constants.F_OK)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+/**
+ * Handlers, Is Ecoindex Lighthouse Plugin installed.
+ * @param event IpcMainEvent
+ * @returns boolean
+ */
+const handlePluginInstalled = async (event: IpcMainEvent) => {
+  const npmDir = getNpmDir()
+  const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`
+  try {
+    fs.accessSync(pluginDir, fs.constants.F_OK)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+/**
+ * Handlers, Get WorkDir
+ * @param event IpcMainEvent
+ * @param newDir string
+ * @returns string
+ */
+const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
+  // console.log(`newDir`, newDir)
+  if (newDir) {
+    // logStream = null
+    setLogStream(getLogFilePathFromDir(newDir))
+    // console.log(`Reset logStream`)
+
+    setWorkDir(newDir)
+  } else {
+    setWorkDir(await getHomeDir())
+  }
+  // console.log(`workDir: ${workDir}`)
+  return await getWorkDir()
+}
+
+/**
+ * Handlers, Test if Json Config File exist in folder after selected it.
+ * @param event IpcMainEvent
+ * @param workDir string
+ * @returns boolean
+ */
+const handleIsJsonConfigFileExist = async (
+  event: IpcMainEvent,
+  workDir: string,
+) => {
+  if (workDir === 'chargement...' || workDir === 'loading...') return
+  const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`
+  console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
+  try {
+    fs.accessSync(jsonConfigFile, fs.constants.F_OK)
+    _showNotification({
+      body: 'Config file founded 👀',
+      subtitle: 'loading file content...',
+    })
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+/**
+ * Handlers, SimpleCollect
+ * @param event IpcMainEvent
+ * @param urlsList SimpleUrlInput[]
+ * @returns string
+ */
 async function handleSimpleCollect(
   event: IpcMainEvent,
   urlsList: SimpleUrlInput[],
@@ -411,17 +468,12 @@ async function handleSimpleCollect(
   if (!urlsList || urlsList.length === 0) {
     throw new Error('Urls list is empty')
   }
-  showNotification({
+  _showNotification({
     subtitle: '🧩 Simple collect',
     body: 'Process intialization.',
   })
 
-  const {
-    command,
-    logStream,
-    nodeDir,
-    workDir: _workDir,
-  } = await _prepareJsonCollect()
+  const { command, nodeDir, workDir: _workDir } = await _prepareJsonCollect()
   console.log('Simple mesure start, process intialization...')
   _debugLogs('Simple mesure start, process intialization...')
   console.log(`Urls list: ${JSON.stringify(urlsList)}`)
@@ -438,14 +490,14 @@ async function handleSimpleCollect(
     command.push('--output-path')
     command.push(_workDir)
     // Fake mesure and path. TODO: use specified path and urls
-    showNotification({
+    _showNotification({
       subtitle: ' 🚀Simple collect',
       body: 'Collect started...',
     })
     try {
-      await _runCollect(command, nodeDir, event, logStream)
+      await _runCollect(command, nodeDir, event)
     } catch (error) {
-      showNotification({
+      _showNotification({
         subtitle: '🚫 Simple collect',
         body: `Collect KO, ${error}\n'`,
       })
@@ -453,7 +505,7 @@ async function handleSimpleCollect(
     }
     // process.stdout.write(data)
     // console.log(result.stdout.toString());
-    showNotification({
+    _showNotification({
       subtitle: '🎉 Simple collect',
       body: `Collect done, you can consult reports in\n${_workDir}'`,
     })
@@ -466,39 +518,12 @@ async function handleSimpleCollect(
 }
 
 /**
- * SimpleUrlInput[] -> string[]
- * @param jsonDatas with urls SimpleUrlInput[]
+ * Handler, JsonSaveAndCollect
+ * @param event IpcMainEvent
+ * @param jsonDatas IJsonMesureData
+ * @param andCollect boolean
+ * @returns string
  */
-const _convertJSONDatasFromSimpleUrlInput = (
-  jsonDatas: IJsonMesureData,
-): IJsonMesureData => {
-  const output = jsonDatas
-  jsonDatas.courses.forEach((course, index) => {
-    const urls: string[] = course.urls.map((url: any) => url.value)
-    jsonDatas.courses[index].urls = urls
-  })
-  return output
-}
-/**
- * string[] -> SimpleUrlInput[]
- * @param jsonDatas with urls string[]
- */
-const _convertJSONDatasFromString = (
-  jsonDatas: IJsonMesureData,
-): IJsonMesureData => {
-  const output = jsonDatas
-  jsonDatas.courses.forEach((course, index) => {
-    const urls: SimpleUrlInput[] = course.urls.map((url: any) => {
-      return {
-        value: url,
-      }
-    })
-    jsonDatas.courses[index].urls = urls
-  })
-  // console.log(`_convertJSONDatasFromString`, output)
-  return output
-}
-
 const handleJsonSaveAndCollect = async (
   event: IpcMainEvent,
   jsonDatas: IJsonMesureData,
@@ -507,7 +532,7 @@ const handleJsonSaveAndCollect = async (
   if (!jsonDatas) {
     throw new Error('Json data is empty')
   }
-  showNotification({
+  _showNotification({
     subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
     body: 'Process intialization.',
   })
@@ -538,7 +563,7 @@ const handleJsonSaveAndCollect = async (
         throw new Error(`extra-header is not in Json format. ${error}`)
       }
     }
-    showNotification({
+    _showNotification({
       subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
       body: andCollect
         ? 'Json save and collect started...'
@@ -548,7 +573,7 @@ const handleJsonSaveAndCollect = async (
       if (jsonDatas && typeof jsonDatas === 'object') {
         jsonStream.write(
           JSON.stringify(
-            _convertJSONDatasFromSimpleUrlInput(jsonDatas),
+            convertJSONDatasFromSimpleUrlInput(jsonDatas),
             null,
             2,
           ),
@@ -557,7 +582,7 @@ const handleJsonSaveAndCollect = async (
         throw new Error('jsonDatas have a problem!')
       }
     } catch (error) {
-      showNotification({
+      _showNotification({
         subtitle: andCollect ? '🚫 JSON save and collect' : '🚫 JSON save',
         body: 'Json file not saved.',
       })
@@ -565,7 +590,7 @@ const handleJsonSaveAndCollect = async (
       throw new Error(`Error writing JSON file. ${error}`)
     }
     if (!andCollect) {
-      showNotification({
+      _showNotification({
         subtitle: '💾 JSON save',
         body: 'Json file saved.',
       })
@@ -574,7 +599,6 @@ const handleJsonSaveAndCollect = async (
 
       const {
         command,
-        logStream,
         nodeDir,
         workDir: _workDir,
       } = await _prepareJsonCollect()
@@ -585,11 +609,11 @@ const handleJsonSaveAndCollect = async (
       command.push('--output-path')
       command.push(_workDir)
       try {
-        await _runCollect(command, nodeDir, event, logStream)
+        await _runCollect(command, nodeDir, event)
       } catch (error) {
         throw new Error('Simple collect error')
       }
-      showNotification({
+      _showNotification({
         subtitle: '🎉 JSON collect',
         body: `Mesures done, you can consult reports in\n${_workDir}`,
       })
@@ -600,13 +624,13 @@ const handleJsonSaveAndCollect = async (
   } catch (error) {
     if (!andCollect) {
       _sendMessageToFrontLog('ERROR, Json file not saved', error)
-      showNotification({
+      _showNotification({
         subtitle: '🚫 JSON save',
         body: 'Json file not saved.',
       })
     } else {
       _sendMessageToFrontLog('ERROR, Json file not saved or collect', error)
-      showNotification({
+      _showNotification({
         subtitle: '🚫 JSON save and collect',
         body: 'Json file not saved or collect.',
       })
@@ -615,7 +639,7 @@ const handleJsonSaveAndCollect = async (
 }
 
 const handleJsonReadAndReload = async (event: IpcMainEvent) => {
-  showNotification({
+  _showNotification({
     subtitle: '🧩 JSON reload',
     body: 'Process intialization.',
   })
@@ -632,16 +656,16 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
         const jsonDatas = JSON.parse(chunk.toString())
         console.log(`jsonDatas`, jsonDatas)
 
-        showNotification({
+        _showNotification({
           subtitle: '🔄 JSON reload',
           body: 'Json file read and reloaded.',
         })
-        resolve(_convertJSONDatasFromString(jsonDatas) as IJsonMesureData)
+        resolve(convertJSONDatasFromString(jsonDatas) as IJsonMesureData)
       })
     })
   } catch (error) {
     _sendMessageToFrontLog('ERROR', 'Json file not read and reloaded', error)
-    showNotification({
+    _showNotification({
       subtitle: '🚫 JSON reload',
       body: `Json file not read and reloaded. ${error}`,
     })
@@ -706,6 +730,7 @@ async function test_handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
     _debugLogs(`error`, JSON.stringify(error, null, 2))
   }
 }
+
 async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
   try {
     console.log(`handleLighthouseEcoindexPluginInstall`)
@@ -778,6 +803,10 @@ async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
   }
 }
 
+/**
+ * Handlers, SelectFolder
+ * @returns string
+ */
 async function handleSelectFolder() {
   const options: Electron.OpenDialogOptions = {
     properties: ['openDirectory', 'createDirectory'],
@@ -789,22 +818,12 @@ async function handleSelectFolder() {
   }
 }
 
+/**
+ * Handlers, Node Version
+ * @returns string
+ */
 async function getNodeVersion() {
-  return await _getNodeVersion()
-}
-
-function showNotification(options: any) {
-  if (!options) {
-    options = {
-      body: 'Notification body',
-      subtitle: 'Notification subtitle',
-    }
-  }
-  if (!options.title || options.title === '') {
-    options.title = packageJson.productName
-  }
-  const customNotification = new Notification(options)
-  customNotification.show()
+  return await getNodeV()
 }
 
 // #endregion

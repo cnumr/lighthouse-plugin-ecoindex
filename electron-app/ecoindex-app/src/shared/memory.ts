@@ -30,10 +30,10 @@ export const setNpmDir = (value: string) => {
   npmDir = value
 }
 
-export const getNodeVersion = () => {
+export const getNodeV = () => {
   return nodeVersion
 }
-export const setNodeVersion = (value: string) => {
+export const setNodeV = (value: string) => {
   nodeVersion = value
 }
 
