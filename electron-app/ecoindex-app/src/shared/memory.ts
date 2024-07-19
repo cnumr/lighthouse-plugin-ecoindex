@@ -2,6 +2,9 @@ import { BrowserWindow } from 'electron'
 import fs from 'fs'
 import { shellEnv } from 'shell-env'
 let workDir = ''
+let nodeDir = ''
+let npmDir = ''
+let nodeVersion = ''
 let logStream: fs.WriteStream = null
 let mainWindow: BrowserWindow = null
 let logStreamPath = ''
@@ -12,6 +15,28 @@ export const getWorkDir = () => {
 export const setWorkDir = (value: string) => {
   workDir = value
 }
+
+export const getNodeDir = () => {
+  return nodeDir
+}
+export const setNodeDir = (value: string) => {
+  nodeDir = value
+}
+
+export const getNpmDir = () => {
+  return npmDir
+}
+export const setNpmDir = (value: string) => {
+  npmDir = value
+}
+
+export const getNodeVersion = () => {
+  return nodeVersion
+}
+export const setNodeVersion = (value: string) => {
+  nodeVersion = value
+}
+
 export const getHomeDir = async () => {
   // fixPath()
   const _shellEnv = await shellEnv()

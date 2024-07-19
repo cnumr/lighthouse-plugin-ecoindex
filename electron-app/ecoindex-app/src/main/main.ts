@@ -17,6 +17,9 @@ import {
   getWorkDir,
   setLogStream,
   setMainWindow,
+  setNodeDir,
+  setNodeVersion,
+  setNpmDir,
   setWorkDir,
 } from '../shared/memory'
 
@@ -223,6 +226,7 @@ const _getNodeVersion = async () => {
     _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
     throw new Error('Node version not found in PATH')
   }
+  setNodeVersion(nodeVersion)
   return nodeVersion
 }
 
@@ -237,6 +241,7 @@ const _getNodeDir = async () => {
     throw new Error('Node dir not found in PATH')
   }
   // console.log(`Node dir: ${nodeDir}`);
+  setNodeDir(nodeDir)
   return nodeDir
 }
 
@@ -254,7 +259,9 @@ const _getNpmDir = async () => {
   // console.log(`Npm dir: ${npmDir}`);
   // console.log(`Updated npm dir: ${updatedNpmBinDir}`);
 
-  return updatedNpmBinDir + '/lib/node_modules'
+  const npmDir = updatedNpmBinDir + '/lib/node_modules'
+  setNpmDir(npmDir)
+  return npmDir
 }
 
 // #endregion
