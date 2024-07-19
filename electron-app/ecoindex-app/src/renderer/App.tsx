@@ -136,17 +136,27 @@ function TheApp() {
   }
 
   useEffect(() => {
+    /**
+     * Handlers, Node Version
+     */
     const fetchNodeVersion = async () => {
       const result = await window.versions.getNodeVersion()
       setNodeVersion(result)
       // nodeVersion = result
       increment()
     }
+
+    /**
+     * Handlers, Get WorkDir
+     */
     const fetchWorkDir = async () => {
       const result = await window.electronAPI.getWorkDir('')
       setWorkDir(result)
       increment()
     }
+    /**
+     * LAUNCH FIRST! Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
+     */
     const fetchNodeInstalled = async () => {
       const result = await window.electronAPI.isNodeInstalled()
       setIsNodeInstalled(result)
@@ -156,6 +166,9 @@ function TheApp() {
       increment()
     }
 
+    /**
+     * Handlers, Is Ecoindex Lighthouse Plugin installed.
+     */
     const fetchLighthouseEcoindexPluginInstalled = async () => {
       const result =
         await window.electronAPI.isLighthouseEcoindexPluginInstalled()
@@ -165,10 +178,11 @@ function TheApp() {
       increment()
     }
 
+    // must be the first
+    fetchNodeInstalled()
     fetchNodeVersion()
     fetchWorkDir()
     fetchLighthouseEcoindexPluginInstalled()
-    fetchNodeInstalled()
   }, [])
 
   useEffect(() => {

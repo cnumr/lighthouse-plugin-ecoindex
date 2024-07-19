@@ -92,7 +92,7 @@ app.on('ready', () => {
   ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSaveAndCollect)
   ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
   // communs handlers and getters
-  ipcMain.handle(channels.GET_NODE_VERSION, getNodeVersion)
+  ipcMain.handle(channels.GET_NODE_VERSION, handlerGetNodeVersion)
   ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
   ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
   ipcMain.handle(
@@ -355,7 +355,7 @@ async function _runCollect(
 // #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
 
 /**
- * Handlers, Test get NodeDir, NpmDir and NodeVersion.
+ * Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
  * @param event IpcMainEvent
  * @returns boolean
  */
@@ -638,7 +638,14 @@ const handleJsonSaveAndCollect = async (
   }
 }
 
-const handleJsonReadAndReload = async (event: IpcMainEvent) => {
+/**
+ * Handlers, Json config Read and Reload.
+ * @param event IpcMainEvent
+ * @returns Promise<IJsonMesureData>
+ */
+const handleJsonReadAndReload = async (
+  event: IpcMainEvent,
+): Promise<IJsonMesureData> => {
   _showNotification({
     subtitle: '🧩 JSON reload',
     body: 'Process intialization.',
@@ -731,7 +738,14 @@ async function test_handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
   }
 }
 
-async function handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
+/**
+ * Handlers, Install Ecoindex Plugin.
+ * @param event IpcMainEvent
+ * @returns Promise<string>
+ */
+async function handleLighthouseEcoindexPluginInstall(
+  event: IpcMainEvent,
+): Promise<string> {
   try {
     console.log(`handleLighthouseEcoindexPluginInstall`)
     _debugLogs(`handleLighthouseEcoindexPluginInstall started 🚀`)
@@ -822,7 +836,7 @@ async function handleSelectFolder() {
  * Handlers, Node Version
  * @returns string
  */
-async function getNodeVersion() {
+async function handlerGetNodeVersion() {
   return await getNodeV()
 }
 
