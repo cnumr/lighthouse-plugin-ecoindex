@@ -9,12 +9,12 @@ import {
 import { ChildProcess, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
+import { getWorkDir, setWorkDir } from '../shared/memory'
 
 import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
 import packageJson from '../../package.json'
-import path from 'path'
 import { shellEnv } from 'shell-env'
 
 // const execFile = util.promisify(_execFile);
@@ -24,8 +24,6 @@ import { shellEnv } from 'shell-env'
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
-
-let workDir = ''
 
 const runfixPath = () => {
   console.log(`RUN fixPath and shellEnv`)
@@ -179,10 +177,10 @@ let logStream: fs.WriteStream = null
  * @param optionalParams string[]
  */
 async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
-  if (!workDir) {
-    workDir = await _getHomeDir()
+  if (!getWorkDir()) {
+    setWorkDir(await _getHomeDir())
   }
-  const logFilePath = `${workDir}/logfile.txt`
+  const logFilePath = `${getWorkDir()}/logfile.txt`
   if (!logStream) {
     logStream = fs.createWriteStream(logFilePath)
     logStream.write('')
@@ -298,12 +296,12 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
     logStream = null
     console.log(`Reset logStream`)
 
-    workDir = newDir
+    setWorkDir(newDir)
   } else {
-    workDir = await _getHomeDir()
+    setWorkDir(await _getHomeDir())
   }
   // console.log(`workDir: ${workDir}`)
-  return await workDir
+  return await getWorkDir()
 }
 
 const handleIsJsonConfigFileExist = async (
@@ -333,7 +331,7 @@ async function _prepareJsonCollect(): Promise<{
 }> {
   // create stream to log the output. TODO: use specified path
   try {
-    const _workDir = await workDir
+    const _workDir = await getWorkDir()
     if (!_workDir || _workDir === '') {
       throw new Error('Work dir not found')
     }
@@ -520,7 +518,7 @@ const handleJsonSaveAndCollect = async (
   _debugLogs('Json save or/and collect start...')
 
   try {
-    const _workDir = await workDir
+    const _workDir = await getWorkDir()
     if (!_workDir || _workDir === '') {
       throw new Error('Work dir not found')
     }
@@ -625,7 +623,7 @@ const handleJsonReadAndReload = async (event: IpcMainEvent) => {
     body: 'Process intialization.',
   })
   try {
-    const _workDir = await workDir
+    const _workDir = await getWorkDir()
     if (!_workDir || _workDir === '') {
       throw new Error('Work dir not found')
     }
@@ -789,7 +787,7 @@ async function handleSelectFolder() {
   }
   const { canceled, filePaths } = await dialog.showOpenDialog(options)
   if (!canceled) {
-    workDir = filePaths[0]
+    setWorkDir(filePaths[0])
     return filePaths[0]
   }
 }
