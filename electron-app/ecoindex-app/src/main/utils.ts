@@ -101,7 +101,6 @@ import { shellEnv } from 'shell-env'
  * @returns any
  */
 export const cleanLogString = (stout: any) => {
-  return stout
   if (typeof stout !== 'string') return stout
   // eslint-disable-next-line no-control-regex, no-useless-escape
   const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')

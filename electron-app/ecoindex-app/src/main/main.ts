@@ -10,7 +10,8 @@ import { ChildProcess, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
-  getLogFileInDir,
+  getHomeDir,
+  getLogFilePathFromDir,
   getLogSteam,
   getMainWindow,
   getWorkDir,
@@ -19,6 +20,7 @@ import {
   setWorkDir,
 } from '../shared/memory'
 
+import { cleanLogString } from './utils'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
@@ -136,8 +138,7 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
     // (C)
     console.log('> ' + chomp(line))
     // eslint-disable-next-line no-control-regex, no-useless-escape
-    const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
-    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(line.replace(gm, '')))
+    win.webContents.send(channels.ASYNCHRONOUS_LOG, chomp(cleanLogString(line)))
   }
 }
 
@@ -186,9 +187,9 @@ const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
  */
 async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   if (!getWorkDir()) {
-    setWorkDir(await _getHomeDir())
+    setWorkDir(await getHomeDir())
   }
-  const logFilePath = getLogFileInDir(getWorkDir())
+  const logFilePath = getLogFilePathFromDir(getWorkDir())
 
   if (!getLogSteam()) {
     setLogStream(logFilePath)
@@ -206,24 +207,10 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   }
   try {
     const stout = toStr(message) + ' ' + optionalParams.map(str => toStr(str))
-    // eslint-disable-next-line no-control-regex, no-useless-escape
-    const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
-    // logStream.write(stout.replace(gm, '') + '\n')
     getLogSteam().write(stout + '\n')
   } catch (error) {
     getLogSteam().write(JSON.stringify(error, null, 2))
   }
-}
-
-const _getHomeDir = async () => {
-  // fixPath()
-  const _shellEnv = await shellEnv()
-  const home = _shellEnv.HOME
-  if (!home) {
-    _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
-    throw new Error('Home dir not found in PATH')
-  }
-  return home
 }
 
 const _getNodeVersion = async () => {
@@ -270,10 +257,6 @@ const _getNpmDir = async () => {
   return updatedNpmBinDir + '/lib/node_modules'
 }
 
-const _isDev = () => {
-  return process.env['WEBPACK_SERVE'] === 'true'
-}
-
 // #endregion
 
 // #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
@@ -303,12 +286,12 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   // console.log(`newDir`, newDir)
   if (newDir) {
     // logStream = null
-    setLogStream(getLogFileInDir(newDir))
+    setLogStream(getLogFilePathFromDir(newDir))
     // console.log(`Reset logStream`)
 
     setWorkDir(newDir)
   } else {
-    setWorkDir(await _getHomeDir())
+    setWorkDir(await getHomeDir())
   }
   // console.log(`workDir: ${workDir}`)
   return await getWorkDir()
