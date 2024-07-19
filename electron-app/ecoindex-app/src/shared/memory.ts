@@ -17,6 +17,10 @@ export const getMainWindow = () => {
 export const setMainWindow = (value: BrowserWindow) => {
   mainWindow = value
 }
+
+export const getLogFileInDir = (dir: string) => {
+  return `${dir}/logfile.txt`
+}
 export const getLogSteam = () => {
   return logStream
 }

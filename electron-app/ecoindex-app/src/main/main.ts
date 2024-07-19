@@ -9,7 +9,15 @@ import {
 import { ChildProcess, spawn } from 'child_process'
 import { channels, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
-import { getWorkDir, setWorkDir } from '../shared/memory'
+import {
+  getLogFileInDir,
+  getLogSteam,
+  getMainWindow,
+  getWorkDir,
+  setLogStream,
+  setMainWindow,
+  setWorkDir,
+} from '../shared/memory'
 
 import fixPath from 'fix-path'
 import fs from 'fs'
@@ -133,20 +141,21 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
   }
 }
 
-let mainWindow: BrowserWindow = null
 const _createWindow = (): void => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    icon: '/assets/app-ico.png',
-    webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-    },
-  })
+  setMainWindow(
+    new BrowserWindow({
+      width: 1000,
+      height: 800,
+      icon: '/assets/app-ico.png',
+      webPreferences: {
+        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      },
+    }),
+  )
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools({ mode: 'detach' })
@@ -163,14 +172,13 @@ const _debugLogs = (message?: any, ...optionalParams: any[]) => {
  * @param optionalParams
  */
 const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
-  mainWindow.webContents.send(
+  getMainWindow().webContents.send(
     channels.HOST_INFORMATIONS,
     message,
     optionalParams,
   )
 }
 
-let logStream: fs.WriteStream = null
 /**
  * Write a log file in output dir / workDir
  * @param message string
@@ -180,10 +188,11 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   if (!getWorkDir()) {
     setWorkDir(await _getHomeDir())
   }
-  const logFilePath = `${getWorkDir()}/logfile.txt`
-  if (!logStream) {
-    logStream = fs.createWriteStream(logFilePath)
-    logStream.write('')
+  const logFilePath = getLogFileInDir(getWorkDir())
+
+  if (!getLogSteam()) {
+    setLogStream(logFilePath)
+    getLogSteam().write('')
   }
   const toStr = (inp: any) => {
     try {
@@ -200,9 +209,9 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
     // eslint-disable-next-line no-control-regex, no-useless-escape
     const gm = new RegExp(']2;(.*)]1; ?(\n?)', 'gm')
     // logStream.write(stout.replace(gm, '') + '\n')
-    logStream.write(stout + '\n')
+    getLogSteam().write(stout + '\n')
   } catch (error) {
-    logStream.write(JSON.stringify(error, null, 2))
+    getLogSteam().write(JSON.stringify(error, null, 2))
   }
 }
 
@@ -293,8 +302,9 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
 const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
   // console.log(`newDir`, newDir)
   if (newDir) {
-    logStream = null
-    console.log(`Reset logStream`)
+    // logStream = null
+    setLogStream(getLogFileInDir(newDir))
+    // console.log(`Reset logStream`)
 
     setWorkDir(newDir)
   } else {
@@ -335,9 +345,6 @@ async function _prepareJsonCollect(): Promise<{
     if (!_workDir || _workDir === '') {
       throw new Error('Work dir not found')
     }
-    // console.log(`Work dir: ${_workDir}`)
-    // const logFilePath = `${_workDir}/logfile.txt`
-    // const logStream = fs.createWriteStream(logFilePath)
 
     const _shellEnv = await shellEnv()
     _debugLogs(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
@@ -354,7 +361,7 @@ async function _prepareJsonCollect(): Promise<{
       `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
       'collect',
     ]
-    return { logStream, command, nodeDir, workDir: _workDir }
+    return { logStream: getLogSteam(), command, nodeDir, workDir: _workDir }
   } catch (error) {
     console.error('Error', error)
   }
