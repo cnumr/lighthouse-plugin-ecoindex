@@ -1,13 +1,12 @@
 import './index.css'
 
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
-import { labels, utils } from '../shared/constants'
+import { channels, labels, utils } from '../shared/constants'
 import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
-import React from 'react'
 import { SimplePanMesure } from './components/simple-pan'
 import { cn } from '../shared/tailwind-helper'
 import iconAsso from '../../assets/asso.svg'
@@ -21,7 +20,9 @@ function TheApp() {
     // let nodeVersion = 'loading...'
     const [workDir, setWorkDir] = useState('chargement...')
     const [appReady, setAppReady] = useState(false)
+    const [datasFromHost, setDatasFromHost] = useState({})
     // let appReady = false
+
     let loadingScreen = 0
     const [urlsList, setUrlsList] = useState<InputField[]>([
         { value: 'https://www.ecoindex.fr/' },
@@ -100,11 +101,6 @@ function TheApp() {
         const filePath = await window.electronAPI.handleSelectFolder()
 
         if (filePath !== undefined) setWorkDir(filePath)
-    }
-
-    const setLog = (value: string) => {
-        const echoElement = document.getElementById('echo') as HTMLElement
-        echoElement.innerText = value
     }
 
     const showNotification = (title: string, options: any) => {
@@ -216,6 +212,26 @@ function TheApp() {
                 fetchNodeVersion()
                 fetchLighthouseEcoindexPluginInstalled()
             })
+        })
+
+        // get data from main
+        window.electronAPI.sendDatasToFront((data: any) => {
+            console.log(typeof data)
+
+            if (typeof data === 'string') {
+                const _data = JSON.parse(data)
+                console.log(`sendDatasToFront`, _data)
+                setDatasFromHost((oldObject) => ({
+                    ...oldObject,
+                    ..._data,
+                }))
+            } else {
+                console.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
+                setDatasFromHost((oldObject) => ({
+                    ...oldObject,
+                    ...data,
+                }))
+            }
         })
     }, [])
 
@@ -398,6 +414,9 @@ function TheApp() {
                         className="echo h-36"
                         readOnly
                     ></textarea>
+                    <div className="hidden text-xs">
+                        {JSON.stringify(datasFromHost, null, 2)}
+                    </div>
                 </div>
                 <div className="text-center text-sm">
                     <p className="text-xs">

@@ -1,6 +1,7 @@
 import './index.css'
 import './index.tsx'
 
+import { IpcRenderer } from 'electron'
 import { cleanLogString } from '../main/utils'
 
 /**
@@ -31,25 +32,35 @@ import { cleanLogString } from '../main/utils'
  * ```
  */
 
+// window.require = require
+
 window.electronAPI.sendLogToFront((message: string) => {
-  console.log(message)
-  const textArea = document.getElementById('echo') as HTMLTextAreaElement
-  textArea.value = textArea.value + '\n' + message
-  textArea.scrollTop = textArea.scrollHeight
+    console.log(message)
+    const textArea = document.getElementById('echo') as HTMLTextAreaElement
+    textArea.value = textArea.value + '\n' + message
+    textArea.scrollTop = textArea.scrollHeight
 })
 
 window.electronAPI.sendMessageToFrontLog(
-  (message?: any, ...optionalParams: any[]) => {
-    if (optionalParams && optionalParams.length > 1)
-      console.log(
-        message,
-        optionalParams.map(out => cleanLogString(out)),
-      )
-    else console.log(cleanLogString(message))
-  },
+    (message?: any, ...optionalParams: any[]) => {
+        if (optionalParams && optionalParams.length > 1)
+            console.log(
+                message,
+                optionalParams.map((out) => cleanLogString(out))
+            )
+        else console.log(cleanLogString(message))
+    }
 )
+
+// window.electronAPI.sendDatasToFront((data: any) => {
+//     if (typeof data === 'string') {
+//         console.log(`sendDatasToFront`, data)
+//     } else {
+//         console.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
+//     }
+// })
 
 console.log('👋 Welcome to Ecoindex mesures launcher!')
 console.log(
-  '💡 More informations : https://cnumr.github.io/lighthouse-plugin-ecoindex/ and https://www.ecoindex.fr/',
+    '💡 More informations : https://cnumr.github.io/lighthouse-plugin-ecoindex/ and https://www.ecoindex.fr/'
 )

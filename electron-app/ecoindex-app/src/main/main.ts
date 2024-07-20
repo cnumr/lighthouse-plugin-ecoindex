@@ -6,7 +6,7 @@ import {
     dialog,
     ipcMain,
 } from 'electron'
-import { ChildProcess, exec, spawn } from 'child_process'
+import { ChildProcess, spawn } from 'child_process'
 import { channels, scripts as custom_scripts, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
@@ -36,7 +36,6 @@ import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
 import packageJson from '../../package.json'
-import { shellEnv } from 'shell-env'
 
 // const execFile = util.promisify(_execFile);
 
@@ -73,6 +72,7 @@ const createWindow = (): void => {
         webPreferences: {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true,
+            // contextIsolation: false,
         },
     })
 
@@ -224,6 +224,17 @@ function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
 }
 
 /**
+ * Utils, Send data to Front.
+ * @param data any
+ */
+function sendDataToFront(data: any) {
+    getMainWindow().webContents.send(
+        channels.HOST_INFORMATIONS_BACK,
+        typeof data === 'string' ? data : JSON.stringify(data, null, 2)
+    )
+}
+
+/**
  * Utils, prepare Json Collect.
  * @returns Promise<{
   command: string[]
@@ -242,9 +253,6 @@ async function _prepareJsonCollect(): Promise<{
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }
-
-        const _shellEnv = await shellEnv()
-        _debugLogs(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`)
 
         const nodeDir = getNodeDir()
         _debugLogs(`Node dir: ${nodeDir}`)
@@ -316,7 +324,7 @@ async function _runCollect(
 ): Promise<string> {
     try {
         _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
-        const controller = new AbortController()
+        // const controller = new AbortController()
         // const { signal } = controller
         const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
             stdio: ['pipe', 'pipe', process.stderr],
@@ -496,7 +504,6 @@ async function _getHostInformations(
 async function _sleep(ms: number) {
     return new Promise((resolve) => {
         console.log(`wait ${ms / 1000}s`)
-
         setTimeout(resolve, ms)
     })
 }
@@ -524,6 +531,13 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
 
     // setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
     // console.log(`nodeVersion`, getNodeV())
+    sendDataToFront({ 'nodeDir-raw': _nodeDir })
+    sendDataToFront({ nodeDir: getNodeDir() })
+    sendDataToFront({ npmDir: getNpmDir() })
+    const { shell } = os.userInfo()
+    sendDataToFront({ shell })
+    sendDataToFront({ platform: os.platform() })
+    sendDataToFront({ env: process.env })
 
     try {
         fs.accessSync(getNodeDir())
@@ -565,13 +579,12 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
  */
 const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
     // fixPath()
-    const _shellEnv = await shellEnv()
-    const home = _shellEnv.HOME
-    if (!home) {
+    const { shell, homedir } = os.userInfo()
+    if (!homedir) {
         // _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
         throw new Error('Home dir not found in PATH')
     }
-    setHomeDir(home)
+    setHomeDir(homedir)
     // console.log(`newDir`, newDir)
     if (newDir) {
         // logStream = null
