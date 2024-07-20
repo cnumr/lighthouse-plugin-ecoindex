@@ -11,7 +11,7 @@ import { channels, scripts as custom_scripts, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
     cleanLogString,
-    convertJSONDatasFromSimpleUrlInput,
+    convertJSONDatasFromISimpleUrlInput,
     convertJSONDatasFromString,
 } from './utils'
 import {
@@ -627,12 +627,12 @@ const handleIsJsonConfigFileExist = async (
 /**
  * Handlers, SimpleCollect
  * @param event IpcMainEvent
- * @param urlsList SimpleUrlInput[]
+ * @param urlsList ISimpleUrlInput[]
  * @returns string
  */
 const handleSimpleCollect = async (
     event: IpcMainEvent,
-    urlsList: SimpleUrlInput[]
+    urlsList: ISimpleUrlInput[]
 ) => {
     if (!urlsList || urlsList.length === 0) {
         throw new Error('Urls list is empty')
@@ -744,7 +744,7 @@ const handleJsonSaveAndCollect = async (
             if (jsonDatas && typeof jsonDatas === 'object') {
                 jsonStream.write(
                     JSON.stringify(
-                        convertJSONDatasFromSimpleUrlInput(jsonDatas),
+                        convertJSONDatasFromISimpleUrlInput(jsonDatas),
                         null,
                         2
                     )

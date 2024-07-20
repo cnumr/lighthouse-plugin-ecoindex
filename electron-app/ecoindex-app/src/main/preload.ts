@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld('versions', {
 contextBridge.exposeInMainWorld('electronAPI', {
     // Front → Main
     // simple handlers
-    handleSimpleMesures: (urlsList: SimpleUrlInput[]) =>
+    handleSimpleMesures: (urlsList: ISimpleUrlInput[]) =>
         ipcRenderer.invoke(channels.SIMPLE_MESURES, urlsList),
     // json handlers
     handleJsonSaveAndCollect: (

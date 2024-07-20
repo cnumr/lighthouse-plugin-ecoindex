@@ -17,7 +17,7 @@ export interface IElectronAPI {
     isNodeInstalled: () => Promise<boolean>
     isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
     handleLighthouseEcoindexPluginInstall: () => Promise<boolean>
-    handleSimpleMesures: (urlsList: SimpleUrlInput[]) => void
+    handleSimpleMesures: (urlsList: ISimpleUrlInput[]) => void
     handleJsonSaveAndCollect: (
         json: IJsonMesureData,
         andCollect: boolean
@@ -27,9 +27,6 @@ export interface IElectronAPI {
 }
 
 declare global {
-    interface Window {
-        require: any
-    }
     export interface IJsonMesureData {
         'extra-header': object | null
         output: string[]
@@ -43,11 +40,14 @@ declare global {
         target: string
         course: string
         'is-best-pages': boolean
-        urls: string[] | SimpleUrlInput[]
-        urlSelector?: SimpleUrlInput[]
+        urls: string[] | ISimpleUrlInput[]
+        urlSelector?: ISimpleUrlInput[]
     }
-    export interface SimpleUrlInput {
+    export interface ISimpleUrlInput {
         value: string
+    }
+    export interface IKeyValue {
+        [key: string]: string
     }
     interface Window {
         versions: IVersionsAPI

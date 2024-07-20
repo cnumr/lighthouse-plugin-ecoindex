@@ -1,7 +1,7 @@
-type SimpleUrlInput = {
-  value: string
+type ISimpleUrlInput = {
+    value: string
 }
 
 type InputField = {
-  value: string
+    value: string
 }
