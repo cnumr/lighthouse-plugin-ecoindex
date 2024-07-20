@@ -23,6 +23,7 @@ import {
   getNodeV,
   getNpmDir,
   getWorkDir,
+  setHomeDir,
   setLogStream,
   setMainWindow,
   setNodeDir,
@@ -92,7 +93,7 @@ app.on('ready', () => {
   ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSaveAndCollect)
   ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
   // communs handlers and getters
-  ipcMain.handle(channels.GET_NODE_VERSION, handlerGetNodeVersion)
+  ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
   ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
   ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
   ipcMain.handle(
@@ -193,9 +194,9 @@ const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
  * @param message string
  * @param optionalParams string[]
  */
-async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
+function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
   if (!getWorkDir()) {
-    setWorkDir(await getHomeDir())
+    setWorkDir(getHomeDir())
   }
   const logFilePath = getLogFilePathFromDir(getWorkDir())
 
@@ -222,7 +223,7 @@ async function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
 }
 
 /**
- * Utils prepare Json Collect.
+ * Utils, prepare Json Collect.
  * @returns Promise<{
   command: string[]
   nodeDir: string
@@ -350,6 +351,122 @@ async function _runCollect(
   return 'mesure done'
 }
 
+/**
+ * Utils, Launch script on host.
+ * @param event IpcMainEvent
+ * @param script_type string. see constants.scripts
+ * @param isReadable boolean
+ * @returns Promise<string>
+ */
+async function _getHostInformations(
+  event: IpcMainEvent,
+  script_type: string,
+  isReadable = true,
+): Promise<string> {
+  try {
+    console.log(`getHostInformations`)
+    _debugLogs(`getHostInformations for ${script_type} started 🚀`)
+    // Create configuration from host and script_type
+    const config: { [key: string]: any } = {}
+    config['script_file'] = `${script_type}`
+    config['ext'] = os.platform() === 'win32' ? 'bat' : 'sh'
+    config['filePath'] = `${
+      process.env['WEBPACK_SERVE'] === 'true'
+        ? __dirname
+        : process.resourcesPath
+    }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`
+    config['out'] = []
+    const { shell, homedir } = os.userInfo()
+    if (shell === '/bin/zsh') {
+      config['runner'] = 'zsh'
+    }
+
+    const informations = {
+      script_type,
+      shell,
+      runner: config['runner'],
+      filePath: config['filePath'],
+      __dirname,
+      homedir,
+    }
+    _debugLogs(`informations`, JSON.stringify(informations, null, 2))
+    _debugLogs(`Try childProcess on`, config['filePath'])
+
+    return new Promise((resolve, reject) => {
+      const childProcess: ChildProcess = spawn(
+        config['runner'] as string,
+        [
+          '-c',
+          `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`,
+        ],
+        {
+          stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
+          env: process.env,
+          // shell: shell,
+        },
+      )
+
+      childProcess.on('exit', (code, signal) => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} exited: ${code}; signal: ${signal}`,
+        )
+      })
+
+      childProcess.on('close', code => {
+        _debugLogs(`Process ${script_type.toUpperCase()} closed: ${code}`)
+
+        if (code === 0) {
+          // _sendMessageToFrontLog(`Intallation done 🚀`)
+          _debugLogs(`Process ${script_type.toUpperCase()} done 🚀`)
+          // resolve(`Process ${script_type.toUpperCase()} done 🚀`)
+          if (config['out'].at(-1)) {
+            resolve(config['out'].at(-1).replace('\\n', '').trim() as string)
+          } else {
+            reject(
+              `Process ${script_type.toUpperCase()} failed, out is unknown 🚫`,
+            )
+          }
+        } else {
+          // _sendMessageToFrontLog(`Intallation failed 🚫`)
+          _debugLogs(`Process ${script_type.toUpperCase()} failed 🚫`)
+          reject(`Process ${script_type.toUpperCase()} failed 🚫`)
+        }
+      })
+
+      if (childProcess.stderr) {
+        childProcess.stderr.on('data', data => {
+          console.error(`Process ${script_type.toUpperCase()} stderr: ${data}`)
+          _debugLogs(`Process ${script_type.toUpperCase()} stderr: ${data}`)
+        })
+      }
+
+      childProcess.on('disconnect', () => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} Child process disconnected`,
+        )
+      })
+
+      childProcess.on('message', (message, sendHandle) => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} Child process message: ${message}`,
+        )
+      })
+
+      if (childProcess.stdout) {
+        isReadable && _echoReadable(event, childProcess.stdout)
+        childProcess.stdout.on('data', data => {
+          config['out'].push(data.toString())
+        })
+      }
+    })
+  } catch (error) {
+    _debugLogs(`error on ${script_type}`, JSON.stringify(error, null, 2))
+    return new Promise((resolve, reject) => {
+      reject(`getHostInformations on ${script_type} failed 🚫`)
+    })
+  }
+}
+
 // #endregion
 
 // #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
@@ -361,19 +478,20 @@ async function _runCollect(
  */
 const handleNodeInstalled = async (event: IpcMainEvent) => {
   // get Node Dir
-  setNodeDir(await getHostInformations(event, custom_scripts.GET_NODE))
+  setNodeDir(await _getHostInformations(event, custom_scripts.GET_NODE))
   console.log(`nodeDir`, getNodeDir())
 
   setNpmDir(getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules')
   console.log(`npmDir: `, getNpmDir())
 
-  // setNodeV(await getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+  // setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
   // console.log(`nodeVersion`, getNodeV())
 
   try {
-    fs.accessSync(getNodeDir(), fs.constants.F_OK)
+    fs.accessSync(getNodeDir())
     return true
   } catch (error) {
+    console.log(`has NOT access to Node DIR 🚫`, error)
     return false
   }
 }
@@ -401,6 +519,14 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
  * @returns string
  */
 const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
+  // fixPath()
+  const _shellEnv = await shellEnv()
+  const home = _shellEnv.HOME
+  if (!home) {
+    // _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
+    throw new Error('Home dir not found in PATH')
+  }
+  setHomeDir(home)
   // console.log(`newDir`, newDir)
   if (newDir) {
     // logStream = null
@@ -409,7 +535,7 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
 
     setWorkDir(newDir)
   } else {
-    setWorkDir(await getHomeDir())
+    setWorkDir(getHomeDir())
   }
   // console.log(`workDir: ${workDir}`)
   return await getWorkDir()
@@ -446,10 +572,10 @@ const handleIsJsonConfigFileExist = async (
  * @param urlsList SimpleUrlInput[]
  * @returns string
  */
-async function handleSimpleCollect(
+const handleSimpleCollect = async (
   event: IpcMainEvent,
   urlsList: SimpleUrlInput[],
-) {
+) => {
   if (!urlsList || urlsList.length === 0) {
     throw new Error('Urls list is empty')
   }
@@ -728,9 +854,9 @@ async function test_handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
  * @param event IpcMainEvent
  * @returns Promise<string>
  */
-async function handleLighthouseEcoindexPluginInstall(
+const handleLighthouseEcoindexPluginInstall = async (
   event: IpcMainEvent,
-): Promise<string> {
+): Promise<string> => {
   try {
     console.log(`handleLighthouseEcoindexPluginInstall`)
     _debugLogs(`handleLighthouseEcoindexPluginInstall started 🚀`)
@@ -802,119 +928,11 @@ async function handleLighthouseEcoindexPluginInstall(
   }
 }
 
-const getHostInformations = async (
-  event: IpcMainEvent,
-  script_type: string,
-): Promise<string> => {
-  try {
-    console.log(`getHostInformations`)
-    _debugLogs(`getHostInformations for ${script_type} started 🚀`)
-    // Create configuration from host and script_type
-    const config: { [key: string]: any } = {}
-    config['script_file'] = `${script_type}`
-    config['ext'] = os.platform() === 'win32' ? 'bat' : 'sh'
-    config['filePath'] = `${
-      process.env['WEBPACK_SERVE'] === 'true'
-        ? __dirname
-        : process.resourcesPath
-    }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`
-    config['out'] = []
-    const { shell, homedir } = os.userInfo()
-    if (shell === '/bin/zsh') {
-      config['runner'] = 'zsh'
-    }
-
-    const informations = {
-      script_type,
-      shell,
-      runner: config['runner'],
-      filePath: config['filePath'],
-      __dirname,
-      homedir,
-    }
-    _debugLogs(`informations`, JSON.stringify(informations, null, 2))
-    _debugLogs(`Try childProcess on`, config['filePath'])
-
-    return new Promise((resolve, reject) => {
-      const childProcess: ChildProcess = spawn(
-        config['runner'] as string,
-        [
-          '-c',
-          `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`,
-        ],
-        {
-          stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-          env: process.env,
-          // shell: shell,
-        },
-      )
-
-      childProcess.on('exit', (code, signal) => {
-        _debugLogs(
-          `Process ${script_type.toUpperCase()} exited: ${code}; signal: ${signal}`,
-        )
-      })
-
-      childProcess.on('close', code => {
-        _debugLogs(`Process ${script_type.toUpperCase()} closed: ${code}`)
-
-        if (code === 0) {
-          // _sendMessageToFrontLog(`Intallation done 🚀`)
-          _debugLogs(`Process ${script_type.toUpperCase()} done 🚀`)
-          // resolve(`Process ${script_type.toUpperCase()} done 🚀`)
-          if (config['out'].at(-1)) {
-            resolve(config['out'].at(-1).replace('\\n', '').trim() as string)
-          } else {
-            reject(
-              `Process ${script_type.toUpperCase()} failed, out is unknown 🚫`,
-            )
-          }
-        } else {
-          // _sendMessageToFrontLog(`Intallation failed 🚫`)
-          _debugLogs(`Process ${script_type.toUpperCase()} failed 🚫`)
-          reject(`Process ${script_type.toUpperCase()} failed 🚫`)
-        }
-      })
-
-      if (childProcess.stderr) {
-        childProcess.stderr.on('data', data => {
-          console.error(`Process ${script_type.toUpperCase()} stderr: ${data}`)
-          _debugLogs(`Process ${script_type.toUpperCase()} stderr: ${data}`)
-        })
-      }
-
-      childProcess.on('disconnect', () => {
-        _debugLogs(
-          `Process ${script_type.toUpperCase()} Child process disconnected`,
-        )
-      })
-
-      childProcess.on('message', (message, sendHandle) => {
-        _debugLogs(
-          `Process ${script_type.toUpperCase()} Child process message: ${message}`,
-        )
-      })
-
-      if (childProcess.stdout) {
-        _echoReadable(event, childProcess.stdout)
-        childProcess.stdout.on('data', data => {
-          config['out'].push(data.toString())
-        })
-      }
-    })
-  } catch (error) {
-    _debugLogs(`error on ${script_type}`, JSON.stringify(error, null, 2))
-    return new Promise((resolve, reject) => {
-      reject(`getHostInformations on ${script_type} failed 🚫`)
-    })
-  }
-}
-
 /**
  * Handlers, SelectFolder
  * @returns string
  */
-async function handleSelectFolder() {
+const handleSelectFolder = async () => {
   const options: Electron.OpenDialogOptions = {
     properties: ['openDirectory', 'createDirectory'],
   }
@@ -929,8 +947,8 @@ async function handleSelectFolder() {
  * Handlers, Node Version
  * @returns string
  */
-async function handlerGetNodeVersion(event: IpcMainEvent) {
-  setNodeV(await getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+const handleGetNodeVersion = async (event: IpcMainEvent) => {
+  setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
   return getNodeV()
 }
 

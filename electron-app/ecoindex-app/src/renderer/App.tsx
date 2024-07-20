@@ -115,12 +115,15 @@ function TheApp() {
     counter.innerText = `Loading... ${loadingScreen}/4`
     const loadingPopin = document.getElementById('loadingPopin') as HTMLElement
     if (loadingScreen === 4) {
+      setAppReady(isNodeInstalled && isLighthouseEcoindexPluginInstalled)
       loadingPopin.style.display = 'none'
       const _n: any = {}
       _n.body = 'Application succefully loaded.\nWelcome 👋'
       _n.subtitle = 'You can now start mesures'
       _n.priority = 'critical'
       showNotification('', _n)
+    } else {
+      setAppReady(false)
     }
   }
 
@@ -161,7 +164,7 @@ function TheApp() {
       const result = await window.electronAPI.isNodeInstalled()
       setIsNodeInstalled(result)
       // isNodeInstalled = result
-      setAppReady(result && isLighthouseEcoindexPluginInstalled)
+      // setAppReady(result && isNodeInstalled)
 
       increment()
     }
@@ -174,16 +177,16 @@ function TheApp() {
         await window.electronAPI.isLighthouseEcoindexPluginInstalled()
       setIsLighthouseEcoindexPluginInstalled(result)
       // isLighthouseEcoindexPluginInstalled = result
-      setAppReady(result && isNodeInstalled)
+      // setAppReady(result && isLighthouseEcoindexPluginInstalled)
       increment()
     }
 
-    // must be the first
-    fetchNodeInstalled().then(() => {
-      fetchNodeVersion()
+    fetchWorkDir().then(() => {
+      fetchNodeInstalled().then(() => {
+        fetchNodeVersion()
+      })
+      fetchLighthouseEcoindexPluginInstalled()
     })
-    fetchWorkDir()
-    fetchLighthouseEcoindexPluginInstalled()
   }, [])
 
   useEffect(() => {
@@ -222,12 +225,14 @@ function TheApp() {
     <div className="relative">
       <main className="flex flex-col justify-between p-4 h-screen">
         <div className="flex flex-col gap-2 items-center">
-          <div className="logo-ecoindex">
-            {/* <img width="100" alt="icon" src={icon} className="bg-slate-400" /> */}
-            <span className="logo-ecoindex logo-ecoindex__eco">eco</span>
-            <span className="logo-ecoindex logo-ecoindex__index">Index</span>
+          <div className="flex gap-4 items-center py-4">
+            <div className="logo-ecoindex">
+              {/* <img width="100" alt="icon" src={icon} className="bg-slate-400" /> */}
+              <span className="logo-ecoindex logo-ecoindex__eco">eco</span>
+              <span className="logo-ecoindex logo-ecoindex__index">Index</span>
+            </div>
+            <h1 className="pt-1">Mesures launcher 👋</h1>
           </div>
-          <h1>Mesures launcher 👋</h1>
           <AlertBox visible={!isNodeInstalled}>
             <span>Node is not installed!</span>
             <button

@@ -4,6 +4,7 @@ import { shellEnv } from 'shell-env'
 let workDir = ''
 let nodeDir = ''
 let npmDir = ''
+let homeDir = ''
 let nodeVersion = ''
 let logStream: fs.WriteStream = null
 let mainWindow: BrowserWindow = null
@@ -37,15 +38,11 @@ export const setNodeV = (value: string) => {
   nodeVersion = value
 }
 
-export const getHomeDir = async () => {
-  // fixPath()
-  const _shellEnv = await shellEnv()
-  const home = _shellEnv.HOME
-  if (!home) {
-    // _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
-    throw new Error('Home dir not found in PATH')
-  }
-  return home
+export const getHomeDir = () => {
+  return homeDir
+}
+export const setHomeDir = (value: string) => {
+  homeDir = value
 }
 
 export const getMainWindow = () => {
