@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "Install plugin launched..."
+echo "Ask which node launched..."
 unset npm_config_prefix > /dev/null 2>&1
 source ~/.zshrc > /dev/null 2>&1
 
-echo "$(which node)"
+# must be the last row
+which node

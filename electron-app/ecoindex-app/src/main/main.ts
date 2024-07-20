@@ -6,8 +6,8 @@ import {
   dialog,
   ipcMain,
 } from 'electron'
-import { ChildProcess, spawn } from 'child_process'
-import { channels, utils } from '../shared/constants'
+import { ChildProcess, exec, spawn } from 'child_process'
+import { channels, scripts as custom_scripts, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
   cleanLogString,
@@ -360,31 +360,16 @@ async function _runCollect(
  * @returns boolean
  */
 const handleNodeInstalled = async (event: IpcMainEvent) => {
-  const _shellEnv = await shellEnv()
-  // console.log(`Shell Env: ${JSON.stringify(_shellEnv, null, 2)}`);
-  const nodeDir =
-    _shellEnv.NODE || _shellEnv.NVM_BIN || _shellEnv.npm_node_execpath
-  if (!nodeDir) {
-    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
-    throw new Error('Node dir not found in PATH')
-  }
-  // console.log(`Node dir: ${nodeDir}`);
-  setNodeDir(nodeDir)
-  const npmBinDir = _shellEnv.NVM_BIN || _shellEnv.npm_config_prefix + '/bin'
-  if (!npmBinDir) {
-    _debugLogs('ERROR', 'Npm dir not found in PATH', _shellEnv)
-    throw new Error('Npm dir not found in PATH')
-  }
-  const updatedNpmBinDir = npmBinDir?.replace(/\/bin$/, '')
+  // get Node Dir
+  setNodeDir(await getHostInformations(event, custom_scripts.GET_NODE))
+  console.log(`nodeDir`, getNodeDir())
 
-  setNpmDir(updatedNpmBinDir + '/lib/node_modules')
+  setNpmDir(getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules')
+  console.log(`npmDir: `, getNpmDir())
 
-  const nodeVersion = nodeDir?.match(/v\d+\.\d+\.\d+/)?.[0]
-  if (!nodeVersion) {
-    _debugLogs('ERROR', 'Node dir not found in PATH', _shellEnv)
-    throw new Error('Node version not found in PATH')
-  }
-  setNodeV(nodeVersion)
+  // setNodeV(await getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+  // console.log(`nodeVersion`, getNodeV())
+
   try {
     fs.accessSync(getNodeDir(), fs.constants.F_OK)
     return true
@@ -778,18 +763,18 @@ async function handleLighthouseEcoindexPluginInstall(
       )
 
       childProcess.on('exit', (code, signal) => {
-        _debugLogs(`Intallation exited: ${code}; signal: ${signal}`)
+        _debugLogs(`Installation exited: ${code}; signal: ${signal}`)
       })
 
       childProcess.on('close', code => {
-        _debugLogs(`Intallation closed: ${code}`)
+        _debugLogs(`Installation closed: ${code}`)
         if (code === 0) {
           // _sendMessageToFrontLog(`Intallation done 🚀`)
-          _debugLogs(`Intallation done 🚀`)
+          _debugLogs(`Installation done 🚀`)
           resolve(`Installation done 🚀`)
         } else {
           // _sendMessageToFrontLog(`Intallation failed 🚫`)
-          _debugLogs(`Intallation failed 🚫`)
+          _debugLogs(`Installation failed 🚫`)
           reject(`Installation failed 🚫`)
         }
       })
@@ -817,6 +802,114 @@ async function handleLighthouseEcoindexPluginInstall(
   }
 }
 
+const getHostInformations = async (
+  event: IpcMainEvent,
+  script_type: string,
+): Promise<string> => {
+  try {
+    console.log(`getHostInformations`)
+    _debugLogs(`getHostInformations for ${script_type} started 🚀`)
+    // Create configuration from host and script_type
+    const config: { [key: string]: any } = {}
+    config['script_file'] = `${script_type}`
+    config['ext'] = os.platform() === 'win32' ? 'bat' : 'sh'
+    config['filePath'] = `${
+      process.env['WEBPACK_SERVE'] === 'true'
+        ? __dirname
+        : process.resourcesPath
+    }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`
+    config['out'] = []
+    const { shell, homedir } = os.userInfo()
+    if (shell === '/bin/zsh') {
+      config['runner'] = 'zsh'
+    }
+
+    const informations = {
+      script_type,
+      shell,
+      runner: config['runner'],
+      filePath: config['filePath'],
+      __dirname,
+      homedir,
+    }
+    _debugLogs(`informations`, JSON.stringify(informations, null, 2))
+    _debugLogs(`Try childProcess on`, config['filePath'])
+
+    return new Promise((resolve, reject) => {
+      const childProcess: ChildProcess = spawn(
+        config['runner'] as string,
+        [
+          '-c',
+          `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`,
+        ],
+        {
+          stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
+          env: process.env,
+          // shell: shell,
+        },
+      )
+
+      childProcess.on('exit', (code, signal) => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} exited: ${code}; signal: ${signal}`,
+        )
+      })
+
+      childProcess.on('close', code => {
+        _debugLogs(`Process ${script_type.toUpperCase()} closed: ${code}`)
+
+        if (code === 0) {
+          // _sendMessageToFrontLog(`Intallation done 🚀`)
+          _debugLogs(`Process ${script_type.toUpperCase()} done 🚀`)
+          // resolve(`Process ${script_type.toUpperCase()} done 🚀`)
+          if (config['out'].at(-1)) {
+            resolve(config['out'].at(-1).replace('\\n', '').trim() as string)
+          } else {
+            reject(
+              `Process ${script_type.toUpperCase()} failed, out is unknown 🚫`,
+            )
+          }
+        } else {
+          // _sendMessageToFrontLog(`Intallation failed 🚫`)
+          _debugLogs(`Process ${script_type.toUpperCase()} failed 🚫`)
+          reject(`Process ${script_type.toUpperCase()} failed 🚫`)
+        }
+      })
+
+      if (childProcess.stderr) {
+        childProcess.stderr.on('data', data => {
+          console.error(`Process ${script_type.toUpperCase()} stderr: ${data}`)
+          _debugLogs(`Process ${script_type.toUpperCase()} stderr: ${data}`)
+        })
+      }
+
+      childProcess.on('disconnect', () => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} Child process disconnected`,
+        )
+      })
+
+      childProcess.on('message', (message, sendHandle) => {
+        _debugLogs(
+          `Process ${script_type.toUpperCase()} Child process message: ${message}`,
+        )
+      })
+
+      if (childProcess.stdout) {
+        _echoReadable(event, childProcess.stdout)
+        childProcess.stdout.on('data', data => {
+          config['out'].push(data.toString())
+        })
+      }
+    })
+  } catch (error) {
+    _debugLogs(`error on ${script_type}`, JSON.stringify(error, null, 2))
+    return new Promise((resolve, reject) => {
+      reject(`getHostInformations on ${script_type} failed 🚫`)
+    })
+  }
+}
+
 /**
  * Handlers, SelectFolder
  * @returns string
@@ -836,8 +929,9 @@ async function handleSelectFolder() {
  * Handlers, Node Version
  * @returns string
  */
-async function handlerGetNodeVersion() {
-  return await getNodeV()
+async function handlerGetNodeVersion(event: IpcMainEvent) {
+  setNodeV(await getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+  return getNodeV()
 }
 
 // #endregion

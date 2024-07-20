@@ -179,8 +179,9 @@ function TheApp() {
     }
 
     // must be the first
-    fetchNodeInstalled()
-    fetchNodeVersion()
+    fetchNodeInstalled().then(() => {
+      fetchNodeVersion()
+    })
     fetchWorkDir()
     fetchLighthouseEcoindexPluginInstalled()
   }, [])

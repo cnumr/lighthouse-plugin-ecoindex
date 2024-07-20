@@ -1,5 +1,6 @@
 type IConstants = {
   channels: { [key: string]: string }
+  scripts: { [key: string]: string }
   labels: { [key: string]: { [key: string]: string } }
   utils: { JSON_FILE_NAME: string; DEFAULT_JSON_DATA: IJsonMesureData }
 }
@@ -19,6 +20,11 @@ const constants: IConstants = {
     IS_JSON_CONFIG_FILE_EXIST: 'is-json-config-file-exist',
     INSTALL_ECOINDEX_PLUGIN: 'install-ecoindex-plugin',
     HOST_INFORMATIONS: 'host-informations',
+  },
+  scripts: {
+    GET_NODE: 'get-node',
+    GET_NODE_VERSION: 'get-node-version',
+    INSTALL_PLUGIN_AND_UTILS: 'install-plugin-and-utils',
   },
   labels: {
     en: {
@@ -73,3 +79,4 @@ const constants: IConstants = {
 export const channels = constants.channels
 export const utils = constants.utils
 export const labels = constants.labels
+export const scripts = constants.scripts
