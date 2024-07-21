@@ -1,7 +1,6 @@
 import type { Configuration } from 'webpack'
 import { plugins } from './webpack.plugins'
 import { rules } from './webpack.rules'
-import webpack from 'webpack'
 
 export const mainConfig: Configuration = {
     /**
@@ -13,13 +12,7 @@ export const mainConfig: Configuration = {
     module: {
         rules,
     },
-    plugins: [
-        new webpack.EnvironmentPlugin({
-            APPLE_ID: process.env.APPLE_ID,
-            APPLE_PASSWORD: process.env.APPLE_PASSWORD,
-            APPLE_TEAM_ID: process.env.APPLE_TEAM_ID,
-        }),
-    ],
+    plugins,
     resolve: {
         extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
     },
