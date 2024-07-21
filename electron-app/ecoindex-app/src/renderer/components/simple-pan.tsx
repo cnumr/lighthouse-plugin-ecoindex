@@ -1,5 +1,7 @@
+import { Button } from '../ui/button'
 import { FC } from 'react'
 import { SimpleUrlsList } from './simple-urls'
+import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 
 export interface ISimpleMesureLayout {
     appReady: boolean
@@ -27,8 +29,8 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
                 language={language}
                 title="2. Urls to mesure"
             />
-            <h2>3. Launch the mesures</h2>
-            <button
+            <TypographyH2>3. Launch the mesures</TypographyH2>
+            <Button
                 type="button"
                 id="btn-simple-mesures"
                 title="Launch the mesures"
@@ -37,7 +39,7 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
                 className="btn btn-green"
             >
                 Mesures
-            </button>
+            </Button>
         </div>
     )
 }

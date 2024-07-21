@@ -1,14 +1,32 @@
 import './index.css'
 
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from './ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/renderer/ui/tooltip'
 import { channels, labels, utils } from '../shared/constants'
 import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
+import { Button } from '@/renderer/ui/button'
+import { Header } from './components/Header'
+import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
 import { SimplePanMesure } from './components/simple-pan'
-import { cn } from '../shared/tailwind-helper'
+import { Textarea } from './ui/textarea'
+import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
+import { cn } from '../renderer/lib/utils'
 import iconAsso from '../../assets/asso.svg'
 import packageJson from '../../package.json'
 
@@ -285,29 +303,29 @@ function TheApp() {
 
     return (
         <div className="relative">
-            <button
-                className="tooltip btn btn-green-outlined btn-small absolute right-12 top-2 box-content w-fit"
-                onClick={copyToClipBoard}
-            >
-                <span className="tooltiptext" id="myTooltip">
-                    Copy to clipboard
-                </span>
-                DEBUG
-            </button>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="secondary"
+                            className="absolute right-2 top-2"
+                            onClick={copyToClipBoard}
+                        >
+                            DEBUG
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>
+                            Copy application informations to clipboard.
+                            <br />
+                            Send theim to developper.
+                        </p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <main className="flex h-screen flex-col justify-between p-4">
                 <div className="flex flex-col items-center gap-2">
-                    <div className="flex items-center gap-4 py-4">
-                        <div className="logo-ecoindex">
-                            {/* <img width="100" alt="icon" src={icon} className="bg-slate-400" /> */}
-                            <span className="logo-ecoindex logo-ecoindex__eco">
-                                eco
-                            </span>
-                            <span className="logo-ecoindex logo-ecoindex__index">
-                                Index
-                            </span>
-                        </div>
-                        <h1 className="pt-1">Mesures launcher 👋</h1>
-                    </div>
+                    <Header />
                     {false && (
                         <>
                             <div>appReady: {appReady ? 'true' : 'false'}</div>
@@ -326,13 +344,13 @@ function TheApp() {
                     {!isNodeInstalled && (
                         <AlertBox visible={true}>
                             <span>Node is not installed!</span>
-                            <button
+                            <Button
                                 id="bt-install-node"
                                 onClick={installNode}
                                 className="btn btn-green-outlined"
                             >
                                 Install
-                            </button>
+                            </Button>
                         </AlertBox>
                     )}
                     {isNodeInstalled &&
@@ -341,32 +359,31 @@ function TheApp() {
                                 <span>
                                     Lighthouse Ecoindex plugin is not installed!
                                 </span>
-                                <button
+                                <Button
                                     id="bt-install-ecoindex"
                                     onClick={installEcoindexPlugin}
                                     className="btn btn-green-outlined"
                                 >
                                     Install
-                                </button>
+                                </Button>
                             </AlertBox>
                         )}
-                    <h2>1. Select ouput folder</h2>
+                    <TypographyH2>1. Select ouput folder</TypographyH2>
                     <div className="flex w-full items-center gap-2">
-                        <p
+                        <Input
                             id="filePath"
-                            className="echo grid min-h-8 place-items-center"
-                        >
-                            {workDir}
-                        </p>
-                        <button
+                            value={workDir}
+                            type="text"
+                            readOnly
+                        />
+                        <Button
                             type="button"
                             id="btn-file"
                             disabled={!appReady}
                             onClick={selectWorkingFolder}
-                            className="btn btn-green whitespace-nowrap"
                         >
                             Browse
-                        </button>
+                        </Button>
                     </div>
                     <div className="w-full">
                         <div className="flex w-full gap-1">
@@ -419,14 +436,22 @@ function TheApp() {
                         />
                     </div>
                     {/* display here the echoReadable line */}
-                    <p className="text-sm font-medium text-ecoindex-green">
-                        console
-                    </p>
-                    <textarea
-                        id="echo"
-                        className="echo h-36"
-                        readOnly
-                    ></textarea>
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>Console</CardTitle>
+                            <CardDescription>
+                                Here you cans see what is happenning hunder the
+                                hood...
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Textarea
+                                id="echo"
+                                className="text-muted-foreground h-36"
+                                readOnly
+                            ></Textarea>
+                        </CardContent>
+                    </Card>
                     <div className="hidden text-xs">
                         {JSON.stringify(datasFromHost, null, 2)}
                     </div>

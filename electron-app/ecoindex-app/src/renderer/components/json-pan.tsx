@@ -1,9 +1,12 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { RiDeleteBin5Line, RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
+import { Button } from '../ui/button'
 import { FaPlusCircle } from 'react-icons/fa'
+import { Input } from '../ui/input'
 import { KeyValue } from './key-value'
 import { SimpleUrlsList } from './simple-urls'
+import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 
 export interface ILayout {
     appReady: boolean
@@ -175,30 +178,35 @@ export const JsonPanMesure: FC<ILayout> = ({
 
     return (
         <div className={className}>
-            <h2>2. Configuration of the courses</h2>
+            <TypographyH2>2. Configuration of the courses</TypographyH2>
             <div className="flex gap-2">
-                <button
+                <Button
+                    variant="secondary"
                     type="button"
                     id="btn-reload-json"
                     title="Reload the configuration"
                     disabled={!appReady || !updated}
-                    className="btn btn-green btn-small"
+                    className="btn-small"
                     onClick={handlerOnReload}
                 >
-                    <RiRefreshLine className="size-4" aria-label="reload" />
+                    <RiRefreshLine
+                        className="mr-2 size-4"
+                        aria-label="reload"
+                    />
                     <span>Reload</span>
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="secondary"
                     type="button"
                     id="btn-save-json"
                     title="Save the configuration"
                     disabled={!appReady || !updated}
-                    className="btn btn-green btn-small"
+                    className="btn-small"
                     onClick={handlerOnSave}
                 >
-                    <RiSave3Line className="size-4" aria-label="save" />
+                    <RiSave3Line className="mr-2 size-4" aria-label="save" />
                     <span>Save</span>
-                </button>
+                </Button>
             </div>
             <form id="json-form">
                 <fieldset>
@@ -269,7 +277,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                 <fieldset>
                     <legend>
                         <span>Courses</span>
-                        <button
+                        <Button
                             type="button"
                             id="btn-add-course"
                             title="Add a course"
@@ -279,7 +287,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                         >
                             <FaPlusCircle className="size-4" aria-label="add" />
                             <span>Add a course</span>
-                        </button>
+                        </Button>
                     </legend>
                     {jsonDatas?.courses.map((course, index) => {
                         const innerSetUrlsList = (
@@ -291,7 +299,8 @@ export const JsonPanMesure: FC<ILayout> = ({
                             <fieldset key={index}>
                                 <legend>
                                     <span>Course {index + 1}</span>
-                                    <button
+                                    <Button
+                                        variant="destructive"
                                         type="button"
                                         id="btn-delete-course"
                                         title="Delete this course"
@@ -308,13 +317,13 @@ export const JsonPanMesure: FC<ILayout> = ({
                                         <span className="sr-only">
                                             Delete course
                                         </span>
-                                    </button>
+                                    </Button>
                                 </legend>
                                 <div className="flex-col !items-start">
                                     <label htmlFor="name" className="mandatory">
                                         Course name
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         name="name"
                                         id="name"
@@ -328,7 +337,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                     <label htmlFor="target" className="">
                                         Target
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         name="target"
                                         id="target"
@@ -342,7 +351,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                     <label htmlFor="course" className="">
                                         Description
                                     </label>
-                                    <input
+                                    <Input
                                         type="text"
                                         name="course"
                                         id="course"
@@ -384,8 +393,9 @@ export const JsonPanMesure: FC<ILayout> = ({
                     })}
                 </fieldset>
                 <div className="flex flex-col items-center gap-2">
-                    <h2>3. Launch the mesures</h2>
-                    <button
+                    <TypographyH2>3. Launch the mesures</TypographyH2>
+                    <Button
+                        variant="default"
                         type="button"
                         id="btn-simple-mesures"
                         title="Launch the mesures"
@@ -394,7 +404,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                         className="btn btn-green"
                     >
                         Mesures
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

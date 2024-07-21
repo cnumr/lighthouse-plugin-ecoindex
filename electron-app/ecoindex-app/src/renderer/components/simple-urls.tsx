@@ -1,7 +1,10 @@
+import { Button } from '../ui/button'
 import { FC } from 'react'
 import { FaPlusCircle } from 'react-icons/fa'
+import { Input } from '../ui/input'
 import { RiDeleteBin5Line } from 'react-icons/ri'
-import { cn } from '../../shared/tailwind-helper'
+import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
+import { cn } from '../lib/utils'
 
 export interface ILayout {
     language: string
@@ -20,7 +23,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
     title = 'Urls to mesure',
     isFullWidth = false,
 }) => {
-    const Tag = isFullWidth ? 'strong' : 'h2'
+    const Tag = isFullWidth ? 'strong' : TypographyH2
     // Function to add a new input field
     const handleAddFields = () => {
         try {
@@ -81,18 +84,19 @@ export const SimpleUrlsList: FC<ILayout> = ({
                     })}
                     key={index}
                 >
-                    <input
+                    <Input
                         type="text"
                         placeholder="Enter an url"
                         value={urlItem.value}
                         onChange={(e) => handleValueChange(index, e)}
-                        className="block w-full rounded-md border-transparent bg-ecoindex-green-100 focus:border-ecoindex-green focus:bg-white focus:ring-0"
+                        className="block w-full"
                     />
 
-                    <button
+                    <Button
+                        variant="destructive"
                         type="button"
                         id="btn-remove-url"
-                        className="btn-square btn-red"
+                        className=""
                         title="delete"
                         onClick={() => handleRemoveFields(index)}
                     >
@@ -101,20 +105,21 @@ export const SimpleUrlsList: FC<ILayout> = ({
                             aria-label="delete"
                         />
                         <span className="sr-only">delete</span>
-                    </button>
+                    </Button>
                 </div>
             ))}
 
-            <button
+            <Button
+                variant="secondary"
                 type="button"
                 id="btn-add-url"
-                className="btn btn-green-outlined flex gap-2"
+                className=""
                 title="add"
                 onClick={handleAddFields}
             >
-                <FaPlusCircle className="size-6" aria-label="add" />
+                <FaPlusCircle className="mr-2 size-6" aria-label="add" />
                 Add an URL
-            </button>
+            </Button>
         </div>
     )
 }
