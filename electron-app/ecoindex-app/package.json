@@ -7,9 +7,9 @@
     "description": "An application to mesure the ecoindex of a website with LightHouse & Ecoindex.",
     "main": ".webpack/main",
     "scripts": {
-        "start": "electron-forge start",
-        "package": "electron-forge package",
-        "make": "electron-forge make",
+        "start": "env-cmd electron-forge start",
+        "package": "env-cmd electron-forge package",
+        "make": "env-cmd electron-forge make",
         "publish": "env-cmd electron-forge publish",
         "lint": "eslint --ext .ts,.tsx ."
     },
