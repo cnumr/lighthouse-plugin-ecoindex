@@ -718,22 +718,22 @@ const handleJsonSaveAndCollect = async (
         console.log(`Work dir: ${_workDir}`)
         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
         const jsonStream = fs.createWriteStream(jsonFilePath)
-        if ((jsonDatas['extra-header'], jsonDatas['extra-header'])) {
-            try {
-                console.log(`extra-header`, jsonDatas['extra-header'])
-                if (typeof jsonDatas['extra-header'] === 'object') {
-                    jsonDatas['extra-header'] = Object(
-                        String(jsonDatas['extra-header']).replace(/\\/g, '')
-                    )
-                } else {
-                    jsonDatas['extra-header'] = JSON.parse(
-                        String(jsonDatas['extra-header']).replace(/\\/g, '')
-                    )
-                }
-            } catch (error) {
-                throw new Error(`extra-header is not in Json format. ${error}`)
-            }
-        }
+        // if ((jsonDatas['extra-header'], jsonDatas['extra-header'])) {
+        //     try {
+        //         console.log(`extra-header`, jsonDatas['extra-header'])
+        //         if (typeof jsonDatas['extra-header'] === 'object') {
+        //             jsonDatas['extra-header'] = Object(
+        //                 String(jsonDatas['extra-header']).replace(/\\/g, '')
+        //             )
+        //         } else {
+        //             jsonDatas['extra-header'] = JSON.parse(
+        //                 String(jsonDatas['extra-header']).replace(/\\/g, '')
+        //             )
+        //         }
+        //     } catch (error) {
+        //         throw new Error(`extra-header is not in Json format. ${error}`)
+        //     }
+        // }
         _showNotification({
             subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
             body: andCollect

@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { RiDeleteBin5Line, RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
 import { FaPlusCircle } from 'react-icons/fa'
+import { KeyValue } from './key-value'
 import { SimpleUrlsList } from './simple-urls'
 
 export interface ILayout {
@@ -168,9 +169,9 @@ export const JsonPanMesure: FC<ILayout> = ({
     //     <pre>{JSON.stringify(jsonDatas, null, 2)}</pre>
     //   </>
     // )
-    useEffect(() => {
-        console.log(JSON.stringify(jsonDatas, null, 2))
-    }, [jsonDatas])
+    // useEffect(() => {
+    //     console.log(JSON.stringify(jsonDatas, null, 2))
+    // }, [jsonDatas])
 
     return (
         <div className={className}>
@@ -209,19 +210,22 @@ export const JsonPanMesure: FC<ILayout> = ({
                         </strong>
                     </p>
                     <div>
-                        <textarea
-                            name="extra-header"
-                            id="extra-header"
-                            placeholder="Extra header"
-                            value={
-                                jsonDatas?.['extra-header']
-                                    ? convertJSONOrStringToString(
-                                          jsonDatas['extra-header']
-                                      )
-                                    : ''
+                        <KeyValue
+                            extraHeader={
+                                jsonDatas?.['extra-header'] as IKeyValue
                             }
-                            onChange={(e) => handlerOnChange(-1, e)}
-                        ></textarea>
+                            language={language}
+                            visible={true}
+                            isFullWidth={true}
+                            title=""
+                            setExtraHeader={(e: IKeyValue) => {
+                                setJsonDatas({
+                                    ...jsonDatas,
+                                    'extra-header': e,
+                                })
+                                setUpdated(true)
+                            }}
+                        />
                     </div>
                 </fieldset>
                 <fieldset>

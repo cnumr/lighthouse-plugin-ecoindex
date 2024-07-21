@@ -62,14 +62,16 @@ export const SimpleUrlsList: FC<ILayout> = ({
                 '!items-start': isFullWidth,
             })}
         >
-            <Tag
-                className={cn({
-                    'max-w-fit text-ecoindex-green': isFullWidth,
-                    'text-center': !isFullWidth,
-                })}
-            >
-                {title}
-            </Tag>
+            {title !== '' && (
+                <Tag
+                    className={cn({
+                        'max-w-fit text-ecoindex-green': isFullWidth,
+                        'text-center': !isFullWidth,
+                    })}
+                >
+                    {title}
+                </Tag>
+            )}
 
             {urlsList.map((urlItem, index) => (
                 <div
