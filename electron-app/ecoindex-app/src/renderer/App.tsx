@@ -4,10 +4,12 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from './ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
+import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import {
     Tooltip,
     TooltipContent,
@@ -24,8 +26,10 @@ import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
 import { SimplePanMesure } from './components/simple-pan'
+import { TabsContent } from '@radix-ui/react-tabs'
 import { Textarea } from './ui/textarea'
 import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
+import { TypographyP } from './ui/typography/TypographyP'
 import { cn } from '../renderer/lib/utils'
 import iconAsso from '../../assets/asso.svg'
 import packageJson from '../../package.json'
@@ -323,8 +327,8 @@ function TheApp() {
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-            <main className="flex h-screen flex-col justify-between p-4">
-                <div className="flex flex-col items-center gap-2">
+            <main className="flex h-screen flex-col justify-between gap-4 p-4">
+                <div className="flex flex-col items-center gap-4">
                     <Header />
                     {false && (
                         <>
@@ -368,75 +372,72 @@ function TheApp() {
                                 </Button>
                             </AlertBox>
                         )}
-                    <TypographyH2>1. Select ouput folder</TypographyH2>
-                    <div className="flex w-full items-center gap-2">
-                        <Input
-                            id="filePath"
-                            value={workDir}
-                            type="text"
-                            readOnly
-                        />
-                        <Button
-                            type="button"
-                            id="btn-file"
-                            disabled={!appReady}
-                            onClick={selectWorkingFolder}
-                        >
-                            Browse
-                        </Button>
-                    </div>
-                    <div className="w-full">
-                        <div className="flex w-full gap-1">
-                            <button
-                                className={cn('tab line-clamp-1', {
-                                    active: tabSelected === 0,
-                                })}
-                                onClick={() => setTabSelected(0)}
-                                title={labels[language]['simple-mesures-label']}
-                            >
+                    <Card className="border-primary w-full">
+                        <CardHeader>
+                            <CardTitle>1. Select ouput folder</CardTitle>
+                            <CardDescription>
+                                Specify where to execute the mesures.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex w-full items-center gap-2">
+                                <Input
+                                    id="filePath"
+                                    value={workDir}
+                                    type="text"
+                                    readOnly
+                                />
+                                <Button
+                                    type="button"
+                                    id="btn-file"
+                                    disabled={!appReady}
+                                    onClick={selectWorkingFolder}
+                                >
+                                    Browse
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
+                    <TypographyP className={`w-full`}>
+                        Choose the type of mesure you want to do.
+                    </TypographyP>
+                    <Tabs defaultValue="simple-mesure" className="w-full">
+                        <TabsList className="mb-4 grid w-full grid-cols-2">
+                            <TabsTrigger value="simple-mesure">
                                 {labels[language]['simple-mesures-label']}
-                            </button>
-                            <button
-                                className={cn('tab line-clamp-1', {
-                                    active: tabSelected === 1,
-                                })}
-                                onClick={() => setTabSelected(1)}
-                                title={labels[language]['full-mesures-label']}
-                            >
+                            </TabsTrigger>
+                            <TabsTrigger value="json-mesure">
                                 {labels[language]['full-mesures-label']}
-                            </button>
-                        </div>
-                        <SimplePanMesure
-                            appReady={appReady}
-                            language={language}
-                            simpleMesures={runSimpleMesures}
-                            urlsList={urlsList}
-                            setUrlsList={setUrlsList}
-                            className={cn(
-                                'tab-content',
-                                { hidden: tabSelected !== 0 },
-                                { flex: tabSelected === 0 }
-                            )}
-                        />
-                        <JsonPanMesure
-                            appReady={appReady}
-                            isJsonFromDisk={isJsonFromDisk}
-                            language={language}
-                            jsonDatas={jsonDatas}
-                            setJsonDatas={setJsonDatas}
-                            mesure={() => runJsonSaveAndCollect(true)}
-                            reload={runJsonReadAndReload}
-                            save={runJsonSaveAndCollect}
-                            notify={handlerJsonNotify}
-                            className={cn(
-                                'tab-content',
-                                { hidden: tabSelected !== 1 },
-                                { flex: tabSelected === 1 }
-                            )}
-                        />
-                    </div>
+                            </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="simple-mesure">
+                            <SimplePanMesure
+                                appReady={appReady}
+                                language={language}
+                                simpleMesures={runSimpleMesures}
+                                urlsList={urlsList}
+                                setUrlsList={setUrlsList}
+                                className="border-primary"
+                            />
+                        </TabsContent>
+                        <TabsContent value="json-mesure">
+                            <JsonPanMesure
+                                appReady={appReady}
+                                isJsonFromDisk={isJsonFromDisk}
+                                language={language}
+                                jsonDatas={jsonDatas}
+                                setJsonDatas={setJsonDatas}
+                                mesure={() => runJsonSaveAndCollect(true)}
+                                reload={runJsonReadAndReload}
+                                save={runJsonSaveAndCollect}
+                                notify={handlerJsonNotify}
+                                className="border-primary"
+                            />
+                        </TabsContent>
+                    </Tabs>
                     {/* display here the echoReadable line */}
-                    <Card className="w-full">
+                    <Card className="border-primary w-full">
                         <CardHeader>
                             <CardTitle>Console</CardTitle>
                             <CardDescription>

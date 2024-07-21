@@ -1,5 +1,6 @@
+import { FC, Fragment } from 'react'
+
 import { Button } from '../ui/button'
-import { FC } from 'react'
 import { FaPlusCircle } from 'react-icons/fa'
 import { Input } from '../ui/input'
 import { RiDeleteBin5Line } from 'react-icons/ri'
@@ -59,7 +60,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
     }
     return (
         <div
-            className={cn('flex w-full flex-col gap-4', {
+            className={cn('flex w-full flex-col justify-start gap-4', {
                 hidden: !visible,
                 '!items-center': !isFullWidth,
                 '!items-start': isFullWidth,
@@ -75,51 +76,51 @@ export const SimpleUrlsList: FC<ILayout> = ({
                     {title}
                 </Tag>
             )}
-
-            {urlsList.map((urlItem, index) => (
-                <div
-                    className={cn('flex items-center gap-4', {
-                        'w-full': isFullWidth,
-                        'w-2/3': !isFullWidth,
-                    })}
-                    key={index}
-                >
-                    <Input
-                        type="text"
-                        placeholder="Enter an url"
-                        value={urlItem.value}
-                        onChange={(e) => handleValueChange(index, e)}
-                        className="block w-full"
-                    />
-
-                    <Button
-                        variant="destructive"
-                        type="button"
-                        id="btn-remove-url"
-                        className=""
-                        title="delete"
-                        onClick={() => handleRemoveFields(index)}
-                    >
-                        <RiDeleteBin5Line
-                            className="size-6"
-                            aria-label="delete"
-                        />
-                        <span className="sr-only">delete</span>
-                    </Button>
-                </div>
-            ))}
-
-            <Button
-                variant="secondary"
-                type="button"
-                id="btn-add-url"
-                className=""
-                title="add"
-                onClick={handleAddFields}
+            <div
+                className={cn('mx-auto flex flex-col items-center gap-4', {
+                    'w-full': isFullWidth,
+                    'w-2/3': !isFullWidth,
+                })}
             >
-                <FaPlusCircle className="mr-2 size-6" aria-label="add" />
-                Add an URL
-            </Button>
+                {urlsList.map((urlItem, index) => (
+                    <div key={index} className="flex w-full gap-4">
+                        <Input
+                            type="text"
+                            placeholder="Enter an url"
+                            value={urlItem.value}
+                            onChange={(e) => handleValueChange(index, e)}
+                            className="block w-full"
+                        />
+
+                        <Button
+                            variant="destructive"
+                            type="button"
+                            id="btn-remove-url"
+                            className=""
+                            title="delete"
+                            onClick={() => handleRemoveFields(index)}
+                        >
+                            <RiDeleteBin5Line
+                                className="size-6"
+                                aria-label="delete"
+                            />
+                            <span className="sr-only">delete</span>
+                        </Button>
+                    </div>
+                ))}
+
+                <Button
+                    variant="secondary"
+                    type="button"
+                    id="btn-add-url"
+                    className=""
+                    title="add"
+                    onClick={handleAddFields}
+                >
+                    <FaPlusCircle className="mr-2 size-6" aria-label="add" />
+                    Add an URL
+                </Button>
+            </div>
         </div>
     )
 }
