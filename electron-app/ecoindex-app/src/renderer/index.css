@@ -3,99 +3,136 @@
 @tailwind utilities;
 
 @layer base {
-  html,
-  body {
-    @apply text-ecoindex-green-950;
-  }
-  h1 {
-    @apply font-black text-xl text-ecoindex-green;
-  }
-  h2 {
-    @apply text-ecoindex-green font-medium text-lg;
-  }
+    html,
+    body {
+        @apply text-ecoindex-green-950;
+    }
+    h1 {
+        @apply text-xl font-black text-ecoindex-green;
+    }
+    h2 {
+        @apply text-lg font-medium text-ecoindex-green;
+    }
 }
 
 @layer components {
-  .btn {
-    @apply font-bold py-2 px-4 rounded-lg border border-transparent max-w-fit flex gap-2 items-center;
-  }
-  .btn-square {
-    @apply font-bold p-2 rounded-lg border border-transparent max-w-fit;
-  }
-  .btn-green {
-    @apply border bg-ecoindex-green-500 text-ecoindex-green-950 hover:bg-ecoindex-green-600 disabled:border-transparent disabled:bg-ecoindex-green-100 disabled:text-ecoindex-green-400 disabled:cursor-not-allowed active:bg-ecoindex-green active:text-ecoindex-green-950;
-  }
-  .btn-red {
-    @apply border bg-ecoindex-red-500 text-ecoindex-red-950 hover:bg-ecoindex-red-600 disabled:border-transparent disabled:bg-ecoindex-red-100 disabled:text-ecoindex-red-400 disabled:cursor-not-allowed active:bg-ecoindex-red active:text-ecoindex-red-950;
-  }
-  .btn-green-outlined {
-    @apply border bg-transparent text-ecoindex-green-600 border-ecoindex-green-600 hover:border-ecoindex-green hover:text-ecoindex-green disabled:border-transparent disabled:border-ecoindex-green-300 disabled:text-ecoindex-green-300 disabled:cursor-not-allowed active:border-ecoindex-green-800 active:text-ecoindex-green-800;
-  }
-  .btn-small {
-    @apply text-sm py-1 px-2;
-  }
-  .echo {
-    @apply text-sm font-mono text-ecoindex-green-500 border border-ecoindex-green-600 w-full;
-  }
-  .logo-ecoindex {
-    @apply flex justify-center;
-    & > span {
-      @apply grid place-items-center py-[.1rem] px-[.5rem] font-medium text-3xl;
+    .btn {
+        @apply flex max-w-fit items-center gap-2 rounded-lg border border-transparent px-4 py-2 font-bold;
     }
-  }
-  .logo-ecoindex__eco {
-    @apply bg-ecoindex-green text-white;
-  }
-  .logo-ecoindex__index {
-    @apply bg-white text-ecoindex-green;
-  }
-  .tab {
-    @apply grid place-items-center max-w-fit py-2 px-4 leading-8 font-bold border-2 border-b-0 rounded-md rounded-b-none bg-ecoindex-green-500 text-ecoindex-green-950 border-ecoindex-green-500 hover:bg-ecoindex-green-600 hover:border-ecoindex-green-600 -mb-[2px];
-  }
-  .tab.active {
-    @apply bg-white text-ecoindex-green-600 border-ecoindex-green-500;
-  }
-  .tab-content {
-    @apply w-full items-center flex-col gap-4 border-2 border-ecoindex-green-500 p-4;
-  }
-  #json-form {
-    @apply grid grid-cols-1 space-y-2 w-full;
-    label {
-      @apply font-bold text-ecoindex-green;
-      &:has(input) {
-        @apply flex gap-2 items-center;
-      }
+    .btn-square {
+        @apply max-w-fit rounded-lg border border-transparent p-2 font-bold;
     }
-    p {
-      @apply text-ecoindex-green-600 text-xs italic mb-2;
+    .btn-green {
+        @apply border bg-ecoindex-green-500 text-ecoindex-green-950 hover:bg-ecoindex-green-600 active:bg-ecoindex-green active:text-ecoindex-green-950 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-ecoindex-green-100 disabled:text-ecoindex-green-400;
     }
-    input[type='text'],
-    textarea {
-      @apply border block w-full rounded-md bg-ecoindex-green-100 border-transparent focus:border-ecoindex-green focus:bg-white focus:ring-0;
+    .btn-red {
+        @apply border bg-ecoindex-red-500 text-ecoindex-red-950 hover:bg-ecoindex-red-600 active:bg-ecoindex-red active:text-ecoindex-red-950 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-ecoindex-red-100 disabled:text-ecoindex-red-400;
     }
-    input[type='checkbox'] {
-      @apply border border-ecoindex-green-500 rounded-md p-2 checked:bg-ecoindex-green-300;
+    .btn-green-outlined {
+        @apply border border-ecoindex-green-600 bg-transparent text-ecoindex-green-600 hover:border-ecoindex-green hover:text-ecoindex-green active:border-ecoindex-green-800 active:text-ecoindex-green-800 disabled:cursor-not-allowed disabled:border-ecoindex-green-300 disabled:border-transparent disabled:text-ecoindex-green-300;
     }
-    .mandatory {
-      @apply relative after:text-ecoindex-red-500 after:content-['*'] after:absolute after:top-[.1rem] after:-right-[.4rem] after:text-xs after:font-bold;
+    .btn-small {
+        @apply px-2 py-1 text-sm;
     }
-    fieldset {
-      @apply border border-ecoindex-green-500 rounded-md p-4 flex flex-col gap-2;
-      legend {
-        @apply font-bold text-ecoindex-green px-2 flex gap-2 items-center;
-        &.mandatory {
-          @apply after:right-[.1rem] after:top-[.1rem];
+    .echo {
+        @apply w-full border border-ecoindex-green-600 font-mono text-sm text-ecoindex-green-500;
+    }
+    .logo-ecoindex {
+        @apply flex justify-center;
+        & > span {
+            @apply grid place-items-center px-[.5rem] py-[.1rem] text-3xl font-medium;
         }
-      }
-      p {
-        @apply text-ecoindex-green-600 text-xs italic mb-2;
-      }
-      div {
-        @apply flex gap-2 items-center;
-      }
-      button {
-        @apply flex gap-2 items-center;
-      }
     }
-  }
+    .logo-ecoindex__eco {
+        @apply bg-ecoindex-green text-white;
+    }
+    .logo-ecoindex__index {
+        @apply bg-white text-ecoindex-green;
+    }
+    .tab {
+        @apply -mb-[2px] grid max-w-fit place-items-center rounded-md rounded-b-none border-2 border-b-0 border-ecoindex-green-500 bg-ecoindex-green-500 px-4 py-2 font-bold leading-8 text-ecoindex-green-950 hover:border-ecoindex-green-600 hover:bg-ecoindex-green-600;
+    }
+    .tab.active {
+        @apply border-ecoindex-green-500 bg-white text-ecoindex-green-600;
+    }
+    .tab-content {
+        @apply w-full flex-col items-center gap-4 border-2 border-ecoindex-green-500 p-4;
+    }
+    #json-form {
+        @apply grid w-full grid-cols-1 space-y-2;
+        label {
+            @apply font-bold text-ecoindex-green;
+            &:has(input) {
+                @apply flex items-center gap-2;
+            }
+        }
+        p {
+            @apply mb-2 text-xs italic text-ecoindex-green-600;
+        }
+        input[type='text'],
+        textarea {
+            @apply block w-full rounded-md border border-transparent bg-ecoindex-green-100 focus:border-ecoindex-green focus:bg-white focus:ring-0;
+        }
+        input[type='checkbox'] {
+            @apply rounded-md border border-ecoindex-green-500 p-2 checked:bg-ecoindex-green-300;
+        }
+        .mandatory {
+            @apply relative after:absolute after:-right-[.4rem] after:top-[.1rem] after:text-xs after:font-bold after:text-ecoindex-red-500 after:content-['*'];
+        }
+        fieldset {
+            @apply flex flex-col gap-2 rounded-md border border-ecoindex-green-500 p-4;
+            legend {
+                @apply flex items-center gap-2 px-2 font-bold text-ecoindex-green;
+                &.mandatory {
+                    @apply after:right-[.1rem] after:top-[.1rem];
+                }
+            }
+            p {
+                @apply mb-2 text-xs italic text-ecoindex-green-600;
+            }
+            div {
+                @apply flex items-center gap-2;
+            }
+            button {
+                @apply flex items-center gap-2;
+            }
+        }
+    }
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 140px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        top: 150%;
+        left: 50%;
+        margin-left: -100%;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip .tooltiptext::after {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #555 transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
 }

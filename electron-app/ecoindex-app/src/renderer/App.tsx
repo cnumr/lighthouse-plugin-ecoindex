@@ -164,6 +164,10 @@ function TheApp() {
         })
     }
 
+    const copyToClipBoard = () => {
+        navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
+    }
+
     useEffect(() => {
         /**
          * Handlers, Node Version
@@ -281,6 +285,15 @@ function TheApp() {
 
     return (
         <div className="relative">
+            <button
+                className="tooltip btn btn-green-outlined btn-small absolute right-12 top-2 box-content w-fit"
+                onClick={copyToClipBoard}
+            >
+                <span className="tooltiptext" id="myTooltip">
+                    Copy to clipboard
+                </span>
+                DEBUG
+            </button>
             <main className="flex h-screen flex-col justify-between p-4">
                 <div className="flex flex-col items-center gap-2">
                     <div className="flex items-center gap-4 py-4">
