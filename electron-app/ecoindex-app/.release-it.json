@@ -8,7 +8,7 @@
         "release": true,
         "autoGenerate": true,
         "releaseName": "Release Electron-app ${version}",
-        "assets": ["out/**/*.zip", "out/**/*.dmg"]
+        "assets": ["out/make/**/*.zip", "out/make/**/*.dmg"]
     },
     "hooks": {
         "after:bump": "npm run publish",
