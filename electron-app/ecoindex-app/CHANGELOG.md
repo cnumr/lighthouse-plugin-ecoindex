@@ -71,6 +71,77 @@
 * version checker done ([0055ca9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0055ca90af3453e9bc903ff449dfde364cf60ad9))
 * workdir ok ([5e86a2c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5e86a2c87f0ea9a45453611ac70e81d86801a1cf))
 
+# [1.0.0-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.2...electron-v1.0.0-rc.0) (2024-07-22)
+
+
+### Bug Fixes
+
+* change assets path ([8d90167](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8d90167fcfaeb89a1e694f00cf3aad3407ce11c7))
+
+
+
+# [v1.0.0-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.2...electron-v1.0.0-rc.0) (2024-07-22)
+
+
+### Bug Fixes
+
+* continue and END ([823496f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/823496f10dccddc1440e187da636921b02a69dd0))
+* continue... ([261a84d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/261a84d777984b6134ef6202e11ca7af1b5fd0ca))
+* fix some error on Node Path ([1f64af6](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1f64af63f01ff94c876a2ee3ca68724551f0a628))
+* fix version and auto update ([883fb23](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/883fb23a4944c80c376cfad73b32802e77681349))
+* import in plugins ([8487a4e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8487a4ecea4675a778c4a0c6018a5b596b096bf1))
+* nodeDir path error ([68f9618](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/68f9618849bfea72d57390c98347f28461b87fd5))
+* not working ([d80f84e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d80f84efb29fca3c4eae6b61627737cdc7eec50e))
+
+
+### Features
+
+* add alert plugin and Node no instaled ([2cdd51f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2cdd51fcb110c7d5b04b5d3cea35d8ae82197e26))
+* add contact email ([3755867](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/37558673cba274a159e24dad0278bb7881e622ca))
+* add DarkMode ([8fd991d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8fd991d11f76ccc7c32a11af5343c1ccb18f9d2e))
+* add dev button ([fd9949b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fd9949bfe2eddf2df63b252affa090e1fbfe0690))
+* add release-it ([530f7e7](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/530f7e7d36107bae5ac829d9c132560fda70ed88))
+* add sender message to console log in front to help debug ([ba85341](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ba8534199eba569ad509abbbbc867eeedda2870f))
+* best design ([30cca1e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/30cca1e79045f326f6cf4b1df927f07dc1a63c8f))
+* collect ([cd0f068](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cd0f068d6bb5200dc4f0a8e9bc79f75deb57ca47))
+* continue JSON ([aac60c2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/aac60c2c69d50c1c05650b798e5b462ad1c58a61))
+* continue Json pan ([f5fc244](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f5fc2449c40d345719aebc7a7b5a34917aef9df8))
+* electron ([1679660](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/16796603d8083bae91f358f2bdce1905a3f7aa17))
+* electron app ([7926172](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/79261720c6ed474b503f221f3a0c4a65c6d05ee1))
+* electron, ne marche pas ([0c300d9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0c300d95a9063378dfb64d77148fbc8d6a881d4c))
+* electron... ([5ecc8ca](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5ecc8caaba51dab0bc9c2cf8371eb44302fe6525))
+* export DMG ([3441ddd](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3441ddd285189985ff2470a20ee19ef28882ff23))
+* few changes ([8d3536b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8d3536b176379de8949c522e73c0511c821688fc))
+* getHomeDir and cleanLogString ([966a144](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/966a144bc85c801a6c90edc373d35f44abf426d9))
+* icon ?? ([307b46f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/307b46fa84c2f66bf08a57609ce0342f372721c4))
+* initiate I/O json and mesure ([80daa71](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/80daa71037dd522aebb5e7dcb7f7fdd8bf8c0cc5))
+* JSON I/O and mesure OK ([fc565d1](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fc565d13c875efd99cba47a252944ca23f832dcb))
+* log ok ([2f29ead](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2f29ead629da37c4622f45b0c1e52c92f956d97f))
+* logStream ([d67d246](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d67d24688f4bdb7c51ea4af1315cda59930aec23))
+* memory dirs ([d941ef2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d941ef223a8f2ccc4210a4c06aa292befc4e8da0))
+* new design ([0d273e5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0d273e5837f9d2f505f6205c6f3a14a2f519946a))
+* new design ([b6db2c3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b6db2c3c677ce14e628efd5146cb12ef8252c862))
+* new electron app ([b4b2d6d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b4b2d6dec4c6558d6caf51f55ae149b022949cc5))
+* not working install plugin ([8bd0a65](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8bd0a659bd017554333bba28d79c8fd8ae53ec39))
+* ok for now ([715aabe](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/715aabe1ef7cf48b28d339a83a7895ad3f1019a7))
+* ok local ([befa30e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/befa30eb95e2288f097dd646b9e25b3e5c6c64f7))
+* ok local and builded ([16959d3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/16959d3f25483816e491bf4fdb3a3938f46831e0))
+* prepare json tab ([6e82ace](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6e82aceb8cd678f4956fa7fab5b8f75e92f4eb57))
+* prepare update JSON ([fca263e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fca263ee7833052ec43f0efda5a09d8cc8a526e1))
+* reactivate the puppeteer installation ([04eaf9a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/04eaf9a994850e77d1eac56ba47f162032c867da))
+* report ([fad7d89](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fad7d89c7a54e0777978a8efeda011494b9849c1))
+* save/read/reload Json... ([d16f66c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d16f66ce7fa4d5f0f1a953b63d719a5ae8e6dd6f))
+* send data to App.tsx ([955a00a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/955a00ace50efd8397cb49023933e08843a4cc8a))
+* simple mesure done ([32ea70d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/32ea70d3e4275c3eb1c2f69d1c54526263cdead8))
+* simple Mesure OK ([090b905](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/090b905857364e320014cf2f3200af427e81776e))
+* temporary commit ([f128f0e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f128f0ee7ff0148c4cb653876f3277b5edfea4d6))
+* typo and design ([4e08a0e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4e08a0eecde60968550ee7deb3e2be6d6b3c6dfe))
+* update jsondata : OK ([f0d819c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f0d819c3538b72f9a19b307fa1381ccaa7608bb6))
+* update release-it configuration ([c87cdae](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c87cdae5a4b62e88a1d215573c4faca1e6a77865))
+* use script to fill nodeDir ([fd4c761](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fd4c761e612140899e37b8d231ac1e6708bcdfa2))
+* version checker done ([0055ca9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0055ca90af3453e9bc903ff449dfde364cf60ad9))
+* workdir ok ([5e86a2c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5e86a2c87f0ea9a45453611ac70e81d86801a1cf))
+
 # 1.0.0-rc.0 (2024-07-22)
 
 
