@@ -11,6 +11,7 @@
         "assets": ["./out/make/zip/darwin/arm64/*.zip", "./out/make/*.dmg"]
     },
     "hooks": {
+        "before:bump": "rm -rf ./out",
         "after:bump": "npm run publish",
         "after:git:release": "echo After git push, before github release",
         "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
