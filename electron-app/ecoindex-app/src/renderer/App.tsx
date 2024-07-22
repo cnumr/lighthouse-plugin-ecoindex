@@ -1,5 +1,6 @@
 import './index.css'
 
+import { Bug, Sun, SunMoon } from 'lucide-react'
 import {
     Card,
     CardContent,
@@ -10,7 +11,6 @@ import {
 } from './ui/card'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
-import { Sun, SunMoon } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import {
     Tooltip,
@@ -27,6 +27,7 @@ import { Header } from './components/Header'
 import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
+import { ReloadIcon } from '@radix-ui/react-icons'
 import { SimplePanMesure } from './components/simple-pan'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { Textarea } from './ui/textarea'
@@ -315,10 +316,12 @@ function TheApp() {
                     <TooltipTrigger asChild>
                         <Button
                             variant="secondary"
+                            size="sm"
                             className="absolute right-2 top-2"
                             onClick={copyToClipBoard}
                         >
-                            DEBUG
+                            <Bug className="mr-2 size-4" />
+                            Debug
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -493,6 +496,7 @@ function TheApp() {
                 </div>
             </main>
             <PopinLoading id="loadingPopin">
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
                 <p id="counter">Loading... 0/4</p>
             </PopinLoading>
         </div>

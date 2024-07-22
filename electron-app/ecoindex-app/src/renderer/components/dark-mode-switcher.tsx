@@ -45,6 +45,7 @@ export const DarkModeSwitcher = React.forwardRef<
         <div className={className} {...props}>
             <Button
                 id="dark"
+                size="sm"
                 onClick={(e) => switchDarkMode(true, e)}
                 variant="outline"
             >
@@ -53,6 +54,7 @@ export const DarkModeSwitcher = React.forwardRef<
             </Button>
             <Button
                 id="light"
+                size="sm"
                 onClick={(e) => switchDarkMode(false, e)}
                 variant="outline"
             >

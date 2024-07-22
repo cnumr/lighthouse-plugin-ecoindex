@@ -1,9 +1,8 @@
-import { FC, Fragment } from 'react'
+import { CirclePlus, Trash2 } from 'lucide-react'
 
 import { Button } from '../ui/button'
-import { FaPlusCircle } from 'react-icons/fa'
+import { FC } from 'react'
 import { Input } from '../ui/input'
-import { RiDeleteBin5Line } from 'react-icons/ri'
 import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 import { cn } from '../lib/utils'
 
@@ -95,15 +94,13 @@ export const SimpleUrlsList: FC<ILayout> = ({
                         <Button
                             variant="destructive"
                             type="button"
+                            size="icon"
                             id="btn-remove-url"
                             className=""
                             title="delete"
                             onClick={() => handleRemoveFields(index)}
                         >
-                            <RiDeleteBin5Line
-                                className="size-6"
-                                aria-label="delete"
-                            />
+                            <Trash2 className="size-4" aria-label="delete" />
                             <span className="sr-only">delete</span>
                         </Button>
                     </div>
@@ -111,13 +108,14 @@ export const SimpleUrlsList: FC<ILayout> = ({
 
                 <Button
                     variant="secondary"
+                    size="sm"
                     type="button"
                     id="btn-add-url"
                     className=""
                     title="add"
                     onClick={handleAddFields}
                 >
-                    <FaPlusCircle className="mr-2 size-6" aria-label="add" />
+                    <CirclePlus className="mr-2 size-4" aria-label="add" />
                     Add an URL
                 </Button>
             </div>

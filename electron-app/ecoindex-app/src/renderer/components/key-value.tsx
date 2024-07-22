@@ -1,3 +1,5 @@
+import { CirclePlus, Trash2 } from 'lucide-react'
+
 import { Button } from '../ui/button'
 import { FC } from 'react'
 import { FaPlusCircle } from 'react-icons/fa'
@@ -145,14 +147,10 @@ export const KeyValue: FC<ILayout> = ({
                             variant="destructive"
                             type="button"
                             id="btn-remove-url"
-                            className=""
                             title="delete"
                             onClick={() => handleRemoveFields(extraHeaderKey)}
                         >
-                            <RiDeleteBin5Line
-                                className="size-6"
-                                aria-label="delete"
-                            />
+                            <Trash2 className="size-4" aria-label="delete" />
                             <span className="sr-only">delete</span>
                         </Button>
                     </div>
@@ -162,12 +160,13 @@ export const KeyValue: FC<ILayout> = ({
             <Button
                 variant="secondary"
                 type="button"
+                size="sm"
                 id="btn-add-url"
                 className=""
                 title="add"
                 onClick={handleAddFields}
             >
-                <FaPlusCircle className="mr-2 size-6" aria-label="add" />
+                <CirclePlus className="mr-2 size-4" aria-label="add" />
                 Add an ExtraHeader item
             </Button>
         </div>

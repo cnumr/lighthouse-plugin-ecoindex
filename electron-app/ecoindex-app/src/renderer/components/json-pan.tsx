@@ -6,16 +6,15 @@ import {
     CardHeader,
     CardTitle,
 } from '../ui/card'
-import { ChangeEvent, FC, useEffect, useState } from 'react'
-import { RiDeleteBin5Line, RiRefreshLine, RiSave3Line } from 'react-icons/ri'
+import { ChangeEvent, FC, useState } from 'react'
+import { CirclePlus, RotateCcw, Save, Trash2 } from 'lucide-react'
+import { RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
 import { Button } from '../ui/button'
-import { FaPlusCircle } from 'react-icons/fa'
 import { Input } from '../ui/input'
 import { KeyValue } from './key-value'
 import { SimpleUrlsList } from './simple-urls'
 import { Switch } from '../ui/switch'
-import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 
 export interface ILayout {
     appReady: boolean
@@ -225,13 +224,13 @@ export const JsonPanMesure: FC<ILayout> = ({
                     <Button
                         variant="secondary"
                         type="button"
+                        size="sm"
                         id="btn-reload-json"
                         title="Reload the configuration"
                         disabled={!appReady || !updated}
-                        className="btn-small"
                         onClick={handlerOnReload}
                     >
-                        <RiRefreshLine
+                        <RotateCcw
                             className="mr-2 size-4"
                             aria-label="reload"
                         />
@@ -240,16 +239,13 @@ export const JsonPanMesure: FC<ILayout> = ({
                     <Button
                         variant="secondary"
                         type="button"
+                        size="sm"
                         id="btn-save-json"
                         title="Save the configuration"
                         disabled={!appReady || !updated}
-                        className="btn-small"
                         onClick={handlerOnSave}
                     >
-                        <RiSave3Line
-                            className="mr-2 size-4"
-                            aria-label="save"
-                        />
+                        <Save className="mr-2 size-4" aria-label="save" />
                         <span>Save</span>
                     </Button>
                 </div>
@@ -323,15 +319,6 @@ export const JsonPanMesure: FC<ILayout> = ({
                             <label htmlFor="json">JSON</label>
                         </div>
                         <div>
-                            {/* <input
-                                type="checkbox"
-                                id="statement"
-                                name="output"
-                                checked={jsonDatas?.output.includes(
-                                    'statement'
-                                )}
-                                onChange={(e) => handlerOnChange(-1, e)}
-                            /> */}
                             <Switch
                                 id="statement"
                                 name="output"
@@ -360,14 +347,15 @@ export const JsonPanMesure: FC<ILayout> = ({
                             <span>Courses</span>
                             <Button
                                 type="button"
+                                size="sm"
+                                variant="default"
                                 id="btn-add-course"
                                 title="Add a course"
                                 disabled={!appReady}
-                                className="btn btn-green-outlined btn-small"
                                 onClick={handlerAddCourse}
                             >
-                                <FaPlusCircle
-                                    className="size-4"
+                                <CirclePlus
+                                    className="mr-2 size-4"
                                     aria-label="add"
                                 />
                                 <span>Add a course</span>
@@ -386,6 +374,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                         <Button
                                             variant="destructive"
                                             type="button"
+                                            size="sm"
                                             id="btn-delete-course"
                                             title="Delete this course"
                                             disabled={!appReady}
@@ -394,7 +383,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                                 handlerDeleteCourse(null, index)
                                             }
                                         >
-                                            <RiDeleteBin5Line
+                                            <Trash2
                                                 className="size-4"
                                                 aria-label="delete"
                                             />
