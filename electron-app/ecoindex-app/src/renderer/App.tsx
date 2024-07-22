@@ -369,10 +369,9 @@ function TheApp() {
                             <div className="flex items-center justify-between gap-4">
                                 <span>Node is not installed!</span>
                                 <Button
-                                    variant="outline"
+                                    variant="default"
                                     id="bt-install-node"
                                     onClick={installNode}
-                                    className="btn btn-green-outlined"
                                 >
                                     Install
                                 </Button>
@@ -387,10 +386,8 @@ function TheApp() {
                                     upgrade it to 20 or upper.
                                 </span>
                                 <Button
-                                    variant="outline"
-                                    id="bt-install-ecoindex"
+                                    variant="default"
                                     onClick={installEcoindexPlugin}
-                                    className="btn btn-green-outlined"
                                 >
                                     Install
                                 </Button>
@@ -406,16 +403,55 @@ function TheApp() {
                                         installed!
                                     </span>
                                     <Button
-                                        variant="outline"
+                                        variant="default"
                                         id="bt-install-ecoindex"
                                         onClick={installEcoindexPlugin}
-                                        className="btn btn-green-outlined"
                                     >
                                         Install
                                     </Button>
                                 </div>
                             </AlertBox>
                         )}
+                    {(!isNodeInstalled ||
+                        !isLighthouseEcoindexPluginInstalled ||
+                        !isNodeVersionOK) && (
+                        <AlertBox variant="bug" title="Report error">
+                            <div className="flex items-center justify-between gap-4">
+                                <span>
+                                    You have an error but you think it's a bug.
+                                    Report to the developper by clicking the
+                                    button (datas are saved to your clipboard)
+                                    and send theim by mail to{' '}
+                                    <a
+                                        href="mailto:renaud@greenit.fr"
+                                        className="underline"
+                                    >
+                                        renaud@greenit.fr
+                                    </a>{' '}
+                                    🙏
+                                </span>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                id="bt-report"
+                                                variant="default"
+                                                onClick={copyToClipBoard}
+                                            >
+                                                Report
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>
+                                                Copy application informations to
+                                                clipboard.
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
+                        </AlertBox>
+                    )}
                     <Card className="border-primary w-full">
                         <CardHeader>
                             <CardTitle>1. Select ouput folder</CardTitle>
