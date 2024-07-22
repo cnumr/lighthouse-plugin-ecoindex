@@ -8,7 +8,9 @@ import {
     CardHeader,
     CardTitle,
 } from './ui/card'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
+import { Sun, SunMoon } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import {
     Tooltip,
@@ -17,10 +19,10 @@ import {
     TooltipTrigger,
 } from '@/renderer/ui/tooltip'
 import { channels, labels, utils } from '../shared/constants'
-import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
 import { Button } from '@/renderer/ui/button'
+import { DarkModeSwitcher } from './components/dark-mode-switcher'
 import { Header } from './components/Header'
 import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
@@ -307,6 +309,7 @@ function TheApp() {
 
     return (
         <div className="relative">
+            <DarkModeSwitcher className="absolute left-2 top-2 flex gap-2" />
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>

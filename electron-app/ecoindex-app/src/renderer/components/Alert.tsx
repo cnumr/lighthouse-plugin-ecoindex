@@ -11,7 +11,7 @@ interface ILayout {
 export const AlertBox: FC<ILayout> = ({ children, title }) => {
     return (
         <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
+            <AlertCircle className="size-4" />
             <AlertTitle>{title}</AlertTitle>
             <AlertDescription>{children}</AlertDescription>
         </Alert>

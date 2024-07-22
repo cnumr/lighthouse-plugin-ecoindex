@@ -66,10 +66,10 @@
     body {
         @apply bg-background text-foreground;
     }
-    html,
-    body {
+    /* html, */
+    /* body {
         @apply text-ecoindex-green-950;
-    }
+    } */
     h1 {
         @apply text-xl font-black text-ecoindex-green;
     }
