@@ -346,30 +346,37 @@ function TheApp() {
                         </>
                     )}
                     {!isNodeInstalled && (
-                        <AlertBox visible={true}>
-                            <span>Node is not installed!</span>
-                            <Button
-                                id="bt-install-node"
-                                onClick={installNode}
-                                className="btn btn-green-outlined"
-                            >
-                                Install
-                            </Button>
-                        </AlertBox>
-                    )}
-                    {isNodeInstalled &&
-                        !isLighthouseEcoindexPluginInstalled && (
-                            <AlertBox visible={true}>
-                                <span>
-                                    Lighthouse Ecoindex plugin is not installed!
-                                </span>
+                        <AlertBox title="Error on Node">
+                            <div className="flex items-center justify-between gap-4">
+                                <span>Node is not installed!</span>
                                 <Button
-                                    id="bt-install-ecoindex"
-                                    onClick={installEcoindexPlugin}
+                                    variant="outline"
+                                    id="bt-install-node"
+                                    onClick={installNode}
                                     className="btn btn-green-outlined"
                                 >
                                     Install
                                 </Button>
+                            </div>
+                        </AlertBox>
+                    )}
+                    {isNodeInstalled &&
+                        !isLighthouseEcoindexPluginInstalled && (
+                            <AlertBox title="Error on Ecoindex">
+                                <div className="flex items-center justify-between gap-4">
+                                    <span>
+                                        Lighthouse Ecoindex plugin is not
+                                        installed!
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        id="bt-install-ecoindex"
+                                        onClick={installEcoindexPlugin}
+                                        className="btn btn-green-outlined"
+                                    >
+                                        Install
+                                    </Button>
+                                </div>
                             </AlertBox>
                         )}
                     <Card className="border-primary w-full">
