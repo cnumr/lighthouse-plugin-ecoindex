@@ -124,13 +124,13 @@
     #json-form {
         @apply grid w-full grid-cols-1 space-y-2;
         label {
-            @apply font-bold text-ecoindex-green;
+            @apply text-primary dark:text-foreground font-bold;
             &:has(input) {
                 @apply flex items-center gap-2;
             }
         }
         p {
-            @apply mb-2 text-xs italic text-ecoindex-green-600;
+            @apply text-primary dark:text-foreground mb-2 text-xs italic;
         }
         /* input[type='text'],
         textarea {
@@ -145,7 +145,7 @@
         fieldset {
             @apply border-primary flex flex-col gap-2 rounded-md border p-4;
             legend {
-                @apply text-primary flex items-center gap-2 px-2 font-bold;
+                @apply text-primary dark:text-foreground flex items-center gap-2 px-2 font-bold;
                 &.mandatory {
                     @apply after:right-[.1rem] after:top-[.1rem];
                 }

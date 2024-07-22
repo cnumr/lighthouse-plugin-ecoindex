@@ -309,7 +309,7 @@ function TheApp() {
     }, [workDir])
 
     return (
-        <div className="relative">
+        <div className="container relative">
             <DarkModeSwitcher className="absolute left-2 top-2 flex gap-2" />
             <TooltipProvider>
                 <Tooltip>

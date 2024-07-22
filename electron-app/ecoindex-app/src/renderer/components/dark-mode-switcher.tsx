@@ -21,22 +21,25 @@ export const DarkModeSwitcher = React.forwardRef<
             html.classList.add('light')
             html.classList.remove('dark')
             light.classList.add('border-2')
-            light.classList.add('border-foreground')
+            light.classList.add('border-input')
             dark.classList.remove('border-2')
-            dark.classList.remove('border-foreground')
+            dark.classList.remove('border-white')
         } else {
             html.classList.add('dark')
             html.classList.remove('light')
             light.classList.remove('border-2')
-            light.classList.remove('border-foreground')
+            light.classList.remove('border-white')
+            light.classList.add('!border-input')
             dark.classList.add('border-2')
-            dark.classList.add('border-foreground')
+            dark.classList.add('border-white')
         }
     }
     useEffect(() => {
         const light = document.getElementById('light')
+        const dark = document.getElementById('dark')
         light.classList.add('border-2')
-        light.classList.add('border-foreground')
+        light.classList.add('border-black')
+        dark.classList.add('border-input')
         const html = document.getElementsByTagName('html')[0]
         html.classList.add('light')
     }, [])

@@ -183,6 +183,17 @@ export const JsonPanMesure: FC<ILayout> = ({
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         // console.log('handlerOnSubmit', event.target)
+        let count = 0
+        jsonDatas?.courses.forEach((course) => {
+            if (course['is-best-pages'] === true) count++
+        })
+        if (count === 0) {
+            alert('You must set 1 best-page on courses.')
+            return
+        } else if (count > 1) {
+            alert('You must set only 1 best-page on courses.')
+            return
+        }
         mesure()
         setUpdated(false)
     }
@@ -478,6 +489,9 @@ export const JsonPanMesure: FC<ILayout> = ({
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
                 <CardTitle>3. Launch the mesures</CardTitle>
+                <CardDescription>
+                    Generates reports files in seleted dir.
+                </CardDescription>
                 <Button
                     variant="default"
                     type="button"

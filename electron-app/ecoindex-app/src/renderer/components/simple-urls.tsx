@@ -68,7 +68,8 @@ export const SimpleUrlsList: FC<ILayout> = ({
             {title !== '' && (
                 <Tag
                     className={cn({
-                        'max-w-fit text-ecoindex-green': isFullWidth,
+                        'text-primary dark:text-foreground max-w-fit':
+                            isFullWidth,
                         'text-center': !isFullWidth,
                     })}
                 >

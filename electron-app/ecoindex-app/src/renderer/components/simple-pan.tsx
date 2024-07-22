@@ -11,6 +11,7 @@ import { Button } from '../ui/button'
 import { FC } from 'react'
 import { SimpleUrlsList } from './simple-urls'
 import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
+import { getWorkDir } from '@/shared/memory'
 
 export interface ISimpleMesureLayout {
     appReady: boolean
@@ -48,6 +49,9 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
                 <CardTitle>3. Launch the mesures</CardTitle>
+                <CardDescription>
+                    Generates Html reports in seleted dir.
+                </CardDescription>
                 <Button
                     type="button"
                     id="btn-simple-mesures"
