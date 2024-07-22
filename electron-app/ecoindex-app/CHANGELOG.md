@@ -1,5 +1,17 @@
 
 
+# [1.0.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.0-rc.0...electron-v1.0.0) (2024-07-22)
+
+
+
+# [v1.0.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.0-rc.0...electron-v1.0.0) (2024-07-22)
+
+
+### Bug Fixes
+
+* change assets path ([8d90167](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8d90167fcfaeb89a1e694f00cf3aad3407ce11c7))
+* no increment version in package.json ([6c67f57](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6c67f572040920e234feeb65242abc96039cf080))
+
 # [1.0.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.2...electron-v1.0.0-rc.0) (2024-07-22)
 
 
