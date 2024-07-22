@@ -38,7 +38,7 @@
         "make": "env-cmd electron-forge make",
         "publish": "env-cmd electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
-        "release": "release-it"
+        "release": "env-cmd release-it"
     },
     "devDependencies": {
         "@electron-forge/cli": "^7.4.0",
@@ -54,6 +54,7 @@
         "@electron-toolkit/eslint-config-prettier": "^2.0.0",
         "@electron/fuses": "^1.8.0",
         "@electron/notarize": "^2.3.2",
+        "@release-it/bumper": "^6.0.1",
         "@release-it/conventional-changelog": "^8.0.1",
         "@svgr/webpack": "^8.1.0",
         "@types/react": "^18.3.3",
