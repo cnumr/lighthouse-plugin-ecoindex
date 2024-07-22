@@ -9,15 +9,18 @@
 ## TODO
 
 -   [ ] Set icon
--   [ ] Build on other OS
+-   [ ] Build on OS
+    -   [x] Mac (sign with Apple Dev)
+    -   [ ] Windows
+    -   [ ] Linux
 -   [ ] Auto build with CI/CD
 -   [ ] Translate
 -   [x] Create simple mesure
 -   [ ] ~~Use path /usr/bin and /usr/bin/which to launch node `/usr/bin/which node` and npm `/usr/bin/which npm` action~~
 -   [x] Fix not showing buttons to install plugin
     -   [x] handler for install plugin
--   [ ] Fix not showing buttons to install Node
-    -   [ ] handler for install Node
+-   [x] Fix not showing buttons to install Node
+    -   [x] handler for install Node
 -   [x] Create complex mesure
     -   [x] Save JSON on disk
         -   [x] Fix extra-header not JSON
