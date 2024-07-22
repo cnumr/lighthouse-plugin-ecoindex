@@ -1020,6 +1020,7 @@ const handleSelectFolder = async () => {
  */
 const handleGetNodeVersion = async (event: IpcMainEvent) => {
     setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+    sendDataToFront({ 'node-version': getNodeV() })
     return getNodeV()
 }
 

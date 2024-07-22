@@ -34,6 +34,7 @@ import { Textarea } from './ui/textarea'
 import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 import { TypographyP } from './ui/typography/TypographyP'
 import { cn } from '../renderer/lib/utils'
+import { getNodeV } from '@/shared/memory'
 import iconAsso from '../../assets/asso.svg'
 import packageJson from '../../package.json'
 
@@ -62,6 +63,7 @@ function TheApp() {
     ] = useState(true)
     // let isLighthouseEcoindexPluginInstalled = false
     const [isNodeInstalled, setIsNodeInstalled] = useState(true)
+    const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
     // let isNodeInstalled = false
 
     // Run runFakeMesure on click on button fake
@@ -200,6 +202,12 @@ function TheApp() {
         const fetchNodeVersion = async () => {
             const result = await window.versions.getNodeVersion()
             setNodeVersion(result)
+            const major = nodeVersion.replace('v', '').split('.')[0]
+            console.log(`major`, major)
+
+            if (Number(major) >= 20) {
+                setIsNodeVersionOK(false)
+            }
             increment()
         }
 
@@ -209,6 +217,7 @@ function TheApp() {
         const fetchWorkDir = async () => {
             const result = await window.electronAPI.getWorkDir('')
             setWorkDir(result)
+
             increment()
         }
         /**
@@ -349,6 +358,10 @@ function TheApp() {
                                     ? 'true'
                                     : 'false'}
                             </div>
+                            <div>
+                                isNodeVersionOK:{' '}
+                                {isNodeVersionOK ? 'true' : 'false'}
+                            </div>
                         </>
                     )}
                     {!isNodeInstalled && (
@@ -359,6 +372,24 @@ function TheApp() {
                                     variant="outline"
                                     id="bt-install-node"
                                     onClick={installNode}
+                                    className="btn btn-green-outlined"
+                                >
+                                    Install
+                                </Button>
+                            </div>
+                        </AlertBox>
+                    )}
+                    {isNodeInstalled && !isNodeVersionOK && (
+                        <AlertBox title="Error on Node Version">
+                            <div className="flex items-center justify-between gap-4">
+                                <span>
+                                    Your Node installation is outdated, you must
+                                    upgrade it to 20 or upper.
+                                </span>
+                                <Button
+                                    variant="outline"
+                                    id="bt-install-ecoindex"
+                                    onClick={installEcoindexPlugin}
                                     className="btn btn-green-outlined"
                                 >
                                     Install

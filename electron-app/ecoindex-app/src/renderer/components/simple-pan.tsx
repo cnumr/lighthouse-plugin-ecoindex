@@ -10,8 +10,6 @@ import {
 import { Button } from '../ui/button'
 import { FC } from 'react'
 import { SimpleUrlsList } from './simple-urls'
-import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
-import { getWorkDir } from '@/shared/memory'
 
 export interface ISimpleMesureLayout {
     appReady: boolean
