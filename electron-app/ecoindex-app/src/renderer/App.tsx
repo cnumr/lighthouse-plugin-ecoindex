@@ -337,7 +337,7 @@ function TheApp() {
                         <p>
                             Copy application informations to clipboard.
                             <br />
-                            Send theim to developper.
+                            Send theim to developper at renaud@greenit.fr.
                         </p>
                     </TooltipContent>
                 </Tooltip>
