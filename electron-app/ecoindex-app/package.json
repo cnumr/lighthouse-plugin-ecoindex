@@ -38,7 +38,10 @@
         "make": "env-cmd electron-forge make",
         "publish": "env-cmd electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
-        "release": "env-cmd release-it"
+        "release": "env-cmd release-it --preRelease=rc",
+        "release:patch": "env-cmd release-it",
+        "release:minor": "env-cmd release-it minor",
+        "release:major": "env-cmd release-it major"
     },
     "devDependencies": {
         "@electron-forge/cli": "^7.4.0",
