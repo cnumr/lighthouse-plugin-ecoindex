@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.5...electron-v1.0.1-rc.6) (2024-07-24)
+
+
+### Features
+
+* display feed URL ([ea53784](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ea537848dbd9671c537c9f812b82af9decce600c))
+
 ## [1.0.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.4...electron-v1.0.1-rc.5) (2024-07-24)
 
 
