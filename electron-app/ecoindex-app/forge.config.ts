@@ -86,6 +86,19 @@ const config: ForgeConfig = {
             },
         },
     ],
+    // publishers: [
+    //     {
+    //         name: '@electron-forge/publisher-github',
+    //         config: {
+    //             repository: {
+    //                 owner: 'cnumr',
+    //                 name: 'lighthouse-plugin-ecoindex',
+    //             },
+    //             tagPrefix: 'electron-v',
+    //             prerelease: true,
+    //         },
+    //     },
+    // ],
     plugins: [
         new AutoUnpackNativesPlugin({}),
         new WebpackPlugin({

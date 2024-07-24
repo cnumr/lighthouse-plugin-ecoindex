@@ -1,15 +1,12 @@
 import './index.css'
 
-import { Bug, Sun, SunMoon } from 'lucide-react'
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from './ui/card'
-import { ChangeEvent, useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import {
@@ -18,9 +15,11 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/renderer/ui/tooltip'
-import { channels, labels, utils } from '../shared/constants'
+import { labels, utils } from '../shared/constants'
+import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
+import { Bug } from 'lucide-react'
 import { Button } from '@/renderer/ui/button'
 import { DarkModeSwitcher } from './components/dark-mode-switcher'
 import { Header } from './components/Header'
@@ -31,17 +30,13 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { SimplePanMesure } from './components/simple-pan'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { Textarea } from './ui/textarea'
-import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 import { TypographyP } from './ui/typography/TypographyP'
-import { cn } from '../renderer/lib/utils'
-import { getNodeV } from '@/shared/memory'
 import iconAsso from '../../assets/asso.svg'
 import packageJson from '../../package.json'
 
 function TheApp() {
     const [language, setLanguage] = useState('en')
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
-    const [tabSelected, setTabSelected] = useState(0)
     const [nodeVersion, setNodeVersion] = useState('')
     // let nodeVersion = 'loading...'
     const [workDir, setWorkDir] = useState('chargement...')
@@ -170,6 +165,7 @@ function TheApp() {
             `_blank`
         )
     }
+
     const installEcoindexPlugin = async () => {
         try {
             await window.electronAPI.handleLighthouseEcoindexPluginInstall()
@@ -367,7 +363,11 @@ function TheApp() {
                     {!isNodeInstalled && (
                         <AlertBox title="Error on Node">
                             <div className="flex items-center justify-between gap-4">
-                                <span>Node is not installed!</span>
+                                <span>
+                                    Node is not installed, install it (you must
+                                    be admin of your computer)! After
+                                    installation, restart application.
+                                </span>
                                 <Button
                                     variant="default"
                                     id="bt-install-node"
@@ -383,13 +383,15 @@ function TheApp() {
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     Your Node installation is outdated, you must
-                                    upgrade it to 20 or upper.
+                                    upgrade it to 20 or upper, upgrade it (you
+                                    must be admin of your computer)! After
+                                    upgrade, restart application.
                                 </span>
                                 <Button
                                     variant="default"
                                     onClick={installEcoindexPlugin}
                                 >
-                                    Install
+                                    Upgrade
                                 </Button>
                             </div>
                         </AlertBox>
@@ -400,7 +402,9 @@ function TheApp() {
                                 <div className="flex items-center justify-between gap-4">
                                     <span>
                                         Lighthouse Ecoindex plugin is not
-                                        installed!
+                                        installed, install it (you must be admin
+                                        of your computer)! After installation,
+                                        restart application.
                                     </span>
                                     <Button
                                         variant="default"
