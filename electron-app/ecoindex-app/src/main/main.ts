@@ -554,32 +554,41 @@ async function _sleep(ms: number) {
  */
 const handleNodeInstalled = async (event: IpcMainEvent) => {
     // get Node Dir
-    const _nodeDir = await _getHostInformations(event, custom_scripts.GET_NODE)
-    if (_nodeDir.includes(';')) {
-        console.log(`Clean nodeDir path`)
-        setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
-    } else setNodeDir(_nodeDir)
-    console.log(`nodeDir`, getNodeDir())
-
-    setNpmDir(getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules')
-    console.log(`npmDir: `, getNpmDir())
-
-    // setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
-    // console.log(`nodeVersion`, getNodeV())
-    sendDataToFront({ 'nodeDir-raw': _nodeDir })
-    sendDataToFront({ nodeDir: getNodeDir() })
-    sendDataToFront({ npmDir: getNpmDir() })
-    const { shell } = os.userInfo()
-    sendDataToFront({ shell })
-    sendDataToFront({ platform: os.platform() })
-    sendDataToFront({ env: process.env })
-
     try {
-        fs.accessSync(getNodeDir())
-        return true
+        const _nodeDir = await _getHostInformations(
+            event,
+            custom_scripts.GET_NODE
+        )
+        if (_nodeDir.includes(';')) {
+            console.log(`Clean nodeDir path`)
+            setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
+        } else setNodeDir(_nodeDir)
+        console.log(`nodeDir`, getNodeDir())
+
+        setNpmDir(
+            getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules'
+        )
+        console.log(`npmDir: `, getNpmDir())
+
+        // setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
+        // console.log(`nodeVersion`, getNodeV())
+        sendDataToFront({ 'nodeDir-raw': _nodeDir })
+        sendDataToFront({ nodeDir: getNodeDir() })
+        sendDataToFront({ npmDir: getNpmDir() })
+        const { shell } = os.userInfo()
+        sendDataToFront({ shell })
+        sendDataToFront({ platform: os.platform() })
+        sendDataToFront({ env: process.env })
+
+        try {
+            fs.accessSync(getNodeDir())
+            return true
+        } catch (error) {
+            console.log(`has NOT access to Node DIR 🚫`, error)
+            return false
+        }
     } catch (error) {
-        console.log(`has NOT access to Node DIR 🚫`, error)
-        return false
+        console.log(`Check is Node Installed failed 🚫`, error)
     }
 }
 
