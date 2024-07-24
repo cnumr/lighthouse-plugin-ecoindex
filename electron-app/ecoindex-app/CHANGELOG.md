@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.4...electron-v1.0.1-rc.5) (2024-07-24)
+
+
+### Features
+
+* switch to `update-electron-app` ([aa78a47](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/aa78a478ae327cffcddd037124a041b3364eef57))
+
 ## [1.0.1-rc.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.3...electron-v1.0.1-rc.4) (2024-07-24)
 
 
