@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.3...electron-v1.0.1-rc.4) (2024-07-24)
+
+
+### Bug Fixes
+
+* handle error on node version not implemented ([c350fad](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c350faddc426763bb7809f82b91a0e10a0fa0f94))
+
 ## [1.0.1-rc.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.2...electron-v1.0.1-rc.3) (2024-07-24)
 
 
