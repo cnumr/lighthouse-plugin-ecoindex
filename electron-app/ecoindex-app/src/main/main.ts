@@ -136,6 +136,11 @@ app.on('ready', () => {
     })
     // _showNotification()
     _createWindow()
+    // log feed URL
+    console.log(`feed URL`, feed)
+
+    _sendMessageToFrontLog(feed)
+    sendDataToFront(feed)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
