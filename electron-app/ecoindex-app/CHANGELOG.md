@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.6...electron-v1.0.1-rc.7) (2024-07-24)
+
+
+### Bug Fixes
+
+* error config for `update-electron-app` ([a6a38a5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a6a38a50043b6c9ef0dbfa6e3143dcf862cfb95f))
+
 ## [1.0.1-rc.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.5...electron-v1.0.1-rc.6) (2024-07-24)
 
 
