@@ -8,7 +8,6 @@ import {
     ipcMain,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
-import { UpdateSourceType, updateElectronApp } from 'update-electron-app'
 import { channels, scripts as custom_scripts, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
@@ -38,12 +37,9 @@ import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
 import packageJson from '../../package.json'
+import { updateElectronApp } from 'update-electron-app'
 
 updateElectronApp({
-    updateSource: {
-        type: UpdateSourceType.ElectronPublicUpdateService,
-        repo: 'cnumr/lighthouse-plugin-ecoindex',
-    },
     updateInterval: '10 minutes',
     logger: require('electron-log'),
     notifyUser: true,
