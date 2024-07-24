@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.2...electron-v1.0.1-rc.3) (2024-07-24)
+
+
+### Bug Fixes
+
+* error not catch on chech node version (error when no node installed) ([d3113e5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d3113e5be877a194a2b10813f44f44028e9f4fa3))
+
 ## [1.0.1-rc.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.1...electron-v1.0.1-rc.2) (2024-07-22)
 
 
