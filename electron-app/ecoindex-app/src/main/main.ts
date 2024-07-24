@@ -8,6 +8,7 @@ import {
     ipcMain,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
+import { UpdateSourceType, updateElectronApp } from 'update-electron-app'
 import { channels, scripts as custom_scripts, utils } from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
@@ -37,23 +38,16 @@ import fixPath from 'fix-path'
 import fs from 'fs'
 import os from 'os'
 import packageJson from '../../package.json'
-import { updateElectronApp } from 'update-electron-app'
 
-updateElectronApp() // additional configuration options available
-
-const server = 'https://update.electronjs.org'
-const feed: Electron.FeedURLOptions = {
-    url: `${server}/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/${app.getVersion()}`,
-}
-
-autoUpdater.setFeedURL(feed)
-
-setInterval(
-    () => {
-        autoUpdater.checkForUpdates()
+updateElectronApp({
+    updateSource: {
+        type: UpdateSourceType.ElectronPublicUpdateService,
+        repo: 'cnumr/lighthouse-plugin-ecoindex',
     },
-    10 * 60 * 1000
-)
+    updateInterval: '10 minutes',
+    logger: require('electron-log'),
+    notifyUser: true,
+}) // additional configuration options available
 
 // const execFile = util.promisify(_execFile);
 
@@ -136,11 +130,6 @@ app.on('ready', () => {
     })
     // _showNotification()
     _createWindow()
-    // log feed URL
-    console.log(`feed URL`, feed)
-
-    _sendMessageToFrontLog(feed)
-    sendDataToFront(feed)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
