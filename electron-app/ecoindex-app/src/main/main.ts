@@ -593,6 +593,22 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
 }
 
 /**
+ * Handlers, Node Version
+ * @returns string
+ */
+const handleGetNodeVersion = async (event: IpcMainEvent) => {
+    try {
+        setNodeV(
+            await _getHostInformations(event, custom_scripts.GET_NODE_VERSION)
+        )
+        sendDataToFront({ 'node-version': getNodeV() })
+        return getNodeV()
+    } catch (error) {
+        console.log(`Check is Node version failed 🚫`, error)
+    }
+}
+
+/**
  * Handlers, Is Ecoindex Lighthouse Plugin installed.
  * @param event IpcMainEvent
  * @returns boolean
@@ -1056,16 +1072,6 @@ const handleSelectFolder = async () => {
         setWorkDir(filePaths[0])
         return filePaths[0]
     }
-}
-
-/**
- * Handlers, Node Version
- * @returns string
- */
-const handleGetNodeVersion = async (event: IpcMainEvent) => {
-    setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
-    sendDataToFront({ 'node-version': getNodeV() })
-    return getNodeV()
 }
 
 // #endregion
