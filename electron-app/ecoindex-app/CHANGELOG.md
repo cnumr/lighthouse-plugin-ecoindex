@@ -1,5 +1,15 @@
 
 
+## [1.0.1-rc.8](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.7...electron-v1.0.1-rc.8) (2024-07-25)
+
+
+### Features
+
+* add help link to documentation ([5ba3958](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5ba39583ce3aad99365d31d30b40a31e8aaea365))
+* dark mode handler ([f70a91e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f70a91eb84d08a58b401662b0993ef120bfbd862))
+* force update of plugin at startup [#30](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/30) ([f55f286](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f55f286aab3b87b831dc5dceb96d71e2a8863576))
+* init force update plugin update ([43c238a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/43c238a51edcb23526c1684913e618f71b1ffee4))
+
 ## [1.0.1-rc.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.6...electron-v1.0.1-rc.7) (2024-07-24)
 
 
