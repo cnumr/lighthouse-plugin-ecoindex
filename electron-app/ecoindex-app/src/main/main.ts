@@ -117,6 +117,10 @@ app.on('ready', () => {
         channels.INSTALL_ECOINDEX_PLUGIN,
         handleLighthouseEcoindexPluginInstall
     )
+    ipcMain.handle(
+        channels.UPDATE_ECOINDEX_PLUGIN,
+        handleLighthouseEcoindexPluginUpdate
+    )
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
         applicationVersion: packageJson.name,
@@ -1029,6 +1033,84 @@ const handleLighthouseEcoindexPluginInstall = async (
     } catch (error) {
         _debugLogs(`error`, JSON.stringify(error, null, 2))
         return 'Installation failed'
+    }
+}
+/**
+ * Handlers, Update Ecoindex Plugin.
+ * @param event IpcMainEvent
+ * @returns Promise<string>
+ */
+const handleLighthouseEcoindexPluginUpdate = async (
+    event: IpcMainEvent
+): Promise<string> => {
+    try {
+        console.log(`handleLighthouseEcoindexPluginUpdate`)
+        _debugLogs(`handleLighthouseEcoindexPluginUpdate started 🚀`)
+
+        // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
+        const filePath = [
+            `${
+                process.env['WEBPACK_SERVE'] === 'true'
+                    ? __dirname
+                    : process.resourcesPath
+            }/scripts/${os.platform()}/update-plugin.sh`,
+        ]
+        const { shell, homedir } = os.userInfo()
+        let runner = ''
+        if (shell === '/bin/zsh') {
+            runner = 'zsh'
+        }
+        const o = { shell, runner, filePath, __dirname, homedir }
+        _debugLogs(`informations`, JSON.stringify(o, null, 2))
+        _debugLogs(`Try childProcess on`, filePath)
+        return new Promise((resolve, reject) => {
+            const childProcess: ChildProcess = spawn(
+                runner,
+                ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
+                {
+                    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
+                    env: process.env,
+                    // shell: shell,
+                }
+            )
+
+            childProcess.on('exit', (code, signal) => {
+                _debugLogs(`Update exited: ${code}; signal: ${signal}`)
+            })
+
+            childProcess.on('close', (code) => {
+                _debugLogs(`Update closed: ${code}`)
+                if (code === 0) {
+                    // _sendMessageToFrontLog(`Intallation done 🚀`)
+                    _debugLogs(`Update done 🚀`)
+                    resolve(`Update done 🚀`)
+                } else {
+                    // _sendMessageToFrontLog(`Intallation failed 🚫`)
+                    _debugLogs(`Update failed 🚫`)
+                    reject(`Update failed 🚫`)
+                }
+            })
+
+            if (childProcess.stderr) {
+                childProcess.stderr.on('data', (data) => {
+                    console.error(`Update stderr: ${data}`)
+                    _debugLogs(`Update stderr: ${data}`)
+                })
+            }
+
+            childProcess.on('disconnect', () => {
+                _debugLogs('Update Child process disconnected')
+            })
+
+            childProcess.on('message', (message, sendHandle) => {
+                _debugLogs(`Update Child process message: ${message}`)
+            })
+
+            if (childProcess.stdout) _echoReadable(event, childProcess.stdout)
+        })
+    } catch (error) {
+        _debugLogs(`error`, JSON.stringify(error, null, 2))
+        return 'Update failed'
     }
 }
 

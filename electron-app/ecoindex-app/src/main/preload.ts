@@ -36,6 +36,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
         ipcRenderer.invoke(channels.IS_JSON_CONFIG_FILE_EXIST, workDir),
     handleLighthouseEcoindexPluginInstall: () =>
         ipcRenderer.invoke(channels.INSTALL_ECOINDEX_PLUGIN),
+    handleLighthouseEcoindexPluginUpdate: () =>
+        ipcRenderer.invoke(channels.UPDATE_ECOINDEX_PLUGIN),
 
     // Main → Front
     sendLogToFront: (callback: any) =>

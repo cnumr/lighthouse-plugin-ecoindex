@@ -19,6 +19,7 @@ const constants: IConstants = {
         IS_NODE_INSTALLED: 'is-node-installed',
         IS_JSON_CONFIG_FILE_EXIST: 'is-json-config-file-exist',
         INSTALL_ECOINDEX_PLUGIN: 'install-ecoindex-plugin',
+        UPDATE_ECOINDEX_PLUGIN: 'update-ecoindex-plugin',
         HOST_INFORMATIONS: 'host-informations',
         HOST_INFORMATIONS_BACK: 'host-informations-back',
     },

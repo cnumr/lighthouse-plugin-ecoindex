@@ -38,11 +38,9 @@ function TheApp() {
     const [language, setLanguage] = useState('en')
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
     const [nodeVersion, setNodeVersion] = useState('')
-    // let nodeVersion = 'loading...'
     const [workDir, setWorkDir] = useState('chargement...')
     const [appReady, setAppReady] = useState(false)
     const [datasFromHost, setDatasFromHost] = useState({})
-    // let appReady = false
 
     let loadingScreen = 0
     const [urlsList, setUrlsList] = useState<InputField[]>([
@@ -56,12 +54,9 @@ function TheApp() {
         isLighthouseEcoindexPluginInstalled,
         setIsLighthouseEcoindexPluginInstalled,
     ] = useState(true)
-    // let isLighthouseEcoindexPluginInstalled = false
     const [isNodeInstalled, setIsNodeInstalled] = useState(true)
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
-    // let isNodeInstalled = false
 
-    // Run runFakeMesure on click on button fake
     const runSimpleMesures = () => {
         console.log('Simple mesures clicked')
         try {
@@ -173,6 +168,13 @@ function TheApp() {
             console.error(`installEcoindexPlugin`, error)
         }
     }
+    const updateEcoindexPlugin = async () => {
+        try {
+            await window.electronAPI.handleLighthouseEcoindexPluginUpdate()
+        } catch (error) {
+            console.error(`updateEcoindexPlugin`, error)
+        }
+    }
 
     /**
      * Utils, wait method.
@@ -241,10 +243,18 @@ function TheApp() {
             increment()
         }
 
+        const fetchUpdateEcoindexPlugin = async () => {
+            if (isLighthouseEcoindexPluginInstalled)
+                await updateEcoindexPlugin()
+        }
+
         fetchWorkDir().then(() => {
             fetchNodeInstalled().then(() => {
-                fetchNodeVersion()
-                fetchLighthouseEcoindexPluginInstalled()
+                fetchNodeVersion().then(() => {
+                    fetchLighthouseEcoindexPluginInstalled().then(() => {
+                        fetchUpdateEcoindexPlugin()
+                    })
+                })
             })
         })
 
