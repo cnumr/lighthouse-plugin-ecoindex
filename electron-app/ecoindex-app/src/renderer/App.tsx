@@ -399,7 +399,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {isNodeInstalled &&
+                    {isNodeVersionOK &&
                         !isLighthouseEcoindexPluginInstalled && (
                             <AlertBox title="Error on Ecoindex">
                                 <div className="flex items-center justify-between gap-4">

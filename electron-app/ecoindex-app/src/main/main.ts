@@ -971,7 +971,7 @@ const handleLighthouseEcoindexPluginInstall = async (
                 process.env['WEBPACK_SERVE'] === 'true'
                     ? __dirname
                     : process.resourcesPath
-            }/scripts/${os.platform()}/install-plugin.sh`,
+            }/scripts/${os.platform()}/install-plugin-full.sh`,
         ]
         const { shell, homedir } = os.userInfo()
         let runner = ''

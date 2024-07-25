@@ -22,7 +22,7 @@ export const AlertBox: FC<ILayout> = ({
     return (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        <Alert variant={_variant}>
+        <Alert variant={_variant} className="">
             {variant === 'destructive' && <AlertCircle className="size-4" />}
             {variant === 'default' && <RocketIcon className="size-4" />}
             {variant === 'bug' && <Bug className="size-4" />}
