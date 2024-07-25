@@ -315,14 +315,17 @@ function TheApp() {
 
     return (
         <div className="container relative">
-            <DarkModeSwitcher className="absolute left-2 top-2 flex gap-2" />
+            <DarkModeSwitcher
+                title="Dark mode switch"
+                className="absolute left-2 top-2 z-20 flex gap-2"
+            />
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
                             variant="secondary"
                             size="sm"
-                            className="absolute right-2 top-2"
+                            className="absolute right-2 top-2 z-20"
                             onClick={copyToClipBoard}
                         >
                             <Bug className="mr-2 size-4" />
@@ -456,70 +459,85 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    <Card className="border-primary w-full">
-                        <CardHeader>
-                            <CardTitle>1. Select ouput folder</CardTitle>
-                            <CardDescription>
-                                Specify where to execute the mesures.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex w-full items-center gap-2">
-                                <Input
-                                    id="filePath"
-                                    value={workDir}
-                                    type="text"
-                                    readOnly
-                                />
-                                <Button
-                                    type="button"
-                                    id="btn-file"
-                                    disabled={!appReady}
-                                    onClick={selectWorkingFolder}
-                                >
-                                    Browse
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
-                    <TypographyP className={`w-full`}>
-                        Choose the type of mesure you want to do.
-                    </TypographyP>
-                    <Tabs defaultValue="simple-mesure" className="w-full">
-                        <TabsList className="mb-4 grid w-full grid-cols-2">
-                            <TabsTrigger value="simple-mesure">
-                                {labels[language]['simple-mesures-label']}
-                            </TabsTrigger>
-                            <TabsTrigger value="json-mesure">
-                                {labels[language]['full-mesures-label']}
-                            </TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="simple-mesure">
-                            <SimplePanMesure
-                                appReady={appReady}
-                                language={language}
-                                simpleMesures={runSimpleMesures}
-                                urlsList={urlsList}
-                                setUrlsList={setUrlsList}
-                                className="border-primary"
-                            />
-                        </TabsContent>
-                        <TabsContent value="json-mesure">
-                            <JsonPanMesure
-                                appReady={appReady}
-                                isJsonFromDisk={isJsonFromDisk}
-                                language={language}
-                                jsonDatas={jsonDatas}
-                                setJsonDatas={setJsonDatas}
-                                mesure={() => runJsonSaveAndCollect(true)}
-                                reload={runJsonReadAndReload}
-                                save={runJsonSaveAndCollect}
-                                notify={handlerJsonNotify}
-                                className="border-primary"
-                            />
-                        </TabsContent>
-                    </Tabs>
+                    {appReady && (
+                        <>
+                            <Card className="border-primary w-full">
+                                <CardHeader>
+                                    <CardTitle>
+                                        1. Select ouput folder
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Specify where to execute the mesures.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="flex w-full items-center gap-2">
+                                        <Input
+                                            id="filePath"
+                                            value={workDir}
+                                            type="text"
+                                            readOnly
+                                        />
+                                        <Button
+                                            type="button"
+                                            id="btn-file"
+                                            disabled={!appReady}
+                                            onClick={selectWorkingFolder}
+                                        >
+                                            Browse
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
+                            <TypographyP className={`w-full`}>
+                                Choose the type of mesure you want to do.
+                            </TypographyP>
+                            <Tabs
+                                defaultValue="simple-mesure"
+                                className="w-full"
+                            >
+                                <TabsList className="mb-4 grid w-full grid-cols-2">
+                                    <TabsTrigger value="simple-mesure">
+                                        {
+                                            labels[language][
+                                                'simple-mesures-label'
+                                            ]
+                                        }
+                                    </TabsTrigger>
+                                    <TabsTrigger value="json-mesure">
+                                        {labels[language]['full-mesures-label']}
+                                    </TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="simple-mesure">
+                                    <SimplePanMesure
+                                        appReady={appReady}
+                                        language={language}
+                                        simpleMesures={runSimpleMesures}
+                                        urlsList={urlsList}
+                                        setUrlsList={setUrlsList}
+                                        className="border-primary"
+                                    />
+                                </TabsContent>
+                                <TabsContent value="json-mesure">
+                                    <JsonPanMesure
+                                        appReady={appReady}
+                                        isJsonFromDisk={isJsonFromDisk}
+                                        language={language}
+                                        jsonDatas={jsonDatas}
+                                        setJsonDatas={setJsonDatas}
+                                        mesure={() =>
+                                            runJsonSaveAndCollect(true)
+                                        }
+                                        reload={runJsonReadAndReload}
+                                        save={runJsonSaveAndCollect}
+                                        notify={handlerJsonNotify}
+                                        className="border-primary"
+                                    />
+                                </TabsContent>
+                            </Tabs>
+                        </>
+                    )}
                     {/* display here the echoReadable line */}
                     <Card className="border-primary w-full">
                         <CardHeader>
