@@ -1,11 +1,13 @@
 import {
     BrowserWindow,
     IpcMainEvent,
+    Menu,
+    MenuItem,
     Notification,
     app,
-    autoUpdater,
     dialog,
     ipcMain,
+    shell,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
 import { channels, scripts as custom_scripts, utils } from '../shared/constants'
@@ -153,6 +155,114 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+const isMac = process.platform === 'darwin'
+
+const template = [
+    // { role: 'appMenu' }
+    ...(isMac
+        ? [
+              {
+                  label: app.name,
+                  submenu: [
+                      { role: 'about' },
+                      { type: 'separator' },
+                      { role: 'services' },
+                      { type: 'separator' },
+                      { role: 'hide' },
+                      { role: 'hideOthers' },
+                      { role: 'unhide' },
+                      { type: 'separator' },
+                      { role: 'quit' },
+                  ],
+              },
+          ]
+        : []),
+    // { role: 'fileMenu' }
+    {
+        label: 'File',
+        submenu: [isMac ? { role: 'close' } : { role: 'quit' }],
+    },
+    // { role: 'editMenu' }
+    {
+        label: 'Edit',
+        submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            ...(isMac
+                ? [
+                      { role: 'pasteAndMatchStyle' },
+                      { role: 'delete' },
+                      { role: 'selectAll' },
+                      { type: 'separator' },
+                      {
+                          label: 'Speech',
+                          submenu: [
+                              { role: 'startSpeaking' },
+                              { role: 'stopSpeaking' },
+                          ],
+                      },
+                  ]
+                : [
+                      { role: 'delete' },
+                      { type: 'separator' },
+                      { role: 'selectAll' },
+                  ]),
+        ],
+    },
+    // { role: 'viewMenu' }
+    {
+        label: 'View',
+        submenu: [
+            { role: 'reload' },
+            { role: 'forceReload' },
+            { role: 'toggleDevTools' },
+            { type: 'separator' },
+            { role: 'resetZoom' },
+            { role: 'zoomIn' },
+            { role: 'zoomOut' },
+            { type: 'separator' },
+            { role: 'togglefullscreen' },
+        ],
+    },
+    // { role: 'windowMenu' }
+    {
+        label: 'Window',
+        submenu: [
+            { role: 'minimize' },
+            { role: 'zoom' },
+            ...(isMac
+                ? [
+                      { type: 'separator' },
+                      { role: 'front' },
+                      { type: 'separator' },
+                      { role: 'window' },
+                  ]
+                : [{ role: 'close' }]),
+        ],
+    },
+    {
+        role: 'help',
+        submenu: [
+            {
+                label: 'Learn More',
+                click: async () => {
+                    await shell.openExternal(
+                        'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
+                    )
+                },
+            },
+        ],
+    },
+]
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
+
 // #region Helpers
 
 /**
@@ -194,11 +304,15 @@ const _debugLogs = (message?: any, ...optionalParams: any[]) => {
  * @param optionalParams
  */
 const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
-    getMainWindow().webContents.send(
-        channels.HOST_INFORMATIONS,
-        message,
-        optionalParams
-    )
+    try {
+        getMainWindow().webContents.send(
+            channels.HOST_INFORMATIONS,
+            message,
+            optionalParams
+        )
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 /**
