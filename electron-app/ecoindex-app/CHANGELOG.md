@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.10](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.9...electron-v1.0.1-rc.10) (2024-07-26)
+
+
+### Bug Fixes
+
+* forget to update release-ti fot forge publish Windows [#28](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/28) ([f4ca7af](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f4ca7af90807a9cbbbb934ec05839c4ddeae49a0))
+
 ## [1.0.1-rc.9](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.8...electron-v1.0.1-rc.9) (2024-07-26)
 
 
