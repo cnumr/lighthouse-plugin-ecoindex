@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+const { spawn } = require('child_process')
+
+const args = process.argv.slice(2)
+let cmd = args.shift()
+const cwd = process.cwd()
+
+if (cmd.endsWith('7z.exe')) {
+    const z7Args = args.filter((v) => v !== 'on')
+    spawn('7z', z7Args, { cwd })
+} else {
+    // cannot use 'wine' loop
+    spawn('/opt/homebrew/bin/wine64', [cmd, ...args], { cwd })
+}

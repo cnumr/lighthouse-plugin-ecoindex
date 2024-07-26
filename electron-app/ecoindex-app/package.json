@@ -4,7 +4,7 @@
     "productName": "EcoindexLighthouse",
     "private": true,
     "version": "1.0.1-rc.8",
-    "description": "An application to mesure the ecological impact of a website with LightHouse & Ecoindex.",
+    "description": "An application to mesure the ecological impact of a website with LightHouse and Ecoindex.",
     "homepage": "https://github.com/cnumr/lighthouse-plugin-ecoindex#readme",
     "bugs": "https://github.com/cnumr/lighthouse-plugin-ecoindex/issues",
     "publisher": "Association Green IT",
@@ -35,7 +35,7 @@
     "scripts": {
         "start": "env-cmd electron-forge start",
         "package": "env-cmd electron-forge package",
-        "make": "env-cmd electron-forge make",
+        "make": "PATH=$(pwd)/wine_proxy:$PATH env-cmd electron-forge make",
         "publish": "env-cmd electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
         "release": "env-cmd release-it --preRelease=rc",

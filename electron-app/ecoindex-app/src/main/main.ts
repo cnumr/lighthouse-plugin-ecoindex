@@ -41,6 +41,10 @@ import os from 'os'
 import packageJson from '../../package.json'
 import { updateElectronApp } from 'update-electron-app'
 
+if (require('electron-squirrel-startup')) {
+    app.quit()
+}
+
 updateElectronApp({
     updateInterval: '10 minutes',
     logger: require('electron-log'),

@@ -51,7 +51,7 @@ const config: ForgeConfig = {
         },
         {
             name: '@electron-forge/maker-zip',
-            platforms: ['darwin'],
+            platforms: ['darwin', 'linux', 'win32'],
             config: {},
         },
         {
@@ -62,18 +62,24 @@ const config: ForgeConfig = {
                 format: 'ULFO',
             },
         },
-        {
-            name: '@electron-forge/maker-wix',
-            config: {
-                language: 1033,
-                manufacturer: 'Green IT',
-            },
-        },
+        // {
+        //     name: '@electron-forge/maker-wix',
+        //     platforms: ['win32'],
+        //     config: {
+        //         language: 1033,
+        //         manufacturer: 'Green IT',
+        //     },
+        // },
         {
             name: '@electron-forge/maker-squirrel',
+            platforms: ['win32'],
             config: {
                 // certificateFile: './cert.pfx',
                 // certificatePassword: process.env.CERTIFICATE_PASSWORD,
+                authors: 'Renaud Heluin',
+                description:
+                    'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
+                language: 1033,
             },
         },
         {

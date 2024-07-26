@@ -8,7 +8,12 @@
         "release": true,
         "autoGenerate": true,
         "releaseName": "Release Electron-app ${version}",
-        "assets": ["./out/make/zip/darwin/arm64/*.zip", "./out/make/*.dmg"]
+        "assets": [
+            "./out/make/zip/darwin/arm64/*.zip",
+            "./out/make/*.dmg",
+            "./out/make/zip/win32/arm64/*.zip",
+            "./out/make/squirrel.windows/arm64/*.exe"
+        ]
     },
     "hooks": {
         "before:bump": "rm -rf ./out",

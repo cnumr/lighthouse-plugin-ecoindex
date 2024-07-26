@@ -36,3 +36,18 @@
 -   https://help.apple.com/xcode/mac/current/#/dev3a05256b8
 -   https://felixrieseberg.com/codesigning-electron-apps-in-ci/
 -   https://github.com/electron/osx-sign
+
+# osx package win32
+
+`brew install mono`
+`brew install xquartz`
+`brew install --cask --no-quarantine wine-stable`
+
+`export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin/mono`
+`brew install p7zip`
+
+`npm run make -- --platform=win32`
+
+## wine proxy
+
+`chmod  +x wine_proxy/wine`
