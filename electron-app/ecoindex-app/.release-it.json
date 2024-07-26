@@ -17,7 +17,7 @@
     },
     "hooks": {
         "before:bump": "rm -rf ./out",
-        "after:bump": "npm run publish",
+        "after:bump": "npm run make -- --platform=win32 && npm run make -- --plateform=darwin",
         "after:git:release": "echo After git push, before github release",
         "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     },
