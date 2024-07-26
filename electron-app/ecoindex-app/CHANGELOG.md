@@ -1,5 +1,12 @@
 
 
+## [1.0.1-rc.11](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.10...electron-v1.0.1-rc.11) (2024-07-26)
+
+
+### Bug Fixes
+
+* export on x64 for forge publish Windows [#28](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/28) ([8256ca2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8256ca2230c8f7c06f1fb47a9cd29beb947926f2))
+
 ## [1.0.1-rc.10](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.9...electron-v1.0.1-rc.10) (2024-07-26)
 
 
