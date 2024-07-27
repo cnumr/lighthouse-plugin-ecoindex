@@ -7,7 +7,10 @@ import type { ForgeConfig } from '@electron-forge/shared-types'
 import { FusesPlugin } from '@electron-forge/plugin-fuses'
 import { WebpackPlugin } from '@electron-forge/plugin-webpack'
 import { mainConfig } from './webpack.main.config'
+import packageJson from './package.json'
 import { rendererConfig } from './webpack.renderer.config'
+
+const { version } = packageJson
 
 const config: ForgeConfig = {
     packagerConfig: {
@@ -62,24 +65,20 @@ const config: ForgeConfig = {
                 format: 'ULFO',
             },
         },
-        // {
-        //     name: '@electron-forge/maker-wix',
-        //     platforms: ['win32'],
-        //     config: {
-        //         language: 1033,
-        //         manufacturer: 'Green IT',
-        //     },
-        // },
         {
             name: '@electron-forge/maker-squirrel',
             platforms: ['win32'],
-            config: {
-                // certificateFile: './cert.pfx',
-                // certificatePassword: process.env.CERTIFICATE_PASSWORD,
-                authors: 'Renaud Heluin',
-                description:
-                    'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
-                language: 1033,
+            config: (arch: string) => {
+                return {
+                    setupExe: `EcoindexLighthouse-win32-${arch}-${version} Setup.exe`,
+                    setupIcon: path.resolve(__dirname, 'assets', 'app-ico.ico'),
+                    // certificateFile: './cert.pfx',
+                    // certificatePassword: process.env.CERTIFICATE_PASSWORD,
+                    authors: 'Renaud Heluin',
+                    description:
+                        'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
+                    language: 1033,
+                }
             },
         },
         {
