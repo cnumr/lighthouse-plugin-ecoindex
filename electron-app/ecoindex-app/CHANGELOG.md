@@ -1,5 +1,13 @@
 
 
+## [1.0.1-rc.12](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.11...electron-v1.0.1-rc.12) (2024-07-27)
+
+
+### Features
+
+* generate exe filename with arch on squirrel forge publish Windows [#28](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/28) ([4a78eb9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4a78eb9ed934141b5c0cc1258a089c2616a27ee7))
+* prepare script for win32 forge publish Windows [#28](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/28) ([b69f2be](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b69f2be0d4cbda5b33ee01cc63699349d28291fe))
+
 ## [1.0.1-rc.11](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.10...electron-v1.0.1-rc.11) (2024-07-26)
 
 
