@@ -1,13 +1,20 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect, useState } from 'react'
 
+import { Progress } from '../ui/progress'
 import { cn } from '../lib/utils'
 
 export interface ILayout {
     children: ReactNode
     visible?: boolean
     id?: string
+    progress: number
 }
-export const PopinLoading: FC<ILayout> = ({ id, children, visible = true }) => {
+export const PopinLoading: FC<ILayout> = ({
+    id,
+    children,
+    visible = true,
+    progress,
+}) => {
     return (
         <div
             id={id}
@@ -17,8 +24,11 @@ export const PopinLoading: FC<ILayout> = ({ id, children, visible = true }) => {
         >
             <div className="bg-background absolute h-full w-full opacity-70"></div>
             <div className="absolute grid h-full w-full place-content-center">
-                <div className="border-primary !text-primary shadow-primary/50 bg-background flex items-center rounded-md border px-4 py-3 font-black shadow-lg">
-                    {children}
+                <div className="border-primary shadow-primary/50 bg-background relative flex flex-col gap-2 rounded-md border px-4 py-3 shadow-lg">
+                    <div className="!text-primary flex items-center font-black">
+                        {children}
+                    </div>
+                    <Progress value={progress} className="h-2 w-full" />
                 </div>
             </div>
         </div>

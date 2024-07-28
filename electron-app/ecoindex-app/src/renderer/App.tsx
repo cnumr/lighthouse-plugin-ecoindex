@@ -9,33 +9,29 @@ import {
 } from './ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/renderer/ui/tooltip'
 import { labels, utils } from '../shared/constants'
 import { useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
 import { Bug } from 'lucide-react'
 import { Button } from '@/renderer/ui/button'
+import { ConsoleApp } from './components/console'
 import { DarkModeSwitcher } from './components/dark-mode-switcher'
+import { Footer } from './components/footer'
 import { Header } from './components/Header'
 import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { SimplePanMesure } from './components/simple-pan'
+import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
-import { Textarea } from './ui/textarea'
 import { TypographyP } from './ui/typography/TypographyP'
-import iconAsso from '../../assets/asso.svg'
 import packageJson from '../../package.json'
 
 function TheApp() {
     const [language, setLanguage] = useState('en')
+    const [progress, setProgress] = useState(0)
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
     const [nodeVersion, setNodeVersion] = useState('')
     const [workDir, setWorkDir] = useState('chargement...')
@@ -127,6 +123,7 @@ function TheApp() {
 
     const increment = () => {
         loadingScreen = loadingScreen + 1
+        setProgress(loadingScreen * (100 / 4))
         console.log(`Verify configuration step ${loadingScreen}/4`)
         const counter = document.getElementById('counter') as HTMLElement
         counter.innerText = `Loading... ${loadingScreen}/4`
@@ -329,28 +326,25 @@ function TheApp() {
                 title="Dark mode switch"
                 className="absolute left-2 top-2 z-20 flex gap-2"
             />
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            className="absolute right-2 top-2 z-20"
-                            onClick={copyToClipBoard}
-                        >
-                            <Bug className="mr-2 size-4" />
-                            Debug
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>
-                            Copy application informations to clipboard.
-                            <br />
-                            Send theim to developper at renaud@greenit.fr.
-                        </p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+            <SimpleTooltip
+                tooltipContent={
+                    <p>
+                        Copy application informations to clipboard.
+                        <br />
+                        Send theim to developper at renaud@greenit.fr.
+                    </p>
+                }
+            >
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    className="absolute right-2 top-2 z-20"
+                    onClick={copyToClipBoard}
+                >
+                    <Bug className="mr-2 size-4" />
+                    Debug
+                </Button>
+            </SimpleTooltip>
             <main className="flex h-screen flex-col justify-between gap-4 p-4">
                 <div className="flex flex-col items-center gap-4">
                     <Header />
@@ -447,25 +441,22 @@ function TheApp() {
                                     </a>{' '}
                                     🙏
                                 </span>
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button
-                                                id="bt-report"
-                                                variant="default"
-                                                onClick={copyToClipBoard}
-                                            >
-                                                Report
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>
-                                                Copy application informations to
-                                                clipboard.
-                                            </p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
+                                <SimpleTooltip
+                                    tooltipContent={
+                                        <p>
+                                            Copy application informations to
+                                            clipboard.
+                                        </p>
+                                    }
+                                >
+                                    <Button
+                                        id="bt-report"
+                                        variant="default"
+                                        onClick={copyToClipBoard}
+                                    >
+                                        Report
+                                    </Button>
+                                </SimpleTooltip>
                             </div>
                         </AlertBox>
                     )}
@@ -549,52 +540,11 @@ function TheApp() {
                         </>
                     )}
                     {/* display here the echoReadable line */}
-                    <Card className="border-primary w-full">
-                        <CardHeader>
-                            <CardTitle>Console</CardTitle>
-                            <CardDescription>
-                                Here you cans see what is happenning hunder the
-                                hood...
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <Textarea
-                                id="echo"
-                                className="text-muted-foreground h-36"
-                                readOnly
-                            ></Textarea>
-                        </CardContent>
-                    </Card>
-                    <div className="hidden text-xs">
-                        {JSON.stringify(datasFromHost, null, 2)}
-                    </div>
+                    <ConsoleApp id="echo" datasFromHost={datasFromHost} />
                 </div>
-                <div className="text-center text-sm">
-                    <p className="text-xs">
-                        Host Informations : Node.js(
-                        {nodeVersion ? nodeVersion : 'loading...'})
-                    </p>
-                    <p className="text-xs">
-                        Internal Electron informations : Chrome (v
-                        {window.versions.chrome()}
-                        ), Node.js (v
-                        {window.versions.node()}), and Electron (v
-                        {window.versions.electron()})
-                    </p>
-                    <p className="mt-2">© 2024 - Made with ❤️ and 🌱 by</p>
-                    <p className="my-4 grid place-content-center">
-                        <a href="https://asso.greenit.fr">
-                            <img
-                                width="100"
-                                alt="icon"
-                                src={iconAsso}
-                                className="bg-green-950"
-                            />
-                        </a>
-                    </p>
-                </div>
+                <Footer nodeVersion={nodeVersion} />
             </main>
-            <PopinLoading id="loadingPopin">
+            <PopinLoading id="loadingPopin" progress={progress}>
                 <ReloadIcon className="mr-2 size-4 animate-spin" />
                 <p id="counter">Loading... 0/4</p>
             </PopinLoading>
