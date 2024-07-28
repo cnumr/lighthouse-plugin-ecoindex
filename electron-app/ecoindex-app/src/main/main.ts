@@ -2,7 +2,6 @@ import {
     BrowserWindow,
     IpcMainEvent,
     Menu,
-    MenuItem,
     Notification,
     app,
     dialog,
@@ -10,7 +9,12 @@ import {
     shell,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
-import { channels, scripts as custom_scripts, utils } from '../shared/constants'
+import {
+    channels,
+    scripts as custom_scripts,
+    scripts,
+    utils,
+} from '../shared/constants'
 import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 import {
     cleanLogString,
@@ -119,13 +123,17 @@ app.on('ready', () => {
         channels.IS_JSON_CONFIG_FILE_EXIST,
         handleIsJsonConfigFileExist
     )
-    ipcMain.handle(
-        channels.INSTALL_ECOINDEX_PLUGIN,
-        handleLighthouseEcoindexPluginInstall
+    ipcMain.handle(channels.INSTALL_ECOINDEX_PLUGIN, (event) =>
+        handle_CMD_Actions(
+            event as IpcMainEvent,
+            channels.INSTALL_ECOINDEX_PLUGIN
+        )
     )
-    ipcMain.handle(
-        channels.UPDATE_ECOINDEX_PLUGIN,
-        handleLighthouseEcoindexPluginUpdate
+    ipcMain.handle(channels.UPDATE_ECOINDEX_PLUGIN, (event) =>
+        handle_CMD_Actions(
+            event as IpcMainEvent,
+            channels.UPDATE_ECOINDEX_PLUGIN
+        )
     )
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
@@ -665,8 +673,6 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
         )
         console.log(`npmDir: `, getNpmDir())
 
-        // setNodeV(await _getHostInformations(event, custom_scripts.GET_NODE_VERSION))
-        // console.log(`nodeVersion`, getNodeV())
         sendDataToFront({ 'nodeDir-raw': _nodeDir })
         sendDataToFront({ nodeDir: getNodeDir() })
         sendDataToFront({ npmDir: getNpmDir() })
@@ -1017,75 +1023,48 @@ const handleJsonReadAndReload = async (
     }
 }
 
-async function test_handleLighthouseEcoindexPluginInstall(event: IpcMainEvent) {
-    try {
-        const { shell, homedir } = os.userInfo()
-        let runner = ''
-        if (shell === '/bin/zsh') {
-            runner = 'zsh'
-        }
-        // const filePath = path.join(
-        //   __dirname,
-        //   'scripts',
-        //   os.platform(),
-        //   'install-plugin.sh',
-        // )
-        // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
-
-        const filePath = [
-            `${
-                process.env['WEBPACK_SERVE'] === 'true'
-                    ? __dirname
-                    : process.resourcesPath
-            }/scripts/${os.platform()}/install-plugin.sh`,
-        ]
-        _debugLogs(`filePath: ${filePath}`)
-        return new Promise((resolve, reject) => {
-            const options = {
-                name: 'Electron App',
-            }
-            // Execute the script
-            const install = spawn('zsh', [
-                '-c',
-                `chmod +x ${filePath} && ${runner} ${filePath}`,
-            ])
-
-            install.stdout.on('data', (data) => {
-                console.log(`stdout: ${data}`)
-                _debugLogs(`stdout: ${data}`)
-            })
-
-            install.stderr.on('data', (data) => {
-                console.error(`stderr: ${data}`)
-                _debugLogs(`stderr: ${data}`)
-            })
-            install.on(`exit`, (code, signal) => {
-                _debugLogs(`Intallation exited: ${code}; signal: ${signal}`)
-                if (code === 0) {
-                    _debugLogs(`Intallation done 🚀`)
-                    resolve(`Intallation done 🚀`)
-                } else {
-                    _debugLogs(`Intallation failed 🚫`)
-                    reject(`Intallation failed 🚫`)
-                }
-            })
-        })
-    } catch (error) {
-        _debugLogs(`error`, JSON.stringify(error, null, 2))
-    }
-}
-
 /**
- * Handlers, Install Ecoindex Plugin.
+ * Handlers, Generic CMD action
  * @param event IpcMainEvent
+ * @param action string
  * @returns Promise<string>
  */
-const handleLighthouseEcoindexPluginInstall = async (
-    event: IpcMainEvent
+const handle_CMD_Actions = async (
+    event: IpcMainEvent,
+    action: string
 ): Promise<string> => {
+    let actionName = 'default'
+    let actionShortName = 'default'
+    let actionCMDFile = 'default'
+    const ext = os.platform() === 'win32' ? 'bat' : 'sh'
+    switch (action) {
+        case channels.INSTALL_ECOINDEX_PLUGIN:
+            actionName = 'LighthouseEcoindexPluginInstall'
+            actionShortName = 'Install plugin'
+            actionCMDFile = `${custom_scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
+            break
+        case channels.UPDATE_ECOINDEX_PLUGIN:
+            actionName = 'LighthouseEcoindexPluginUpdate'
+            actionShortName = 'Update plugin'
+            actionCMDFile = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
+            break
+        case channels.IS_NODE_INSTALLED:
+            actionName = 'TODO'
+            actionShortName = 'Update plugin'
+            actionCMDFile = `${scripts.GET_NODE}.${ext}`
+            break
+        case channels.GET_NODE_VERSION:
+            actionName = 'TODO'
+            actionShortName = 'Update plugin'
+            actionCMDFile = `${scripts.GET_NODE_VERSION}.${ext}`
+            break
+
+        default:
+            throw new Error(`${action} not handled in handle_CMD_Actions`)
+    }
     try {
-        console.log(`handleLighthouseEcoindexPluginInstall`)
-        _debugLogs(`handleLighthouseEcoindexPluginInstall started 🚀`)
+        console.log(`handle${actionName}`)
+        _debugLogs(`handle${actionName} started 🚀`)
 
         // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
         const filePath = [
@@ -1093,7 +1072,7 @@ const handleLighthouseEcoindexPluginInstall = async (
                 process.env['WEBPACK_SERVE'] === 'true'
                     ? __dirname
                     : process.resourcesPath
-            }/scripts/${os.platform()}/install-plugin-full.sh`,
+            }/scripts/${os.platform()}/${actionCMDFile}`,
         ]
         const { shell, homedir } = os.userInfo()
         let runner = ''
@@ -1115,120 +1094,44 @@ const handleLighthouseEcoindexPluginInstall = async (
             )
 
             childProcess.on('exit', (code, signal) => {
-                _debugLogs(`Installation exited: ${code}; signal: ${signal}`)
+                _debugLogs(`${actionName} exited: ${code}; signal: ${signal}`)
             })
 
             childProcess.on('close', (code) => {
-                _debugLogs(`Installation closed: ${code}`)
+                _debugLogs(`${actionName} closed: ${code}`)
                 if (code === 0) {
-                    // _sendMessageToFrontLog(`Intallation done 🚀`)
-                    _debugLogs(`Installation done 🚀`)
-                    resolve(`Installation done 🚀`)
+                    // _sendMessageToFrontLog(`${actionShortName} done 🚀`)
+                    _debugLogs(`${actionShortName} done 🚀`)
+                    resolve(`${actionShortName} done 🚀`)
                 } else {
-                    // _sendMessageToFrontLog(`Intallation failed 🚫`)
-                    _debugLogs(`Installation failed 🚫`)
-                    reject(`Installation failed 🚫`)
+                    // _sendMessageToFrontLog(`${actionShortName} failed 🚫`)
+                    _debugLogs(`${actionShortName} failed 🚫`)
+                    reject(`${actionShortName} failed 🚫`)
                 }
             })
 
             if (childProcess.stderr) {
                 childProcess.stderr.on('data', (data) => {
-                    console.error(`Installation stderr: ${data}`)
-                    _debugLogs(`Installation stderr: ${data}`)
+                    console.error(`${actionShortName} stderr: ${data}`)
+                    _debugLogs(`${actionShortName} stderr: ${data}`)
                 })
             }
 
             childProcess.on('disconnect', () => {
-                _debugLogs('Installation Child process disconnected')
+                _debugLogs('${actionShortName} Child process disconnected')
             })
 
             childProcess.on('message', (message, sendHandle) => {
-                _debugLogs(`Installation Child process message: ${message}`)
+                _debugLogs(
+                    `${actionShortName} Child process message: ${message}`
+                )
             })
 
             if (childProcess.stdout) _echoReadable(event, childProcess.stdout)
         })
     } catch (error) {
         _debugLogs(`error`, JSON.stringify(error, null, 2))
-        return 'Installation failed'
-    }
-}
-/**
- * Handlers, Update Ecoindex Plugin.
- * @param event IpcMainEvent
- * @returns Promise<string>
- */
-const handleLighthouseEcoindexPluginUpdate = async (
-    event: IpcMainEvent
-): Promise<string> => {
-    try {
-        console.log(`handleLighthouseEcoindexPluginUpdate`)
-        _debugLogs(`handleLighthouseEcoindexPluginUpdate started 🚀`)
-
-        // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
-        const filePath = [
-            `${
-                process.env['WEBPACK_SERVE'] === 'true'
-                    ? __dirname
-                    : process.resourcesPath
-            }/scripts/${os.platform()}/update-plugin.sh`,
-        ]
-        const { shell, homedir } = os.userInfo()
-        let runner = ''
-        if (shell === '/bin/zsh') {
-            runner = 'zsh'
-        }
-        const o = { shell, runner, filePath, __dirname, homedir }
-        _debugLogs(`informations`, JSON.stringify(o, null, 2))
-        _debugLogs(`Try childProcess on`, filePath)
-        return new Promise((resolve, reject) => {
-            const childProcess: ChildProcess = spawn(
-                runner,
-                ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
-                {
-                    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-                    env: process.env,
-                    // shell: shell,
-                }
-            )
-
-            childProcess.on('exit', (code, signal) => {
-                _debugLogs(`Update exited: ${code}; signal: ${signal}`)
-            })
-
-            childProcess.on('close', (code) => {
-                _debugLogs(`Update closed: ${code}`)
-                if (code === 0) {
-                    // _sendMessageToFrontLog(`Intallation done 🚀`)
-                    _debugLogs(`Update done 🚀`)
-                    resolve(`Update done 🚀`)
-                } else {
-                    // _sendMessageToFrontLog(`Intallation failed 🚫`)
-                    _debugLogs(`Update failed 🚫`)
-                    reject(`Update failed 🚫`)
-                }
-            })
-
-            if (childProcess.stderr) {
-                childProcess.stderr.on('data', (data) => {
-                    console.error(`Update stderr: ${data}`)
-                    _debugLogs(`Update stderr: ${data}`)
-                })
-            }
-
-            childProcess.on('disconnect', () => {
-                _debugLogs('Update Child process disconnected')
-            })
-
-            childProcess.on('message', (message, sendHandle) => {
-                _debugLogs(`Update Child process message: ${message}`)
-            })
-
-            if (childProcess.stdout) _echoReadable(event, childProcess.stdout)
-        })
-    } catch (error) {
-        _debugLogs(`error`, JSON.stringify(error, null, 2))
-        return 'Update failed'
+        return '${actionShortName} failed'
     }
 }
 

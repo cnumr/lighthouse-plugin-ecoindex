@@ -26,8 +26,8 @@ const constants: IConstants = {
     scripts: {
         GET_NODE: 'get-node',
         GET_NODE_VERSION: 'get-node-version',
-        INSTALL_PLUGIN_AND_UTILS: 'install-plugin-and-utils',
-        UPDATED_PLUGIN: 'updated-plugin',
+        INSTALL_PLUGIN_AND_UTILS: 'install-plugin-full',
+        UPDATED_PLUGIN: 'update-plugin',
     },
     labels: {
         en: {
