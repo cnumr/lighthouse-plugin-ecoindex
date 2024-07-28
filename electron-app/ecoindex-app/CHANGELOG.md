@@ -1,5 +1,13 @@
 
 
+## [1.0.1-rc.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.12...electron-v1.0.1-rc.13) (2024-07-28)
+
+
+### Features
+
+* (main) refactorization of code ([1bf8814](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1bf881486d85953d944d419eff110101edf7705e))
+* design side, refactorisation and better design ([ae862a1](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ae862a13544f4617a90567f32335622ffc645a81))
+
 ## [1.0.1-rc.12](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.11...electron-v1.0.1-rc.12) (2024-07-27)
 
 
