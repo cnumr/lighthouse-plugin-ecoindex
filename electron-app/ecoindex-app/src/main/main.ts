@@ -1,3 +1,5 @@
+import * as path from 'node:path'
+
 import {
     BrowserWindow,
     IpcMainEvent,
@@ -69,8 +71,14 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 const _runfixPath = () => {
     console.log(`RUN fixPath and shellEnv`)
     fixPath()
-    const { shell } = os.userInfo()
-    console.log(`shell`, shell)
+    if(os.platform() === 'darwin'){
+        console.log(`darwin`);
+        const { shell } = os.userInfo()
+        console.log(`shell`, shell)
+    } else {
+        console.log(`win32`);
+        console.log(`shell`, `cmd.exe`)
+    }
 }
 _runfixPath()
 
@@ -526,17 +534,25 @@ async function _getHostInformations(
         const config: { [key: string]: any } = {}
         config['script_file'] = `${script_type}`
         config['ext'] = os.platform() === 'win32' ? 'bat' : 'sh'
+
         config['filePath'] = `${
             process.env['WEBPACK_SERVE'] === 'true'
                 ? __dirname
                 : process.resourcesPath
-        }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`
+        }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`.replace(/\//gm, path.sep)
+        
         config['out'] = []
         const { shell, homedir } = os.userInfo()
         if (shell === '/bin/zsh') {
             config['runner'] = 'zsh'
+            config['launcher'] = '-c'
+            config['cmd'] = `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`
+        } else if(os.platform() === `win32`){
+            config['runner'] = "cmd.exe"
+            config['launcher'] = '/c'
+            config['cmd'] = ` ${config['filePath']}`
         }
-
+        
         const informations = {
             script_type,
             shell,
@@ -545,6 +561,7 @@ async function _getHostInformations(
             __dirname,
             homedir,
         }
+        console.log(JSON.stringify(config, null, 2));
         _debugLogs(`informations`, JSON.stringify(informations, null, 2))
         _debugLogs(`Try childProcess on`, config['filePath'])
 
@@ -552,8 +569,8 @@ async function _getHostInformations(
             const childProcess: ChildProcess = spawn(
                 config['runner'] as string,
                 [
-                    '-c',
-                    `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`,
+                    config['launcher'],
+                    config['cmd'],
                 ],
                 {
                     stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
@@ -581,7 +598,8 @@ async function _getHostInformations(
                         resolve(
                             config['out']
                                 .at(-1)
-                                .replace('\\n', '')
+                                .replace(/[\r\n]/gm, '')
+                                .replace('\\node.exe', '')
                                 .trim() as string
                         )
                     } else {
@@ -666,11 +684,17 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
             console.log(`Clean nodeDir path`)
             setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
         } else setNodeDir(_nodeDir)
-        console.log(`nodeDir`, getNodeDir())
+        console.log(`nodeDir returned: `, _nodeDir)
+        console.log(`nodeDir:`, getNodeDir())
 
-        setNpmDir(
-            getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules'
-        )
+        
+        if(os.platform()=== `darwin`) {
+            setNpmDir(getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules'.replace(/\//gm, path.sep))
+
+        } else {
+            setNpmDir(os.userInfo().homedir+ `\\AppData\\Roaming\\npm\\node_modules`)
+        }
+        
         console.log(`npmDir: `, getNpmDir())
 
         sendDataToFront({ 'nodeDir-raw': _nodeDir })
@@ -723,7 +747,7 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
         return false
     }
     const npmDir = getNpmDir()
-    const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`
+    const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`.replace(/\//gm, path.sep)
     try {
         fs.accessSync(pluginDir)
         return true
@@ -771,7 +795,7 @@ const handleIsJsonConfigFileExist = async (
     workDir: string
 ) => {
     if (workDir === 'chargement...' || workDir === 'loading...') return
-    const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`
+    const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`.replace(/\//gm, path.sep)
     console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
     try {
         fs.accessSync(jsonConfigFile, fs.constants.F_OK)
