@@ -71,12 +71,12 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 const _runfixPath = () => {
     console.log(`RUN fixPath and shellEnv`)
     fixPath()
-    if(os.platform() === 'darwin'){
-        console.log(`darwin`);
+    if (os.platform() === 'darwin') {
+        console.log(`darwin`)
         const { shell } = os.userInfo()
         console.log(`shell`, shell)
     } else {
-        console.log(`win32`);
+        console.log(`win32`)
         console.log(`shell`, `cmd.exe`)
     }
 }
@@ -516,143 +516,6 @@ async function _runCollect(
 }
 
 /**
- * Utils, Launch script on host.
- * @param event IpcMainEvent
- * @param script_type string. see constants.scripts
- * @param isReadable boolean
- * @returns Promise<string>
- */
-async function _getHostInformations(
-    event: IpcMainEvent,
-    script_type: string,
-    isReadable = true
-): Promise<string> {
-    try {
-        console.log(`getHostInformations`)
-        _debugLogs(`getHostInformations for ${script_type} started 🚀`)
-        // Create configuration from host and script_type
-        const config: { [key: string]: any } = {}
-        config['script_file'] = `${script_type}`
-        config['ext'] = os.platform() === 'win32' ? 'bat' : 'sh'
-
-        config['filePath'] = `${
-            process.env['WEBPACK_SERVE'] === 'true'
-                ? __dirname
-                : process.resourcesPath
-        }/scripts/${os.platform()}/${config['script_file']}.${config['ext']}`.replace(/\//gm, path.sep)
-        
-        config['out'] = []
-        const { shell, homedir } = os.userInfo()
-        if (shell === '/bin/zsh') {
-            config['runner'] = 'zsh'
-            config['launcher'] = '-c'
-            config['cmd'] = `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`
-        } else if(os.platform() === `win32`){
-            config['runner'] = "cmd.exe"
-            config['launcher'] = '/c'
-            config['cmd'] = ` ${config['filePath']}`
-        }
-        
-        const informations = {
-            script_type,
-            shell,
-            runner: config['runner'],
-            filePath: config['filePath'],
-            __dirname,
-            homedir,
-        }
-        console.log(JSON.stringify(config, null, 2));
-        _debugLogs(`informations`, JSON.stringify(informations, null, 2))
-        _debugLogs(`Try childProcess on`, config['filePath'])
-
-        return new Promise((resolve, reject) => {
-            const childProcess: ChildProcess = spawn(
-                config['runner'] as string,
-                [
-                    config['launcher'],
-                    config['cmd'],
-                ],
-                {
-                    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-                    env: process.env,
-                    // shell: shell,
-                }
-            )
-
-            childProcess.on('exit', (code, signal) => {
-                _debugLogs(
-                    `Process ${script_type.toUpperCase()} exited: ${code}; signal: ${signal}`
-                )
-            })
-
-            childProcess.on('close', (code) => {
-                _debugLogs(
-                    `Process ${script_type.toUpperCase()} closed: ${code}`
-                )
-
-                if (code === 0) {
-                    // _sendMessageToFrontLog(`Intallation done 🚀`)
-                    _debugLogs(`Process ${script_type.toUpperCase()} done 🚀`)
-                    // resolve(`Process ${script_type.toUpperCase()} done 🚀`)
-                    if (config['out'].at(-1)) {
-                        resolve(
-                            config['out']
-                                .at(-1)
-                                .replace(/[\r\n]/gm, '')
-                                .replace('\\node.exe', '')
-                                .trim() as string
-                        )
-                    } else {
-                        reject(
-                            `Process ${script_type.toUpperCase()} failed, out is unknown 🚫`
-                        )
-                    }
-                } else {
-                    // _sendMessageToFrontLog(`Intallation failed 🚫`)
-                    _debugLogs(`Process ${script_type.toUpperCase()} failed 🚫`)
-                    reject(`Process ${script_type.toUpperCase()} failed 🚫`)
-                }
-            })
-
-            if (childProcess.stderr) {
-                childProcess.stderr.on('data', (data) => {
-                    console.error(
-                        `Process ${script_type.toUpperCase()} stderr: ${data}`
-                    )
-                    _debugLogs(
-                        `Process ${script_type.toUpperCase()} stderr: ${data}`
-                    )
-                })
-            }
-
-            childProcess.on('disconnect', () => {
-                _debugLogs(
-                    `Process ${script_type.toUpperCase()} Child process disconnected`
-                )
-            })
-
-            childProcess.on('message', (message, sendHandle) => {
-                _debugLogs(
-                    `Process ${script_type.toUpperCase()} Child process message: ${message}`
-                )
-            })
-
-            if (childProcess.stdout) {
-                isReadable && _echoReadable(event, childProcess.stdout)
-                childProcess.stdout.on('data', (data) => {
-                    config['out'].push(data.toString())
-                })
-            }
-        })
-    } catch (error) {
-        _debugLogs(`error on ${script_type}`, JSON.stringify(error, null, 2))
-        return new Promise((resolve, reject) => {
-            reject(`getHostInformations on ${script_type} failed 🚫`)
-        })
-    }
-}
-
-/**
  * Utils, wait method.
  * @param ms number
  * @returns Promise<unknown>
@@ -676,9 +539,9 @@ async function _sleep(ms: number) {
 const handleNodeInstalled = async (event: IpcMainEvent) => {
     // get Node Dir
     try {
-        const _nodeDir = await _getHostInformations(
+        const _nodeDir = await handle_CMD_Actions(
             event,
-            custom_scripts.GET_NODE
+            channels.IS_NODE_INSTALLED
         )
         if (_nodeDir.includes(';')) {
             console.log(`Clean nodeDir path`)
@@ -687,14 +550,17 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
         console.log(`nodeDir returned: `, _nodeDir)
         console.log(`nodeDir:`, getNodeDir())
 
-        
-        if(os.platform()=== `darwin`) {
-            setNpmDir(getNodeDir()?.replace(/\/bin\/node$/, '') + '/lib/node_modules'.replace(/\//gm, path.sep))
-
+        if (os.platform() === `darwin`) {
+            setNpmDir(
+                getNodeDir()?.replace(/\/bin\/node$/, '') +
+                    '/lib/node_modules'.replace(/\//gm, path.sep)
+            )
         } else {
-            setNpmDir(os.userInfo().homedir+ `\\AppData\\Roaming\\npm\\node_modules`)
+            setNpmDir(
+                os.userInfo().homedir + `\\AppData\\Roaming\\npm\\node_modules`
+            )
         }
-        
+
         console.log(`npmDir: `, getNpmDir())
 
         sendDataToFront({ 'nodeDir-raw': _nodeDir })
@@ -723,9 +589,7 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
  */
 const handleGetNodeVersion = async (event: IpcMainEvent) => {
     try {
-        setNodeV(
-            await _getHostInformations(event, custom_scripts.GET_NODE_VERSION)
-        )
+        setNodeV(await handle_CMD_Actions(event, channels.GET_NODE_VERSION))
         sendDataToFront({ 'node-version': getNodeV() })
         return getNodeV()
     } catch (error) {
@@ -747,7 +611,10 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
         return false
     }
     const npmDir = getNpmDir()
-    const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`.replace(/\//gm, path.sep)
+    const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`.replace(
+        /\//gm,
+        path.sep
+    )
     try {
         fs.accessSync(pluginDir)
         return true
@@ -795,7 +662,10 @@ const handleIsJsonConfigFileExist = async (
     workDir: string
 ) => {
     if (workDir === 'chargement...' || workDir === 'loading...') return
-    const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`.replace(/\//gm, path.sep)
+    const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`.replace(
+        /\//gm,
+        path.sep
+    )
     console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
     try {
         fs.accessSync(jsonConfigFile, fs.constants.F_OK)
@@ -1057,59 +927,81 @@ const handle_CMD_Actions = async (
     event: IpcMainEvent,
     action: string
 ): Promise<string> => {
-    let actionName = 'default'
-    let actionShortName = 'default'
-    let actionCMDFile = 'default'
+    // Create configuration from host and script_type
+    const config: {
+        runner: string
+        launcher: string
+        filePath: string[]
+        actionCMDFile: string
+        actionName: string
+        actionShortName: string
+        cmd: string
+        out: string[]
+    } = {
+        runner: os.platform() === 'win32' ? 'cmd.exe' : 'sh',
+        launcher: os.platform() === 'win32' ? '/c' : '-c',
+        filePath: undefined,
+        actionCMDFile: undefined,
+        actionName: undefined,
+        actionShortName: undefined,
+        cmd: undefined,
+        out: [],
+    }
+
     const ext = os.platform() === 'win32' ? 'bat' : 'sh'
     switch (action) {
         case channels.INSTALL_ECOINDEX_PLUGIN:
-            actionName = 'LighthouseEcoindexPluginInstall'
-            actionShortName = 'Install plugin'
-            actionCMDFile = `${custom_scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
+            config['actionName'] = 'LighthouseEcoindexPluginInstall'
+            config['actionShortName'] = 'Install plugin'
+            config['actionCMDFile'] =
+                `${custom_scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
             break
         case channels.UPDATE_ECOINDEX_PLUGIN:
-            actionName = 'LighthouseEcoindexPluginUpdate'
-            actionShortName = 'Update plugin'
-            actionCMDFile = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
+            config['actionName'] = 'LighthouseEcoindexPluginUpdate'
+            config['actionShortName'] = 'Update plugin'
+            config['actionCMDFile'] = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
             break
         case channels.IS_NODE_INSTALLED:
-            actionName = 'TODO'
-            actionShortName = 'Update plugin'
-            actionCMDFile = `${scripts.GET_NODE}.${ext}`
+            config['actionName'] = 'isNodeInstalled'
+            config['actionShortName'] = 'Node installed'
+            config['actionCMDFile'] = `${scripts.GET_NODE}.${ext}`
             break
         case channels.GET_NODE_VERSION:
-            actionName = 'TODO'
-            actionShortName = 'Update plugin'
-            actionCMDFile = `${scripts.GET_NODE_VERSION}.${ext}`
+            config['actionName'] = 'getNodeVersion'
+            config['actionShortName'] = 'Node version'
+            config['actionCMDFile'] = `${scripts.GET_NODE_VERSION}.${ext}`
             break
 
         default:
             throw new Error(`${action} not handled in handle_CMD_Actions`)
     }
     try {
-        console.log(`handle${actionName}`)
-        _debugLogs(`handle${actionName} started 🚀`)
+        console.log(`handle${config['actionName']}`)
+        _debugLogs(`handle${config['actionName']} started 🚀`)
 
-        // const filePath = [`${__dirname}/scripts/${os.platform()}/install-plugin.sh`]
-        const filePath = [
+        config['filePath'] = [
             `${
                 process.env['WEBPACK_SERVE'] === 'true'
                     ? __dirname
                     : process.resourcesPath
-            }/scripts/${os.platform()}/${actionCMDFile}`,
+            }/scripts/${os.platform()}/${config['actionCMDFile']}`.replace(
+                /\//gm,
+                path.sep
+            ),
         ]
-        const { shell, homedir } = os.userInfo()
-        let runner = ''
-        if (shell === '/bin/zsh') {
-            runner = 'zsh'
+        _debugLogs(`Try childProcess on`, config['filePath'])
+
+        if (os.platform() === `darwin`) {
+            config['cmd'] =
+                `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`
+        } else if (os.platform() === `win32`) {
+            config['cmd'] = ` ${config['filePath']}`
         }
-        const o = { shell, runner, filePath, __dirname, homedir }
-        _debugLogs(`informations`, JSON.stringify(o, null, 2))
-        _debugLogs(`Try childProcess on`, filePath)
+
         return new Promise((resolve, reject) => {
             const childProcess: ChildProcess = spawn(
-                runner,
-                ['-c', `chmod +x ${filePath} && ${runner} ${filePath}`],
+                config['runner'] as string,
+                [config['launcher'], config['cmd']],
                 {
                     stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
                     env: process.env,
@@ -1118,44 +1010,77 @@ const handle_CMD_Actions = async (
             )
 
             childProcess.on('exit', (code, signal) => {
-                _debugLogs(`${actionName} exited: ${code}; signal: ${signal}`)
+                _debugLogs(
+                    `${config['actionName']} exited: ${code}; signal: ${signal}`
+                )
             })
 
             childProcess.on('close', (code) => {
-                _debugLogs(`${actionName} closed: ${code}`)
+                _debugLogs(`${config['actionName']} closed: ${code}`)
                 if (code === 0) {
-                    // _sendMessageToFrontLog(`${actionShortName} done 🚀`)
-                    _debugLogs(`${actionShortName} done 🚀`)
-                    resolve(`${actionShortName} done 🚀`)
+                    // _sendMessageToFrontLog(`${config['actionShortName']} done 🚀`)
+                    _debugLogs(`${config['actionShortName']} done 🚀`)
+                    if (
+                        action === channels.IS_NODE_INSTALLED ||
+                        action === channels.GET_NODE_VERSION
+                    ) {
+                        if (config['out'].at(-1)) {
+                            resolve(
+                                config['out']
+                                    .at(-1)
+                                    .replace(/[\r\n]/gm, '')
+                                    .replace('\\node.exe', '') // voir si il faut l'enlever...
+                                    .trim() as string
+                            )
+                        } else {
+                            reject(
+                                `Process ${config['actionShortName']} failed, out is unknown 🚫`
+                            )
+                        }
+                    } else if (
+                        action === channels.INSTALL_ECOINDEX_PLUGIN ||
+                        action === channels.UPDATE_ECOINDEX_PLUGIN
+                    ) {
+                        resolve(`${config['actionShortName']} done 🚀`)
+                    }
                 } else {
-                    // _sendMessageToFrontLog(`${actionShortName} failed 🚫`)
-                    _debugLogs(`${actionShortName} failed 🚫`)
-                    reject(`${actionShortName} failed 🚫`)
+                    // _sendMessageToFrontLog(`${config['actionShortName']} failed 🚫`)
+                    _debugLogs(`${config['actionShortName']} failed 🚫`)
+                    reject(`${config['actionShortName']} failed 🚫`)
                 }
             })
 
             if (childProcess.stderr) {
                 childProcess.stderr.on('data', (data) => {
-                    console.error(`${actionShortName} stderr: ${data}`)
-                    _debugLogs(`${actionShortName} stderr: ${data}`)
+                    console.error(
+                        `${config['actionShortName']} stderr: ${data}`
+                    )
+                    _debugLogs(`${config['actionShortName']} stderr: ${data}`)
                 })
             }
 
             childProcess.on('disconnect', () => {
-                _debugLogs('${actionShortName} Child process disconnected')
+                _debugLogs(
+                    `${config['actionShortName']} Child process disconnected`
+                )
             })
 
             childProcess.on('message', (message, sendHandle) => {
                 _debugLogs(
-                    `${actionShortName} Child process message: ${message}`
+                    `${config['actionShortName']} Child process message: ${message}`
                 )
             })
 
-            if (childProcess.stdout) _echoReadable(event, childProcess.stdout)
+            if (childProcess.stdout) {
+                _echoReadable(event, childProcess.stdout)
+                childProcess.stdout.on('data', (data) => {
+                    config['out'].push(data.toString())
+                })
+            }
         })
     } catch (error) {
         _debugLogs(`error`, JSON.stringify(error, null, 2))
-        return '${actionShortName} failed'
+        return `${config['actionShortName']} failed 🚫`
     }
 }
 
