@@ -1,5 +1,17 @@
 
 
+## [1.0.1-rc.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.13...electron-v1.0.1-rc.14) (2024-07-31)
+
+
+### Features
+
+* add missing cmd ([eed718d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/eed718d174b5be91014afa6cca8d404e95d251d5))
+* better handling process ([f8a46ec](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f8a46ec7b020aceddaddf6e0b538990635c1dbe7))
+* factorization and remove _getHostInformation ([52d1220](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/52d1220c2ae748b9f2f80bab8d972a5db3e02419))
+* fix script to run more silently and with mutiple actions ([b67ff22](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b67ff2206512f8582840d8bc3b85aea95cb9f927))
+* handler mesures on win32 ([d99d1de](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d99d1ded1b4cf2c841de7bec7e476de396abaa41))
+* set path and bat for win32 [#28](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/28) ([bb64108](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/bb641086a25c3157b65e2475cc0bab715e6d8615))
+
 ## [1.0.1-rc.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.12...electron-v1.0.1-rc.13) (2024-07-28)
 
 
