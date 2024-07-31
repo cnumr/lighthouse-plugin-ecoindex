@@ -122,6 +122,7 @@ app.on('ready', () => {
     ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
     ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
     ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
+    ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
     ipcMain.handle(
         channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED,
         handlePluginInstalled
@@ -409,11 +410,14 @@ async function _prepareCollect(): Promise<{
         console.log(`Npm dir: ${npmDir}`)
 
         const command = [
-            `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`.replace( /\//gm, path.sep),
+            `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`.replace(
+                /\//gm,
+                path.sep
+            ),
             'collect',
         ]
-        if(os.platform() === `win32`){
-            nodeDir = nodeDir.replace( /\\/gm, path.sep)
+        if (os.platform() === `win32`) {
+            nodeDir = nodeDir.replace(/\\/gm, path.sep)
         }
         return { command, nodeDir, workDir: _workDir }
     } catch (error) {
@@ -478,6 +482,7 @@ async function _runCollect(
         const childProcess: ChildProcess = spawn(`"${nodeDir}"`, command, {
             stdio: ['pipe', 'pipe', process.stderr],
             shell: true,
+            windowsHide: true,
             // signal,
         })
 
@@ -623,6 +628,15 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
         return true
     } catch (error) {
         return false
+    }
+}
+
+const handleHomeDir = async (event: IpcMainEvent) => {
+    try {
+        const { homedir } = os.userInfo()
+        return homedir
+    } catch (error) {
+        return `error on handleHomeDir 🚫`
     }
 }
 
@@ -1008,6 +1022,7 @@ const handle_CMD_Actions = async (
                 {
                     stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
                     env: process.env,
+                    windowsHide: true,
                     // shell: shell,
                 }
             )

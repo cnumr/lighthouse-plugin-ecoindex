@@ -13,6 +13,7 @@ const constants: IConstants = {
         READ_RELOAD_JSON_FILE: 'read-reload-json-file',
         // JSON_FILE_FOUNDED: 'readed-json-file',
         GET_WORKDIR: 'get-workdir',
+        GET_HOMEDIR: 'get-homedir',
         GET_NODE_VERSION: 'get-node-version',
         SELECT_FOLDER: 'dialog:select-folder',
         IS_LIGHTHOUSE_ECOINDEX_INSTALLED: 'is-lighthouse-ecoindex-installed',

@@ -29,6 +29,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     handleSelectFolder: () => ipcRenderer.invoke(channels.SELECT_FOLDER),
     getWorkDir: (newDir: string) =>
         ipcRenderer.invoke(channels.GET_WORKDIR, newDir),
+    getHomeDir: () => ipcRenderer.invoke(channels.GET_HOMEDIR),
     isLighthouseEcoindexPluginInstalled: () =>
         ipcRenderer.invoke(channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED),
     isNodeInstalled: () => ipcRenderer.invoke(channels.IS_NODE_INSTALLED),

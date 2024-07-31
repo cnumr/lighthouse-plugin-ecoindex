@@ -14,15 +14,16 @@ export interface IElectronAPI {
     handleSetFolderOuput: () => Promise<string>
     handleSelectFolder: () => Promise<string>
     getWorkDir: (newDir: string) => Promise<string>
+    getHomeDir: () => Promise<string>
     isNodeInstalled: () => Promise<boolean>
     isLighthouseEcoindexPluginInstalled: () => Promise<boolean>
     handleLighthouseEcoindexPluginInstall: () => Promise<boolean>
     handleLighthouseEcoindexPluginUpdate: () => Promise<boolean>
-    handleSimpleMesures: (urlsList: ISimpleUrlInput[]) => void
+    handleSimpleMesures: (urlsList: ISimpleUrlInput[]) => Promise<string>
     handleJsonSaveAndCollect: (
         json: IJsonMesureData,
         andCollect: boolean
-    ) => void
+    ) => Promise<string>
     handleJsonReadAndReload: () => Promise<IJsonMesureData>
     handleIsJsonConfigFileExist: (workDir: string) => Promise<boolean>
 }

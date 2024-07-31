@@ -35,8 +35,11 @@ function TheApp() {
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
     const [nodeVersion, setNodeVersion] = useState('')
     const [workDir, setWorkDir] = useState('chargement...')
+    const [homeDir, setHomeDir] = useState('chargement...')
     const [appReady, setAppReady] = useState(false)
     const [datasFromHost, setDatasFromHost] = useState({})
+    const [displayPopin, setDisplayPopin] = useState(true)
+    const [popinText, setPopinText] = useState('Loading... 0/4')
 
     let loadingScreen = 0
     const [urlsList, setUrlsList] = useState<InputField[]>([
@@ -53,16 +56,54 @@ function TheApp() {
     const [isNodeInstalled, setIsNodeInstalled] = useState(true)
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
 
-    const runSimpleMesures = () => {
+    const blockScrolling = (block = true) => {
+        const body = document.getElementsByTagName(
+            `body`
+        )[0] as unknown as HTMLBodyElement
+        body.style.overflowY = block ? 'hidden' : 'auto'
+    }
+    const showHidePopinDuringProcess = async (value: string | boolean) => {
+        if (typeof value === 'string') {
+            setPopinText(value)
+            setDisplayPopin(true)
+            blockScrolling(true)
+            window.scrollTo(0, 0)
+        } else if (value === true) {
+            setPopinText(`Done 🎉`)
+            await _sleep(2000)
+            setDisplayPopin(false)
+            blockScrolling(false)
+        } else {
+            setPopinText(`Error 🚫`)
+            await _sleep(4000)
+            setDisplayPopin(false)
+            blockScrolling(false)
+        }
+    }
+
+    const runSimpleMesures = async () => {
         console.log('Simple mesures clicked')
+        if (workDir === homeDir) {
+            if (
+                !confirm(
+                    `Are you shure to want create report(s) in your default folder?\n\rDestination: ${homeDir}`
+                )
+            )
+                return
+        }
+        showHidePopinDuringProcess(
+            `${labels[language]['simple-mesures-label']} started 🚀`
+        )
         try {
-            window.electronAPI.handleSimpleMesures(urlsList)
+            await window.electronAPI.handleSimpleMesures(urlsList)
+            showHidePopinDuringProcess(true)
         } catch (error) {
             console.error('Error on runSimpleMesures', error)
             showNotification('', {
                 body: 'Error on runSimpleMesures',
                 subtitle: 'Courses Mesure (Simple mode)',
             })
+            showHidePopinDuringProcess(false)
         }
     }
 
@@ -87,21 +128,34 @@ function TheApp() {
         }
     }
 
-    const runJsonSaveAndCollect = (saveAndCollect = false) => {
+    const runJsonSaveAndCollect = async (saveAndCollect = false) => {
         console.log('Json save clicked')
+        if (workDir === homeDir) {
+            if (
+                !confirm(
+                    `Are you shure to want create report(s) in your default folder?\n\rDestination: ${homeDir}`
+                )
+            )
+                return
+        }
+        showHidePopinDuringProcess(
+            `${labels[language]['full-mesures-label']} started 🚀`
+        )
         try {
             console.log(`jsonDatas`, jsonDatas)
             console.log(`saveAndCollect`, saveAndCollect)
-            window.electronAPI.handleJsonSaveAndCollect(
+            await window.electronAPI.handleJsonSaveAndCollect(
                 jsonDatas,
                 saveAndCollect
             )
+            showHidePopinDuringProcess(true)
         } catch (error) {
             console.error('Error on runJsonSaveAndCollect', error)
             showNotification('', {
                 subtitle: '🚫 Courses Mesure (Full mode)',
                 body: 'Error on runJsonSaveAndCollect',
             })
+            showHidePopinDuringProcess(false)
         }
     }
 
@@ -125,11 +179,7 @@ function TheApp() {
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / 4))
         console.log(`Verify configuration step ${loadingScreen}/4`)
-        const counter = document.getElementById('counter') as HTMLElement
-        counter.innerText = `Loading... ${loadingScreen}/4`
-        const loadingPopin = document.getElementById(
-            'loadingPopin'
-        ) as HTMLElement
+        setPopinText(`Loading... ${loadingScreen}/4`)
         if (loadingScreen === 4) {
             console.log(`<><><><><><><><><><><><><><><><><><>`)
             console.log(`All data readed! 👀`)
@@ -139,7 +189,7 @@ function TheApp() {
                 isLighthouseEcoindexPluginInstalled
             )
             checkAppReady()
-            loadingPopin.style.display = 'none'
+            setDisplayPopin(false)
             const _n: any = {}
             _n.body = 'Application succefully loaded.\nWelcome 👋'
             _n.subtitle = 'You can now start mesures'
@@ -245,7 +295,14 @@ function TheApp() {
                 await updateEcoindexPlugin()
         }
 
+        const fetchHomeDir = async () => {
+            const filePath = await window.electronAPI.getHomeDir()
+
+            setHomeDir(filePath)
+        }
+
         fetchWorkDir().then(() => {
+            fetchHomeDir()
             fetchNodeInstalled().then(() => {
                 fetchNodeVersion().then(() => {
                     fetchLighthouseEcoindexPluginInstalled().then(() => {
@@ -462,7 +519,7 @@ function TheApp() {
                     )}
                     {appReady && (
                         <>
-                            <Card className="border-primary w-full">
+                            <Card className="w-full border-primary">
                                 <CardHeader>
                                     <CardTitle>
                                         1. Select ouput folder
@@ -544,10 +601,16 @@ function TheApp() {
                 </div>
                 <Footer nodeVersion={nodeVersion} />
             </main>
-            <PopinLoading id="loadingPopin" progress={progress}>
-                <ReloadIcon className="mr-2 size-4 animate-spin" />
-                <p id="counter">Loading... 0/4</p>
-            </PopinLoading>
+            {displayPopin && (
+                <PopinLoading
+                    id="loadingPopin"
+                    progress={progress}
+                    showProgress={!appReady}
+                >
+                    <ReloadIcon className="mr-2 size-4 animate-spin" />
+                    <p id="counter">{popinText}</p>
+                </PopinLoading>
+            )}
         </div>
     )
 }
