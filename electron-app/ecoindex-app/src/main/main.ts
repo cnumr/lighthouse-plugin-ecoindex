@@ -388,7 +388,7 @@ function sendDataToFront(data: any) {
   workDir: string
 }>
  */
-async function _prepareJsonCollect(): Promise<{
+async function _prepareCollect(): Promise<{
     command: string[]
     nodeDir: string
     workDir: string
@@ -400,7 +400,7 @@ async function _prepareJsonCollect(): Promise<{
             throw new Error('Work dir not found')
         }
 
-        const nodeDir = getNodeDir()
+        let nodeDir = getNodeDir()
         _debugLogs(`Node dir: ${nodeDir}`)
         console.log(`Node dir: ${nodeDir}`)
 
@@ -409,9 +409,12 @@ async function _prepareJsonCollect(): Promise<{
         console.log(`Npm dir: ${npmDir}`)
 
         const command = [
-            `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`,
+            `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`.replace( /\//gm, path.sep),
             'collect',
         ]
+        if(os.platform() === `win32`){
+            nodeDir = nodeDir.replace( /\\/gm, path.sep)
+        }
         return { command, nodeDir, workDir: _workDir }
     } catch (error) {
         console.error('Error', error)
@@ -472,7 +475,7 @@ async function _runCollect(
         _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
         // const controller = new AbortController()
         // const { signal } = controller
-        const childProcess: ChildProcess = spawn(`${nodeDir}`, command, {
+        const childProcess: ChildProcess = spawn(`"${nodeDir}"`, command, {
             stdio: ['pipe', 'pipe', process.stderr],
             shell: true,
             // signal,
@@ -697,7 +700,7 @@ const handleSimpleCollect = async (
         body: 'Process intialization.',
     })
 
-    const { command, nodeDir, workDir: _workDir } = await _prepareJsonCollect()
+    const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
     console.log('Simple mesure start, process intialization...')
     _debugLogs('Simple mesure start, process intialization...')
     console.log(`Urls list: ${JSON.stringify(urlsList)}`)
@@ -829,7 +832,7 @@ const handleJsonSaveAndCollect = async (
                 command,
                 nodeDir,
                 workDir: _workDir,
-            } = await _prepareJsonCollect()
+            } = await _prepareCollect()
             _debugLogs('Json mesure start...')
             _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
             command.push('--json-file')
@@ -1029,7 +1032,7 @@ const handle_CMD_Actions = async (
                                 config['out']
                                     .at(-1)
                                     .replace(/[\r\n]/gm, '')
-                                    .replace('\\node.exe', '') // voir si il faut l'enlever...
+                                    //.replace('\\node.exe', '') // voir si il faut l'enlever...
                                     .trim() as string
                             )
                         } else {
