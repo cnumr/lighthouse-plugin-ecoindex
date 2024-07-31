@@ -1,1 +1,2 @@
-where node
+@echo off
+call where node

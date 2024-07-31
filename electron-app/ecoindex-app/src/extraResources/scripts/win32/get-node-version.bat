@@ -1,1 +1,2 @@
-node -v
+@echo off
+call node -v
