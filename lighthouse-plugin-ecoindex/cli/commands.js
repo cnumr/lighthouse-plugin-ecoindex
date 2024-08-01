@@ -1,11 +1,11 @@
 import * as constants from 'lighthouse/core/config/constants.js'
 
-import _slugify from 'slugify'
-import { cleanPath } from './converters'
 import fs from 'fs'
-import { isDate } from 'util/types'
 import logSymbols from 'log-symbols'
 import path from 'path'
+import _slugify from 'slugify'
+import { isDate } from 'util/types'
+import { cleanPath } from './converters.js'
 
 const moduleDir = '../'
 
