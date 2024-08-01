@@ -1,3 +1,17 @@
+
+
+## [4.0.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.3...4.0.4) (2024-08-01)
+
+
+### Bug Fixes
+
+* typofix ([a519357](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a5193577f627fc652510427851e65a17f1e1e06e))
+
+
+### Features
+
+* get path compatible with darwin, linux, win32 ([ccc3edf](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ccc3edf1aeb137108e0186f7d179935c0301e5da))
+
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
