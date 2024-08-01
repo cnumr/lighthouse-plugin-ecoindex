@@ -33,13 +33,14 @@
     "lighthouse-ecoindex": "./cli/index.js",
     "lighthouse-plugin-ecoindex": "./cli/index.js"
   },
-  "version": "4.0.2",
+  "version": "4.0.4",
   "type": "module",
   "scripts": {
     "release": "release-it"
   },
   "devDependencies": {
     "@j-ulrich/release-it-regex-bumper": "^5.1.0",
+    "@release-it/conventional-changelog": "^8.0.1",
     "auto-changelog": "^2.4.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",

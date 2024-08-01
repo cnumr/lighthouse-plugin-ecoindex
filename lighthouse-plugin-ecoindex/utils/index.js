@@ -1,13 +1,13 @@
+import { Audit, NetworkRecords } from 'lighthouse'
 import {
   computeEcoIndex,
   computeGreenhouseGasesEmissionfromEcoIndex,
   computeWaterConsumptionfromEcoIndex,
   getEcoIndexGrade,
 } from 'ecoindex'
-import { Audit, NetworkRecords } from 'lighthouse'
 
-import { JSDOM } from 'jsdom'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
+import TotalByteWeight from 'lighthouse/core/audits/byte-efficiency/total-byte-weight.js'
 import round from 'lodash.round'
 
 export const B_TO_KB = 1000
@@ -18,16 +18,6 @@ export const B_TO_KB = 1000
  * @returns number
  */
 export async function getEcoindexNodes(artifacts) {
-  // if (!artifacts.DOMInformations) {
-  //   throw new Error(
-  //     "DOMInformations not found, EcoindexNodes can't be calculated.",
-  //   )
-  //   const MainDocumentContent = artifacts.MainDocumentContent
-  //   const dom = new JSDOM(MainDocumentContent)
-  //   const allNodes = dom.window.document.querySelectorAll('*').length
-  //   const svgContentNodes = dom.window.document.querySelectorAll('svg *').length
-  //   return allNodes - svgContentNodes
-  // }
   const domInformations = artifacts.DOMInformations
   // console.debug(`domInformations`, domInformations)
   return domInformations.nodesWithoutSVGChildsCount
@@ -44,6 +34,8 @@ export async function getLoadingExperience(
   const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
 
   const records = await NetworkRecords.request(devtoolsLog, context)
+  const { numericValue: totalByteWeight, details: totalByteDetails } =
+    await TotalByteWeight.audit(artifacts, context)
 
   let totalCompressedSize = 0
   let requestCount = 0
@@ -61,8 +53,9 @@ export async function getLoadingExperience(
     totalCompressedSize += result.totalBytes
     requestCount += 1
   })
-  // console.log(`{totalCompressedSize kB:${totalCompressedSize / 1000}},`)
-  // console.log(`{totalCompressedSize MB:${totalCompressedSize / 1000000}},`)
+  // console.log(`totalByteWeight`, totalByteWeight)
+  // console.log(`{totalCompressedSize kB:${totalCompressedSize * 0.001}},`)
+  // console.log(`{totalCompressedSize MB:${totalCompressedSize * 0.000001}},`)
 
   // console.log(`{domSize:${domSize}},`)
   // console.log(`{size:${totalCompressedSize}},`)
@@ -71,7 +64,8 @@ export async function getLoadingExperience(
     return {
       nodes: domSize,
       requests: requestCount,
-      size: totalCompressedSize,
+      size: totalByteWeight,
+      sizeDetails: totalByteDetails,
     }
   }
   const ecoIndexScore = getEcoindexResults(
@@ -209,7 +203,7 @@ function formatMetric(metric, value) {
     case 'nodes':
       return value + ' DOM elements'
     case 'size':
-      return (value / B_TO_KB).toFixed(3) + ' kB (transfered)'
+      return (value / B_TO_KB).toFixed(0) + ' KiB (transfered)'
     case 'requests':
       return value + ' requests'
     default:
@@ -253,7 +247,7 @@ function getMetricNumericUnit(metric) {
     case 'nodes':
       return 'DOM elements'
     case 'size':
-      return 'kB (transfered)'
+      return 'KiB (transfered)'
     case 'requests':
       return 'requests'
     default:
@@ -302,7 +296,7 @@ function createInformationsTable(metric, value, isPercentile = false) {
     case 'size':
       items.push({
         label: 'Size of the page',
-        data: `${(value / B_TO_KB).toFixed(3)} ${getMetricNumericUnit(metric)}`,
+        data: `${(value / B_TO_KB).toFixed(0)} ${getMetricNumericUnit(metric)}`,
       })
       break
     case 'requests':

@@ -1,6 +1,7 @@
 import * as constants from 'lighthouse/core/config/constants.js'
 
 import _slugify from 'slugify'
+import { cleanPath } from './converters'
 import fs from 'fs'
 import { isDate } from 'util/types'
 import logSymbols from 'log-symbols'
@@ -210,9 +211,9 @@ function getEnvStatementsObj(exportPath, withStatement = true) {
   return {
     courses: [],
     statements: {
-      json: `${_exportPath}/ecoindex-environmental-statement.json`,
-      html: `${_exportPath}/ecoindex-environmental-statement.html`,
-      md: `${_exportPath}/ecoindex-environmental-statement.md`,
+      json: cleanPath(`${_exportPath}/ecoindex-environmental-statement.json`),
+      html: cleanPath(`${_exportPath}/ecoindex-environmental-statement.html`),
+      md: cleanPath(`${_exportPath}/ecoindex-environmental-statement.md`),
     },
   }
 }

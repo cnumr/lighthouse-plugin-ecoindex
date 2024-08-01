@@ -1,3 +1,5 @@
+import * as path from 'node:path'
+
 import { getEcoIndexGrade } from 'ecoindex'
 
 /**
@@ -126,4 +128,8 @@ function convertPagesResults(lhr) {
   }
 }
 
-export { convertCourseResults }
+function cleanPath(thePath) {
+  return thePath.replace(/\//gm, path.sep)
+}
+
+export { cleanPath, convertCourseResults }

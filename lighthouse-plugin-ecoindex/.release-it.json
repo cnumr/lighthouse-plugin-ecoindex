@@ -1,11 +1,20 @@
 {
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
   "git": {
-    "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
+    "commitMessage": "chore: release v${version}"
   },
   "hooks": {
-    "after:bump": "npx auto-changelog -p && git add ../ ."
+    "before:bump": "echo Release started 🚀",
+    "after:bump": "git add ../ .",
+    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
   },
   "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "angular"
+      },
+      "infile": "CHANGELOG.md"
+    },
     "@j-ulrich/release-it-regex-bumper": {
       "out": [
         {
