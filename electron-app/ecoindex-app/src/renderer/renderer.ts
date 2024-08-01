@@ -46,11 +46,11 @@ window.electronAPI.sendLogToFront((message: string) => {
 window.electronAPI.sendMessageToFrontLog(
     (message?: any, ...optionalParams: any[]) => {
         if (optionalParams && optionalParams.length > 1)
-            frontLog.log(
+            console.log(
                 message,
                 optionalParams.map((out) => cleanLogString(out))
             )
-        else frontLog.log(cleanLogString(message))
+        else console.log(cleanLogString(message))
     }
 )
 
