@@ -55,7 +55,11 @@ window.electronAPI.sendMessageToFrontLog(
 )
 
 window.electronAPI.openReport((url: any) => {
-    window.open(url, `_blank`)
+    try {
+        window.open(url, `_blank`)
+    } catch (error) {
+        frontLog.error(`Error in openReport`, error)
+    }
 })
 
 // window.electronAPI.sendDatasToFront((data: any) => {

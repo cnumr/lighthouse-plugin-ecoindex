@@ -493,15 +493,20 @@ async function _runCollect(
 
         childProcess.on('exit', (code, signal) => {
             if (isSimple && out.length > 0) {
-                mainLog.debug(`out`, out)
-                const filtered = out.filter((item: string) => {
-                    item.includes('Report generated')
-                })
-                mainLog.debug(`filtered`, filtered)
-                getMainWindow().webContents.send(
-                    channels.OPEN_REPORT,
-                    filtered.at(-1).replace(`Report generated: `, ``)
-                )
+                const fl = (item: string) => {
+                    return item.includes('Report generated')
+                }
+                const filtered = out.filter(fl)
+                const url =
+                    'file:///' +
+                    filtered
+                        .at(-1)
+                        .replace(`Report generated: `, ``)
+                        .split('generic.report.html')[0] +
+                    `generic.report.html`
+                mainLog.debug(`url`, url)
+                shell.openExternal(url, { activate: true })
+                // getMainWindow().webContents.send(channels.OPEN_REPORT, url)
             }
             _debugLogs(
                 `Child process exited with code ${code} and signal ${signal}`
