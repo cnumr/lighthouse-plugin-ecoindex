@@ -1,8 +1,10 @@
 import './index.css'
 import './index.tsx'
 
-import { IpcRenderer } from 'electron'
 import { cleanLogString } from '../main/utils'
+import log from 'electron-log/renderer'
+
+const frontLog = log.scope('front/renderer')
 
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
@@ -35,7 +37,7 @@ import { cleanLogString } from '../main/utils'
 // window.require = require
 
 window.electronAPI.sendLogToFront((message: string) => {
-    console.log(message)
+    frontLog.log(message)
     const textArea = document.getElementById('echo') as HTMLTextAreaElement
     textArea.value = textArea.value + '\n' + message
     textArea.scrollTop = textArea.scrollHeight
@@ -44,11 +46,11 @@ window.electronAPI.sendLogToFront((message: string) => {
 window.electronAPI.sendMessageToFrontLog(
     (message?: any, ...optionalParams: any[]) => {
         if (optionalParams && optionalParams.length > 1)
-            console.log(
+            frontLog.log(
                 message,
                 optionalParams.map((out) => cleanLogString(out))
             )
-        else console.log(cleanLogString(message))
+        else frontLog.log(cleanLogString(message))
     }
 )
 

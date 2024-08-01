@@ -27,7 +27,10 @@ import { SimplePanMesure } from './components/simple-pan'
 import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from './ui/typography/TypographyP'
+import log from 'electron-log/renderer'
 import packageJson from '../../package.json'
+
+const frontLog = log.scope('front/App')
 
 function TheApp() {
     const [language, setLanguage] = useState('en')
@@ -82,7 +85,7 @@ function TheApp() {
     }
 
     const runSimpleMesures = async () => {
-        console.log('Simple mesures clicked')
+        frontLog.log('Simple mesures clicked')
         if (workDir === homeDir) {
             if (
                 !confirm(
@@ -98,7 +101,7 @@ function TheApp() {
             await window.electronAPI.handleSimpleMesures(urlsList)
             showHidePopinDuringProcess(true)
         } catch (error) {
-            console.error('Error on runSimpleMesures', error)
+            frontLog.error('Error on runSimpleMesures', error)
             showNotification('', {
                 body: 'Error on runSimpleMesures',
                 subtitle: 'Courses Mesure (Simple mode)',
@@ -108,11 +111,11 @@ function TheApp() {
     }
 
     const runJsonReadAndReload = async () => {
-        console.log('Json read and reload')
+        frontLog.log('Json read and reload')
         try {
             const _jsonDatas: IJsonMesureData =
                 await window.electronAPI.handleJsonReadAndReload()
-            console.log(`runJsonReadAndReload`, _jsonDatas)
+            frontLog.log(`runJsonReadAndReload`, _jsonDatas)
             if (_jsonDatas) {
                 setJsonDatas(_jsonDatas)
                 setIsJsonFromDisk(true)
@@ -120,7 +123,7 @@ function TheApp() {
                 setIsJsonFromDisk(false)
             }
         } catch (error) {
-            console.error('Error on runJsonReadAndReload', error)
+            frontLog.error('Error on runJsonReadAndReload', error)
             showNotification('', {
                 subtitle: '🚫 Courses Mesure (Full mode)',
                 body: 'Error on runJsonReadAndReload',
@@ -129,7 +132,7 @@ function TheApp() {
     }
 
     const runJsonSaveAndCollect = async (saveAndCollect = false) => {
-        console.log('Json save clicked')
+        frontLog.log('Json save clicked')
         if (workDir === homeDir) {
             if (
                 !confirm(
@@ -142,15 +145,15 @@ function TheApp() {
             `${labels[language]['full-mesures-label']} started 🚀`
         )
         try {
-            console.log(`jsonDatas`, jsonDatas)
-            console.log(`saveAndCollect`, saveAndCollect)
+            frontLog.log(`jsonDatas`, jsonDatas)
+            frontLog.log(`saveAndCollect`, saveAndCollect)
             await window.electronAPI.handleJsonSaveAndCollect(
                 jsonDatas,
                 saveAndCollect
             )
             showHidePopinDuringProcess(true)
         } catch (error) {
-            console.error('Error on runJsonSaveAndCollect', error)
+            frontLog.error('Error on runJsonSaveAndCollect', error)
             showNotification('', {
                 subtitle: '🚫 Courses Mesure (Full mode)',
                 body: 'Error on runJsonSaveAndCollect',
@@ -160,7 +163,7 @@ function TheApp() {
     }
 
     const handlerJsonNotify = (title: string, message: string) => {
-        console.log('Json notify clicked')
+        frontLog.log('Json notify clicked')
         showNotification('', { body: message, subtitle: title })
     }
 
@@ -178,13 +181,13 @@ function TheApp() {
     const increment = () => {
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / 4))
-        console.log(`Verify configuration step ${loadingScreen}/4`)
+        frontLog.log(`Verify configuration step ${loadingScreen}/4`)
         setPopinText(`Loading... ${loadingScreen}/4`)
         if (loadingScreen === 4) {
-            console.log(`<><><><><><><><><><><><><><><><><><>`)
-            console.log(`All data readed! 👀`)
-            console.log(`isNodeInstalled`, isNodeInstalled)
-            console.log(
+            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+            frontLog.log(`All data readed! 👀`)
+            frontLog.log(`isNodeInstalled`, isNodeInstalled)
+            frontLog.log(
                 `isLighthouseEcoindexPluginInstalled`,
                 isLighthouseEcoindexPluginInstalled
             )
@@ -195,7 +198,7 @@ function TheApp() {
             _n.subtitle = 'You can now start mesures'
             _n.priority = 'critical'
             showNotification('', _n)
-            console.log(`<><><><><><><><><><><><><><><><><><>`)
+            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
         } else {
             setAppReady(false)
         }
@@ -212,14 +215,14 @@ function TheApp() {
         try {
             await window.electronAPI.handleLighthouseEcoindexPluginInstall()
         } catch (error) {
-            console.error(`installEcoindexPlugin`, error)
+            frontLog.error(`installEcoindexPlugin`, error)
         }
     }
     const updateEcoindexPlugin = async () => {
         try {
             await window.electronAPI.handleLighthouseEcoindexPluginUpdate()
         } catch (error) {
-            console.error(`updateEcoindexPlugin`, error)
+            frontLog.error(`updateEcoindexPlugin`, error)
         }
     }
 
@@ -230,7 +233,7 @@ function TheApp() {
      */
     async function _sleep(ms: number) {
         return new Promise((resolve) => {
-            console.log(`wait ${ms / 1000}s`)
+            frontLog.log(`wait ${ms / 1000}s`)
 
             setTimeout(resolve, ms)
         })
@@ -248,7 +251,7 @@ function TheApp() {
             const result = await window.versions.getNodeVersion()
             setNodeVersion(result)
             const major = nodeVersion.replace('v', '').split('.')[0]
-            console.log(`major`, major)
+            frontLog.log(`major`, major)
 
             if (Number(major) >= 20) {
                 setIsNodeVersionOK(false)
@@ -270,7 +273,7 @@ function TheApp() {
          */
         const fetchNodeInstalled = async () => {
             const result = await window.electronAPI.isNodeInstalled()
-            console.log(`fetchNodeInstalledRESULT`, result === true)
+            frontLog.log(`fetchNodeInstalledRESULT`, result === true)
             setIsNodeInstalled(result === true)
             increment()
         }
@@ -281,7 +284,7 @@ function TheApp() {
         const fetchLighthouseEcoindexPluginInstalled = async () => {
             const result =
                 await window.electronAPI.isLighthouseEcoindexPluginInstalled()
-            console.log(
+            frontLog.log(
                 `fetchLighthouseEcoindexPluginInstalledRESULT`,
                 result === true
             )
@@ -314,17 +317,17 @@ function TheApp() {
 
         // get data from main
         window.electronAPI.sendDatasToFront((data: any) => {
-            console.log(typeof data)
+            frontLog.log(typeof data)
 
             if (typeof data === 'string') {
                 const _data = JSON.parse(data)
-                console.log(`sendDatasToFront`, _data)
+                frontLog.log(`sendDatasToFront`, _data)
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ..._data,
                 }))
             } else {
-                console.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
+                frontLog.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ...data,
@@ -334,8 +337,8 @@ function TheApp() {
     }, [])
 
     const checkAppReady = () => {
-        console.log('isNodeInstalled', isNodeInstalled)
-        console.log(
+        frontLog.log('isNodeInstalled', isNodeInstalled)
+        frontLog.log(
             'isLighthouseEcoindexPluginInstalled',
             isLighthouseEcoindexPluginInstalled
         )
@@ -346,31 +349,31 @@ function TheApp() {
     }
 
     useEffect(() => {
-        console.log('language', language)
+        frontLog.log('language', language)
     }, [language])
 
     useEffect(() => {
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-        console.log(
+        frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.log(
             `Binded on [isNodeInstalled, isLighthouseEcoindexPluginInstalled]`
         )
         checkAppReady()
-        console.log(`appReady`, appReady)
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.log(`appReady`, appReady)
+        frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
     }, [isNodeInstalled, isLighthouseEcoindexPluginInstalled])
 
     useEffect(() => {
-        console.log(`************************************`)
-        console.log(`Binded on [appReady]`)
-        console.log('appReady', appReady)
-        console.log(`************************************`)
+        frontLog.log(`************************************`)
+        frontLog.log(`Binded on [appReady]`)
+        frontLog.log('appReady', appReady)
+        frontLog.log(`************************************`)
     }, [appReady])
 
     useEffect(() => {
         const isJsonConfigFileExist = async () => {
             const result =
                 await window.electronAPI.handleIsJsonConfigFileExist(workDir)
-            console.log(`isJsonConfigFileExist`, result)
+            frontLog.log(`isJsonConfigFileExist`, result)
 
             result && runJsonReadAndReload()
         }

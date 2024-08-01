@@ -25,15 +25,13 @@ import {
 } from './utils'
 import {
     getHomeDir,
-    getLogFilePathFromDir,
-    getLogSteam,
     getMainWindow,
     getNodeDir,
     getNodeV,
     getNpmDir,
     getWorkDir,
+    isDev,
     setHomeDir,
-    setLogStream,
     setMainWindow,
     setNodeDir,
     setNodeV,
@@ -43,6 +41,7 @@ import {
 
 import fixPath from 'fix-path'
 import fs from 'fs'
+import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
 import { updateElectronApp } from 'update-electron-app'
@@ -50,6 +49,9 @@ import { updateElectronApp } from 'update-electron-app'
 if (require('electron-squirrel-startup')) {
     app.quit()
 }
+
+log.initialize()
+const mainLog = log.scope('main')
 
 updateElectronApp({
     updateInterval: '10 minutes',
@@ -69,15 +71,15 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
  * Helpers, Fix Path
  */
 const _runfixPath = () => {
-    console.log(`RUN fixPath and shellEnv`)
+    if (isDev()) mainLog.debug(`RUN fixPath and shellEnv`)
     fixPath()
     if (os.platform() === 'darwin') {
-        console.log(`darwin`)
+        if (isDev()) mainLog.debug(`darwin`)
         const { shell } = os.userInfo()
-        console.log(`shell`, shell)
+        if (isDev()) mainLog.debug(`shell`, shell)
     } else {
-        console.log(`win32`)
-        console.log(`shell`, `cmd.exe`)
+        if (isDev()) mainLog.debug(`win32`)
+        if (isDev()) mainLog.debug(`shell`, `cmd.exe`)
     }
 }
 _runfixPath()
@@ -316,7 +318,7 @@ const _createWindow = (): void => {
  */
 const _debugLogs = (message?: any, ...optionalParams: any[]) => {
     _sendMessageToFrontLog(message, ...optionalParams)
-    _sendMessageToLogFile(message, ...optionalParams)
+    mainLog.debug(message, ...optionalParams)
 }
 
 /**
@@ -332,43 +334,45 @@ const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
             optionalParams
         )
     } catch (error) {
-        console.log(error)
+        mainLog.error('Error in _sendMessageToFrontLog', error)
     }
 }
 
-/**
- * Write a log file in output dir / workDir
- * @param message string
- * @param optionalParams string[]
- */
-function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
-    if (!getWorkDir()) {
-        setWorkDir(getHomeDir())
-    }
-    const logFilePath = getLogFilePathFromDir(getWorkDir())
+// /**
+//  * Write a log file in output dir / workDir
+//  * @param message string
+//  * @param optionalParams string[]
+//  */
+// function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
+//     const toStr = (inp: any) => {
+//         try {
+//             if (typeof inp !== 'string') {
+//                 return JSON.stringify(inp, null, 2)
+//             }
+//             return inp
+//         } catch (error) {
+//             return JSON.stringify(error, null, 2)
+//         }
+//     }
+//     const stout = toStr(message) + ' ' + optionalParams.map((str) => toStr(str))
+//     mainLog.debug(stout)
+//     return
+//     if (!getWorkDir()) {
+//         setWorkDir(getHomeDir())
+//     }
+//     const logFilePath = getLogFilePathFromDir(getWorkDir())
 
-    if (!getLogSteam()) {
-        setLogStream(logFilePath)
-        getLogSteam().write('')
-    }
-    const toStr = (inp: any) => {
-        try {
-            if (typeof inp !== 'string') {
-                return JSON.stringify(inp, null, 2)
-            }
-            return inp
-        } catch (error) {
-            return JSON.stringify(error, null, 2)
-        }
-    }
-    try {
-        const stout =
-            toStr(message) + ' ' + optionalParams.map((str) => toStr(str))
-        getLogSteam().write(stout + '\n')
-    } catch (error) {
-        getLogSteam().write(JSON.stringify(error, null, 2))
-    }
-}
+//     if (!getLogSteam()) {
+//         setLogStream(logFilePath)
+//         getLogSteam().write('')
+//     }
+
+//     try {
+//         getLogSteam().write(stout + '\n')
+//     } catch (error) {
+//         getLogSteam().write(JSON.stringify(error, null, 2))
+//     }
+// }
 
 /**
  * Utils, Send data to Front.
@@ -403,11 +407,9 @@ async function _prepareCollect(): Promise<{
 
         let nodeDir = getNodeDir()
         _debugLogs(`Node dir: ${nodeDir}`)
-        console.log(`Node dir: ${nodeDir}`)
 
         const npmDir = getNpmDir()
         _debugLogs(`Npm dir: ${npmDir}`)
-        console.log(`Npm dir: ${npmDir}`)
 
         const command = [
             `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`.replace(
@@ -421,7 +423,7 @@ async function _prepareCollect(): Promise<{
         }
         return { command, nodeDir, workDir: _workDir }
     } catch (error) {
-        console.error('Error', error)
+        mainLog.error('Error in _prepareCollect', error)
     }
 }
 
@@ -435,7 +437,7 @@ async function _echoReadable(event: IpcMainEvent, readable: any) {
     const win = BrowserWindow.fromWebContents(webContents)
     for await (const line of chunksToLinesAsync(readable)) {
         // (C)
-        console.log('> ' + chomp(line))
+        if (isDev()) mainLog.debug('> ' + chomp(line))
         // eslint-disable-next-line no-control-regex, no-useless-escape
         win.webContents.send(
             channels.ASYNCHRONOUS_LOG,
@@ -519,7 +521,7 @@ async function _runCollect(
         // controller.abort()
         return 'mesure done'
     } catch (error) {
-        console.log(error)
+        mainLog.error('Error in _runCollect', error)
     }
 }
 
@@ -530,7 +532,7 @@ async function _runCollect(
  */
 async function _sleep(ms: number) {
     return new Promise((resolve) => {
-        console.log(`wait ${ms / 1000}s`)
+        if (isDev()) mainLog.debug(`wait ${ms / 1000}s`)
         setTimeout(resolve, ms)
     })
 }
@@ -552,11 +554,11 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
             channels.IS_NODE_INSTALLED
         )
         if (_nodeDir.includes(';')) {
-            console.log(`Clean nodeDir path`)
+            if (isDev()) mainLog.debug(`Clean nodeDir path`)
             setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
         } else setNodeDir(_nodeDir)
-        console.log(`nodeDir returned: `, _nodeDir)
-        console.log(`nodeDir:`, getNodeDir())
+        if (isDev()) mainLog.debug(`nodeDir returned: `, _nodeDir)
+        if (isDev()) mainLog.debug(`nodeDir:`, getNodeDir())
 
         if (os.platform() === `darwin`) {
             setNpmDir(
@@ -569,7 +571,7 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
             )
         }
 
-        console.log(`npmDir: `, getNpmDir())
+        if (isDev()) mainLog.debug(`npmDir: `, getNpmDir())
 
         sendDataToFront({ 'nodeDir-raw': _nodeDir })
         sendDataToFront({ nodeDir: getNodeDir() })
@@ -583,11 +585,11 @@ const handleNodeInstalled = async (event: IpcMainEvent) => {
             fs.accessSync(getNodeDir())
             return true
         } catch (error) {
-            console.log(`has NOT access to Node DIR 🚫`, error)
+            mainLog.error(`has NOT access to Node DIR 🚫`, error)
             return false
         }
     } catch (error) {
-        console.log(`Check is Node Installed failed 🚫`, error)
+        mainLog.error(`Check is Node Installed failed 🚫`, error)
     }
 }
 
@@ -601,7 +603,7 @@ const handleGetNodeVersion = async (event: IpcMainEvent) => {
         sendDataToFront({ 'node-version': getNodeV() })
         return getNodeV()
     } catch (error) {
-        console.log(`Check is Node version failed 🚫`, error)
+        mainLog.error(`Check is Node version failed 🚫`, error)
     }
 }
 
@@ -614,7 +616,10 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
     try {
         fs.accessSync(getNodeDir())
     } catch (error) {
-        console.log(`in handlePluginInstalled, nodeDir is in error! 🚫`, error)
+        mainLog.error(
+            `in handlePluginInstalled, nodeDir is in error! 🚫`,
+            error
+        )
 
         return false
     }
@@ -627,6 +632,7 @@ const handlePluginInstalled = async (event: IpcMainEvent) => {
         fs.accessSync(pluginDir)
         return true
     } catch (error) {
+        mainLog.debug(`Lighthouse plugin not installed`)
         return false
     }
 }
@@ -636,7 +642,8 @@ const handleHomeDir = async (event: IpcMainEvent) => {
         const { homedir } = os.userInfo()
         return homedir
     } catch (error) {
-        return `error on handleHomeDir 🚫`
+        mainLog.error(`Error on handleHomeDir 🚫`)
+        return `Error on handleHomeDir 🚫`
     }
 }
 
@@ -647,24 +654,20 @@ const handleHomeDir = async (event: IpcMainEvent) => {
  * @returns string
  */
 const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
-    // fixPath()
-    const { shell, homedir } = os.userInfo()
+    const { homedir } = os.userInfo()
     if (!homedir) {
-        // _debugLogs('ERROR', 'Home dir not found in PATH', _shellEnv)
-        throw new Error('Home dir not found in PATH')
+        mainLog.error('Home dir not found in userInfo()')
+        throw new Error('Home dir not found in userInfo()')
     }
     setHomeDir(homedir)
-    // console.log(`newDir`, newDir)
     if (newDir) {
-        // logStream = null
-        setLogStream(getLogFilePathFromDir(newDir))
-        // console.log(`Reset logStream`)
+        // log replaced by electron-log
+        // setLogStream(getLogFilePathFromDir(newDir))
 
         setWorkDir(newDir)
     } else {
         setWorkDir(getHomeDir())
     }
-    // console.log(`workDir: ${workDir}`)
     return await getWorkDir()
 }
 
@@ -683,7 +686,7 @@ const handleIsJsonConfigFileExist = async (
         /\//gm,
         path.sep
     )
-    console.log(`handleIsJsonConfigFileExist`, jsonConfigFile)
+    if (isDev()) mainLog.debug(`handleIsJsonConfigFileExist`, jsonConfigFile)
     try {
         fs.accessSync(jsonConfigFile, fs.constants.F_OK)
         _showNotification({
@@ -692,6 +695,7 @@ const handleIsJsonConfigFileExist = async (
         })
         return true
     } catch (error) {
+        mainLog.debug(`Error in handleIsJsonConfigFileExist`)
         return false
     }
 }
@@ -715,9 +719,7 @@ const handleSimpleCollect = async (
     })
 
     const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
-    console.log('Simple mesure start, process intialization...')
     _debugLogs('Simple mesure start, process intialization...')
-    console.log(`Urls list: ${JSON.stringify(urlsList)}`)
     _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
     try {
         urlsList.forEach((url) => {
@@ -736,7 +738,8 @@ const handleSimpleCollect = async (
             body: 'Collect started...',
         })
         try {
-            console.log(`before (simple) runCollect`, nodeDir, command)
+            if (isDev())
+                mainLog.debug(`before (simple) runCollect`, nodeDir, command)
 
             await _runCollect(command, nodeDir, event)
         } catch (error) {
@@ -747,12 +750,11 @@ const handleSimpleCollect = async (
             throw new Error('Simple collect error')
         }
         // process.stdout.write(data)
-        // console.log(result.stdout.toString());
         _showNotification({
             subtitle: '🎉 Simple collect',
             body: `Collect done, you can consult reports in\n${_workDir}'`,
         })
-        console.log('Simple collect done 🚀')
+        if (isDev()) mainLog.debug('Simple collect done 🚀')
         return 'collect done'
     } catch (error) {
         _debugLogs(`stderr: ${error}`)
@@ -779,7 +781,6 @@ const handleJsonSaveAndCollect = async (
         subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
         body: 'Process intialization.',
     })
-    console.log('Json save or/and collect start...')
     _debugLogs('Json save or/and collect start...')
 
     try {
@@ -787,25 +788,9 @@ const handleJsonSaveAndCollect = async (
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }
-        console.log(`Work dir: ${_workDir}`)
+        if (isDev()) mainLog.debug(`Work dir: ${_workDir}`)
         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
         const jsonStream = fs.createWriteStream(jsonFilePath)
-        // if ((jsonDatas['extra-header'], jsonDatas['extra-header'])) {
-        //     try {
-        //         console.log(`extra-header`, jsonDatas['extra-header'])
-        //         if (typeof jsonDatas['extra-header'] === 'object') {
-        //             jsonDatas['extra-header'] = Object(
-        //                 String(jsonDatas['extra-header']).replace(/\\/g, '')
-        //             )
-        //         } else {
-        //             jsonDatas['extra-header'] = JSON.parse(
-        //                 String(jsonDatas['extra-header']).replace(/\\/g, '')
-        //             )
-        //         }
-        //     } catch (error) {
-        //         throw new Error(`extra-header is not in Json format. ${error}`)
-        //     }
-        // }
         _showNotification({
             subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
             body: andCollect
@@ -822,6 +807,7 @@ const handleJsonSaveAndCollect = async (
                     )
                 )
             } else {
+                mainLog.error('jsonDatas have a problem!')
                 throw new Error('jsonDatas have a problem!')
             }
         } catch (error) {
@@ -840,7 +826,7 @@ const handleJsonSaveAndCollect = async (
                 body: 'Json file saved.',
             })
         } else {
-            console.log('Json mesure start...')
+            if (isDev()) mainLog.debug('Json mesure start...')
 
             const {
                 command,
@@ -856,6 +842,7 @@ const handleJsonSaveAndCollect = async (
             try {
                 await _runCollect(command, nodeDir, event)
             } catch (error) {
+                mainLog.error('Simple collect error', error)
                 throw new Error('Simple collect error')
             }
             _showNotification({
@@ -863,12 +850,12 @@ const handleJsonSaveAndCollect = async (
                 body: `Mesures done, you can consult reports in\n${_workDir}`,
             })
             _debugLogs('Json collect done 🚀')
-            console.log('Json collect done 🚀')
             return 'mesure done'
         }
     } catch (error) {
         if (!andCollect) {
             _sendMessageToFrontLog('ERROR, Json file not saved', error)
+            _debugLogs('ERROR, Json file not saved', error)
             _showNotification({
                 subtitle: '🚫 JSON save',
                 body: 'Json file not saved.',
@@ -878,6 +865,7 @@ const handleJsonSaveAndCollect = async (
                 'ERROR, Json file not saved or collect',
                 error
             )
+            _debugLogs('ERROR, Json file not saved or collect', error)
             _showNotification({
                 subtitle: '🚫 JSON save and collect',
                 body: 'Json file not saved or collect.',
@@ -903,13 +891,12 @@ const handleJsonReadAndReload = async (
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }
-        // console.log(`Work dir: ${_workDir}`)
         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
         return new Promise((resolve, reject) => {
             const jsonStream = fs.createReadStream(jsonFilePath)
             jsonStream.on('data', function (chunk) {
                 const jsonDatas = JSON.parse(chunk.toString())
-                console.log(`jsonDatas`, jsonDatas)
+                if (isDev()) mainLog.debug(`jsonDatas`, jsonDatas)
 
                 _showNotification({
                     subtitle: '🔄 JSON reload',
@@ -926,6 +913,7 @@ const handleJsonReadAndReload = async (
             'Json file not read and reloaded',
             error
         )
+        _debugLogs('ERROR', 'Json file not read and reloaded', error)
         _showNotification({
             subtitle: '🚫 JSON reload',
             body: `Json file not read and reloaded. ${error}`,
@@ -993,7 +981,6 @@ const handle_CMD_Actions = async (
             throw new Error(`${action} not handled in handle_CMD_Actions`)
     }
     try {
-        console.log(`handle${config['actionName']}`)
         _debugLogs(`handle${config['actionName']} started 🚀`)
 
         config['filePath'] = [
@@ -1097,7 +1084,7 @@ const handle_CMD_Actions = async (
             }
         })
     } catch (error) {
-        _debugLogs(`error`, JSON.stringify(error, null, 2))
+        _debugLogs(`error`, error)
         return `${config['actionShortName']} failed 🚫`
     }
 }
@@ -1107,13 +1094,17 @@ const handle_CMD_Actions = async (
  * @returns string
  */
 const handleSelectFolder = async () => {
-    const options: Electron.OpenDialogOptions = {
-        properties: ['openDirectory', 'createDirectory'],
-    }
-    const { canceled, filePaths } = await dialog.showOpenDialog(options)
-    if (!canceled) {
-        setWorkDir(filePaths[0])
-        return filePaths[0]
+    try {
+        const options: Electron.OpenDialogOptions = {
+            properties: ['openDirectory', 'createDirectory'],
+        }
+        const { canceled, filePaths } = await dialog.showOpenDialog(options)
+        if (!canceled) {
+            setWorkDir(filePaths[0])
+            return filePaths[0]
+        }
+    } catch (error) {
+        mainLog.error(`Error in handleSelectFolder`)
     }
 }
 
