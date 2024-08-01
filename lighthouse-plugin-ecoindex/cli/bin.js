@@ -1,10 +1,11 @@
 import { dateToFileString, listAudits } from './commands.js'
 import { generateEnvironmentalStatement, runCourses } from './run.js'
 
+import { cleanPath } from './converters.js'
+import { fileURLToPath } from 'url'
 import { getFlags } from './cli-flags.js'
 import logSymbols from 'log-symbols'
 import path from 'path'
-import { fileURLToPath } from 'url';
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -20,7 +21,6 @@ import { fileURLToPath } from 'url';
  */
 
 const DEMO_INPUT_FILE_PATH = '/../demo/example-input-file.json'
-  
 
 /**
  * @return {Promise<void>}
@@ -29,9 +29,11 @@ async function begin() {
   const cliFlags = getFlags()
 
   // Prepare output path
-  cliFlags['exportPath'] = `${cliFlags['output-path']}/${await dateToFileString(
-    cliFlags['generationDate'],
-  )}`
+  cliFlags['exportPath'] = cleanPath(
+    `"${cliFlags['output-path']}/${await dateToFileString(
+      cliFlags['generationDate'],
+    )}"`,
+  )
 
   if (cliFlags._[0] === 'collect' || cliFlags._[0] === 'convert') {
     if (cliFlags.listAllAudits) {
@@ -39,8 +41,8 @@ async function begin() {
     }
     if (cliFlags['demo']) {
       console.log(`${logSymbols.warning} Demo mode enabled.`)
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = path.dirname(__filename);
+      const __filename = fileURLToPath(import.meta.url)
+      const __dirname = path.dirname(__filename)
       cliFlags['json-file'] = path.normalize(__dirname + DEMO_INPUT_FILE_PATH)
     }
     console.log(`${logSymbols.info} Command ${cliFlags._[0]} started`)

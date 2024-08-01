@@ -1,10 +1,10 @@
+import { cleanPath, convertCourseResults } from './converters.js'
 import fs, { writeFileSync } from 'fs'
 import { getEnvStatementsObj, slugify } from './commands.js'
 import path, { dirname } from 'path'
 
 import { B_TO_KB } from '../utils/index.js'
 import Handlebars from 'handlebars'
-import { convertCourseResults } from './converters.js'
 import { fileURLToPath } from 'url'
 import logSymbols from 'log-symbols'
 
@@ -35,19 +35,19 @@ async function preparareReports(cliFlags, course = undefined) {
   let exportPath = cliFlags['exportPath']
 
   if (course) {
-    await fs.mkdirSync(`${exportPath}/statements`, {
+    await fs.mkdirSync(cleanPath(`${exportPath}/statements`), {
       recursive: true,
     })
   } else {
-    await fs.mkdirSync(`${exportPath}`, {
+    await fs.mkdirSync(cleanPath(`${exportPath}`), {
       recursive: true,
     })
     console.log(
       `${logSymbols.info} With \`url\` option, generic report(s) are generated.`,
     )
     return {
-      html: `${exportPath}/generic.report.html`,
-      json: `${exportPath}/generic.report.json`,
+      html: cleanPath(`${exportPath}/generic.report.html`),
+      json: cleanPath(`${exportPath}/generic.report.json`),
     }
   }
 
@@ -62,12 +62,12 @@ async function preparareReports(cliFlags, course = undefined) {
     name: course.name,
     course: course.course,
     reports: {
-      html: `${exportPath}/${
-        courseName ? courseName : 'best-pages'
-      }.report.html`,
-      json: `${exportPath}/${
-        courseName ? courseName : 'best-pages'
-      }.report.json`,
+      html: cleanPath(
+        `${exportPath}/${courseName ? courseName : 'best-pages'}.report.html`,
+      ),
+      json: cleanPath(
+        `${exportPath}/${courseName ? courseName : 'best-pages'}.report.json`,
+      ),
     },
   }
   cliFlags['envStatementsObj'].courses.push(output)
@@ -201,20 +201,27 @@ async function printEnvStatementDocuments(cliFlags) {
   // Add informations documents and assets
   let exportPath = cliFlags['exportPath']
   try {
-    await fs.mkdirSync(`${exportPath}/assets`, {
+    await fs.mkdirSync(cleanPath(`${exportPath}/assets`), {
       recursive: true,
     })
     await fs.copyFileSync(
-      path.join(__dirname, `templates/fr_FR/docs/README.md`),
-      `${exportPath}/README.md`,
+      cleanPath(path.join(__dirname, `templates/fr_FR/docs/README.md`)),
+      cleanPath(`${exportPath}/README.md`),
     )
     await fs.copyFileSync(
-      path.join(__dirname, `templates/fr_FR/docs/assets/eco-conception.png`),
-      `${exportPath}/assets/eco-conception.png`,
+      cleanPath(
+        path.join(__dirname, `templates/fr_FR/docs/assets/eco-conception.png`),
+      ),
+      cleanPath(`${exportPath}/assets/eco-conception.png`),
     )
     await fs.copyFileSync(
-      path.join(__dirname, `templates/fr_FR/docs/assets/logo-asso-greenit.svg`),
-      `${exportPath}/assets/logo-asso-greenit.svg`,
+      cleanPath(
+        path.join(
+          __dirname,
+          `templates/fr_FR/docs/assets/logo-asso-greenit.svg`,
+        ),
+      ),
+      cleanPath(`${exportPath}/assets/logo-asso-greenit.svg`),
     )
   } catch (error) {
     console.error(`${logSymbols.error} ${error}`)
@@ -225,7 +232,7 @@ async function printEnvStatementDocuments(cliFlags) {
   // Markdown
   try {
     const sourceMD = fs.readFileSync(
-      path.join(__dirname, `templates/fr_FR/markdown.handlebars`),
+      cleanPath(path.join(__dirname, `templates/fr_FR/markdown.handlebars`)),
       'utf8',
     )
     const templateMD = Handlebars.compile(sourceMD)
@@ -242,7 +249,7 @@ async function printEnvStatementDocuments(cliFlags) {
   }
   try {
     const sourceHTML = fs.readFileSync(
-      path.join(__dirname, `templates/fr_FR/html.handlebars`),
+      cleanPath(path.join(__dirname, `templates/fr_FR/html.handlebars`)),
       'utf8',
     )
     const templateHTML = Handlebars.compile(sourceHTML)
@@ -329,7 +336,7 @@ async function printSummary(cliFlags) {
   })
   let exportPath = cliFlags['exportPath']
   writeFileSync(
-    `${exportPath}/summary.report.json`,
+    cleanPath(`${exportPath}/summary.report.json`),
     JSON.stringify(output, null, '\t'),
   )
   console.log(`Summary report generated: ${exportPath}/summary.report.json`)

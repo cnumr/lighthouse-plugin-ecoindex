@@ -1,77 +1,43 @@
 {
   "extra-header": {
     "Cookie": "monster=blue",
-    "x-men": "wolverine",
-    "Authorization": "Basic c3BpZTpFaXBzRXJnb1N1bTQyJA==",
-    "config-source": "input-file.json"
+    "x-men": "wolverine"
   },
   "output": ["html", "json", "statement"],
+  "user-agent": "random",
   "output-path": "./reports/multi",
-  "user-agent": "insights",
   "output-name": "ecoindex",
   "courses": [
     {
-      "name": "BEST PAGES",
-      "target": "TBD.",
-      "course": "Visiter les données financières, les résultats financiers, les informations réglementées, la page finance",
+      "name": "Découvrir ecoindex et l'écoconception",
+      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+      "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
       "is-best-pages": true,
       "urls": [
-        "https://www.spie.com/fr",
-        "https://www.spie.com/fr/rejoindre-spie",
-        "https://www.spie.com/fr/investisseurs/cours-de-laction",
-        "https://www.spie.com/fr/rejoindre-spie/vous-aussi-rejoignez-spie",
-        "https://www.spie.com/en"
+        "https://www.ecoindex.fr/",
+        "https://www.ecoindex.fr/comment-ca-marche/",
+        "https://www.ecoindex.fr/ecoconception/"
       ]
     },
     {
-      "name": "INVESTORS",
-      "target": "TBD.",
-      "course": "Visiter les données financières, les résultats financiers, les informations réglementées, la page finance",
+      "name": "Rejoindre la communauté",
+      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+      "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
       "is-best-pages": false,
       "urls": [
-        "https://www.spie.com/en",
-        "https://www.spie.com/en/about-spie",
-        "https://www.spie.com/en/about-us/spie-around-world",
-        "https://www.spie.com/en/investors/share-price",
-        "https://www.spie.com/en/investors",
-        "https://www.spie.com/en/journalists/profile-key-figures",
-        "https://www.spie.com/en/investors/financial-results",
-        "https://www.spie.com/en/regulated-information",
-        "https://www.spie.com/en/finance"
+        "https://www.ecoindex.fr/",
+        "https://www.ecoindex.fr/a-propos/",
+        "https://www.ecoindex.fr/nous-rejoindre/"
       ]
     },
     {
-      "name": "CLIENTS",
-      "target": "TBD.",
-      "course": "Consulter les offres, les solutions et les expertises, les secteurs, les réalisations",
-      "is-best-pages": false,
-      "urls": [
-        "https://www.spie.com/fr",
-        "https://www.spie.com/fr/spie-France",
-        "https://www.spie.com/fr/propos/spie-dans-le-monde",
-        "https://www.spie.com/fr/journalistes/profil-chiffres-cles",
-        "https://www.spie.com/fr/decouvrez-nos-offres-solutions-et-expertises",
-        "https://www.spie.com/fr/decouvrez-nos-offres-solutions-et-expertises/secteurs/energies/nucleaire",
-        "https://www.spie.com/fr/realisations",
-        "https://www.spie.com/fr/actualites",
-        "https://www.spie.com/fr/actualites/resultats-annuels-2022"
-      ]
-    },
-    {
-      "name": "CANDIDATS",
-      "target": "TBD.",
+      "name": "Revoir d'anciens résultats",
+      "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
       "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
       "is-best-pages": false,
       "urls": [
-        "https://www.spie.com/fr/",
-        "https://www.spie.com/fr/rejoindre-spie",
-        "https://www.spie.com/fr/rejoindre-spie/vous-aussi-rejoignez-spie",
-        "https://www.spie.com/fr/a-propos-de-spie",
-        "https://www.spie.com/fr/rejoindre-spie/actionnariat-salarie",
-        "https://www.spie.com/fr/rejoindre-spie/7-bonnes-raisons-de-nous-rejoindre",
-        "https://www.spie.com/fr/rejoindre-spie/7-bonnes-raisons-de-nous-rejoindre/partager-des-valeurs-qui-ont-du-sens",
-        "https://www.spie.com/fr/temoignages-collaborateurs",
-        "https://www.spie.com/fr/developpement-durable"
+        "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+        "https://www.ecoindex.fr/"
       ]
     }
   ]
