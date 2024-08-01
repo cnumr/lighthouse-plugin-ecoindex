@@ -1,5 +1,12 @@
 
 
+## [4.0.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.4...4.0.5) (2024-08-01)
+
+
+### Bug Fixes
+
+* bad import ([f2b804d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f2b804d0096ce7838010253df5310434fa8a9b1a))
+
 ## [4.0.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.3...4.0.4) (2024-08-01)
 
 
