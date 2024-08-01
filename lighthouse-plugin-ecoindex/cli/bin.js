@@ -1,11 +1,11 @@
 import { dateToFileString, listAudits } from './commands.js'
 import { generateEnvironmentalStatement, runCourses } from './run.js'
 
-import { cleanPath } from './converters.js'
-import { fileURLToPath } from 'url'
-import { getFlags } from './cli-flags.js'
 import logSymbols from 'log-symbols'
 import path from 'path'
+import { fileURLToPath } from 'url'
+import { getFlags } from './cli-flags.js'
+import { cleanPath } from './converters.js'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -30,9 +30,9 @@ async function begin() {
 
   // Prepare output path
   cliFlags['exportPath'] = cleanPath(
-    `"${cliFlags['output-path']}/${await dateToFileString(
+    `${cliFlags['output-path']}/${await dateToFileString(
       cliFlags['generationDate'],
-    )}"`,
+    )}`,
   )
 
   if (cliFlags._[0] === 'collect' || cliFlags._[0] === 'convert') {
