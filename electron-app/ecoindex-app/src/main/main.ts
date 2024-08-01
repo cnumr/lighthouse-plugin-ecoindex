@@ -6,12 +6,12 @@ import {
     Menu,
     Notification,
     app,
-    autoUpdater,
     dialog,
     ipcMain,
-    shell
+    shell,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
+import { UpdateSourceType, updateElectronApp } from 'update-electron-app'
 import {
     channels,
     scripts as custom_scripts,
@@ -39,15 +39,15 @@ import {
     setNodeV,
     setNpmDir,
     setTryNode,
-    setWorkDir
+    setWorkDir,
 } from '../shared/memory'
 
+import Updater from './Updater'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
-import { updateElectronApp } from 'update-electron-app'
 
 if (require('electron-squirrel-startup')) {
     app.quit()
@@ -55,22 +55,6 @@ if (require('electron-squirrel-startup')) {
 
 log.initialize()
 const mainLog = log.scope('main')
-
-try {
-    const server = 'https://update.electronjs.org'
-    const feed:any = `${server}/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/electron-${app.getVersion()}`
-
-    autoUpdater.setFeedURL(feed)
-
-    updateElectronApp({
-        updateInterval: '10 minutes',
-        logger: require('electron-log'),
-        notifyUser: true,
-    }) // additional configuration options available
-} catch (error) {
-    mainLog.error(`Error on process AutoUpdater`, error)
-}
-
 
 // const execFile = util.promisify(_execFile);
 
@@ -166,6 +150,7 @@ app.on('ready', () => {
         credits: packageJson.description,
         copyright: packageJson.publisher,
     })
+    Updater.getInstance()
     // _showNotification()
     _createWindow()
 })
@@ -579,14 +564,14 @@ async function _sleep(ms: number) {
  * @param event IpcMainEvent
  * @returns boolean
  */
-const handleNodeInstalled:any = async (event: IpcMainEvent) => {
+const handleNodeInstalled: any = async (event: IpcMainEvent) => {
     // get Node Dir
     try {
         const _nodeDir = await handle_CMD_Actions(
             event,
             channels.IS_NODE_INSTALLED
         )
-        if(_nodeDir === "" && getTryNode() > 0){
+        if (_nodeDir === '' && getTryNode() > 0) {
             await _sleep(2000)
             setTryNode()
             return handleNodeInstalled(event)
