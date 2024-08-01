@@ -78,6 +78,7 @@ const config: ForgeConfig = {
                     description:
                         'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
                     language: 1033,
+                    name: `EcoindexLighthouse`
                 }
             },
         },
