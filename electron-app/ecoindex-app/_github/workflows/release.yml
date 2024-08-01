@@ -1,0 +1,42 @@
+# **************************
+#  WORK ON PATH BEFORE TRY !
+#  ADD RELEASE-IT
+# **************************
+
+name: Release app
+on:
+    workflow_dispatch:
+jobs:
+    build:
+        strategy:
+            matrix:
+                os:
+                    [
+                        { name: 'linux', image: 'ubuntu-latest' },
+                        { name: 'windows', image: 'windows-latest' },
+                        { name: 'macos', image: 'macos-latest' },
+                    ]
+        runs-on: ${{ matrix.os.image }}
+        steps:
+            - name: Github checkout
+              uses: actions/checkout@v3
+            - name: Use Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - name: Cache node modules
+              uses: actions/cache@v2
+              with:
+                  path: 'node_modules'
+                  key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-modules-
+            - run: yarn install --immutable
+            - name: Debug token
+              run: echo ${GITHUB_TOKEN:0:5}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.ELECTRON_FORGE_GITHUB_TOKEN }}
+            - name: Publish app
+              env:
+                  GITHUB_TOKEN: ${{ secrets.ELECTRON_FORGE_GITHUB_TOKEN }}
+              run: yarn publish-app

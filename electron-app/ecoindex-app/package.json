@@ -35,7 +35,12 @@
     "scripts": {
         "start": "env-cmd electron-forge start",
         "package": "env-cmd electron-forge package",
-        "make": "PATH=$(pwd)/wine_proxy:$PATH env-cmd electron-forge make",
+        "clean:out": "rm -rf ./out/* --y",
+        "make": "env-cmd electron-forge make",
+        "make:darwin:arm64": "env-cmd electron-forge make --platform=darwin --arch=arm64",
+        "make:darwin:x64": "env-cmd electron-forge make --platform=darwin --arch=x64",
+        "make:win32:x64": "PATH=$(pwd)/wine_proxy:$PATH env-cmd electron-forge make --platform=win32 --arch=x64",
+        "make:win32:arm64": "PATH=$(pwd)/wine_proxy:$PATH env-cmd electron-forge make --platform=win32 --arch=arm64",
         "publish": "env-cmd electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
         "release": "env-cmd release-it --preRelease=rc",

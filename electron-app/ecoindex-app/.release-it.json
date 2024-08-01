@@ -10,6 +10,7 @@
         "releaseName": "Release Electron-app ${version}",
         "assets": [
             "./out/make/zip/darwin/arm64/*.zip",
+            "./out/make/zip/darwin/x64/*.zip",
             "./out/make/*.dmg",
             "./out/make/zip/win32/arm64/*.zip",
             "./out/make/zip/win32/x64/*.zip",
