@@ -1,10 +1,23 @@
 import iconAsso from '../../../assets/asso.svg'
-export const Footer = ({ nodeVersion }: { nodeVersion: string }) => {
+export const Footer = ({
+    nodeVersion,
+    appVersion,
+    repoUrl,
+}: {
+    nodeVersion: string
+    appVersion: string
+    repoUrl: string
+}) => {
     return (
         <div className="text-center text-sm">
             <p className="text-xs">
                 Host Informations : Node.js(
                 {nodeVersion ? nodeVersion : 'loading...'})
+            </p>
+            <p className="text-xs">
+                <a href={repoUrl} title="Visite website" target="_blank">
+                    Application version: {appVersion}
+                </a>
             </p>
             <p className="text-xs">
                 Internal Electron informations : Chrome (v

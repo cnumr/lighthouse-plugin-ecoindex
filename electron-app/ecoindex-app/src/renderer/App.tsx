@@ -602,7 +602,11 @@ function TheApp() {
                     {/* display here the echoReadable line */}
                     <ConsoleApp id="echo" datasFromHost={datasFromHost} />
                 </div>
-                <Footer nodeVersion={nodeVersion} />
+                <Footer
+                    nodeVersion={nodeVersion}
+                    appVersion={packageJson.version}
+                    repoUrl={packageJson.homepage}
+                />
             </main>
             {displayPopin && (
                 <PopinLoading
