@@ -1,5 +1,23 @@
 
 
+## [1.0.1-rc.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.14...electron-v1.0.1-rc.15) (2024-08-01)
+
+
+### Bug Fixes
+
+* bad import ([f2b804d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f2b804d0096ce7838010253df5310434fa8a9b1a))
+* typo fix ([ef13635](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ef136354981728cdba2db5af8ce7fd01a6758119))
+* typofix ([a519357](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a5193577f627fc652510427851e65a17f1e1e06e))
+
+
+### Features
+
+* better page size ([4cba2f1](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4cba2f1193e66ee8bd9367783c22f778e1a7ee7e))
+* finish open report ([fcdcf63](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fcdcf63fb276f7a5a3729d13757c3aa635e93a6c))
+* get path compatible with darwin, linux, win32 ([ccc3edf](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ccc3edf1aeb137108e0186f7d179935c0301e5da))
+* getDetails to used in table ([906e7e2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/906e7e2ffbfc8a4832502d983e11a8c06f8dbf1d))
+* started open report ([0758e52](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0758e52d53e6c4a27479cc84c126f473a608e50f))
+
 ## [1.0.1-rc.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.13...electron-v1.0.1-rc.14) (2024-07-31)
 
 
