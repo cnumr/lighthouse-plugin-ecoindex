@@ -56,6 +56,7 @@ class Updater {
             )
         }
 
+        // https://github.com/cnumr/lighthouse-plugin-ecoindex/releases.atom
         if (!isDev) {
             const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/${app.getVersion()}`
             const userAgent = format(
