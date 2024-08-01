@@ -55,6 +55,7 @@ if (require('electron-squirrel-startup')) {
 
 log.initialize()
 const mainLog = log.scope('main')
+log.info(`******************** APP IS STRATING ********************`)
 
 // const execFile = util.promisify(_execFile);
 
