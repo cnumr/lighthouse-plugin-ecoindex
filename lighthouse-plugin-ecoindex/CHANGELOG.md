@@ -1,5 +1,12 @@
 
 
+## [4.0.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.5...4.0.6) (2024-08-01)
+
+
+### Bug Fixes
+
+* typo fix ([ef13635](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ef136354981728cdba2db5af8ce7fd01a6758119))
+
 ## [4.0.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.4...4.0.5) (2024-08-01)
 
 
