@@ -4,18 +4,16 @@
     "commitMessage": "chore: release v${version}"
   },
   "hooks": {
-    "before:bump": "Release started 🚀",
+    "before:bump": "echo Release started 🚀",
     "after:bump": "git add ../ .",
     "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
   },
   "plugins": {
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "angular"
-        },
-        "infile": "CHANGELOG.md"
-      }
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "angular"
+      },
+      "infile": "CHANGELOG.md"
     },
     "@j-ulrich/release-it-regex-bumper": {
       "out": [
