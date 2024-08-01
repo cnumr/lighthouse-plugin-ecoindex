@@ -1,5 +1,18 @@
 
 
+## [1.0.1-rc.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.15...electron-v1.0.1-rc.16) (2024-08-01)
+
+
+### Bug Fixes
+
+* loading to fast before ask NodeDir + Start fixing autoUpdater ([2b0d1b3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2b0d1b36a104c4665e2e941e111d63fa380799d4))
+* wrong path when as space [#26](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/26) ([96e7856](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/96e7856a941d2f3d04033459cdad4e8f041ae067))
+
+
+### Features
+
+* init new updater ([e606761](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e606761fb1625a49cc2e452279d14c3901f8802b))
+
 ## [1.0.1-rc.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.14...electron-v1.0.1-rc.15) (2024-08-01)
 
 
