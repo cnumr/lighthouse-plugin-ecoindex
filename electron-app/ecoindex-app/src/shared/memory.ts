@@ -1,6 +1,7 @@
 import { BrowserWindow } from 'electron'
 import fs from 'fs'
 import { shellEnv } from 'shell-env'
+
 let workDir = ''
 let nodeDir = ''
 let npmDir = ''
@@ -65,4 +66,13 @@ export const getLogSteam = () => {
 export const setLogStream = (path: string) => {
   if (path) logStreamPath = path
   logStream = fs.createWriteStream(logStreamPath)
+}
+
+let tryNode = 5
+export const setTryNode = () => {
+  tryNode = tryNode - 1
+}
+
+export const getTryNode = () => {
+  return tryNode
 }

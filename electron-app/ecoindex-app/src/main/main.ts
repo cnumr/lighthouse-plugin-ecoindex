@@ -30,6 +30,7 @@ import {
     getNodeDir,
     getNodeV,
     getNpmDir,
+    getTryNode,
     getWorkDir,
     isDev,
     setHomeDir,
@@ -37,7 +38,8 @@ import {
     setNodeDir,
     setNodeV,
     setNpmDir,
-    setWorkDir,
+    setTryNode,
+    setWorkDir
 } from '../shared/memory'
 
 import fixPath from 'fix-path'
@@ -54,20 +56,42 @@ if (require('electron-squirrel-startup')) {
 log.initialize()
 const mainLog = log.scope('main')
 
-try {
-    const server = 'https://update.electronjs.org'
-const feed:any = `${server}/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/electron-${app.getVersion()}`
+const server = "https://update.electronjs.org";
+// https://github.com/cnumr/lighthouse-plugin-ecoindex/releases/download/electron-v1.0.1-rc.15/EcoindexLighthouse-win32-arm64-1.0.1-rc.15.zip
+const feed:any = `${server}/electron/update-server/${process.platform}/${packageJson.version}`;
 
-autoUpdater.setFeedURL(feed)
+console.log(`Current version: ${packageJson.version}`);
 
-updateElectronApp({
-    updateInterval: '10 minutes',
-    logger: require('electron-log'),
-    notifyUser: true,
-}) // additional configuration options available
-} catch (error) {
-    mainLog.error(`Error on process AutoUpdater`, error)
-}
+autoUpdater.setFeedURL(feed);
+autoUpdater.checkForUpdates();
+
+autoUpdater.on("checking-for-update", () => {
+  console.log("checking-for-update");
+});
+
+autoUpdater.on("update-available", () => {
+  console.log("update-available");
+});
+
+autoUpdater.on("update-not-available", () => {
+  console.log("update-not-available");
+});
+
+autoUpdater.on(
+  "update-downloaded",
+  (event, releaseNotes, releaseName, updateURL) => {
+    console.log("update-downloaded", {
+      event,
+      releaseNotes,
+      releaseName,
+      updateURL,
+    });
+  }
+);
+
+autoUpdater.on("error", (error) => {
+  console.log("error", { error });
+});
 
 
 // const execFile = util.promisify(_execFile);
@@ -575,15 +599,21 @@ async function _sleep(ms: number) {
 /**
  * Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
  * @param event IpcMainEvent
- * @returns boolean
+ * @returns Promise<boolean>
  */
-const handleNodeInstalled = async (event: IpcMainEvent) => {
+const handleNodeInstalled:any = async (event: IpcMainEvent) => {
     // get Node Dir
     try {
         const _nodeDir = await handle_CMD_Actions(
             event,
             channels.IS_NODE_INSTALLED
         )
+        if((_nodeDir === "" || _nodeDir === undefined || _nodeDir === null) && getTryNode() > 0){
+            mainLog.error(`NodeDir or Node.exe is undefined, try`, getTryNode())
+            await _sleep(2000)
+            setTryNode()
+            return await handleNodeInstalled(event)
+        }
         if (_nodeDir.includes(';')) {
             if (isDev()) mainLog.debug(`Clean nodeDir path`)
             setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
