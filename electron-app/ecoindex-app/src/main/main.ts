@@ -6,9 +6,10 @@ import {
     Menu,
     Notification,
     app,
+    autoUpdater,
     dialog,
     ipcMain,
-    shell,
+    shell
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
 import {
@@ -53,11 +54,21 @@ if (require('electron-squirrel-startup')) {
 log.initialize()
 const mainLog = log.scope('main')
 
+try {
+    const server = 'https://update.electronjs.org'
+const feed:any = `${server}/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/electron-${app.getVersion()}`
+
+autoUpdater.setFeedURL(feed)
+
 updateElectronApp({
     updateInterval: '10 minutes',
     logger: require('electron-log'),
     notifyUser: true,
 }) // additional configuration options available
+} catch (error) {
+    mainLog.error(`Error on process AutoUpdater`, error)
+}
+
 
 // const execFile = util.promisify(_execFile);
 
@@ -679,14 +690,14 @@ const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
         mainLog.error('Home dir not found in userInfo()')
         throw new Error('Home dir not found in userInfo()')
     }
-    setHomeDir(homedir)
+    setHomeDir(`${homedir}`)
     if (newDir) {
         // log replaced by electron-log
         // setLogStream(getLogFilePathFromDir(newDir))
 
-        setWorkDir(newDir)
+        setWorkDir(`${newDir}`)
     } else {
-        setWorkDir(getHomeDir())
+        setWorkDir(`${getHomeDir()}`)
     }
     return await getWorkDir()
 }
@@ -1120,8 +1131,8 @@ const handleSelectFolder = async () => {
         }
         const { canceled, filePaths } = await dialog.showOpenDialog(options)
         if (!canceled) {
-            setWorkDir(filePaths[0])
-            return filePaths[0]
+            setWorkDir(`"${filePaths[0]}"`)
+            return `"${filePaths[0]}"`
         }
     } catch (error) {
         mainLog.error(`Error in handleSelectFolder`)
