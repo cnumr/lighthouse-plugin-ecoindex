@@ -475,9 +475,12 @@ function _showNotification(options: any) {
 async function _runCollect(
     command: string[],
     nodeDir: string,
-    event: IpcMainEvent
+    event: IpcMainEvent,
+    isSimple = false
 ): Promise<string> {
     try {
+        const out: string[] = []
+
         _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
         // const controller = new AbortController()
         // const { signal } = controller
@@ -489,6 +492,17 @@ async function _runCollect(
         })
 
         childProcess.on('exit', (code, signal) => {
+            if (isSimple && out.length > 0) {
+                mainLog.debug(`out`, out)
+                const filtered = out.filter((item: string) => {
+                    item.includes('Report generated')
+                })
+                mainLog.debug(`filtered`, filtered)
+                getMainWindow().webContents.send(
+                    channels.OPEN_REPORT,
+                    filtered.at(-1).replace(`Report generated: `, ``)
+                )
+            }
             _debugLogs(
                 `Child process exited with code ${code} and signal ${signal}`
             )
@@ -500,6 +514,7 @@ async function _runCollect(
         })
 
         childProcess.stdout.on('data', (data) => {
+            out.push(data.toString())
             _debugLogs(`stdout: ${data}`)
         })
 
@@ -741,7 +756,7 @@ const handleSimpleCollect = async (
             if (isDev())
                 mainLog.debug(`before (simple) runCollect`, nodeDir, command)
 
-            await _runCollect(command, nodeDir, event)
+            await _runCollect(command, nodeDir, event, true)
         } catch (error) {
             _showNotification({
                 subtitle: '🚫 Simple collect',

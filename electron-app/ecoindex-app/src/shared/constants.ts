@@ -23,6 +23,7 @@ const constants: IConstants = {
         UPDATE_ECOINDEX_PLUGIN: 'update-ecoindex-plugin',
         HOST_INFORMATIONS: 'host-informations',
         HOST_INFORMATIONS_BACK: 'host-informations-back',
+        OPEN_REPORT: 'open-report',
     },
     scripts: {
         GET_NODE: 'get-node',

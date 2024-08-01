@@ -10,6 +10,7 @@ export interface IElectronAPI {
     sendLogToFront: (callback) => string
     sendMessageToFrontLog: (callback) => object
     sendDatasToFront: (callback) => object
+    openReport: (callback) => object
     // Front → Main
     handleSetFolderOuput: () => Promise<string>
     handleSelectFolder: () => Promise<string>

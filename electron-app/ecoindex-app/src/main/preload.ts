@@ -61,4 +61,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
             (_event, message, optionalParams) =>
                 callback(message, optionalParams)
         ),
+    openReport: (callback: any) =>
+        ipcRenderer.on(channels.OPEN_REPORT, (_event, url) => callback(url)),
 })

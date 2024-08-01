@@ -54,6 +54,10 @@ window.electronAPI.sendMessageToFrontLog(
     }
 )
 
+window.electronAPI.openReport((url: any) => {
+    window.open(url, `_blank`)
+})
+
 // window.electronAPI.sendDatasToFront((data: any) => {
 //     if (typeof data === 'string') {
 //         console.log(`sendDatasToFront`, data)
