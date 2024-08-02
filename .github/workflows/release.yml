@@ -5,9 +5,8 @@
 
 name: Release Electron app
 on:
-  push:
-    tags:
-      - '*'
+  release: 
+    types: published
   workflow_dispatch:
     inputs:
       release_type:
@@ -129,7 +128,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: CHANGELOG.md
           prerelease: true
           name: Release Electron-app ${{ steps.info.outputs.version }}
           tag_name: electron-v${{ steps.info.outputs.version }}
