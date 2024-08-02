@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.13...electron-v1.2.1-rc.14) (2024-08-02)
+
+
+### Bug Fixes
+
+* change path in `jaywcjlove/github-action-package` ([0b28c17](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0b28c1725961e5f0fc992a1b715db7e6f7b2111f))
+
 ## [1.2.1-rc.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.12...electron-v1.2.1-rc.13) (2024-08-02)
 
 
