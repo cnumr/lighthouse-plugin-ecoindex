@@ -1,5 +1,13 @@
 
 
+## [1.2.1-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.0...electron-v1.2.1-rc.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* fix need of env-cmd on CI ([b46a278](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b46a27800753e090c82849903c83abbe8c33cc8a))
+* wrong display token ([63c9d43](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/63c9d4368ebb0f5ffeaab558bb0b606c58b2be5e))
+
 # [1.2.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.1.0...electron-v1.2.0) (2024-08-02)
 
 
