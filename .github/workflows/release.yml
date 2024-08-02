@@ -86,7 +86,7 @@ jobs:
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: Add MacOS certs
-        if: matrix.os == 'macos-latest'
+        if: matrix.os.image == 'macos-latest'
         shell: bash
         run: |
           KEY_CHAIN=build.keychain
