@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.2...electron-v1.2.1-rc.3) (2024-08-02)
+
+
+### Bug Fixes
+
+* typofix ([b052d2f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b052d2ff883ee2c178e5f57cbd171ab1f94691a3))
+
 ## [1.2.1-rc.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.1...electron-v1.2.1-rc.2) (2024-08-02)
 
 
