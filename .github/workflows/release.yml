@@ -71,13 +71,19 @@ jobs:
       - run: npm ci
       - name: Debug token
         run: echo ${GITHUB_TOKEN:0:5}
-        run: echo ${APPLE_ID:0:5}
-        run: echo ${APPLE_PASSWORD:0:5}
-        run: echo ${APPLE_TEAM_ID:0:5}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug APPLE_ID
+        run: echo ${APPLE_ID:0:5}
+        env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
+      - name: Debug APPLE_PASSWORD
+        run: echo ${APPLE_PASSWORD:0:5}
+        env:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      - name: Debug APPLE_TEAM_ID
+        run: echo ${APPLE_TEAM_ID:0:5}
+        env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: Publish app
         env:
