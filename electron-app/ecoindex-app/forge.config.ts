@@ -101,7 +101,7 @@ const config: ForgeConfig = {
                     name: 'lighthouse-plugin-ecoindex',
                 },
                 tagPrefix: 'electron-v',
-                // prerelease: true,
+                prerelease: true,
             },
         },
     ],
