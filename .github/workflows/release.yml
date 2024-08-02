@@ -65,7 +65,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: 'node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
       - run: npm i
@@ -85,6 +85,17 @@ jobs:
         run: echo ${APPLE_TEAM_ID:0:3}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      - name: setup python
+        # https://github.com/LinusU/node-appdmg/issues/234#issuecomment-2002410428
+        if: matrix.os.image == 'macos-latest'
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: setup appdmg
+        if: matrix.os.image == 'macos-latest'
+        run: |
+          python3 -m pip install setuptools
+          npm install -g appdmg@0.6.6
       # - name: reinstall appdmg
       #   if: matrix.os.image == 'macos-latest'
       #   # https://github.com/actions/runner-images/issues/8796
@@ -95,14 +106,6 @@ jobs:
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
-      - name: Make
-        run: npm run make:ci
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_APPLICATION_CERT: ${{ secrets.APPLE_APPLICATION_CERT }}
-          KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
