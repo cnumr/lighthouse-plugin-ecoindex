@@ -1,5 +1,13 @@
 
 
+# [1.1.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.16...electron-v1.1.0) (2024-08-02)
+
+
+### Features
+
+* display version app and url ([b2507fa](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b2507fa972398d28a2f1c0d7c230d15f4c75783e))
+* release on GitHub action ([cfb2113](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cfb211381342b0d704dd8b93d98e58571ea065c2))
+
 ## [1.0.1-rc.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.15...electron-v1.0.1-rc.16) (2024-08-01)
 
 
