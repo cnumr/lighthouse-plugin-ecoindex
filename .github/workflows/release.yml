@@ -7,17 +7,17 @@ name: Release Electron app
 on:
   release: 
   workflow_dispatch:
-    inputs:
-      release_type:
-        type: choice
-        description: "Update Major, Minor, Patch or RC (prerealse)"
-        required: true
-        options:
-          - -- --preRelease=rc
-          - -- patch
-          - -- minor
-          - -- major
-        default: -- --preRelease=rc
+    # inputs:
+    #   release_type:
+    #     type: choice
+    #     description: "Update Major, Minor, Patch or RC (prerealse)"
+    #     required: true
+    #     options:
+    #       - -- --preRelease=rc
+    #       - -- patch
+    #       - -- minor
+    #       - -- major
+    #     default: -- --preRelease=rc
 defaults:
   run:
     working-directory: electron-app/ecoindex-app
