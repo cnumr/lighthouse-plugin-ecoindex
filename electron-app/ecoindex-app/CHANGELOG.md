@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.12...electron-v1.2.1-rc.13) (2024-08-02)
+
+
+### Features
+
+* change reading package.json ([ddfd5f8](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ddfd5f8d56e10199bf90eb394e739580f3c2138b))
+
 ## [1.2.1-rc.12](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.11...electron-v1.2.1-rc.12) (2024-08-02)
 
 
