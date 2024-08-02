@@ -116,12 +116,21 @@ jobs:
           KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
           DEBUG: '@electron/osx-sign,electron-forge:*'
         run: npm run make:ci
+      - name: Build
+        run: echo ${{ github.sha }} > Release.txt
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          body_path: CHANGELOG.md
+          prerelease: true
+          tag_name: electron-v${{ steps.package-version.outputs.current-version}}
           files: |
+            Release.txt
             out/**/*.deb
             out/**/*.dmg
             out/**/*Setup.exe
