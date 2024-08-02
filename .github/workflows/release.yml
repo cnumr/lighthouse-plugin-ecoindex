@@ -87,17 +87,7 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: Add MacOS certs
         if: matrix.os.image == 'macos-latest'
-        shell: bash
-        run: |
-          KEY_CHAIN=build.keychain
-          CERTIFICATE_P12=certificate.p12
-          echo $CERTIFICATE_OSX_APPLICATION | base64 --decode > $CERTIFICATE_P12
-          security create-keychain -p actions $KEY_CHAIN
-          security default-keychain -s $KEY_CHAIN
-          security unlock-keychain -p actions $KEY_CHAIN
-          security import $CERTIFICATE_P12 -k $KEY_CHAIN -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign;
-          security set-key-partition-list -S apple-tool:,apple: -s -k actions $KEY_CHAIN
-          rm -fr *.p12chmod +x add-osx-cert.sh && ./add-osx-cert.sh
+        run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
