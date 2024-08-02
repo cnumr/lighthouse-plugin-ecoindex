@@ -36,6 +36,9 @@
 -   https://help.apple.com/xcode/mac/current/#/dev3a05256b8
 -   https://felixrieseberg.com/codesigning-electron-apps-in-ci/
 -   https://github.com/electron/osx-sign
+-   https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+-   https://github.com/electron/forge/issues/3315
+-   https://github.com/sneljo1/auryo/blob/5180622e43d236feaebd00013f3d78e93f02cac1/internals/scripts/add-osx-cert.sh
 
 # osx package win32
 
