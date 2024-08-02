@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.8](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.7...electron-v1.2.1-rc.8) (2024-08-02)
+
+
+### Features
+
+* build on GitHub, tryning to fix appdmg ([2179f40](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2179f40dd8fa775e129bdfc5de25ed5f5f0fdc3c))
+
 ## [1.2.1-rc.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.6...electron-v1.2.1-rc.7) (2024-08-02)
 
 
