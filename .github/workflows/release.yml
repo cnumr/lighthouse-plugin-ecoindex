@@ -85,8 +85,9 @@ jobs:
         run: echo ${APPLE_TEAM_ID:0:3}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      - name: delete package-lock.json
-        run: rm -rf package-lock.json
+      - name: reinstall appdmg
+        # https://github.com/actions/runner-images/issues/8796
+        run: npm uninstall -g appdmg && npm install -g appdmg
       - name: Add MacOS certs
         if: matrix.os.image == 'macos-latest'
         run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
