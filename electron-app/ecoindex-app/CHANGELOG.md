@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.12](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.11...electron-v1.2.1-rc.12) (2024-08-02)
+
+
+### Bug Fixes
+
+* Relase githubaction ([91662e6](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/91662e6807e913e6c96af95b701e517c13b4bc73))
+
 ## [1.2.1-rc.11](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.10...electron-v1.2.1-rc.11) (2024-08-02)
 
 
