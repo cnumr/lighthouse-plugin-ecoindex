@@ -122,6 +122,8 @@ jobs:
       - name: package.json info
         id: info
         uses: jaywcjlove/github-action-package@main
+        with:
+          path: electron-app/ecoindex-app/package.json
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
