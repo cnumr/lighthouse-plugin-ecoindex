@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.10](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.9...electron-v1.2.1-rc.10) (2024-08-02)
+
+
+### Features
+
+* run publish on GitHub action, trying to fix appdmg ([82e0a5e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/82e0a5e90114515cff3a5aed4876c373dd647367))
+
 ## [1.2.1-rc.9](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.8...electron-v1.2.1-rc.9) (2024-08-02)
 
 
