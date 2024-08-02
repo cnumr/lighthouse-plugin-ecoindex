@@ -78,7 +78,7 @@ const config: ForgeConfig = {
                     description:
                         'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
                     language: 1033,
-                    name: `EcoindexLighthouse`
+                    name: `EcoindexLighthouse`,
                 }
             },
         },
@@ -92,19 +92,19 @@ const config: ForgeConfig = {
             },
         },
     ],
-    // publishers: [
-    //     {
-    //         name: '@electron-forge/publisher-github',
-    //         config: {
-    //             repository: {
-    //                 owner: 'cnumr',
-    //                 name: 'lighthouse-plugin-ecoindex',
-    //             },
-    //             tagPrefix: 'electron-v',
-    //             prerelease: true,
-    //         },
-    //     },
-    // ],
+    publishers: [
+        {
+            name: '@electron-forge/publisher-github',
+            config: {
+                repository: {
+                    owner: 'cnumr',
+                    name: 'lighthouse-plugin-ecoindex',
+                },
+                tagPrefix: 'electron-v',
+                // prerelease: true,
+            },
+        },
+    ],
     plugins: [
         new AutoUnpackNativesPlugin({}),
         new WebpackPlugin({
