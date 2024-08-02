@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.4...electron-v1.2.1-rc.5) (2024-08-02)
+
+
+### Features
+
+* publish on Gtihuh action, try fixing Cannot find module 'appdmg' ([f441c61](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f441c6174e582110e9de3daa4abfd5cd781b7ae2))
+
 ## [1.2.1-rc.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.3...electron-v1.2.1-rc.4) (2024-08-02)
 
 
