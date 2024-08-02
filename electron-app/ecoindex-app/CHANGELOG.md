@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.11](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.10...electron-v1.2.1-rc.11) (2024-08-02)
+
+
+### Features
+
+* try build on github ([bc2292d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/bc2292d9fc2b2269a4b93e6ea2b44edb71f22d99))
+
 ## [1.2.1-rc.10](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.9...electron-v1.2.1-rc.10) (2024-08-02)
 
 
