@@ -14,11 +14,11 @@ on:
         type: choice
         required: true
         options:
-          - --preRelease=rc
-          - patch
-          - minor
-          - major
-        default: --preRelease=rc
+          - -- --preRelease=rc
+          - -- patch
+          - -- minor
+          - -- major
+        default: -- --preRelease=rc
 defaults:
   run:
     working-directory: electron-app/ecoindex-app
@@ -71,8 +71,14 @@ jobs:
       - run: npm ci
       - name: Debug token
         run: echo ${GITHUB_TOKEN:0:5}
+        run: echo ${APPLE_ID:0:5}
+        run: echo ${APPLE_PASSWORD:0:5}
+        run: echo ${APPLE_TEAM_ID:0:5}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
