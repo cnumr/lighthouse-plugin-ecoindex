@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.9](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.8...electron-v1.2.1-rc.9) (2024-08-02)
+
+
+### Features
+
+* trying to fix `appdmg` error ([b17f93c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b17f93cf9bd6cffdf04baa1029d9d5d916e547a9))
+
 ## [1.2.1-rc.8](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.7...electron-v1.2.1-rc.8) (2024-08-02)
 
 
