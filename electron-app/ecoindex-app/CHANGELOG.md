@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.0...electron-v1.2.1-rc.1) (2024-08-02)
+
+
+### Features
+
+* try... ([04a67c7](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/04a67c756d6cae37ef490de375c580aa1f85c346))
+
 ## [1.2.1-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.0...electron-v1.2.1-rc.0) (2024-08-02)
 
 
