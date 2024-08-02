@@ -6,7 +6,6 @@
     },
     "github": {
         "release": true,
-        "draft": true,
         "autoGenerate": true,
         "releaseName": "Release Electron-app ${version}",
         "assets": [
