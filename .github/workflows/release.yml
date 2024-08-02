@@ -86,6 +86,7 @@ jobs:
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: reinstall appdmg
+        if: matrix.os.image == 'macos-latest'
         # https://github.com/actions/runner-images/issues/8796
         run: npm uninstall -g appdmg && npm install -g appdmg
       - name: Add MacOS certs
