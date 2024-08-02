@@ -1,5 +1,13 @@
 
 
+## [1.2.1-rc.18](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.17...electron-v1.2.1-rc.18) (2024-08-02)
+
+
+### Bug Fixes
+
+* listener on release is not dispatched ([bf2f2dc](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/bf2f2dcded44e557a6eecc09e08ecc5c172c6bcf))
+* unset as draft ([1cb1eb4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1cb1eb4862adf12618fa9196fb8f5e88a1d766f1))
+
 ## [1.2.1-rc.17](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.16...electron-v1.2.1-rc.17) (2024-08-02)
 
 
