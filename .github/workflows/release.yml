@@ -51,7 +51,7 @@ jobs:
           [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            { name: 'macos', image: 'macos-latest' },
+            # { name: 'macos', image: 'macos-latest' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -106,7 +106,7 @@ jobs:
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
-      - name: Publish app
+      - name: Make app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -115,4 +115,15 @@ jobs:
           APPLE_APPLICATION_CERT: ${{ secrets.APPLE_APPLICATION_CERT }}
           KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
           DEBUG: '@electron/osx-sign,electron-forge:*'
-        run: npm run publish:ci
+        run: npm run make:ci
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            out/**/*.deb
+            out/**/*.dmg
+            out/**/*Setup.exe
+            out/**/*.rpm
+            out/**/*.zip

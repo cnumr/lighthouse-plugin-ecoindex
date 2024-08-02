@@ -25,14 +25,15 @@ const config: ForgeConfig = {
         icon: path.resolve(__dirname, 'assets', 'app-ico'),
         extraResource: ['./src/extraResources/scripts'],
         osxSign: {
-            // optionsForFile: (filePath) => {
-            //     // Here, we keep it simple and return a single entitlements.plist file.
-            //     // You can use this callback to map different sets of entitlements
-            //     // to specific files in your packaged app.
-            //     return {
-            //         entitlements: './assets/default.darwin.plist',
-            //     }
-            // },
+            optionsForFile: (filePath) => {
+                // Here, we keep it simple and return a single entitlements.plist file.
+                // You can use this callback to map different sets of entitlements
+                // to specific files in your packaged app.
+                return {
+                    entitlements: './assets/default.darwin.plist',
+                }
+            },
+            identity: 'Developer ID Application: Renaud Héluin (ARQGHNC9UG)',
         },
         osxNotarize: {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -92,19 +93,19 @@ const config: ForgeConfig = {
             },
         },
     ],
-    publishers: [
-        {
-            name: '@electron-forge/publisher-github',
-            config: {
-                repository: {
-                    owner: 'cnumr',
-                    name: 'lighthouse-plugin-ecoindex',
-                },
-                tagPrefix: 'electron-v',
-                prerelease: true,
-            },
-        },
-    ],
+    // publishers: [
+    //     {
+    //         name: '@electron-forge/publisher-github',
+    //         config: {
+    //             repository: {
+    //                 owner: 'cnumr',
+    //                 name: 'lighthouse-plugin-ecoindex',
+    //             },
+    //             tagPrefix: 'electron-v',
+    //             prerelease: true,
+    //         },
+    //     },
+    // ],
     plugins: [
         new AutoUnpackNativesPlugin({}),
         new WebpackPlugin({
