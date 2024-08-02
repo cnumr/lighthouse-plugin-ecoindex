@@ -5,7 +5,7 @@
         "tagName": "electron-v${version}"
     },
     "github": {
-        "release": true,
+        "release": false,
         "autoGenerate": true,
         "releaseName": "Release Electron-app ${version}",
         "assets": [
@@ -17,12 +17,6 @@
             "./out/make/squirrel.windows/arm64/*.exe",
             "./out/make/squirrel.windows/x64/*.exe"
         ]
-    },
-    "hooks": {
-        "before:bump": "rm -rf ./out",
-        "after:bump": "sh make.sh",
-        "after:git:release": "echo After git push, before github release",
-        "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     },
     "npm": {
         "publish": false

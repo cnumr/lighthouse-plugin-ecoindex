@@ -1,0 +1,82 @@
+# **************************
+#  WORK ON PATH BEFORE TRY !
+#  ADD RELEASE-IT
+# **************************
+
+name: Release Electron app
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        required: true
+        options:
+          - --preRelease=rc
+          - patch
+          - minor
+          - major
+        default: --preRelease=rc
+defaults:
+  run:
+    working-directory: electron-app/ecoindex-app
+jobs:
+  release_it:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: npm ci
+      - run: npm run release:ci "${{ github.event.inputs.release_type }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: release_it
+    strategy:
+      matrix:
+        os:
+          [
+            { name: 'linux', image: 'ubuntu-latest' },
+            { name: 'windows', image: 'windows-latest' },
+            { name: 'macos', image: 'macos-latest' },
+          ]
+    runs-on: ${{ matrix.os.image }}
+    steps:
+      - name: Github checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - run: npm ci
+      - name: Debug token
+        run: echo ${GITHUB_TOKEN:0:5}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: npm run publish:ci
