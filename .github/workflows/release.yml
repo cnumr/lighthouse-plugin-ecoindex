@@ -68,7 +68,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - run: npm ci
+      - run: npm i
       - name: Debug token
         run: echo ${GITHUB_TOKEN:0:5}
         env:
