@@ -6,6 +6,7 @@
 name: Release Electron app
 on:
   release: 
+    types: [released, prereleased]
   workflow_dispatch:
     # inputs:
     #   release_type:
