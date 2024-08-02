@@ -14,11 +14,11 @@ on:
         type: choice
         required: true
         options:
-          - --preRelease=rc
-          - patch
-          - minor
-          - major
-        default: --preRelease=rc
+          - -- --preRelease=rc
+          - -- patch
+          - -- minor
+          - -- major
+        default: -- --preRelease=rc
 defaults:
   run:
     working-directory: electron-app/ecoindex-app
