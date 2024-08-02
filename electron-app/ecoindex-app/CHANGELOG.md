@@ -1,5 +1,17 @@
 
 
+## [1.2.1-rc.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.15...electron-v1.2.1-rc.16) (2024-08-02)
+
+
+### Bug Fixes
+
+* listener on release ([d6ee5af](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d6ee5afc2bff4247f9a34abb39495ead1fe4447f))
+
+
+### Features
+
+* set prelease ([779ce3e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/779ce3ecb9c7536d43e3a0f0fbdf0f325b24b5c0))
+
 ## [1.2.1-rc.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.14...electron-v1.2.1-rc.15) (2024-08-02)
 
 
