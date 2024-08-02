@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.5...electron-v1.2.1-rc.6) (2024-08-02)
+
+
+### Features
+
+* try to fix `Running make command [FAILED: Cannot find module 'appdmg'` ([406d7ed](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/406d7ed371279cbe620c8dc50c91606d0eba18a9))
+
 ## [1.2.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.4...electron-v1.2.1-rc.5) (2024-08-02)
 
 
