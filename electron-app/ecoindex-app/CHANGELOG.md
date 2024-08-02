@@ -1,5 +1,12 @@
 
 
+# [1.2.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.1.0...electron-v1.2.0) (2024-08-02)
+
+
+### Features
+
+* try run publish on ci ([868bf5f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/868bf5f2eeba944972e6a4a0de13b3510af7c89a))
+
 # [1.1.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.0.1-rc.16...electron-v1.1.0) (2024-08-02)
 
 
