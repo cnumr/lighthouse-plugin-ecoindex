@@ -1,5 +1,14 @@
 
 
+## [1.2.1-rc.17](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.16...electron-v1.2.1-rc.17) (2024-08-02)
+
+
+### Features
+
+* --github.draft ([42bed7a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/42bed7a3799fa058e451de611e9d4d92e48c4050))
+* disabled input on `workflow_dispatch` ([97803ca](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/97803caaf76455a637c51767eb8377011e2869fa))
+* unfilter listner on release ([32a4c5a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/32a4c5a8a6f3fe57bffc904c89e8685c3abea683))
+
 ## [1.2.1-rc.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.15...electron-v1.2.1-rc.16) (2024-08-02)
 
 
