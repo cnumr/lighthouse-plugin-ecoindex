@@ -1,0 +1,34 @@
+{
+    "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+    "git": {
+        "commitMessage": "chore: release v${version}",
+        "tagName": "electron-v${version}"
+    },
+    "github": {
+        "release": true,
+        "autoGenerate": true,
+        "releaseName": "Release Electron-app ${version}",
+        "assets": [
+            "./out/make/zip/darwin/arm64/*.zip",
+            "./out/make/zip/darwin/x64/*.zip",
+            "./out/make/*.dmg"
+        ]
+    },
+    "npm": {
+        "publish": false
+    },
+    "hooks": {
+        "before:bump": "rm -rf ./out",
+        "after:bump": "sh make.sh",
+        "after:git:release": "echo After git push, before github release",
+        "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    },
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": {
+                "name": "angular"
+            },
+            "infile": "CHANGELOG.md"
+        }
+    }
+}

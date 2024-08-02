@@ -45,10 +45,10 @@
         "publish": "env-cmd electron-forge publish",
         "publish:ci": "electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
-        "release": "env-cmd release-it --preRelease=rc",
-        "release:patch": "env-cmd release-it",
-        "release:minor": "env-cmd release-it minor",
-        "release:major": "env-cmd release-it major",
+        "release:local": "env-cmd release-it --preRelease=rc --config .local.release-it.json",
+        "release:local:patch": "env-cmd release-it --config .local.release-it.json",
+        "release:local:minor": "env-cmd release-it minor --config .local.release-it.json",
+        "release:local:major": "env-cmd release-it major --config .local.release-it.json",
         "release:ci": "release-it"
     },
     "devDependencies": {

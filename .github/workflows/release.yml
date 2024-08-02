@@ -24,28 +24,28 @@ defaults:
   run:
     working-directory: electron-app/ecoindex-app
 jobs:
-  release_it:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Github checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - name: git config
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: npm ci
-      - run: npm run release:ci ${{ github.event.inputs.release_type }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # release_it:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Github checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Use Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+  #     - name: git config
+  #       run: |
+  #         git config user.name "${GITHUB_ACTOR}"
+  #         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+  #     - run: npm ci
+  #     - run: npm run release:ci ${{ github.event.inputs.release_type }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    needs: release_it
+    # needs: release_it
     strategy:
       matrix:
         os:
