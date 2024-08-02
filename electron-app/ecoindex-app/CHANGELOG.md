@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.1...electron-v1.2.1-rc.2) (2024-08-02)
+
+
+### Features
+
+* Create MacOS certs ([3e5ff7b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3e5ff7b241737a800e041871d772b220f562bd5e))
+
 ## [1.2.1-rc.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.0...electron-v1.2.1-rc.1) (2024-08-02)
 
 
