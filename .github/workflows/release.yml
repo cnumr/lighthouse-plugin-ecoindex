@@ -12,6 +12,7 @@ on:
     inputs:
       release_type:
         type: choice
+        description: "Update Major, Minor, Patch or RC (prerealse)"
         required: true
         options:
           - -- --preRelease=rc
@@ -116,11 +117,11 @@ jobs:
           KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
           DEBUG: '@electron/osx-sign,electron-forge:*'
         run: npm run make:ci
-      - name: Build
+      - name: Generate Release.txt
         run: echo ${{ github.sha }} > Release.txt
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: package.json info
+        id: info
+        uses: jaywcjlove/github-action-package@main
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
@@ -128,11 +129,12 @@ jobs:
         with:
           body_path: CHANGELOG.md
           prerelease: true
-          tag_name: electron-v${{ steps.package-version.outputs.current-version}}
+          name: Release Electron-app ${{ steps.info.outputs.version }}
+          tag_name: electron-v${{ steps.info.outputs.version }}
           files: |
-            Release.txt
-            out/**/*.deb
-            out/**/*.dmg
-            out/**/*Setup.exe
-            out/**/*.rpm
-            out/**/*.zip
+            electron-app/ecoindex-app/Release.txt
+            electron-app/ecoindex-app/out/**/*.deb
+            electron-app/ecoindex-app/out/**/*.dmg
+            electron-app/ecoindex-app/out/**/*Setup.exe
+            electron-app/ecoindex-app/out/**/*.rpm
+            electron-app/ecoindex-app/out/**/*.zip
