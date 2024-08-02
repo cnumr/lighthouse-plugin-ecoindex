@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.14...electron-v1.2.1-rc.15) (2024-08-02)
+
+
+### Features
+
+* publish mac localy and publish linux and Windows on Github (manually) ([14a4505](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/14a4505cb039c116d73fcc58dbf6f1d102d51e9b))
+
 ## [1.2.1-rc.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.13...electron-v1.2.1-rc.14) (2024-08-02)
 
 
