@@ -1,5 +1,17 @@
 
 
+## [1.2.1-rc.19](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.18...electron-v1.2.1-rc.19) (2024-08-03)
+
+
+### Bug Fixes
+
+* issue with `@vercel/webpack-asset-relocator-loader` see https://github.com/electron/forge/issues/3600 ([5c9b8b2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5c9b8b22c2dac1a3553ff53c78e420064fe1017c))
+
+
+### Features
+
+* splass screen popin d'accueil [#27](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/27) ([707284f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/707284f95dedda4fbdee0ac55fceae2f44772bde))
+
 ## [1.2.1-rc.18](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.17...electron-v1.2.1-rc.18) (2024-08-02)
 
 
