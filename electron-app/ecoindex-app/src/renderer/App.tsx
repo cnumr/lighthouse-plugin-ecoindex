@@ -10,7 +10,7 @@ import {
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import { labels, utils } from '../shared/constants'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
 import { Bug } from 'lucide-react'
@@ -59,12 +59,21 @@ function TheApp() {
     const [isNodeInstalled, setIsNodeInstalled] = useState(true)
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
 
+    /**
+     * Necessary display waiting popin.
+     * @param block boolean
+     */
     const blockScrolling = (block = true) => {
         const body = document.getElementsByTagName(
             `body`
         )[0] as unknown as HTMLBodyElement
         body.style.overflowY = block ? 'hidden' : 'auto'
     }
+
+    /**
+     * Show/Hide waiting popin during process.
+     * @param value string | boolean
+     */
     const showHidePopinDuringProcess = async (value: string | boolean) => {
         if (typeof value === 'string') {
             setPopinText(value)
@@ -84,6 +93,10 @@ function TheApp() {
         }
     }
 
+    /**
+     * Handler, launch simple mesure with the plugin.
+     * @returns Promise<void>
+     */
     const runSimpleMesures = async () => {
         frontLog.log('Simple mesures clicked')
         if (workDir === homeDir) {
@@ -110,7 +123,10 @@ function TheApp() {
         }
     }
 
-    const runJsonReadAndReload = async () => {
+    /**
+     * Handler, Read and Reload the Json configuration for mesures of parcours. Relaunched when workDir change.
+     */
+    const runJsonReadAndReload = useCallback(async () => {
         frontLog.log('Json read and reload')
         try {
             const _jsonDatas: IJsonMesureData =
@@ -129,8 +145,15 @@ function TheApp() {
                 body: 'Error on runJsonReadAndReload',
             })
         }
-    }
+    }, [])
 
+    /**
+     * Handler, launch mesures of parcours.
+     * 1. Save Json configuration in workDir.
+     * 2. Launch mesures with the plugin.
+     * @param saveAndCollect boolean
+     * @returns Promise<void>
+     */
     const runJsonSaveAndCollect = async (saveAndCollect = false) => {
         frontLog.log('Json save clicked')
         if (workDir === homeDir) {
@@ -162,22 +185,38 @@ function TheApp() {
         }
     }
 
+    /**
+     * Notify user.
+     * @param title string
+     * @param message string
+     */
     const handlerJsonNotify = (title: string, message: string) => {
         frontLog.log('Json notify clicked')
         showNotification('', { body: message, subtitle: title })
     }
 
+    /**
+     * Handler for selecting workDir.
+     */
     const selectWorkingFolder = async () => {
         const filePath = await window.electronAPI.handleSelectFolder()
 
         if (filePath !== undefined) setWorkDir(filePath)
     }
 
+    /**
+     * Notify user.
+     * @param title string
+     * @param options any
+     */
     const showNotification = (title: string, options: any) => {
         const _t = title === '' ? packageJson.productName : title
         new window.Notification(_t, options)
     }
 
+    /**
+     * Increment function to handle the waiting popin.
+     */
     const increment = () => {
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / 4))
@@ -204,6 +243,9 @@ function TheApp() {
         }
     }
 
+    /**
+     * Handler to open URL of the official Node.js installer.
+     */
     const installNode = () => {
         window.open(
             `https://nodejs.org/en/download/prebuilt-installer`,
@@ -211,6 +253,9 @@ function TheApp() {
         )
     }
 
+    /**
+     * Handler to install Puppetter, Puppetter/Chrome Browser and lighthouse-plugin-ecoindex.
+     */
     const installEcoindexPlugin = async () => {
         try {
             await window.electronAPI.handleLighthouseEcoindexPluginInstall()
@@ -218,6 +263,9 @@ function TheApp() {
             frontLog.error(`installEcoindexPlugin`, error)
         }
     }
+    /**
+     * Handler to force update/reinstall lighthouse-plugin-ecoindex.
+     */
     const updateEcoindexPlugin = async () => {
         try {
             await window.electronAPI.handleLighthouseEcoindexPluginUpdate()
@@ -239,6 +287,9 @@ function TheApp() {
         })
     }
 
+    /**
+     * Handler to copy in clipboard the content of datasFromHost.
+     */
     const copyToClipBoard = () => {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
@@ -251,7 +302,6 @@ function TheApp() {
             const result = await window.versions.getNodeVersion()
             setNodeVersion(result)
             const major = nodeVersion.replace('v', '').split('.')[0]
-            frontLog.log(`major`, major)
 
             if (Number(major) >= 20) {
                 setIsNodeVersionOK(false)
@@ -293,17 +343,26 @@ function TheApp() {
             increment()
         }
 
+        /**
+         * Handler, force update of lighthouse-plugin-ecoindex
+         */
         const fetchUpdateEcoindexPlugin = async () => {
             if (isLighthouseEcoindexPluginInstalled)
                 await updateEcoindexPlugin()
         }
 
+        /**
+         * Handlers, to get user home dir.
+         */
         const fetchHomeDir = async () => {
             const filePath = await window.electronAPI.getHomeDir()
 
             setHomeDir(filePath)
         }
 
+        /**
+         * Launch the mandatory actions at startup, once.
+         */
         fetchWorkDir().then(() => {
             fetchHomeDir()
             fetchNodeInstalled().then(() => {
@@ -315,19 +374,19 @@ function TheApp() {
             })
         })
 
-        // get data from main
+        /**
+         * Handler (main->front), get data from main
+         */
         window.electronAPI.sendDatasToFront((data: any) => {
-            frontLog.log(typeof data)
-
             if (typeof data === 'string') {
                 const _data = JSON.parse(data)
-                frontLog.log(`sendDatasToFront`, _data)
+                // frontLog.log(`sendDatasToFront`, _data)
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ..._data,
                 }))
             } else {
-                frontLog.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
+                // frontLog.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ...data,
@@ -336,6 +395,9 @@ function TheApp() {
         })
     }, [])
 
+    /**
+     * Handler, check and update if App is ready to use.
+     */
     const checkAppReady = () => {
         frontLog.log('isNodeInstalled', isNodeInstalled)
         frontLog.log(
@@ -348,20 +410,41 @@ function TheApp() {
         setAppReady(count === 2)
     }
 
+    /**
+     * Detect language change.
+     */
     useEffect(() => {
         frontLog.log('language', language)
     }, [language])
 
-    useEffect(() => {
+    /**
+     * Display information in log and check if App is ready.
+     */
+    const logEventAndCheckAppReady = useCallback((name: string) => {
         frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-        frontLog.log(
-            `Binded on [isNodeInstalled, isLighthouseEcoindexPluginInstalled]`
-        )
+        frontLog.log(`Binded on [${name}]`)
         checkAppReady()
         frontLog.log(`appReady`, appReady)
         frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-    }, [isNodeInstalled, isLighthouseEcoindexPluginInstalled])
+    }, [])
 
+    /**
+     * Detect isNodeInstalled change.
+     */
+    useEffect(() => {
+        logEventAndCheckAppReady(`isNodeInstalled`)
+    }, [isNodeInstalled, logEventAndCheckAppReady])
+
+    /**
+     * Detect isLighthouseEcoindexPluginInstalled change.
+     */
+    useEffect(() => {
+        logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
+    }, [isLighthouseEcoindexPluginInstalled, logEventAndCheckAppReady])
+
+    /**
+     * Detect appReady change.
+     */
     useEffect(() => {
         frontLog.log(`************************************`)
         frontLog.log(`Binded on [appReady]`)
@@ -369,6 +452,9 @@ function TheApp() {
         frontLog.log(`************************************`)
     }, [appReady])
 
+    /**
+     * Detect workDir change.
+     */
     useEffect(() => {
         const isJsonConfigFileExist = async () => {
             const result =
@@ -378,7 +464,7 @@ function TheApp() {
             result && runJsonReadAndReload()
         }
         isJsonConfigFileExist()
-    }, [workDir])
+    }, [workDir, runJsonReadAndReload])
 
     return (
         <div className="container relative">
