@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.20](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.19...electron-v1.2.1-rc.20) (2024-08-03)
+
+
+### Bug Fixes
+
+* restore missing make scripts ([14b8273](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/14b8273df8936c0048a4ec30b615bfdd767bad2d))
+
 ## [1.2.1-rc.19](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.18...electron-v1.2.1-rc.19) (2024-08-03)
 
 
