@@ -9,70 +9,85 @@ let homeDir = ''
 let nodeVersion = ''
 let logStream: fs.WriteStream = null
 let mainWindow: BrowserWindow = null
+let welcomeWindow: BrowserWindow = null
+let showedWelcome = false
 let logStreamPath = ''
 
 export const getWorkDir = () => {
-  return workDir
+    return workDir
 }
 export const setWorkDir = (value: string) => {
-  workDir = value
+    workDir = value
 }
 
 export const getNodeDir = () => {
-  return nodeDir
+    return nodeDir
 }
 export const setNodeDir = (value: string) => {
-  nodeDir = value
+    nodeDir = value
 }
 
 export const getNpmDir = () => {
-  return npmDir
+    return npmDir
 }
 export const setNpmDir = (value: string) => {
-  npmDir = value
+    npmDir = value
 }
 
 export const getNodeV = () => {
-  return nodeVersion
+    return nodeVersion
 }
 export const setNodeV = (value: string) => {
-  nodeVersion = value
+    nodeVersion = value
 }
 
 export const getHomeDir = () => {
-  return homeDir
+    return homeDir
 }
 export const setHomeDir = (value: string) => {
-  homeDir = value
+    homeDir = value
 }
 
 export const getMainWindow = () => {
-  return mainWindow
+    return mainWindow
 }
 export const setMainWindow = (value: BrowserWindow) => {
-  mainWindow = value
+    mainWindow = value
+}
+
+export const getWelcomeWindow = () => {
+    return welcomeWindow
+}
+export const setWelcomeWindow = (value: BrowserWindow) => {
+    welcomeWindow = value
+}
+export const hasShowWelcomeWindow = () => {
+    return showedWelcome
+}
+export const setHasShowedWelcomeWindow = (value: boolean) => {
+    showedWelcome = value
 }
 
 export const isDev = () => {
-  return process.env['WEBPACK_SERVE'] === 'true'
+    return process.env['WEBPACK_SERVE'] === 'true'
 }
 export const getLogFilePathFromDir = (dir: string) => {
-  return `${dir}/logfile.txt`
+    return `${dir}/logfile.txt`
 }
 
 export const getLogSteam = () => {
-  return logStream
+    return logStream
 }
 export const setLogStream = (path: string) => {
-  if (path) logStreamPath = path
-  logStream = fs.createWriteStream(logStreamPath)
+    if (path) logStreamPath = path
+    logStream = fs.createWriteStream(logStreamPath)
 }
 
 let tryNode = 5
 export const setTryNode = () => {
-  tryNode = tryNode - 1
+    tryNode = tryNode - 1
 }
 
 export const getTryNode = () => {
-  return tryNode
+    return tryNode
 }

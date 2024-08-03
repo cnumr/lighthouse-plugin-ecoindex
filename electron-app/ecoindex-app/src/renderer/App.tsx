@@ -361,6 +361,18 @@ function TheApp() {
         }
 
         /**
+         * Open Welcome window.
+         */
+        const welcomeWindow = () => {
+            try {
+                // window.open('hello.html', '_blank')
+            } catch (error) {
+                frontLog.debug(error)
+            }
+        }
+        welcomeWindow()
+
+        /**
          * Launch the mandatory actions at startup, once.
          */
         fetchWorkDir().then(() => {

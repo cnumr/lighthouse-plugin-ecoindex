@@ -31,14 +31,18 @@ import {
     getNodeV,
     getNpmDir,
     getTryNode,
+    getWelcomeWindow,
     getWorkDir,
+    hasShowWelcomeWindow,
     isDev,
+    setHasShowedWelcomeWindow,
     setHomeDir,
     setMainWindow,
     setNodeDir,
     setNodeV,
     setNpmDir,
     setTryNode,
+    setWelcomeWindow,
     setWorkDir,
 } from '../shared/memory'
 
@@ -64,6 +68,8 @@ log.info(`******************** APP IS STRATING ********************`)
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
+declare const HELLO_WINDOW_WEBPACK_ENTRY: string
+declare const HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
 /**
  * Helpers, Fix Path
@@ -85,28 +91,6 @@ _runfixPath()
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
     app.quit()
-}
-
-/**
- * Electron, Create Windows
- */
-const createWindow = (): void => {
-    // Create the browser window.
-    const mainWindow = new BrowserWindow({
-        height: 600,
-        width: 800,
-        webPreferences: {
-            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            nodeIntegration: true,
-            // contextIsolation: false,
-        },
-    })
-
-    // and load the index.html of the app.
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
 // This method will be called when Electron has finished
@@ -153,7 +137,7 @@ app.on('ready', () => {
     })
     Updater.getInstance()
     // _showNotification()
-    _createWindow()
+    _createMainWindow()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -170,7 +154,7 @@ app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow()
+        _createMainWindow()
     }
 })
 
@@ -288,9 +272,9 @@ Menu.setApplicationMenu(menu)
 // #region Helpers
 
 /**
- * Helpers, Window Creation
+ * Helpers, Main Window Creation
  */
-const _createWindow = (): void => {
+const _createMainWindow = (): void => {
     // Create the browser window.
     setMainWindow(
         new BrowserWindow({
@@ -305,6 +289,25 @@ const _createWindow = (): void => {
 
     // and load the index.html of the app.
     getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+
+    if (!hasShowWelcomeWindow()) {
+        setWelcomeWindow(
+            new BrowserWindow({
+                width: 800,
+                height: 700,
+                icon: '/assets/app-ico.png',
+                webPreferences: {
+                    preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
+                },
+                parent: getMainWindow(),
+                modal: true,
+                show: true,
+            })
+        )
+        getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
+    } else {
+        setHasShowedWelcomeWindow(true)
+    }
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools({ mode: 'detach' })

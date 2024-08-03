@@ -4,7 +4,7 @@ export function TypographyP({
     children,
     className,
 }: {
-    children: React.ReactElement | string
+    children?: React.ReactNode
     className?: string
 }) {
     return (

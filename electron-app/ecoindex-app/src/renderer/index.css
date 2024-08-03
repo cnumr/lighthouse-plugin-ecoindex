@@ -124,34 +124,34 @@
     #json-form {
         @apply grid w-full grid-cols-1 space-y-2;
         label {
-            @apply text-primary dark:text-foreground font-bold;
+            @apply font-bold text-primary dark:text-foreground;
             &:has(input) {
                 @apply flex items-center gap-2;
             }
         }
         p {
-            @apply text-primary dark:text-foreground mb-2 text-xs italic;
+            @apply mb-2 text-xs italic text-primary dark:text-foreground;
         }
         /* input[type='text'],
         textarea {
             @apply block w-full rounded-md border border-transparent bg-ecoindex-green-100 focus:border-ecoindex-green focus:bg-white focus:ring-0;
         } */
         input[type='checkbox'] {
-            @apply checked:bg-primary/60 border-primary rounded-md border p-2;
+            @apply rounded-md border border-primary p-2 checked:bg-primary/60;
         }
         .mandatory {
             @apply relative after:absolute after:-right-[.4rem] after:top-[.1rem] after:text-xs after:font-bold after:text-ecoindex-red-500 after:content-['*'];
         }
         fieldset {
-            @apply border-primary flex flex-col gap-2 rounded-md border p-4;
+            @apply flex flex-col gap-2 rounded-md border border-primary p-4;
             legend {
-                @apply text-primary dark:text-foreground flex items-center gap-2 px-2 font-bold;
+                @apply flex items-center gap-2 px-2 font-bold text-primary dark:text-foreground;
                 &.mandatory {
                     @apply after:right-[.1rem] after:top-[.1rem];
                 }
             }
             p {
-                @apply border-primary mb-2 text-xs italic;
+                @apply mb-2 border-primary text-xs italic;
             }
             div {
                 @apply flex items-center gap-2;
@@ -197,5 +197,8 @@
     .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
+    }
+    p ul {
+        @apply mb-4 ml-8 mt-2 list-disc;
     }
 }
