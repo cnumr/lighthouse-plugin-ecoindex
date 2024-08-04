@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.28](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.27...electron-v1.2.1-rc.28) (2024-08-04)
+
+
+### Features
+
+* Install prose and change Hello window ([dca2db7](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/dca2db7082f1e5f299bd62c4989f87ca008a8d81))
+
 ## [1.2.1-rc.27](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.26...electron-v1.2.1-rc.27) (2024-08-04)
 
 
