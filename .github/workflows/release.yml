@@ -85,17 +85,9 @@ jobs:
         run: echo ${APPLE_TEAM_ID:0:3}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      - name: setup python
-        # https://github.com/LinusU/node-appdmg/issues/234#issuecomment-2002410428
-        if: matrix.os.image == 'macos-12'
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
       - name: setup appdmg
         if: matrix.os.image == 'macos-12'
-        run: |
-          python3 -m pip install setuptools
-          npm install -g appdmg@0.6.6
+        run: npm install -g appdmg
       # - name: reinstall appdmg
       #   if: matrix.os.image == 'macos-12'
       #   # https://github.com/actions/runner-images/issues/8796
