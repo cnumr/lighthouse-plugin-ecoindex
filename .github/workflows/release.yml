@@ -66,6 +66,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
+      - name: install setuptools and appdmg
+        # fix error Error: Cannot find module 'appdmg'
+        if: matrix.os.image == 'macos-13'
+        run: |
+          python3 -m pip install setuptools --break-system-packages
+          npm i -g appdmg
       - name: Cache node modules
         uses: actions/cache@v2
         with:
