@@ -2,9 +2,7 @@ import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 
 import { Button } from '../ui/button'
 import { Header } from '../components/Header'
-import { TypographyH2 } from '../ui/typography/TypographyH2'
-import { TypographyList } from '../ui/typography/TypographyList'
-import { TypographyP } from '../ui/typography/TypographyP'
+import pkg from '../../../package.json'
 
 function HelloApp() {
     const closeHandler = () => {
@@ -13,101 +11,106 @@ function HelloApp() {
     return (
         <div className="flex flex-col items-center justify-center gap-4 p-8">
             <Header />
-            <div className="mx-auto flex flex-col items-center justify-center gap-4 *:!my-0 *:w-full">
-                <TypographyP>
-                    Cette application desktop vous permet de réaliser des
-                    mesures comme sur le site{' '}
+            <div className="prose dark:prose-invert prose-headings:underline mx-auto !max-w-max">
+                <p>
+                    This desktop application allows you to perform measurements
+                    as on the{' '}
                     <a
                         href="https://econindex.fr/"
                         target="_blank"
                         className="underline"
                     >
                         econindex.fr
-                    </a>
-                    , mais en ayant aussi les mesures de{' '}
-                    <strong>lighthouse</strong>, dans un seul et même rapport,
-                    sans limitation 🎉
-                </TypographyP>
-                <TypographyH2>Principales caractéristiques</TypographyH2>
-                <TypographyP>
-                    Vous pourrez soit mesurer <strong>une serie d'URL</strong>,
-                    soit mesurer <strong>des parcours de visites entier</strong>
-                    .
+                    </a>{' '}
+                    website, but also having the <strong>lighthouse</strong>{' '}
+                    measurements, in one and the same report, without limitation
+                    🎉
+                </p>
+                <h2>Key features</h2>
+                <p>
+                    You can either measure <strong>a series of URLs</strong>, or
+                    measure <strong>entire visit paths</strong>.
                     <br />
-                    Cette version d'écoindex,{' '}
-                    <strong>
-                        réalise des mesures stables et cohérentes avec les
-                        mesures d'
-                        <a
-                            href="https://econindex.fr/"
-                            target="_blank"
-                            className="underline"
-                        >
-                            econindex.fr
-                        </a>{' '}
-                        ou{' '}
-                        <code
-                            title="outil en python a utiliser en ligne de command, dans le
-                    terminal."
-                            className="border-b border-dashed border-primary"
-                        >
-                            ecoindex-cli
-                        </code>
-                    </strong>
-                    .
-                    <br />
-                    La gestion du cache navigateur permet d'avoir des mesures{' '}
-                    <strong>réalistes</strong>.<br />
-                    Avec cette application, vous obtiendrez :
-                </TypographyP>
-                <TypographyList className="ml-12 [&>li]:mt-0 [&_ul]:ml-8 [&_ul]:list-disc">
+                    This version of ecoindex provides stable, consistent
+                    measurements with{' '}
+                    <a
+                        href="https://econindex.fr/"
+                        target="_blank"
+                        className="underline"
+                    >
+                        econindex.fr
+                    </a>{' '}
+                    or{' '}
+                    <code
+                        title="python tool for use on the command line, in the terminal."
+                        className="border-b border-dashed border-primary"
+                    >
+                        ecoindex-cli
+                    </code>
+                    .<br />
+                    Browser cache management ensures <strong>
+                        realistic
+                    </strong>{' '}
+                    measurements.
+                </p>
+                <p>With this application, you'll get :</p>
+                <ul>
                     <li>
-                        <strong>Mesures simple</strong> : Un rapport HTML
-                        Lighthouse avec l'écoindex et ses bonnes pratiques ;
-                    </li>
-                    <li>
-                        <strong>Mesures de parcours</strong> :
+                        <strong>Simple measurements:</strong>
                         <ul>
                             <li>
-                                Des rapports HTML, JSON Lighthouse avec
-                                l'écoindex et ses bonnes pratiques, ainsi que la
-                                déclaration environnementale préremplie.
-                            </li>
-                            <li>
-                                Un fichier de configuration, sauvegardée dans le
-                                dossier de mesures, vous permettra de relancer
-                                autant de fois les mesures et ainsi avoir la
-                                tendance des performances environnementale de ce
-                                site/unités fonctionnelles.
+                                An HTML Lighthouse report with the ecoindex and
+                                its best practices.
                             </li>
                         </ul>
                     </li>
-                </TypographyList>
-                <TypographyH2>Informations</TypographyH2>
-                <TypographyP>
-                    Cette application nécessitera des addons qui ne devront être
-                    installés que la première fois :
-                </TypographyP>
-                <TypographyList className="ml-12 [&>li]:mt-0">
-                    <li>NodeJS (qui est le moteur de l'application) ;</li>
                     <li>
-                        Le plugin Lighthouse ecoindex, qui pilote la mesure.
+                        <strong>Route measurements:</strong>
+                        <ul>
+                            <li>
+                                HTML, JSON Lighthouse reports with ecoindex and
+                                best practices, plus pre-filled environmental
+                                declaration ;
+                            </li>
+                            <li>
+                                A configuration file, saved in the measurements
+                                folder, will enable you to re-run the
+                                measurements as many times as you like, and thus
+                                get a trend of the environmental performance of
+                                this site/functional units.
+                            </li>
+                        </ul>
                     </li>
-                </TypographyList>
-                <TypographyP>
-                    <strong>Ne vous inquitez pas, vous serez guider 🙏</strong>
-                </TypographyP>
-                <div className="grid place-items-center">
-                    <Button
-                        onClick={closeHandler}
-                        id="close-window"
-                        size="sm"
-                        variant="default"
-                        className="mt-8 w-fit"
-                    >
-                        Fermer
-                    </Button>
-                </div>
+                </ul>
+                <h2>Important information</h2>
+                <p>
+                    This application will require addons that need to be
+                    installed only the first time:
+                </p>
+                <ul>
+                    <li>NodeJS (the application's engine) ;</li>
+                    <li>
+                        Lighthouse ecoindex plugin, which drives the
+                        measurement.
+                    </li>
+                </ul>
+                <p>
+                    <strong>Don't worry, we'll guide you through 🙏</strong>
+                </p>
+            </div>
+            <div className="grid place-items-center">
+                <Button
+                    onClick={closeHandler}
+                    id="close-window"
+                    size="default"
+                    variant="default"
+                    className="mt-8 w-fit"
+                >
+                    Fermer
+                </Button>
+            </div>
+            <div className="prose dark:prose-invert prose-sm text-center font-semibold">
+                Version de l'application: {pkg.version}
             </div>
         </div>
     )
