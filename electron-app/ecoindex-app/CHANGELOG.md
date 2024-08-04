@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.27](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.26...electron-v1.2.1-rc.27) (2024-08-04)
+
+
+### Bug Fixes
+
+* error on linux with appdmg ([61043e2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/61043e29542e8b2c25c9ab0c284cc5187768d003))
+
 ## [1.2.1-rc.26](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.25...electron-v1.2.1-rc.26) (2024-08-04)
 
 
