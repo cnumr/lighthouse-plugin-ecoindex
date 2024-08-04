@@ -5,6 +5,11 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses'
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives'
 import type { ForgeConfig } from '@electron-forge/shared-types'
 import { FusesPlugin } from '@electron-forge/plugin-fuses'
+import { MakerDMG } from '@electron-forge/maker-dmg'
+import { MakerDeb } from '@electron-forge/maker-deb'
+import { MakerRpm } from '@electron-forge/maker-rpm'
+import { MakerSquirrel } from '@electron-forge/maker-squirrel'
+import { MakerZIP } from '@electron-forge/maker-zip'
 import { WebpackPlugin } from '@electron-forge/plugin-webpack'
 import { mainConfig } from './webpack.main.config'
 import packageJson from './package.json'
@@ -21,9 +26,14 @@ const config: ForgeConfig = {
         appBundleId: 'io.greenit.ecoindex-ligthouse',
         appCategoryType: 'public.app-category.developer-tools',
         appCopyright: 'Copyright 2024-2030 Green IT',
+        darwinDarkModeSupport: true,
         asar: true,
         icon: path.resolve(__dirname, 'assets', 'app-ico'),
         extraResource: ['./src/extraResources/scripts'],
+        win32metadata: {
+            CompanyName: 'Green IT',
+            OriginalFilename: 'EcoindexLighthouse',
+        },
         osxSign: {
             optionsForFile: (filePath) => {
                 // Here, we keep it simple and return a single entitlements.plist file.
@@ -31,6 +41,7 @@ const config: ForgeConfig = {
                 // to specific files in your packaged app.
                 return {
                     entitlements: './assets/default.darwin.plist',
+                    hardenedRuntime: true,
                 }
             },
             identity: 'Developer ID Application: Renaud Héluin (ARQGHNC9UG)',
@@ -49,23 +60,37 @@ const config: ForgeConfig = {
     },
     rebuildConfig: {},
     makers: [
-        {
-            name: '@electron-forge/maker-rpm',
-            config: {},
-        },
-        {
-            name: '@electron-forge/maker-zip',
-            platforms: ['darwin', 'linux', 'win32'],
-            config: {},
-        },
-        {
-            name: '@electron-forge/maker-dmg',
-            platforms: ['darwin'],
-            config: {
-                // background: './assets/dmg-background.png',
-                format: 'ULFO',
+        new MakerRpm(
+            {
+                options: {
+                    homepage:
+                        'https://github.com/cnumr/lighthouse-plugin-ecoindex',
+                },
             },
-        },
+            ['linux']
+        ),
+        new MakerZIP({}, ['darwin', 'linux', 'win32']),
+        // {
+        //     name: '@electron-forge/maker-zip',
+        //     platforms: ['darwin', 'linux', 'win32'],
+        //     config: {},
+        // },
+        new MakerDMG(
+            {
+                format: 'ULFO',
+                icon: path.resolve(__dirname, 'assets', 'app-ico.icns'),
+                overwrite: true,
+            },
+            ['darwin']
+        ),
+        // {
+        //     name: '@electron-forge/maker-dmg',
+        //     platforms: ['darwin'],
+        //     config: {
+        //         // background: './assets/dmg-background.png',
+        //         format: 'ULFO',
+        //     },
+        // },
         {
             name: '@electron-forge/maker-squirrel',
             platforms: ['win32'],
@@ -83,31 +108,46 @@ const config: ForgeConfig = {
                 }
             },
         },
-        {
-            name: '@electron-forge/maker-deb',
-            config: {
+        new MakerDeb(
+            {
                 options: {
+                    categories: ['Utility'],
                     maintainer: 'Renaud Héluin',
-                    homepage: 'https://asso.greenit.fr',
+                    homepage:
+                        'https://github.com/cnumr/lighthouse-plugin-ecoindex',
                 },
             },
-        },
+            ['linux']
+        ),
+        // {
+        //     name: '@electron-forge/maker-deb',
+        //     config: {
+        //         options: {
+        //             maintainer: 'Renaud Héluin',
+        //             homepage: 'https://asso.greenit.fr',
+        //         },
+        //     },
+        // },
     ],
-    // publishers: [
-    //     {
-    //         name: '@electron-forge/publisher-github',
-    //         config: {
-    //             repository: {
-    //                 owner: 'cnumr',
-    //                 name: 'lighthouse-plugin-ecoindex',
-    //             },
-    //             tagPrefix: 'electron-v',
-    //             prerelease: true,
-    //         },
-    //     },
-    // ],
+    publishers: [
+        // {
+        //     name: '@electron-forge/publisher-github',
+        //     config: {
+        //         repository: {
+        //             owner: 'cnumr',
+        //             name: 'lighthouse-plugin-ecoindex',
+        //         },
+        //         tagPrefix: 'electron-v',
+        //         prerelease: true,
+        //     },
+        // },
+    ],
     plugins: [
-        new AutoUnpackNativesPlugin({}),
+        // new AutoUnpackNativesPlugin({}),
+        {
+            name: '@electron-forge/plugin-auto-unpack-natives',
+            config: {},
+        },
         new WebpackPlugin({
             mainConfig,
             renderer: {

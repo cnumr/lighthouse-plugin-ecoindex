@@ -1,5 +1,5 @@
 echo "make is starting 🧩"
-echo "clean out folder"
+echo "clean out/make folder"
 npm run clean:out
 # echo "make -- --arch=x64 --platform=win32"
 # npm run make:win32:x64

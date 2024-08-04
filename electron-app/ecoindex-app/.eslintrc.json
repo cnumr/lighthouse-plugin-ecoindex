@@ -14,7 +14,8 @@
         "plugin:react-hooks/recommended"
     ],
     "rules": {
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "no-empty-interface": "off"
     },
     "parser": "@typescript-eslint/parser"
 }
