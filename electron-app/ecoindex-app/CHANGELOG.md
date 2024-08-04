@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.25](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.24...electron-v1.2.1-rc.25) (2024-08-04)
+
+
+### Bug Fixes
+
+* Error: Cannot find module 'appdmg' ([d2cb8fe](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d2cb8fe8bb950cab481691c64ada05ff64743f59))
+
 ## [1.2.1-rc.24](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.23...electron-v1.2.1-rc.24) (2024-08-04)
 
 ## [1.2.1-rc.23](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.22...electron-v1.2.1-rc.23) (2024-08-04)
