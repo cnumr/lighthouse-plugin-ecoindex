@@ -51,7 +51,7 @@ jobs:
           [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            { name: 'macos', image: 'macos-latest' },
+            { name: 'macos', image: 'macos-13' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -60,7 +60,12 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
+      - name: setup python
+        if: matrix.os.image == 'macos-13'
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -68,47 +73,32 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - run: npm i
+      - run: npm ci
       - name: Debug token
         run: echo ${GITHUB_TOKEN:0:3}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Debug APPLE_ID
+        if: matrix.os.image == 'macos-13'
         run: echo ${APPLE_ID:0:3}
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
       - name: Debug APPLE_PASSWORD
+        if: matrix.os.image == 'macos-13'
         run: echo ${APPLE_PASSWORD:0:3}
         env:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Debug APPLE_TEAM_ID
+        if: matrix.os.image == 'macos-13'
         run: echo ${APPLE_TEAM_ID:0:3}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      - name: setup appdmg
-        if: matrix.os.image == 'macos-latest'
-        run: npm install -g appdmg
-      # - name: reinstall appdmg
-      #   if: matrix.os.image == 'macos-latest'
-      #   # https://github.com/actions/runner-images/issues/8796
-      #   run: npm uninstall -g appdmg && npm install -g appdmg
       - name: Add MacOS certs
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-13'
         run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
-      - name: setup python
-        if: matrix.os.image == 'macos-latest'
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-
-      - name: setup appdmg
-        if: matrix.os.image == 'macos-latest'
-        run: |
-          python3 -m pip install setuptools
-          npm install -g appdmg@0.6.6
       - name: Make app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
