@@ -18,8 +18,8 @@
         "publish": false
     },
     "hooks": {
-        "before:bump": "rm -rf ./out",
-        "after:bump": "sh make.sh",
+        "before:bump": "echo not do 'rm -rf ./out'",
+        "after:bump": "echo not do 'sh make.sh'",
         "after:git:release": "echo After git push, before github release",
         "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     },

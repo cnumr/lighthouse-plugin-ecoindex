@@ -5,7 +5,7 @@
 
 name: Release Electron app
 on:
-  release: 
+  release:
     types: [released, prereleased]
   workflow_dispatch:
     # inputs:
@@ -47,11 +47,10 @@ jobs:
     # needs: release_it
     strategy:
       matrix:
-        os:
-          [
+        os: [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            # { name: 'macos', image: 'macos-latest' },
+            { name: 'macos', image: 'macos-latest' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -106,6 +105,17 @@ jobs:
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
+      - name: setup python
+        if: matrix.os.image == 'macos-latest'
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: setup appdmg
+        if: matrix.os.image == 'macos-latest'
+        run: |
+          python3 -m pip install setuptools
+          npm install -g appdmg@0.6.6
       - name: Make app
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
