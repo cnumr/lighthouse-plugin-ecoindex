@@ -51,7 +51,7 @@ jobs:
           [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            { name: 'macos', image: 'macos-12' },
+            { name: 'macos', image: 'macos-latest' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -86,26 +86,26 @@ jobs:
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: setup appdmg
-        if: matrix.os.image == 'macos-12'
+        if: matrix.os.image == 'macos-latest'
         run: npm install -g appdmg
       # - name: reinstall appdmg
-      #   if: matrix.os.image == 'macos-12'
+      #   if: matrix.os.image == 'macos-latest'
       #   # https://github.com/actions/runner-images/issues/8796
       #   run: npm uninstall -g appdmg && npm install -g appdmg
       - name: Add MacOS certs
-        if: matrix.os.image == 'macos-12'
+        if: matrix.os.image == 'macos-latest'
         run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
       - name: setup python
-        if: matrix.os.image == 'macos-12'
+        if: matrix.os.image == 'macos-latest'
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
       - name: setup appdmg
-        if: matrix.os.image == 'macos-12'
+        if: matrix.os.image == 'macos-latest'
         run: |
           python3 -m pip install setuptools
           npm install -g appdmg@0.6.6
