@@ -70,11 +70,6 @@ const config: ForgeConfig = {
             ['linux']
         ),
         new MakerZIP({}, ['darwin', 'linux', 'win32']),
-        // {
-        //     name: '@electron-forge/maker-zip',
-        //     platforms: ['darwin', 'linux', 'win32'],
-        //     config: {},
-        // },
         new MakerDMG(
             {
                 format: 'ULFO',
@@ -83,14 +78,6 @@ const config: ForgeConfig = {
             },
             ['darwin']
         ),
-        // {
-        //     name: '@electron-forge/maker-dmg',
-        //     platforms: ['darwin'],
-        //     config: {
-        //         // background: './assets/dmg-background.png',
-        //         format: 'ULFO',
-        //     },
-        // },
         {
             name: '@electron-forge/maker-squirrel',
             platforms: ['win32'],
@@ -129,19 +116,7 @@ const config: ForgeConfig = {
         //     },
         // },
     ],
-    publishers: [
-        // {
-        //     name: '@electron-forge/publisher-github',
-        //     config: {
-        //         repository: {
-        //             owner: 'cnumr',
-        //             name: 'lighthouse-plugin-ecoindex',
-        //         },
-        //         tagPrefix: 'electron-v',
-        //         prerelease: true,
-        //     },
-        // },
-    ],
+    publishers: [],
     plugins: [
         // new AutoUnpackNativesPlugin({}),
         {
