@@ -1,5 +1,12 @@
 
 
+## [1.2.1-rc.26](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.25...electron-v1.2.1-rc.26) (2024-08-04)
+
+
+### Bug Fixes
+
+* error on npm ci ([1e29fbf](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1e29fbf90136fed367cb6424e00e52a9d86ebf9e))
+
 ## [1.2.1-rc.25](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.24...electron-v1.2.1-rc.25) (2024-08-04)
 
 
