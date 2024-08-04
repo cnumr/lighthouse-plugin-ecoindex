@@ -79,7 +79,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - run: npm ci
+      - run: npm install
       - name: Debug token
         run: echo ${GITHUB_TOKEN:0:3}
         env:
