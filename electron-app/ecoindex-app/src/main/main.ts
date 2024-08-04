@@ -1,3 +1,4 @@
+import * as menuFactoryService from '../services/menuFactory'
 import * as path from 'node:path'
 
 import {
@@ -11,7 +12,7 @@ import {
     shell,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
-import { UpdateSourceType, updateElectronApp } from 'update-electron-app'
+// import i18n from '../configs/i18next.config'
 import {
     channels,
     scripts as custom_scripts,
@@ -49,6 +50,7 @@ import {
 import Updater from './Updater'
 import fixPath from 'fix-path'
 import fs from 'fs'
+import i18n from '../configs/i18next.config'
 import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
@@ -267,7 +269,7 @@ const template = [
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
+// Menu.setApplicationMenu(menu)
 
 // #region Helpers
 
@@ -289,6 +291,18 @@ const _createMainWindow = (): void => {
 
     // and load the index.html of the app.
     getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+
+    try {
+        i18n.on('loaded', (loaded) => {
+            i18n.changeLanguage('en')
+            i18n.off('loaded')
+        })
+        i18n.on('languageChanged', (lng) => {
+            menuFactoryService.buildMenu(app, getMainWindow(), i18n)
+        })
+    } catch (error) {
+        mainLog.error(`i18n`, error)
+    }
 
     if (!hasShowWelcomeWindow()) {
         setWelcomeWindow(
