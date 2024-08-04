@@ -1,6 +1,7 @@
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 
 import { Button } from '../ui/button'
+import { DarkModeSwitcher } from '../components/dark-mode-switcher'
 import { Header } from '../components/Header'
 import pkg from '../../../package.json'
 
@@ -9,9 +10,13 @@ function HelloApp() {
         window.close()
     }
     return (
-        <div className="flex flex-col items-center justify-center gap-4 p-8">
+        <div className="relative flex flex-col items-center justify-center gap-4 p-8">
+            <DarkModeSwitcher
+                title="Dark mode switch"
+                className="absolute left-2 top-2 z-20 hidden gap-2"
+            />
             <Header />
-            <div className="prose dark:prose-invert prose-headings:underline mx-auto !max-w-max">
+            <div className="prose mx-auto !max-w-max dark:prose-invert prose-headings:underline">
                 <p>
                     This desktop application allows you to perform measurements
                     as on the{' '}
@@ -109,7 +114,7 @@ function HelloApp() {
                     Fermer
                 </Button>
             </div>
-            <div className="prose dark:prose-invert prose-sm text-center font-semibold">
+            <div className="prose prose-sm text-center font-semibold dark:prose-invert">
                 Version de l'application: {pkg.version}
             </div>
         </div>
