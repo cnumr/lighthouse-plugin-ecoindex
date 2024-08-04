@@ -47,10 +47,11 @@ jobs:
     # needs: release_it
     strategy:
       matrix:
-        os: [
+        os:
+          [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            { name: 'macos', image: 'macos-latest' },
+            { name: 'macos', image: 'macos-12' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -86,33 +87,33 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: setup python
         # https://github.com/LinusU/node-appdmg/issues/234#issuecomment-2002410428
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-12'
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
       - name: setup appdmg
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-12'
         run: |
           python3 -m pip install setuptools
           npm install -g appdmg@0.6.6
       # - name: reinstall appdmg
-      #   if: matrix.os.image == 'macos-latest'
+      #   if: matrix.os.image == 'macos-12'
       #   # https://github.com/actions/runner-images/issues/8796
       #   run: npm uninstall -g appdmg && npm install -g appdmg
       - name: Add MacOS certs
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-12'
         run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
       - name: setup python
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-12'
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
       - name: setup appdmg
-        if: matrix.os.image == 'macos-latest'
+        if: matrix.os.image == 'macos-12'
         run: |
           python3 -m pip install setuptools
           npm install -g appdmg@0.6.6
