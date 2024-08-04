@@ -7,12 +7,7 @@
     "github": {
         "release": true,
         "autoGenerate": true,
-        "releaseName": "Release Electron-app ${version}",
-        "assets": [
-            "./out/make/zip/darwin/arm64/*.zip",
-            "./out/make/zip/darwin/x64/*.zip",
-            "./out/make/*.dmg"
-        ]
+        "releaseName": "Release Electron-app ${version}"
     },
     "npm": {
         "publish": false
