@@ -26,6 +26,8 @@ import { SimplePanMesure } from './components/simple-pan'
 import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from './ui/typography/TypographyP'
+import i18nResources from '../configs/i18nResources'
+import i18next from 'i18next'
 import log from 'electron-log/renderer'
 import packageJson from '../../package.json'
 import { useTranslation } from 'react-i18next'
@@ -392,6 +394,18 @@ function TheApp() {
                     ...oldObject,
                     ...data,
                 }))
+            }
+        })
+
+        window.electronAPI.changeLanguageInFront((lng: string) => {
+            try {
+                i18nResources.changeLanguage(lng, (err, t) => {
+                    if (err)
+                        return frontLog.log('something went wrong loading', err)
+                    t('key') // -> same as i18next.t
+                })
+            } catch (error) {
+                frontLog.error(error)
             }
         })
     }, [])

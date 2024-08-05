@@ -16,6 +16,6 @@ i18n.use(
         },
     })
 
-i18n.languages = ['en', 'de', 'ja']
+i18n.languages = ['en', 'fr']
 
 export default i18n

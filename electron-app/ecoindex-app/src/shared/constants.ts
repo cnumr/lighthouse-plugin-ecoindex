@@ -25,6 +25,7 @@ const constants: IConstants = {
         HOST_INFORMATIONS_BACK: 'host-informations-back',
         OPEN_REPORT: 'open-report',
         GET_INITIAL_TRANSLATIONS: 'get-initial-translations',
+        CHANGE_LANGUAGE_TO_FRONT: 'change-language-to-front',
     },
     scripts: {
         GET_NODE: 'get-node',

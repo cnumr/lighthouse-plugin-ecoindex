@@ -191,6 +191,10 @@ const _createMainWindow = (): void => {
             i18n.off('loaded')
         })
         i18n.on('languageChanged', (lng) => {
+            getMainWindow().webContents.send(
+                channels.CHANGE_LANGUAGE_TO_FRONT,
+                lng
+            )
             menuFactoryService.buildMenu(app, getMainWindow(), i18n)
         })
     } catch (error) {
@@ -415,7 +419,6 @@ async function _runCollect(
                     `generic.report.html`
                 mainLog.debug(`url`, url)
                 shell.openExternal(url, { activate: true })
-                // getMainWindow().webContents.send(channels.OPEN_REPORT, url)
             }
             _debugLogs(
                 `Child process exited with code ${code} and signal ${signal}`

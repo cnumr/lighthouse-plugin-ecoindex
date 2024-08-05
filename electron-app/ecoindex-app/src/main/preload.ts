@@ -63,6 +63,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
             (_event, message, optionalParams) =>
                 callback(message, optionalParams)
         ),
-    openReport: (callback: any) =>
-        ipcRenderer.on(channels.OPEN_REPORT, (_event, url) => callback(url)),
+    changeLanguageInFront: (callback: any) =>
+        ipcRenderer.on(
+            channels.CHANGE_LANGUAGE_TO_FRONT,
+            (_event, languageCode) => callback(languageCode)
+        ),
 })

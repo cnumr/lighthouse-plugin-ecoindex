@@ -8,10 +8,10 @@ export interface IVersionsAPI {
 export interface IElectronAPI {
     // i18nextElectronBackend: any
     // Main → Front
+    changeLanguageInFront: (callback) => string
     sendLogToFront: (callback) => string
     sendMessageToFrontLog: (callback) => object
     sendDatasToFront: (callback) => object
-    openReport: (callback) => object
     // Front → Main
     getInitialTranslations: () => Promise<object>
     handleSetFolderOuput: () => Promise<string>

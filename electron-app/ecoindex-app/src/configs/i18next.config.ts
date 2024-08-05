@@ -23,6 +23,7 @@ try {
             escapeValue: false,
         },
         saveMissing: true,
+        saveMissingTo: 'all',
         fallbackLng: config.fallbackLng,
         whitelist: config.languages,
         react: {
