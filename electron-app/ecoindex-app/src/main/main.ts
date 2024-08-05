@@ -11,7 +11,6 @@ import {
     shell,
 } from 'electron'
 import { ChildProcess, spawn } from 'child_process'
-// import i18n from '../configs/i18next.config'
 import {
     channels,
     scripts as custom_scripts,
@@ -130,7 +129,6 @@ app.on('ready', () => {
             channels.UPDATE_ECOINDEX_PLUGIN
         )
     )
-    ipcMain.handle(channels.GET_INITIAL_TRANSLATIONS, getInitialTranslations)
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
         applicationVersion: packageJson.name,
@@ -143,25 +141,14 @@ app.on('ready', () => {
     _createMainWindow()
 })
 
-const getInitialTranslations = async (event: IpcMainEvent) => {
-    let initial = {}
-    i18n.loadLanguages('fr', (err, t) => {
-        initial = {
-            en: {
-                translation: i18n.getResourceBundle('fr', config.namespace),
-            },
-        }
-        event.returnValue = initial
-    })
-    return initial
-}
-
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
+    } else {
+        // todo
     }
 })
 

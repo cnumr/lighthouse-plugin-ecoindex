@@ -9,7 +9,6 @@ import {
 } from './ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
-import { labels, utils } from '../shared/constants'
 import { useCallback, useEffect, useState } from 'react'
 
 import { AlertBox } from './components/Alert'
@@ -19,7 +18,6 @@ import { ConsoleApp } from './components/console'
 import { DarkModeSwitcher } from './components/dark-mode-switcher'
 import { Footer } from './components/footer'
 import { Header } from './components/Header'
-import { I18nextProvider } from 'react-i18next'
 import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
@@ -28,10 +26,10 @@ import { SimplePanMesure } from './components/simple-pan'
 import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from './ui/typography/TypographyP'
-import i18n from '../configs/i18next.config.client'
-import { ipcRenderer } from '../exportHelpers'
 import log from 'electron-log/renderer'
 import packageJson from '../../package.json'
+import { useTranslation } from 'react-i18next'
+import { utils } from '../shared/constants'
 
 const frontLog = log.scope('front/App')
 
@@ -111,7 +109,7 @@ function TheApp() {
                 return
         }
         showHidePopinDuringProcess(
-            `${labels[language]['simple-mesures-label']} started 🚀`
+            `${t('Url(s) Mesure (Simple mode)')} started 🚀`
         )
         try {
             await window.electronAPI.handleSimpleMesures(urlsList)
@@ -168,7 +166,7 @@ function TheApp() {
                 return
         }
         showHidePopinDuringProcess(
-            `${labels[language]['full-mesures-label']} started 🚀`
+            `${t('Courses Mesure (Full mode)')} started 🚀`
         )
         try {
             frontLog.log(`jsonDatas`, jsonDatas)
@@ -297,13 +295,7 @@ function TheApp() {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
 
-    const fetchInitialTranslations = async () => {
-        const result = await window.electronAPI.getInitialTranslations()
-        frontLog.debug(`getInitialTranslations`, result)
-    }
-
     useEffect(() => {
-        // fetchInitialTranslations()
         /**
          * Handlers, Node Version
          */
@@ -423,6 +415,11 @@ function TheApp() {
      * Detect language change.
      */
     useEffect(() => {
+        // window.languageChange.language((value) => {
+        //     setLanguage(value)
+        // })
+
+        // i18next.changeLanguage(language)
         frontLog.log('language', language)
     }, [language])
 
@@ -475,17 +472,17 @@ function TheApp() {
         isJsonConfigFileExist()
     }, [workDir, runJsonReadAndReload])
 
+    const { t } = useTranslation()
+
+    // frontLog.debug(`i18n.t`, i18n.t('Dark mode switch'))
+    // frontLog.debug(`i18n`, i18n)
+    // frontLog.debug(`t`, t('Dark mode switch'))
+
     return (
-        // <I18nextProvider
-        //     i18n={i18n}
-        //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //     // @ts-ignore
-        //     initialI18nStore={fetchInitialTranslations}
-        //     initialLanguage="fr"
-        // >
         <div className="container relative">
+            <p className="text-center">{t('Dark mode switch')}</p>
             <DarkModeSwitcher
-                title="Dark mode switch"
+                title={t('Dark mode switch')}
                 className="absolute left-2 top-2 z-20 flex gap-2"
             />
             <SimpleTooltip
@@ -662,14 +659,10 @@ function TheApp() {
                             >
                                 <TabsList className="mb-4 grid w-full grid-cols-2">
                                     <TabsTrigger value="simple-mesure">
-                                        {
-                                            labels[language][
-                                                'simple-mesures-label'
-                                            ]
-                                        }
+                                        {t('Url(s) Mesure (Simple mode)')}
                                     </TabsTrigger>
                                     <TabsTrigger value="json-mesure">
-                                        {labels[language]['full-mesures-label']}
+                                        {t('Courses Mesure (Full mode)')}
                                     </TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="simple-mesure">
@@ -721,7 +714,6 @@ function TheApp() {
                 </PopinLoading>
             )}
         </div>
-        // </I18nextProvider>
     )
 }
 

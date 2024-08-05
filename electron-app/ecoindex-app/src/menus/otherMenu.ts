@@ -1,7 +1,8 @@
 import { BrowserWindow, app as ElectronApp, shell } from 'electron'
 
 import { config } from '../configs/app.config'
-import i18n from '../configs/i18next.config'
+import i18n from 'i18next'
+import pkg from '../../package.json'
 
 export const otherTemplate = (
     app: typeof ElectronApp,
@@ -66,7 +67,7 @@ export const otherTemplate = (
 
             submenu: [
                 {
-                    label: i18n.t('Learn More'),
+                    label: `${_i18n.t('Learn More about')} ${pkg.displayName}`,
                     click: async () => {
                         await shell.openExternal(
                             'https://cnumr.github.io/lighthouse-plugin-ecoindex/'

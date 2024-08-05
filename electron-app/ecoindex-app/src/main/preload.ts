@@ -13,9 +13,9 @@ contextBridge.exposeInMainWorld('versions', {
 })
 
 contextBridge.exposeInMainWorld('electronAPI', {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     // Front → Main
-    getInitialTranslations: () =>
-        ipcRenderer.invoke(channels.GET_INITIAL_TRANSLATIONS),
     // simple handlers
     handleSimpleMesures: (urlsList: ISimpleUrlInput[]) =>
         ipcRenderer.invoke(channels.SIMPLE_MESURES, urlsList),

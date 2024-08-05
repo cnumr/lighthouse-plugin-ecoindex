@@ -1,11 +1,9 @@
-import * as os from 'node:os'
-
 import pkg from '../../package.json'
 export const config = {
-    platform: os.platform(),
+    platform: process.platform,
     port: process.env.PORT ? process.env.PORT : 3000,
     title: pkg.displayName,
     languages: ['fr', 'en'],
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
     namespace: 'translation',
 }

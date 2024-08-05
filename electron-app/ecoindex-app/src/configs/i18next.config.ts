@@ -9,11 +9,12 @@ const i18nLog = log.scope('main/i18next.config')
 
 try {
     const i18nextOptions = {
+        debug: true,
         backend: {
             // path where resources get loaded from
-            loadPath: './locales/{{lng}}/{{ns}}.json',
+            loadPath: './src/locales/{{lng}}/{{ns}}.json',
             // path to post missing resources
-            addPath: './locales/{{lng}}/{{ns}}.missing.json',
+            addPath: './src/locales/{{lng}}/{{ns}}.missing.json',
             // jsonIndent to use when storing json files
             jsonIndent: 2,
         },
@@ -21,13 +22,9 @@ try {
         interpolation: {
             escapeValue: false,
         },
-
         saveMissing: true,
-
         fallbackLng: config.fallbackLng,
-
         whitelist: config.languages,
-
         react: {
             wait: false,
         },
@@ -42,7 +39,9 @@ try {
         // @ts-ignore
         init(i18nextOptions)
     }
+    // i18nLog.debug(i18n)
 } catch (error) {
     i18nLog.error(error)
 }
+
 export default i18n

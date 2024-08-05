@@ -1,8 +1,10 @@
 import { BrowserWindow, app as ElectronApp, shell } from 'electron'
 
 import { config } from '../configs/app.config'
-import i18n from '../configs/i18next.config'
+import i18n from 'i18next'
+import i18nBackend from 'i18next-electron-fs-backend'
 import pkg from '../../package.json'
+import whitelist from '../configs/whitelist'
 
 export const darwinTemplate = (
     app: typeof ElectronApp,
@@ -14,31 +16,31 @@ export const darwinTemplate = (
             label: config.title,
             submenu: [
                 {
-                    label: `${i18n.t('About')} ${pkg.displayName}`,
+                    label: `${_i18n.t('About')} ${pkg.displayName}`,
                     role: 'about',
                 },
                 {
                     type: 'separator',
                 },
                 {
-                    label: i18n.t('Hide App'),
+                    label: _i18n.t('Hide App'),
                     accelerator: 'Command+H',
                     role: 'hide',
                 },
                 {
-                    label: i18n.t('Hide Others'),
+                    label: _i18n.t('Hide Others'),
                     accelerator: 'Command+Shift+H',
                     role: 'hideothers',
                 },
                 {
-                    label: i18n.t('Show All'),
+                    label: _i18n.t('Show All'),
                     role: 'unhide',
                 },
                 {
                     type: 'separator',
                 },
                 {
-                    label: i18n.t('Quit'),
+                    label: _i18n.t('Quit'),
                     accelerator: 'Command+Q',
                     click: () => {
                         app.quit()
@@ -47,10 +49,10 @@ export const darwinTemplate = (
             ],
         },
         {
-            label: i18n.t('View'),
+            label: _i18n.t('View'),
             submenu: [
                 {
-                    label: i18n.t('Reload'),
+                    label: _i18n.t('Reload'),
                     accelerator: 'Command+R',
                     click: (_: any, focusedWindow: BrowserWindow) => {
                         if (focusedWindow) {
@@ -58,9 +60,9 @@ export const darwinTemplate = (
                         }
                     },
                 },
-                { role: 'forceReload', label: i18n.t('Force reload') },
+                { role: 'forceReload', label: _i18n.t('Force reload') },
                 {
-                    label: i18n.t('Full Screen'),
+                    label: _i18n.t('Full Screen'),
                     accelerator: 'Ctrl+Command+F',
                     click: (_: any, focusedWindow: BrowserWindow) => {
                         if (focusedWindow) {
@@ -71,7 +73,7 @@ export const darwinTemplate = (
                     },
                 },
                 {
-                    label: i18n.t('Minimize'),
+                    label: _i18n.t('Minimize'),
                     accelerator: 'Command+M',
                     role: 'minimize',
                 },
@@ -79,7 +81,7 @@ export const darwinTemplate = (
                     type: 'separator',
                 },
                 {
-                    label: i18n.t('Toggle Developer Tools'),
+                    label: _i18n.t('Toggle Developer Tools'),
                     accelerator: 'Alt+Command+I',
                     click: (_: any, focusedWindow: BrowserWindow) => {
                         focusedWindow.webContents.toggleDevTools()
@@ -88,10 +90,10 @@ export const darwinTemplate = (
             ],
         },
         {
-            label: i18n.t('Help'),
+            label: _i18n.t('Help'),
             submenu: [
                 {
-                    label: `Learn More about ${pkg.displayName}`,
+                    label: `${_i18n.t('Learn More about')} ${pkg.displayName}`,
                     click: async () => {
                         await shell.openExternal(
                             'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
@@ -100,6 +102,13 @@ export const darwinTemplate = (
                 },
             ],
         },
+        // {
+        //     label: _i18n.t('Language'),
+        //     submenu: whitelist.buildSubmenu(
+        //         i18nBackend.changeLanguageRequest,
+        //         i18nextMainBackend
+        //     ),
+        // },
     ]
 
     const languageMenu = config.languages.map((languageCode) => {

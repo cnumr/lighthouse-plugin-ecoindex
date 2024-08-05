@@ -6,6 +6,7 @@ export interface IVersionsAPI {
 }
 
 export interface IElectronAPI {
+    // i18nextElectronBackend: any
     // Main → Front
     sendLogToFront: (callback) => string
     sendMessageToFrontLog: (callback) => object

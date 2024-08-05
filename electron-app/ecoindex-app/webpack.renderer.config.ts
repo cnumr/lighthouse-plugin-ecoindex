@@ -20,6 +20,9 @@ export const rendererConfig: Configuration = {
     plugins,
     resolve: {
         extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
-        alias: resolveTsAliases(path.resolve('tsconfig.json')),
+        alias: {
+            ...resolveTsAliases(path.resolve('tsconfig.json')),
+            path: require.resolve('path-browserify'),
+        },
     },
 }
