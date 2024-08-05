@@ -4,7 +4,6 @@ import * as path from 'node:path'
 import {
     BrowserWindow,
     IpcMainEvent,
-    Menu,
     Notification,
     app,
     dialog,
@@ -48,6 +47,7 @@ import {
 } from '../shared/memory'
 
 import Updater from './Updater'
+import { config } from '../configs/app.config'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import i18n from '../configs/i18next.config'
@@ -130,6 +130,7 @@ app.on('ready', () => {
             channels.UPDATE_ECOINDEX_PLUGIN
         )
     )
+    ipcMain.handle(channels.GET_INITIAL_TRANSLATIONS, getInitialTranslations)
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
         applicationVersion: packageJson.name,
@@ -141,6 +142,19 @@ app.on('ready', () => {
     // _showNotification()
     _createMainWindow()
 })
+
+const getInitialTranslations = async (event: IpcMainEvent) => {
+    let initial = {}
+    i18n.loadLanguages('fr', (err, t) => {
+        initial = {
+            en: {
+                translation: i18n.getResourceBundle('fr', config.namespace),
+            },
+        }
+        event.returnValue = initial
+    })
+    return initial
+}
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -162,114 +176,6 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-const isMac = process.platform === 'darwin'
-
-const template = [
-    // { role: 'appMenu' }
-    ...(isMac
-        ? [
-              {
-                  label: app.name,
-                  submenu: [
-                      { role: 'about' },
-                      { type: 'separator' },
-                      { role: 'services' },
-                      { type: 'separator' },
-                      { role: 'hide' },
-                      { role: 'hideOthers' },
-                      { role: 'unhide' },
-                      { type: 'separator' },
-                      { role: 'quit' },
-                  ],
-              },
-          ]
-        : []),
-    // { role: 'fileMenu' }
-    {
-        label: 'File',
-        submenu: [isMac ? { role: 'close' } : { role: 'quit' }],
-    },
-    // { role: 'editMenu' }
-    {
-        label: 'Edit',
-        submenu: [
-            { role: 'undo' },
-            { role: 'redo' },
-            { type: 'separator' },
-            { role: 'cut' },
-            { role: 'copy' },
-            { role: 'paste' },
-            ...(isMac
-                ? [
-                      { role: 'pasteAndMatchStyle' },
-                      { role: 'delete' },
-                      { role: 'selectAll' },
-                      { type: 'separator' },
-                      {
-                          label: 'Speech',
-                          submenu: [
-                              { role: 'startSpeaking' },
-                              { role: 'stopSpeaking' },
-                          ],
-                      },
-                  ]
-                : [
-                      { role: 'delete' },
-                      { type: 'separator' },
-                      { role: 'selectAll' },
-                  ]),
-        ],
-    },
-    // { role: 'viewMenu' }
-    {
-        label: 'View',
-        submenu: [
-            { role: 'reload' },
-            { role: 'forceReload' },
-            { role: 'toggleDevTools' },
-            { type: 'separator' },
-            { role: 'resetZoom' },
-            { role: 'zoomIn' },
-            { role: 'zoomOut' },
-            { type: 'separator' },
-            { role: 'togglefullscreen' },
-        ],
-    },
-    // { role: 'windowMenu' }
-    {
-        label: 'Window',
-        submenu: [
-            { role: 'minimize' },
-            { role: 'zoom' },
-            ...(isMac
-                ? [
-                      { type: 'separator' },
-                      { role: 'front' },
-                      { type: 'separator' },
-                      { role: 'window' },
-                  ]
-                : [{ role: 'close' }]),
-        ],
-    },
-    {
-        role: 'help',
-        submenu: [
-            {
-                label: 'Learn More',
-                click: async () => {
-                    await shell.openExternal(
-                        'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
-                    )
-                },
-            },
-        ],
-    },
-]
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const menu = Menu.buildFromTemplate(template)
-// Menu.setApplicationMenu(menu)
 
 // #region Helpers
 

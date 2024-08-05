@@ -12,6 +12,7 @@ export interface IElectronAPI {
     sendDatasToFront: (callback) => object
     openReport: (callback) => object
     // Front → Main
+    getInitialTranslations: () => Promise<object>
     handleSetFolderOuput: () => Promise<string>
     handleSelectFolder: () => Promise<string>
     getWorkDir: (newDir: string) => Promise<string>

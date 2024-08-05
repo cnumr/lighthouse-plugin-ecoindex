@@ -19,6 +19,7 @@ import { ConsoleApp } from './components/console'
 import { DarkModeSwitcher } from './components/dark-mode-switcher'
 import { Footer } from './components/footer'
 import { Header } from './components/Header'
+import { I18nextProvider } from 'react-i18next'
 import { Input } from './ui/input'
 import { JsonPanMesure } from './components/json-pan'
 import { PopinLoading } from './components/loading-popin'
@@ -27,6 +28,8 @@ import { SimplePanMesure } from './components/simple-pan'
 import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from './ui/typography/TypographyP'
+import i18n from '../configs/i18next.config.client'
+import { ipcRenderer } from '../exportHelpers'
 import log from 'electron-log/renderer'
 import packageJson from '../../package.json'
 
@@ -294,7 +297,13 @@ function TheApp() {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
 
+    const fetchInitialTranslations = async () => {
+        const result = await window.electronAPI.getInitialTranslations()
+        frontLog.debug(`getInitialTranslations`, result)
+    }
+
     useEffect(() => {
+        // fetchInitialTranslations()
         /**
          * Handlers, Node Version
          */
@@ -359,18 +368,6 @@ function TheApp() {
 
             setHomeDir(filePath)
         }
-
-        /**
-         * Open Welcome window.
-         */
-        const welcomeWindow = () => {
-            try {
-                // window.open('hello.html', '_blank')
-            } catch (error) {
-                frontLog.debug(error)
-            }
-        }
-        welcomeWindow()
 
         /**
          * Launch the mandatory actions at startup, once.
@@ -479,6 +476,13 @@ function TheApp() {
     }, [workDir, runJsonReadAndReload])
 
     return (
+        // <I18nextProvider
+        //     i18n={i18n}
+        //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //     // @ts-ignore
+        //     initialI18nStore={fetchInitialTranslations}
+        //     initialLanguage="fr"
+        // >
         <div className="container relative">
             <DarkModeSwitcher
                 title="Dark mode switch"
@@ -717,6 +721,7 @@ function TheApp() {
                 </PopinLoading>
             )}
         </div>
+        // </I18nextProvider>
     )
 }
 

@@ -14,6 +14,8 @@ contextBridge.exposeInMainWorld('versions', {
 
 contextBridge.exposeInMainWorld('electronAPI', {
     // Front → Main
+    getInitialTranslations: () =>
+        ipcRenderer.invoke(channels.GET_INITIAL_TRANSLATIONS),
     // simple handlers
     handleSimpleMesures: (urlsList: ISimpleUrlInput[]) =>
         ipcRenderer.invoke(channels.SIMPLE_MESURES, urlsList),
