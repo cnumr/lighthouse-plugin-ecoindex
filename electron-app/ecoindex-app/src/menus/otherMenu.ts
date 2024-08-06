@@ -78,13 +78,13 @@ export const otherTemplate = (
         },
     ]
 
-    const languageMenu = config.languages.map((languageCode) => {
+    const languageMenu = config.lngs.map((languageCode: any) => {
         return {
-            label: i18n.t(languageCode),
+            label: languageCode.lng,
             type: 'radio',
-            checked: i18n.language === languageCode,
+            checked: i18n.language === languageCode.code,
             click: () => {
-                i18n.changeLanguage(languageCode)
+                i18n.changeLanguage(languageCode.code)
             },
         }
     }) as unknown as Electron.Menu

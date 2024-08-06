@@ -195,10 +195,14 @@ const _createMainWindow = (): void => {
                 channels.CHANGE_LANGUAGE_TO_FRONT,
                 lng
             )
-            getWelcomeWindow().webContents.send(
-                channels.CHANGE_LANGUAGE_TO_FRONT,
-                lng
-            )
+            try {
+                getWelcomeWindow().webContents.send(
+                    channels.CHANGE_LANGUAGE_TO_FRONT,
+                    lng
+                )
+            } catch (error) {
+                // destroyed after close
+            }
             menuFactoryService.buildMenu(app, getMainWindow(), i18n)
         })
     } catch (error) {

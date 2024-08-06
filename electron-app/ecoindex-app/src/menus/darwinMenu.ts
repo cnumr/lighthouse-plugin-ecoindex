@@ -2,9 +2,7 @@ import { BrowserWindow, app as ElectronApp, shell } from 'electron'
 
 import { config } from '../configs/app.config'
 import i18n from 'i18next'
-import i18nBackend from 'i18next-electron-fs-backend'
 import pkg from '../../package.json'
-import whitelist from '../configs/whitelist'
 
 export const darwinTemplate = (
     app: typeof ElectronApp,
@@ -110,14 +108,13 @@ export const darwinTemplate = (
         //     ),
         // },
     ]
-
-    const languageMenu = config.languages.map((languageCode) => {
+    const languageMenu = config.lngs.map((languageCode: any) => {
         return {
-            label: i18n.t(languageCode),
+            label: languageCode.lng,
             type: 'radio',
-            checked: i18n.language === languageCode,
+            checked: i18n.language === languageCode.code,
             click: () => {
-                i18n.changeLanguage(languageCode)
+                i18n.changeLanguage(languageCode.code)
             },
         }
     }) as unknown as Electron.Menu

@@ -40,6 +40,11 @@ function HelloApp() {
             <DarkModeSwitcher visible={false} />
             <Header />
             <div className="prose mx-auto !max-w-max dark:prose-invert prose-headings:underline">
+                <p className="text-sm italic">
+                    {t(
+                        'You can change the application language in the menu, Language.'
+                    )}
+                </p>
                 <p>
                     This desktop application allows you to perform measurements
                     as on the{' '}
