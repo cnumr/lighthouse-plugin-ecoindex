@@ -1,0 +1,25 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-flow",
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        [
+            "i18next-extract",
+            {
+                "jsonSpace": 4,
+                "locales": ["en", "fr"],
+                "defaultValue": "to translate",
+                "keySeparator": null,
+                "nsSeparator": null,
+                "keyAsDefaultValue": ["en"],
+                "useI18nextDefaultValue": false,
+                "keyAsDefaultValueForDerivedKeys": false,
+                // "transKeepBasicHtmlNodesFor": ["br", "strong", "i", "p", "a"],
+                "outputPath": "src/locales/{{locale}}/{{ns}}.json"
+            }
+        ]
+    ]
+}

@@ -49,9 +49,16 @@
         "release:local:patch": "env-cmd release-it --config .local.release-it.json",
         "release:local:minor": "env-cmd release-it minor --config .local.release-it.json",
         "release:local:major": "env-cmd release-it major --config .local.release-it.json",
-        "release:ci": "release-it"
+        "release:ci": "release-it",
+        "localize:front": "babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
     },
     "devDependencies": {
+        "@babel/cli": "^7.24.8",
+        "@babel/core": "^7.25.2",
+        "@babel/preset-env": "^7.25.3",
+        "@babel/preset-flow": "^7.24.7",
+        "@babel/preset-react": "^7.24.7",
+        "@babel/preset-typescript": "^7.24.7",
         "@electron-forge/cli": "^7.4.0",
         "@electron-forge/maker-deb": "^7.4.0",
         "@electron-forge/maker-dmg": "^7.4.0",
@@ -78,6 +85,7 @@
         "@typescript-eslint/parser": "^5.62.0",
         "@vercel/webpack-asset-relocator-loader": "1.7.3",
         "autoprefixer": "^10.4.19",
+        "babel-plugin-i18next-extract": "^0.10.0",
         "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^6.11.0",
         "electron": "31.0.1",

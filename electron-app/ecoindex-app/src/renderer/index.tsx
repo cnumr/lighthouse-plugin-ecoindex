@@ -12,10 +12,8 @@ const root = createRoot(container)
 
 root.render(
     <React.Suspense fallback="loading">
-        {/* <React.StrictMode> */}
         <I18nextProvider i18n={i18n}>
             <App />
         </I18nextProvider>
-        {/* </React.StrictMode> */}
     </React.Suspense>
 )

@@ -14,7 +14,7 @@ try {
             // path where resources get loaded from
             loadPath: './src/locales/{{lng}}/{{ns}}.json',
             // path to post missing resources
-            addPath: './src/locales/{{lng}}/{{ns}}.missing.json',
+            // addPath: './src/locales/{{lng}}/{{ns}}.missing.json',
             // jsonIndent to use when storing json files
             jsonIndent: 2,
         },
@@ -30,7 +30,6 @@ try {
             wait: false,
         },
     }
-
     use(i18nextBackend)
 
     // initialize if not already initialized

@@ -3,18 +3,41 @@ import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { DarkModeSwitcher } from '../components/dark-mode-switcher'
 import { Header } from '../components/Header'
+import i18nResources from '../../configs/i18nResources'
+import log from 'electron-log/renderer'
 import pkg from '../../../package.json'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+
+const frontLog = log.scope('front/HelloApp')
 
 function HelloApp() {
     const closeHandler = () => {
         window.close()
     }
+
+    useEffect(() => {
+        /**
+         * Handler (main->front), Change language from Menu.
+         */
+        window.electronAPI.changeLanguageInFront((lng: string) => {
+            frontLog.debug(`changeLanguageInFront`, lng)
+            try {
+                i18nResources.changeLanguage(lng, (err, t) => {
+                    if (err)
+                        return frontLog.log('something went wrong loading', err)
+                    t('key') // -> same as i18next.t
+                })
+            } catch (error) {
+                frontLog.error(error)
+            }
+        })
+    }, [])
+
+    const { t } = useTranslation()
     return (
         <div className="relative flex flex-col items-center justify-center gap-4 p-8">
-            <DarkModeSwitcher
-                title="Dark mode switch"
-                className="absolute left-2 top-2 z-20 hidden gap-2"
-            />
+            <DarkModeSwitcher visible={false} />
             <Header />
             <div className="prose mx-auto !max-w-max dark:prose-invert prose-headings:underline">
                 <p>
@@ -31,7 +54,7 @@ function HelloApp() {
                     measurements, in one and the same report, without limitation
                     🎉
                 </p>
-                <h2>Key features</h2>
+                <h2>{t('Key features')}</h2>
                 <p>
                     You can either measure <strong>a series of URLs</strong>, or
                     measure <strong>entire visit paths</strong>.

@@ -27,7 +27,6 @@ import { SimpleTooltip } from './components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from './ui/typography/TypographyP'
 import i18nResources from '../configs/i18nResources'
-import i18next from 'i18next'
 import log from 'electron-log/renderer'
 import packageJson from '../../package.json'
 import { useTranslation } from 'react-i18next'
@@ -397,6 +396,9 @@ function TheApp() {
             }
         })
 
+        /**
+         * Handler (main->front), Change language from Menu.
+         */
         window.electronAPI.changeLanguageInFront((lng: string) => {
             try {
                 i18nResources.changeLanguage(lng, (err, t) => {
@@ -488,13 +490,8 @@ function TheApp() {
 
     const { t } = useTranslation()
 
-    // frontLog.debug(`i18n.t`, i18n.t('Dark mode switch'))
-    // frontLog.debug(`i18n`, i18n)
-    // frontLog.debug(`t`, t('Dark mode switch'))
-
     return (
         <div className="container relative">
-            <p className="text-center">{t('Dark mode switch')}</p>
             <DarkModeSwitcher
                 title={t('Dark mode switch')}
                 className="absolute left-2 top-2 z-20 flex gap-2"
@@ -502,9 +499,9 @@ function TheApp() {
             <SimpleTooltip
                 tooltipContent={
                     <p>
-                        Copy application informations to clipboard.
-                        <br />
-                        Send theim to developper at renaud@greenit.fr.
+                        {t(
+                            'Copy application informations to clipboard.<br />Send theim to developper at renaud@greenit.fr.'
+                        )}
                     </p>
                 }
             >
@@ -515,7 +512,7 @@ function TheApp() {
                     onClick={copyToClipBoard}
                 >
                     <Bug className="mr-2 size-4" />
-                    Debug
+                    {t('Debug')}
                 </Button>
             </SimpleTooltip>
             <main className="flex h-screen flex-col justify-between gap-4 p-4">
@@ -544,16 +541,16 @@ function TheApp() {
                         <AlertBox title="Error on Node">
                             <div className="flex items-center justify-between gap-4">
                                 <span>
-                                    Node is not installed, install it (you must
-                                    be admin of your computer)! After
-                                    installation, restart application.
+                                    {t(
+                                        'Node is not installed, install it (you must be admin of your computer)! After installation, restart application.'
+                                    )}
                                 </span>
                                 <Button
                                     variant="default"
                                     id="bt-install-node"
                                     onClick={installNode}
                                 >
-                                    Install
+                                    {t('Install')}
                                 </Button>
                             </div>
                         </AlertBox>
@@ -562,16 +559,15 @@ function TheApp() {
                         <AlertBox title="Error on Node Version">
                             <div className="flex items-center justify-between gap-4">
                                 <span>
-                                    Your Node installation is outdated, you must
-                                    upgrade it to 20 or upper, upgrade it (you
-                                    must be admin of your computer)! After
-                                    upgrade, restart application.
+                                    {t(
+                                        'Your Node installation is outdated, you must upgrade it to 20 or upper, upgrade it (you must be admin of your computer)! After upgrade, restart application.'
+                                    )}
                                 </span>
                                 <Button
                                     variant="default"
                                     onClick={installEcoindexPlugin}
                                 >
-                                    Upgrade
+                                    {t('Upgrade')}
                                 </Button>
                             </div>
                         </AlertBox>
@@ -581,17 +577,16 @@ function TheApp() {
                             <AlertBox title="Error on Ecoindex">
                                 <div className="flex items-center justify-between gap-4">
                                     <span>
-                                        Lighthouse Ecoindex plugin is not
-                                        installed, install it (you must be admin
-                                        of your computer)! After installation,
-                                        restart application.
+                                        {t(
+                                            'Lighthouse Ecoindex plugin is not installed, install it (you must be admin of your computer)! After installation, restart application.'
+                                        )}
                                     </span>
                                     <Button
                                         variant="default"
                                         id="bt-install-ecoindex"
                                         onClick={installEcoindexPlugin}
                                     >
-                                        Install
+                                        {t('Install')}
                                     </Button>
                                 </div>
                             </AlertBox>
@@ -602,10 +597,9 @@ function TheApp() {
                         <AlertBox variant="bug" title="Report error">
                             <div className="flex items-center justify-between gap-4">
                                 <span>
-                                    You have an error but you think it's a bug.
-                                    Report to the developper by clicking the
-                                    button (datas are saved to your clipboard)
-                                    and send theim by mail to{' '}
+                                    {t(
+                                        "You have an error but you think it's a bug. Report to the developper by clicking the button (datas are saved to your clipboard) and send theim by mail to "
+                                    )}
                                     <a
                                         href="mailto:renaud@greenit.fr"
                                         className="underline"
@@ -617,8 +611,9 @@ function TheApp() {
                                 <SimpleTooltip
                                     tooltipContent={
                                         <p>
-                                            Copy application informations to
-                                            clipboard.
+                                            {t(
+                                                'Copy application informations to clipboard.'
+                                            )}
                                         </p>
                                     }
                                 >
@@ -627,7 +622,7 @@ function TheApp() {
                                         variant="default"
                                         onClick={copyToClipBoard}
                                     >
-                                        Report
+                                        {t('Report')}
                                     </Button>
                                 </SimpleTooltip>
                             </div>
@@ -638,10 +633,12 @@ function TheApp() {
                             <Card className="w-full border-primary">
                                 <CardHeader>
                                     <CardTitle>
-                                        1. Select ouput folder
+                                        {t('1. Select ouput folder')}
                                     </CardTitle>
                                     <CardDescription>
-                                        Specify where to execute the mesures.
+                                        {t(
+                                            'Specify where to execute the mesures.'
+                                        )}
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
@@ -658,14 +655,14 @@ function TheApp() {
                                             disabled={!appReady}
                                             onClick={selectWorkingFolder}
                                         >
-                                            Browse
+                                            {t('Browse')}
                                         </Button>
                                     </div>
                                 </CardContent>
                             </Card>
                             {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
                             <TypographyP className={`w-full`}>
-                                Choose the type of mesure you want to do.
+                                {t('Choose the type of mesure you want to do.')}
                             </TypographyP>
                             <Tabs
                                 defaultValue="simple-mesure"
