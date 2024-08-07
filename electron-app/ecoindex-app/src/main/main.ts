@@ -46,7 +46,6 @@ import {
 } from '../shared/memory'
 
 import Updater from './Updater'
-import { config } from '../configs/app.config'
 import fixPath from 'fix-path'
 import fs from 'fs'
 import i18n from '../configs/i18next.config'
@@ -201,7 +200,7 @@ const _createMainWindow = (): void => {
                     lng
                 )
             } catch (error) {
-                // destroyed after close
+                mainLog.error(error)
             }
             menuFactoryService.buildMenu(app, getMainWindow(), i18n)
         })

@@ -16,6 +16,12 @@ export const plugins = [
         APPLE_TEAM_ID: process.env.APPLE_TEAM_ID,
     }),
     new CopyPlugin({
-        patterns: [{ from: 'src/extraResources', to: '.' }],
+        patterns: [
+            { from: 'src/extraResources', to: '.' },
+            {
+                from: 'src/locales',
+                to: './locales',
+            },
+        ],
     }),
 ]

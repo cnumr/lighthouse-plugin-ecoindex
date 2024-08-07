@@ -25,6 +25,24 @@
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "/Applications/EcoindexLighthouse.app",
+            "args": ["your-electron-project-path"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                { "name": "ELECTRON_ENABLE_LOGGING", "value": "true" },
+                { "name": "ELECTRON_ENABLE_STACK_DUMPING", "value": "true" },
+                { "name": "ELECTRON_RUN_AS_NODE", "value": "" }
+            ],
+            "externalConsole": false,
+            "sourceFileMap": {
+                "o:\\": "${workspaceFolder}"
+            }
         }
     ]
 }

@@ -23,7 +23,9 @@ export function buildMenu(
     mainWindow: BrowserWindow,
     _i18n: typeof i18n
 ) {
-    menuFactoryLog.debug(`app.name`, app.name)
+    // menuFactoryLog.debug(`app.name`, app.name)
+    // menuFactoryLog.debug(`_i18n`, _i18n)
+
     try {
         if (config.platform === 'darwin') {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

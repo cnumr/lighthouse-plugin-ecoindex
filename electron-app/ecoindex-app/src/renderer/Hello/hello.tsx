@@ -5,7 +5,6 @@ import { createRoot } from 'react-dom/client'
 import i18n from '../../configs/i18nResources'
 
 const container = document.getElementById('root') as HTMLElement
-console.log(container)
 
 const root = createRoot(container)
 root.render(

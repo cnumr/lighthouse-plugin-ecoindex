@@ -29,7 +29,7 @@ const config: ForgeConfig = {
         darwinDarkModeSupport: true,
         asar: true,
         icon: path.resolve(__dirname, 'assets', 'app-ico'),
-        extraResource: ['./src/extraResources/scripts'],
+        extraResource: ['./src/extraResources/scripts', './src/locales'],
         win32metadata: {
             CompanyName: 'Green IT',
             OriginalFilename: 'EcoindexLighthouse',
