@@ -1,4 +1,7 @@
+import { Trans, useTranslation } from 'react-i18next'
+
 import iconAsso from '../../../assets/asso.svg'
+
 export const Footer = ({
     nodeVersion,
     appVersion,
@@ -8,25 +11,35 @@ export const Footer = ({
     appVersion: string
     repoUrl: string
 }) => {
+    const { t } = useTranslation()
+    const currentYear = '1245'
     return (
         <div className="text-center text-sm">
             <p className="text-xs">
-                Host Informations : Node.js(
-                {nodeVersion ? nodeVersion : 'loading...'})
+                {t('Host Informations:')}: Node.js(
+                {nodeVersion ? nodeVersion : t('loading...')})
             </p>
             <p className="text-xs">
                 <a href={repoUrl} title="Visite website" target="_blank">
-                    Application version: {appVersion}
+                    {t('Application version:')} {appVersion}
                 </a>
             </p>
             <p className="text-xs">
-                Internal Electron informations : Chrome (v
+                {t('Internal Electron informations: Chrome')} (v
                 {window.versions.chrome()}
                 ), Node.js (v
-                {window.versions.node()}), and Electron (v
+                {window.versions.node()}), {t('and')} Electron (v
                 {window.versions.electron()})
             </p>
-            <p className="mt-2">© 2024 - Made with ❤️ and 🌱 by</p>
+            {/* <p className="mt-2">{t('© 2024 - Made with ❤️ and 🌱 by')}</p> */}
+            <p className="mt-2">
+                <Trans
+                    i18nKey="footerCopyright"
+                    currentYear={new Date(Date.now()).getFullYear()}
+                >
+                    © {{ currentYear }} - Made with ❤️ and 🌱 by'
+                </Trans>
+            </p>
             <p className="my-4 grid place-content-center">
                 <a href="https://asso.greenit.fr">
                     <img

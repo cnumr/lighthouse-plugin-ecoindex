@@ -50,7 +50,7 @@
         "release:local:minor": "env-cmd release-it minor --config .local.release-it.json",
         "release:local:major": "env-cmd release-it major --config .local.release-it.json",
         "release:ci": "release-it",
-        "localize:front": "babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
+        "localize:generate": "babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
     },
     "devDependencies": {
         "@babel/cli": "^7.24.8",

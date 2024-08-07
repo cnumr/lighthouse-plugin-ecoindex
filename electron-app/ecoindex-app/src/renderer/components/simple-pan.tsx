@@ -10,6 +10,7 @@ import {
 import { Button } from '../ui/button'
 import { FC } from 'react'
 import { SimpleUrlsList } from './simple-urls'
+import { useTranslation } from 'react-i18next'
 
 export interface ISimpleMesureLayout {
     appReady: boolean
@@ -28,12 +29,13 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
     setUrlsList,
     className,
 }) => {
+    const { t } = useTranslation()
     return (
         <Card className={className}>
             <CardHeader>
-                <CardTitle>2. Urls to mesure</CardTitle>
+                <CardTitle>{t('2. Urls to mesure')}</CardTitle>
                 <CardDescription>
-                    Simples mesures with HTML output.
+                    {t('Simples mesures with HTML output.')}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -46,22 +48,21 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
                 />
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
-                <CardTitle>3. Launch the mesures</CardTitle>
+                <CardTitle>{t('3. Launch the mesures')}</CardTitle>
                 <CardDescription>
-                    Generates Html reports in seleted dir.
+                    {t('Generates Html reports in seleted dir.')}
                 </CardDescription>
                 <Button
                     type="button"
                     id="btn-simple-mesures"
-                    title="Launch the mesures"
+                    title={t('Launch the mesures')}
                     disabled={!appReady}
                     onClick={simpleMesures}
                     className="btn btn-green"
                 >
-                    Mesures
+                    {t('Mesures')}
                 </Button>
             </CardFooter>
-            {/* <TypographyH2>3. Launch the mesures</TypographyH2> */}
         </Card>
     )
 }

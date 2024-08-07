@@ -15,6 +15,7 @@ import { Input } from '../ui/input'
 import { KeyValue } from './key-value'
 import { SimpleUrlsList } from './simple-urls'
 import { Switch } from '../ui/switch'
+import { useTranslation } from 'react-i18next'
 
 export interface ILayout {
     appReady: boolean
@@ -41,6 +42,8 @@ export const JsonPanMesure: FC<ILayout> = ({
     mesure,
     notify,
 }) => {
+    const { t } = useTranslation()
+
     const [updated, setUpdated] = useState(false)
     const handlerAddCourse = () => {
         console.log('add course')
@@ -55,7 +58,7 @@ export const JsonPanMesure: FC<ILayout> = ({
             ...jsonDatas,
             courses: [...jsonDatas.courses, newCourse],
         })
-        notify('Courses Mesure (Full mode)', 'Course added')
+        notify(t('Courses Mesure (Full mode)'), t('Course added'))
         setUpdated(true)
     }
     const handlerDeleteCourse = (_: any, key: number) => {
@@ -64,7 +67,8 @@ export const JsonPanMesure: FC<ILayout> = ({
             ...jsonDatas,
             courses: jsonDatas.courses.filter((_, index) => index !== key),
         })
-        notify('Courses Mesure (Full mode)', `Course ${key + 1} deleted`)
+        // to translate
+        notify(t('Courses Mesure (Full mode)'), `Course ${key + 1} deleted`)
         setUpdated(true)
     }
     const handlerOnUpdateSimpleUrlsList = (
@@ -188,10 +192,10 @@ export const JsonPanMesure: FC<ILayout> = ({
             if (course['is-best-pages'] === true) count++
         })
         if (count === 0) {
-            alert('You must set 1 best-page on courses.')
+            alert(t('You must set 1 best-page on courses.'))
             return
         } else if (count > 1) {
-            alert('You must set only 1 best-page on courses.')
+            alert(t('You must set only 1 best-page on courses.'))
             return
         }
         mesure()
@@ -204,22 +208,6 @@ export const JsonPanMesure: FC<ILayout> = ({
         save()
         setUpdated(false)
     }
-
-    const convertJSONOrStringToString = (value: object | string) => {
-        if (value instanceof Object) {
-            return JSON.stringify(value)
-        }
-        return value.toString()
-    }
-    // return (
-    //   <>
-    //     <p>Waiting fix reload JSON...</p>
-    //     <pre>{JSON.stringify(jsonDatas, null, 2)}</pre>
-    //   </>
-    // )
-    // useEffect(() => {
-    //     console.log(JSON.stringify(jsonDatas, null, 2))
-    // }, [jsonDatas])
 
     return (
         <Card className={className}>
@@ -237,15 +225,15 @@ export const JsonPanMesure: FC<ILayout> = ({
                         type="button"
                         size="sm"
                         id="btn-reload-json"
-                        title="Reload the configuration"
+                        title={t('Reload the configuration')}
                         disabled={!appReady || !updated}
                         onClick={handlerOnReload}
                     >
                         <RotateCcw
                             className="mr-2 size-4"
-                            aria-label="reload"
+                            aria-label={t('reload')}
                         />
-                        <span>Reload</span>
+                        <span>{t('Reload')}</span>
                     </Button>
                     <Button
                         variant="secondary"
@@ -256,17 +244,19 @@ export const JsonPanMesure: FC<ILayout> = ({
                         disabled={!appReady || !updated}
                         onClick={handlerOnSave}
                     >
-                        <Save className="mr-2 size-4" aria-label="save" />
-                        <span>Save</span>
+                        <Save className="mr-2 size-4" aria-label={t('save')} />
+                        <span>{t('Save')}</span>
                     </Button>
                 </div>
                 <form id="json-form">
                     <fieldset>
-                        <legend>Extra header</legend>
+                        <legend>{t('Extra header')}</legend>
                         <p>
-                            Header to add cookies, Authentication...{' '}
+                            {t('Header to add cookies, Authentication...')}{' '}
                             <strong>
-                                JSON format mandatory, with curly brackets{' '}
+                                {t(
+                                    'JSON format mandatory, with curly brackets'
+                                )}{' '}
                                 {'{}'}
                             </strong>
                         </p>
@@ -291,16 +281,9 @@ export const JsonPanMesure: FC<ILayout> = ({
                     </fieldset>
                     <fieldset>
                         <legend className="mandatory">
-                            Choose the reports you want to generate
+                            {t('Choose the reports you want to generate')}
                         </legend>
                         <div>
-                            {/* <input
-                                type="checkbox"
-                                id="html"
-                                name="output"
-                                checked={jsonDatas?.output.includes('html')}
-                                onChange={(e) => handlerOnChange(-1, e)}
-                            /> */}
                             <Switch
                                 id="html"
                                 name="output"
@@ -312,13 +295,6 @@ export const JsonPanMesure: FC<ILayout> = ({
                             <label htmlFor="html">HTML</label>
                         </div>
                         <div>
-                            {/* <input
-                                type="checkbox"
-                                id="json"
-                                name="output"
-                                checked={jsonDatas?.output.includes('json')}
-                                onChange={(e) => handlerOnChange(-1, e)}
-                            /> */}
                             <Switch
                                 id="json"
                                 name="output"
@@ -346,30 +322,30 @@ export const JsonPanMesure: FC<ILayout> = ({
                                 }}
                             />
                             <label htmlFor="statement">
-                                Statement{' '}
+                                {t('Statement')}{' '}
                                 <em className="text-xs">
-                                    (JSON output mandatory)
+                                    {t('(JSON output mandatory)')}
                                 </em>
                             </label>
                         </div>
                     </fieldset>
                     <fieldset>
                         <legend>
-                            <span>Courses</span>
+                            <span>{t('Courses')}</span>
                             <Button
                                 type="button"
                                 size="sm"
                                 variant="default"
                                 id="btn-add-course"
-                                title="Add a course"
+                                title={t('Add a course')}
                                 disabled={!appReady}
                                 onClick={handlerAddCourse}
                             >
                                 <CirclePlus
                                     className="mr-2 size-4"
-                                    aria-label="add"
+                                    aria-label={t('add')}
                                 />
-                                <span>Add a course</span>
+                                <span>{t('Add a course')}</span>
                             </Button>
                         </legend>
                         {jsonDatas?.courses.map((course, index) => {
@@ -381,13 +357,15 @@ export const JsonPanMesure: FC<ILayout> = ({
                             return (
                                 <fieldset key={index}>
                                     <legend>
-                                        <span>Course {index + 1}</span>
+                                        <span>
+                                            {t('Course')} {index + 1}
+                                        </span>
                                         <Button
                                             variant="destructive"
                                             type="button"
                                             size="sm"
                                             id="btn-delete-course"
-                                            title="Delete this course"
+                                            title={t('Delete this course')}
                                             disabled={!appReady}
                                             className="btn btn-red btn-small"
                                             onClick={() =>
@@ -396,10 +374,10 @@ export const JsonPanMesure: FC<ILayout> = ({
                                         >
                                             <Trash2
                                                 className="size-4"
-                                                aria-label="delete"
+                                                aria-label={t('delete')}
                                             />
                                             <span className="sr-only">
-                                                Delete course
+                                                {t('Delete course')}
                                             </span>
                                         </Button>
                                     </legend>
@@ -408,7 +386,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                             htmlFor="name"
                                             className="mandatory"
                                         >
-                                            Course name
+                                            {t('Course name')}
                                         </label>
                                         <Input
                                             type="text"
@@ -422,7 +400,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                     </div>
                                     <div className="flex-col !items-start">
                                         <label htmlFor="target" className="">
-                                            Target
+                                            {t('Target')}
                                         </label>
                                         <Input
                                             type="text"
@@ -436,7 +414,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                     </div>
                                     <div className="flex-col !items-start">
                                         <label htmlFor="course" className="">
-                                            Description
+                                            {t('Description')}
                                         </label>
                                         <Input
                                             type="text"
@@ -462,7 +440,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                                             }
                                         />
                                         <label htmlFor="is-best-pages">
-                                            Is best pages?
+                                            {t('Is best pages?')}
                                         </label>
                                     </div>
                                     <div>
@@ -482,26 +460,23 @@ export const JsonPanMesure: FC<ILayout> = ({
                             )
                         })}
                     </fieldset>
-                    {/* <div className="flex flex-col items-center gap-2">
-                        <TypographyH2>3. Launch the mesures</TypographyH2>
-                    </div> */}
                 </form>
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
-                <CardTitle>3. Launch the mesures</CardTitle>
+                <CardTitle>{t('3. Launch the mesures')}</CardTitle>
                 <CardDescription>
-                    Generates reports files in seleted dir.
+                    {t('Generates reports files in seleted dir.')}
                 </CardDescription>
                 <Button
                     variant="default"
                     type="button"
                     id="btn-simple-mesures"
-                    title="Launch the mesures"
+                    title={t('Launch the mesures')}
                     disabled={!appReady}
                     onClick={handlerOnSubmit}
                     className="btn btn-green"
                 >
-                    Mesures
+                    {t('Mesures')}
                 </Button>
             </CardFooter>
         </Card>

@@ -5,6 +5,7 @@ import { FC } from 'react'
 import { Input } from '../ui/input'
 import { TypographyH2 } from '@/renderer/ui/typography/TypographyH2'
 import { cn } from '../lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface ILayout {
     language: string
@@ -23,13 +24,14 @@ export const SimpleUrlsList: FC<ILayout> = ({
     title = 'Urls to mesure',
     isFullWidth = false,
 }) => {
+    const { t } = useTranslation()
     const Tag = isFullWidth ? 'strong' : TypographyH2
     // Function to add a new input field
     const handleAddFields = () => {
         try {
             setUrlsList([...urlsList, { value: '' }])
         } catch (error) {
-            console.error('Error adding a new input field', error)
+            console.error(t('Error adding a new input field'), error)
         }
     }
 
@@ -40,7 +42,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
         try {
             setUrlsList(newInputFields)
         } catch (error) {
-            console.error('Error removing an input field', error)
+            console.error(t('Error removing an input field'), error)
         }
     }
 
@@ -54,7 +56,10 @@ export const SimpleUrlsList: FC<ILayout> = ({
         try {
             setUrlsList(values)
         } catch (error) {
-            console.error('Error updating the value of an input field', error)
+            console.error(
+                t('Error updating the value of an input field'),
+                error
+            )
         }
     }
     return (
@@ -68,7 +73,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
             {title !== '' && (
                 <Tag
                     className={cn({
-                        'text-primary dark:text-foreground max-w-fit':
+                        'max-w-fit text-primary dark:text-foreground':
                             isFullWidth,
                         'text-center': !isFullWidth,
                     })}
@@ -86,7 +91,7 @@ export const SimpleUrlsList: FC<ILayout> = ({
                     <div key={index} className="flex w-full gap-4">
                         <Input
                             type="text"
-                            placeholder="Enter an url"
+                            placeholder={t('Enter an url')}
                             value={urlItem.value}
                             onChange={(e) => handleValueChange(index, e)}
                             className="block w-full"
@@ -98,11 +103,14 @@ export const SimpleUrlsList: FC<ILayout> = ({
                             size="icon"
                             id="btn-remove-url"
                             className=""
-                            title="delete"
+                            title={t('delete')}
                             onClick={() => handleRemoveFields(index)}
                         >
-                            <Trash2 className="size-4" aria-label="delete" />
-                            <span className="sr-only">delete</span>
+                            <Trash2
+                                className="size-4"
+                                aria-label={t('delete')}
+                            />
+                            <span className="sr-only">{t('delete')}</span>
                         </Button>
                     </div>
                 ))}
@@ -113,11 +121,11 @@ export const SimpleUrlsList: FC<ILayout> = ({
                     type="button"
                     id="btn-add-url"
                     className=""
-                    title="add"
+                    title={t('add')}
                     onClick={handleAddFields}
                 >
                     <CirclePlus className="mr-2 size-4" aria-label="add" />
-                    Add an URL
+                    {t('Add an URL')}
                 </Button>
             </div>
         </div>

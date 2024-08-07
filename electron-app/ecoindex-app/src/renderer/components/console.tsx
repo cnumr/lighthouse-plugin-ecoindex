@@ -13,6 +13,7 @@ import { SimpleTooltip } from './simple-tooltip'
 import { Textarea } from '../ui/textarea'
 import { TypographyH2 } from '../ui/typography/TypographyH2'
 import { TypographyH3 } from '../ui/typography/TypographyH3'
+import { useTranslation } from 'react-i18next'
 
 interface ILayout {
     datasFromHost: any
@@ -22,6 +23,7 @@ export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
     const copyToClipBoard = () => {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
+    const { t } = useTranslation()
     return (
         <details className="w-full rounded-lg border border-primary bg-card p-2 text-card-foreground shadow-sm [&_svg]:open:-rotate-180">
             <summary className="flex cursor-pointer list-none items-center gap-4 rounded-sm">
@@ -42,12 +44,12 @@ export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
                 </div>
                 <div className="flex items-center text-sm text-primary">
                     <Bug className="mr-2 size-4" />
-                    <div>Show informations</div>
+                    <div>{t('Show informations')}</div>
                 </div>
             </summary>
 
             <div className="mt-4 flex w-full flex-col gap-4 first:w-fit">
-                <TypographyH3>Console</TypographyH3>
+                <TypographyH3>{t('Console')}</TypographyH3>
                 <Textarea
                     id={id}
                     className="h-36 text-muted-foreground"
@@ -55,7 +57,9 @@ export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
                 ></Textarea>
                 <SimpleTooltip
                     tooltipContent={
-                        <p>Copy application informations to clipboard.</p>
+                        <p>
+                            {t('Copy application informations to clipboard.')}
+                        </p>
                     }
                 >
                     <Button
@@ -66,7 +70,7 @@ export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
                         className="flex w-fit items-center"
                     >
                         <ClipboardCopy className="mr-2 size-4" />
-                        Copy datas
+                        {t('Copy datas')}
                     </Button>
                 </SimpleTooltip>
                 <pre className="ligatures-none flex overflow-auto bg-slate-800 text-sm leading-6 text-slate-50">

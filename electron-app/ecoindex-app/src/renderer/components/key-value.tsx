@@ -7,6 +7,7 @@ import { Input } from '../ui/input'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { TypographyH2 } from '../ui/typography/TypographyH2'
 import { cn } from '../lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface ILayout {
     language: string
@@ -25,6 +26,7 @@ export const KeyValue: FC<ILayout> = ({
     title = 'Key Value (component)',
     isFullWidth = false,
 }) => {
+    const { t } = useTranslation()
     const Tag = isFullWidth ? 'strong' : TypographyH2
     // Function to add a new input field
     const handleAddFields = () => {
@@ -35,7 +37,7 @@ export const KeyValue: FC<ILayout> = ({
                 ...newExtraHeaderElement,
             })
         } catch (error) {
-            console.error('Error adding a new input field', error)
+            console.error(t('Error adding a new input field'), error)
         }
     }
 
@@ -46,7 +48,7 @@ export const KeyValue: FC<ILayout> = ({
         try {
             setExtraHeader(newInputFields)
         } catch (error) {
-            console.error('Error removing an input field', error)
+            console.error(t('Error removing an input field'), error)
         }
     }
 
@@ -59,7 +61,10 @@ export const KeyValue: FC<ILayout> = ({
         try {
             setExtraHeader(values)
         } catch (error) {
-            console.error('Error updating the value of an input field', error)
+            console.error(
+                t('Error updating the value of an input field'),
+                error
+            )
         }
     }
     const handleKeyChange = (
@@ -90,7 +95,10 @@ export const KeyValue: FC<ILayout> = ({
         try {
             setExtraHeader(tempValues)
         } catch (error) {
-            console.error('Error updating the value of an input field', error)
+            console.error(
+                t('Error updating the value of an input field'),
+                error
+            )
         }
     }
     return (
@@ -104,7 +112,7 @@ export const KeyValue: FC<ILayout> = ({
             {title !== '' && (
                 <Tag
                     className={cn({
-                        'text-primary dark:text-foreground max-w-fit':
+                        'max-w-fit text-primary dark:text-foreground':
                             isFullWidth,
                         'text-center': !isFullWidth,
                     })}
@@ -128,7 +136,7 @@ export const KeyValue: FC<ILayout> = ({
                             data-key={extraHeaderKey}
                             data-type="key"
                             data-old-key={extraHeaderKey}
-                            placeholder="Enter a key"
+                            placeholder={t('Enter a key')}
                             value={extraHeaderKey}
                             onChange={(e) => handleKeyChange(index, e)}
                             className="block w-full"
@@ -138,7 +146,7 @@ export const KeyValue: FC<ILayout> = ({
                             data-idx-value={index}
                             data-key={extraHeaderKey}
                             data-type="value"
-                            placeholder="Enter a value"
+                            placeholder={t('Enter a value')}
                             value={extraHeader[extraHeaderKey]}
                             onChange={(e) => handleValueChange(e)}
                             className="block w-full"
@@ -152,7 +160,7 @@ export const KeyValue: FC<ILayout> = ({
                             onClick={() => handleRemoveFields(extraHeaderKey)}
                         >
                             <Trash2 className="size-4" aria-label="delete" />
-                            <span className="sr-only">delete</span>
+                            <span className="sr-only">{t('delete')}</span>
                         </Button>
                     </div>
                 )
@@ -164,11 +172,11 @@ export const KeyValue: FC<ILayout> = ({
                 size="sm"
                 id="btn-add-url"
                 className=""
-                title="add"
+                title={t('add')}
                 onClick={handleAddFields}
             >
-                <CirclePlus className="mr-2 size-4" aria-label="add" />
-                Add an ExtraHeader item
+                <CirclePlus className="mr-2 size-4" aria-label={t('add')} />
+                {t('Add an ExtraHeader item')}
             </Button>
         </div>
     )
