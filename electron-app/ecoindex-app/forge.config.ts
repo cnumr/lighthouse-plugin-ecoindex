@@ -89,7 +89,7 @@ const config: ForgeConfig = {
                     // certificatePassword: process.env.CERTIFICATE_PASSWORD,
                     authors: 'Renaud Heluin',
                     description:
-                        'An application to mesure the ecological impact of a website with LightHouse and Ecoindex.',
+                        'An application to measure the ecological impact of a website with LightHouse and Ecoindex.',
                     language: 1033,
                     name: `EcoindexLighthouse`,
                 }

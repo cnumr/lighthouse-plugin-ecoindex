@@ -33,9 +33,9 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
     return (
         <Card className={className}>
             <CardHeader>
-                <CardTitle>{t('2. Urls to mesure')}</CardTitle>
+                <CardTitle>{t('2. Urls to measure')}</CardTitle>
                 <CardDescription>
-                    {t('Simples mesures with HTML output.')}
+                    {t('Simples measures with HTML output.')}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -48,19 +48,19 @@ export const SimplePanMesure: FC<ISimpleMesureLayout> = ({
                 />
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
-                <CardTitle>{t('3. Launch the mesures')}</CardTitle>
+                <CardTitle>{t('3. Launch the measures')}</CardTitle>
                 <CardDescription>
                     {t('Generates Html reports in seleted dir.')}
                 </CardDescription>
                 <Button
                     type="button"
                     id="btn-simple-mesures"
-                    title={t('Launch the mesures')}
+                    title={t('Launch the measures')}
                     disabled={!appReady}
                     onClick={simpleMesures}
                     className="btn btn-green"
                 >
-                    {t('Mesures')}
+                    {t('Measures')}
                 </Button>
             </CardFooter>
         </Card>

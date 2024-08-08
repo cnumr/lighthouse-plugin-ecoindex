@@ -58,7 +58,7 @@ export const JsonPanMesure: FC<ILayout> = ({
             ...jsonDatas,
             courses: [...jsonDatas.courses, newCourse],
         })
-        notify(t('Courses Mesure (Full mode)'), t('Course added'))
+        notify(t('Courses Measure (Full mode)'), t('Course added'))
         setUpdated(true)
     }
     const handlerDeleteCourse = (_: any, key: number) => {
@@ -68,7 +68,7 @@ export const JsonPanMesure: FC<ILayout> = ({
             courses: jsonDatas.courses.filter((_, index) => index !== key),
         })
         // to translate
-        notify(t('Courses Mesure (Full mode)'), `Course ${key + 1} deleted`)
+        notify(t('Courses Measure (Full mode)'), `Course ${key + 1} deleted`)
         setUpdated(true)
     }
     const handlerOnUpdateSimpleUrlsList = (
@@ -212,9 +212,11 @@ export const JsonPanMesure: FC<ILayout> = ({
     return (
         <Card className={className}>
             <CardHeader>
-                <CardTitle>2. Configuration of the courses</CardTitle>
+                <CardTitle>{t('2. Configuration of the courses')}</CardTitle>
                 <CardDescription>
-                    Mesure courses and generate JSON file to relaunch mesures.
+                    {t(
+                        'Measure courses and generate JSON file to relaunch measures.'
+                    )}
                 </CardDescription>
             </CardHeader>
             {/* <TypographyH2>2. Configuration of the courses</TypographyH2> */}
@@ -240,7 +242,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                         type="button"
                         size="sm"
                         id="btn-save-json"
-                        title="Save the configuration"
+                        title={t('Save the configuration')}
                         disabled={!appReady || !updated}
                         onClick={handlerOnSave}
                     >
@@ -251,15 +253,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                 <form id="json-form">
                     <fieldset>
                         <legend>{t('Extra header')}</legend>
-                        <p>
-                            {t('Header to add cookies, Authentication...')}{' '}
-                            <strong>
-                                {t(
-                                    'JSON format mandatory, with curly brackets'
-                                )}{' '}
-                                {'{}'}
-                            </strong>
-                        </p>
+                        <p>{t('Header to add cookies, Authentication...')} </p>
                         <div>
                             <KeyValue
                                 extraHeader={
@@ -463,7 +457,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                 </form>
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-4">
-                <CardTitle>{t('3. Launch the mesures')}</CardTitle>
+                <CardTitle>{t('3. Launch the measures')}</CardTitle>
                 <CardDescription>
                     {t('Generates reports files in seleted dir.')}
                 </CardDescription>
@@ -471,12 +465,12 @@ export const JsonPanMesure: FC<ILayout> = ({
                     variant="default"
                     type="button"
                     id="btn-simple-mesures"
-                    title={t('Launch the mesures')}
+                    title={t('Launch the measures')}
                     disabled={!appReady}
                     onClick={handlerOnSubmit}
                     className="btn btn-green"
                 >
-                    {t('Mesures')}
+                    {t('Measures')}
                 </Button>
             </CardFooter>
         </Card>

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 const frontLog = log.scope('front/HelloApp')
 
 function HelloApp() {
-    const [language, setLanguage] = useState('fr')
+    const [language, setLanguage] = useState('en')
     const closeHandler = () => {
         window.close()
     }
@@ -63,7 +63,7 @@ function HelloApp() {
                             <strong>lighthouse</strong> measurements, in one and
                             the same report, without limitation 🎉
                         </p>
-                        <h2>{t('Key features')}</h2>
+                        <h2>Key features</h2>
                         <p>
                             You can either measure{' '}
                             <strong>a series of URLs</strong>, or measure{' '}
@@ -140,8 +140,8 @@ function HelloApp() {
                 ) : (
                     <>
                         <p>
-                            This desktop application allows you to perform
-                            measurements as on the{' '}
+                            Cette application de bureau vous permet d'effectuer
+                            mesures comme sur le site{' '}
                             <a
                                 href="https://econindex.fr/"
                                 target="_blank"
@@ -149,18 +149,18 @@ function HelloApp() {
                             >
                                 econindex.fr
                             </a>{' '}
-                            website, but also having the{' '}
-                            <strong>lighthouse</strong> measurements, in one and
-                            the same report, without limitation 🎉
+                            , mais aussi d'avoir les mesures de{' '}
+                            <strong>lighthouse</strong>, dans un seul et même
+                            rapport, sans limitation. 🎉
                         </p>
-                        <h2>{t('Key features')}</h2>
+                        <h2>Informations clés</h2>
                         <p>
-                            You can either measure{' '}
-                            <strong>a series of URLs</strong>, or measure{' '}
-                            <strong>entire visit paths</strong>.
+                            Vous pouvez soit mesurer{' '}
+                            <strong>une série d'URLs</strong>, ou des{' '}
+                            <strong>parcours de visite entiers</strong>.
                             <br />
-                            This version of ecoindex provides stable, consistent
-                            measurements with{' '}
+                            Cette version d'ecoindex fournit des mesures stables
+                            et cohérentes comme avec{' '}
                             <a
                                 href="https://econindex.fr/"
                                 target="_blank"
@@ -168,62 +168,67 @@ function HelloApp() {
                             >
                                 econindex.fr
                             </a>{' '}
-                            or{' '}
+                            ou{' '}
                             <code
-                                title="python tool for use on the command line, in the terminal."
+                                title="outil en python qui s'utilise en ligne de commande, dans le terminal."
                                 className="border-b border-dashed border-primary"
                             >
                                 ecoindex-cli
                             </code>
                             .<br />
-                            Browser cache management ensures{' '}
-                            <strong>realistic</strong> measurements.
+                            La gestion du cache du navigateur garantit des
+                            mesures <strong>réalistes</strong>
                         </p>
-                        <p>With this application, you'll get :</p>
+                        <p>Avec cette application, vous obtiendrez :</p>
                         <ul>
                             <li>
-                                <strong>Simple measurements:</strong>
+                                <strong>Mesures simples :</strong>
                                 <ul>
                                     <li>
-                                        An HTML Lighthouse report with the
-                                        ecoindex and its best practices.
+                                        Un rapport HTML Lighthouse avec
+                                        l'écoindex et ses bonnes pratiques.
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <strong>Route measurements:</strong>
+                                <strong>Mesures de parcours :</strong>
                                 <ul>
                                     <li>
-                                        HTML, JSON Lighthouse reports with
-                                        ecoindex and best practices, plus
-                                        pre-filled environmental declaration ;
+                                        Les rapports de Lighthouse en HTML ou
+                                        JSON avec l'ecoindex, ses bonnes
+                                        pratiques et la génération de la
+                                        déclaration environnementale,
+                                        pré-remplie.
                                     </li>
                                     <li>
-                                        A configuration file, saved in the
-                                        measurements folder, will enable you to
-                                        re-run the measurements as many times as
-                                        you like, and thus get a trend of the
-                                        environmental performance of this
-                                        site/functional units.
+                                        Un fichier de configuration, enregistré
+                                        dans le dossier des mesures, vous
+                                        permettra de relancer les mesures autant
+                                        de fois que vous le souhaitez, et
+                                        d'obtenir ainsi une tendance de la
+                                        performance environnementale de ce site
+                                        / de cette unité fonctionnelle.
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                        <h2>Important information</h2>
+                        <h2>Information importante</h2>
                         <p>
-                            This application will require addons that need to be
-                            installed only the first time:
+                            Cette application nécessite des modules
+                            complémentaires qui ne doivent être installés que la
+                            première fois :
                         </p>
                         <ul>
-                            <li>NodeJS (the application's engine) ;</li>
+                            <li>NodeJS (le moteur de l'application) ;</li>
                             <li>
-                                Lighthouse ecoindex plugin, which drives the
-                                measurement.
+                                Plugin Lighthouse ecoindex, qui pilote la
+                                mesure.
                             </li>
                         </ul>
                         <p>
                             <strong>
-                                Don't worry, we'll guide you through 🙏
+                                Ne vous inquiétez pas, nous vous guiderons pas à
+                                pas 🙏
                             </strong>
                         </p>
                     </>

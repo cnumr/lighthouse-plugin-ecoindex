@@ -1,7 +1,6 @@
 type IConstants = {
     channels: { [key: string]: string }
     scripts: { [key: string]: string }
-    labels: { [key: string]: { [key: string]: string } }
     utils: { JSON_FILE_NAME: string; DEFAULT_JSON_DATA: IJsonMesureData }
 }
 const constants: IConstants = {
@@ -32,12 +31,6 @@ const constants: IConstants = {
         GET_NODE_VERSION: 'get-node-version',
         INSTALL_PLUGIN_AND_UTILS: 'install-plugin-full',
         UPDATED_PLUGIN: 'update-plugin',
-    },
-    labels: {
-        en: {
-            'full-mesures-label': 'Courses Mesure (Full mode)',
-            'simple-mesures-label': 'Url(s) Mesure (Simple mode)',
-        },
     },
     utils: {
         JSON_FILE_NAME: 'input-file.json',
@@ -84,5 +77,4 @@ const constants: IConstants = {
 }
 export const channels = constants.channels
 export const utils = constants.utils
-export const labels = constants.labels
 export const scripts = constants.scripts

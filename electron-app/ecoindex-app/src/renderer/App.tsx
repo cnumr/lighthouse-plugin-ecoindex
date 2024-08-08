@@ -100,17 +100,17 @@ function TheApp() {
      * @returns Promise<void>
      */
     const runSimpleMesures = async () => {
-        frontLog.log('Simple mesures clicked')
+        frontLog.log('Simple measures clicked')
         if (workDir === homeDir) {
             if (
                 !confirm(
-                    `Are you shure to want create report(s) in your default folder?\n\rDestination: ${homeDir}`
+                    `${t('Are you shure to want create report(s) in your default folder?')}\n\rDestination: ${homeDir}`
                 )
             )
                 return
         }
         showHidePopinDuringProcess(
-            `${t('Url(s) Mesure (Simple mode)')} started 🚀`
+            `${t('Url(s) Measure (Simple mode)')} started 🚀`
         )
         try {
             await window.electronAPI.handleSimpleMesures(urlsList)
@@ -119,7 +119,7 @@ function TheApp() {
             frontLog.error('Error on runSimpleMesures', error)
             showNotification('', {
                 body: 'Error on runSimpleMesures',
-                subtitle: 'Courses Mesure (Simple mode)',
+                subtitle: 'Courses Measure (Simple mode)',
             })
             showHidePopinDuringProcess(false)
         }
@@ -143,16 +143,16 @@ function TheApp() {
         } catch (error) {
             frontLog.error('Error on runJsonReadAndReload', error)
             showNotification('', {
-                subtitle: '🚫 Courses Mesure (Full mode)',
+                subtitle: '🚫 Courses Measure (Full mode)',
                 body: 'Error on runJsonReadAndReload',
             })
         }
     }, [])
 
     /**
-     * Handler, launch mesures of parcours.
+     * Handler, launch measures of parcours.
      * 1. Save Json configuration in workDir.
-     * 2. Launch mesures with the plugin.
+     * 2. Launch measures with the plugin.
      * @param saveAndCollect boolean
      * @returns Promise<void>
      */
@@ -167,7 +167,7 @@ function TheApp() {
                 return
         }
         showHidePopinDuringProcess(
-            `${t('Courses Mesure (Full mode)')} started 🚀`
+            `${t('Courses Measure (Full mode)')} started 🚀`
         )
         try {
             frontLog.log(`jsonDatas`, jsonDatas)
@@ -180,7 +180,7 @@ function TheApp() {
         } catch (error) {
             frontLog.error('Error on runJsonSaveAndCollect', error)
             showNotification('', {
-                subtitle: '🚫 Courses Mesure (Full mode)',
+                subtitle: '🚫 Courses Measure (Full mode)',
                 body: 'Error on runJsonSaveAndCollect',
             })
             showHidePopinDuringProcess(false)
@@ -223,7 +223,7 @@ function TheApp() {
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / 4))
         frontLog.log(`Verify configuration step ${loadingScreen}/4`)
-        setPopinText(`Loading... ${loadingScreen}/4`)
+        setPopinText(`${t('Loading...')} ${loadingScreen}/4`)
         if (loadingScreen === 4) {
             frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             frontLog.log(`All data readed! 👀`)
@@ -236,7 +236,7 @@ function TheApp() {
             setDisplayPopin(false)
             const _n: any = {}
             _n.body = 'Application succefully loaded.\nWelcome 👋'
-            _n.subtitle = 'You can now start mesures'
+            _n.subtitle = 'You can now start measures'
             _n.priority = 'critical'
             showNotification('', _n)
             frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
@@ -637,7 +637,7 @@ function TheApp() {
                                     </CardTitle>
                                     <CardDescription>
                                         {t(
-                                            'Specify where to execute the mesures.'
+                                            'Specify where to execute the measures.'
                                         )}
                                     </CardDescription>
                                 </CardHeader>
@@ -662,7 +662,9 @@ function TheApp() {
                             </Card>
                             {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
                             <TypographyP className={`w-full`}>
-                                {t('Choose the type of mesure you want to do.')}
+                                {t(
+                                    'Choose the type of measure you want to do.'
+                                )}
                             </TypographyP>
                             <Tabs
                                 defaultValue="simple-mesure"
@@ -670,10 +672,10 @@ function TheApp() {
                             >
                                 <TabsList className="mb-4 grid w-full grid-cols-2">
                                     <TabsTrigger value="simple-mesure">
-                                        {t('Url(s) Mesure (Simple mode)')}
+                                        {t('Url(s) Measure (Simple mode)')}
                                     </TabsTrigger>
                                     <TabsTrigger value="json-mesure">
-                                        {t('Courses Mesure (Full mode)')}
+                                        {t('Courses Measure (Full mode)')}
                                     </TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="simple-mesure">

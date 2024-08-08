@@ -8,7 +8,7 @@ export const Header = () => {
                     Index
                 </span>
             </div>
-            <h1 className="pt-1">Mesures launcher 👋</h1>
+            <h1 className="pt-1">Measures launcher 👋</h1>
         </div>
     )
 }

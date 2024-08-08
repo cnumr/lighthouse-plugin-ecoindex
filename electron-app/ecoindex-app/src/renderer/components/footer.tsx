@@ -12,7 +12,7 @@ export const Footer = ({
     repoUrl: string
 }) => {
     const { t } = useTranslation()
-    const currentYear = '1245'
+    const currentYear = new Date(Date.now()).getFullYear()
     return (
         <div className="text-center text-sm">
             <p className="text-xs">
@@ -33,11 +33,8 @@ export const Footer = ({
             </p>
             {/* <p className="mt-2">{t('© 2024 - Made with ❤️ and 🌱 by')}</p> */}
             <p className="mt-2">
-                <Trans
-                    i18nKey="footerCopyright"
-                    currentYear={new Date(Date.now()).getFullYear()}
-                >
-                    © {{ currentYear }} - Made with ❤️ and 🌱 by'
+                <Trans i18nKey="footerCopyright" currentYear={currentYear}>
+                    © {{ currentYear }} - Made with ❤️ and 🌱 by
                 </Trans>
             </p>
             <p className="my-4 grid place-content-center">

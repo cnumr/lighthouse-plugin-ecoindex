@@ -62,7 +62,7 @@ window.electronAPI.sendMessageToFrontLog(
 //     }
 // })
 
-console.log('👋 Welcome to Ecoindex mesures launcher!')
+console.log('👋 Welcome to Ecoindex measures launcher!')
 console.log(
     '💡 More informations : https://cnumr.github.io/lighthouse-plugin-ecoindex/ and https://www.ecoindex.fr/'
 )

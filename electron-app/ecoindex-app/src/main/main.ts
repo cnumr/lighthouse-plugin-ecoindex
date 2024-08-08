@@ -59,7 +59,7 @@ if (require('electron-squirrel-startup')) {
 
 log.initialize()
 const mainLog = log.scope('main')
-log.info(`******************** APP IS STRATING ********************`)
+log.info(`******************** APP IS STARTING ********************`)
 
 // const execFile = util.promisify(_execFile);
 
@@ -186,23 +186,31 @@ const _createMainWindow = (): void => {
 
     try {
         i18n.on('loaded', (loaded) => {
-            i18n.changeLanguage('en')
-            i18n.off('loaded')
+            try {
+                i18n.changeLanguage('en')
+                i18n.off('loaded')
+            } catch (error) {
+                //
+            }
         })
         i18n.on('languageChanged', (lng) => {
-            getMainWindow().webContents.send(
-                channels.CHANGE_LANGUAGE_TO_FRONT,
-                lng
-            )
             try {
-                getWelcomeWindow().webContents.send(
-                    channels.CHANGE_LANGUAGE_TO_FRONT,
-                    lng
-                )
+                i18n.isInitialized &&
+                    getMainWindow().webContents.send(
+                        channels.CHANGE_LANGUAGE_TO_FRONT,
+                        lng
+                    )
+                i18n.isInitialized &&
+                    !getWelcomeWindow().isDestroyed() &&
+                    getWelcomeWindow().webContents.send(
+                        channels.CHANGE_LANGUAGE_TO_FRONT,
+                        lng
+                    )
+                i18n.isInitialized &&
+                    menuFactoryService.buildMenu(app, getMainWindow(), i18n)
             } catch (error) {
-                mainLog.error(error)
+                // Welcome Window is distroyed on close, i need to catch
             }
-            menuFactoryService.buildMenu(app, getMainWindow(), i18n)
         })
     } catch (error) {
         mainLog.error(`i18n`, error)
@@ -257,42 +265,6 @@ const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
         mainLog.error('Error in _sendMessageToFrontLog', error)
     }
 }
-
-// /**
-//  * Write a log file in output dir / workDir
-//  * @param message string
-//  * @param optionalParams string[]
-//  */
-// function _sendMessageToLogFile(message?: any, ...optionalParams: any[]) {
-//     const toStr = (inp: any) => {
-//         try {
-//             if (typeof inp !== 'string') {
-//                 return JSON.stringify(inp, null, 2)
-//             }
-//             return inp
-//         } catch (error) {
-//             return JSON.stringify(error, null, 2)
-//         }
-//     }
-//     const stout = toStr(message) + ' ' + optionalParams.map((str) => toStr(str))
-//     mainLog.debug(stout)
-//     return
-//     if (!getWorkDir()) {
-//         setWorkDir(getHomeDir())
-//     }
-//     const logFilePath = getLogFilePathFromDir(getWorkDir())
-
-//     if (!getLogSteam()) {
-//         setLogStream(logFilePath)
-//         getLogSteam().write('')
-//     }
-
-//     try {
-//         getLogSteam().write(stout + '\n')
-//     } catch (error) {
-//         getLogSteam().write(JSON.stringify(error, null, 2))
-//     }
-// }
 
 /**
  * Utils, Send data to Front.
@@ -434,7 +406,7 @@ async function _runCollect(
 
         childProcess.on('close', (code) => {
             _debugLogs(`Child process close with code ${code}`)
-            _debugLogs('Mesure done 🚀')
+            _debugLogs('Measure done 🚀')
         })
 
         childProcess.stdout.on('data', (data) => {
@@ -663,7 +635,7 @@ const handleSimpleCollect = async (
     })
 
     const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
-    _debugLogs('Simple mesure start, process intialization...')
+    _debugLogs('Simple measure start, process intialization...')
     _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
     try {
         urlsList.forEach((url) => {
@@ -770,14 +742,14 @@ const handleJsonSaveAndCollect = async (
                 body: 'Json file saved.',
             })
         } else {
-            if (isDev()) mainLog.debug('Json mesure start...')
+            if (isDev()) mainLog.debug('Json measure start...')
 
             const {
                 command,
                 nodeDir,
                 workDir: _workDir,
             } = await _prepareCollect()
-            _debugLogs('Json mesure start...')
+            _debugLogs('Json measure start...')
             _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
             command.push('--json-file')
             command.push(_workDir + '/' + utils.JSON_FILE_NAME)
@@ -791,10 +763,10 @@ const handleJsonSaveAndCollect = async (
             }
             _showNotification({
                 subtitle: '🎉 JSON collect',
-                body: `Mesures done, you can consult reports in\n${_workDir}`,
+                body: `Measures done, you can consult reports in\n${_workDir}`,
             })
             _debugLogs('Json collect done 🚀')
-            return 'mesure done'
+            return 'measure done'
         }
     } catch (error) {
         if (!andCollect) {
