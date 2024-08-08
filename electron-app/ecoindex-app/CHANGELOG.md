@@ -1,5 +1,26 @@
 
 
+# [1.3.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.28...electron-v1.3.0) (2024-08-08)
+
+
+### Bug Fixes
+
+* localization file well exported in packaged app ([e994b5d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e994b5d201a80839c1ab638aae3e9aaf7246669b))
+* typofix ([c97df5e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c97df5eec9dae42786e19d9459d23139f1c9b0c8))
+
+
+### Features
+
+* add Dark mode detector on Splash ([d4a3ad3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d4a3ad3e03dcfb9ff7e52d1c0e28ec270d0af841))
+* continue init renderer translation ([fd178ce](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fd178ceeca37188adb640736037d7d2686b69e21))
+* continue translate and fixing errors ([d2b8917](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d2b8917a25da3bbf07ba0bb9768fdfe1e8d697c0))
+* language in Splash window ok + babel to generate missing traductions ([92744c5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/92744c50a4f4bd1ded57aea6f3af55743c189861))
+* new translation menu and init i18n ([fde3549](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fde354928b15ec834e4e674338f37517cacb2fe5))
+* traduction ok on App, todo Hello 🎉 ([d201b2f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d201b2fc9bfa82ecce8aa8065c279e578154f730))
+* transation continue (missing main to renderer switch) ([ef5907e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ef5907ea8043ff4f104ccfcb6f73bfa64c38b78c))
+* translation done ([e45d681](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e45d681b4fcfc000307521525353696ddc9491b8))
+* translation ready ([e317dd3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e317dd3dbca608685a311d948608430d97e62dac))
+
 ## [1.2.1-rc.28](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.27...electron-v1.2.1-rc.28) (2024-08-04)
 
 
