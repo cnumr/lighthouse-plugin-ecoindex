@@ -127,7 +127,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          prerelease: true
           name: Release Electron-app ${{ steps.info.outputs.version }}
           tag_name: electron-v${{ steps.info.outputs.version }}
           files: |
