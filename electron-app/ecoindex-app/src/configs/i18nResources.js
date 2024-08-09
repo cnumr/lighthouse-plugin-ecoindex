@@ -12,7 +12,7 @@ try {
     )
         .on('failedLoading', (lng, ns, msg) => console.error(msg))
         .init({
-            debug: true,
+            debug: false,
             fallbackLng: 'en',
             interpolation: {
                 escapeValue: false, // not needed for react as it escapes by default

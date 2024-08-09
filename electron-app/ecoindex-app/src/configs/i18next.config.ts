@@ -14,7 +14,7 @@ try {
     const root = process.cwd()
     const { isPackaged } = app
     const i18nextOptions = {
-        debug: true,
+        debug: !IS_PROD,
         backend: {
             // path where resources get loaded from
             // loadPath: './src/locales/{{lng}}/{{ns}}.json',
