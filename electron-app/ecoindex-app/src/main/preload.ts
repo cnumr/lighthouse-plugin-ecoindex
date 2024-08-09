@@ -41,6 +41,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
         ipcRenderer.invoke(channels.INSTALL_ECOINDEX_PLUGIN),
     handleLighthouseEcoindexPluginUpdate: () =>
         ipcRenderer.invoke(channels.UPDATE_ECOINDEX_PLUGIN),
+    handleInstallPuppeteerBrowser: () =>
+        ipcRenderer.invoke(channels.INSTALL_PUPPETEER_BROWSER),
 
     // Main → Front
     sendLogToFront: (callback: any) =>

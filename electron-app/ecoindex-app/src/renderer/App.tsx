@@ -298,6 +298,14 @@ function TheApp() {
 
     useEffect(() => {
         /**
+         * Handlers, install Puppeteer Browser on Host
+         */
+        const installPuppeteerBrowser = async () => {
+            const result =
+                await window.electronAPI.handleInstallPuppeteerBrowser()
+            frontLog.debug(`installPuppeteerBrowser`, result)
+        }
+        /**
          * Handlers, Node Version
          */
         const fetchNodeVersion = async () => {
@@ -368,9 +376,11 @@ function TheApp() {
         fetchWorkDir().then(() => {
             fetchHomeDir()
             fetchNodeInstalled().then(() => {
-                fetchNodeVersion().then(() => {
-                    fetchLighthouseEcoindexPluginInstalled().then(() => {
-                        fetchUpdateEcoindexPlugin()
+                installPuppeteerBrowser().then(() => {
+                    fetchNodeVersion().then(() => {
+                        fetchLighthouseEcoindexPluginInstalled().then(() => {
+                            fetchUpdateEcoindexPlugin()
+                        })
                     })
                 })
             })
@@ -403,7 +413,10 @@ function TheApp() {
             try {
                 i18nResources.changeLanguage(lng, (err, t) => {
                     if (err)
-                        return frontLog.log('something went wrong loading', err)
+                        return frontLog.error(
+                            'something went wrong loading',
+                            err
+                        )
                     t('key') // -> same as i18next.t
                 })
             } catch (error) {
@@ -416,8 +429,8 @@ function TheApp() {
      * Handler, check and update if App is ready to use.
      */
     const checkAppReady = () => {
-        frontLog.log('isNodeInstalled', isNodeInstalled)
-        frontLog.log(
+        frontLog.debug('isNodeInstalled', isNodeInstalled)
+        frontLog.debug(
             'isLighthouseEcoindexPluginInstalled',
             isLighthouseEcoindexPluginInstalled
         )
@@ -436,18 +449,18 @@ function TheApp() {
         // })
 
         // i18next.changeLanguage(language)
-        frontLog.log('language', language)
+        frontLog.debug('language', language)
     }, [language])
 
     /**
      * Display information in log and check if App is ready.
      */
     const logEventAndCheckAppReady = useCallback((name: string) => {
-        frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-        frontLog.log(`Binded on [${name}]`)
+        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.debug(`Binded on [${name}]`)
         checkAppReady()
-        frontLog.log(`appReady`, appReady)
-        frontLog.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.debug(`appReady`, appReady)
+        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
     }, [])
 
     /**
