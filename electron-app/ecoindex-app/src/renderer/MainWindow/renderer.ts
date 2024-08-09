@@ -1,7 +1,7 @@
-import './index.css'
+import '../styles/index.css'
 import './index.tsx'
 
-import { cleanLogString } from '../main/utils'
+import { cleanLogString } from '../../main/utils'
 import log from 'electron-log/renderer'
 
 const frontLog = log.scope('front/renderer')

@@ -2,7 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from 'electron'
 
-import { channels } from '../shared/constants'
+import { channels } from '../../shared/constants'
 
 contextBridge.exposeInMainWorld('versions', {
     node: () => process.versions.node,

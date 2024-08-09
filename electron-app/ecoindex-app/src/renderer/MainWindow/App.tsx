@@ -1,36 +1,34 @@
-import './index.css'
-
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card'
+} from '../ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
-import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
 import { useCallback, useEffect, useState } from 'react'
 
-import { AlertBox } from './components/Alert'
+import { AlertBox } from '../components/Alert'
 import { Bug } from 'lucide-react'
 import { Button } from '@/renderer/ui/button'
-import { ConsoleApp } from './components/console'
-import { DarkModeSwitcher } from './components/dark-mode-switcher'
-import { Footer } from './components/footer'
-import { Header } from './components/Header'
-import { Input } from './ui/input'
-import { JsonPanMesure } from './components/json-pan'
-import { PopinLoading } from './components/loading-popin'
+import { ConsoleApp } from '../components/console'
+import { DarkModeSwitcher } from '../components/dark-mode-switcher'
+import { Footer } from '../components/footer'
+import { Header } from '../components/Header'
+import { Input } from '../ui/input'
+import { JsonPanMesure } from '../components/json-pan'
+import { PopinLoading } from '../components/loading-popin'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { SimplePanMesure } from './components/simple-pan'
-import { SimpleTooltip } from './components/simple-tooltip'
+import { SimplePanMesure } from '../components/simple-pan'
+import { SimpleTooltip } from '../components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
-import { TypographyP } from './ui/typography/TypographyP'
-import i18nResources from '../configs/i18nResources'
+import { TypographyP } from '../ui/typography/TypographyP'
+import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
-import packageJson from '../../package.json'
+import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
-import { utils } from '../shared/constants'
+import { utils } from '../../shared/constants'
 
 const frontLog = log.scope('front/App')
 

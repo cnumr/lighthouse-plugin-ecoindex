@@ -130,19 +130,19 @@ const config: ForgeConfig = {
                 config: rendererConfig,
                 entryPoints: [
                     {
-                        html: './src/renderer/index.html',
-                        js: './src/renderer/renderer.ts',
+                        html: './src/renderer/MainWindow/index.html',
+                        js: './src/renderer/MainWindow/renderer.ts',
                         name: 'main_window',
                         preload: {
-                            js: './src/main/preload.ts',
+                            js: './src/renderer/MainWindow/preload.ts',
                         },
                     },
                     {
-                        html: './src/renderer/Hello/hello.html',
-                        js: './src/renderer/Hello/helloRenderer.ts',
+                        html: './src/renderer/HelloWindow/index.html',
+                        js: './src/renderer/HelloWindow/renderer.ts',
                         name: 'hello_window',
                         preload: {
-                            js: './src/renderer/Hello/helloPreload.ts',
+                            js: './src/renderer/HelloWindow/preload.ts',
                         },
                     },
                 ],
