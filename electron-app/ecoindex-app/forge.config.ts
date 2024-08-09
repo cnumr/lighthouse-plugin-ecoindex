@@ -73,6 +73,7 @@ const config: ForgeConfig = {
         new MakerDMG(
             {
                 format: 'ULFO',
+                background: path.resolve(__dirname, 'assets', 'dmgbg.png'),
                 icon: path.resolve(__dirname, 'assets', 'app-ico.icns'),
                 overwrite: true,
             },
