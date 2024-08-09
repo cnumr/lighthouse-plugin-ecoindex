@@ -5,16 +5,16 @@
     <key>com.apple.security.cs.allow-jit</key>
     <true/>
     <key>com.apple.security.device.audio-input</key>
-    <true/>
+    <false/>
     <key>com.apple.security.device.bluetooth</key>
-    <true/>
+    <false/>
     <key>com.apple.security.device.camera</key>
-    <true/>
+    <false/>
     <key>com.apple.security.device.print</key>
-    <true/>
+    <false/>
     <key>com.apple.security.device.usb</key>
-    <true/>
+    <false/>
     <key>com.apple.security.personal-information.location</key>
-    <true/>
+    <false/>
   </dict>
 </plist>
