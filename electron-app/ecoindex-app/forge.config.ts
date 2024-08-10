@@ -29,7 +29,6 @@ const config: ForgeConfig = {
             './src/extraResources/scripts',
             './src/locales',
             './node_modules/puppeteer',
-            './node_modules/lighthouse-plugin-ecoindex',
         ],
         win32metadata: {
             CompanyName: 'Green IT',
