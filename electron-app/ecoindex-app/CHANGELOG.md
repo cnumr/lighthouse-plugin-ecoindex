@@ -1,5 +1,12 @@
 
 
+## [1.3.1-rc.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.1...electron-v1.3.1-rc.2) (2024-08-10)
+
+
+### Bug Fixes
+
+* try to fix hangup generation on GitHub ([fe0577d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fe0577dbc84d039126567a8313cb9194c8b87fab))
+
 ## [1.3.1-rc.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.0...electron-v1.3.1-rc.1) (2024-08-10)
 
 
