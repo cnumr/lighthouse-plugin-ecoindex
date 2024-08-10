@@ -6,7 +6,9 @@
 name: Release Electron app
 on:
   push:
-    tags: electron-v*
+    tags:
+      - 'electron-v*'
+  workflow_dispatch:
 
 defaults:
   run:
