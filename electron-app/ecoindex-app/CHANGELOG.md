@@ -1,5 +1,24 @@
 
 
+## [1.3.1-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.0...electron-v1.3.1-rc.0) (2024-08-10)
+
+
+### Bug Fixes
+
+* add missing translation ([1b394ed](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1b394ed83c106ff9b9a9a5e85f34496be57eeb25))
+
+
+### Features
+
+* add custom background on installer DMG ([2237704](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2237704e3bf2eeea3a2e28da6cfdc6359d6de444))
+* add workflow to create tag on GitHub ([e9b9445](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e9b94451574a1066a916aad9a12b7916d8f90370))
+* change window Name ([a649ed6](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a649ed62f78757d3c932b999edc113b08ce5d1d0))
+* enable debug i18n only on DEV ([f763023](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f76302391a6dc4c9631917f53cc0544ad815c2eb))
+* refactoring ([0161796](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/01617968ebc28da51beba90f47ef56b512d1320a))
+* rm creation release (tag) from GitHub, filter on push with tag electron ([2a711b0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/2a711b0f673361e03a6b6189dd0ea9582beb5e89))
+* starting switching using internal Electron node ([636200c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/636200c3fe6b9ac674cec6f3676d6adf518cbcaa))
+* try to use internal node and refactoring ([c53105b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c53105be4427393fb7a95a1a27b607101ea67c4c))
+
 # [1.3.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.2.1-rc.28...electron-v1.3.0) (2024-08-08)
 
 
