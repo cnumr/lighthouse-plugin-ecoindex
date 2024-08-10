@@ -48,11 +48,15 @@ import {
 import Updater from './Updater'
 import fixPath from 'fix-path'
 import fs from 'fs'
+import { handleInstallPuppeteerBrowser } from './handlers/PuppeteerBrowserInstall'
+import { handleInstallSudoPuppeteerBrowser } from './handlers/SudoPuppeteerBrowserInstall'
 import i18n from '../configs/i18next.config'
+import { isAdmin } from './handlers/IsAdminOnHost'
+import { isLighthousePluginEcoindexInstalled } from './handlers/isLighthousePluginEcoindexInstalled'
+import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInstalled'
 import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
-import puppeteer from 'puppeteer'
 
 if (require('electron-squirrel-startup')) {
     app.quit()
@@ -129,10 +133,22 @@ app.on('ready', () => {
             channels.UPDATE_ECOINDEX_PLUGIN
         )
     )
-    ipcMain.handle(
-        channels.INSTALL_PUPPETEER_BROWSER,
-        handleInstallPuppeteerBrowser
-    )
+    // Not used for the moment...
+    ipcMain.handle(channels.INSTALL_PUPPETEER_BROWSER, () => {
+        isLighthousePluginEcoindexInstalled(log)
+            .then(() => {
+                mainLog.debug(`LighthousePluginEcoindexInstalled 👍`)
+            })
+            .catch(() => {
+                mainLog.error(`LighthousePluginEcoindex not Installed 🚫`)
+            })
+        isPupperteerBrowserInstalled(log)
+        if (isAdmin(log)) {
+            handleInstallPuppeteerBrowser(log, null, _echoReadable)
+        } else {
+            handleInstallSudoPuppeteerBrowser(log)
+        }
+    })
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
         applicationVersion: packageJson.name,
@@ -511,73 +527,6 @@ const handleNodeInstalled: any = async (event: IpcMainEvent) => {
         }
     } catch (error) {
         mainLog.error(`Check is Node Installed failed 🚫`, error)
-    }
-}
-
-const handleInstallPuppeteerBrowser = async (event?: IpcMainEvent) => {
-    try {
-        const env = {
-            ...process.env,
-            PATH: `${process.env.PATH}:/usr/local/bin`,
-        }
-        return new Promise((resolve, reject) => {
-            const childProcess: ChildProcess = fork(
-                'node_modules/puppeteer/install.mjs',
-                {
-                    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-                    env: env,
-                }
-            )
-
-            childProcess.on('exit', (code, signal) => {
-                mainLog.debug(
-                    `handleInstallPuppeteerBrowser exited: ${code}; signal: ${signal}`
-                )
-            })
-
-            childProcess.on('close', (code) => {
-                mainLog.debug(`handleInstallPuppeteerBrowser closed: ${code}`)
-                if (code === 0) {
-                    // _sendMessageToFrontLog(`${config['actionShortName']} done 🚀`)
-                    mainLog.debug(`handleInstallPuppeteerBrowser done 🚀`)
-                    mainLog.debug(
-                        `puppeteer.executablePath()`,
-                        puppeteer.executablePath()
-                    )
-                    resolve(`handleInstallPuppeteerBrowser done 🚀`)
-                } else {
-                    reject(`handleInstallPuppeteerBrowser failed 🚫`)
-                }
-
-                if (childProcess.stderr) {
-                    childProcess.stderr.on('data', (data) => {
-                        mainLog.debug(
-                            `handleInstallPuppeteerBrowser stderr: ${data}`
-                        )
-                    })
-                }
-            })
-
-            childProcess.on('disconnect', () => {
-                mainLog.debug(
-                    `handleInstallPuppeteerBrowser Child process disconnected`
-                )
-            })
-
-            childProcess.on('message', (message, sendHandle) => {
-                mainLog.debug(
-                    `handleInstallPuppeteerBrowser Child process message: ${message}`
-                )
-            })
-
-            if (childProcess.stdout) {
-                childProcess.stdout.on('data', (data) => {
-                    _echoReadable(event, childProcess.stdout)
-                })
-            }
-        })
-    } catch (error) {
-        mainLog.error(`handleInstallPuppeteerBrowser Error`, error)
     }
 }
 

@@ -299,9 +299,21 @@ function TheApp() {
          * Handlers, install Puppeteer Browser on Host
          */
         const installPuppeteerBrowser = async () => {
-            const result =
-                await window.electronAPI.handleInstallPuppeteerBrowser()
-            frontLog.debug(`installPuppeteerBrowser`, result)
+            return new Promise<string | boolean>((result, reject) => {
+                window.electronAPI
+                    .handleInstallPuppeteerBrowser()
+                    .then((value) => {
+                        frontLog.debug(`installPuppeteerBrowser Done 🎉`, value)
+                        result(value)
+                    })
+                    .catch((value) => {
+                        frontLog.error(
+                            `installPuppeteerBrowser Failed 🚫`,
+                            value
+                        )
+                        reject(value)
+                    })
+            })
         }
         /**
          * Handlers, Node Version
@@ -374,11 +386,12 @@ function TheApp() {
         fetchWorkDir().then(() => {
             fetchHomeDir()
             fetchNodeInstalled().then(() => {
-                installPuppeteerBrowser().then(() => {
-                    fetchNodeVersion().then(() => {
-                        fetchLighthouseEcoindexPluginInstalled().then(() => {
-                            fetchUpdateEcoindexPlugin()
-                        })
+                // installPuppeteerBrowser().then(() => {
+                //     //
+                // })
+                fetchNodeVersion().then(() => {
+                    fetchLighthouseEcoindexPluginInstalled().then(() => {
+                        fetchUpdateEcoindexPlugin()
                     })
                 })
             })

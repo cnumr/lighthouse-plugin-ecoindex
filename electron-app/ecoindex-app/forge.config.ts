@@ -2,13 +2,11 @@ import * as path from 'node:path'
 
 import { FuseV1Options, FuseVersion } from '@electron/fuses'
 
-import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives'
 import type { ForgeConfig } from '@electron-forge/shared-types'
 import { FusesPlugin } from '@electron-forge/plugin-fuses'
 import { MakerDMG } from '@electron-forge/maker-dmg'
 import { MakerDeb } from '@electron-forge/maker-deb'
 import { MakerRpm } from '@electron-forge/maker-rpm'
-import { MakerSquirrel } from '@electron-forge/maker-squirrel'
 import { MakerZIP } from '@electron-forge/maker-zip'
 import { WebpackPlugin } from '@electron-forge/plugin-webpack'
 import { mainConfig } from './webpack.main.config'
@@ -20,19 +18,22 @@ const { version } = packageJson
 const config: ForgeConfig = {
     packagerConfig: {
         executableName:
-            process.platform === 'linux'
-                ? 'ecoindex-lighthouse'
-                : 'EcoindexLighthouse',
+            process.platform === 'linux' ? 'ecoindex-app' : 'EcoindexApp',
         appBundleId: 'io.greenit.ecoindex-ligthouse',
         appCategoryType: 'public.app-category.developer-tools',
         appCopyright: 'Copyright 2024-2030 Green IT',
         darwinDarkModeSupport: true,
         asar: true,
         icon: path.resolve(__dirname, 'assets', 'app-ico'),
-        extraResource: ['./src/extraResources/scripts', './src/locales'],
+        extraResource: [
+            './src/extraResources/scripts',
+            './src/locales',
+            './node_modules/puppeteer',
+            './node_modules/lighthouse-plugin-ecoindex',
+        ],
         win32metadata: {
             CompanyName: 'Green IT',
-            OriginalFilename: 'EcoindexLighthouse',
+            OriginalFilename: 'Ecoindex',
         },
         osxSign: {
             optionsForFile: (filePath) => {
@@ -84,7 +85,7 @@ const config: ForgeConfig = {
             platforms: ['win32'],
             config: (arch: string) => {
                 return {
-                    setupExe: `EcoindexLighthouse-win32-${arch}-${version} Setup.exe`,
+                    setupExe: `EcoindexApp-win32-${arch}-${version} Setup.exe`,
                     setupIcon: path.resolve(__dirname, 'assets', 'app-ico.ico'),
                     // certificateFile: './cert.pfx',
                     // certificatePassword: process.env.CERTIFICATE_PASSWORD,
@@ -92,7 +93,7 @@ const config: ForgeConfig = {
                     description:
                         'An application to measure the ecological impact of a website with LightHouse and Ecoindex.',
                     language: 1033,
-                    name: `EcoindexLighthouse`,
+                    name: `Ecoindex`,
                 }
             },
         },
