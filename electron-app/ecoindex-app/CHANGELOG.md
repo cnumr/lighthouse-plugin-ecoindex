@@ -1,5 +1,13 @@
 
 
+## [1.3.1-rc.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.0...electron-v1.3.1-rc.1) (2024-08-10)
+
+
+### Bug Fixes
+
+* build error linux ([6f67abb](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6f67abbbe2765f2a8719e3457472d33e722c9811))
+* typofix and missing workflow_dispatch ([903dea5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/903dea509a87dd6ea006dfbbb00d1e83499d8cb0))
+
 ## [1.3.1-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.0...electron-v1.3.1-rc.0) (2024-08-10)
 
 
