@@ -1,5 +1,12 @@
 
 
+## [1.3.1-rc.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.3...electron-v1.3.1-rc.4) (2024-08-10)
+
+
+### Bug Fixes
+
+* rm missing extraResources ([7ebc90b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/7ebc90b03e4aa060436054d0076d0f29a2c45fa0))
+
 ## [1.3.1-rc.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.2...electron-v1.3.1-rc.3) (2024-08-10)
 
 
