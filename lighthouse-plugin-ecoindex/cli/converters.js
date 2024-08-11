@@ -1,6 +1,6 @@
 import * as path from 'node:path'
 
-import { getEcoIndexGrade } from 'ecoindex'
+import { getEcoIndexGrade } from '../utils/EcoindexJS.js'
 
 /**
  * Convertion base

@@ -47,7 +47,7 @@
     "release-it": "^17.0.0"
   },
   "dependencies": {
-    "ecoindex": "^1.0.5",
+    "ecoindex_reference": "^1.0.2",
     "handlebars": "^4.7.8",
     "jsdom": "^22.1.0",
     "lighthouse": "^11.7.0",
