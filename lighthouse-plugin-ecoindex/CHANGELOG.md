@@ -1,5 +1,12 @@
 
 
+## [4.1.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.6...4.1.1) (2024-08-11)
+
+
+### Features
+
+* add ecoindex-js and ecoindex_reference inside the package to rm alert on assert json ([b8dcfe0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b8dcfe0e83cf49ef661d2089000ca0fb0a8202bb))
+
 ## [4.0.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.5...4.0.6) (2024-08-01)
 
 
