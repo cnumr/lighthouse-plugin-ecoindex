@@ -8,13 +8,15 @@
 
 ## TODO
 
--   [ ] Set icon
--   [ ] Build on OS
+see https://github.com/cnumr/lighthouse-plugin-ecoindex/issues
+
+-   [x] Set icon
+-   [x] Build on OS
     -   [x] Mac (sign with Apple Dev)
-    -   [ ] Windows
+    -   [x] Windows
     -   [ ] Linux
--   [ ] Auto build with CI/CD
--   [ ] Translate
+-   [x] Auto build with CI/CD
+-   [x] Translat
 -   [x] Create simple mesure
 -   [ ] ~~Use path /usr/bin and /usr/bin/which to launch node `/usr/bin/which node` and npm `/usr/bin/which npm` action~~
 -   [x] Fix not showing buttons to install plugin
