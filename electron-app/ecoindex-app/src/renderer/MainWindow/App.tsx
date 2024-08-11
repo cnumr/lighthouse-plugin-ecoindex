@@ -37,12 +37,13 @@ function TheApp() {
   const [progress, setProgress] = useState(0)
   const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
   const [nodeVersion, setNodeVersion] = useState('')
-  const [workDir, setWorkDir] = useState('chargement...')
-  const [homeDir, setHomeDir] = useState('chargement...')
+  const [workDir, setWorkDir] = useState('loading...')
+  const [homeDir, setHomeDir] = useState('loading...')
   const [appReady, setAppReady] = useState(false)
   const [datasFromHost, setDatasFromHost] = useState({})
   const [displayPopin, setDisplayPopin] = useState(true)
   const [popinText, setPopinText] = useState('Loading... 0/4')
+  const [pluginVersion, setPluginVersion] = useState('loading...')
 
   let loadingScreen = 0
   const [urlsList, setUrlsList] = useState<InputField[]>([
@@ -250,26 +251,16 @@ function TheApp() {
     window.open(`https://nodejs.org/en/download/prebuilt-installer`, `_blank`)
   }
 
-  /**
-   * Handler to install Puppetter, Puppetter/Chrome Browser and lighthouse-plugin-ecoindex.
-   */
-  const installEcoindexPlugin = async () => {
-    try {
-      await window.electronAPI.handleLighthouseEcoindexPluginInstall()
-    } catch (error) {
-      frontLog.error(`installEcoindexPlugin`, error)
-    }
-  }
-  /**
-   * Handler to force update/reinstall lighthouse-plugin-ecoindex.
-   */
-  const updateEcoindexPlugin = async () => {
-    try {
-      await window.electronAPI.handleLighthouseEcoindexPluginUpdate()
-    } catch (error) {
-      frontLog.error(`updateEcoindexPlugin`, error)
-    }
-  }
+  // /**
+  //  * Handler to install Puppetter, Puppetter/Chrome Browser and lighthouse-plugin-ecoindex.
+  //  */
+  // const installEcoindexPlugin = async () => {
+  //   try {
+  //     await window.electronAPI.handleLighthouseEcoindexPluginInstall()
+  //   } catch (error) {
+  //     frontLog.error(`installEcoindexPlugin`, error)
+  //   }
+  // }
 
   /**
    * Utils, wait method.
@@ -357,11 +348,29 @@ function TheApp() {
       increment()
     }
 
+    // /**
+    //  * Handler, force update of lighthouse-plugin-ecoindex
+    //  */
+    // const fetchUpdateEcoindexPlugin = async () => {
+    //   if (isLighthouseEcoindexPluginInstalled) await updateEcoindexPlugin()
+    // }
     /**
      * Handler, force update of lighthouse-plugin-ecoindex
      */
-    const fetchUpdateEcoindexPlugin = async () => {
-      if (isLighthouseEcoindexPluginInstalled) await updateEcoindexPlugin()
+    const fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated = async () => {
+      try {
+        const result =
+          await window.electronAPI.isLighthousePluginEcoindexMustBeInstallOrUpdated()
+        setIsLighthouseEcoindexPluginInstalled(result.result)
+        setPluginVersion(result.version)
+        frontLog.debug(result.message)
+        increment()
+      } catch (error) {
+        frontLog.error(
+          `fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated`,
+          error,
+        )
+      }
     }
 
     /**
@@ -379,13 +388,11 @@ function TheApp() {
     fetchWorkDir().then(() => {
       fetchHomeDir()
       fetchNodeInstalled().then(() => {
-        // installPuppeteerBrowser().then(() => {
-        //     //
-        // })
         fetchNodeVersion().then(() => {
-          fetchLighthouseEcoindexPluginInstalled().then(() => {
-            fetchUpdateEcoindexPlugin()
-          })
+          // installPuppeteerBrowser().then(() => {
+          //   //
+          // })
+          fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated()
         })
       })
     })
@@ -568,13 +575,13 @@ function TheApp() {
                     'Your Node installation is outdated, you must upgrade it to 20 or upper, upgrade it (you must be admin of your computer)! After upgrade, restart application.',
                   )}
                 </span>
-                <Button variant="destructive" onClick={installEcoindexPlugin}>
+                <Button variant="destructive" onClick={installNode}>
                   {t('Upgrade')}
                 </Button>
               </div>
             </AlertBox>
           )}
-          {isNodeVersionOK && !isLighthouseEcoindexPluginInstalled && (
+          {/* {isNodeVersionOK && !isLighthouseEcoindexPluginInstalled && (
             <AlertBox title="Error on Ecoindex">
               <div className="flex items-center justify-between gap-4">
                 <span>
@@ -591,7 +598,7 @@ function TheApp() {
                 </Button>
               </div>
             </AlertBox>
-          )}
+          )} */}
           {(!isNodeInstalled ||
             !isLighthouseEcoindexPluginInstalled ||
             !isNodeVersionOK) && (
@@ -690,6 +697,7 @@ function TheApp() {
         </div>
         <Footer
           nodeVersion={nodeVersion}
+          pluginVersion={pluginVersion}
           appVersion={packageJson.version}
           repoUrl={packageJson.homepage}
         />

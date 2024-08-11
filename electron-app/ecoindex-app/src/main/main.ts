@@ -1,51 +1,51 @@
 import * as menuFactoryService from '../services/menuFactory'
 
-import { BrowserWindow, IpcMainEvent, app, ipcMain } from 'electron'
+import { BrowserWindow, app, ipcMain } from 'electron'
 import {
-    getMainWindow,
-    getWelcomeWindow,
-    hasShowWelcomeWindow,
-    isDev,
-    setHasShowedWelcomeWindow,
-    setMainWindow,
-    setWelcomeWindow,
+  getMainWindow,
+  getWelcomeWindow,
+  hasShowWelcomeWindow,
+  isDev,
+  setHasShowedWelcomeWindow,
+  setMainWindow,
+  setWelcomeWindow,
 } from '../shared/memory'
 import {
-    handleJsonSaveAndCollect,
-    handleSimpleCollect,
+  handleJsonSaveAndCollect,
+  handleSimpleCollect,
 } from './handlers/HandleCollectAll'
 
-import Updater from './Updater'
-import { channels } from '../shared/constants'
+import log from 'electron-log/main'
 import fixPath from 'fix-path'
+import os from 'os'
+import packageJson from '../../package.json'
+import i18n from '../configs/i18next.config'
+import { channels } from '../shared/constants'
+import Updater from './Updater'
+import { handleNodeInstalled } from './handlers/HandleGetNodeDir_NpmDir'
 import { handleGetNodeVersion } from './handlers/HandleGetNodeVersion'
 import { handleHomeDir } from './handlers/HandleHomeDir'
-import { handleInstallPuppeteerBrowser } from './handlers/PuppeteerBrowserInstall'
-import { handleInstallSudoPuppeteerBrowser } from './handlers/SudoPuppeteerBrowserInstall'
 import { handleIsJsonConfigFileExist } from './handlers/HandleIsJsonConfigFileExist'
 import { handleJsonReadAndReload } from './handlers/HandleJsonReadAndReload'
-import { handleNodeInstalled } from './handlers/HandleGetNodeDir_NpmDir'
 import { handlePluginInstalled } from './handlers/HandlePluginInstalled'
 import { handleSelectFolder } from './handlers/HandleSelectFolder'
 import { handleWorkDir } from './handlers/HandleWorkDir'
-import { handle_CMD_Actions } from './handlers/HandleCMDActions'
-import i18n from '../configs/i18next.config'
 import { isAdmin } from './handlers/IsAdminOnHost'
-import { isLighthousePluginEcoindexInstalled } from './handlers/isLighthousePluginEcoindexInstalled'
+import { isLighthousePluginEcoindexMustBeInstallOrUpdated } from './handlers/IsLighthousePluginEcoindexMustBeInstallOrUpdated'
 import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInstalled'
-import log from 'electron-log/main'
-import os from 'os'
-import packageJson from '../../package.json'
+import { handleInstallPuppeteerBrowser } from './handlers/PuppeteerBrowserInstall'
+import { handleInstallSudoPuppeteerBrowser } from './handlers/SudoPuppeteerBrowserInstall'
+import { isLighthousePluginEcoindexInstalled } from './handlers/isLighthousePluginEcoindexInstalled'
 
 if (require('electron-squirrel-startup')) {
-    app.quit()
+  app.quit()
 }
 
 log.initialize()
 const mainLog = log.scope('main')
 
 export const getMainLog = () => {
-    return log
+  return log
 }
 log.info(`******************** APP IS STARTING ********************`)
 
@@ -63,105 +63,105 @@ declare const HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY: string
  * Helpers, Fix Path
  */
 const _runfixPath = () => {
-    if (isDev()) mainLog.debug(`RUN fixPath and shellEnv`)
-    fixPath()
-    if (os.platform() === 'darwin') {
-        if (isDev()) mainLog.debug(`darwin`)
-        const { shell } = os.userInfo()
-        if (isDev()) mainLog.debug(`shell`, shell)
-    } else {
-        if (isDev()) mainLog.debug(`win32`)
-        if (isDev()) mainLog.debug(`shell`, `cmd.exe`)
-    }
+  if (isDev()) mainLog.debug(`RUN fixPath and shellEnv`)
+  fixPath()
+  if (os.platform() === 'darwin') {
+    if (isDev()) mainLog.debug(`darwin`)
+    const { shell } = os.userInfo()
+    if (isDev()) mainLog.debug(`shell`, shell)
+  } else {
+    if (isDev()) mainLog.debug(`win32`)
+    if (isDev()) mainLog.debug(`shell`, `cmd.exe`)
+  }
 }
 _runfixPath()
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
-    app.quit()
+  app.quit()
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-    // simple handlers
-    ipcMain.handle(channels.SIMPLE_MESURES, handleSimpleCollect)
-    // json handlers
-    ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSaveAndCollect)
-    ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
-    // communs handlers and getters
-    ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
-    ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
-    ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
-    ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
-    ipcMain.handle(
-        channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED,
-        handlePluginInstalled
-    )
-    ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)
-    ipcMain.handle(
-        channels.IS_JSON_CONFIG_FILE_EXIST,
-        handleIsJsonConfigFileExist
-    )
-    ipcMain.handle(channels.INSTALL_ECOINDEX_PLUGIN, (event) =>
-        handle_CMD_Actions(
-            event as IpcMainEvent,
-            channels.INSTALL_ECOINDEX_PLUGIN
-        )
-    )
-    ipcMain.handle(channels.UPDATE_ECOINDEX_PLUGIN, (event) =>
-        handle_CMD_Actions(
-            event as IpcMainEvent,
-            channels.UPDATE_ECOINDEX_PLUGIN
-        )
-    )
-    // Not used for the moment...
-    ipcMain.handle(channels.INSTALL_PUPPETEER_BROWSER, () => {
-        isLighthousePluginEcoindexInstalled()
-            .then(() => {
-                mainLog.debug(`LighthousePluginEcoindexInstalled 👍`)
-            })
-            .catch(() => {
-                mainLog.error(`LighthousePluginEcoindex not Installed 🚫`)
-            })
-        isPupperteerBrowserInstalled()
-        if (isAdmin()) {
-            handleInstallPuppeteerBrowser()
-        } else {
-            handleInstallSudoPuppeteerBrowser()
-        }
-    })
-    app.setAboutPanelOptions({
-        applicationName: packageJson.productName,
-        applicationVersion: packageJson.name,
-        version: packageJson.version,
-        credits: packageJson.description,
-        copyright: packageJson.publisher,
-    })
-    Updater.getInstance()
-    // showNotification()
-    _createMainWindow()
+  // simple handlers
+  ipcMain.handle(channels.SIMPLE_MESURES, handleSimpleCollect)
+  // json handlers
+  ipcMain.handle(channels.SAVE_JSON_FILE, handleJsonSaveAndCollect)
+  ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
+
+  // communs handlers and getters
+  ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
+  ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
+  ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)
+  ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
+  ipcMain.handle(
+    channels.INSTALL_OR_UPDATE_ECOINDEX_PLUGIN,
+    isLighthousePluginEcoindexMustBeInstallOrUpdated,
+  )
+  ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
+  ipcMain.handle(
+    channels.IS_JSON_CONFIG_FILE_EXIST,
+    handleIsJsonConfigFileExist,
+  )
+  // ipcMain.handle(
+  //   channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED,
+  //   handlePluginInstalled,
+  // )
+  //   ipcMain.handle(channels.INSTALL_ECOINDEX_PLUGIN, event =>
+  //     handle_CMD_Actions(event as IpcMainEvent, channels.INSTALL_ECOINDEX_PLUGIN),
+  //   )
+  //   ipcMain.handle(channels.UPDATE_ECOINDEX_PLUGIN, event =>
+  //     handle_CMD_Actions(event as IpcMainEvent, channels.UPDATE_ECOINDEX_PLUGIN),
+  //   )
+  // Not used for the moment...
+  ipcMain.handle(channels.INSTALL_PUPPETEER_BROWSER, () => {
+    // isLighthousePluginEcoindexInstalled()
+    //   .then(() => {
+    //     mainLog.debug(`LighthousePluginEcoindexInstalled 👍`)
+    //   })
+    //   .catch(() => {
+    //     mainLog.error(`LighthousePluginEcoindex not Installed 🚫`)
+    //   })
+    isPupperteerBrowserInstalled()
+    if (isAdmin()) {
+      handleInstallPuppeteerBrowser()
+    } else {
+      handleInstallSudoPuppeteerBrowser()
+    }
+  })
+
+  app.setAboutPanelOptions({
+    applicationName: packageJson.productName,
+    applicationVersion: packageJson.name,
+    version: packageJson.version,
+    credits: packageJson.description,
+    copyright: packageJson.publisher,
+  })
+  Updater.getInstance()
+  // showNotification()
+  _createMainWindow()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    } else {
-        // todo
-    }
+  if (process.platform !== 'darwin') {
+    app.quit()
+  } else {
+    // todo
+  }
 })
 
 // Electron, Create Window
 app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) {
-        _createMainWindow()
-    }
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (BrowserWindow.getAllWindows().length === 0) {
+    _createMainWindow()
+  }
 })
 
 // In this file you can include the rest of your app's specific main process
@@ -173,300 +173,74 @@ app.on('activate', () => {
  * Helpers, Main Window Creation
  */
 const _createMainWindow = (): void => {
-    // Create the browser window.
-    setMainWindow(
-        new BrowserWindow({
-            width: 1000,
-            height: 800,
-            icon: '/assets/app-ico.png',
-            webPreferences: {
-                preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            },
-        })
+  // Create the browser window.
+  setMainWindow(
+    new BrowserWindow({
+      width: 1000,
+      height: 800,
+      icon: '/assets/app-ico.png',
+      webPreferences: {
+        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      },
+    }),
+  )
+
+  // and load the index.html of the app.
+  getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+
+  try {
+    i18n.on('loaded', loaded => {
+      try {
+        i18n.changeLanguage('en')
+        i18n.off('loaded')
+      } catch (error) {
+        //
+      }
+    })
+    i18n.on('languageChanged', lng => {
+      try {
+        i18n.isInitialized &&
+          getMainWindow().webContents.send(
+            channels.CHANGE_LANGUAGE_TO_FRONT,
+            lng,
+          )
+        i18n.isInitialized &&
+          !getWelcomeWindow().isDestroyed() &&
+          getWelcomeWindow().webContents.send(
+            channels.CHANGE_LANGUAGE_TO_FRONT,
+            lng,
+          )
+        i18n.isInitialized &&
+          menuFactoryService.buildMenu(app, getMainWindow(), i18n)
+      } catch (error) {
+        // Welcome Window is distroyed on close, i need to catch
+      }
+    })
+  } catch (error) {
+    mainLog.error(`i18n`, error)
+  }
+
+  if (!hasShowWelcomeWindow()) {
+    setWelcomeWindow(
+      new BrowserWindow({
+        width: 800,
+        height: 700,
+        icon: '/assets/app-ico.png',
+        webPreferences: {
+          preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        },
+        parent: getMainWindow(),
+        modal: true,
+        show: true,
+      }),
     )
+    getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
+  } else {
+    setHasShowedWelcomeWindow(true)
+  }
 
-    // and load the index.html of the app.
-    getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-
-    try {
-        i18n.on('loaded', (loaded) => {
-            try {
-                i18n.changeLanguage('en')
-                i18n.off('loaded')
-            } catch (error) {
-                //
-            }
-        })
-        i18n.on('languageChanged', (lng) => {
-            try {
-                i18n.isInitialized &&
-                    getMainWindow().webContents.send(
-                        channels.CHANGE_LANGUAGE_TO_FRONT,
-                        lng
-                    )
-                i18n.isInitialized &&
-                    !getWelcomeWindow().isDestroyed() &&
-                    getWelcomeWindow().webContents.send(
-                        channels.CHANGE_LANGUAGE_TO_FRONT,
-                        lng
-                    )
-                i18n.isInitialized &&
-                    menuFactoryService.buildMenu(app, getMainWindow(), i18n)
-            } catch (error) {
-                // Welcome Window is distroyed on close, i need to catch
-            }
-        })
-    } catch (error) {
-        mainLog.error(`i18n`, error)
-    }
-
-    if (!hasShowWelcomeWindow()) {
-        setWelcomeWindow(
-            new BrowserWindow({
-                width: 800,
-                height: 700,
-                icon: '/assets/app-ico.png',
-                webPreferences: {
-                    preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
-                },
-                parent: getMainWindow(),
-                modal: true,
-                show: true,
-            })
-        )
-        getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
-    } else {
-        setHasShowedWelcomeWindow(true)
-    }
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools({ mode: 'detach' })
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
-
-// #endregion
-
-// #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
-
-// /**
-//  * Handlers, SimpleCollect
-//  * @param event IpcMainEvent
-//  * @param urlsList ISimpleUrlInput[]
-//  * @returns string
-//  */
-// const handleSimpleCollect = async (
-//     event: IpcMainEvent,
-//     urlsList: ISimpleUrlInput[]
-// ) => {
-//     if (!urlsList || urlsList.length === 0) {
-//         throw new Error('Urls list is empty')
-//     }
-//     showNotification({
-//         subtitle: '🧩 Simple collect',
-//         body: 'Process intialization.',
-//     })
-
-//     const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
-//     _debugLogs('Simple measure start, process intialization...')
-//     _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
-//     try {
-//         urlsList.forEach((url) => {
-//             if (url.value) {
-//                 command.push('-u')
-//                 command.push(url.value)
-//             }
-//         })
-//         command.push('-o')
-//         command.push('html')
-//         command.push('--output-path')
-//         command.push(`${_workDir}`)
-//         // Fake mesure and path. TODO: use specified path and urls
-//         showNotification({
-//             subtitle: ' 🚀Simple collect',
-//             body: 'Collect started...',
-//         })
-//         try {
-//             if (isDev())
-//                 mainLog.debug(`before (simple) runCollect`, nodeDir, command)
-
-//             await _runCollect(command, nodeDir, event, true)
-//         } catch (error) {
-//             showNotification({
-//                 subtitle: '🚫 Simple collect',
-//                 body: `Collect KO, ${error}\n'`,
-//             })
-//             throw new Error('Simple collect error')
-//         }
-//         // process.stdout.write(data)
-//         showNotification({
-//             subtitle: '🎉 Simple collect',
-//             body: `Collect done, you can consult reports in\n${_workDir}'`,
-//         })
-//         if (isDev()) mainLog.debug('Simple collect done 🚀')
-//         return 'collect done'
-//     } catch (error) {
-//         _debugLogs(`stderr: ${error}`)
-//     }
-//     // alert process done
-// }
-
-// /**
-//  * Handler, JsonSaveAndCollect
-//  * @param event IpcMainEvent
-//  * @param jsonDatas IJsonMesureData
-//  * @param andCollect boolean
-//  * @returns string
-//  */
-// const handleJsonSaveAndCollect = async (
-//     event: IpcMainEvent,
-//     jsonDatas: IJsonMesureData,
-//     andCollect: boolean
-// ) => {
-//     if (!jsonDatas) {
-//         throw new Error('Json data is empty')
-//     }
-//     showNotification({
-//         subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
-//         body: 'Process intialization.',
-//     })
-//     _debugLogs('Json save or/and collect start...')
-
-//     try {
-//         const _workDir = await getWorkDir()
-//         if (!_workDir || _workDir === '') {
-//             throw new Error('Work dir not found')
-//         }
-//         if (isDev()) mainLog.debug(`Work dir: ${_workDir}`)
-//         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
-//         const jsonStream = fs.createWriteStream(jsonFilePath)
-//         showNotification({
-//             subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
-//             body: andCollect
-//                 ? 'Json save and collect started...'
-//                 : 'Json save started...',
-//         })
-//         try {
-//             if (jsonDatas && typeof jsonDatas === 'object') {
-//                 jsonStream.write(
-//                     JSON.stringify(
-//                         convertJSONDatasFromISimpleUrlInput(jsonDatas),
-//                         null,
-//                         2
-//                     )
-//                 )
-//             } else {
-//                 mainLog.error('jsonDatas have a problem!')
-//                 throw new Error('jsonDatas have a problem!')
-//             }
-//         } catch (error) {
-//             showNotification({
-//                 subtitle: andCollect
-//                     ? '🚫 JSON save and collect'
-//                     : '🚫 JSON save',
-//                 body: 'Json file not saved.',
-//             })
-//             _debugLogs(`Error writing JSON file. ${error}`)
-//             throw new Error(`Error writing JSON file. ${error}`)
-//         }
-//         if (!andCollect) {
-//             showNotification({
-//                 subtitle: '💾 JSON save',
-//                 body: 'Json file saved.',
-//             })
-//         } else {
-//             if (isDev()) mainLog.debug('Json measure start...')
-
-//             const {
-//                 command,
-//                 nodeDir,
-//                 workDir: _workDir,
-//             } = await _prepareCollect()
-//             _debugLogs('Json measure start...')
-//             _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
-//             command.push('--json-file')
-//             command.push(_workDir + '/' + utils.JSON_FILE_NAME)
-//             command.push('--output-path')
-//             command.push(`${_workDir}`)
-//             try {
-//                 await _runCollect(command, nodeDir, event)
-//             } catch (error) {
-//                 mainLog.error('Simple collect error', error)
-//                 throw new Error('Simple collect error')
-//             }
-//             showNotification({
-//                 subtitle: '🎉 JSON collect',
-//                 body: `Measures done, you can consult reports in\n${_workDir}`,
-//             })
-//             _debugLogs('Json collect done 🚀')
-//             return 'measure done'
-//         }
-//     } catch (error) {
-//         if (!andCollect) {
-//             _sendMessageToFrontLog('ERROR, Json file not saved', error)
-//             _debugLogs('ERROR, Json file not saved', error)
-//             showNotification({
-//                 subtitle: '🚫 JSON save',
-//                 body: 'Json file not saved.',
-//             })
-//         } else {
-//             _sendMessageToFrontLog(
-//                 'ERROR, Json file not saved or collect',
-//                 error
-//             )
-//             _debugLogs('ERROR, Json file not saved or collect', error)
-//             showNotification({
-//                 subtitle: '🚫 JSON save and collect',
-//                 body: 'Json file not saved or collect.',
-//             })
-//         }
-//     }
-// }
-
-// /**
-//  * Handlers, Json config Read and Reload.
-//  * @param event IpcMainEvent
-//  * @returns Promise<IJsonMesureData>
-//  */
-// const handleJsonReadAndReload = async (
-//     event: IpcMainEvent
-// ): Promise<IJsonMesureData> => {
-//     showNotification({
-//         subtitle: '🧩 JSON reload',
-//         body: 'Process intialization.',
-//     })
-//     try {
-//         const _workDir = await getWorkDir()
-//         if (!_workDir || _workDir === '') {
-//             throw new Error('Work dir not found')
-//         }
-//         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
-//         return new Promise((resolve, reject) => {
-//             const jsonStream = fs.createReadStream(jsonFilePath)
-//             jsonStream.on('data', function (chunk) {
-//                 const jsonDatas = JSON.parse(chunk.toString())
-//                 if (isDev()) mainLog.debug(`jsonDatas`, jsonDatas)
-
-//                 showNotification({
-//                     subtitle: '🔄 JSON reload',
-//                     body: 'Json file read and reloaded.',
-//                 })
-//                 resolve(
-//                     convertJSONDatasFromString(jsonDatas) as IJsonMesureData
-//                 )
-//             })
-//         })
-//     } catch (error) {
-//         _sendMessageToFrontLog(
-//             'ERROR',
-//             'Json file not read and reloaded',
-//             error
-//         )
-//         _debugLogs('ERROR', 'Json file not read and reloaded', error)
-//         showNotification({
-//             subtitle: '🚫 JSON reload',
-//             body: `Json file not read and reloaded. ${error}`,
-//         })
-//         // throw new Error(`Json file not read and reloaded. ${error}`)
-//     }
-// }
 
 // #endregion
