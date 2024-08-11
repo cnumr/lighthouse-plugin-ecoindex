@@ -1,5 +1,18 @@
 
 
+## [1.3.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.4...electron-v1.3.1-rc.5) (2024-08-11)
+
+
+### Bug Fixes
+
+* better space between logo and title in header ([868514c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/868514c4c0f5b707593295bbf79f82a3f736113e))
+* change color of alertbox on datk mode Changer couleur des warns en Darkmode [#32](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/32) ([7212bb4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/7212bb49fb685b99b2bedeb47e46a353e45fbc60))
+
+
+### Features
+
+* refactored, collect KO ([59b080d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/59b080d4bf96ebc877f5e24ba4c9ced9fa57e842))
+
 ## [1.3.1-rc.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.3...electron-v1.3.1-rc.4) (2024-08-10)
 
 
