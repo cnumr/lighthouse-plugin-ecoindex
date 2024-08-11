@@ -1,5 +1,12 @@
 
 
+## [1.3.1-rc.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.5...electron-v1.3.1-rc.6) (2024-08-11)
+
+
+### Features
+
+* berrer handling plugin version and update, full electron ([889e50e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/889e50ef48c08530097187f69a6a408a2c910a37))
+
 ## [1.3.1-rc.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.4...electron-v1.3.1-rc.5) (2024-08-11)
 
 
