@@ -125,10 +125,10 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                                     channels.ASYNCHRONOUS_LOG,
                                     `Lighthouse-plugin-ecoindex installed.`
                                 )
-                                resolve(result)
+                                return resolve(result)
                             })
                             .catch((error) => {
-                                reject({
+                                return reject({
                                     result: false,
                                     message: error,
                                     version: currentVersion,
@@ -139,7 +139,7 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                             channels.ASYNCHRONOUS_LOG,
                             `Lighthouse-plugin-ecoindex installed.`
                         )
-                        resolve({
+                        return resolve({
                             result: true,
                             message: `Don't need to update lighthouse-plugin-ecoindex 🚫`,
                             version: latestVersion,
