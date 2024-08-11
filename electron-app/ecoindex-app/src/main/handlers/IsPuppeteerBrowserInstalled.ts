@@ -1,6 +1,6 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
-import Logger from 'electron-log'
+import { getMainLog } from '../main'
 import puppeteer from 'puppeteer'
 
 /**
@@ -10,11 +10,10 @@ import puppeteer from 'puppeteer'
  * @returns boolean
  */
 export const isPupperteerBrowserInstalled = (
-    log: Logger.MainLogger,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event?: IpcMainEvent | IpcMainInvokeEvent
 ) => {
-    const mainLog = log.scope('main/isPupperteerBrowserInstalled')
+    const mainLog = getMainLog().scope('main/isPupperteerBrowserInstalled')
     try {
         const returned = puppeteer.executablePath()
         mainLog.debug(returned)

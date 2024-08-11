@@ -3,22 +3,20 @@ import * as path from 'node:path'
 import { ChildProcess, fork } from 'child_process'
 import { IpcMainEvent, IpcMainInvokeEvent, app } from 'electron'
 
-import Logger from 'electron-log'
+import { _echoReadable } from '../utils/EchoReadable'
+import { getMainLog } from '../main'
 import puppeteer from 'puppeteer'
 
 /**
  * Handler to install Puppeteer Browser to make mesure with the plugin.
  * @param _event IpcMainEvent | IpcMainInvokeEvent
- * @param _echoReadable A loggin function referenced in main
- * @returns
+ * @returns Promise<string | boolean>
  */
 export const handleInstallPuppeteerBrowser = async (
-    log: Logger.MainLogger,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event: IpcMainEvent | IpcMainInvokeEvent | null,
-    _echoReadable: CallableFunction
+    _event?: IpcMainEvent | IpcMainInvokeEvent | null
 ) => {
-    const mainLog = log.scope('main/pupperteerInstall')
+    const mainLog = getMainLog().scope('main/pupperteerInstall')
     try {
         // const env = {
         //     ...process.env,
@@ -102,7 +100,7 @@ export const handleInstallPuppeteerBrowser = async (
 
             if (childProcess.stdout) {
                 childProcess.stdout.on('data', () => {
-                    _echoReadable(event, childProcess.stdout)
+                    _echoReadable(_event, childProcess.stdout)
                 })
             }
         })

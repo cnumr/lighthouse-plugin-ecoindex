@@ -1,12 +1,12 @@
-import Logger from 'electron-log'
+import { getMainLog } from '../main'
 import isElevated from 'native-is-elevated'
 
 /**
  * Modified version of VSCode isAdmin() method
  * @returns boolean
  */
-export const isAdmin = (log: Logger.MainLogger) => {
-    const mainLog = log.scope('main/HandlerIsAdmin')
+export const isAdmin = () => {
+    const mainLog = getMainLog().scope('main/HandlerIsAdmin')
     mainLog.debug('isAdmin asked')
     try {
         let isAdmin: boolean

@@ -1,55 +1,34 @@
 import * as menuFactoryService from '../services/menuFactory'
-import * as path from 'node:path'
 
+import { BrowserWindow, IpcMainEvent, app, ipcMain } from 'electron'
 import {
-    BrowserWindow,
-    IpcMainEvent,
-    Notification,
-    app,
-    dialog,
-    ipcMain,
-    shell,
-} from 'electron'
-import { ChildProcess, fork, spawn } from 'child_process'
-import {
-    channels,
-    scripts as custom_scripts,
-    scripts,
-    utils,
-} from '../shared/constants'
-import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
-import {
-    cleanLogString,
-    convertJSONDatasFromISimpleUrlInput,
-    convertJSONDatasFromString,
-} from './utils'
-import {
-    getHomeDir,
     getMainWindow,
-    getNodeDir,
-    getNodeV,
-    getNpmDir,
-    getTryNode,
     getWelcomeWindow,
-    getWorkDir,
     hasShowWelcomeWindow,
     isDev,
     setHasShowedWelcomeWindow,
-    setHomeDir,
     setMainWindow,
-    setNodeDir,
-    setNodeV,
-    setNpmDir,
-    setTryNode,
     setWelcomeWindow,
-    setWorkDir,
 } from '../shared/memory'
+import {
+    handleJsonSaveAndCollect,
+    handleSimpleCollect,
+} from './handlers/HandleCollectAll'
 
 import Updater from './Updater'
+import { channels } from '../shared/constants'
 import fixPath from 'fix-path'
-import fs from 'fs'
+import { handleGetNodeVersion } from './handlers/HandleGetNodeVersion'
+import { handleHomeDir } from './handlers/HandleHomeDir'
 import { handleInstallPuppeteerBrowser } from './handlers/PuppeteerBrowserInstall'
 import { handleInstallSudoPuppeteerBrowser } from './handlers/SudoPuppeteerBrowserInstall'
+import { handleIsJsonConfigFileExist } from './handlers/HandleIsJsonConfigFileExist'
+import { handleJsonReadAndReload } from './handlers/HandleJsonReadAndReload'
+import { handleNodeInstalled } from './handlers/HandleGetNodeDir_NpmDir'
+import { handlePluginInstalled } from './handlers/HandlePluginInstalled'
+import { handleSelectFolder } from './handlers/HandleSelectFolder'
+import { handleWorkDir } from './handlers/HandleWorkDir'
+import { handle_CMD_Actions } from './handlers/HandleCMDActions'
 import i18n from '../configs/i18next.config'
 import { isAdmin } from './handlers/IsAdminOnHost'
 import { isLighthousePluginEcoindexInstalled } from './handlers/isLighthousePluginEcoindexInstalled'
@@ -64,6 +43,10 @@ if (require('electron-squirrel-startup')) {
 
 log.initialize()
 const mainLog = log.scope('main')
+
+export const getMainLog = () => {
+    return log
+}
 log.info(`******************** APP IS STARTING ********************`)
 
 // const execFile = util.promisify(_execFile);
@@ -135,18 +118,18 @@ app.on('ready', () => {
     )
     // Not used for the moment...
     ipcMain.handle(channels.INSTALL_PUPPETEER_BROWSER, () => {
-        isLighthousePluginEcoindexInstalled(log)
+        isLighthousePluginEcoindexInstalled()
             .then(() => {
                 mainLog.debug(`LighthousePluginEcoindexInstalled 👍`)
             })
             .catch(() => {
                 mainLog.error(`LighthousePluginEcoindex not Installed 🚫`)
             })
-        isPupperteerBrowserInstalled(log)
-        if (isAdmin(log)) {
-            handleInstallPuppeteerBrowser(log, null, _echoReadable)
+        isPupperteerBrowserInstalled()
+        if (isAdmin()) {
+            handleInstallPuppeteerBrowser()
         } else {
-            handleInstallSudoPuppeteerBrowser(log)
+            handleInstallSudoPuppeteerBrowser()
         }
     })
     app.setAboutPanelOptions({
@@ -157,7 +140,7 @@ app.on('ready', () => {
         copyright: packageJson.publisher,
     })
     Updater.getInstance()
-    // _showNotification()
+    // showNotification()
     _createMainWindow()
 })
 
@@ -260,789 +243,230 @@ const _createMainWindow = (): void => {
     // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }
 
-/**
- * Helpers, Launch Multi Debug
- * @param message any
- * @param optionalParams any
- */
-const _debugLogs = (message?: any, ...optionalParams: any[]) => {
-    _sendMessageToFrontLog(message, ...optionalParams)
-    mainLog.debug(message, ...optionalParams)
-}
-
-/**
- * Send message to DEV consol log
- * @param message
- * @param optionalParams
- */
-const _sendMessageToFrontLog = (message?: any, ...optionalParams: any[]) => {
-    try {
-        getMainWindow().webContents.send(
-            channels.HOST_INFORMATIONS,
-            message,
-            optionalParams
-        )
-    } catch (error) {
-        mainLog.error('Error in _sendMessageToFrontLog', error)
-    }
-}
-
-/**
- * Utils, Send data to Front.
- * @param data any
- */
-function sendDataToFront(data: any) {
-    getMainWindow().webContents.send(
-        channels.HOST_INFORMATIONS_BACK,
-        typeof data === 'string' ? data : JSON.stringify(data, null, 2)
-    )
-}
-
-/**
- * Utils, prepare Json Collect.
- * @returns Promise<{
-  command: string[]
-  nodeDir: string
-  workDir: string
-}>
- */
-async function _prepareCollect(): Promise<{
-    command: string[]
-    nodeDir: string
-    workDir: string
-}> {
-    // create stream to log the output. TODO: use specified path
-    try {
-        const _workDir = getWorkDir()
-        if (!_workDir || _workDir === '') {
-            throw new Error('Work dir not found')
-        }
-
-        let nodeDir = getNodeDir()
-        _debugLogs(`Node dir: ${nodeDir}`)
-
-        const npmDir = getNpmDir()
-        _debugLogs(`Npm dir: ${npmDir}`)
-
-        const command = [
-            `${npmDir}/lighthouse-plugin-ecoindex/cli/index.js`.replace(
-                /\//gm,
-                path.sep
-            ),
-            'collect',
-        ]
-        if (os.platform() === `win32`) {
-            nodeDir = nodeDir.replace(/\\/gm, path.sep)
-        }
-        return { command, nodeDir, workDir: _workDir }
-    } catch (error) {
-        mainLog.error('Error in _prepareCollect', error)
-    }
-}
-
-/**
- * Send message to log zone in front of the app
- * @param event
- * @param readable
- */
-async function _echoReadable(event: IpcMainEvent, readable: any) {
-    const webContents = event.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    for await (const line of chunksToLinesAsync(readable)) {
-        // (C)
-        if (isDev()) mainLog.debug('> ' + chomp(line))
-        // eslint-disable-next-line no-control-regex, no-useless-escape
-        win.webContents.send(
-            channels.ASYNCHRONOUS_LOG,
-            chomp(cleanLogString(line))
-        )
-    }
-}
-
-/**
- * Utils, Show Notification
- * @param options
- */
-function _showNotification(options: any) {
-    if (!options) {
-        options = {
-            body: 'Notification body',
-            subtitle: 'Notification subtitle',
-        }
-    }
-    if (!options.title || options.title === '') {
-        options.title = packageJson.productName
-    }
-    const customNotification = new Notification(options)
-    customNotification.show()
-}
-
-/**
- * Utils, Collect
- * @param command string[]
- * @param nodeDir string
- * @param event IpcMainEvent
- * @param logStream
- * @returns string
- */
-async function _runCollect(
-    command: string[],
-    nodeDir: string,
-    event: IpcMainEvent,
-    isSimple = false
-): Promise<string> {
-    try {
-        const out: string[] = []
-
-        _debugLogs(`runCollect: ${nodeDir} ${JSON.stringify(command, null, 2)}`)
-        // const controller = new AbortController()
-        // const { signal } = controller
-        const childProcess: ChildProcess = spawn(`"${nodeDir}"`, command, {
-            stdio: ['pipe', 'pipe', process.stderr],
-            shell: true,
-            windowsHide: true,
-            // signal,
-        })
-
-        childProcess.on('exit', (code, signal) => {
-            if (isSimple && out.length > 0) {
-                const fl = (item: string) => {
-                    return item.includes('Report generated')
-                }
-                const filtered = out.filter(fl)
-                const url =
-                    'file:///' +
-                    filtered
-                        .at(-1)
-                        .replace(`Report generated: `, ``)
-                        .split('generic.report.html')[0] +
-                    `generic.report.html`
-                mainLog.debug(`url`, url)
-                shell.openExternal(url, { activate: true })
-            }
-            _debugLogs(
-                `Child process exited with code ${code} and signal ${signal}`
-            )
-        })
-
-        childProcess.on('close', (code) => {
-            _debugLogs(`Child process close with code ${code}`)
-            _debugLogs('Measure done 🚀')
-        })
-
-        childProcess.stdout.on('data', (data) => {
-            out.push(data.toString())
-            _debugLogs(`stdout: ${data}`)
-        })
-
-        if (childProcess.stderr) {
-            childProcess.stderr.on('data', (data) => {
-                _debugLogs(`stderr: ${data.toString()}`)
-            })
-        }
-
-        childProcess.on('disconnect', () => {
-            _debugLogs('Child process disconnected')
-        })
-
-        childProcess.on('message', (message, sendHandle) => {
-            _debugLogs(`Child process message: ${message}`)
-        })
-
-        await _echoReadable(event, childProcess.stdout)
-        // controller.abort()
-        return 'mesure done'
-    } catch (error) {
-        mainLog.error('Error in _runCollect', error)
-    }
-}
-
-/**
- * Utils, wait method.
- * @param ms number
- * @returns Promise<unknown>
- */
-async function _sleep(ms: number) {
-    return new Promise((resolve) => {
-        if (isDev()) mainLog.debug(`wait ${ms / 1000}s`)
-        setTimeout(resolve, ms)
-    })
-}
-
 // #endregion
 
 // #region Public API - handleRunFakeMesure, handleSetTitle, handleWorkDir, handlePluginInstalled, handleNodeInstalled
 
-/**
- * Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
- * @param event IpcMainEvent
- * @returns boolean
- */
-const handleNodeInstalled: any = async (event: IpcMainEvent) => {
-    // get Node Dir
-    try {
-        const _nodeDir = await handle_CMD_Actions(
-            event,
-            channels.IS_NODE_INSTALLED
-        )
-        if (_nodeDir === '' && getTryNode() > 0) {
-            await _sleep(2000)
-            setTryNode()
-            return handleNodeInstalled(event)
-        }
-        if (_nodeDir.includes(';')) {
-            if (isDev()) mainLog.debug(`Clean nodeDir path`)
-            setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
-        } else setNodeDir(_nodeDir)
-        if (isDev()) mainLog.debug(`nodeDir returned: `, _nodeDir)
-        if (isDev()) mainLog.debug(`nodeDir:`, getNodeDir())
+// /**
+//  * Handlers, SimpleCollect
+//  * @param event IpcMainEvent
+//  * @param urlsList ISimpleUrlInput[]
+//  * @returns string
+//  */
+// const handleSimpleCollect = async (
+//     event: IpcMainEvent,
+//     urlsList: ISimpleUrlInput[]
+// ) => {
+//     if (!urlsList || urlsList.length === 0) {
+//         throw new Error('Urls list is empty')
+//     }
+//     showNotification({
+//         subtitle: '🧩 Simple collect',
+//         body: 'Process intialization.',
+//     })
 
-        if (os.platform() === `darwin`) {
-            setNpmDir(
-                getNodeDir()?.replace(/\/bin\/node$/, '') +
-                    '/lib/node_modules'.replace(/\//gm, path.sep)
-            )
-        } else {
-            setNpmDir(
-                os.userInfo().homedir + `\\AppData\\Roaming\\npm\\node_modules`
-            )
-        }
+//     const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
+//     _debugLogs('Simple measure start, process intialization...')
+//     _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
+//     try {
+//         urlsList.forEach((url) => {
+//             if (url.value) {
+//                 command.push('-u')
+//                 command.push(url.value)
+//             }
+//         })
+//         command.push('-o')
+//         command.push('html')
+//         command.push('--output-path')
+//         command.push(`${_workDir}`)
+//         // Fake mesure and path. TODO: use specified path and urls
+//         showNotification({
+//             subtitle: ' 🚀Simple collect',
+//             body: 'Collect started...',
+//         })
+//         try {
+//             if (isDev())
+//                 mainLog.debug(`before (simple) runCollect`, nodeDir, command)
 
-        if (isDev()) mainLog.debug(`npmDir: `, getNpmDir())
+//             await _runCollect(command, nodeDir, event, true)
+//         } catch (error) {
+//             showNotification({
+//                 subtitle: '🚫 Simple collect',
+//                 body: `Collect KO, ${error}\n'`,
+//             })
+//             throw new Error('Simple collect error')
+//         }
+//         // process.stdout.write(data)
+//         showNotification({
+//             subtitle: '🎉 Simple collect',
+//             body: `Collect done, you can consult reports in\n${_workDir}'`,
+//         })
+//         if (isDev()) mainLog.debug('Simple collect done 🚀')
+//         return 'collect done'
+//     } catch (error) {
+//         _debugLogs(`stderr: ${error}`)
+//     }
+//     // alert process done
+// }
 
-        sendDataToFront({ 'nodeDir-raw': _nodeDir })
-        sendDataToFront({ nodeDir: getNodeDir() })
-        sendDataToFront({ npmDir: getNpmDir() })
-        const { shell } = os.userInfo()
-        sendDataToFront({ shell })
-        sendDataToFront({ platform: os.platform() })
-        sendDataToFront({ env: process.env })
+// /**
+//  * Handler, JsonSaveAndCollect
+//  * @param event IpcMainEvent
+//  * @param jsonDatas IJsonMesureData
+//  * @param andCollect boolean
+//  * @returns string
+//  */
+// const handleJsonSaveAndCollect = async (
+//     event: IpcMainEvent,
+//     jsonDatas: IJsonMesureData,
+//     andCollect: boolean
+// ) => {
+//     if (!jsonDatas) {
+//         throw new Error('Json data is empty')
+//     }
+//     showNotification({
+//         subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
+//         body: 'Process intialization.',
+//     })
+//     _debugLogs('Json save or/and collect start...')
 
-        try {
-            fs.accessSync(getNodeDir())
-            return true
-        } catch (error) {
-            mainLog.error(`has NOT access to Node DIR 🚫`, error)
-            return false
-        }
-    } catch (error) {
-        mainLog.error(`Check is Node Installed failed 🚫`, error)
-    }
-}
+//     try {
+//         const _workDir = await getWorkDir()
+//         if (!_workDir || _workDir === '') {
+//             throw new Error('Work dir not found')
+//         }
+//         if (isDev()) mainLog.debug(`Work dir: ${_workDir}`)
+//         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
+//         const jsonStream = fs.createWriteStream(jsonFilePath)
+//         showNotification({
+//             subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
+//             body: andCollect
+//                 ? 'Json save and collect started...'
+//                 : 'Json save started...',
+//         })
+//         try {
+//             if (jsonDatas && typeof jsonDatas === 'object') {
+//                 jsonStream.write(
+//                     JSON.stringify(
+//                         convertJSONDatasFromISimpleUrlInput(jsonDatas),
+//                         null,
+//                         2
+//                     )
+//                 )
+//             } else {
+//                 mainLog.error('jsonDatas have a problem!')
+//                 throw new Error('jsonDatas have a problem!')
+//             }
+//         } catch (error) {
+//             showNotification({
+//                 subtitle: andCollect
+//                     ? '🚫 JSON save and collect'
+//                     : '🚫 JSON save',
+//                 body: 'Json file not saved.',
+//             })
+//             _debugLogs(`Error writing JSON file. ${error}`)
+//             throw new Error(`Error writing JSON file. ${error}`)
+//         }
+//         if (!andCollect) {
+//             showNotification({
+//                 subtitle: '💾 JSON save',
+//                 body: 'Json file saved.',
+//             })
+//         } else {
+//             if (isDev()) mainLog.debug('Json measure start...')
 
-/**
- * Handlers, Node Version
- * @returns string
- */
-const handleGetNodeVersion = async (event: IpcMainEvent) => {
-    try {
-        setNodeV(await handle_CMD_Actions(event, channels.GET_NODE_VERSION))
-        sendDataToFront({ 'node-version': getNodeV() })
-        return getNodeV()
-    } catch (error) {
-        mainLog.error(`Check is Node version failed 🚫`, error)
-    }
-}
+//             const {
+//                 command,
+//                 nodeDir,
+//                 workDir: _workDir,
+//             } = await _prepareCollect()
+//             _debugLogs('Json measure start...')
+//             _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
+//             command.push('--json-file')
+//             command.push(_workDir + '/' + utils.JSON_FILE_NAME)
+//             command.push('--output-path')
+//             command.push(`${_workDir}`)
+//             try {
+//                 await _runCollect(command, nodeDir, event)
+//             } catch (error) {
+//                 mainLog.error('Simple collect error', error)
+//                 throw new Error('Simple collect error')
+//             }
+//             showNotification({
+//                 subtitle: '🎉 JSON collect',
+//                 body: `Measures done, you can consult reports in\n${_workDir}`,
+//             })
+//             _debugLogs('Json collect done 🚀')
+//             return 'measure done'
+//         }
+//     } catch (error) {
+//         if (!andCollect) {
+//             _sendMessageToFrontLog('ERROR, Json file not saved', error)
+//             _debugLogs('ERROR, Json file not saved', error)
+//             showNotification({
+//                 subtitle: '🚫 JSON save',
+//                 body: 'Json file not saved.',
+//             })
+//         } else {
+//             _sendMessageToFrontLog(
+//                 'ERROR, Json file not saved or collect',
+//                 error
+//             )
+//             _debugLogs('ERROR, Json file not saved or collect', error)
+//             showNotification({
+//                 subtitle: '🚫 JSON save and collect',
+//                 body: 'Json file not saved or collect.',
+//             })
+//         }
+//     }
+// }
 
-/**
- * Handlers, Is Ecoindex Lighthouse Plugin installed.
- * @param event IpcMainEvent
- * @returns boolean
- */
-const handlePluginInstalled = async (event: IpcMainEvent) => {
-    try {
-        fs.accessSync(getNodeDir())
-    } catch (error) {
-        mainLog.error(
-            `in handlePluginInstalled, nodeDir is in error! 🚫`,
-            error
-        )
+// /**
+//  * Handlers, Json config Read and Reload.
+//  * @param event IpcMainEvent
+//  * @returns Promise<IJsonMesureData>
+//  */
+// const handleJsonReadAndReload = async (
+//     event: IpcMainEvent
+// ): Promise<IJsonMesureData> => {
+//     showNotification({
+//         subtitle: '🧩 JSON reload',
+//         body: 'Process intialization.',
+//     })
+//     try {
+//         const _workDir = await getWorkDir()
+//         if (!_workDir || _workDir === '') {
+//             throw new Error('Work dir not found')
+//         }
+//         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
+//         return new Promise((resolve, reject) => {
+//             const jsonStream = fs.createReadStream(jsonFilePath)
+//             jsonStream.on('data', function (chunk) {
+//                 const jsonDatas = JSON.parse(chunk.toString())
+//                 if (isDev()) mainLog.debug(`jsonDatas`, jsonDatas)
 
-        return false
-    }
-    const npmDir = getNpmDir()
-    const pluginDir = `${npmDir}/lighthouse-plugin-ecoindex`.replace(
-        /\//gm,
-        path.sep
-    )
-    try {
-        fs.accessSync(pluginDir)
-        return true
-    } catch (error) {
-        mainLog.debug(`Lighthouse plugin not installed`)
-        return false
-    }
-}
-
-const handleHomeDir = async (event: IpcMainEvent) => {
-    try {
-        const { homedir } = os.userInfo()
-        return homedir
-    } catch (error) {
-        mainLog.error(`Error on handleHomeDir 🚫`)
-        return `Error on handleHomeDir 🚫`
-    }
-}
-
-/**
- * Handlers, Get WorkDir
- * @param event IpcMainEvent
- * @param newDir string
- * @returns string
- */
-const handleWorkDir = async (event: IpcMainEvent, newDir: string) => {
-    const { homedir } = os.userInfo()
-    if (!homedir) {
-        mainLog.error('Home dir not found in userInfo()')
-        throw new Error('Home dir not found in userInfo()')
-    }
-    setHomeDir(`${homedir}`)
-    if (newDir) {
-        // log replaced by electron-log
-        // setLogStream(getLogFilePathFromDir(newDir))
-
-        setWorkDir(`${newDir}`)
-    } else {
-        setWorkDir(`${getHomeDir()}`)
-    }
-    return await getWorkDir()
-}
-
-/**
- * Handlers, Test if Json Config File exist in folder after selected it.
- * @param event IpcMainEvent
- * @param workDir string
- * @returns boolean
- */
-const handleIsJsonConfigFileExist = async (
-    event: IpcMainEvent,
-    workDir: string
-) => {
-    if (workDir === 'chargement...' || workDir === 'loading...') return
-    const jsonConfigFile = `${workDir}/${utils.JSON_FILE_NAME}`.replace(
-        /\//gm,
-        path.sep
-    )
-    if (isDev()) mainLog.debug(`handleIsJsonConfigFileExist`, jsonConfigFile)
-    try {
-        fs.accessSync(jsonConfigFile, fs.constants.F_OK)
-        _showNotification({
-            body: 'Config file founded 👀',
-            subtitle: 'loading file content...',
-        })
-        return true
-    } catch (error) {
-        mainLog.debug(`Error in handleIsJsonConfigFileExist`)
-        return false
-    }
-}
-
-/**
- * Handlers, SimpleCollect
- * @param event IpcMainEvent
- * @param urlsList ISimpleUrlInput[]
- * @returns string
- */
-const handleSimpleCollect = async (
-    event: IpcMainEvent,
-    urlsList: ISimpleUrlInput[]
-) => {
-    if (!urlsList || urlsList.length === 0) {
-        throw new Error('Urls list is empty')
-    }
-    _showNotification({
-        subtitle: '🧩 Simple collect',
-        body: 'Process intialization.',
-    })
-
-    const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
-    _debugLogs('Simple measure start, process intialization...')
-    _debugLogs(`Urls list: ${JSON.stringify(urlsList)}`)
-    try {
-        urlsList.forEach((url) => {
-            if (url.value) {
-                command.push('-u')
-                command.push(url.value)
-            }
-        })
-        command.push('-o')
-        command.push('html')
-        command.push('--output-path')
-        command.push(_workDir)
-        // Fake mesure and path. TODO: use specified path and urls
-        _showNotification({
-            subtitle: ' 🚀Simple collect',
-            body: 'Collect started...',
-        })
-        try {
-            if (isDev())
-                mainLog.debug(`before (simple) runCollect`, nodeDir, command)
-
-            await _runCollect(command, nodeDir, event, true)
-        } catch (error) {
-            _showNotification({
-                subtitle: '🚫 Simple collect',
-                body: `Collect KO, ${error}\n'`,
-            })
-            throw new Error('Simple collect error')
-        }
-        // process.stdout.write(data)
-        _showNotification({
-            subtitle: '🎉 Simple collect',
-            body: `Collect done, you can consult reports in\n${_workDir}'`,
-        })
-        if (isDev()) mainLog.debug('Simple collect done 🚀')
-        return 'collect done'
-    } catch (error) {
-        _debugLogs(`stderr: ${error}`)
-    }
-    // alert process done
-}
-
-/**
- * Handler, JsonSaveAndCollect
- * @param event IpcMainEvent
- * @param jsonDatas IJsonMesureData
- * @param andCollect boolean
- * @returns string
- */
-const handleJsonSaveAndCollect = async (
-    event: IpcMainEvent,
-    jsonDatas: IJsonMesureData,
-    andCollect: boolean
-) => {
-    if (!jsonDatas) {
-        throw new Error('Json data is empty')
-    }
-    _showNotification({
-        subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
-        body: 'Process intialization.',
-    })
-    _debugLogs('Json save or/and collect start...')
-
-    try {
-        const _workDir = await getWorkDir()
-        if (!_workDir || _workDir === '') {
-            throw new Error('Work dir not found')
-        }
-        if (isDev()) mainLog.debug(`Work dir: ${_workDir}`)
-        const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
-        const jsonStream = fs.createWriteStream(jsonFilePath)
-        _showNotification({
-            subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
-            body: andCollect
-                ? 'Json save and collect started...'
-                : 'Json save started...',
-        })
-        try {
-            if (jsonDatas && typeof jsonDatas === 'object') {
-                jsonStream.write(
-                    JSON.stringify(
-                        convertJSONDatasFromISimpleUrlInput(jsonDatas),
-                        null,
-                        2
-                    )
-                )
-            } else {
-                mainLog.error('jsonDatas have a problem!')
-                throw new Error('jsonDatas have a problem!')
-            }
-        } catch (error) {
-            _showNotification({
-                subtitle: andCollect
-                    ? '🚫 JSON save and collect'
-                    : '🚫 JSON save',
-                body: 'Json file not saved.',
-            })
-            _debugLogs(`Error writing JSON file. ${error}`)
-            throw new Error(`Error writing JSON file. ${error}`)
-        }
-        if (!andCollect) {
-            _showNotification({
-                subtitle: '💾 JSON save',
-                body: 'Json file saved.',
-            })
-        } else {
-            if (isDev()) mainLog.debug('Json measure start...')
-
-            const {
-                command,
-                nodeDir,
-                workDir: _workDir,
-            } = await _prepareCollect()
-            _debugLogs('Json measure start...')
-            _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
-            command.push('--json-file')
-            command.push(_workDir + '/' + utils.JSON_FILE_NAME)
-            command.push('--output-path')
-            command.push(_workDir)
-            try {
-                await _runCollect(command, nodeDir, event)
-            } catch (error) {
-                mainLog.error('Simple collect error', error)
-                throw new Error('Simple collect error')
-            }
-            _showNotification({
-                subtitle: '🎉 JSON collect',
-                body: `Measures done, you can consult reports in\n${_workDir}`,
-            })
-            _debugLogs('Json collect done 🚀')
-            return 'measure done'
-        }
-    } catch (error) {
-        if (!andCollect) {
-            _sendMessageToFrontLog('ERROR, Json file not saved', error)
-            _debugLogs('ERROR, Json file not saved', error)
-            _showNotification({
-                subtitle: '🚫 JSON save',
-                body: 'Json file not saved.',
-            })
-        } else {
-            _sendMessageToFrontLog(
-                'ERROR, Json file not saved or collect',
-                error
-            )
-            _debugLogs('ERROR, Json file not saved or collect', error)
-            _showNotification({
-                subtitle: '🚫 JSON save and collect',
-                body: 'Json file not saved or collect.',
-            })
-        }
-    }
-}
-
-/**
- * Handlers, Json config Read and Reload.
- * @param event IpcMainEvent
- * @returns Promise<IJsonMesureData>
- */
-const handleJsonReadAndReload = async (
-    event: IpcMainEvent
-): Promise<IJsonMesureData> => {
-    _showNotification({
-        subtitle: '🧩 JSON reload',
-        body: 'Process intialization.',
-    })
-    try {
-        const _workDir = await getWorkDir()
-        if (!_workDir || _workDir === '') {
-            throw new Error('Work dir not found')
-        }
-        const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
-        return new Promise((resolve, reject) => {
-            const jsonStream = fs.createReadStream(jsonFilePath)
-            jsonStream.on('data', function (chunk) {
-                const jsonDatas = JSON.parse(chunk.toString())
-                if (isDev()) mainLog.debug(`jsonDatas`, jsonDatas)
-
-                _showNotification({
-                    subtitle: '🔄 JSON reload',
-                    body: 'Json file read and reloaded.',
-                })
-                resolve(
-                    convertJSONDatasFromString(jsonDatas) as IJsonMesureData
-                )
-            })
-        })
-    } catch (error) {
-        _sendMessageToFrontLog(
-            'ERROR',
-            'Json file not read and reloaded',
-            error
-        )
-        _debugLogs('ERROR', 'Json file not read and reloaded', error)
-        _showNotification({
-            subtitle: '🚫 JSON reload',
-            body: `Json file not read and reloaded. ${error}`,
-        })
-        // throw new Error(`Json file not read and reloaded. ${error}`)
-    }
-}
-
-/**
- * Handlers, Generic CMD action
- * @param event IpcMainEvent
- * @param action string
- * @returns Promise<string>
- */
-const handle_CMD_Actions = async (
-    event: IpcMainEvent,
-    action: string
-): Promise<string> => {
-    // Create configuration from host and script_type
-    const config: {
-        runner: string
-        launcher: string
-        filePath: string[]
-        actionCMDFile: string
-        actionName: string
-        actionShortName: string
-        cmd: string
-        out: string[]
-    } = {
-        runner: os.platform() === 'win32' ? 'cmd.exe' : 'sh',
-        launcher: os.platform() === 'win32' ? '/c' : '-c',
-        filePath: undefined,
-        actionCMDFile: undefined,
-        actionName: undefined,
-        actionShortName: undefined,
-        cmd: undefined,
-        out: [],
-    }
-
-    const ext = os.platform() === 'win32' ? 'bat' : 'sh'
-    switch (action) {
-        case channels.INSTALL_ECOINDEX_PLUGIN:
-            config['actionName'] = 'LighthouseEcoindexPluginInstall'
-            config['actionShortName'] = 'Install plugin'
-            config['actionCMDFile'] =
-                `${custom_scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
-            break
-        case channels.UPDATE_ECOINDEX_PLUGIN:
-            config['actionName'] = 'LighthouseEcoindexPluginUpdate'
-            config['actionShortName'] = 'Update plugin'
-            config['actionCMDFile'] = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
-            break
-        case channels.IS_NODE_INSTALLED:
-            config['actionName'] = 'isNodeInstalled'
-            config['actionShortName'] = 'Node installed'
-            config['actionCMDFile'] = `${scripts.GET_NODE}.${ext}`
-            break
-        case channels.GET_NODE_VERSION:
-            config['actionName'] = 'getNodeVersion'
-            config['actionShortName'] = 'Node version'
-            config['actionCMDFile'] = `${scripts.GET_NODE_VERSION}.${ext}`
-            break
-
-        default:
-            throw new Error(`${action} not handled in handle_CMD_Actions`)
-    }
-    try {
-        _debugLogs(`handle${config['actionName']} started 🚀`)
-
-        config['filePath'] = [
-            `${
-                process.env['WEBPACK_SERVE'] === 'true'
-                    ? __dirname
-                    : process.resourcesPath
-            }/scripts/${os.platform()}/${config['actionCMDFile']}`.replace(
-                /\//gm,
-                path.sep
-            ),
-        ]
-        _debugLogs(`Try childProcess on`, config['filePath'])
-
-        if (os.platform() === `darwin`) {
-            config['cmd'] =
-                `chmod +x ${config['filePath']} && ${config['runner']} ${config['filePath']}`
-        } else if (os.platform() === `win32`) {
-            config['cmd'] = ` ${config['filePath']}`
-        }
-
-        return new Promise((resolve, reject) => {
-            const childProcess: ChildProcess = spawn(
-                config['runner'] as string,
-                [config['launcher'], config['cmd']],
-                {
-                    stdio: ['pipe', 'pipe', process.stderr, 'ipc'],
-                    env: process.env,
-                    windowsHide: true,
-                    // shell: shell,
-                }
-            )
-
-            childProcess.on('exit', (code, signal) => {
-                _debugLogs(
-                    `${config['actionName']} exited: ${code}; signal: ${signal}`
-                )
-            })
-
-            childProcess.on('close', (code) => {
-                _debugLogs(`${config['actionName']} closed: ${code}`)
-                if (code === 0) {
-                    // _sendMessageToFrontLog(`${config['actionShortName']} done 🚀`)
-                    _debugLogs(`${config['actionShortName']} done 🚀`)
-                    if (
-                        action === channels.IS_NODE_INSTALLED ||
-                        action === channels.GET_NODE_VERSION
-                    ) {
-                        if (config['out'].at(-1)) {
-                            resolve(
-                                config['out']
-                                    .at(-1)
-                                    .replace(/[\r\n]/gm, '')
-                                    //.replace('\\node.exe', '') // voir si il faut l'enlever...
-                                    .trim() as string
-                            )
-                        } else {
-                            reject(
-                                `Process ${config['actionShortName']} failed, out is unknown 🚫`
-                            )
-                        }
-                    } else if (
-                        action === channels.INSTALL_ECOINDEX_PLUGIN ||
-                        action === channels.UPDATE_ECOINDEX_PLUGIN
-                    ) {
-                        resolve(`${config['actionShortName']} done 🚀`)
-                    }
-                } else {
-                    // _sendMessageToFrontLog(`${config['actionShortName']} failed 🚫`)
-                    _debugLogs(`${config['actionShortName']} failed 🚫`)
-                    reject(`${config['actionShortName']} failed 🚫`)
-                }
-            })
-
-            if (childProcess.stderr) {
-                childProcess.stderr.on('data', (data) => {
-                    console.error(
-                        `${config['actionShortName']} stderr: ${data}`
-                    )
-                    _debugLogs(`${config['actionShortName']} stderr: ${data}`)
-                })
-            }
-
-            childProcess.on('disconnect', () => {
-                _debugLogs(
-                    `${config['actionShortName']} Child process disconnected`
-                )
-            })
-
-            childProcess.on('message', (message, sendHandle) => {
-                _debugLogs(
-                    `${config['actionShortName']} Child process message: ${message}`
-                )
-            })
-
-            if (childProcess.stdout) {
-                _echoReadable(event, childProcess.stdout)
-                childProcess.stdout.on('data', (data) => {
-                    config['out'].push(data.toString())
-                })
-            }
-        })
-    } catch (error) {
-        _debugLogs(`error`, error)
-        return `${config['actionShortName']} failed 🚫`
-    }
-}
-
-/**
- * Handlers, SelectFolder
- * @returns string
- */
-const handleSelectFolder = async () => {
-    try {
-        const options: Electron.OpenDialogOptions = {
-            properties: ['openDirectory', 'createDirectory'],
-        }
-        const { canceled, filePaths } = await dialog.showOpenDialog(options)
-        if (!canceled) {
-            setWorkDir(`"${filePaths[0]}"`)
-            return `"${filePaths[0]}"`
-        }
-    } catch (error) {
-        mainLog.error(`Error in handleSelectFolder`)
-    }
-}
+//                 showNotification({
+//                     subtitle: '🔄 JSON reload',
+//                     body: 'Json file read and reloaded.',
+//                 })
+//                 resolve(
+//                     convertJSONDatasFromString(jsonDatas) as IJsonMesureData
+//                 )
+//             })
+//         })
+//     } catch (error) {
+//         _sendMessageToFrontLog(
+//             'ERROR',
+//             'Json file not read and reloaded',
+//             error
+//         )
+//         _debugLogs('ERROR', 'Json file not read and reloaded', error)
+//         showNotification({
+//             subtitle: '🚫 JSON reload',
+//             body: `Json file not read and reloaded. ${error}`,
+//         })
+//         // throw new Error(`Json file not read and reloaded. ${error}`)
+//     }
+// }
 
 // #endregion

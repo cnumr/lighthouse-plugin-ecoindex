@@ -2,7 +2,7 @@ import * as path from 'node:path'
 
 import { IpcMainEvent, IpcMainInvokeEvent, app } from 'electron'
 
-import Logger from 'electron-log'
+import { getMainLog } from '../main'
 import sudoPrompt from '@vscode/sudo-prompt'
 
 /**
@@ -11,11 +11,10 @@ import sudoPrompt from '@vscode/sudo-prompt'
  * @returns
  */
 export const handleInstallSudoPuppeteerBrowser = async (
-    log: Logger.MainLogger,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event?: IpcMainEvent | IpcMainInvokeEvent | null
 ) => {
-    const mainLog = log.scope('main/sudoPupperteerInstall')
+    const mainLog = getMainLog().scope('main/sudoPupperteerInstall')
     try {
         // const env = {
         //     ...process.env,

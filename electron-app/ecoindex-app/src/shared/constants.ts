@@ -40,7 +40,6 @@ const constants: IConstants = {
                 Cookie: 'monster=blue',
                 'x-men': 'wolverine',
                 Authorization: 'Basic c3BpZTpFaXBzRXJnb1N1bTQyJA==',
-                'config-source': 'input-file.json',
             },
             output: ['html'],
             'user-agent': 'insights',
