@@ -1,5 +1,6 @@
-import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
+import { BrowserWindow, IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
+import { channels } from '../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../main'
 
@@ -13,12 +14,13 @@ import { getMainLog } from '../main'
  * @returns boolean
  */
 export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event?: IpcMainEvent | IpcMainInvokeEvent
+    event?: IpcMainEvent | IpcMainInvokeEvent
 ): Promise<ResultMessage> => {
     const mainLog = getMainLog().scope(
         'main/isLighthousePluginEcoindexInstalled'
     )
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
     /**
      * Version installée sur le host.
      */
@@ -119,6 +121,10 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                             })
                         })
                             .then((result) => {
+                                win.webContents.send(
+                                    channels.ASYNCHRONOUS_LOG,
+                                    `Lighthouse-plugin-ecoindex installed.`
+                                )
                                 resolve(result)
                             })
                             .catch((error) => {
@@ -129,6 +135,10 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                                 })
                             })
                     } else {
+                        win.webContents.send(
+                            channels.ASYNCHRONOUS_LOG,
+                            `Lighthouse-plugin-ecoindex installed.`
+                        )
                         resolve({
                             result: true,
                             message: `Don't need to update lighthouse-plugin-ecoindex 🚫`,

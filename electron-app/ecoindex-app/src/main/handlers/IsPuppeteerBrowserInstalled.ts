@@ -5,7 +5,6 @@ import puppeteer from 'puppeteer'
 
 /**
  * Check if Puppeteer mandatory Browser is installed on host.
- * @param log Logger.MainLogger
  * @param _event IpcMainEvent | IpcMainInvokeEvent
  * @returns boolean
  */

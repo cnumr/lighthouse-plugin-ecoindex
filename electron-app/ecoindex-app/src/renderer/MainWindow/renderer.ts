@@ -36,6 +36,9 @@ const frontLog = log.scope('front/renderer')
 
 // window.require = require
 
+/**
+ * Write message to the console box visible in front.
+ */
 window.electronAPI.sendLogToFront((message: string) => {
     frontLog.log(message)
     const textArea = document.getElementById('echo') as HTMLTextAreaElement
@@ -43,6 +46,9 @@ window.electronAPI.sendLogToFront((message: string) => {
     textArea.scrollTop = textArea.scrollHeight
 })
 
+/**
+ * Send log to dev console.
+ */
 window.electronAPI.sendMessageToFrontLog(
     (message?: any, ...optionalParams: any[]) => {
         if (optionalParams && optionalParams.length > 1)

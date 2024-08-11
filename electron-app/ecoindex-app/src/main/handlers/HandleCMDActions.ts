@@ -70,6 +70,12 @@ export const handle_CMD_Actions = (
             config['actionShortName'] = 'Node version'
             config['actionCMDFile'] = `${scripts.GET_NODE_VERSION}.${ext}`
             break
+        case channels.INSTALL_PUPPETEER_BROWSER:
+            config['actionName'] = 'installPupperteerBrowser'
+            config['actionShortName'] = 'Puppeteer Browser installation'
+            config['actionCMDFile'] =
+                `${scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
+            break
 
         default:
             throw new Error(`${action} not handled in handle_CMD_Actions`)
@@ -137,10 +143,7 @@ export const handle_CMD_Actions = (
                                 `Process ${config['actionShortName']} failed, out is unknown 🚫`
                             )
                         }
-                    } else if (
-                        action === channels.INSTALL_ECOINDEX_PLUGIN ||
-                        action === channels.UPDATE_ECOINDEX_PLUGIN
-                    ) {
+                    } else {
                         resolve(`${config['actionShortName']} done 🚀`)
                     }
                 } else {
