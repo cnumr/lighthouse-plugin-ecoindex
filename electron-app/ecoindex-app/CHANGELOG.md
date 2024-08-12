@@ -1,5 +1,18 @@
 
 
+## [1.3.1-rc.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.6...electron-v1.3.1-rc.7) (2024-08-12)
+
+
+### Bug Fixes
+
+* add a relaod button if freeze on install ([c431326](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c4313260c1998ea41bd5002aeb731fb21051d384))
+* plugin installer don't dispatch end and success event ([114ac88](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/114ac88e054de801494f2010718de734205b8955))
+
+
+### Features
+
+* installation browser and plugin silently ([3195b7c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3195b7c49e2cf89e9ec94e2f73fd5263d5b9789a))
+
 ## [1.3.1-rc.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.5...electron-v1.3.1-rc.6) (2024-08-11)
 
 
