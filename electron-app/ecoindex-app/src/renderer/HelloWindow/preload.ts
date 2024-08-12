@@ -8,4 +8,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
             channels.CHANGE_LANGUAGE_TO_FRONT,
             (_event, languageCode) => callback(languageCode)
         ),
+    hideHelloWindow: () =>
+        ipcRenderer.invoke(channels.SHOW_HIDE_WELCOME_WINDOW),
+})
+contextBridge.exposeInMainWorld('store', {
+    set: (key: string, value: any) =>
+        ipcRenderer.invoke('store-set', key, value),
+    get: (key: string) => ipcRenderer.invoke('store-get', key),
+    delete: (key: string) => ipcRenderer.invoke('store-delete', key),
 })

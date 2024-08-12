@@ -14,6 +14,7 @@
                 "defaultValue": "to translate",
                 "keySeparator": null,
                 "nsSeparator": null,
+                "i18nextInstanceNames": ["_i18n", "i18next", "i18n"],
                 "keyAsDefaultValue": ["en"],
                 "useI18nextDefaultValue": false,
                 "keyAsDefaultValueForDerivedKeys": false,

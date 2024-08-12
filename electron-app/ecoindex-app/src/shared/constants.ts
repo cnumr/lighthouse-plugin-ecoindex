@@ -27,6 +27,7 @@ const constants: IConstants = {
         GET_INITIAL_TRANSLATIONS: 'get-initial-translations',
         CHANGE_LANGUAGE_TO_FRONT: 'change-language-to-front',
         INSTALL_PUPPETEER_BROWSER: 'install-puppeteer-browser',
+        SHOW_HIDE_WELCOME_WINDOW: 'show-hide-welcome-window',
     },
     scripts: {
         GET_NODE: 'get-node',

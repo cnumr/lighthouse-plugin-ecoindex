@@ -1,13 +1,10 @@
 import * as menuFactoryService from '../services/menuFactory'
 
 import { BrowserWindow, app, ipcMain } from 'electron'
-import { channels, scripts } from '../shared/constants'
 import {
     getMainWindow,
     getWelcomeWindow,
-    hasShowWelcomeWindow,
     isDev,
-    setHasShowedWelcomeWindow,
     setMainWindow,
     setWelcomeWindow,
 } from '../shared/memory'
@@ -16,7 +13,10 @@ import {
     handleSimpleCollect,
 } from './handlers/HandleCollectAll'
 
+import Store from 'electron-store'
 import Updater from './Updater'
+import { channels } from '../shared/constants'
+import { convertVersion } from './utils'
 import fixPath from 'fix-path'
 import { handleGetNodeVersion } from './handlers/HandleGetNodeVersion'
 import { handleHomeDir } from './handlers/HandleHomeDir'
@@ -39,6 +39,9 @@ if (require('electron-squirrel-startup')) {
 
 log.initialize()
 const mainLog = log.scope('main')
+
+const store = new Store()
+mainLog.debug(`userData`, app.getPath('userData'))
 
 export const getMainLog = () => {
     return log
@@ -168,6 +171,21 @@ app.on('ready', () => {
         // }
     })
 
+    ipcMain.handle('store-set', (event, key: string, value: any) => {
+        store.set(key, value)
+    })
+
+    ipcMain.handle('store-get', (event, key: string) => {
+        return store.get(key)
+    })
+
+    ipcMain.handle('store-delete', (event, key: string) => {
+        store.delete(key)
+    })
+    ipcMain.handle(channels.SHOW_HIDE_WELCOME_WINDOW, () => {
+        getWelcomeWindow().hide()
+    })
+
     app.setAboutPanelOptions({
         applicationName: packageJson.productName,
         applicationVersion: packageJson.name,
@@ -256,24 +274,21 @@ const _createMainWindow = (): void => {
         mainLog.error(`i18n`, error)
     }
 
-    if (!hasShowWelcomeWindow()) {
-        setWelcomeWindow(
-            new BrowserWindow({
-                width: 800,
-                height: 700,
-                icon: '/assets/app-ico.png',
-                webPreferences: {
-                    preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
-                },
-                parent: getMainWindow(),
-                modal: true,
-                show: true,
-            })
-        )
-        getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
-    } else {
-        setHasShowedWelcomeWindow(true)
-    }
+    const displayHello = `displayHello.${convertVersion(packageJson.version)}`
+    setWelcomeWindow(
+        new BrowserWindow({
+            width: 800,
+            height: 700,
+            icon: '/assets/app-ico.png',
+            webPreferences: {
+                preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
+            },
+            parent: getMainWindow(),
+            modal: true,
+            show: !store.get(displayHello) && store.get(displayHello) !== true,
+        })
+    )
+    getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools({ mode: 'detach' })

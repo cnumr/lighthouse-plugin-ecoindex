@@ -1,6 +1,7 @@
 import { BrowserWindow, app as ElectronApp, shell } from 'electron'
 
 import { config } from '../configs/app.config'
+import { getWelcomeWindow } from '../shared/memory'
 import i18n from 'i18next'
 import log from 'electron-log/main'
 import pkg from '../../package.json'
@@ -77,6 +78,12 @@ export const otherTemplate = (
                             await shell.openExternal(
                                 'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
                             )
+                        },
+                    },
+                    {
+                        label: `${_i18n.t('Open splash window...')}`,
+                        click: async () => {
+                            await getWelcomeWindow().show()
                         },
                     },
                 ],

@@ -1,9 +1,12 @@
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
 import { Button } from '../ui/button'
+import { Checkbox } from '../ui/checkbox'
+import { CheckedState } from '@radix-ui/react-checkbox'
 import { DarkModeSwitcher } from '../components/dark-mode-switcher'
 import { Header } from '../components/Header'
+import { convertVersion } from '../../main/utils'
 import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
 import pkg from '../../../package.json'
@@ -13,8 +16,18 @@ const frontLog = log.scope('front/HelloApp')
 
 function HelloApp() {
     const [language, setLanguage] = useState('en')
+    const [checked, setChecked] = useState(false)
     const closeHandler = () => {
-        window.close()
+        window.electronAPI.hideHelloWindow()
+        window.scrollTo(0, 0)
+    }
+
+    const handlerDoNotDisplayAgain = (event: CheckedState) => {
+        setChecked(event.valueOf() as boolean)
+        window.store.set(
+            `displayHello.${convertVersion(pkg.version)}`,
+            event.valueOf()
+        )
     }
 
     useEffect(() => {
@@ -34,6 +47,15 @@ function HelloApp() {
                 frontLog.error(error)
             }
         })
+
+        const updateCheckBox = async () => {
+            const displayHello = `displayHello.${convertVersion(pkg.version)}`
+            const value = (await window.store.get(
+                displayHello
+            )) as unknown as boolean
+            setChecked(value)
+        }
+        updateCheckBox()
     }, [])
 
     const { t } = useTranslation()
@@ -234,17 +256,42 @@ function HelloApp() {
                     </>
                 )}
             </div>
-            <div className="grid place-items-center">
-                <Button
-                    onClick={closeHandler}
-                    id="close-window"
-                    size="default"
-                    variant="default"
-                    className="mt-8 w-fit"
-                    title={t('Close this window')}
-                >
-                    {t('Close')}
-                </Button>
+            <div className="mt-8 flex w-full items-center justify-between">
+                <div className="flex w-1/3 items-start space-x-2 *:justify-start">
+                    <Checkbox
+                        id="do-not-display-again"
+                        checked={checked}
+                        onCheckedChange={(event) =>
+                            handlerDoNotDisplayAgain(event)
+                        }
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                        <label
+                            htmlFor="do-not-display-again"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                            {t(`Do not show this window again.`)}
+                        </label>
+                        <p className="text-sm text-muted-foreground">
+                            {t(
+                                `Don't worry, you can always open it from the Help menu.`
+                            )}
+                        </p>
+                    </div>
+                </div>
+                <div className="flex w-1/3 !justify-center">
+                    <Button
+                        onClick={closeHandler}
+                        id="close-window"
+                        size="default"
+                        variant="default"
+                        className="w-fit"
+                        title={t('Close this window')}
+                    >
+                        {t('Close')}
+                    </Button>
+                </div>
+                <div className="w-1/3"></div>
             </div>
             <div className="prose prose-sm text-center font-semibold dark:prose-invert">
                 {t('Version of the application')}: {pkg.version}

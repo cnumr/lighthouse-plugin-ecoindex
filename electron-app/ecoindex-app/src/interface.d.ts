@@ -5,6 +5,11 @@ export interface IVersionsAPI {
     getNodeVersion: () => Promise<string>
 }
 
+export interface IStoreAPI {
+    set: (key: string, value: any) => Promise<void>
+    get: (key: string) => Promise<string>
+    delete: (key: string) => Promise<void>
+}
 export interface IElectronAPI {
     // i18nextElectronBackend: any
     // Main → Front
@@ -31,6 +36,7 @@ export interface IElectronAPI {
     ) => Promise<string>
     handleJsonReadAndReload: () => Promise<IJsonMesureData>
     handleIsJsonConfigFileExist: (workDir: string) => Promise<boolean>
+    hideHelloWindow: () => Promise<void>
 }
 
 declare global {
@@ -59,5 +65,6 @@ declare global {
     interface Window {
         versions: IVersionsAPI
         electronAPI: IElectronAPI
+        store: IStoreAPI
     }
 }
