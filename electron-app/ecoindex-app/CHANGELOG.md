@@ -1,5 +1,13 @@
 
 
+## [1.3.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.2...electron-v1.3.3) (2024-08-12)
+
+
+### Features
+
+* add Checkbox ([3b4a671](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3b4a6713bcdaf331755923e2406f285b41ce0c08))
+* save window settings popin d'accueil [#27](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/27) ([c5dbd73](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c5dbd7362c7925f38550900414a4d799bae8a3df))
+
 ## [1.3.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.7...electron-v1.3.1) (2024-08-12)
 
 
