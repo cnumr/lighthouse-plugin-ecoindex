@@ -49,17 +49,17 @@ export const handle_CMD_Actions = (
 
     const ext = os.platform() === 'win32' ? 'bat' : 'sh'
     switch (action) {
-        case channels.INSTALL_ECOINDEX_PLUGIN:
+        case channels.INSTALL_LIGHTHOUSE_PLUGIN_ECOINDEX:
             config['actionName'] = 'LighthouseEcoindexPluginInstall'
             config['actionShortName'] = 'Install plugin'
             config['actionCMDFile'] =
-                `${custom_scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
+                `${custom_scripts.INSTALL_LIGHTHOUSE_PLUGIN_ECOINDEX}.${ext}`
             break
-        case channels.UPDATE_ECOINDEX_PLUGIN:
-            config['actionName'] = 'LighthouseEcoindexPluginUpdate'
-            config['actionShortName'] = 'Update plugin'
-            config['actionCMDFile'] = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
-            break
+        // case channels.UPDATE_ECOINDEX_PLUGIN:
+        //     config['actionName'] = 'LighthouseEcoindexPluginUpdate'
+        //     config['actionShortName'] = 'Update plugin'
+        //     config['actionCMDFile'] = `${custom_scripts.UPDATED_PLUGIN}.${ext}`
+        //     break
         case channels.IS_NODE_INSTALLED:
             config['actionName'] = 'isNodeInstalled'
             config['actionShortName'] = 'Node installed'
@@ -74,7 +74,7 @@ export const handle_CMD_Actions = (
             config['actionName'] = 'installPupperteerBrowser'
             config['actionShortName'] = 'Puppeteer Browser installation'
             config['actionCMDFile'] =
-                `${scripts.INSTALL_PLUGIN_AND_UTILS}.${ext}`
+                `${scripts.INSTALL_PUPPETEER_BROWSER}.${ext}`
             break
 
         default:

@@ -1,13 +1,14 @@
 type ISimpleUrlInput = {
-  value: string
+    value: string
 }
 
 type InputField = {
-  value: string
+    value: string
 }
 
 type ResultMessage = {
-  result: boolean
-  message: string
-  version?: string
+    result: boolean
+    message: string
+    actualVersion?: string
+    targetVersion?: string
 }

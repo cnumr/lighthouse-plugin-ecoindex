@@ -13,6 +13,7 @@ import { version } from 'react'
  * Check is Mandatory is installed on host.
  * @param _event IpcMainEvent | IpcMainInvokeEvent
  * @returns boolean
+ * @deprecated use isLighthousePluginEcoindexInstalled
  */
 export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -118,7 +119,7 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                                 resolve({
                                     result: true,
                                     message: `lighthouse-plugin-ecoindex installed or updated 🎉`,
-                                    version: currentVersion,
+                                    targetVersion: currentVersion,
                                 })
                             })
                         })
@@ -136,7 +137,7 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                         return resolve({
                             result: true,
                             message: `Don't need to update lighthouse-plugin-ecoindex 🚫`,
-                            version: latestVersion,
+                            targetVersion: latestVersion,
                         })
                     }
                 })

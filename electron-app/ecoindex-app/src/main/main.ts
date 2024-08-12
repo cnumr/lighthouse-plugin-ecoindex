@@ -31,7 +31,8 @@ import { handleWorkDir } from './handlers/HandleWorkDir'
 import { handle_CMD_Actions } from './handlers/HandleCMDActions'
 import i18n from '../configs/i18next.config'
 import { isAdmin } from './handlers/IsAdminOnHost'
-import { isLighthousePluginEcoindexInstalled } from './handlers/isLighthousePluginEcoindexInstalled'
+import { isLighthousePluginEcoindexInstalled } from './handlers/IsLighthousePluginEcoindexInstalled'
+import { isLighthousePluginEcoindexInstalled_old } from './handlers/isLighthousePluginEcoindexInstalled_old'
 import { isLighthousePluginEcoindexMustBeInstallOrUpdated } from './handlers/IsLighthousePluginEcoindexMustBeInstallOrUpdated'
 import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInstalled'
 import log from 'electron-log/main'
@@ -97,10 +98,37 @@ app.on('ready', () => {
     ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
     ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)
     ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
-    ipcMain.handle(
-        channels.INSTALL_OR_UPDATE_ECOINDEX_PLUGIN,
-        isLighthousePluginEcoindexMustBeInstallOrUpdated
-    )
+    // ipcMain.handle(
+    //     channels.INSTALL_OR_UPDATE_ECOINDEX_PLUGIN,
+    //     isLighthousePluginEcoindexMustBeInstallOrUpdated
+    // )
+    ipcMain.handle(channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED, async (event) => {
+        const webContents = event.sender
+        const win = BrowserWindow.fromWebContents(webContents)
+        const isInstalled = await isLighthousePluginEcoindexInstalled(event)
+        mainLog.debug(`isLighthousePluginEcoindexInstalled`, isInstalled.result)
+        if (!isInstalled.result) {
+            const result = await handle_CMD_Actions(
+                event,
+                channels.INSTALL_LIGHTHOUSE_PLUGIN_ECOINDEX
+            )
+            win.webContents.send(
+                channels.ASYNCHRONOUS_LOG,
+                `Lighthouse plugin ecoindex installed.`
+            )
+            return {
+                result,
+                message: `Lighthouse plugin ecoindex installed`,
+                targetVersion: isInstalled.targetVersion,
+            }
+        } else {
+            win.webContents.send(
+                channels.ASYNCHRONOUS_LOG,
+                `Lighthouse plugin ecoindex allready installed.`
+            )
+            return isInstalled
+        }
+    })
     ipcMain.handle(channels.SELECT_FOLDER, handleSelectFolder)
     ipcMain.handle(
         channels.IS_JSON_CONFIG_FILE_EXIST,

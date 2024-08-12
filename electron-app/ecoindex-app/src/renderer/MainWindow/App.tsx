@@ -319,23 +319,26 @@ function TheApp() {
         /**
          * Handlers, install Puppeteer Browser on Host
          */
-        const installPuppeteerBrowser = async () => {
+        const fetchIsPuppeteerBrowserInstalled = async () => {
             return new Promise<string | boolean>((resolve, reject) => {
                 window.electronAPI
-                    .handleInstallPuppeteerBrowser()
+                    .handleIsPuppeteerBrowserInstalled()
                     .then((value) => {
-                        frontLog.debug(`installPuppeteerBrowser Done 🎉`, value)
+                        frontLog.debug(
+                            `fetchIsPuppeteerBrowserInstalled Done 🎉`,
+                            value
+                        )
                         resolve(value as boolean)
                     })
                     .catch((value) => {
                         frontLog.error(
-                            `installPuppeteerBrowser Failed 🚫`,
+                            `fetchIsPuppeteerBrowserInstalled Failed 🚫`,
                             value
                         )
                         reject(value as boolean)
                     })
             }).then((value: boolean) => {
-                setPuppeteerBrowserInstalled(value)
+                setIsLighthouseEcoindexPluginInstalled(value)
                 increment()
             })
         }
@@ -395,23 +398,22 @@ function TheApp() {
         /**
          * Handler, force update of lighthouse-plugin-ecoindex
          */
-        const fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated =
-            async () => {
-                try {
-                    const result =
-                        await window.electronAPI.isLighthousePluginEcoindexMustBeInstallOrUpdated()
-                    setIsLighthouseEcoindexPluginInstalled(result.result)
-                    setPluginVersion(result.version)
-                    frontLog.debug(result.message)
-                    sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
-                    increment()
-                } catch (error) {
-                    frontLog.error(
-                        `fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated`,
-                        error
-                    )
-                }
+        const fetchIsLighthousePluginEcoindexInstalled = async () => {
+            try {
+                const result =
+                    await window.electronAPI.isLighthouseEcoindexPluginInstalled()
+                setIsLighthouseEcoindexPluginInstalled(result.result)
+                setPluginVersion(result.targetVersion)
+                frontLog.debug(result.message)
+                sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
+                increment()
+            } catch (error) {
+                frontLog.error(
+                    `fetchIsLighthousePluginEcoindexInstalled`,
+                    error
+                )
             }
+        }
 
         /**
          * Handlers, to get user home dir.
@@ -428,9 +430,10 @@ function TheApp() {
             fetchHomeDir()
             fetchNodeInstalled().then(() => {
                 fetchNodeVersion().then(() => {
-                    installPuppeteerBrowser().then(() => {
-                        fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated()
-                        setDisplayReloadButton(false)
+                    fetchIsPuppeteerBrowserInstalled().then(() => {
+                        fetchIsLighthousePluginEcoindexInstalled().then(() => {
+                            setDisplayReloadButton(false)
+                        })
                     })
                 })
             })
