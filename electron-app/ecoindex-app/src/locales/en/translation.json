@@ -62,6 +62,7 @@
     "Node is not installed, install it (you must be admin of your computer)! After installation, restart application.": "Node is not installed, install it (you must be admin of your computer)! After installation, restart application.",
     "Quit": "Quit",
     "Reload": "Reload",
+    "Reload if too long": "...Reload",
     "Reload the configuration": "Reload the configuration",
     "Report": "Report",
     "Save": "Save",

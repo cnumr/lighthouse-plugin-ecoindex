@@ -3,6 +3,7 @@ import { BrowserWindow, IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { channels } from '../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../main'
+import { version } from 'react'
 
 // 1. Check if installed
 // 2. Check npm las version
@@ -14,13 +15,12 @@ import { getMainLog } from '../main'
  * @returns boolean
  */
 export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     event?: IpcMainEvent | IpcMainInvokeEvent
 ): Promise<ResultMessage> => {
     const mainLog = getMainLog().scope(
         'main/isLighthousePluginEcoindexInstalled'
     )
-    const webContents = event.sender
-    const win = BrowserWindow.fromWebContents(webContents)
     /**
      * Version installée sur le host.
      */
@@ -97,21 +97,23 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                         mainLog.debug(
                             `Need to update lighthouse-plugin-ecoindex`
                         )
-                        new Promise<ResultMessage>((resolve, reject) => {
+                        return new Promise<ResultMessage>((resolve, reject) => {
                             const cmd = `npm install -g lighthouse-plugin-ecoindex`
                             exec(cmd, (error, stdout, stderr) => {
                                 if (error) {
                                     mainLog.error(`exec error: ${error}`)
-                                    reject(
-                                        `lighthouse-plugin-ecoindex install or update error ${error}`
-                                    )
+                                    reject({
+                                        result: false,
+                                        message: `lighthouse-plugin-ecoindex install or update error ${error}`,
+                                        version: `unkown`,
+                                    })
                                 }
-                                // if (stdout) mainLog.debug(`stdout: ${stdout}`)
+                                if (stdout) mainLog.debug(`stdout: ${stdout}`)
                                 // if (stdout)
                                 //   mainLog.debug(
                                 //     `lighthouse-plugin-ecoindex installed or updated 🎉`,
                                 //   )
-                                // if (stderr) mainLog.error(`stderr: ${stderr}`)
+                                if (stderr) mainLog.debug(`stderr: ${stderr}`)
                                 currentVersion = latestVersion
                                 resolve({
                                     result: true,
@@ -121,10 +123,6 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                             })
                         })
                             .then((result) => {
-                                win.webContents.send(
-                                    channels.ASYNCHRONOUS_LOG,
-                                    `Lighthouse-plugin-ecoindex installed.`
-                                )
                                 return resolve(result)
                             })
                             .catch((error) => {
@@ -135,10 +133,6 @@ export const isLighthousePluginEcoindexMustBeInstallOrUpdated = (
                                 })
                             })
                     } else {
-                        win.webContents.send(
-                            channels.ASYNCHRONOUS_LOG,
-                            `Lighthouse-plugin-ecoindex installed.`
-                        )
                         return resolve({
                             result: true,
                             message: `Don't need to update lighthouse-plugin-ecoindex 🚫`,

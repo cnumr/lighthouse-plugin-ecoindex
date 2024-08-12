@@ -7,6 +7,7 @@ import {
 } from '../ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
+import { channels, utils } from '../../shared/constants'
 import { useCallback, useEffect, useState } from 'react'
 
 import { AlertBox } from '../components/Alert'
@@ -24,11 +25,11 @@ import { SimplePanMesure } from '../components/simple-pan'
 import { SimpleTooltip } from '../components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from '../ui/typography/TypographyP'
+import { getMainWindow } from '@/shared/memory'
 import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
 import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
-import { utils } from '../../shared/constants'
 
 const frontLog = log.scope('front/App')
 
@@ -48,6 +49,8 @@ function TheApp() {
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
     const [puppeteerBrowserInstalled, setPuppeteerBrowserInstalled] =
         useState(true)
+
+    const [displayReloadButton, setDisplayReloadButton] = useState(false)
 
     let loadingScreen = 0
     const [urlsList, setUrlsList] = useState<InputField[]>([
@@ -291,7 +294,28 @@ function TheApp() {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
 
+    const forceRefresh = () => {
+        // getMainWindow().webContents.reload()
+        window.location.reload()
+    }
+
+    /**
+     * Send text to console on front.
+     * @param message string
+     */
+    const sendLogToFront = (message: string) => {
+        const textArea = document.getElementById('echo') as HTMLTextAreaElement
+        textArea.value = textArea.value + '\n' + message
+        textArea.scrollTop = textArea.scrollHeight
+    }
+
     useEffect(() => {
+        const handleDisplayReloadButton = async () => {
+            setDisplayReloadButton(false)
+            await _sleep(30000)
+            setDisplayReloadButton(true)
+        }
+        handleDisplayReloadButton()
         /**
          * Handlers, install Puppeteer Browser on Host
          */
@@ -335,7 +359,6 @@ function TheApp() {
         const fetchWorkDir = async () => {
             const result = await window.electronAPI.getWorkDir('')
             setWorkDir(result)
-
             increment()
         }
         /**
@@ -380,6 +403,7 @@ function TheApp() {
                     setIsLighthouseEcoindexPluginInstalled(result.result)
                     setPluginVersion(result.version)
                     frontLog.debug(result.message)
+                    sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
                     increment()
                 } catch (error) {
                     frontLog.error(
@@ -394,7 +418,6 @@ function TheApp() {
          */
         const fetchHomeDir = async () => {
             const filePath = await window.electronAPI.getHomeDir()
-
             setHomeDir(filePath)
         }
 
@@ -407,6 +430,7 @@ function TheApp() {
                 fetchNodeVersion().then(() => {
                     installPuppeteerBrowser().then(() => {
                         fetchIsLighthousePluginEcoindexMustBeInstallOrUpdated()
+                        setDisplayReloadButton(false)
                     })
                 })
             })
@@ -771,9 +795,24 @@ function TheApp() {
                     id="loadingPopin"
                     progress={progress}
                     showProgress={!appReady}
+                    className="flex !flex-col items-center"
+                    footer={
+                        displayReloadButton && (
+                            <Button
+                                id="bt-reload"
+                                variant="destructive"
+                                size="sm"
+                                onClick={forceRefresh}
+                            >
+                                {t('Reload if too long')}
+                            </Button>
+                        )
+                    }
                 >
-                    <ReloadIcon className="mr-2 size-4 animate-spin" />
-                    <p id="counter">{popinText}</p>
+                    <div className="flex flex-nowrap items-center">
+                        <ReloadIcon className="mr-2 size-4 animate-spin" />
+                        <p id="counter">{popinText}</p>
+                    </div>
                 </PopinLoading>
             )}
         </div>
