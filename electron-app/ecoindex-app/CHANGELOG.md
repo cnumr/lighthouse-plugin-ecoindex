@@ -1,5 +1,12 @@
 
 
+## [1.3.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.7...electron-v1.3.1) (2024-08-12)
+
+
+### Bug Fixes
+
+* try handling the end installation of plugin ([c2d03ff](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c2d03ff6485e8f0e901cfcc457422df868d5c27b))
+
 ## [1.3.1-rc.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.6...electron-v1.3.1-rc.7) (2024-08-12)
 
 
