@@ -247,7 +247,7 @@ function HelloApp() {
                 </Button>
             </div>
             <div className="prose prose-sm text-center font-semibold dark:prose-invert">
-                {t("Version de l'application")}: {pkg.version}
+                {t('Version of the application')}: {pkg.version}
             </div>
         </div>
     )

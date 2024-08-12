@@ -10,7 +10,7 @@ import { version } from 'react'
 // 3. Update if necessay
 
 /**
- * Check is Mandatory is installed on host.
+ * Check if LighthousePluginEcoindex (Mandatory) is installed on host.
  * @param _event IpcMainEvent | IpcMainInvokeEvent
  * @returns boolean
  */

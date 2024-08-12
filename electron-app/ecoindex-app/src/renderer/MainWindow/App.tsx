@@ -25,7 +25,6 @@ import { SimplePanMesure } from '../components/simple-pan'
 import { SimpleTooltip } from '../components/simple-tooltip'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { TypographyP } from '../ui/typography/TypographyP'
-import { getMainWindow } from '@/shared/memory'
 import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
 import packageJson from '../../../package.json'
@@ -34,7 +33,7 @@ import { useTranslation } from 'react-i18next'
 const frontLog = log.scope('front/App')
 
 function TheApp() {
-    const [language, setLanguage] = useState('en')
+    // const [language, setLanguage] = useState('en')
     const [progress, setProgress] = useState(0)
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
     const [nodeVersion, setNodeVersion] = useState('')
@@ -500,14 +499,14 @@ function TheApp() {
     /**
      * Detect language change.
      */
-    useEffect(() => {
-        // window.languageChange.language((value) => {
-        //     setLanguage(value)
-        // })
+    // useEffect(() => {
+    //     // window.languageChange.language((value) => {
+    //     //     setLanguage(value)
+    //     // })
 
-        // i18next.changeLanguage(language)
-        frontLog.debug('language', language)
-    }, [language])
+    //     // i18next.changeLanguage(language)
+    //     frontLog.debug('language', language)
+    // }, [language])
 
     /**
      * Display information in log and check if App is ready.
@@ -757,7 +756,7 @@ function TheApp() {
                                 <TabsContent value="simple-mesure">
                                     <SimplePanMesure
                                         appReady={appReady}
-                                        language={language}
+                                        language={i18nResources.language}
                                         simpleMesures={runSimpleMesures}
                                         urlsList={urlsList}
                                         setUrlsList={setUrlsList}
@@ -768,7 +767,7 @@ function TheApp() {
                                     <JsonPanMesure
                                         appReady={appReady}
                                         isJsonFromDisk={isJsonFromDisk}
-                                        language={language}
+                                        language={i18nResources.language}
                                         jsonDatas={jsonDatas}
                                         setJsonDatas={setJsonDatas}
                                         mesure={() =>
