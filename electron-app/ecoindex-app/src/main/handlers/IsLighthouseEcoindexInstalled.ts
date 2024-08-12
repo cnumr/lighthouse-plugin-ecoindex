@@ -1,9 +1,7 @@
-import { BrowserWindow, IpcMainEvent, IpcMainInvokeEvent } from 'electron'
+import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
-import { channels } from '../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../main'
-import { version } from 'react'
 
 // 1. Check if installed
 // 2. Check npm las version
