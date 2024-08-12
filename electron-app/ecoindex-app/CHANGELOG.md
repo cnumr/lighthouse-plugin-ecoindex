@@ -37,6 +37,22 @@
 
 ### Bug Fixes
 
+* typofix ([443ae60](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/443ae60dcec9038f73014bdedef9986435a1f997))
+
+
+
+## [v1.3.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1...electron-v1.3.2) (2024-08-12)
+
+
+### Bug Fixes
+
+* try fix build error on linux ([4fa48a2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4fa48a26aa2c95567d9e22c8aa1ad88830eedfa1))
+
+## [1.3.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1...electron-v1.3.2) (2024-08-12)
+
+
+### Bug Fixes
+
 * try fix build error on linux ([4fa48a2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4fa48a26aa2c95567d9e22c8aa1ad88830eedfa1))
 
 ## [1.3.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.1-rc.7...electron-v1.3.1) (2024-08-12)
