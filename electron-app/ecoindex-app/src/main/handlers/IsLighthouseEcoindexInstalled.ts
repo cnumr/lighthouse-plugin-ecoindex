@@ -14,13 +14,11 @@ import { version } from 'react'
  * @param event IpcMainEvent | IpcMainInvokeEvent
  * @returns boolean
  */
-export const isLighthousePluginEcoindexInstalled = (
+export const isLighthouseEcoindexInstalled = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     event?: IpcMainEvent | IpcMainInvokeEvent
 ): Promise<ResultMessage> => {
-    const mainLog = getMainLog().scope(
-        'main/isLighthousePluginEcoindexInstalled'
-    )
+    const mainLog = getMainLog().scope('main/isLighthouseEcoindexInstalled')
     /**
      * Version installée sur le host.
      */

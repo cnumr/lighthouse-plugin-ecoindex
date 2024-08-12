@@ -27,7 +27,7 @@ import { handleSelectFolder } from './handlers/HandleSelectFolder'
 import { handleWorkDir } from './handlers/HandleWorkDir'
 import { handle_CMD_Actions } from './handlers/HandleCMDActions'
 import i18n from '../configs/i18next.config'
-import { isLighthousePluginEcoindexInstalled } from './handlers/IsLighthousePluginEcoindexInstalled'
+import { isLighthouseEcoindexInstalled } from './handlers/IsLighthouseEcoindexInstalled'
 import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInstalled'
 import log from 'electron-log/main'
 import os from 'os'
@@ -99,8 +99,8 @@ app.on('ready', () => {
     ipcMain.handle(channels.IS_LIGHTHOUSE_ECOINDEX_INSTALLED, async (event) => {
         const webContents = event.sender
         const win = BrowserWindow.fromWebContents(webContents)
-        const isInstalled = await isLighthousePluginEcoindexInstalled(event)
-        mainLog.debug(`isLighthousePluginEcoindexInstalled`, isInstalled.result)
+        const isInstalled = await isLighthouseEcoindexInstalled(event)
+        mainLog.debug(`isLighthouseEcoindexInstalled`, isInstalled.result)
         if (!isInstalled.result) {
             const result = await handle_CMD_Actions(
                 event,
