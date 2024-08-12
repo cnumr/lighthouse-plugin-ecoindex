@@ -405,7 +405,7 @@ function TheApp() {
                 setIsLighthouseEcoindexPluginInstalled(result.result)
                 setPluginVersion(result.targetVersion)
                 frontLog.debug(result.message)
-                sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
+                // sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
                 increment()
             } catch (error) {
                 frontLog.error(

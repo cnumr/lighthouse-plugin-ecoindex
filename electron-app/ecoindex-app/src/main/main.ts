@@ -163,7 +163,7 @@ app.on('ready', () => {
         } else {
             win.webContents.send(
                 channels.ASYNCHRONOUS_LOG,
-                `Puppeteer Browser installed.`
+                `Puppeteer Browser allready installed.`
             )
             return isInstalled
         }
