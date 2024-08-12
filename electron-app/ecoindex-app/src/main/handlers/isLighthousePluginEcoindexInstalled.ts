@@ -11,7 +11,7 @@ import { version } from 'react'
 
 /**
  * Check if LighthousePluginEcoindex (Mandatory) is installed on host.
- * @param _event IpcMainEvent | IpcMainInvokeEvent
+ * @param event IpcMainEvent | IpcMainInvokeEvent
  * @returns boolean
  */
 export const isLighthousePluginEcoindexInstalled = (

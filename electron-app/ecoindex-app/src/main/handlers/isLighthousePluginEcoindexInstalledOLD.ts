@@ -9,7 +9,7 @@ import { getMainLog } from '../main'
  * @returns boolean
  * @deprecated use isLighthousePluginEcoindexInstalled
  */
-export const isLighthousePluginEcoindexInstalled_old = (
+export const isLighthousePluginEcoindexInstalledOLD = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event?: IpcMainEvent | IpcMainInvokeEvent
 ) => {
