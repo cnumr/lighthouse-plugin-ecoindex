@@ -1,5 +1,6 @@
 import { BrowserWindow, app as ElectronApp, shell } from 'electron'
 
+import Store from 'electron-store'
 import { config } from '../configs/app.config'
 import { getWelcomeWindow } from '../shared/memory'
 import i18n from 'i18next'
@@ -8,6 +9,8 @@ import pkg from '../../package.json'
 
 log.initialize()
 const otherTemplateLog = log.scope('main/otherTemplate')
+
+const store = new Store()
 
 export const otherTemplate = (
     app: typeof ElectronApp,
@@ -21,6 +24,7 @@ export const otherTemplate = (
                 type: 'radio',
                 checked: i18n.language === languageCode.code,
                 click: () => {
+                    store.set(`language`, languageCode.code)
                     i18n.changeLanguage(languageCode.code)
                 },
             }

@@ -475,6 +475,18 @@ function TheApp() {
                 frontLog.error(error)
             }
         })
+
+        const getLanguage = async () => {
+            try {
+                const gettedLng = await window.store.get(`language`)
+                if (gettedLng) {
+                    i18nResources.changeLanguage(gettedLng)
+                }
+            } catch (error) {
+                frontLog.debug(error)
+            }
+        }
+        getLanguage()
     }, [])
 
     /**

@@ -1,10 +1,13 @@
+// #region Imports
 import * as menuFactoryService from '../services/menuFactory'
 
 import { BrowserWindow, app, ipcMain } from 'electron'
 import {
     getMainWindow,
     getWelcomeWindow,
+    hasShowWelcomeWindow,
     isDev,
+    setHasShowedWelcomeWindow,
     setMainWindow,
     setWelcomeWindow,
 } from '../shared/memory'
@@ -33,6 +36,8 @@ import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
 
+// #endregion
+// #region Intialization
 if (require('electron-squirrel-startup')) {
     app.quit()
 }
@@ -79,6 +84,9 @@ _runfixPath()
 if (require('electron-squirrel-startup')) {
     app.quit()
 }
+// #endregion
+
+// #region App config
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -195,7 +203,7 @@ app.on('ready', () => {
     })
     Updater.getInstance()
     // showNotification()
-    _createMainWindow()
+    createMainWindow()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -214,19 +222,85 @@ app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-        _createMainWindow()
+        createMainWindow()
     }
 })
+// #endregion
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-// #region Helpers
+// #region i18n helpers
+const _changeLanguage = (lng: string) => {
+    try {
+        i18n.isInitialized &&
+            getMainWindow().webContents.send(
+                channels.CHANGE_LANGUAGE_TO_FRONT,
+                lng
+            )
+        i18n.isInitialized &&
+            !getWelcomeWindow().isDestroyed() &&
+            getWelcomeWindow().webContents.send(
+                channels.CHANGE_LANGUAGE_TO_FRONT,
+                lng
+            )
+        i18n.isInitialized &&
+            menuFactoryService.buildMenu(app, getMainWindow(), i18n)
+    } catch (error) {
+        // Welcome Window is distroyed on close, i need to catch
+    }
+}
+
+const i18nInit = () => {
+    try {
+        i18n.on('loaded', (loaded) => {
+            try {
+                i18n.changeLanguage('en')
+                i18n.off('loaded')
+            } catch (error) {
+                //
+            }
+        })
+        i18n.on('languageChanged', (lng) => {
+            _changeLanguage(lng)
+        })
+    } catch (error) {
+        mainLog.error(`i18n`, error)
+    }
+    // read language in store
+    i18n.changeLanguage(store.get(`language`, `en`) as string)
+}
+// #endregion
+
+// #region Windows creation
+export const createHelloWindow = () => {
+    if (!hasShowWelcomeWindow()) {
+        const displayHello = `displayHello.${convertVersion(packageJson.version)}`
+        setWelcomeWindow(
+            new BrowserWindow({
+                width: 800,
+                height: 700,
+                icon: '/assets/app-ico.png',
+                webPreferences: {
+                    preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
+                },
+                parent: getMainWindow(),
+                modal: true,
+                show:
+                    !store.get(displayHello) &&
+                    store.get(displayHello) !== true,
+            })
+        )
+        getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
+    } else {
+        setHasShowedWelcomeWindow(true)
+    }
+}
 
 /**
  * Helpers, Main Window Creation
  */
-const _createMainWindow = (): void => {
+const createMainWindow = (): void => {
     // Create the browser window.
     setMainWindow(
         new BrowserWindow({
@@ -242,54 +316,11 @@ const _createMainWindow = (): void => {
     // and load the index.html of the app.
     getMainWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
-    try {
-        i18n.on('loaded', (loaded) => {
-            try {
-                i18n.changeLanguage('en')
-                i18n.off('loaded')
-            } catch (error) {
-                //
-            }
-        })
-        i18n.on('languageChanged', (lng) => {
-            try {
-                i18n.isInitialized &&
-                    getMainWindow().webContents.send(
-                        channels.CHANGE_LANGUAGE_TO_FRONT,
-                        lng
-                    )
-                i18n.isInitialized &&
-                    !getWelcomeWindow().isDestroyed() &&
-                    getWelcomeWindow().webContents.send(
-                        channels.CHANGE_LANGUAGE_TO_FRONT,
-                        lng
-                    )
-                i18n.isInitialized &&
-                    menuFactoryService.buildMenu(app, getMainWindow(), i18n)
-            } catch (error) {
-                // Welcome Window is distroyed on close, i need to catch
-            }
-        })
-    } catch (error) {
-        mainLog.error(`i18n`, error)
-    }
+    createHelloWindow()
 
-    const displayHello = `displayHello.${convertVersion(packageJson.version)}`
-    setWelcomeWindow(
-        new BrowserWindow({
-            width: 800,
-            height: 700,
-            icon: '/assets/app-ico.png',
-            webPreferences: {
-                preload: HELLO_WINDOW_PRELOAD_WEBPACK_ENTRY,
-            },
-            parent: getMainWindow(),
-            modal: true,
-            show: !store.get(displayHello) && store.get(displayHello) !== true,
-        })
-    )
-    getWelcomeWindow().loadURL(HELLO_WINDOW_WEBPACK_ENTRY)
+    i18nInit()
 
+    _changeLanguage(store.get(`language`, `en`) as string)
     // Open the DevTools.
     // mainWindow.webContents.openDevTools({ mode: 'detach' })
 }

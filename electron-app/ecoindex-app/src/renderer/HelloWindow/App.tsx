@@ -18,8 +18,9 @@ function HelloApp() {
     const [language, setLanguage] = useState('en')
     const [checked, setChecked] = useState(false)
     const closeHandler = () => {
-        window.electronAPI.hideHelloWindow()
-        window.scrollTo(0, 0)
+        // window.electronAPI.hideHelloWindow()
+        // window.scrollTo(0, 0)
+        window.close()
     }
 
     const handlerDoNotDisplayAgain = (event: CheckedState) => {
@@ -47,6 +48,15 @@ function HelloApp() {
                 frontLog.error(error)
             }
         })
+
+        const getLanguage = async () => {
+            const gettedLng = await window.store.get(`language`)
+            if (gettedLng) {
+                i18nResources.changeLanguage(gettedLng)
+                setLanguage(gettedLng)
+            }
+        }
+        getLanguage()
 
         const updateCheckBox = async () => {
             const displayHello = `displayHello.${convertVersion(pkg.version)}`

@@ -73,3 +73,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
             (_event, languageCode) => callback(languageCode)
         ),
 })
+
+contextBridge.exposeInMainWorld('store', {
+    set: (key: string, value: any) =>
+        ipcRenderer.invoke('store-set', key, value),
+    get: (key: string) => ipcRenderer.invoke('store-get', key),
+    delete: (key: string) => ipcRenderer.invoke('store-delete', key),
+})

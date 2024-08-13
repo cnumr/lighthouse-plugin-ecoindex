@@ -1,13 +1,18 @@
 import { BrowserWindow, app as ElectronApp, shell } from 'electron'
+import { getWelcomeWindow, setHasShowedWelcomeWindow } from '../shared/memory'
 
+import Store from 'electron-store'
 import { config } from '../configs/app.config'
-import { getWelcomeWindow } from '../shared/memory'
+import { convertVersion } from '../main/utils'
+import { createHelloWindow } from '../main/main'
 import i18n from 'i18next'
 import log from 'electron-log/main'
 import pkg from '../../package.json'
 
 log.initialize()
 const darwinTemplateLog = log.scope('main/darwinTemplate')
+
+const store = new Store()
 
 export const darwinTemplate = (
     app: typeof ElectronApp,
@@ -21,6 +26,7 @@ export const darwinTemplate = (
                 type: 'radio',
                 checked: i18n.language === languageCode.code,
                 click: () => {
+                    store.set(`language`, languageCode.code)
                     i18n.changeLanguage(languageCode.code)
                 },
             }
@@ -121,7 +127,13 @@ export const darwinTemplate = (
                     {
                         label: `${_i18n.t('Open splash window...')}`,
                         click: async () => {
-                            await getWelcomeWindow().show()
+                            store.set(
+                                `displayHello.${convertVersion(pkg.version)}`,
+                                false
+                            )
+                            setHasShowedWelcomeWindow(false)
+                            await createHelloWindow()
+                            // await getWelcomeWindow().show()
                         },
                     },
                 ],
