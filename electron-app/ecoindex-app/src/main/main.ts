@@ -183,8 +183,8 @@ app.on('ready', () => {
         store.set(key, value)
     })
 
-    ipcMain.handle('store-get', (event, key: string) => {
-        return store.get(key)
+    ipcMain.handle('store-get', (event, key: string, defaultValue?: any) => {
+        return store.get(key, defaultValue)
     })
 
     ipcMain.handle('store-delete', (event, key: string) => {

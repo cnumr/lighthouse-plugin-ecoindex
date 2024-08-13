@@ -15,8 +15,13 @@ import { useTranslation } from 'react-i18next'
 const frontLog = log.scope('front/HelloApp')
 
 function HelloApp() {
+    // #region useState, useTranslation
     const [language, setLanguage] = useState('en')
     const [checked, setChecked] = useState(false)
+    const { t } = useTranslation()
+    // endregion
+
+    // region handlers
     const closeHandler = () => {
         // window.electronAPI.hideHelloWindow()
         // window.scrollTo(0, 0)
@@ -30,7 +35,9 @@ function HelloApp() {
             event.valueOf()
         )
     }
+    // endregion
 
+    // #region useEffect
     useEffect(() => {
         /**
          * Handler (main->front), Change language from Menu.
@@ -67,8 +74,9 @@ function HelloApp() {
         }
         updateCheckBox()
     }, [])
+    // #endregion
 
-    const { t } = useTranslation()
+    // region JSX
     return (
         <div className="relative flex flex-col items-center justify-center gap-4 p-8">
             <DarkModeSwitcher visible={false} />

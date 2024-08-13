@@ -7,7 +7,7 @@ export interface IVersionsAPI {
 
 export interface IStoreAPI {
     set: (key: string, value: any) => Promise<void>
-    get: (key: string) => Promise<string>
+    get: (key: string, defaultValue?: any) => Promise<string>
     delete: (key: string) => Promise<void>
 }
 export interface IElectronAPI {

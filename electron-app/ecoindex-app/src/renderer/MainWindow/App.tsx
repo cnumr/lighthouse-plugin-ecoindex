@@ -33,6 +33,7 @@ import { useTranslation } from 'react-i18next'
 const frontLog = log.scope('front/App')
 
 function TheApp() {
+    // #region useState, useTranslation
     // const [language, setLanguage] = useState('en')
     const [progress, setProgress] = useState(0)
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
@@ -64,6 +65,11 @@ function TheApp() {
         setIsLighthouseEcoindexPluginInstalled,
     ] = useState(true)
 
+    const { t } = useTranslation()
+
+    // endregion
+
+    // region popin
     /**
      * Necessary display waiting popin.
      * @param block boolean
@@ -98,6 +104,40 @@ function TheApp() {
         }
     }
 
+    /**
+     * Increment function to handle the waiting popin.
+     */
+    const increment = () => {
+        const STEPS = 5
+        loadingScreen = loadingScreen + 1
+        setProgress(loadingScreen * (100 / STEPS))
+        frontLog.log(`Verify configuration step ${loadingScreen}/${STEPS}`)
+        setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
+        if (loadingScreen === STEPS) {
+            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+            frontLog.log(`All data readed! 👀`)
+            frontLog.log(`isNodeInstalled`, isNodeInstalled)
+            frontLog.log(
+                `isLighthouseEcoindexPluginInstalled`,
+                isLighthouseEcoindexPluginInstalled
+            )
+            frontLog.log(`puppeteerBrowserInstalled`, puppeteerBrowserInstalled)
+            checkAppReady()
+            setDisplayPopin(false)
+            const _n: any = {}
+            _n.body = 'Application succefully loaded.\nWelcome 👋'
+            _n.subtitle = 'You can now start measures'
+            _n.priority = 'critical'
+            showNotification('', _n)
+            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+            setDisplayReloadButton(false)
+        } else {
+            setAppReady(false)
+        }
+    }
+    // #endregion
+
+    // #region handlers
     /**
      * Handler, launch simple mesure with the plugin.
      * @returns Promise<void>
@@ -193,7 +233,7 @@ function TheApp() {
     }
 
     /**
-     * Notify user.
+     * Handlers, notify user.
      * @param title string
      * @param message string
      */
@@ -208,47 +248,9 @@ function TheApp() {
     const selectWorkingFolder = async () => {
         const filePath = await window.electronAPI.handleSelectFolder()
 
-        if (filePath !== undefined) setWorkDir(filePath)
-    }
-
-    /**
-     * Notify user.
-     * @param title string
-     * @param options any
-     */
-    const showNotification = (title: string, options: any) => {
-        const _t = title === '' ? packageJson.productName : title
-        new window.Notification(_t, options)
-    }
-
-    /**
-     * Increment function to handle the waiting popin.
-     */
-    const increment = () => {
-        const STEPS = 5
-        loadingScreen = loadingScreen + 1
-        setProgress(loadingScreen * (100 / STEPS))
-        frontLog.log(`Verify configuration step ${loadingScreen}/${STEPS}`)
-        setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
-        if (loadingScreen === STEPS) {
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
-            frontLog.log(`All data readed! 👀`)
-            frontLog.log(`isNodeInstalled`, isNodeInstalled)
-            frontLog.log(
-                `isLighthouseEcoindexPluginInstalled`,
-                isLighthouseEcoindexPluginInstalled
-            )
-            frontLog.log(`puppeteerBrowserInstalled`, puppeteerBrowserInstalled)
-            checkAppReady()
-            setDisplayPopin(false)
-            const _n: any = {}
-            _n.body = 'Application succefully loaded.\nWelcome 👋'
-            _n.subtitle = 'You can now start measures'
-            _n.priority = 'critical'
-            showNotification('', _n)
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
-        } else {
-            setAppReady(false)
+        if (filePath !== undefined) {
+            setWorkDir(filePath)
+            await window.store.set(`lastWorkDir`, filePath)
         }
     }
 
@@ -273,6 +275,7 @@ function TheApp() {
     //   }
     // }
 
+    // #region utils
     /**
      * Utils, wait method.
      * @param ms number
@@ -287,12 +290,25 @@ function TheApp() {
     }
 
     /**
+     * Notify user.
+     * @param title string
+     * @param options any
+     */
+    const showNotification = (title: string, options: any) => {
+        const _t = title === '' ? packageJson.productName : title
+        new window.Notification(_t, options)
+    }
+
+    /**
      * Handler to copy in clipboard the content of datasFromHost.
      */
     const copyToClipBoard = () => {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
 
+    /**
+     * Handlers, force window refresh
+     */
     const forceRefresh = () => {
         // getMainWindow().webContents.reload()
         window.location.reload()
@@ -308,6 +324,51 @@ function TheApp() {
         textArea.scrollTop = textArea.scrollHeight
     }
 
+    /**
+     * Handler, check and update if App is ready to use.
+     */
+    const checkAppReady = () => {
+        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady %%%%%%%%%%%%%%%`)
+        frontLog.debug('isNodeInstalled', isNodeInstalled)
+        frontLog.debug(
+            'isLighthouseEcoindexPluginInstalled',
+            isLighthouseEcoindexPluginInstalled
+        )
+        frontLog.debug('puppeteerBrowserInstalled', puppeteerBrowserInstalled)
+        let count = 0
+        if (isNodeInstalled) count++
+        if (isLighthouseEcoindexPluginInstalled) count++
+        if (puppeteerBrowserInstalled) count++
+        setAppReady(count === 3)
+        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
+    }
+
+    /**
+     * Detect language change.
+     */
+    // useEffect(() => {
+    //     // window.languageChange.language((value) => {
+    //     //     setLanguage(value)
+    //     // })
+
+    //     // i18next.changeLanguage(language)
+    //     frontLog.debug('language', language)
+    // }, [language])
+
+    /**
+     * Display information in log and check if App is ready.
+     */
+    const logEventAndCheckAppReady = useCallback((name: string) => {
+        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.debug(`Binded on [${name}]`)
+        checkAppReady()
+        frontLog.debug(`appReady`, appReady)
+        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+    }, [])
+
+    // #endregion
+
+    // #region useEffect
     useEffect(() => {
         const handleDisplayReloadButton = async () => {
             setDisplayReloadButton(false)
@@ -360,7 +421,8 @@ function TheApp() {
          */
         const fetchWorkDir = async () => {
             const result = await window.electronAPI.getWorkDir('')
-            setWorkDir(result)
+            const storedWorkDir = await window.store.get(`lastWorkDir`, result)
+            setWorkDir(storedWorkDir)
             increment()
         }
         /**
@@ -490,48 +552,6 @@ function TheApp() {
     }, [])
 
     /**
-     * Handler, check and update if App is ready to use.
-     */
-    const checkAppReady = () => {
-        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady %%%%%%%%%%%%%%%`)
-        frontLog.debug('isNodeInstalled', isNodeInstalled)
-        frontLog.debug(
-            'isLighthouseEcoindexPluginInstalled',
-            isLighthouseEcoindexPluginInstalled
-        )
-        frontLog.debug('puppeteerBrowserInstalled', puppeteerBrowserInstalled)
-        let count = 0
-        if (isNodeInstalled) count++
-        if (isLighthouseEcoindexPluginInstalled) count++
-        if (puppeteerBrowserInstalled) count++
-        setAppReady(count === 3)
-        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
-    }
-
-    /**
-     * Detect language change.
-     */
-    // useEffect(() => {
-    //     // window.languageChange.language((value) => {
-    //     //     setLanguage(value)
-    //     // })
-
-    //     // i18next.changeLanguage(language)
-    //     frontLog.debug('language', language)
-    // }, [language])
-
-    /**
-     * Display information in log and check if App is ready.
-     */
-    const logEventAndCheckAppReady = useCallback((name: string) => {
-        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-        frontLog.debug(`Binded on [${name}]`)
-        checkAppReady()
-        frontLog.debug(`appReady`, appReady)
-        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-    }, [])
-
-    /**
      * Detect isNodeInstalled change.
      */
     useEffect(() => {
@@ -567,8 +587,11 @@ function TheApp() {
      */
     useEffect(() => {
         const isJsonConfigFileExist = async () => {
+            const lastWorkDir = await window.store.get(`lastWorkDir`, workDir)
             const result =
-                await window.electronAPI.handleIsJsonConfigFileExist(workDir)
+                await window.electronAPI.handleIsJsonConfigFileExist(
+                    lastWorkDir
+                )
             frontLog.log(`isJsonConfigFileExist`, result)
 
             result && runJsonReadAndReload()
@@ -576,7 +599,9 @@ function TheApp() {
         isJsonConfigFileExist()
     }, [workDir, runJsonReadAndReload])
 
-    const { t } = useTranslation()
+    // #endregion
+
+    // #region JSX
 
     return (
         <div className="container relative">
