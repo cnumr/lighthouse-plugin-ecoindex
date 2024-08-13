@@ -15,6 +15,16 @@ export const darwinTemplate = (
     _i18n: typeof i18n
 ): (Electron.MenuItemConstructorOptions | Electron.MenuItem)[] => {
     try {
+        const languageMenu = config.lngs.map((languageCode: any) => {
+            return {
+                label: languageCode.lng,
+                type: 'radio',
+                checked: i18n.language === languageCode.code,
+                click: () => {
+                    i18n.changeLanguage(languageCode.code)
+                },
+            }
+        }) as unknown as Electron.Menu
         const menu: any = [
             {
                 label: config.title,
@@ -94,6 +104,10 @@ export const darwinTemplate = (
                 ],
             },
             {
+                label: i18n.t('Language'),
+                submenu: languageMenu,
+            },
+            {
                 label: _i18n.t('Help'),
                 submenu: [
                     {
@@ -120,20 +134,6 @@ export const darwinTemplate = (
             //     ),
             // },
         ]
-        const languageMenu = config.lngs.map((languageCode: any) => {
-            return {
-                label: languageCode.lng,
-                type: 'radio',
-                checked: i18n.language === languageCode.code,
-                click: () => {
-                    i18n.changeLanguage(languageCode.code)
-                },
-            }
-        }) as unknown as Electron.Menu
-        menu.push({
-            label: i18n.t('Language'),
-            submenu: languageMenu,
-        })
 
         return menu as unknown as (
             | Electron.MenuItemConstructorOptions

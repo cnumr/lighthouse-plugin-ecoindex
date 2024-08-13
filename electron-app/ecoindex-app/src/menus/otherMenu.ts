@@ -15,6 +15,16 @@ export const otherTemplate = (
     _i18n: typeof i18n
 ): (Electron.MenuItemConstructorOptions | Electron.MenuItem)[] => {
     try {
+        const languageMenu = config.lngs.map((languageCode: any) => {
+            return {
+                label: languageCode.lng,
+                type: 'radio',
+                checked: i18n.language === languageCode.code,
+                click: () => {
+                    i18n.changeLanguage(languageCode.code)
+                },
+            }
+        }) as unknown as Electron.Menu
         const menu: any = [
             {
                 label: i18n.t('&File'),
@@ -67,7 +77,10 @@ export const otherTemplate = (
                     },
                 ],
             },
-
+            {
+                label: i18n.t('Language'),
+                submenu: languageMenu,
+            },
             {
                 label: i18n.t('Help'),
 
@@ -89,21 +102,6 @@ export const otherTemplate = (
                 ],
             },
         ]
-
-        const languageMenu = config.lngs.map((languageCode: any) => {
-            return {
-                label: languageCode.lng,
-                type: 'radio',
-                checked: i18n.language === languageCode.code,
-                click: () => {
-                    i18n.changeLanguage(languageCode.code)
-                },
-            }
-        }) as unknown as Electron.Menu
-        menu.push({
-            label: i18n.t('Language'),
-            submenu: languageMenu,
-        })
 
         return menu as unknown as (
             | Electron.MenuItemConstructorOptions
