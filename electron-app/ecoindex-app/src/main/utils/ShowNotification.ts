@@ -1,4 +1,5 @@
 import { Notification } from 'electron'
+import i18n from '../../configs/i18next.config'
 import packageJson from '../../../package.json'
 /**
  * Utils, Show Notification
@@ -7,8 +8,8 @@ import packageJson from '../../../package.json'
 export function showNotification(options: any) {
     if (!options) {
         options = {
-            body: 'Notification body',
-            subtitle: 'Notification subtitle',
+            body: i18n.t('Notification body'),
+            subtitle: i18n.t('Notification subtitle'),
         }
     }
     if (!options.title || options.title === '') {

@@ -7,7 +7,6 @@ import {
 } from '../ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
-import { channels, utils } from '../../shared/constants'
 import { useCallback, useEffect, useState } from 'react'
 
 import { AlertBox } from '../components/Alert'
@@ -29,6 +28,7 @@ import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
 import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
+import { utils } from '../../shared/constants'
 
 const frontLog = log.scope('front/App')
 
@@ -125,8 +125,8 @@ function TheApp() {
             checkAppReady()
             setDisplayPopin(false)
             const _n: any = {}
-            _n.body = 'Application succefully loaded.\nWelcome 👋'
-            _n.subtitle = 'You can now start measures'
+            _n.body = t('Application succefully loaded.\nWelcome 👋')
+            _n.subtitle = t('You can now start measures')
             _n.priority = 'critical'
             showNotification('', _n)
             frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
@@ -163,8 +163,8 @@ function TheApp() {
         } catch (error) {
             frontLog.error('Error on runSimpleMesures', error)
             showNotification('', {
-                body: 'Error on runSimpleMesures',
-                subtitle: 'Courses Measure (Simple mode)',
+                body: t('Error on runSimpleMesures'),
+                subtitle: t('Courses Measure (Simple mode)'),
             })
             showHidePopinDuringProcess(false)
         }
@@ -206,7 +206,10 @@ function TheApp() {
         if (workDir === homeDir) {
             if (
                 !confirm(
-                    `Are you shure to want create report(s) in your default folder?\n\rDestination: ${homeDir}`
+                    t(
+                        `Are you shure to want create report(s) in your default folder?\n\rDestination: {{homeDir}}`,
+                        homeDir
+                    )
                 )
             )
                 return
@@ -225,8 +228,8 @@ function TheApp() {
         } catch (error) {
             frontLog.error('Error on runJsonSaveAndCollect', error)
             showNotification('', {
-                subtitle: '🚫 Courses Measure (Full mode)',
-                body: 'Error on runJsonSaveAndCollect',
+                subtitle: t('🚫 Courses Measure (Full mode)'),
+                body: t('Error on runJsonSaveAndCollect'),
             })
             showHidePopinDuringProcess(false)
         }
@@ -344,18 +347,6 @@ function TheApp() {
     }
 
     /**
-     * Detect language change.
-     */
-    // useEffect(() => {
-    //     // window.languageChange.language((value) => {
-    //     //     setLanguage(value)
-    //     // })
-
-    //     // i18next.changeLanguage(language)
-    //     frontLog.debug('language', language)
-    // }, [language])
-
-    /**
      * Display information in log and check if App is ready.
      */
     const logEventAndCheckAppReady = useCallback((name: string) => {
@@ -440,27 +431,6 @@ function TheApp() {
             increment()
         }
 
-        // /**
-        //  * Handlers, Is Ecoindex Lighthouse Plugin installed.
-        //  */
-        // const fetchLighthouseEcoindexPluginInstalled = async () => {
-        //   const result =
-        //     await window.electronAPI.isLighthouseEcoindexPluginInstalled()
-        //   frontLog.log(
-        //     `fetchLighthouseEcoindexPluginInstalledRESULT`,
-        //     result === true,
-        //   )
-
-        //   setIsLighthouseEcoindexPluginInstalled(result === true)
-        //   increment()
-        // }
-
-        // /**
-        //  * Handler, force update of lighthouse-plugin-ecoindex
-        //  */
-        // const fetchUpdateEcoindexPlugin = async () => {
-        //   if (isLighthouseEcoindexPluginInstalled) await updateEcoindexPlugin()
-        // }
         /**
          * Handler, force update of lighthouse-plugin-ecoindex
          */
@@ -579,16 +549,6 @@ function TheApp() {
     useEffect(() => {
         logEventAndCheckAppReady(`setPuppeteerBrowserInstalled`)
     }, [setPuppeteerBrowserInstalled, logEventAndCheckAppReady])
-
-    /**
-     * Detect appReady change.
-     */
-    // useEffect(() => {
-    //     frontLog.log(`************************************`)
-    //     frontLog.log(`Binded on [appReady]`)
-    //     frontLog.log('appReady', appReady)
-    //     frontLog.log(`************************************`)
-    // }, [appReady])
 
     /**
      * Detect workDir change.

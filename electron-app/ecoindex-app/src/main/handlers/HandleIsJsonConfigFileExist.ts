@@ -4,6 +4,7 @@ import { IpcMainEvent } from 'electron'
 import Store from 'electron-store'
 import fs from 'node:fs'
 import { getMainLog } from '../main'
+import i18n from '../../configs/i18next.config'
 import path from 'node:path'
 import { showNotification } from '../utils/ShowNotification'
 import { utils } from '../../shared/constants'
@@ -31,8 +32,8 @@ export const handleIsJsonConfigFileExist = async (
     try {
         fs.accessSync(jsonConfigFile, fs.constants.F_OK)
         showNotification({
-            body: 'Config file founded 👀',
-            subtitle: 'loading file content...',
+            body: i18n.t('Config file founded 👀'),
+            subtitle: i18n.t('loading file content...'),
         })
         return true
     } catch (error) {

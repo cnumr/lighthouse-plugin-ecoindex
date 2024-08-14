@@ -8,6 +8,7 @@ import { _sendMessageToFrontLog } from '../utils/SendMessageToFrontLog'
 import { convertJSONDatasFromISimpleUrlInput } from '../utils/ConvertJSONDatas'
 import fs from 'node:fs'
 import { getMainLog } from '../main'
+import i18n from '../../configs/i18next.config'
 import os from 'node:os'
 import path from 'node:path'
 import { showNotification } from '../utils/ShowNotification'
@@ -152,8 +153,8 @@ export const handleSimpleCollect = async (
         throw new Error('Urls list is empty')
     }
     showNotification({
-        subtitle: '🧩 Simple collect',
-        body: 'Process intialization.',
+        subtitle: i18n.t('🧩 Simple collect'),
+        body: i18n.t('Process intialization.'),
     })
 
     const { command, nodeDir, workDir: _workDir } = await _prepareCollect()
@@ -172,8 +173,8 @@ export const handleSimpleCollect = async (
         command.push(`${_workDir}`)
         // Fake mesure and path. TODO: use specified path and urls
         showNotification({
-            subtitle: ' 🚀Simple collect',
-            body: 'Collect started...',
+            subtitle: i18n.t(' 🚀Simple collect'),
+            body: i18n.t('Collect started...'),
         })
         try {
             if (isDev())
@@ -182,15 +183,18 @@ export const handleSimpleCollect = async (
             await _runCollect(command, nodeDir, event, true)
         } catch (error) {
             showNotification({
-                subtitle: '🚫 Simple collect',
-                body: `Collect KO, ${error}\n'`,
+                subtitle: i18n.t('🚫 Simple collect'),
+                body: i18n.t(`Collect KO, {{error}}\n`, error),
             })
             throw new Error('Simple collect error')
         }
         // process.stdout.write(data)
         showNotification({
-            subtitle: '🎉 Simple collect',
-            body: `Collect done, you can consult reports in\n${_workDir}'`,
+            subtitle: i18n.t('🎉 Simple collect'),
+            body: i18n.t(
+                `Collect done, you can consult reports in\n{{_workDir}}`,
+                _workDir
+            ),
         })
         if (isDev()) mainLog.debug('Simple collect done 🚀')
         return 'collect done'
@@ -217,8 +221,10 @@ export const handleJsonSaveAndCollect = async (
         throw new Error('Json data is empty')
     }
     showNotification({
-        subtitle: andCollect ? '🧩 JSON save and collect' : '🧩 JSON save',
-        body: 'Process intialization.',
+        subtitle: andCollect
+            ? i18n.t('🧩 JSON save and collect')
+            : i18n.t('🧩 JSON save'),
+        body: i18n.t('Process intialization.'),
     })
     _debugLogs('Json save or/and collect start...')
 
@@ -231,10 +237,12 @@ export const handleJsonSaveAndCollect = async (
         const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
         const jsonStream = fs.createWriteStream(jsonFilePath)
         showNotification({
-            subtitle: andCollect ? '🚀 JSON save and collect' : '🚀 JSON save',
+            subtitle: andCollect
+                ? i18n.t('🚀 JSON save and collect')
+                : i18n.t('🚀 JSON save'),
             body: andCollect
-                ? 'Json save and collect started...'
-                : 'Json save started...',
+                ? i18n.t('Json save and collect started...')
+                : i18n.t('Json save started...'),
         })
         try {
             if (jsonDatas && typeof jsonDatas === 'object') {
@@ -252,17 +260,17 @@ export const handleJsonSaveAndCollect = async (
         } catch (error) {
             showNotification({
                 subtitle: andCollect
-                    ? '🚫 JSON save and collect'
-                    : '🚫 JSON save',
-                body: 'Json file not saved.',
+                    ? i18n.t('🚫 JSON save and collect')
+                    : i18n.t('🚫 JSON save'),
+                body: i18n.t('Json file not saved.'),
             })
             _debugLogs(`Error writing JSON file. ${error}`)
             throw new Error(`Error writing JSON file. ${error}`)
         }
         if (!andCollect) {
             showNotification({
-                subtitle: '💾 JSON save',
-                body: 'Json file saved.',
+                subtitle: i18n.t('💾 JSON save'),
+                body: i18n.t('Json file saved.'),
             })
         } else {
             if (isDev()) mainLog.debug('Json measure start...')
@@ -285,8 +293,11 @@ export const handleJsonSaveAndCollect = async (
                 throw new Error('Simple collect error')
             }
             showNotification({
-                subtitle: '🎉 JSON collect',
-                body: `Measures done, you can consult reports in\n${_workDir}`,
+                subtitle: i18n.t('🎉 JSON collect'),
+                body: i18n.t(
+                    `Measures done, you can consult reports in\n{{_workDir}}`,
+                    _workDir
+                ),
             })
             _debugLogs('Json collect done 🚀')
             return 'measure done'
@@ -296,8 +307,8 @@ export const handleJsonSaveAndCollect = async (
             _sendMessageToFrontLog('ERROR, Json file not saved', error)
             _debugLogs('ERROR, Json file not saved', error)
             showNotification({
-                subtitle: '🚫 JSON save',
-                body: 'Json file not saved.',
+                subtitle: i18n.t('🚫 JSON save'),
+                body: i18n.t('Json file not saved.'),
             })
         } else {
             _sendMessageToFrontLog(
@@ -306,8 +317,8 @@ export const handleJsonSaveAndCollect = async (
             )
             _debugLogs('ERROR, Json file not saved or collect', error)
             showNotification({
-                subtitle: '🚫 JSON save and collect',
-                body: 'Json file not saved or collect.',
+                subtitle: i18n.t('🚫 JSON save and collect'),
+                body: i18n.t('Json file not saved or collect.'),
             })
         }
     }
