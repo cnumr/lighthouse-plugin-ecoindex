@@ -79,6 +79,7 @@ jobs:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
       - name: Make app
+        if: matrix.os.image != 'macos-13'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -89,6 +90,7 @@ jobs:
           DEBUG: '@electron/osx-sign,electron-forge:*'
         run: npm run make:ci
       - name: Make mac app
+        if: matrix.os.image == 'macos-13'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
