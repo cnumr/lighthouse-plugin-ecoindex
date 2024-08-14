@@ -29,7 +29,7 @@ import pkg from '../../package.json'
 log.initialize()
 const updaterLog = log.scope('main/Updater')
 
-const IS_PROD = process.env.NODE_ENV !== 'production'
+const IS_PROD = process.env.NODE_ENV === 'production'
 
 /**
  *
