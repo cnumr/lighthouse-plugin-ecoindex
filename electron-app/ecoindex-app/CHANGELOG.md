@@ -1,5 +1,17 @@
 
 
+## [1.3.8](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.7...electron-v1.3.8) (2024-08-14)
+
+
+### Bug Fixes
+
+* fix workDir empty Sauvegarder via `electron-store` [#41](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/41) ([db89495](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/db894952bb4182567d25c4e47516655382686133))
+
+
+### Features
+
+* fix error on Update Enable Auto update [#40](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/40) ([b7dbc82](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b7dbc825f6081fb043b626b5a4b3ac6ebb6eadb2))
+
 ## [1.3.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.6...electron-v1.3.7) (2024-08-14)
 
 
