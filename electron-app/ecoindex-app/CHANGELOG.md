@@ -1,5 +1,12 @@
 
 
+## [1.3.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.6...electron-v1.3.7) (2024-08-14)
+
+
+### Bug Fixes
+
+* roll-back ([8cae795](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8cae7955b5e1cace62abfdf97bbda90bfecce95a))
+
 ## [1.3.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.5...electron-v1.3.6) (2024-08-14)
 
 
