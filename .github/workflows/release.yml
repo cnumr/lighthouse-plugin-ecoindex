@@ -88,6 +88,16 @@ jobs:
           KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
           DEBUG: '@electron/osx-sign,electron-forge:*'
         run: npm run make:ci
+      - name: Make mac app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APPLICATION_CERT: ${{ secrets.APPLE_APPLICATION_CERT }}
+          KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
+          DEBUG: '@electron/osx-sign,electron-forge:*'
+        run: npm run make:ci:mac
       - name: Generate Release.txt
         run: echo ${{ github.sha }} > Release.txt
       - name: package.json info
