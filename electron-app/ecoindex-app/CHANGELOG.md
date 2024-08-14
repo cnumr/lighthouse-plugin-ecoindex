@@ -1,5 +1,21 @@
 
 
+## [1.3.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.3...electron-v1.3.4) (2024-08-14)
+
+
+### Bug Fixes
+
+* bad NODE_ENV test ([8edc2bb](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8edc2bb1074cb351a299b6e206447b50fc3e2623))
+
+
+### Features
+
+* language, change menu order ([53480fc](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/53480fc185df651ba6e903a253f3dc5f4771751b))
+* Remove, change debug level on each use. Disable mainly all in production [#39](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/39) ([b83a7da](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b83a7da9c785090bb57e0e7d8181155dd1aa3822))
+* Sauvegarder via `electron-store` [#41](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/41) read/write workDir ([ef98599](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ef985998513a9c290db13df30787b938dc67acea))
+* save language and window pref Sauvegarder via `electron-store` [#41](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/41) ([789047d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/789047dfd485b99f66e131ff80dc442751cc2e12))
+* try making auto update... Enable Auto update [#40](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/40) ([c0e842f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c0e842f141b9b630880ea9ed19cc65404ebd8ad2))
+
 ## [1.3.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.2...electron-v1.3.3) (2024-08-12)
 
 
