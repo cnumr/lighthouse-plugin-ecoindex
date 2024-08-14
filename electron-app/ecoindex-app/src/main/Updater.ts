@@ -58,15 +58,18 @@ class Updater {
         // https://github.com/cnumr/lighthouse-plugin-ecoindex/releases.atom
         updaterLog.debug(`IS_PROD`, IS_PROD)
         if (IS_PROD) {
-            // const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${process.arch}/${app.getVersion()}`
-            const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-x64/${app.getVersion()}`
+            let _arch = ''
+            if (os.platform() === 'darwin') {
+                _arch = 'x64'
+            } else _arch = os.arch()
+            const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${_arch}/${app.getVersion()}`
+            // const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${os.arch()}/${app.getVersion()}`
             const userAgent = format(
                 '%s/%s (%s: %s)',
                 pkg.productName,
                 pkg.version,
                 os.platform(),
-                'x64'
-                // os.arch()
+                _arch
             )
 
             updaterLog.log('feedUrl', feedUrl)
