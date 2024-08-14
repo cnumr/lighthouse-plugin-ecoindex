@@ -421,7 +421,12 @@ function TheApp() {
          */
         const fetchWorkDir = async () => {
             const result = await window.electronAPI.getWorkDir('')
-            const storedWorkDir = await window.store.get(`lastWorkDir`, result)
+            frontLog.debug(`fetchWorkDir result: `, result)
+            const storedWorkDir = await window.store.get(
+                `lastWorkDir`,
+                result !== '' ? result : homeDir
+            )
+            frontLog.debug(`fetchWorkDir storedWorkDir:`, storedWorkDir)
             setWorkDir(storedWorkDir)
             increment()
         }
@@ -487,13 +492,16 @@ function TheApp() {
         /**
          * Launch the mandatory actions at startup, once.
          */
-        fetchWorkDir().then(() => {
-            fetchHomeDir()
-            fetchNodeInstalled().then(() => {
-                fetchNodeVersion().then(() => {
-                    fetchIsPuppeteerBrowserInstalled().then(() => {
-                        fetchIsLighthousePluginEcoindexInstalled().then(() => {
-                            setDisplayReloadButton(false)
+        fetchHomeDir().then(() => {
+            fetchWorkDir().then(() => {
+                fetchNodeInstalled().then(() => {
+                    fetchNodeVersion().then(() => {
+                        fetchIsPuppeteerBrowserInstalled().then(() => {
+                            fetchIsLighthousePluginEcoindexInstalled().then(
+                                () => {
+                                    setDisplayReloadButton(false)
+                                }
+                            )
                         })
                     })
                 })

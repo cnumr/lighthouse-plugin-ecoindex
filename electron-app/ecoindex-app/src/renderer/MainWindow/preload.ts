@@ -77,6 +77,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 contextBridge.exposeInMainWorld('store', {
     set: (key: string, value: any) =>
         ipcRenderer.invoke('store-set', key, value),
-    get: (key: string) => ipcRenderer.invoke('store-get', key),
+    get: (key: string, defaultValue: any) =>
+        ipcRenderer.invoke('store-get', key, defaultValue),
     delete: (key: string) => ipcRenderer.invoke('store-delete', key),
 })

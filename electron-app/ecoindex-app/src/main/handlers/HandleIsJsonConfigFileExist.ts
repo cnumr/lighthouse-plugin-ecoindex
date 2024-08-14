@@ -1,8 +1,9 @@
+import { getHomeDir, isDev } from '../../shared/memory'
+
 import { IpcMainEvent } from 'electron'
 import Store from 'electron-store'
 import fs from 'node:fs'
 import { getMainLog } from '../main'
-import { isDev } from '../../shared/memory'
 import path from 'node:path'
 import { showNotification } from '../utils/ShowNotification'
 import { utils } from '../../shared/constants'
@@ -22,7 +23,7 @@ export const handleIsJsonConfigFileExist = async (
     const mainLog = getMainLog().scope('main/handleIsJsonConfigFileExist')
     if (workDir === 'chargement...' || workDir === 'loading...') return
     const jsonConfigFile =
-        `${store.get(`lastWorkDir`, workDir)}/${utils.JSON_FILE_NAME}`.replace(
+        `${store.get(`lastWorkDir`, workDir ? workDir : getHomeDir())}/${utils.JSON_FILE_NAME}`.replace(
             /\//gm,
             path.sep
         )

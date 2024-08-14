@@ -101,8 +101,8 @@ app.on('ready', () => {
     ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
 
     // communs handlers and getters
-    ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
     ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
+    ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
     ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)
     ipcMain.handle(channels.GET_NODE_VERSION, handleGetNodeVersion)
     // ipcMain.handle(
