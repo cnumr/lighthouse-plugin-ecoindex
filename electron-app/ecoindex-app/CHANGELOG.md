@@ -1,5 +1,12 @@
 
 
+## [1.3.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.4...electron-v1.3.5) (2024-08-14)
+
+
+### Bug Fixes
+
+* bad test in CI ([687b409](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/687b40969687de53798f5fb109de457da777009f))
+
 ## [1.3.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.3...electron-v1.3.4) (2024-08-14)
 
 
