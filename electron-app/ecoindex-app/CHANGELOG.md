@@ -1,5 +1,12 @@
 
 
+## [1.3.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.5...electron-v1.3.6) (2024-08-14)
+
+
+### Bug Fixes
+
+* duplicate packg ([08903a9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/08903a986d7b65aea1e0a935846e250929e6602f))
+
 ## [1.3.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.4...electron-v1.3.5) (2024-08-14)
 
 
