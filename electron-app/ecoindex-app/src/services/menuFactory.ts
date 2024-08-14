@@ -2,7 +2,7 @@ import { BrowserWindow, Menu } from 'electron'
 
 import { config } from '../configs/app.config'
 import { darwinTemplate } from '../menus/darwinMenu'
-import i18n from '@/configs/i18next.config'
+import i18n from '../configs/i18next.config'
 import log from 'electron-log/main'
 import { otherTemplate } from '../menus/otherMenu'
 
