@@ -1,5 +1,12 @@
 
 
+## [1.3.9](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.8...electron-v1.3.9) (2024-08-14)
+
+
+### Features
+
+* udate translation ([e89bbda](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e89bbdab2090abb7ab129d776562a95085aafda3))
+
 ## [1.3.8](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.7...electron-v1.3.8) (2024-08-14)
 
 
