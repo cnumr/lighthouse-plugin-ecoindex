@@ -38,7 +38,7 @@
         "clean:out": "rm -rf ./out/* --y",
         "make": "NODE_ENV=production && env-cmd electron-forge make",
         "make:ci": "electron-forge make",
-        "make:ci:mac": "electron-forge make --arch=x64,arm64",
+        "make:ci:mac": "electron-forge make --arch=universal",
         "make:darwin:arm64": "env-cmd electron-forge make --platform=darwin --arch=arm64",
         "make:darwin:x64": "env-cmd electron-forge make --platform=darwin --arch=x64",
         "make:win32:x64": "PATH=$(pwd)/wine_proxy:$PATH env-cmd electron-forge make --platform=win32 --arch=x64",
