@@ -206,7 +206,7 @@ app.on('ready', () => {
     })
     // Updater.getInstance().checkForUpdates(false)
     updateElectronApp({
-        logger: require('electron-log'),
+        logger: log.scope('update-electron-app'),
     })
     // showNotification()
     createMainWindow()

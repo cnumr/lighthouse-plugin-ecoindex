@@ -6,7 +6,8 @@
     },
     "github": {
         "release": false,
-        "autoGenerate": true,
+        "autoGenerate": false,
+        "releaseNotes": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
         "releaseName": "Release Electron-app ${version}",
         "assets": [
             "./out/make/zip/darwin/arm64/*.zip",
