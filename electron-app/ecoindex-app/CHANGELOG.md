@@ -1,5 +1,12 @@
 
 
+## [1.3.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.12...electron-v1.3.13) (2024-08-15)
+
+
+### Features
+
+* update... Enable Auto update [#40](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/40) ([74e6f9d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/74e6f9d5bececdc9bb078759f81181ad5651dd43))
+
 ## [1.3.12](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.11...electron-v1.3.12) (2024-08-15)
 
 
