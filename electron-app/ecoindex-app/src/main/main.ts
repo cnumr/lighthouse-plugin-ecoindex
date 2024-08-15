@@ -35,6 +35,7 @@ import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInsta
 import log from 'electron-log/main'
 import os from 'os'
 import packageJson from '../../package.json'
+import { updateElectronApp } from 'update-electron-app'
 
 // #endregion
 // #region Intialization
@@ -203,7 +204,10 @@ app.on('ready', () => {
         credits: packageJson.description,
         copyright: packageJson.publisher,
     })
-    Updater.getInstance().checkForUpdates(false)
+    // Updater.getInstance().checkForUpdates(false)
+    updateElectronApp({
+        logger: require('electron-log'),
+    })
     // showNotification()
     createMainWindow()
 })

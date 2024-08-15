@@ -21,10 +21,11 @@ jobs:
         os: [
             { name: 'linux', image: 'ubuntu-latest' },
             { name: 'windows', image: 'windows-latest' },
-            { name: 'macos', image: 'macos-13' },
+            { name: 'macos/intel', image: 'macos-13' },
+            { name: 'macos/M1', image: 'macos-14' },
             # { name: 'windows', image: 'windows-latest/x86' },
             # { name: 'windows', image: 'windows-latest/x64' },
-            # { name: 'macos', image: 'macos-13/amd64' },
+            # { name: 'macos', image: 'macos-13/ || matrix.os.image == 'macos-14'amd64' },
           ]
     runs-on: ${{ matrix.os.image }}
     steps:
@@ -35,13 +36,13 @@ jobs:
         with:
           node-version: 18
       - name: setup python
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
       - name: install setuptools and appdmg
         # fix error Error: Cannot find module 'appdmg'
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         run: |
           python3 -m pip install setuptools --break-system-packages
           npm i -g appdmg
@@ -58,28 +59,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Debug APPLE_ID
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         run: echo ${APPLE_ID:0:3}
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
       - name: Debug APPLE_PASSWORD
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         run: echo ${APPLE_PASSWORD:0:3}
         env:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Debug APPLE_TEAM_ID
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         run: echo ${APPLE_TEAM_ID:0:3}
         env:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       - name: Add MacOS certs
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.APPLE_APPLICATION_CERT }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
       - name: Make app
-        if: matrix.os.image != 'macos-13'
+        if: matrix.os.image != 'macos-13' || matrix.os.image == 'macos-14'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -90,7 +91,7 @@ jobs:
           DEBUG: '@electron/osx-sign,electron-forge:*'
         run: npm run make:ci
       - name: Make mac app
-        if: matrix.os.image == 'macos-13'
+        if: matrix.os.image == 'macos-13' || matrix.os.image == 'macos-14'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
