@@ -7,17 +7,8 @@
     "github": {
         "release": false,
         "autoGenerate": false,
-        "releaseNotes": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
         "releaseName": "Release Electron-app ${version}",
-        "assets": [
-            "./out/make/zip/darwin/arm64/*.zip",
-            "./out/make/zip/darwin/x64/*.zip",
-            "./out/make/*.dmg",
-            "./out/make/zip/win32/arm64/*.zip",
-            "./out/make/zip/win32/x64/*.zip",
-            "./out/make/squirrel.windows/arm64/*.exe",
-            "./out/make/squirrel.windows/x64/*.exe"
-        ]
+        "releaseNotes": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
     "npm": {
         "publish": false
