@@ -143,7 +143,7 @@ function TheApp() {
      * @returns Promise<void>
      */
     const runSimpleMesures = async () => {
-        frontLog.log('Simple measures clicked')
+        frontLog.debug('Simple measures clicked')
         if (workDir === homeDir) {
             if (
                 !confirm(
@@ -178,7 +178,7 @@ function TheApp() {
         try {
             const _jsonDatas: IJsonMesureData =
                 await window.electronAPI.handleJsonReadAndReload()
-            frontLog.log(`runJsonReadAndReload`, _jsonDatas)
+            frontLog.debug(`runJsonReadAndReload`, _jsonDatas)
             if (_jsonDatas) {
                 setJsonDatas(_jsonDatas)
                 setIsJsonFromDisk(true)
@@ -202,7 +202,7 @@ function TheApp() {
      * @returns Promise<void>
      */
     const runJsonSaveAndCollect = async (saveAndCollect = false) => {
-        frontLog.log('Json save clicked')
+        frontLog.debug('Json save clicked')
         if (workDir === homeDir) {
             if (
                 !confirm(
@@ -218,8 +218,8 @@ function TheApp() {
             `${t('Courses Measure (Full mode)')} started 🚀`
         )
         try {
-            frontLog.log(`jsonDatas`, jsonDatas)
-            frontLog.log(`saveAndCollect`, saveAndCollect)
+            frontLog.debug(`jsonDatas`, jsonDatas)
+            frontLog.debug(`saveAndCollect`, saveAndCollect)
             await window.electronAPI.handleJsonSaveAndCollect(
                 jsonDatas,
                 saveAndCollect
@@ -241,7 +241,7 @@ function TheApp() {
      * @param message string
      */
     const handlerJsonNotify = (title: string, message: string) => {
-        frontLog.log('Json notify clicked')
+        frontLog.debug('Json notify clicked')
         showNotification('', { body: message, subtitle: title })
     }
 
@@ -286,7 +286,7 @@ function TheApp() {
      */
     async function _sleep(ms: number) {
         return new Promise((resolve) => {
-            frontLog.log(`wait ${ms / 1000}s`)
+            frontLog.debug(`wait ${ms / 1000}s`)
 
             setTimeout(resolve, ms)
         })
@@ -331,19 +331,19 @@ function TheApp() {
      * Handler, check and update if App is ready to use.
      */
     const checkAppReady = () => {
-        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady %%%%%%%%%%%%%%%`)
-        frontLog.debug('isNodeInstalled', isNodeInstalled)
-        frontLog.debug(
+        frontLog.log(`%%%%%%%%%%%%%%% checkAppReady %%%%%%%%%%%%%%%`)
+        frontLog.log('isNodeInstalled', isNodeInstalled)
+        frontLog.log(
             'isLighthouseEcoindexPluginInstalled',
             isLighthouseEcoindexPluginInstalled
         )
-        frontLog.debug('puppeteerBrowserInstalled', puppeteerBrowserInstalled)
+        frontLog.log('puppeteerBrowserInstalled', puppeteerBrowserInstalled)
         let count = 0
         if (isNodeInstalled) count++
         if (isLighthouseEcoindexPluginInstalled) count++
         if (puppeteerBrowserInstalled) count++
         setAppReady(count === 3)
-        frontLog.debug(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
+        frontLog.log(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
     }
 
     /**
@@ -426,7 +426,7 @@ function TheApp() {
          */
         const fetchNodeInstalled = async () => {
             const result = await window.electronAPI.isNodeInstalled()
-            frontLog.log(`fetchNodeInstalledRESULT`, result === true)
+            frontLog.debug(`fetchNodeInstalledRESULT`, result === true)
             setIsNodeInstalled(result === true)
             increment()
         }
@@ -484,13 +484,13 @@ function TheApp() {
         window.electronAPI.sendDatasToFront((data: any) => {
             if (typeof data === 'string') {
                 const _data = JSON.parse(data)
-                // frontLog.log(`sendDatasToFront`, _data)
+                // frontLog.debug(`sendDatasToFront`, _data)
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ..._data,
                 }))
             } else {
-                // frontLog.log(`sendDatasToFront`, JSON.stringify(data, null, 2))
+                // frontLog.debug(`sendDatasToFront`, JSON.stringify(data, null, 2))
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ...data,

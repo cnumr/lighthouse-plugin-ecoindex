@@ -48,6 +48,7 @@ function HelloApp() {
             try {
                 i18nResources.changeLanguage(lng, (err, t) => {
                     if (err)
+                        // silent error
                         return frontLog.log('something went wrong loading', err)
                     t('key') // -> same as i18next.t
                 })

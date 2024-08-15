@@ -81,7 +81,7 @@ class Updater {
             })
             this.create()
         } else {
-            updaterLog.log('Auto-Updater disabled (dev-mode)')
+            updaterLog.debug('Auto-Updater disabled (dev-mode)')
         }
 
         Updater.instance = this
@@ -130,7 +130,7 @@ class Updater {
      *
      */
     protected onCheckingOnUpdate(): void {
-        updaterLog.log('checking-for-update')
+        updaterLog.debug('checking-for-update')
     }
 
     /**
@@ -165,7 +165,7 @@ class Updater {
             })
         }
 
-        updaterLog.log('update-not-available')
+        updaterLog.debug('update-not-available')
     }
 
     /**

@@ -40,7 +40,7 @@ const frontLog = log.scope('front/renderer')
  * Write message to the console box visible in front.
  */
 window.electronAPI.sendLogToFront((message: string) => {
-    frontLog.log(message)
+    frontLog.debug(message)
     const textArea = document.getElementById('echo') as HTMLTextAreaElement
     textArea.value = textArea.value + '\n' + message
     textArea.scrollTop = textArea.scrollHeight

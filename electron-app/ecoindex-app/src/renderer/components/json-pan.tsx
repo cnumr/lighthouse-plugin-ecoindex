@@ -8,14 +8,16 @@ import {
 } from '../ui/card'
 import { ChangeEvent, FC, useState } from 'react'
 import { CirclePlus, RotateCcw, Save, Trash2 } from 'lucide-react'
-import { RiRefreshLine, RiSave3Line } from 'react-icons/ri'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { KeyValue } from './key-value'
 import { SimpleUrlsList } from './simple-urls'
 import { Switch } from '../ui/switch'
+import log from 'electron-log/renderer'
 import { useTranslation } from 'react-i18next'
+
+const frontLog = log.scope('front/JsonPan')
 
 export interface ILayout {
     appReady: boolean
@@ -46,7 +48,7 @@ export const JsonPanMesure: FC<ILayout> = ({
 
     const [updated, setUpdated] = useState(false)
     const handlerAddCourse = () => {
-        console.log('add course')
+        frontLog.debug('add course')
         const newCourse = {
             name: 'TBD',
             target: 'TBD',
@@ -62,7 +64,7 @@ export const JsonPanMesure: FC<ILayout> = ({
         setUpdated(true)
     }
     const handlerDeleteCourse = (_: any, key: number) => {
-        console.log('delete course', key)
+        frontLog.debug('delete course', key)
         setJsonDatas?.({
             ...jsonDatas,
             courses: jsonDatas.courses.filter((_, index) => index !== key),
@@ -75,7 +77,7 @@ export const JsonPanMesure: FC<ILayout> = ({
         course: number,
         urlsList: ISimpleUrlInput[]
     ) => {
-        console.log('handlerOnUpdateSimpleUrlsList', course, urlsList)
+        frontLog.debug('handlerOnUpdateSimpleUrlsList', course, urlsList)
         setJsonDatas?.({
             ...jsonDatas,
             courses: jsonDatas.courses.map((c, index) => {
@@ -103,7 +105,7 @@ export const JsonPanMesure: FC<ILayout> = ({
             value: string | boolean,
             _c: number
         ) => {
-            console.log('updateGeneric', type, id, name, value, _c)
+            frontLog.debug('updateGeneric', type, id, name, value, _c)
             if (_c === -1) {
                 if (name !== 'output') {
                     setJsonDatas?.({
@@ -111,7 +113,7 @@ export const JsonPanMesure: FC<ILayout> = ({
                         [id]: value,
                     })
                 } else {
-                    console.log(`is output`)
+                    frontLog.debug(`is output`)
                     if (e) {
                         const _jsonDatas = {
                             ...jsonDatas,
@@ -168,25 +170,25 @@ export const JsonPanMesure: FC<ILayout> = ({
             }
         } else {
             // todo
-            console.log(`handlerOnChange`, id, name, e, course)
+            frontLog.debug(`handlerOnChange`, id, name, e, course)
 
             updateGeneric('checkbox', id, name ? name : id, e, course)
         }
 
-        // console.log(`jsonDatas`, jsonDatas)
+        // frontLog.debug(`jsonDatas`, jsonDatas)
         setUpdated(true)
     }
     const handlerOnReload = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-        // console.log('handlerOnReload', event.target)
+        // frontLog.debug('handlerOnReload', event.target)
         reload()
         setUpdated(false)
     }
     const handlerOnSubmit = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-        // console.log('handlerOnSubmit', event.target)
+        // frontLog.debug('handlerOnSubmit', event.target)
         let count = 0
         jsonDatas?.courses.forEach((course) => {
             if (course['is-best-pages'] === true) count++
@@ -204,7 +206,7 @@ export const JsonPanMesure: FC<ILayout> = ({
     const handlerOnSave = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-        // console.log('handlerOnSave', event.target)
+        // frontLog.debug('handlerOnSave', event.target)
         save()
         setUpdated(false)
     }
