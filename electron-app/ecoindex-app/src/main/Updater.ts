@@ -29,7 +29,15 @@ import pkg from '../../package.json'
 log.initialize()
 const updaterLog = log.scope('main/Updater')
 
-const IS_PROD = process.env.NODE_ENV === 'production'
+let IS_PROD = process.env.NODE_ENV === 'production'
+
+let version = app.getVersion()
+
+// eslint-disable-next-line no-constant-condition
+if (false) {
+    IS_PROD = true
+    version = '1.3.8'
+}
 
 /**
  *
@@ -62,12 +70,12 @@ class Updater {
             if (os.platform() === 'darwin') {
                 _arch = 'x64'
             } else _arch = os.arch()
-            const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${_arch}/${app.getVersion()}`
+            const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${_arch}/${version}`
             // const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${os.arch()}/${app.getVersion()}`
             const userAgent = format(
                 '%s/%s (%s: %s)',
                 pkg.productName,
-                pkg.version,
+                version,
                 os.platform(),
                 _arch
             )
@@ -91,11 +99,12 @@ class Updater {
      * @param {boolean} isSilentMode
      */
     public checkForUpdates(isSilentMode = true): void {
-        if (IS_PROD) {
+        if (!IS_PROD) {
             return
         }
 
         this.isSilentMode = isSilentMode
+        updaterLog.debug(`checkForUpdates (isSilentMode)`, isSilentMode)
         autoUpdater.checkForUpdates()
     }
 
@@ -130,7 +139,7 @@ class Updater {
      *
      */
     protected onCheckingOnUpdate(): void {
-        updaterLog.debug('checking-for-update')
+        updaterLog.log('checking-for-update')
     }
 
     /**
@@ -160,12 +169,12 @@ class Updater {
                 message: i18n.t('You’re up-to-date!'),
                 detail: i18n.t(
                     `EcoindexApp {{version}} is currently the newest version available.`,
-                    { version: app.getVersion() }
+                    { version }
                 ),
             })
         }
 
-        updaterLog.debug('update-not-available')
+        updaterLog.log('update-not-available')
     }
 
     /**
@@ -179,12 +188,15 @@ class Updater {
         _: Event,
         releaseNotes: string,
         releaseName: string,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _releaseDate: Date,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _updateURL: string
     ): void {
-        // updaterLog.log('update-downloaded', arguments)
+        updaterLog.log('update-downloaded', {
+            releaseName,
+            _releaseDate,
+            _updateURL,
+            releaseNotes,
+        })
 
         const options = {
             type: 'info',
