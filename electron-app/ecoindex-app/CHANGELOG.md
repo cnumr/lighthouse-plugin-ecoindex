@@ -1,5 +1,12 @@
 
 
+## [1.3.11](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.10...electron-v1.3.11) (2024-08-15)
+
+
+### Features
+
+* use of update-electron-app and try to generate arm64/maos build ([d0bf6e1](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d0bf6e1741c35cd25dd62da6fb86c6f73dc08072))
+
 ## [1.3.10](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.9...electron-v1.3.10) (2024-08-15)
 
 
