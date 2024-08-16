@@ -1,22 +1,18 @@
 import { BrowserWindow } from 'electron'
 import Store from 'electron-store'
-import fs from 'fs'
 import log from 'electron-log/main'
 import os from 'node:os'
 
-const store = new Store()
 const logMemory = log.scope(`main/memory`)
+const store = new Store()
 
-let workDir = ''
 let nodeDir = ''
 let npmDir = ''
 let homeDir = ''
 let nodeVersion = ''
-let logStream: fs.WriteStream = null
 let mainWindow: BrowserWindow = null
 let welcomeWindow: BrowserWindow = null
 let showedWelcome = false
-let logStreamPath = ''
 
 export const getWorkDir = () => {
     const lastWorkDir = store.get(`lastWorkDir`)
@@ -30,7 +26,6 @@ export const getWorkDir = () => {
 }
 export const setWorkDir = (value: string) => {
     store.set('lastWorkDir', value ? value : os.homedir())
-    workDir = value
 }
 
 export const getNodeDir = () => {
@@ -83,17 +78,6 @@ export const setHasShowedWelcomeWindow = (value: boolean) => {
 
 export const isDev = () => {
     return process.env['WEBPACK_SERVE'] === 'true'
-}
-export const getLogFilePathFromDir = (dir: string) => {
-    return `${dir}/logfile.txt`
-}
-
-export const getLogSteam = () => {
-    return logStream
-}
-export const setLogStream = (path: string) => {
-    if (path) logStreamPath = path
-    logStream = fs.createWriteStream(logStreamPath)
 }
 
 let tryNode = 5

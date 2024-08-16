@@ -32,8 +32,8 @@ export const handleIsJsonConfigFileExist = async (
     try {
         fs.accessSync(jsonConfigFile, fs.constants.F_OK)
         showNotification({
-            body: i18n.t('Config file founded 👀'),
-            subtitle: i18n.t('loading file content...'),
+            body: i18n.t('loading file content...'),
+            subtitle: i18n.t('Config file founded 👀'),
         })
         return true
     } catch (error) {

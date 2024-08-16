@@ -19,10 +19,10 @@ export const handleJsonReadAndReload = async (
     event: IpcMainEvent
 ): Promise<IJsonMesureData> => {
     const mainLog = getMainLog().scope('main/handleJsonReadAndReload')
-    showNotification({
-        subtitle: i18n.t('🧩 JSON reload'),
-        body: i18n.t('Process intialization.'),
-    })
+    // showNotification({
+    //     subtitle: i18n.t('🧩 JSON reload'),
+    //     body: i18n.t('Process intialization.'),
+    // })
     try {
         const _workDir = await getWorkDir()
         if (!_workDir || _workDir === '') {
