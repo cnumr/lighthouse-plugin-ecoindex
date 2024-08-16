@@ -1,5 +1,13 @@
 
 
+## [1.3.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.13...electron-v1.3.14) (2024-08-16)
+
+
+### Features
+
+* better workDir handle with stored value ([82880a3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/82880a31d11ae2230a7324b757fe91739666da4c))
+* updater can't work with electron-v tags ([ad2eab5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ad2eab562d80a402e5f238624661aa3881641639))
+
 ## [1.3.13](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.12...electron-v1.3.13) (2024-08-15)
 
 
