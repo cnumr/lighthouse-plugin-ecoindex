@@ -30,7 +30,7 @@ export async function _prepareCollect(): Promise<{
     const mainLog = getMainLog().scope('main/prepareCollect')
     // create stream to log the output. TODO: use specified path
     try {
-        const _workDir = getWorkDir()
+        const _workDir = getWorkDir() as string
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }

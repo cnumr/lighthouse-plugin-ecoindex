@@ -1,6 +1,11 @@
 import { BrowserWindow } from 'electron'
+import Store from 'electron-store'
 import fs from 'fs'
-import { shellEnv } from 'shell-env'
+import log from 'electron-log/main'
+import os from 'node:os'
+
+const store = new Store()
+const logMemory = log.scope(`main/memory`)
 
 let workDir = ''
 let nodeDir = ''
@@ -14,9 +19,17 @@ let showedWelcome = false
 let logStreamPath = ''
 
 export const getWorkDir = () => {
-    return workDir
+    const lastWorkDir = store.get(`lastWorkDir`)
+    logMemory.debug(`getWorkDir>lastWorkDir`, lastWorkDir)
+    if (!lastWorkDir) {
+        store.set(`lastWorkDir`, os.homedir())
+        return os.homedir()
+    } else {
+        return lastWorkDir
+    }
 }
 export const setWorkDir = (value: string) => {
+    store.set('lastWorkDir', value ? value : os.homedir())
     workDir = value
 }
 

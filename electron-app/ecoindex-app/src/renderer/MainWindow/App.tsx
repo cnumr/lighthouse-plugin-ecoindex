@@ -253,7 +253,6 @@ function TheApp() {
 
         if (filePath !== undefined) {
             setWorkDir(filePath)
-            await window.store.set(`lastWorkDir`, filePath)
         }
     }
 

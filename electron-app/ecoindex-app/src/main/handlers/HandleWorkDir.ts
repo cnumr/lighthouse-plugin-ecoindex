@@ -23,15 +23,8 @@ export const handleWorkDir = async (
 ) => {
     const mainLog = getMainLog().scope('main/handleWorkDir')
     if (newDir) {
-        // log replaced by electron-log
-        // setLogStream(getLogFilePathFromDir(newDir))
-
         setWorkDir(`${newDir}`)
         mainLog.debug(`workDir:`, newDir)
-    } else {
-        const _homeDir = os.homedir()
-        setHomeDir(_homeDir)
-        setWorkDir(store.get(`lastWorkDir`, _homeDir) as string)
     }
     return await getWorkDir()
 }

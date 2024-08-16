@@ -1,7 +1,6 @@
 import { getWorkDir, isDev } from '../../shared/memory'
 
 import { IpcMainEvent } from 'electron'
-import Store from 'electron-store'
 import { _debugLogs } from '../utils/MultiDebugLogs'
 import { _sendMessageToFrontLog } from '../utils/SendMessageToFrontLog'
 import { convertJSONDatasFromString } from '../utils/ConvertJSONDatas'
@@ -10,8 +9,6 @@ import { getMainLog } from '../main'
 import i18n from '../../configs/i18next.config'
 import { showNotification } from '../utils/ShowNotification'
 import { utils } from '../../shared/constants'
-
-const store = new Store()
 
 /**
  * Handlers, Json config Read and Reload.
@@ -27,8 +24,7 @@ export const handleJsonReadAndReload = async (
         body: i18n.t('Process intialization.'),
     })
     try {
-        let _workDir = await getWorkDir()
-        _workDir = store.get(`lastWorkDir`, _workDir) as string
+        const _workDir = await getWorkDir()
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }
