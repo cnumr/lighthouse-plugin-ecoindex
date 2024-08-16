@@ -204,10 +204,12 @@ app.on('ready', () => {
         credits: packageJson.description,
         copyright: packageJson.publisher,
     })
+    // #region Updates
     // Updater.getInstance().checkForUpdates(false)
-    updateElectronApp({
-        logger: log.scope('update-electron-app'),
-    })
+    // updateElectronApp({
+    //     logger: log.scope('update-electron-app'),
+    // })
+    // #endregion
     // showNotification()
     createMainWindow()
 })

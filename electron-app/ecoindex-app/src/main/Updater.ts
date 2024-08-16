@@ -31,12 +31,15 @@ const updaterLog = log.scope('main/Updater')
 
 let IS_PROD = process.env.NODE_ENV === 'production'
 
-let version = app.getVersion()
+/**
+ * IS NOT WORKING BECAUSE OF THE CHOICE TO HAVE `electron-vX.Y.x` AS TAGNAME THAS IS NOT SEMVER COMPLIANT..
+ */
+let version = `electron-v${app.getVersion()}`
 
 // eslint-disable-next-line no-constant-condition
-if (false) {
+if (true) {
     IS_PROD = true
-    version = '1.3.8'
+    version = 'electron-v1.3.8'
 }
 
 /**
@@ -66,10 +69,7 @@ class Updater {
         // https://github.com/cnumr/lighthouse-plugin-ecoindex/releases.atom
         updaterLog.debug(`IS_PROD`, IS_PROD)
         if (IS_PROD) {
-            let _arch = ''
-            if (os.platform() === 'darwin') {
-                _arch = 'x64'
-            } else _arch = os.arch()
+            const _arch = os.arch()
             const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${_arch}/${version}`
             // const feedUrl = `https://update.electronjs.org/cnumr/lighthouse-plugin-ecoindex/${process.platform}-${os.arch()}/${app.getVersion()}`
             const userAgent = format(
