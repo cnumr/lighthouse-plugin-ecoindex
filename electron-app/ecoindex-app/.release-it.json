@@ -2,13 +2,14 @@
     "$schema": "https://unpkg.com/release-it/schema/release-it.json",
     "git": {
         "commitMessage": "chore: release v${version}",
-        "tagName": "electron-v${version}"
+        "tagName": "electron-v${version}",
+        "tagAnnotation": "Release ${version}",
+        "tagArgs": []
     },
     "github": {
         "release": false,
-        "autoGenerate": false,
-        "releaseName": "Release Electron-app ${version}",
-        "releaseNotes": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
+        "autoGenerate": true,
+        "releaseName": "Release Electron-app ${version}"
     },
     "npm": {
         "publish": false
