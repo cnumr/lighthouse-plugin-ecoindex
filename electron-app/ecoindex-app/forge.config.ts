@@ -84,7 +84,7 @@ const config: ForgeConfig = {
             platforms: ['win32'],
             config: (arch: string) => {
                 return {
-                    setupExe: `EcoindexApp-win32-${arch}-${version} Setup.exe`,
+                    setupExe: `ecoindex-app-${version}-win32-${arch}-setup.exe`,
                     setupIcon: path.resolve(__dirname, 'assets', 'app-ico.ico'),
                     // certificateFile: './cert.pfx',
                     // certificatePassword: process.env.CERTIFICATE_PASSWORD,
