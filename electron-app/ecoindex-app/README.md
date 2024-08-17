@@ -1,5 +1,7 @@
 # Ecoindex-app
 
+[![Release Electron app](https://github.com/cnumr/lighthouse-plugin-ecoindex/actions/workflows/release.yml/badge.svg)](https://github.com/cnumr/lighthouse-plugin-ecoindex/actions/workflows/release.yml)
+
 ## Informations
 
 -   ElectronJS / Electron Forge with `template=webpack-typescript`
