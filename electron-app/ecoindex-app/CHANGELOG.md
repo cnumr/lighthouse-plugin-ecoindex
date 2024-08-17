@@ -1,5 +1,20 @@
 
 
+## [1.3.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.14...electron-v1.3.15) (2024-08-17)
+
+
+### Bug Fixes
+
+* Le bouton recharchement ne doit plus être afficher [#44](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/44) ([eea2489](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/eea24898f40ef1a5c56badae1f8291ffd2b10ea4))
+* Le place holder n'a pas été rempli [#45](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/45) ([441e121](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/441e12171becc702c6c41bff0559a7790409d553))
+* Le place holder n'a pas été rempli [#45](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/45) ([a9dfd9f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a9dfd9fac7503b7687beb74dea726ebe8968b031))
+* typofix ([3dbe0bb](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3dbe0bb6394ac9e240d2ee2643d9d76fa18d37f2))
+
+
+### Features
+
+* add ecoindex-js and ecoindex_reference inside the package to rm alert on assert json ([b8dcfe0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b8dcfe0e83cf49ef661d2089000ca0fb0a8202bb))
+
 ## [1.3.14](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.13...electron-v1.3.14) (2024-08-16)
 
 
