@@ -3,8 +3,7 @@
     "git": {
         "commitMessage": "chore: release v${version}",
         "tagName": "electron-v${version}",
-        "tagAnnotation": "Release ${version}",
-        "tagArgs": []
+        "tagAnnotation": "Release ${version}"
     },
     "github": {
         "release": false,
