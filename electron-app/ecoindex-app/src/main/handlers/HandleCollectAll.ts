@@ -193,7 +193,7 @@ export const handleSimpleCollect = async (
             subtitle: i18n.t('🎉 Simple collect'),
             body: i18n.t(
                 `Collect done, you can consult reports in\n{{_workDir}}`,
-                _workDir
+                { _workDir }
             ),
         })
         if (isDev()) mainLog.debug('Simple collect done 🚀')
@@ -296,7 +296,7 @@ export const handleJsonSaveAndCollect = async (
                 subtitle: i18n.t('🎉 JSON collect'),
                 body: i18n.t(
                     `Measures done, you can consult reports in\n{{_workDir}}`,
-                    _workDir
+                    { _workDir }
                 ),
             })
             _debugLogs('Json collect done 🚀')
