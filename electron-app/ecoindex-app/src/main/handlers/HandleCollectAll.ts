@@ -184,7 +184,7 @@ export const handleSimpleCollect = async (
         } catch (error) {
             showNotification({
                 subtitle: i18n.t('🚫 Simple collect'),
-                body: i18n.t(`Collect KO, {{error}}\n`, error),
+                body: i18n.t(`Collect KO, {{error}}\n`, { error }),
             })
             throw new Error('Simple collect error')
         }

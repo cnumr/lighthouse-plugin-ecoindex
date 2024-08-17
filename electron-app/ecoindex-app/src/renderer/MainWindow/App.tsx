@@ -209,7 +209,7 @@ function TheApp() {
                 !confirm(
                     t(
                         `Are you shure to want create report(s) in your default folder?\n\rDestination: {{homeDir}}`,
-                        homeDir
+                        { homeDir }
                     )
                 )
             )

@@ -53,7 +53,9 @@ export const handleJsonReadAndReload = async (
         _debugLogs('ERROR', 'Json file not read and reloaded', error)
         showNotification({
             subtitle: i18n.t('🚫 JSON reload'),
-            body: i18n.t(`Json file not read and reloaded. {{error}}`, error),
+            body: i18n.t(`Json file not read and reloaded. {{error}}`, {
+                error,
+            }),
         })
         // throw new Error(`Json file not read and reloaded. ${error}`)
     }
