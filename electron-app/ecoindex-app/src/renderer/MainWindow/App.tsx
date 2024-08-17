@@ -154,6 +154,7 @@ function TheApp() {
             )
                 return
         }
+        setDisplayReloadButton(false)
         showHidePopinDuringProcess(
             `${t('Url(s) Measure (Simple mode)')} started 🚀`
         )
@@ -214,6 +215,7 @@ function TheApp() {
             )
                 return
         }
+        setDisplayReloadButton(false)
         showHidePopinDuringProcess(
             `${t('Courses Measure (Full mode)')} started 🚀`
         )
@@ -356,16 +358,24 @@ function TheApp() {
         frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
     }, [])
 
+    const handleDisplayReloadButton = async () => {
+        frontLog.debug(
+            `handleDisplayReloadButton launched, isLighthouseEcoindexPluginInstalled`,
+            isLighthouseEcoindexPluginInstalled
+        )
+        if (!isLighthouseEcoindexPluginInstalled) {
+            setDisplayReloadButton(false)
+            await _sleep(30000)
+            setDisplayReloadButton(true)
+        } else {
+            frontLog.debug(`handleDisplayReloadButton canceled`)
+        }
+    }
+
     // #endregion
 
     // #region useEffect
     useEffect(() => {
-        const handleDisplayReloadButton = async () => {
-            setDisplayReloadButton(false)
-            await _sleep(30000)
-            setDisplayReloadButton(true)
-        }
-        handleDisplayReloadButton()
         /**
          * Handlers, install Puppeteer Browser on Host
          */
@@ -435,6 +445,7 @@ function TheApp() {
          */
         const fetchIsLighthousePluginEcoindexInstalled = async () => {
             try {
+                handleDisplayReloadButton()
                 const result =
                     await window.electronAPI.isLighthouseEcoindexPluginInstalled()
                 setIsLighthouseEcoindexPluginInstalled(result.result)
@@ -809,6 +820,7 @@ function TheApp() {
                                 variant="destructive"
                                 size="sm"
                                 onClick={forceRefresh}
+                                className="max-w-fit"
                             >
                                 {t('Reload if too long')}
                             </Button>
