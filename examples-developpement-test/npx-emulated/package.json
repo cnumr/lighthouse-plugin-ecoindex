@@ -4,10 +4,10 @@
   "type": "module",
   "description": "Test locally `npx-emulated`",
   "scripts": {
-    "direct:help": "node lighthouse-plugin-ecoindex/cli/index.js --help",
+    "direct:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
     "direct:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",
     "file:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -j ./input-file.json",
-    "direct:issue_12": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.spie.com/en/about-us/spie-around-world -o html",
+    "direct:issue_12": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.spie.com/en/about-us/spie-around-world -o html -p './reports/with whitespace'",
     "serve": "npx http-server -o reports --no-dotfiles",
     "clean": "rm -rf reports/* && touch reports/.gitkeep",
     "test": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://novagaia.fr/ -u https://novagaia.fr/a-propos/ -o html && npm run serve"

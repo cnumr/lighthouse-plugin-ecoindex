@@ -4,7 +4,7 @@ import {
   computeGreenhouseGasesEmissionfromEcoIndex,
   computeWaterConsumptionfromEcoIndex,
   getEcoIndexGrade,
-} from 'ecoindex'
+} from '../utils/EcoindexJS.js'
 
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import TotalByteWeight from 'lighthouse/core/audits/byte-efficiency/total-byte-weight.js'

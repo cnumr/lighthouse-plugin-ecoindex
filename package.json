@@ -12,7 +12,6 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "ecoindex": "^1.0.5",
     "eslint": "^8.52.0",
     "mocha": "^10.2.0",
     "prettier": "^3.0.3",
