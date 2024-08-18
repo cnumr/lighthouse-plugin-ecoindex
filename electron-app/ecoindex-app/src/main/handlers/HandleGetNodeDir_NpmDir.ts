@@ -34,18 +34,23 @@ export const handleNodeInstalled = async (
             event,
             channels.IS_NODE_INSTALLED
         )
+        // #region tries read node
+        // give some tries before return false
         if (_nodeDir === '' && getTryNode() > 0) {
             await sleep(2000)
             setTryNode()
             return handleNodeInstalled(event)
         }
+        // after some tries, Node is not installed.
+        if (_nodeDir === '') return false
+        // #region set nodeDir
         if (_nodeDir.includes(';')) {
             if (isDev()) mainLog.debug(`Clean nodeDir path`)
             setNodeDir(_nodeDir.split(';')[2].replace('\x07', '').trim())
         } else setNodeDir(_nodeDir)
         if (isDev()) mainLog.debug(`nodeDir returned: `, _nodeDir)
         if (isDev()) mainLog.debug(`nodeDir:`, getNodeDir())
-
+        // #region set npmDir
         if (os.platform() === `darwin`) {
             setNpmDir(
                 getNodeDir()?.replace(/\/bin\/node$/, '') +
@@ -76,5 +81,6 @@ export const handleNodeInstalled = async (
         }
     } catch (error) {
         mainLog.error(`Check is Node Installed failed 🚫`, error)
+        return false
     }
 }
