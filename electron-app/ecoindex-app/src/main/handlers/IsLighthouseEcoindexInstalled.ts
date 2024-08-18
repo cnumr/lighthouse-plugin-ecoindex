@@ -2,6 +2,7 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { exec } from 'child_process'
 import { getMainLog } from '../main'
+import { getNodeDir } from '../../shared/memory'
 
 // 1. Check if installed
 // 2. Check npm las version
