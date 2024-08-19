@@ -37,22 +37,24 @@ function TheApp() {
     // const [language, setLanguage] = useState('en')
     const [progress, setProgress] = useState(0)
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
-    const [nodeVersion, setNodeVersion] = useState('')
-    const [workDir, setWorkDir] = useState('loading...')
-    const [homeDir, setHomeDir] = useState('loading...')
-    const [appReady, setAppReady] = useState(false)
+    const [nodeVersion, setNodeVersion] = useState('undefined')
     const [datasFromHost, setDatasFromHost] = useState({})
     const [displayPopin, setDisplayPopin] = useState(true)
     const [popinText, setPopinText] = useState('Loading... 0/4')
     const [pluginVersion, setPluginVersion] = useState('loading...')
-    const [isNodeInstalled, setIsNodeInstalled] = useState(true)
-    const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
-    const [isPuppeteerBrowserInstalled, setIsPuppeteerBrowserInstalled] =
-        useState(true)
+
+    const [workDir, setWorkDir] = useState('loading...')
+    const [homeDir, setHomeDir] = useState('loading...')
+    const [appReady, setAppReady] = useState(false)
+
+    const [isNodeInstalled, setIsNodeInstalled] = useState(false)
+    const [isNodeVersionOK, setIsNodeVersionOK] = useState(false)
+    const [puppeteerBrowserInstalled, setPuppeteerBrowserInstalled] =
+        useState(false)
     const [
         isLighthouseEcoindexPluginInstalled,
         setIsLighthouseEcoindexPluginInstalled,
-    ] = useState(true)
+    ] = useState(false)
 
     const [displayReloadButton, setDisplayReloadButton] = useState(false)
 
@@ -107,36 +109,46 @@ function TheApp() {
     /**
      * Increment function to handle the waiting popin.
      */
-    const increment = () => {
+    const increment = (by: string) => {
+        frontLog.debug(`increment`, by)
         const STEPS = 5
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / STEPS))
         frontLog.log(`Verify configuration step ${loadingScreen}/${STEPS}`)
         setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
         if (loadingScreen === STEPS) {
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
-            frontLog.log(`All data readed! 👀`)
-            frontLog.log(`isNodeInstalled`, isNodeInstalled)
-            frontLog.log(
-                `isLighthouseEcoindexPluginInstalled`,
-                isLighthouseEcoindexPluginInstalled
-            )
-            frontLog.log(
-                `isPuppeteerBrowserInstalled`,
-                isPuppeteerBrowserInstalled
-            )
-            checkAppReady()
+            allDataRead()
+        } else {
+            setAppReady(false)
+        }
+    }
+    const allDataRead = () => {
+        frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+        frontLog.log(`All data readed! 👀`)
+        frontLog.log(`workDir`, workDir)
+        frontLog.log(`isNodeInstalled`, isNodeInstalled)
+        frontLog.log(`nodeVersion`, nodeVersion)
+        frontLog.log(`puppeteerBrowserInstalled`, puppeteerBrowserInstalled)
+        frontLog.log(
+            `isLighthouseEcoindexPluginInstalled`,
+            isLighthouseEcoindexPluginInstalled
+        )
+        // checkAppReady()
+        // setAppReady(true)
+        if (
+            isNodeInstalled &&
+            puppeteerBrowserInstalled &&
+            isLighthouseEcoindexPluginInstalled
+        ) {
             setDisplayPopin(false)
             const _n: any = {}
             _n.body = t('Application succefully loaded.\nWelcome 👋')
             _n.subtitle = t('You can now start measures')
             _n.priority = 'critical'
             showNotification('', _n)
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             setDisplayReloadButton(false)
-        } else {
-            setAppReady(false)
         }
+        frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
     }
     // #endregion
 
@@ -341,11 +353,11 @@ function TheApp() {
             'isLighthouseEcoindexPluginInstalled',
             isLighthouseEcoindexPluginInstalled
         )
-        frontLog.log('isPuppeteerBrowserInstalled', isPuppeteerBrowserInstalled)
+        frontLog.log('puppeteerBrowserInstalled', puppeteerBrowserInstalled)
         let count = 0
         if (isNodeInstalled) count++
         if (isLighthouseEcoindexPluginInstalled) count++
-        if (isPuppeteerBrowserInstalled) count++
+        if (puppeteerBrowserInstalled) count++
         setAppReady(count === 3)
         frontLog.log(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
     }
@@ -356,9 +368,9 @@ function TheApp() {
     const logEventAndCheckAppReady = useCallback((name: string) => {
         frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
         frontLog.debug(`Binded on [${name}]`)
-        checkAppReady()
+        // checkAppReady()
         frontLog.debug(`appReady`, appReady)
-        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+        frontLog.debug(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<`)
     }, [])
 
     const handleDisplayReloadButton = async () => {
@@ -377,120 +389,193 @@ function TheApp() {
 
     // #endregion
 
-    // #region useEffect
-    useEffect(() => {
-        /**
-         * Handlers, install Puppeteer Browser on Host
-         */
-        const fetchIsPuppeteerBrowserInstalled = async () => {
-            return new Promise<string | boolean>((resolve, reject) => {
-                window.electronAPI
-                    .handleIsPuppeteerBrowserInstalled()
-                    .then((value) => {
-                        frontLog.debug(
-                            `fetchIsPuppeteerBrowserInstalled Done 🎉`,
-                            value
-                        )
-                        resolve(value as boolean)
-                    })
-                    .catch((value) => {
-                        frontLog.error(
-                            `fetchIsPuppeteerBrowserInstalled Failed 🚫`,
-                            value
-                        )
-                        reject(value as boolean)
-                    })
-            }).then((value: boolean) => {
-                setIsLighthouseEcoindexPluginInstalled(value)
-                increment()
-            })
-        }
-        /**
-         * Handlers, Node Version
-         */
-        const fetchNodeVersion = async () => {
-            const result = await window.versions.getNodeVersion()
-            setNodeVersion(result)
-            const major = nodeVersion.replace('v', '').split('.')[0]
+    // #region Handlers startup
+    /**
+     * Handlers, install Puppeteer Browser on Host
+     */
+    const fetchIsPuppeteerBrowserInstalled = async () => {
+        return new Promise<string | boolean>((resolve, reject) => {
+            window.electronAPI
+                .handleIsPuppeteerBrowserInstalled()
+                .then((value) => {
+                    frontLog.debug(
+                        `fetchIsPuppeteerBrowserInstalled Done 🎉`,
+                        value
+                    )
+                    setPuppeteerBrowserInstalled(true)
+                    return resolve(value as boolean)
+                })
+                .catch((value) => {
+                    frontLog.error(
+                        `fetchIsPuppeteerBrowserInstalled Failed 🚫`,
+                        value
+                    )
+                    setPuppeteerBrowserInstalled(false)
+                    return reject(value as boolean)
+                })
+        }).then((value: boolean) => {
+            setIsLighthouseEcoindexPluginInstalled(value)
+            increment(`PuppeteerBrowserInstalled`)
+        })
+    }
+    /**
+     * Handlers, Node Version
+     */
+    const fetchNodeVersion = async () => {
+        const result = await window.versions.getNodeVersion()
+        frontLog.debug(`fetchNodeVersion`, result)
+        setNodeVersion(result)
+        return new Promise((resolve, reject) => {
+            const major = result.replace('v', '').split('.')[0]
+            frontLog.debug(`fetchNodeVersion major`, major)
+            frontLog.debug(
+                `fetchNodeVersion Number(major) >= 20`,
+                Number(major) >= 20
+            )
 
             if (Number(major) >= 20) {
-                setIsNodeVersionOK(false)
+                setIsNodeVersionOK(true)
+                increment(`Node version`)
+                return resolve(`Node version is upper or equal to 20.`)
             }
-            increment()
-        }
+            return reject(`Node version lower than 20.`)
+        })
+    }
 
-        /**
-         * Handlers, Get WorkDir
-         */
-        const fetchWorkDir = async () => {
-            const result = await window.electronAPI.getWorkDir('')
-            frontLog.debug(`fetchWorkDir result: `, result)
-            const storedWorkDir = await window.store.get(
-                `lastWorkDir`,
-                result !== '' ? result : homeDir
-            )
-            frontLog.debug(`fetchWorkDir storedWorkDir:`, storedWorkDir)
-            setWorkDir(storedWorkDir)
-            increment()
-        }
-        /**
-         * LAUNCH FIRST! Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
-         */
-        const fetchNodeInstalled = async () => {
-            const result = await window.electronAPI.isNodeInstalled()
+    /**
+     * Handlers, Get WorkDir
+     */
+    const fetchWorkDir = async () => {
+        const result = await window.electronAPI.getWorkDir('')
+        frontLog.debug(`fetchWorkDir result: `, result)
+        const storedWorkDir = await window.store.get(
+            `lastWorkDir`,
+            result !== '' ? result : homeDir
+        )
+        frontLog.debug(`fetchWorkDir storedWorkDir:`, storedWorkDir)
+        setWorkDir(storedWorkDir)
+        increment(`WorkDir`)
+        return storedWorkDir
+    }
+    /**
+     * LAUNCH FIRST! Handlers, Get and Set NodeDir, NpmDir and NodeVersion.
+     */
+    const fetchNodeInstalled = async () => {
+        const result = await window.electronAPI.isNodeInstalled()
+        return new Promise((resolve, reject) => {
             frontLog.debug(`fetchNodeInstalledRESULT`, result === true)
-            setIsNodeInstalled(result === true)
-            increment()
-        }
-
-        /**
-         * Handler, force update of lighthouse-plugin-ecoindex
-         */
-        const fetchIsLighthousePluginEcoindexInstalled = async () => {
-            try {
-                handleDisplayReloadButton()
-                const result =
-                    await window.electronAPI.isLighthouseEcoindexPluginInstalled()
-                setIsLighthouseEcoindexPluginInstalled(result.result)
-                setPluginVersion(result.targetVersion)
-                frontLog.debug(result.message)
-                // sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
-                increment()
-            } catch (error) {
-                frontLog.error(
-                    `fetchIsLighthousePluginEcoindexInstalled`,
-                    error
-                )
+            if (result === true) {
+                setIsNodeInstalled(true)
+                increment(`Node Installed`)
+                resolve(true)
+            } else {
+                setIsNodeInstalled(false)
+                reject(false)
             }
-        }
+        })
+    }
 
-        /**
-         * Handlers, to get user home dir.
-         */
-        const fetchHomeDir = async () => {
-            const filePath = await window.electronAPI.getHomeDir()
-            setHomeDir(filePath)
+    /**
+     * Handler, force update of lighthouse-plugin-ecoindex
+     */
+    const fetchIsLighthousePluginEcoindexInstalled = async () => {
+        try {
+            handleDisplayReloadButton()
+            const result =
+                await window.electronAPI.isLighthouseEcoindexPluginInstalled()
+            setIsLighthouseEcoindexPluginInstalled(result.result)
+            setPluginVersion(result.targetVersion)
+            frontLog.debug(result.message)
+            // sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
+            increment(`Lighthouse Plugin Ecoindex Installed`)
+            return true
+        } catch (error) {
+            frontLog.error(`fetchIsLighthousePluginEcoindexInstalled`, error)
+            return false
         }
+    }
 
+    /**
+     * Handlers, to get user home dir.
+     */
+    const fetchHomeDir = async () => {
+        const filePath = await window.electronAPI.getHomeDir()
+        setHomeDir(filePath)
+    }
+
+    const abortVerification = (by: string) => {
+        frontLog.log(`abort by`, by)
+        // setIsNodeInstalled(false)
+        // setPuppeteerBrowserInstalled(false)
+        // setIsLighthouseEcoindexPluginInstalled(false)
+        setDisplayPopin(false)
+    }
+
+    // #endregion
+
+    // #region useEffect
+    useEffect(() => {
         /**
          * Launch the mandatory actions at startup, once.
          */
         fetchHomeDir().then(() => {
             fetchWorkDir().then(() => {
-                fetchNodeInstalled().then(() => {
-                    fetchNodeVersion().then(() => {
-                        fetchIsPuppeteerBrowserInstalled().then(() => {
-                            fetchIsLighthousePluginEcoindexInstalled().then(
-                                () => {
-                                    setDisplayReloadButton(false)
+                fetchNodeInstalled()
+                    .then((result) => {
+                        frontLog.log(`fetchNodeInstalled`, result)
+                        if (result === null) {
+                            abortVerification(`fetchNodeInstalled`)
+                        }
+                        fetchNodeVersion()
+                            .then((result) => {
+                                frontLog.log(`fetchNodeVersion`, result)
+                                if (result === null) {
+                                    abortVerification(`fetchNodeVersion`)
                                 }
-                            )
-                        })
+                                fetchIsPuppeteerBrowserInstalled()
+                                    .then((result) => {
+                                        frontLog.log(
+                                            `fetchIsPuppeteerBrowserInstalled`,
+                                            result
+                                        )
+                                        if (result === null) {
+                                            abortVerification(
+                                                `fetchIsPuppeteerBrowserInstalled`
+                                            )
+                                        }
+                                        fetchIsLighthousePluginEcoindexInstalled()
+                                            .then((result) => {
+                                                frontLog.log(
+                                                    `fetchIsLighthousePluginEcoindexInstalled`,
+                                                    result
+                                                )
+                                                if (result === null) {
+                                                    abortVerification(
+                                                        `fetchIsLighthousePluginEcoindexInstalled`
+                                                    )
+                                                }
+                                                setDisplayReloadButton(false)
+                                            })
+                                            .catch(() =>
+                                                abortVerification(
+                                                    `fetchIsLighthousePluginEcoindexInstalled`
+                                                )
+                                            )
+                                    })
+                                    .catch(() =>
+                                        abortVerification(
+                                            `fetchIsPuppeteerBrowserInstalled`
+                                        )
+                                    )
+                            })
+                            .catch(() => abortVerification(`fetchNodeVersion`))
                     })
-                })
+                    .catch(() => abortVerification(`fetchNodeInstalled`))
             })
         })
+    }, [])
 
+    useEffect(() => {
         /**
          * Handler (main->front), get data from main
          */
@@ -529,46 +614,9 @@ function TheApp() {
             }
         })
 
-        window.electronAPI.sendConfigDatasToFront((configData: ConfigData) => {
-            frontLog.debug(configData.toString())
-            // todo
-            if (configData.error) {
-                frontLog.error(configData.toString())
-                return
-            }
-            switch (configData.type) {
-                case ConfigData.WORKDIR:
-                    setWorkDir(configData.result as string)
-                    break
-                case ConfigData.HOMEDIR:
-                    setHomeDir(configData.result as string)
-                    break
-                case ConfigData.NODE_INSTALLED:
-                    setIsNodeInstalled(configData.result as boolean)
-                    break
-                case ConfigData.NODE_VERSION_IS_OK:
-                    setIsNodeVersionOK(configData.result as boolean)
-                    break
-                case ConfigData.PLUGIN_INSTALLED:
-                    setIsLighthouseEcoindexPluginInstalled(
-                        configData.result as boolean
-                    )
-                    break
-                case ConfigData.PLUGIN_VERSION:
-                    setPluginVersion(configData.result as string)
-                    break
-                case ConfigData.PUPPETEER_BROWSER_INSTALLED:
-                    setIsPuppeteerBrowserInstalled(configData.result as boolean)
-                    break
-                case ConfigData.APP_READY:
-                    setAppReady(configData.result as boolean)
-                    break
-
-                default:
-                    throw new Error('ConfigData not handle in App.tsx')
-            }
-        })
-
+        /**
+         * Read language from store.
+         */
         const getLanguage = async () => {
             try {
                 const gettedLng = await window.store.get(`language`)
@@ -585,23 +633,31 @@ function TheApp() {
     /**
      * Detect isNodeInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`isNodeInstalled`)
-    }, [isNodeInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`isNodeInstalled`)
+    // }, [isNodeInstalled, setIsNodeInstalled, logEventAndCheckAppReady])
 
     /**
      * Detect isLighthouseEcoindexPluginInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
-    }, [isLighthouseEcoindexPluginInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
+    // }, [
+    //     isLighthouseEcoindexPluginInstalled,
+    //     setIsLighthouseEcoindexPluginInstalled,
+    //     logEventAndCheckAppReady,
+    // ])
 
     /**
-     * Detect setIsPuppeteerBrowserInstalled change.
+     * Detect setPuppeteerBrowserInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`setIsPuppeteerBrowserInstalled`)
-    }, [setIsPuppeteerBrowserInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`setPuppeteerBrowserInstalled`)
+    // }, [
+    //     puppeteerBrowserInstalled,
+    //     setPuppeteerBrowserInstalled,
+    //     logEventAndCheckAppReady,
+    // ])
 
     /**
      * Detect workDir change.
@@ -623,6 +679,17 @@ function TheApp() {
     // #endregion
 
     // #region JSX
+    useEffect(() => {
+        allDataRead()
+        checkAppReady()
+    }, [
+        isNodeInstalled,
+        nodeVersion,
+        puppeteerBrowserInstalled,
+        isLighthouseEcoindexPluginInstalled,
+        allDataRead,
+        checkAppReady,
+    ])
 
     return (
         <div className="container relative">
@@ -669,10 +736,14 @@ function TheApp() {
                                 isNodeVersionOK:{' '}
                                 {isNodeVersionOK ? 'true' : 'false'}
                             </div>
+                            <div>
+                                puppeteerBrowserInstalled:{' '}
+                                {puppeteerBrowserInstalled ? 'true' : 'false'}
+                            </div>
                         </>
                     )}
                     {!isNodeInstalled && (
-                        <AlertBox title="Error on Node">
+                        <AlertBox title={t('Error on Node')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
@@ -690,7 +761,7 @@ function TheApp() {
                         </AlertBox>
                     )}
                     {isNodeInstalled && !isNodeVersionOK && (
-                        <AlertBox title="Error on Node Version">
+                        <AlertBox title={t('Error on Node Version')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
@@ -727,7 +798,7 @@ function TheApp() {
                     {(!isNodeInstalled ||
                         !isLighthouseEcoindexPluginInstalled ||
                         !isNodeVersionOK) && (
-                        <AlertBox variant="bug" title="Report error">
+                        <AlertBox variant="bug" title={t('Report error')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(

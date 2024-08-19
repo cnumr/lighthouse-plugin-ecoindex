@@ -17,6 +17,7 @@ export interface IElectronAPI {
     sendLogToFront: (callback) => string
     sendMessageToFrontLog: (callback) => object
     sendDatasToFront: (callback) => object
+    sendConfigDatasToFront: (callback) => ConfigData
     // Front → Main
     getInitialTranslations: () => Promise<object>
     handleSetFolderOuput: () => Promise<string>

@@ -44,8 +44,8 @@ if (require('electron-squirrel-startup')) {
 }
 
 log.initialize()
-log.transports.file.level =
-    process.env.NODE_ENV === 'production' ? 'info' : 'debug'
+// log.transports.file.level =
+//     process.env.NODE_ENV === 'production' ? 'info' : 'debug'
 const mainLog = log.scope('main')
 
 const store = new Store()
