@@ -12,6 +12,16 @@ contextBridge.exposeInMainWorld('versions', {
     getNodeVersion: () => ipcRenderer.invoke(channels.GET_NODE_VERSION),
 })
 
+contextBridge.exposeInMainWorld('initialisationAPI', {
+    // Front → Main
+    initializeApplication: () =>
+        ipcRenderer.invoke(channels.INITIALIZATION_APP),
+    // Main → Front
+    sendConfigDatasToFront: (callback: any) =>
+        ipcRenderer.on(channels.INITIALIZATION_DATAS, (_event, value) =>
+            callback(value)
+        ),
+})
 contextBridge.exposeInMainWorld('electronAPI', {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

@@ -17,7 +17,6 @@ export interface IElectronAPI {
     sendLogToFront: (callback) => string
     sendMessageToFrontLog: (callback) => object
     sendDatasToFront: (callback) => object
-    sendConfigDatasToFront: (callback) => ConfigData
     // Front → Main
     getInitialTranslations: () => Promise<object>
     handleSetFolderOuput: () => Promise<string>
@@ -38,6 +37,13 @@ export interface IElectronAPI {
     handleJsonReadAndReload: () => Promise<IJsonMesureData>
     handleIsJsonConfigFileExist: (workDir: string) => Promise<boolean>
     hideHelloWindow: () => Promise<void>
+}
+
+export interface IInitalization {
+    // Front → Main
+    initializeApplication: () => Promise<boolean>
+    // Main → Front
+    sendConfigDatasToFront: (callback) => ConfigData
 }
 
 declare global {
@@ -67,5 +73,6 @@ declare global {
         versions: IVersionsAPI
         electronAPI: IElectronAPI
         store: IStoreAPI
+        initialisationAPI: IInitalization
     }
 }

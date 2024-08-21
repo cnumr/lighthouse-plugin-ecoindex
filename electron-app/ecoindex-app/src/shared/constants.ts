@@ -5,6 +5,8 @@ type IConstants = {
 }
 const constants: IConstants = {
     channels: {
+        INITIALIZATION_APP: 'initialization-app',
+        INITIALIZATION_DATAS: 'initialization-datas',
         ASYNCHRONOUS_LOG: 'asynchronous-log',
         SIMPLE_MESURES: 'simple-mesures',
         JSON_MESURES: 'json-mesures',

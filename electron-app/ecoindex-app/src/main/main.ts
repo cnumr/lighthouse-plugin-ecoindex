@@ -30,6 +30,7 @@ import { handleSelectFolder } from './handlers/HandleSelectFolder'
 import { handleWorkDir } from './handlers/HandleWorkDir'
 import { handle_CMD_Actions } from './handlers/HandleCMDActions'
 import i18n from '../configs/i18next.config'
+import { initialization } from './handlers/Initalization'
 import { isLighthouseEcoindexInstalled } from './handlers/IsLighthouseEcoindexInstalled'
 import { isPupperteerBrowserInstalled } from './handlers/IsPuppeteerBrowserInstalled'
 import log from 'electron-log/main'
@@ -102,6 +103,7 @@ app.on('ready', () => {
     ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
 
     // communs handlers and getters
+    ipcMain.handle(channels.INITIALIZATION_APP, initialization)
     ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
     ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
     ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)

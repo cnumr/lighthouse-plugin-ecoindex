@@ -2,7 +2,7 @@
  * Object used to transport datas from `Back` to `Front`.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ConfigData {
+export class ConfigData {
     static WORKDIR = 'workDir'
     static HOMEDIR = 'homeDir'
     static APP_READY = 'appReady'
@@ -22,7 +22,7 @@ class ConfigData {
     /**
      * The error if fail.
      */
-    error?: string | object | Error
+    error?: any
     /**
      * A message if needed.
      */

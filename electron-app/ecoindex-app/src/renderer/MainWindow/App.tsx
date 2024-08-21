@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { AlertBox } from '../components/Alert'
 import { Bug } from 'lucide-react'
 import { Button } from '@/renderer/ui/button'
+import { ConfigData } from '../../class/ConfigData'
 import { ConsoleApp } from '../components/console'
 import { DarkModeSwitcher } from '../components/dark-mode-switcher'
 import { Footer } from '../components/footer'
@@ -45,14 +46,14 @@ function TheApp() {
     const [displayPopin, setDisplayPopin] = useState(true)
     const [popinText, setPopinText] = useState('Loading... 0/4')
     const [pluginVersion, setPluginVersion] = useState('loading...')
-    const [isNodeInstalled, setIsNodeInstalled] = useState(true)
-    const [isNodeVersionOK, setIsNodeVersionOK] = useState(true)
+    const [isNodeInstalled, setIsNodeInstalled] = useState(false)
+    const [isNodeVersionOK, setIsNodeVersionOK] = useState(false)
     const [isPuppeteerBrowserInstalled, setIsPuppeteerBrowserInstalled] =
-        useState(true)
+        useState(false)
     const [
         isLighthouseEcoindexPluginInstalled,
         setIsLighthouseEcoindexPluginInstalled,
-    ] = useState(true)
+    ] = useState(false)
 
     const [displayReloadButton, setDisplayReloadButton] = useState(false)
 
@@ -475,21 +476,21 @@ function TheApp() {
         /**
          * Launch the mandatory actions at startup, once.
          */
-        fetchHomeDir().then(() => {
-            fetchWorkDir().then(() => {
-                fetchNodeInstalled().then(() => {
-                    fetchNodeVersion().then(() => {
-                        fetchIsPuppeteerBrowserInstalled().then(() => {
-                            fetchIsLighthousePluginEcoindexInstalled().then(
-                                () => {
-                                    setDisplayReloadButton(false)
-                                }
-                            )
-                        })
-                    })
-                })
-            })
-        })
+        // fetchHomeDir().then(() => {
+        //     fetchWorkDir().then(() => {
+        //         fetchNodeInstalled().then(() => {
+        //             fetchNodeVersion().then(() => {
+        //                 fetchIsPuppeteerBrowserInstalled().then(() => {
+        //                     fetchIsLighthousePluginEcoindexInstalled().then(
+        //                         () => {
+        //                             setDisplayReloadButton(false)
+        //                         }
+        //                     )
+        //                 })
+        //             })
+        //         })
+        //     })
+        // })
 
         /**
          * Handler (main->front), get data from main
@@ -529,46 +530,6 @@ function TheApp() {
             }
         })
 
-        window.electronAPI.sendConfigDatasToFront((configData: ConfigData) => {
-            frontLog.debug(configData.toString())
-            // todo
-            if (configData.error) {
-                frontLog.error(configData.toString())
-                return
-            }
-            switch (configData.type) {
-                case ConfigData.WORKDIR:
-                    setWorkDir(configData.result as string)
-                    break
-                case ConfigData.HOMEDIR:
-                    setHomeDir(configData.result as string)
-                    break
-                case ConfigData.NODE_INSTALLED:
-                    setIsNodeInstalled(configData.result as boolean)
-                    break
-                case ConfigData.NODE_VERSION_IS_OK:
-                    setIsNodeVersionOK(configData.result as boolean)
-                    break
-                case ConfigData.PLUGIN_INSTALLED:
-                    setIsLighthouseEcoindexPluginInstalled(
-                        configData.result as boolean
-                    )
-                    break
-                case ConfigData.PLUGIN_VERSION:
-                    setPluginVersion(configData.result as string)
-                    break
-                case ConfigData.PUPPETEER_BROWSER_INSTALLED:
-                    setIsPuppeteerBrowserInstalled(configData.result as boolean)
-                    break
-                case ConfigData.APP_READY:
-                    setAppReady(configData.result as boolean)
-                    break
-
-                default:
-                    throw new Error('ConfigData not handle in App.tsx')
-            }
-        })
-
         const getLanguage = async () => {
             try {
                 const gettedLng = await window.store.get(`language`)
@@ -582,26 +543,81 @@ function TheApp() {
         getLanguage()
     }, [])
 
+    // #region initialisationAPI
+    useEffect(() => {
+        const initalization = async () => {
+            frontLog.debug(`initializeApplication start 🚀`)
+            const result =
+                await window.initialisationAPI.initializeApplication()
+            frontLog.debug(`initializeApplication ended '${result}' 👍`)
+        }
+        initalization()
+
+        window.initialisationAPI.sendConfigDatasToFront(
+            (configData: ConfigData) => {
+                frontLog.debug(`sendConfigDatasToFront`, configData)
+                // todo
+                if (configData.error) {
+                    frontLog.error(configData)
+                    return
+                }
+                switch (configData.type) {
+                    case ConfigData.WORKDIR:
+                        setWorkDir(configData.result as string)
+                        break
+                    case ConfigData.HOMEDIR:
+                        setHomeDir(configData.result as string)
+                        break
+                    case ConfigData.NODE_INSTALLED:
+                        setIsNodeInstalled(configData.result as boolean)
+                        break
+                    case ConfigData.NODE_VERSION_IS_OK:
+                        setIsNodeVersionOK(configData.result as boolean)
+                        break
+                    case ConfigData.PLUGIN_INSTALLED:
+                        setIsLighthouseEcoindexPluginInstalled(
+                            configData.result as boolean
+                        )
+                        break
+                    case ConfigData.PLUGIN_VERSION:
+                        setPluginVersion(configData.result as string)
+                        break
+                    case ConfigData.PUPPETEER_BROWSER_INSTALLED:
+                        setIsPuppeteerBrowserInstalled(
+                            configData.result as boolean
+                        )
+                        break
+                    case ConfigData.APP_READY:
+                        setAppReady(configData.result as boolean)
+                        break
+
+                    default:
+                        throw new Error('ConfigData not handle in App.tsx')
+                }
+            }
+        )
+    }, [])
+
     /**
      * Detect isNodeInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`isNodeInstalled`)
-    }, [isNodeInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`isNodeInstalled`)
+    // }, [isNodeInstalled, logEventAndCheckAppReady])
 
     /**
      * Detect isLighthouseEcoindexPluginInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
-    }, [isLighthouseEcoindexPluginInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
+    // }, [isLighthouseEcoindexPluginInstalled, logEventAndCheckAppReady])
 
     /**
      * Detect setIsPuppeteerBrowserInstalled change.
      */
-    useEffect(() => {
-        logEventAndCheckAppReady(`setIsPuppeteerBrowserInstalled`)
-    }, [setIsPuppeteerBrowserInstalled, logEventAndCheckAppReady])
+    // useEffect(() => {
+    //     logEventAndCheckAppReady(`setIsPuppeteerBrowserInstalled`)
+    // }, [setIsPuppeteerBrowserInstalled, logEventAndCheckAppReady])
 
     /**
      * Detect workDir change.
@@ -652,7 +668,7 @@ function TheApp() {
             <main className="flex h-screen flex-col justify-between gap-4 p-4">
                 <div className="flex flex-col items-center gap-4">
                     <Header />
-                    {false && (
+                    {true && (
                         <>
                             <div>appReady: {appReady ? 'true' : 'false'}</div>
                             <div>
