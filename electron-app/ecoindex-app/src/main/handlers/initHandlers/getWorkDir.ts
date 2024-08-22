@@ -23,9 +23,9 @@ export const initGetWorkDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
             toReturned.result = lastWorkDir as string
             resolve(toReturned)
         } catch (error) {
-            mainLog.error(`Error on handleWorkDir 🚫`)
-            toReturned.error = `Error on handleWorkDir 🚫`
-            toReturned.message = `Error on handleWorkDir 🚫`
+            mainLog.error(`Error on initGetWorkDir 🚫`)
+            toReturned.error = `Error on initGetWorkDir 🚫`
+            toReturned.message = `Error on initGetWorkDir 🚫`
             reject(toReturned)
         }
     })

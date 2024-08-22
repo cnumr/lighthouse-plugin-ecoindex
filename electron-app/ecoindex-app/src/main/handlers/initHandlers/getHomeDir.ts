@@ -14,9 +14,9 @@ export const initGetHomeDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
             toReturned.result = homedir
             resolve(toReturned)
         } catch (error) {
-            mainLog.error(`Error on handleHomeDir 🚫`)
-            toReturned.error = `Error on handleHomeDir 🚫`
-            toReturned.message = `Error on handleHomeDir 🚫`
+            mainLog.error(`Error on initGetHomeDir 🚫`)
+            toReturned.error = `Error on initGetHomeDir 🚫`
+            toReturned.message = `Error on initGetHomeDir 🚫`
             reject(toReturned)
         }
     })

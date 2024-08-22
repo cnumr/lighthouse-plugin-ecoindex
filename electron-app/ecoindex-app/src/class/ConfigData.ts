@@ -11,6 +11,7 @@ export class ConfigData {
     static NODE_INSTALLED = 'node_installed'
     static NODE_VERSION_IS_OK = 'node_version_is_ok'
     static PUPPETEER_BROWSER_INSTALLED = 'puppeteer_browser_installed'
+    static PUPPETEER_BROWSER_INSTALLATION = 'puppeteer_browser_installation'
     static APP_CAN_NOT_BE_LAUNCHED = 'app_can_not_be_launched'
     /**
      * The type of the content.
@@ -43,6 +44,7 @@ export class ConfigData {
             | 'node_installed'
             | 'node_version_is_ok'
             | 'puppeteer_browser_installed'
+            | 'puppeteer_browser_installation'
             | 'app_can_not_be_launched'
     ) {
         this.type = type

@@ -590,7 +590,7 @@ function TheApp() {
                         break
                     case ConfigData.PUPPETEER_BROWSER_INSTALLED:
                         setIsPuppeteerBrowserInstalled(
-                            configData.result as boolean
+                            configData.result !== null
                         )
                         increment()
                         break
@@ -693,11 +693,18 @@ function TheApp() {
                                     : 'false'}
                             </div>
                             <div>
+                                isPuppeteerBrowserInstalled:{' '}
+                                {isPuppeteerBrowserInstalled ? 'true' : 'false'}
+                            </div>
+                            <div>
                                 isNodeVersionOK:{' '}
                                 {isNodeVersionOK ? 'true' : 'false'}
                             </div>
                             <div>workDir: {workDir}</div>
                             <div>homeDir: {homeDir}</div>
+                            <div>
+                                PuppeteerBrowser: {isPuppeteerBrowserInstalled}
+                            </div>
                         </>
                     )}
                     {!isNodeInstalled && (
