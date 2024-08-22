@@ -109,7 +109,7 @@ function TheApp() {
      * Increment function to handle the waiting popin.
      */
     const increment = () => {
-        const STEPS = 5
+        const STEPS = 7
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / STEPS))
         frontLog.log(`Verify configuration step ${loadingScreen}/${STEPS}`)
@@ -564,31 +564,42 @@ function TheApp() {
                 switch (configData.type) {
                     case ConfigData.WORKDIR:
                         setWorkDir(configData.result as string)
+                        increment()
                         break
                     case ConfigData.HOMEDIR:
                         setHomeDir(configData.result as string)
+                        increment()
                         break
                     case ConfigData.NODE_INSTALLED:
                         setIsNodeInstalled(configData.result as boolean)
+                        increment()
                         break
                     case ConfigData.NODE_VERSION_IS_OK:
                         setIsNodeVersionOK(configData.result as boolean)
+                        increment()
                         break
                     case ConfigData.PLUGIN_INSTALLED:
                         setIsLighthouseEcoindexPluginInstalled(
                             configData.result as boolean
                         )
+                        increment()
                         break
                     case ConfigData.PLUGIN_VERSION:
                         setPluginVersion(configData.result as string)
+                        increment()
                         break
                     case ConfigData.PUPPETEER_BROWSER_INSTALLED:
                         setIsPuppeteerBrowserInstalled(
                             configData.result as boolean
                         )
+                        increment()
                         break
                     case ConfigData.APP_READY:
                         setAppReady(configData.result as boolean)
+                        break
+                    case ConfigData.APP_CAN_NOT_BE_LAUNCHED:
+                        // setAppReady(configData.result as boolean)
+                        // TODO
                         break
 
                     default:
@@ -685,6 +696,8 @@ function TheApp() {
                                 isNodeVersionOK:{' '}
                                 {isNodeVersionOK ? 'true' : 'false'}
                             </div>
+                            <div>workDir: {workDir}</div>
+                            <div>homeDir: {homeDir}</div>
                         </>
                     )}
                     {!isNodeInstalled && (
