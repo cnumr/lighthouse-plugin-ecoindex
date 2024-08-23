@@ -12,6 +12,8 @@ import { initIsNodeNodeVersionOK } from './initHandlers/isNodeVersionOK'
 import { initPluginCanInstall } from './initHandlers/plugin_canInstall'
 import { initPluginGetLastVersion } from './initHandlers/plugin_getLastVersion'
 import { initPluginIsIntalled } from './initHandlers/plugin_isInstalled'
+import { initPluginNormalInstallation } from './initHandlers/plugin_installNormally'
+import { initPluginSudoInstallation } from './initHandlers/plugin_installWithSudo'
 import { initPuppeteerBrowserInstallation } from './initHandlers/puppeteerBrowser_installation'
 import { initPuppeteerBrowserIsInstalled } from './initHandlers/puppeteerBrowser_isInstalled'
 import { initSetNpmDir } from './initHandlers/setNpmDir'
@@ -28,6 +30,8 @@ type initializedDatas = {
     initPluginIsIntalled?: boolean | string
     initPluginGetLastVersion?: string
     initPluginCanInstall?: boolean
+    initPluginNormalInstallation?: boolean
+    initPluginSudoInstallation?: boolean
 }
 
 const readInitalizedDatas = (value: initializedDatas): boolean => {
@@ -206,9 +210,45 @@ export const initialization = async (
             if (initializedDatas.initPluginCanInstall) {
                 mainLog.log(`7.3 Electron can write in ~/.npm ...`)
                 mainLog.log(`7.3 Plugin installation ...`)
+                const getPluginNormalInstallationReturned =
+                    await initPluginNormalInstallation(event)
+                initializedDatas.initPluginNormalInstallation =
+                    getPluginNormalInstallationReturned.result as boolean
+                mainLog.log(getPluginNormalInstallationReturned.toString())
+                const normalPluginInstallation = new ConfigData(
+                    'plugin_installed'
+                )
+                normalPluginInstallation.result =
+                    initializedDatas.initPluginNormalInstallation
+                normalPluginInstallation.message =
+                    initializedDatas.initPluginNormalInstallation
+                        ? `Plugin installed`
+                        : `Installation plugin failed`
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    normalPluginInstallation
+                )
             } else {
                 mainLog.log(`7.3 Electron CAN'T write in ~/.npm ...`)
                 mainLog.log(`7.3 Plugin SUDO installation ...`)
+                const getPluginSudoInstallationReturned =
+                    await initPluginSudoInstallation(event)
+                initializedDatas.initPluginSudoInstallation =
+                    getPluginSudoInstallationReturned.result as boolean
+                mainLog.log(getPluginSudoInstallationReturned.toString())
+                const sudoPluginInstallation = new ConfigData(
+                    'plugin_installed'
+                )
+                sudoPluginInstallation.result =
+                    initializedDatas.initPluginNormalInstallation
+                sudoPluginInstallation.message =
+                    initializedDatas.initPluginNormalInstallation
+                        ? `Plugin installed`
+                        : `Installation plugin failed`
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    sudoPluginInstallation
+                )
             }
         }
 

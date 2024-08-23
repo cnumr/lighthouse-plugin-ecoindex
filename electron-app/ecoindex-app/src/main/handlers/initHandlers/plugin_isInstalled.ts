@@ -37,8 +37,8 @@ export const initPluginIsIntalled = (
                         mainLog.debug(`Lighthouse plugin not installed`)
                         // return false
                         toReturned.error =
-                            toReturned.message = `lighthouse-plugin-ecoindex is installed on host`
-                        resolve(toReturned)
+                            toReturned.message = `lighthouse-plugin-ecoindex is not installed on host`
+                        return resolve(toReturned)
                     }
                     // Extract version numbers using a regular expression
                     const versionRegex = /\b\d+\.\d+\.\d+\b/g
