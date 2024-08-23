@@ -50,6 +50,8 @@ function TheApp() {
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(false)
     const [isPuppeteerBrowserInstalled, setIsPuppeteerBrowserInstalled] =
         useState(false)
+    const [puppeteerBrowserInstalled, setPuppeteerBrowserInstalled] =
+        useState('loading...')
     const [
         isLighthouseEcoindexPluginInstalled,
         setIsLighthouseEcoindexPluginInstalled,
@@ -576,6 +578,7 @@ function TheApp() {
                         break
                     case ConfigData.NODE_VERSION_IS_OK:
                         setIsNodeVersionOK(configData.result as boolean)
+                        setNodeVersion(configData.message)
                         increment()
                         break
                     case ConfigData.PLUGIN_INSTALLED:
@@ -591,6 +594,9 @@ function TheApp() {
                     case ConfigData.PUPPETEER_BROWSER_INSTALLED:
                         setIsPuppeteerBrowserInstalled(
                             configData.result !== null
+                        )
+                        setPuppeteerBrowserInstalled(
+                            configData.result as string
                         )
                         increment()
                         break
@@ -703,7 +709,7 @@ function TheApp() {
                             <div>workDir: {workDir}</div>
                             <div>homeDir: {homeDir}</div>
                             <div>
-                                PuppeteerBrowser: {isPuppeteerBrowserInstalled}
+                                PuppeteerBrowser: {puppeteerBrowserInstalled}
                             </div>
                         </>
                     )}

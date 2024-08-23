@@ -23,7 +23,7 @@ export const initIsNodeNodeVersionOK = async (
             output.error = `Node version not found`
         } else {
             output.result = Number(major) >= 20
-            output.message = `Node version is ${returned} and it's upper or equal to 20=${output.result}`
+            output.message = returned
         }
         mainLog.debug(output)
         return new Promise<ConfigData>((resolve, reject) => {

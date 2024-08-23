@@ -50,8 +50,8 @@ export const initPluginIsIntalled = (
                         .filter((version) => version !== null)
                     currentVersion = versions[0].replace(`\n`, ``).trim()
                     mainLog.debug(`version installed: ${currentVersion}`)
-                    toReturned.result = true
-                    toReturned.message = `${currentVersion}`
+                    toReturned.message = `plugin allready installed`
+                    toReturned.result = `${currentVersion}`
                     resolve(toReturned)
                 } catch (error) {
                     throw new Error(error)

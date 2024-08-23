@@ -9,6 +9,8 @@ import { initGetHomeDir } from './initHandlers/getHomeDir'
 import { initGetWorkDir } from './initHandlers/getWorkDir'
 import { initIsNodeInstalled } from './initHandlers/IsNodeInstalled'
 import { initIsNodeNodeVersionOK } from './initHandlers/isNodeVersionOK'
+import { initPluginCanInstall } from './initHandlers/plugin_canInstall'
+import { initPluginGetLastVersion } from './initHandlers/plugin_getLastVersion'
 import { initPluginIsIntalled } from './initHandlers/plugin_isInstalled'
 import { initPuppeteerBrowserInstallation } from './initHandlers/puppeteerBrowser_installation'
 import { initPuppeteerBrowserIsInstalled } from './initHandlers/puppeteerBrowser_isInstalled'
@@ -23,7 +25,9 @@ type initializedDatas = {
     initGetWorkDir?: string
     initSetNpmDir?: string
     initPuppeteerBrowserIsInstalled?: boolean
-    initPluginIsIntalled?: boolean
+    initPluginIsIntalled?: boolean | string
+    initPluginGetLastVersion?: string
+    initPluginCanInstall?: boolean
 }
 
 const readInitalizedDatas = (value: initializedDatas): boolean => {
@@ -151,12 +155,62 @@ export const initialization = async (
             return false
         }
 
-        mainLog.log(`7. Is a Plugin installed ...`)
+        mainLog.log(`7.1 Is a Plugin installed on host ...`)
         // #region Plugin Installed
         const getPluginIsInstalledReturned = await initPluginIsIntalled(event)
         initializedDatas.initPluginIsIntalled =
-            getPluginIsInstalledReturned.result as boolean
+            getPluginIsInstalledReturned.result as string
         mainLog.log(getPluginIsInstalledReturned.toString())
+        // #region Plugin Last Version
+        if (initializedDatas.initPluginIsIntalled) {
+            // plugin installed
+            mainLog.log(`7.2 Plugin is Installed on host ...`)
+            mainLog.log(`7.2 Check plugin last version on registry ...`)
+            const getPluginGetLastVersionReturned =
+                await initPluginGetLastVersion(
+                    event,
+                    initializedDatas.initPluginIsIntalled
+                )
+            initializedDatas.initPluginGetLastVersion =
+                getPluginGetLastVersionReturned.result as string
+            mainLog.log(getPluginGetLastVersionReturned.toString())
+            if (
+                initializedDatas.initPluginGetLastVersion ===
+                initializedDatas.initPluginIsIntalled
+            ) {
+                const pluginMessage = `Plugin version installed is ${initializedDatas.initPluginGetLastVersion}`
+                const pluginOK = new ConfigData('plugin_installed')
+                pluginOK.result = true
+                pluginOK.message = pluginMessage
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    pluginOK
+                )
+                const pluginVersion = new ConfigData('plugin_version')
+                pluginVersion.result = initializedDatas.initPluginGetLastVersion
+                pluginVersion.message = pluginMessage
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    pluginVersion
+                )
+            }
+        } else {
+            // plugin not installed
+            mainLog.log(`7.2 Plugin NOT installed on host ...`)
+            mainLog.log(`7.2 Check if electron can write in ~/.npm ...`)
+            const getPluginCanInstallReturned =
+                await initPluginCanInstall(event)
+            initializedDatas.initPluginCanInstall =
+                getPluginCanInstallReturned.result as boolean
+            mainLog.log(getPluginCanInstallReturned.toString())
+            if (initializedDatas.initPluginCanInstall) {
+                mainLog.log(`7.3 Electron can write in ~/.npm ...`)
+                mainLog.log(`7.3 Plugin installation ...`)
+            } else {
+                mainLog.log(`7.3 Electron CAN'T write in ~/.npm ...`)
+                mainLog.log(`7.3 Plugin SUDO installation ...`)
+            }
+        }
 
         // #region
 
