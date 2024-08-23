@@ -27,8 +27,8 @@ export const initIsNodeNodeVersionOK = async (
         }
         mainLog.debug(output)
         return new Promise<ConfigData>((resolve, reject) => {
-            if (output.error) reject(output)
-            else resolve(output)
+            // output.error ? reject(output) : resolve(output)
+            resolve(output)
         })
     } catch (error) {
         mainLog.error(error)

@@ -1,11 +1,14 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
-import { getTryNode, setTryNode } from '../../../shared/memory'
+import { getTryNode, setNodeDir, setTryNode } from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
+import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
 import { handle_CMD_Actions } from '../HandleCMDActions'
 import { sleep } from '../../../main/utils/Sleep'
+
+const store = new Store()
 
 /**
  *
@@ -44,11 +47,13 @@ export const initIsNodeInstalled = async (
         } else {
             output.result = true
             output.message = `Node is Installed in ${returned}`
+            setNodeDir(returned)
+            store.set(`nodeDir`, returned)
         }
         mainLog.debug(output)
         return new Promise<ConfigData>((resolve, reject) => {
-            if (output.error) reject(output)
-            else resolve(output)
+            // output.error ? reject(output) : resolve(output)
+            resolve(output)
         })
     } catch (error) {
         mainLog.error(error)

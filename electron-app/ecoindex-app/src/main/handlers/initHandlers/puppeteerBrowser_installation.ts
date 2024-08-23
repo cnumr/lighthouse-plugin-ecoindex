@@ -25,6 +25,7 @@ export const initPuppeteerBrowserInstallation = async (
         toReturned.message = `Error on initPuppeteerBrowserInstallation 🚫`
     }
     return new Promise<ConfigData>((resolve, reject) => {
-        toReturned.result ? resolve(toReturned) : reject(toReturned)
+        // toReturned.result ? resolve(toReturned) : reject(toReturned)
+        resolve(toReturned)
     })
 }

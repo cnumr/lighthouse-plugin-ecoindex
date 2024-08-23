@@ -5,6 +5,7 @@
 export class ConfigData {
     static WORKDIR = 'workDir'
     static HOMEDIR = 'homeDir'
+    static NPMDIR = 'npmDir'
     static APP_READY = 'appReady'
     static PLUGIN_INSTALLED = 'plugin_installed'
     static PLUGIN_VERSION = 'plugin_version'
@@ -38,6 +39,7 @@ export class ConfigData {
         type:
             | 'workDir'
             | 'homeDir'
+            | 'npmDir'
             | 'appReady'
             | 'plugin_installed'
             | 'plugin_version'
@@ -60,6 +62,10 @@ export class ConfigData {
                 typeof this.result === 'string'
                     ? this.result
                     : JSON.stringify(this.result)
+        output.message =
+            typeof this.message === 'string'
+                ? this.message
+                : JSON.stringify(this.message)
         if (this.error)
             output.error =
                 typeof this.error === 'string'

@@ -9,8 +9,10 @@ import { initGetHomeDir } from './initHandlers/getHomeDir'
 import { initGetWorkDir } from './initHandlers/getWorkDir'
 import { initIsNodeInstalled } from './initHandlers/IsNodeInstalled'
 import { initIsNodeNodeVersionOK } from './initHandlers/isNodeVersionOK'
+import { initPluginIsIntalled } from './initHandlers/plugin_isInstalled'
 import { initPuppeteerBrowserInstallation } from './initHandlers/puppeteerBrowser_installation'
 import { initPuppeteerBrowserIsInstalled } from './initHandlers/puppeteerBrowser_isInstalled'
+import { initSetNpmDir } from './initHandlers/setNpmDir'
 
 const store = new Store()
 
@@ -19,7 +21,9 @@ type initializedDatas = {
     initIsNodeNodeVersionOK?: boolean
     initGetHomeDir?: string
     initGetWorkDir?: string
+    initSetNpmDir?: string
     initPuppeteerBrowserIsInstalled?: boolean
+    initPluginIsIntalled?: boolean
 }
 
 const readInitalizedDatas = (value: initializedDatas): boolean => {
@@ -76,7 +80,12 @@ export const initialization = async (
             // stop all
             return false
         }
-        mainLog.log(`3. Get User HomeDir...`)
+        mainLog.log(`3. Get Npm Dir...`)
+        // #region Npm Dir
+        const getNpmDirReturned = await initSetNpmDir(event)
+        initializedDatas.initSetNpmDir = getNpmDirReturned.result as string
+        mainLog.log(getNpmDirReturned.toString())
+        mainLog.log(`4. Get User HomeDir...`)
         // #region Home Dir
         const getHomeDirReturned = await initGetHomeDir(event)
         initializedDatas.initGetHomeDir = getHomeDirReturned.result as string
@@ -85,7 +94,7 @@ export const initialization = async (
             channels.INITIALIZATION_DATAS,
             getHomeDirReturned
         )
-        mainLog.log(`4. Get Last used WorkDir or fallback in User HomeDir ...`)
+        mainLog.log(`5. Get Last used WorkDir or fallback in User HomeDir ...`)
         // #region WorkDir
         const getWorkDirReturned = await initGetWorkDir(event)
         initializedDatas.initGetWorkDir = getWorkDirReturned.result as string
@@ -94,7 +103,7 @@ export const initialization = async (
             channels.INITIALIZATION_DATAS,
             getWorkDirReturned
         )
-        mainLog.log(`5. Is a Puppeteer Browser installed ...`)
+        mainLog.log(`6. Is a Puppeteer Browser installed ...`)
         // #region Puppeteer Browser Installed
         let getPuppeteerBrowserIsInstalledReturned =
             await initPuppeteerBrowserIsInstalled(event)
@@ -102,13 +111,13 @@ export const initialization = async (
             getPuppeteerBrowserIsInstalledReturned.result !== null
         // #region Puppeteer Browser Installation
         if (getPuppeteerBrowserIsInstalledReturned.error) {
-            mainLog.log(`5.a Puppeteer Browser need to be installed ...`)
+            mainLog.log(`6.a Puppeteer Browser need to be installed ...`)
             const getPuppeteerBrowserInstallationReturned =
                 await initPuppeteerBrowserInstallation(event)
             // #region Puppeteer Browser Verification
             if (getPuppeteerBrowserInstallationReturned.result !== null) {
                 mainLog.log(
-                    `5.b Verification Puppeteer installed after installation ...`
+                    `6.b Verification Puppeteer installed after installation ...`
                 )
                 getPuppeteerBrowserIsInstalledReturned =
                     await initPuppeteerBrowserIsInstalled(event)
@@ -141,6 +150,14 @@ export const initialization = async (
             // stop all
             return false
         }
+
+        mainLog.log(`7. Is a Plugin installed ...`)
+        // #region Plugin Installed
+        const getPluginIsInstalledReturned = await initPluginIsIntalled(event)
+        initializedDatas.initPluginIsIntalled =
+            getPluginIsInstalledReturned.result as boolean
+        mainLog.log(getPluginIsInstalledReturned.toString())
+
         // #region
 
         return readInitalizedDatas(initializedDatas)
