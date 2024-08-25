@@ -41,7 +41,7 @@ export interface IElectronAPI {
 
 export interface IInitalization {
     // Front → Main
-    initializeApplication: () => Promise<boolean>
+    initializeApplication: (forceInitialisation: boolean) => Promise<boolean>
     // Main → Front
     sendConfigDatasToFront: (callback) => ConfigData
 }

@@ -38,13 +38,35 @@ const readInitalizedDatas = (value: initializedDatas): boolean => {
     return value.initIsNodeInstalled && value.initIsNodeNodeVersionOK
 }
 
+const APP_INSTALLED_ONCE = `app_installed_done_once`
+
 export const initialization = async (
-    event: IpcMainEvent | IpcMainInvokeEvent
+    event: IpcMainEvent | IpcMainInvokeEvent,
+    forceInitialisation = false
 ) => {
     const mainLog = getMainLog().scope('main/initialization')
     const initializedDatas: initializedDatas = {}
     try {
         mainLog.log(`Initialization start...`)
+        // #region Check First launch
+        if (!forceInitialisation) {
+            mainLog.log(`0. Is first launch?`)
+            const hasBeenInstalledOnce = store.get(APP_INSTALLED_ONCE, false)
+            if (!hasBeenInstalledOnce) {
+                const firstLaunchDetected = new ConfigData(
+                    'app_can_not_be_launched',
+                    'error_type_first_install'
+                )
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    firstLaunchDetected
+                )
+                return false
+            }
+        } else {
+            mainLog.info(`Installation asked manually for 1st installation.`)
+            mainLog.debug(`forced mode started from button`)
+        }
         mainLog.log(`1. Node installed start...`)
         // #region Node installed
         const isNodeReturned = await initIsNodeInstalled(event)
@@ -252,8 +274,9 @@ export const initialization = async (
             }
         }
 
-        // #region
-
+        // #region END
+        store.set(APP_INSTALLED_ONCE, true)
+        // TODO
         return readInitalizedDatas(initializedDatas)
     } catch (error) {
         mainLog.error(error)

@@ -547,13 +547,17 @@ function TheApp() {
 
     // #region initialisationAPI
     useEffect(() => {
-        const initalization = async () => {
+        const initalization = async (forceInitialisation: boolean) => {
             frontLog.debug(`initializeApplication start 🚀`)
             const result =
-                await window.initialisationAPI.initializeApplication()
-            frontLog.debug(`initializeApplication ended '${result}' 👍`)
+                await window.initialisationAPI.initializeApplication(
+                    forceInitialisation
+                )
+            frontLog.debug(
+                `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
+            )
         }
-        initalization()
+        initalization(false)
 
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
