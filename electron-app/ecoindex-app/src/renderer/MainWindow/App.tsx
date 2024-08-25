@@ -19,6 +19,7 @@ import { Footer } from '../components/footer'
 import { Header } from '../components/Header'
 import { Input } from '../ui/input'
 import { JsonPanMesure } from '../components/json-pan'
+import { MySkeleton } from '../components/my-skeleton'
 import { PopinLoading } from '../components/loading-popin'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { SimplePanMesure } from '../components/simple-pan'
@@ -43,11 +44,13 @@ function TheApp() {
     const [homeDir, setHomeDir] = useState('loading...')
     const [appReady, setAppReady] = useState(false)
     const [datasFromHost, setDatasFromHost] = useState({})
-    const [displayPopin, setDisplayPopin] = useState(true)
+    const [displayPopin, setDisplayPopin] = useState(false)
     const [popinText, setPopinText] = useState('Loading... 0/4')
-    const [pluginVersion, setPluginVersion] = useState('loading...')
+    const [pluginVersion, setPluginVersion] = useState('')
     const [isNodeInstalled, setIsNodeInstalled] = useState(false)
     const [isNodeVersionOK, setIsNodeVersionOK] = useState(false)
+    const [isFirstStart, setIsFirstStart] = useState(true)
+    const [userCanWrite, setUserCanWrite] = useState(true)
     const [isPuppeteerBrowserInstalled, setIsPuppeteerBrowserInstalled] =
         useState(false)
     const [puppeteerBrowserInstalled, setPuppeteerBrowserInstalled] =
@@ -546,18 +549,19 @@ function TheApp() {
     }, [])
 
     // #region initialisationAPI
-    useEffect(() => {
-        const initalization = async (forceInitialisation: boolean) => {
-            frontLog.debug(`initializeApplication start 🚀`)
-            const result =
-                await window.initialisationAPI.initializeApplication(
-                    forceInitialisation
-                )
-            frontLog.debug(
-                `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
+    const launchInitialization = async (forceInitialisation: boolean) => {
+        frontLog.debug(`initializeApplication start 🚀`)
+        setDisplayPopin(true)
+        const result =
+            await window.initialisationAPI.initializeApplication(
+                forceInitialisation
             )
-        }
-        initalization(false)
+        frontLog.debug(
+            `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
+        )
+    }
+    useEffect(() => {
+        launchInitialization(false)
 
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
@@ -609,7 +613,25 @@ function TheApp() {
                         break
                     case ConfigData.APP_CAN_NOT_BE_LAUNCHED:
                         // setAppReady(configData.result as boolean)
-                        // TODO
+                        switch (configData.errorType) {
+                            case ConfigData.ERROR_TYPE_FIRST_INSTALL:
+                                setDisplayPopin(false)
+                                setIsFirstStart(true)
+                                break
+                            case ConfigData.ERROR_TYPE_NO_NODE:
+                                setDisplayPopin(false)
+                                setIsNodeInstalled(false)
+                                break
+                            case ConfigData.ERROR_TYPE_NO_WRITE_ACCESS:
+                                setDisplayPopin(false)
+                                setUserCanWrite(false)
+                                break
+
+                            default:
+                                throw new Error(
+                                    'ConfigData.errorType not handle in App.tsx'
+                                )
+                        }
                         break
 
                     default:
@@ -717,8 +739,26 @@ function TheApp() {
                             </div>
                         </>
                     )}
-                    {!isNodeInstalled && (
-                        <AlertBox title="Error on Node">
+                    {!appReady && isFirstStart && (
+                        <AlertBox title={t('First launch')} variant="default">
+                            <div className="flex items-center justify-between gap-4">
+                                <span>
+                                    {t(
+                                        `It's the first time you are using the application, you must start the addons installation.`
+                                    )}
+                                </span>
+                                <Button
+                                    variant="default"
+                                    id="bt-install-node"
+                                    onClick={() => launchInitialization(true)}
+                                >
+                                    {t('Install')}
+                                </Button>
+                            </div>
+                        </AlertBox>
+                    )}
+                    {!appReady && isNodeInstalled && (
+                        <AlertBox title={t('Error on Node')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
@@ -735,8 +775,8 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {isNodeInstalled && !isNodeVersionOK && (
-                        <AlertBox title="Error on Node Version">
+                    {!appReady && isNodeVersionOK && (
+                        <AlertBox title={t('Error on Node Version')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
@@ -752,61 +792,61 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {/* {isNodeVersionOK && !isLighthouseEcoindexPluginInstalled && (
-            <AlertBox title="Error on Ecoindex">
-              <div className="flex items-center justify-between gap-4">
-                <span>
-                  {t(
-                    'Lighthouse Ecoindex plugin is not installed, install it (you must be admin of your computer)! After installation, restart application.',
-                  )}
-                </span>
-                <Button
-                  variant="destructive"
-                  id="bt-install-ecoindex"
-                  onClick={installEcoindexPlugin}
-                >
-                  {t('Install')}
-                </Button>
-              </div>
-            </AlertBox>
-          )} */}
-                    {(!isNodeInstalled ||
-                        !isLighthouseEcoindexPluginInstalled ||
-                        !isNodeVersionOK) && (
-                        <AlertBox variant="bug" title="Report error">
+                    {!appReady && !userCanWrite && (
+                        <AlertBox title={t('Permissions Error')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
-                                        "You have an error but you think it's a bug. Report to the developper by clicking the button (datas are saved to your clipboard) and send theim by mail to "
+                                        `You don't have permission to install on of the addon, lanch the specific installer.<br/>Your administrator password wil be requested.`
                                     )}
-                                    <a
-                                        href="mailto:renaud@greenit.fr"
-                                        className="underline"
-                                    >
-                                        renaud@greenit.fr
-                                    </a>{' '}
-                                    🙏
                                 </span>
-                                <SimpleTooltip
-                                    tooltipContent={
-                                        <p>
-                                            {t(
-                                                'Copy application informations to clipboard.'
-                                            )}
-                                        </p>
-                                    }
+                                <Button
+                                    variant="destructive"
+                                    onClick={installNode}
                                 >
-                                    <Button
-                                        id="bt-report"
-                                        variant="default"
-                                        onClick={copyToClipBoard}
-                                    >
-                                        {t('Report')}
-                                    </Button>
-                                </SimpleTooltip>
+                                    {t('Install addons as Administrator')}
+                                </Button>
                             </div>
                         </AlertBox>
                     )}
+                    {!appReady &&
+                        !isFirstStart &&
+                        (!isNodeInstalled || !isNodeVersionOK) && (
+                            <AlertBox variant="bug" title={t('Report error')}>
+                                <div className="flex items-center justify-between gap-4">
+                                    <span>
+                                        {t(
+                                            "You have an error but you think it's a bug. Report to the developper by clicking the button (datas are saved to your clipboard) and send theim by mail to "
+                                        )}
+                                        <a
+                                            href="mailto:renaud@greenit.fr"
+                                            className="underline"
+                                        >
+                                            renaud@greenit.fr
+                                        </a>{' '}
+                                        🙏
+                                    </span>
+                                    <SimpleTooltip
+                                        tooltipContent={
+                                            <p>
+                                                {t(
+                                                    'Copy application informations to clipboard.'
+                                                )}
+                                            </p>
+                                        }
+                                    >
+                                        <Button
+                                            id="bt-report"
+                                            variant="default"
+                                            onClick={copyToClipBoard}
+                                        >
+                                            {t('Report')}
+                                        </Button>
+                                    </SimpleTooltip>
+                                </div>
+                            </AlertBox>
+                        )}
+                    {!appReady && <MySkeleton />}
                     {appReady && (
                         <>
                             <Card className="w-full border-primary">
