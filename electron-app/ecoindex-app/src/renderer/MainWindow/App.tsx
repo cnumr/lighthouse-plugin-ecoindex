@@ -38,6 +38,7 @@ function TheApp() {
     // #region useState, useTranslation
     // const [language, setLanguage] = useState('en')
     const [progress, setProgress] = useState(0)
+    const [initializing, setInitializing] = useState(false)
     const [isJsonFromDisk, setIsJsonFromDisk] = useState(false)
     const [nodeVersion, setNodeVersion] = useState('')
     const [workDir, setWorkDir] = useState('loading...')
@@ -115,11 +116,13 @@ function TheApp() {
      */
     const increment = () => {
         const STEPS = 7
+        initReloadButton(false)
         loadingScreen = loadingScreen + 1
         setProgress(loadingScreen * (100 / STEPS))
         frontLog.log(`Verify configuration step ${loadingScreen}/${STEPS}`)
         setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
         if (loadingScreen === STEPS) {
+            initReloadButton(true)
             frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             frontLog.log(`All data readed! 👀`)
             frontLog.log(`isNodeInstalled`, isNodeInstalled)
@@ -289,16 +292,26 @@ function TheApp() {
     // }
 
     // #region utils
+    let timeOut: NodeJS.Timeout = null
     /**
      * Utils, wait method.
-     * @param ms number
+     * @param {number} ms Milisecond of the timer.
+     * @param {boolean} clear clear and stop the timer.
      * @returns Promise<unknown>
      */
-    async function _sleep(ms: number) {
+    async function _sleep(ms: number, clear = false) {
+        if (clear) {
+            frontLog.debug(`sleep cleared.`)
+            clearTimeout(timeOut)
+            return
+        }
         return new Promise((resolve) => {
             frontLog.debug(`wait ${ms / 1000}s`)
-
-            setTimeout(resolve, ms)
+            if (timeOut) {
+                clearTimeout(timeOut)
+                frontLog.debug(`sleep reseted.`)
+            }
+            timeOut = setTimeout(resolve, ms)
         })
     }
 
@@ -566,9 +579,17 @@ function TheApp() {
     }, [])
 
     // #region initialisationAPI
+    const initReloadButton = async (clear = false) => {
+        setDisplayReloadButton(false)
+        await _sleep(30000, clear)
+        setDisplayReloadButton(true)
+    }
     const launchInitialization = async (forceInitialisation: boolean) => {
         frontLog.debug(`initializeApplication start 🚀`)
         setDisplayPopin(true)
+        setInitializing(true)
+        setDisplayReloadButton(false)
+        initReloadButton()
         if (
             forceInitialisation ||
             (await window.store.get(storeConstants.APP_INSTALLED_ONCE, false))
@@ -578,6 +599,7 @@ function TheApp() {
             await window.initialisationAPI.initializeApplication(
                 forceInitialisation
             )
+        setInitializing(false)
         frontLog.debug(
             `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
         )
@@ -733,7 +755,7 @@ function TheApp() {
             <main className="flex h-screen flex-col justify-between gap-4 p-4">
                 <div className="flex flex-col items-center gap-4">
                     <Header />
-                    {true && (
+                    {false && (
                         <>
                             <div>appReady: {appReady ? 'true' : 'false'}</div>
                             <div>
@@ -764,7 +786,7 @@ function TheApp() {
                             </div>
                         </>
                     )}
-                    {!appReady && isFirstStart && (
+                    {!initializing && !appReady && isFirstStart && (
                         <AlertBox title={t('First launch')} variant="default">
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -782,7 +804,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!appReady && isNodeInstalled && (
+                    {!initializing && !appReady && isNodeInstalled && (
                         <AlertBox title={t('Error on Node')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -800,7 +822,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!appReady && isNodeVersionOK && (
+                    {!initializing && !appReady && isNodeVersionOK && (
                         <AlertBox title={t('Error on Node Version')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -817,7 +839,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!appReady && !userCanWrite && (
+                    {!initializing && !appReady && !userCanWrite && (
                         <AlertBox title={t('Permissions Error')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -834,7 +856,8 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!appReady &&
+                    {!initializing &&
+                        !appReady &&
                         !isFirstStart &&
                         (!isNodeInstalled || !isNodeVersionOK) && (
                             <AlertBox variant="bug" title={t('Report error')}>

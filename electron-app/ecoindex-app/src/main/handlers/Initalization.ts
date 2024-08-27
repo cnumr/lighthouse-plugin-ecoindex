@@ -274,6 +274,21 @@ export const initialization = async (
                     sudoPluginInstallation
                 )
             }
+            mainLog.log(`7.2 Plugin NOT installed on host ...`)
+            mainLog.log(`7.3 Verify plugin version after install ...`)
+            const getPluginGetLastVersionReturned =
+                await initPluginGetLastVersion(event, `uninstalled`)
+            initializedDatas.initPluginGetLastVersion =
+                getPluginGetLastVersionReturned.result as string
+            mainLog.log(getPluginGetLastVersionReturned.toString())
+            const pluginMessage = `Plugin version installed is ${initializedDatas.initPluginGetLastVersion}`
+            const pluginVersion = new ConfigData('plugin_version')
+            pluginVersion.result = initializedDatas.initPluginGetLastVersion
+            pluginVersion.message = pluginMessage
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                pluginVersion
+            )
         }
 
         // #region END
