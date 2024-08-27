@@ -103,7 +103,11 @@ app.on('ready', () => {
     ipcMain.handle(channels.READ_RELOAD_JSON_FILE, handleJsonReadAndReload)
 
     // communs handlers and getters
-    ipcMain.handle(channels.INITIALIZATION_APP, initialization)
+    ipcMain.handle(
+        channels.INITIALIZATION_APP,
+        async (event, forceInitialisation) =>
+            initialization(event, forceInitialisation)
+    )
     ipcMain.handle(channels.GET_HOMEDIR, handleHomeDir)
     ipcMain.handle(channels.GET_WORKDIR, handleWorkDir)
     ipcMain.handle(channels.IS_NODE_INSTALLED, handleNodeInstalled)

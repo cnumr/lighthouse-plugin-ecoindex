@@ -3,6 +3,7 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import { handle_CMD_Actions } from '../HandleCMDActions'
 
 export const initIsNodeNodeVersionOK = async (
@@ -18,17 +19,20 @@ export const initIsNodeNodeVersionOK = async (
         )
         const major = returned.replace('v', '').split('.')[0]
 
-        const output = new ConfigData('node_version_is_ok')
+        const toReturned = new ConfigData('node_version_is_ok')
         if (returned === '') {
-            output.error = `Node version not found`
+            toReturned.error = `Node version not found`
         } else {
-            output.result = Number(major) >= 20
-            output.message = returned
+            toReturned.result = Number(major) >= 20
+            toReturned.message = returned
         }
-        mainLog.debug(output)
-        return new Promise<ConfigData>((resolve, reject) => {
-            // output.error ? reject(output) : resolve(output)
-            resolve(output)
+        mainLog.debug(toReturned)
+        return new Promise<ConfigData>((resolve) => {
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
+            resolve(toReturned)
         })
     } catch (error) {
         mainLog.error(error)

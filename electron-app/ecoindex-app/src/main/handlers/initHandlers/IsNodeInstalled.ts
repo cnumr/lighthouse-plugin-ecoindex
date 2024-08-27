@@ -1,5 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
-import { getTryNode, setNodeDir, setTryNode } from '../../../shared/memory'
+import {
+    getMainWindow,
+    getTryNode,
+    setNodeDir,
+    setTryNode,
+} from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
@@ -41,19 +46,22 @@ export const initIsNodeInstalled = async (
     try {
         const returned: string = await fetchNode(_event)
 
-        const output = new ConfigData('node_installed')
+        const toReturned = new ConfigData('node_installed')
         if (returned === '') {
-            output.error = `Node not found`
+            toReturned.error = `Node not found`
         } else {
-            output.result = true
-            output.message = `Node is Installed in ${returned}`
+            toReturned.result = true
+            toReturned.message = `Node is Installed in ${returned}`
             setNodeDir(returned)
             store.set(`nodeDir`, returned)
         }
-        mainLog.debug(output)
-        return new Promise<ConfigData>((resolve, reject) => {
-            // output.error ? reject(output) : resolve(output)
-            resolve(output)
+        mainLog.debug(toReturned)
+        return new Promise<ConfigData>((resolve) => {
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
+            resolve(toReturned)
         })
     } catch (error) {
         mainLog.error(error)

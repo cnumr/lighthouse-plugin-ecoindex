@@ -1,8 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 
 export const initPluginNormalInstallation = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -27,6 +29,10 @@ export const initPluginNormalInstallation = (
                 mainLog.debug(`stdout: ${stdout}`)
                 toReturned.result = true
                 toReturned.message = `lighthouse-plugin-ecoindex installed or updated 🎉`
+                getMainWindow().webContents.send(
+                    channels.HOST_INFORMATIONS_BACK,
+                    toReturned
+                )
                 return resolve(toReturned)
             }
         })

@@ -1,8 +1,8 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
+import { channels, store as storeConstants } from '../../shared/constants'
 
 import { ConfigData } from '../../class/ConfigData'
 import Store from 'electron-store'
-import { channels } from '../../shared/constants'
 import { getMainLog } from '../main'
 import { getMainWindow } from '../../shared/memory'
 import { initGetHomeDir } from './initHandlers/getHomeDir'
@@ -38,20 +38,22 @@ const readInitalizedDatas = (value: initializedDatas): boolean => {
     return value.initIsNodeInstalled && value.initIsNodeNodeVersionOK
 }
 
-const APP_INSTALLED_ONCE = `app_installed_done_once`
-
 export const initialization = async (
     event: IpcMainEvent | IpcMainInvokeEvent,
     forceInitialisation = false
 ) => {
     const mainLog = getMainLog().scope('main/initialization')
+    mainLog.info(`forceInitialisation`, forceInitialisation)
     const initializedDatas: initializedDatas = {}
     try {
         mainLog.log(`Initialization start...`)
         // #region Check First launch
         if (!forceInitialisation) {
             mainLog.log(`0. Is first launch?`)
-            const hasBeenInstalledOnce = store.get(APP_INSTALLED_ONCE, false)
+            const hasBeenInstalledOnce = store.get(
+                storeConstants.APP_INSTALLED_ONCE,
+                false
+            )
             if (!hasBeenInstalledOnce) {
                 const firstLaunchDetected = new ConfigData(
                     'app_can_not_be_launched',
@@ -275,9 +277,25 @@ export const initialization = async (
         }
 
         // #region END
-        store.set(APP_INSTALLED_ONCE, true)
-        // TODO
-        return readInitalizedDatas(initializedDatas)
+        const appReady = new ConfigData('appReady')
+        if (readInitalizedDatas(initializedDatas)) {
+            // TODO
+            store.set(storeConstants.APP_INSTALLED_ONCE, true)
+            appReady.result = true
+            appReady.message = `All initialization process ended successfully`
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                appReady
+            )
+            return true
+        }
+        appReady.error =
+            appReady.message = `All initialization process ended successfully`
+        getMainWindow().webContents.send(
+            channels.INITIALIZATION_DATAS,
+            appReady
+        )
+        return false
     } catch (error) {
         mainLog.error(error)
         return false

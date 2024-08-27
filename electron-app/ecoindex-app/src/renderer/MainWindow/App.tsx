@@ -7,6 +7,7 @@ import {
 } from '../ui/card'
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom'
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
+import { store as storeConstants, utils } from '../../shared/constants'
 import { useCallback, useEffect, useState } from 'react'
 
 import { AlertBox } from '../components/Alert'
@@ -30,7 +31,6 @@ import i18nResources from '../../configs/i18nResources'
 import log from 'electron-log/renderer'
 import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
-import { utils } from '../../shared/constants'
 
 const frontLog = log.scope('front/App')
 
@@ -504,16 +504,33 @@ function TheApp() {
             if (typeof data === 'string') {
                 const _data = JSON.parse(data)
                 // frontLog.debug(`sendDatasToFront`, _data)
+                frontLog.debug(`sendDatasToFront is a string`, _data)
                 setDatasFromHost((oldObject) => ({
                     ...oldObject,
                     ..._data,
                 }))
             } else {
-                // frontLog.debug(`sendDatasToFront`, JSON.stringify(data, null, 2))
-                setDatasFromHost((oldObject) => ({
-                    ...oldObject,
-                    ...data,
-                }))
+                if (data.type && (data.result || data.error)) {
+                    frontLog.debug(`sendDatasToFront is a ConfigData`, data)
+                    setDatasFromHost((oldObject) => {
+                        const o: any = {
+                            ...oldObject,
+                        }
+                        const type = (data as ConfigData).type
+                        o[type] = data
+                        return o
+                    })
+                } else {
+                    // frontLog.debug(`sendDatasToFront`, JSON.stringify(data, null, 2))
+                    frontLog.debug(
+                        `sendDatasToFront is object`,
+                        JSON.stringify(data, null, 2)
+                    )
+                    setDatasFromHost((oldObject) => ({
+                        ...oldObject,
+                        ...data,
+                    }))
+                }
             }
         })
 
@@ -552,6 +569,11 @@ function TheApp() {
     const launchInitialization = async (forceInitialisation: boolean) => {
         frontLog.debug(`initializeApplication start 🚀`)
         setDisplayPopin(true)
+        if (
+            forceInitialisation ||
+            (await window.store.get(storeConstants.APP_INSTALLED_ONCE, false))
+        )
+            setIsFirstStart(false)
         const result =
             await window.initialisationAPI.initializeApplication(
                 forceInitialisation
@@ -714,6 +736,9 @@ function TheApp() {
                     {true && (
                         <>
                             <div>appReady: {appReady ? 'true' : 'false'}</div>
+                            <div>
+                                isFirstStart: {isFirstStart ? 'true' : 'false'}
+                            </div>
                             <div>
                                 isNodeInstalled:{' '}
                                 {isNodeInstalled ? 'true' : 'false'}
@@ -879,7 +904,6 @@ function TheApp() {
                                     </div>
                                 </CardContent>
                             </Card>
-                            {/* <TypographyH2>1. Select ouput folder</TypographyH2> */}
                             <TypographyP className={`w-full`}>
                                 {t(
                                     'Choose the type of measure you want to do.'

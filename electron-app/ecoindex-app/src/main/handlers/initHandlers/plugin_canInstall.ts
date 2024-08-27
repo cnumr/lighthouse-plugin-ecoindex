@@ -2,7 +2,9 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { accessSync, constants } from 'node:fs'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import path from 'node:path'
 
@@ -35,6 +37,10 @@ export const initPluginCanInstall = (
             toReturned.result = false
             toReturned.message = `User CAN'T write`
         }
+        getMainWindow().webContents.send(
+            channels.HOST_INFORMATIONS_BACK,
+            toReturned
+        )
         resolve(toReturned)
     })
 }

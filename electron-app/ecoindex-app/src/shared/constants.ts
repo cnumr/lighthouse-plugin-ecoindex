@@ -1,9 +1,13 @@
 type IConstants = {
+    store: { [key: string]: string }
     channels: { [key: string]: string }
     scripts: { [key: string]: string }
     utils: { JSON_FILE_NAME: string; DEFAULT_JSON_DATA: IJsonMesureData }
 }
 const constants: IConstants = {
+    store: {
+        APP_INSTALLED_ONCE: `app_installed_done_once`,
+    },
     channels: {
         INITIALIZATION_APP: 'initialization-app',
         INITIALIZATION_DATAS: 'initialization-datas',
@@ -85,3 +89,4 @@ const constants: IConstants = {
 export const channels = constants.channels
 export const utils = constants.utils
 export const scripts = constants.scripts
+export const store = constants.store

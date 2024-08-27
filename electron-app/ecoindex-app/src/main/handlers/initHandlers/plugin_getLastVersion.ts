@@ -1,8 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 
 export const initPluginGetLastVersion = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,11 +43,19 @@ export const initPluginGetLastVersion = (
                     toReturned.result = latestVersion.trim()
                     toReturned.message = `Update from version:${currentInstalledVersion.trim()} to latest version:${latestVersion.trim()} needed`
                     mainLog.debug(toReturned.message)
+                    getMainWindow().webContents.send(
+                        channels.HOST_INFORMATIONS_BACK,
+                        toReturned
+                    )
                     return resolve(toReturned)
                 } else {
                     toReturned.result = latestVersion.trim()
                     toReturned.message = `lighthouse-plugin-ecoindex is up to date`
                     mainLog.debug(toReturned.message)
+                    getMainWindow().webContents.send(
+                        channels.HOST_INFORMATIONS_BACK,
+                        toReturned
+                    )
                     return resolve(toReturned)
                 }
             }

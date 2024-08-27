@@ -3,7 +3,9 @@ import { getNodeDir, setNpmDir } from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import path from 'path'
 
@@ -29,11 +31,19 @@ export const initSetNpmDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
     return new Promise<ConfigData>((resolve, reject) => {
         try {
             toReturned.result = store.get(`npmDir`) as string
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             resolve(toReturned)
         } catch (error) {
             mainLog.error(`Error on initSetNpmDir 🚫`)
             toReturned.error = `Error on initSetNpmDir 🚫`
             toReturned.message = `Error on initSetNpmDir 🚫`
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             resolve(toReturned)
         }
     })

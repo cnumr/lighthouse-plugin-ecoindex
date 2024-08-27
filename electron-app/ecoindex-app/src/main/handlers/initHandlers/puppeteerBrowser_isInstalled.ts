@@ -1,7 +1,9 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import puppeteer from 'puppeteer'
 
@@ -34,7 +36,10 @@ export const initPuppeteerBrowserIsInstalled = async (
         toReturned.message = `Error on initPuppeteerBrowserIsInstalled 🚫`
     }
     return new Promise<ConfigData>((resolve) => {
-        // toReturned.result ? resolve(toReturned) : reject(toReturned)
+        getMainWindow().webContents.send(
+            channels.HOST_INFORMATIONS_BACK,
+            toReturned
+        )
         resolve(toReturned)
     })
 }

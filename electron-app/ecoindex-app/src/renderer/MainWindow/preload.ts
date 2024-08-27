@@ -14,8 +14,8 @@ contextBridge.exposeInMainWorld('versions', {
 
 contextBridge.exposeInMainWorld('initialisationAPI', {
     // Front → Main
-    initializeApplication: () =>
-        ipcRenderer.invoke(channels.INITIALIZATION_APP),
+    initializeApplication: (forceInitialisation: boolean) =>
+        ipcRenderer.invoke(channels.INITIALIZATION_APP, forceInitialisation),
     // Main → Front
     sendConfigDatasToFront: (callback: any) =>
         ipcRenderer.on(channels.INITIALIZATION_DATAS, (_event, value) =>

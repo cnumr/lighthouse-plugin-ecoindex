@@ -3,7 +3,9 @@ import * as path from 'node:path'
 import { IpcMainEvent, IpcMainInvokeEvent, app } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import sudoPrompt from '@vscode/sudo-prompt'
 
 export const initPluginSudoInstallation = (
@@ -44,6 +46,10 @@ export const initPluginSudoInstallation = (
                     mainLog.debug(`stdout: ${stdout}`)
                     toReturned.result = true
                     toReturned.message = `lighthouse-plugin-ecoindex installed or updated 🎉`
+                    getMainWindow().webContents.send(
+                        channels.HOST_INFORMATIONS_BACK,
+                        toReturned
+                    )
                     return resolve(toReturned)
                 }
             }

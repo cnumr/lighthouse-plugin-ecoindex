@@ -2,7 +2,9 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 
 const store = new Store()
@@ -21,11 +23,19 @@ export const initGetWorkDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
     return new Promise<ConfigData>((resolve, reject) => {
         try {
             toReturned.result = lastWorkDir as string
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             resolve(toReturned)
         } catch (error) {
             mainLog.error(`Error on initGetWorkDir 🚫`)
             toReturned.error = `Error on initGetWorkDir 🚫`
             toReturned.message = `Error on initGetWorkDir 🚫`
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             reject(toReturned)
         }
     })

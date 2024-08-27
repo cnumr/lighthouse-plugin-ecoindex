@@ -17,6 +17,7 @@ export class ConfigData {
     static ERROR_TYPE_NO_NODE = 'error_type_no_node'
     static ERROR_TYPE_NO_WRITE_ACCESS = 'error_type_no_write_access'
     static ERROR_TYPE_FIRST_INSTALL = 'error_type_first_install'
+
     /**
      * The type of the content.
      */
@@ -38,7 +39,8 @@ export class ConfigData {
 
     /**
      * Constructor
-     * @param type string
+     * @param {string} type type of ConfigData object.
+     * @param {string} errorType type of error handle by ConfigData object.
      */
     constructor(
         type:
@@ -71,7 +73,9 @@ export class ConfigData {
      * @returns ConfigData object in string format.
      */
     toString(): string {
-        const output: ConfigData = { type: this.type }
+        const output: ConfigData = {
+            type: this.type,
+        }
         if (this.result)
             output.result =
                 typeof this.result === 'string'

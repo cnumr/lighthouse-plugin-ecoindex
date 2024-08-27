@@ -1,7 +1,9 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,11 +14,19 @@ export const initGetHomeDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
         try {
             const { homedir } = os.userInfo()
             toReturned.result = homedir
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             resolve(toReturned)
         } catch (error) {
             mainLog.error(`Error on initGetHomeDir 🚫`)
             toReturned.error = `Error on initGetHomeDir 🚫`
             toReturned.message = `Error on initGetHomeDir 🚫`
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
             reject(toReturned)
         }
     })

@@ -1,8 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
+import { channels } from '../../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../../main'
+import { getMainWindow } from '../../../shared/memory'
 
 export const initPluginIsIntalled = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -52,6 +54,10 @@ export const initPluginIsIntalled = (
                     mainLog.debug(`version installed: ${currentVersion}`)
                     toReturned.message = `plugin allready installed`
                     toReturned.result = `${currentVersion}`
+                    getMainWindow().webContents.send(
+                        channels.HOST_INFORMATIONS_BACK,
+                        toReturned
+                    )
                     resolve(toReturned)
                 } catch (error) {
                     throw new Error(error)
