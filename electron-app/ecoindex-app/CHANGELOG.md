@@ -1,5 +1,28 @@
 
 
+## [1.3.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.15...electron-v1.3.16) (2024-08-27)
+
+
+### Bug Fixes
+
+* prevent silent error if `.zshrc` file doesn't exist ([587042c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/587042c1957cd18067c2d1127bf8f0336f0fcdeb))
+
+
+### Features
+
+* better handler ([074e59c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/074e59ce740b237218f6f3d7fa84359213d17436))
+* continue (add informations to datasFromHost) Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([683c05a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/683c05a41655a11d8f720bd2fe1f7e383724b8d4))
+* continue (better handler of wait durring installation) Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([e82b7b4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e82b7b4f7411a13acf574954ffcdd5651921dbb3))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([94fe42f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/94fe42fa3a23127c45c1e21862ce0729a81f9617))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([cf99d8a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cf99d8a68e07cffbf1fd9bf725aeac42fab77642))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([f3d3a6f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f3d3a6ffd374078c22ed5b675380e3349948a18b))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([3a0988a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3a0988ae38c658da37e2824d15b1e57a606b71bf))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([32ec9b1](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/32ec9b1599129879d3cd9ec35dbb0f853054f7b4))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([bd3240f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/bd3240f743e93079438b6c958f019bc1d7024290))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([21022c0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/21022c03efcab87d36e446d9857223169d6fbc15))
+* continue Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([9452952](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/9452952fdc4c4580a8b984edc88540c31a2b5727))
+* prepare new intialize Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([770d60a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/770d60a07697c0c9bdb5adb3e61592caea503ae0))
+
 ## [1.3.15](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.14...electron-v1.3.15) (2024-08-17)
 
 
