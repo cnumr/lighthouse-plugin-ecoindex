@@ -1,5 +1,12 @@
 
 
+## [1.3.18](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.17...electron-v1.3.18) (2024-08-28)
+
+
+### Bug Fixes
+
+* lors de la collect avec JSON, s'il y a un espace, la mesure ne fonctionne pas [#49](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/49) ([0d75e4d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0d75e4ddbdbf97aeda3031352cf2e8a12c4778bb))
+
 ## [1.3.17](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.16...electron-v1.3.17) (2024-08-28)
 
 
