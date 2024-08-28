@@ -1,5 +1,12 @@
 
 
+## [1.3.17](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.16...electron-v1.3.17) (2024-08-28)
+
+
+### Features
+
+* ajouter l'ouverture des logs depuis le menu `aide` [#48](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/48) ([6635948](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/663594846ae1b063235ab5e0c532e7084065c4af))
+
 ## [1.3.16](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.15...electron-v1.3.16) (2024-08-27)
 
 
