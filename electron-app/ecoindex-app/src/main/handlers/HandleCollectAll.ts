@@ -51,7 +51,7 @@ export async function _prepareCollect(): Promise<{
         if (os.platform() === `win32`) {
             nodeDir = nodeDir.replace(/\\/gm, path.sep)
         }
-        return { command, nodeDir, workDir: _workDir }
+        return { command, nodeDir, workDir: _workDir.replace(/ /g, '\\ ') }
     } catch (error) {
         mainLog.error('Error in _prepareCollect', error)
     }
@@ -233,8 +233,9 @@ export const handleJsonSaveAndCollect = async (
         if (!_workDir || _workDir === '') {
             throw new Error('Work dir not found')
         }
+        // _workDir = (_workDir as string).replace(/ /g, '\\\\ ')
         if (isDev()) mainLog.debug(`Work dir: ${_workDir}`)
-        const jsonFilePath = `${_workDir}/${utils.JSON_FILE_NAME}`
+        const jsonFilePath = path.join(_workDir as string, utils.JSON_FILE_NAME)
         const jsonStream = fs.createWriteStream(jsonFilePath)
         showNotification({
             subtitle: andCollect
@@ -283,9 +284,9 @@ export const handleJsonSaveAndCollect = async (
             _debugLogs('Json measure start...')
             _debugLogs(`JSON datas ${JSON.stringify(jsonDatas, null, 2)}`)
             command.push('--json-file')
-            command.push(_workDir + '/' + utils.JSON_FILE_NAME)
+            command.push(path.join(_workDir, utils.JSON_FILE_NAME))
             command.push('--output-path')
-            command.push(`${_workDir}`)
+            command.push(_workDir)
             try {
                 await _runCollect(command, nodeDir, event)
             } catch (error) {
@@ -299,6 +300,11 @@ export const handleJsonSaveAndCollect = async (
                     { _workDir }
                 ),
             })
+            try {
+                shell.openPath((await getWorkDir()) as string)
+            } catch (error) {
+                mainLog.error(error)
+            }
             _debugLogs('Json collect done 🚀')
             return 'measure done'
         }
