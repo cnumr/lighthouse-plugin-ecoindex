@@ -123,17 +123,17 @@ function TheApp() {
         setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
         if (loadingScreen === STEPS) {
             initReloadButton(true)
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+            // frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             frontLog.log(`All data readed! 👀`)
-            frontLog.log(`isNodeInstalled`, isNodeInstalled)
-            frontLog.log(
-                `isLighthouseEcoindexPluginInstalled`,
-                isLighthouseEcoindexPluginInstalled
-            )
-            frontLog.log(
-                `isPuppeteerBrowserInstalled`,
-                isPuppeteerBrowserInstalled
-            )
+            // frontLog.log(`isNodeInstalled`, isNodeInstalled)
+            // frontLog.log(
+            //     `isLighthouseEcoindexPluginInstalled`,
+            //     isLighthouseEcoindexPluginInstalled
+            // )
+            // frontLog.log(
+            //     `isPuppeteerBrowserInstalled`,
+            //     isPuppeteerBrowserInstalled
+            // )
             checkAppReady()
             setDisplayPopin(false)
             const _n: any = {}
@@ -141,7 +141,7 @@ function TheApp() {
             _n.subtitle = t('You can now start measures')
             _n.priority = 'critical'
             showNotification('', _n)
-            frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
+            // frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             setDisplayReloadButton(false)
         } else {
             setAppReady(false)
