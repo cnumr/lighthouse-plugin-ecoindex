@@ -12,6 +12,8 @@ const otherTemplateLog = log.scope('main/otherTemplate')
 
 const store = new Store()
 
+const logFile = `${log.transports.file.getFile().path}`
+
 export const otherTemplate = (
     app: typeof ElectronApp,
     mainWindow: BrowserWindow,
@@ -95,6 +97,12 @@ export const otherTemplate = (
                             await shell.openExternal(
                                 'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
                             )
+                        },
+                    },
+                    {
+                        label: `Log...`,
+                        click: async () => {
+                            await shell.openPath(`${logFile}`)
                         },
                     },
                     {

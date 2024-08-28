@@ -1,4 +1,4 @@
-import { BrowserWindow, app as ElectronApp, shell } from 'electron'
+import { BrowserWindow, app as ElectronApp, app, shell } from 'electron'
 import { getWelcomeWindow, setHasShowedWelcomeWindow } from '../shared/memory'
 
 import Store from 'electron-store'
@@ -13,6 +13,8 @@ log.initialize()
 const darwinTemplateLog = log.scope('main/darwinTemplate')
 
 const store = new Store()
+
+const logFile = `${log.transports.file.getFile().path}`
 
 export const darwinTemplate = (
     app: typeof ElectronApp,
@@ -122,6 +124,12 @@ export const darwinTemplate = (
                             await shell.openExternal(
                                 'https://cnumr.github.io/lighthouse-plugin-ecoindex/'
                             )
+                        },
+                    },
+                    {
+                        label: `Log...`,
+                        click: async () => {
+                            await shell.openPath(`${logFile}`)
                         },
                     },
                     {
