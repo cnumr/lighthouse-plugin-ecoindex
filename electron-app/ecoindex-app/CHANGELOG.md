@@ -1,5 +1,13 @@
 
 
+## [1.3.20](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.19...electron-v1.3.20) (2024-08-29)
+
+
+### Bug Fixes
+
+* test error, must be on `win32` ([c2613db](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c2613db3e9105ec84a763f284a2455aa93ab2e2c))
+* test headless Puppeteer Browser only (coherent) Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([cdaf9d9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cdaf9d9eeee5edef9b48ac8e9096932a517b383f))
+
 ## [1.3.19](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.18...electron-v1.3.19) (2024-08-29)
 
 
