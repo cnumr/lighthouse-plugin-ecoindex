@@ -47,7 +47,7 @@ export const initIsNodeInstalled = async (
     )
     const toReturned = new ConfigData('node_installed')
     return new Promise<ConfigData>((resolve) => {
-        const cmd = os.platform() === 'darwin' ? `which node` : `where node`
+        const cmd = os.platform() === 'win32' ? `where node` : `which node`
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
                 mainLog.error(`exec error: ${error}`)
