@@ -1,5 +1,12 @@
 
 
+## [1.3.19](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.18...electron-v1.3.19) (2024-08-29)
+
+
+### Bug Fixes
+
+* usage of external script file Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([66f28ba](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/66f28baf2ba856a8108f054f769d4107e1f71579))
+
 ## [1.3.18](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.17...electron-v1.3.18) (2024-08-28)
 
 
