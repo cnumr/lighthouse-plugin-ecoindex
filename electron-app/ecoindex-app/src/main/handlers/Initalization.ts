@@ -90,7 +90,7 @@ export const initialization = async (
             // stop all
             return false
         }
-        mainLog.log(`2. Node Version upper or equal to 20 start...`)
+        mainLog.log(`2. Node Version upper or equal to 18 start...`)
         // #region Node has good version
         const isNode20Returned = await initIsNodeNodeVersionOK(event)
         initializedDatas.initIsNodeNodeVersionOK =
