@@ -23,7 +23,15 @@ export const initPuppeteerBrowserIsInstalled = async (
         const executablePath = `${homedir}/.cache/puppeteer/chrome-headless-shell/${platform}_${arch}-127.0.6533.119`
         // mainLog.debug(`executablePath`, executablePath)
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const browser = await puppeteer.launch()
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--disable-gpu',
+                '--disable-dev-shm-usage',
+                '--disable-setuid-sandbox',
+                '--no-sandbox',
+            ],
+        })
         const puppeterVersion = await (await browser.newPage())
             .browser()
             .version()
