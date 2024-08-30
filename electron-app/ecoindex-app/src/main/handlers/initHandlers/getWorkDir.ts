@@ -3,6 +3,7 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
+import fs from 'node:fs'
 import { getMainLog } from '../../main'
 import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
@@ -18,6 +19,13 @@ export const initGetWorkDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
     if (!lastWorkDir) {
         store.set(`lastWorkDir`, homedir)
         lastWorkDir = homedir
+    }
+    try {
+        fs.accessSync(lastWorkDir as string)
+    } catch (error) {
+        store.set(`lastWorkDir`, homedir)
+        lastWorkDir = homedir
+        mainLog.info(`lastWorkDir unknown, fall back to homeDir`, lastWorkDir)
     }
 
     return new Promise<ConfigData>((resolve, reject) => {
