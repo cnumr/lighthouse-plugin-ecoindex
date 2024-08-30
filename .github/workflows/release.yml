@@ -120,6 +120,7 @@ jobs:
             electron-app/ecoindex-app/out/**/*.deb
             electron-app/ecoindex-app/out/**/*.dmg
             electron-app/ecoindex-app/out/**/*Setup.exe
+            electron-app/ecoindex-app/out/**/*setup.exe
             electron-app/ecoindex-app/out/**/*.rpm
             electron-app/ecoindex-app/out/**/*.zip
             electron-app/ecoindex-app/out/**/*.nupkg
