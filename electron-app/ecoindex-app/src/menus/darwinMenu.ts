@@ -71,6 +71,37 @@ export const darwinTemplate = (
                 ],
             },
             {
+                label: _i18n.t('Edit'),
+                submenu: [
+                    { label: _i18n.t('Undo'), role: 'undo' },
+                    { label: _i18n.t('Redo'), role: 'redo' },
+                    { type: 'separator' },
+                    { label: _i18n.t('Cut'), role: 'cut' },
+                    { label: _i18n.t('Copy'), role: 'copy' },
+                    { label: _i18n.t('Paste'), role: 'paste' },
+                    {
+                        label: _i18n.t('Paste and match style'),
+                        role: 'pasteAndMatchStyle',
+                    },
+                    { label: _i18n.t('Delete'), role: 'delete' },
+                    { label: _i18n.t('Select all'), role: 'selectAll' },
+                    { type: 'separator' },
+                    {
+                        label: _i18n.t('Speech'),
+                        submenu: [
+                            {
+                                label: _i18n.t('Start speaking'),
+                                role: 'startSpeaking',
+                            },
+                            {
+                                label: _i18n.t('Stop speaking'),
+                                role: 'stopSpeaking',
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
                 label: _i18n.t('View'),
                 submenu: [
                     {
