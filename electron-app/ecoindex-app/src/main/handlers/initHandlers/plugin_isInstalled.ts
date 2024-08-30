@@ -22,13 +22,14 @@ export const initPluginIsIntalled = (
         const cmd = `npm list -g`
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
-                // mainLog.error(`exec error: ${error}`)
+                mainLog.error(`exec error: ${error}`)
                 mainLog.debug(`Lighthouse plugin not installed`)
                 // return false
                 toReturned.error =
                     toReturned.message = `lighthouse-plugin-ecoindex is installed on host`
                 resolve(toReturned)
             }
+            if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout)
                 try {
                     const lines = stdout.split('\n')
@@ -62,7 +63,6 @@ export const initPluginIsIntalled = (
                 } catch (error) {
                     throw new Error(error)
                 }
-            // if (stderr) mainLog.error(`stderr: ${stderr}`)
         })
     })
 }

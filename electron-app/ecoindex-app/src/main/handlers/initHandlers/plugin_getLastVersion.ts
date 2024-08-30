@@ -31,8 +31,9 @@ export const initPluginGetLastVersion = (
                     toReturned.message = `lighthouse-plugin-ecoindex can't check on registery`
                 // resolve(toReturned)
             }
+            if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
-                mainLog.debug(`latest version: ${stdout.trim()}`)
+                // mainLog.debug(`latest version: ${stdout.trim()}`)
                 // if (stderr) mainLog.error(`stderr: ${stderr}`)
 
                 latestVersion = stdout.replace(`\n`, ``).trim()
@@ -42,7 +43,6 @@ export const initPluginGetLastVersion = (
                 ) {
                     toReturned.result = latestVersion.trim()
                     toReturned.message = `Update from version:${currentInstalledVersion.trim()} to latest version:${latestVersion.trim()} needed`
-                    mainLog.debug(toReturned.message)
                     getMainWindow().webContents.send(
                         channels.HOST_INFORMATIONS_BACK,
                         toReturned
@@ -51,7 +51,6 @@ export const initPluginGetLastVersion = (
                 } else {
                     toReturned.result = latestVersion.trim()
                     toReturned.message = `lighthouse-plugin-ecoindex is up to date`
-                    mainLog.debug(toReturned.message)
                     getMainWindow().webContents.send(
                         channels.HOST_INFORMATIONS_BACK,
                         toReturned

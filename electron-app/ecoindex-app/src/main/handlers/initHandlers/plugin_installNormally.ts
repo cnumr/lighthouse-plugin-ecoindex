@@ -26,7 +26,7 @@ export const initPluginNormalInstallation = (
             }
             if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
-                mainLog.debug(`stdout: ${stdout}`)
+                // mainLog.debug(`stdout: ${stdout}`)
                 toReturned.result = true
                 toReturned.message = `lighthouse-plugin-ecoindex installed or updated 🎉`
                 getMainWindow().webContents.send(

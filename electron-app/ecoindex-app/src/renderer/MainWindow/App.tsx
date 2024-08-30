@@ -524,7 +524,7 @@ function TheApp() {
                 }))
             } else {
                 if (data.type && (data.result || data.error)) {
-                    frontLog.debug(`sendDatasToFront is a ConfigData`, data)
+                    // frontLog.debug(`sendDatasToFront is a ConfigData`, data)
                     setDatasFromHost((oldObject) => {
                         const o: any = {
                             ...oldObject,
@@ -609,10 +609,13 @@ function TheApp() {
 
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
-                frontLog.debug(`sendConfigDatasToFront`, configData)
+                // frontLog.debug(`sendConfigDatasToFront`, configData)
                 // todo
                 if (configData.error) {
                     frontLog.error(configData)
+                    window.alert(
+                        `${configData.type} : ${configData.message ? configData.message : configData.error}`
+                    )
                     return
                 }
                 switch (configData.type) {

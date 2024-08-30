@@ -22,16 +22,14 @@ export const initPuppeteerBrowserInstallation = async (
                 mainLog.error(`exec error: ${error}`)
                 toReturned.error = error
                 toReturned.message = `puppeteer and browsers can't be installed`
-                mainLog.debug(toReturned)
                 return resolve(toReturned)
             }
+            if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
                 const returned: string = stdout.trim()
                 mainLog.debug(`log: ${returned}`)
-                // if (stderr) mainLog.error(`stderr: ${stderr}`)
                 toReturned.result = true
                 toReturned.message = `puppeteer and browsers are installed`
-                mainLog.debug(toReturned)
                 getMainWindow().webContents.send(
                     channels.HOST_INFORMATIONS_BACK,
                     toReturned

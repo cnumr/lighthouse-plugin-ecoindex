@@ -52,9 +52,9 @@ export const initIsNodeInstalled = async (
             if (error) {
                 mainLog.error(`exec error: ${error}`)
                 toReturned.error = toReturned.message = `Node can't be detected`
-                mainLog.debug(toReturned)
                 return resolve(toReturned)
             }
+            if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
                 const returned: string = stdout.trim()
                 mainLog.debug(`Node path: ${returned}`)
@@ -63,7 +63,6 @@ export const initIsNodeInstalled = async (
                 toReturned.message = `Node is Installed in ${returned}`
                 setNodeDir(returned)
                 store.set(`nodeDir`, returned)
-                mainLog.debug(toReturned)
                 getMainWindow().webContents.send(
                     channels.HOST_INFORMATIONS_BACK,
                     toReturned

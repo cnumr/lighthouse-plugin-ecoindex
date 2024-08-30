@@ -24,19 +24,19 @@ export const initIsNodeNodeVersionOK = async (
                 mainLog.error(`exec error: ${error}`)
                 toReturned.error =
                     toReturned.message = `Node version can't be detected`
-                mainLog.debug(toReturned)
                 return resolve(toReturned)
             }
+            if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
                 const returned: string = stdout.trim()
-                mainLog.debug(`Node version: ${returned}`)
+                // mainLog.debug(`Node version: ${returned}`)
                 const major = returned.replace('v', '').split('.')[0]
                 // if (stderr) mainLog.error(`stderr: ${stderr}`)
                 toReturned.result = Number(major) >= 18
                 toReturned.message = returned
                 setNodeV(returned)
                 store.set(`nodeVersion`, returned)
-                mainLog.debug(toReturned)
+                // mainLog.debug(toReturned)
                 getMainWindow().webContents.send(
                     channels.HOST_INFORMATIONS_BACK,
                     toReturned

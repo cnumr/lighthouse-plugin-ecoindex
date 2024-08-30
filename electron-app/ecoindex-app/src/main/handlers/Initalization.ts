@@ -73,7 +73,7 @@ export const initialization = async (
         // #region Node installed
         const isNodeReturned = await initIsNodeInstalled(event)
         initializedDatas.initIsNodeInstalled = isNodeReturned.result as boolean
-        mainLog.log(isNodeReturned.toString())
+        mainLog.log(isNodeReturned)
         getMainWindow().webContents.send(
             channels.INITIALIZATION_DATAS,
             isNodeReturned
@@ -95,7 +95,7 @@ export const initialization = async (
         const isNode20Returned = await initIsNodeNodeVersionOK(event)
         initializedDatas.initIsNodeNodeVersionOK =
             isNode20Returned.result as boolean
-        mainLog.log(isNode20Returned.toString())
+        mainLog.log(isNode20Returned)
         getMainWindow().webContents.send(
             channels.INITIALIZATION_DATAS,
             isNode20Returned
@@ -116,12 +116,12 @@ export const initialization = async (
         // #region Npm Dir
         const getNpmDirReturned = await initSetNpmDir(event)
         initializedDatas.initSetNpmDir = getNpmDirReturned.result as string
-        mainLog.log(getNpmDirReturned.toString())
+        mainLog.log(getNpmDirReturned)
         mainLog.log(`4. Get User HomeDir...`)
         // #region Home Dir
         const getHomeDirReturned = await initGetHomeDir(event)
         initializedDatas.initGetHomeDir = getHomeDirReturned.result as string
-        mainLog.log(getHomeDirReturned.toString())
+        mainLog.log(getHomeDirReturned)
         getMainWindow().webContents.send(
             channels.INITIALIZATION_DATAS,
             getHomeDirReturned
@@ -130,7 +130,7 @@ export const initialization = async (
         // #region WorkDir
         const getWorkDirReturned = await initGetWorkDir(event)
         initializedDatas.initGetWorkDir = getWorkDirReturned.result as string
-        mainLog.log(getWorkDirReturned.toString())
+        mainLog.log(getWorkDirReturned)
         getMainWindow().webContents.send(
             channels.INITIALIZATION_DATAS,
             getWorkDirReturned
@@ -161,7 +161,7 @@ export const initialization = async (
                 `Puppeteer Browser allready installed, no need to install it`
             )
         }
-        mainLog.log(getPuppeteerBrowserIsInstalledReturned.toString())
+        mainLog.log(getPuppeteerBrowserIsInstalledReturned)
         getMainWindow().webContents.send(
             channels.INITIALIZATION_DATAS,
             getPuppeteerBrowserIsInstalledReturned
@@ -188,7 +188,7 @@ export const initialization = async (
         const getPluginIsInstalledReturned = await initPluginIsIntalled(event)
         initializedDatas.initPluginIsIntalled =
             getPluginIsInstalledReturned.result as string
-        mainLog.log(getPluginIsInstalledReturned.toString())
+        mainLog.log(getPluginIsInstalledReturned)
         // #region Plugin Last Version
         if (initializedDatas.initPluginIsIntalled) {
             // plugin installed
@@ -201,7 +201,7 @@ export const initialization = async (
                 )
             initializedDatas.initPluginGetLastVersion =
                 getPluginGetLastVersionReturned.result as string
-            mainLog.log(getPluginGetLastVersionReturned.toString())
+            mainLog.log(getPluginGetLastVersionReturned)
             if (
                 initializedDatas.initPluginGetLastVersion ===
                 initializedDatas.initPluginIsIntalled
@@ -225,20 +225,20 @@ export const initialization = async (
         } else {
             // plugin not installed
             mainLog.log(`7.2 Plugin NOT installed on host ...`)
-            mainLog.log(`7.2 Check if electron can write in ~/.npm ...`)
+            mainLog.log(`7.2 Check if electron can install plugin ...`)
             const getPluginCanInstallReturned =
                 await initPluginCanInstall(event)
             initializedDatas.initPluginCanInstall =
                 getPluginCanInstallReturned.result as boolean
-            mainLog.log(getPluginCanInstallReturned.toString())
+            mainLog.log(getPluginCanInstallReturned)
             if (initializedDatas.initPluginCanInstall) {
-                mainLog.log(`7.3 Electron can write in ~/.npm ...`)
+                mainLog.log(`7.3 Electron install plugin ...`)
                 mainLog.log(`7.3 Plugin installation ...`)
                 const getPluginNormalInstallationReturned =
                     await initPluginNormalInstallation(event)
                 initializedDatas.initPluginNormalInstallation =
                     getPluginNormalInstallationReturned.result as boolean
-                mainLog.log(getPluginNormalInstallationReturned.toString())
+                mainLog.log(getPluginNormalInstallationReturned)
                 const normalPluginInstallation = new ConfigData(
                     'plugin_installed'
                 )
@@ -253,13 +253,13 @@ export const initialization = async (
                     normalPluginInstallation
                 )
             } else {
-                mainLog.log(`7.3 Electron CAN'T write in ~/.npm ...`)
+                mainLog.log(`7.3 Electron CAN'T install plugin ...`)
                 mainLog.log(`7.3 Plugin SUDO installation ...`)
                 const getPluginSudoInstallationReturned =
                     await initPluginSudoInstallation(event)
                 initializedDatas.initPluginSudoInstallation =
                     getPluginSudoInstallationReturned.result as boolean
-                mainLog.log(getPluginSudoInstallationReturned.toString())
+                mainLog.log(getPluginSudoInstallationReturned)
                 const sudoPluginInstallation = new ConfigData(
                     'plugin_installed'
                 )
@@ -280,7 +280,7 @@ export const initialization = async (
                 await initPluginGetLastVersion(event, `uninstalled`)
             initializedDatas.initPluginGetLastVersion =
                 getPluginGetLastVersionReturned.result as string
-            mainLog.log(getPluginGetLastVersionReturned.toString())
+            mainLog.log(getPluginGetLastVersionReturned)
             const pluginMessage = `Plugin version installed is ${initializedDatas.initPluginGetLastVersion}`
             const pluginVersion = new ConfigData('plugin_version')
             pluginVersion.result = initializedDatas.initPluginGetLastVersion
