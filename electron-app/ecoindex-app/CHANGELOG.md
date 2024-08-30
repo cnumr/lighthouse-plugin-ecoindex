@@ -1,5 +1,17 @@
 
 
+## [1.3.21](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.20...electron-v1.3.21) (2024-08-30)
+
+
+### Bug Fixes
+
+* ajouter edit menu le copier / coller ne fonctionne pas [#50](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/50) ([6b6d6c8](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6b6d6c8141f9db153cc596a726ba48fba4beccc4))
+
+
+### Features
+
+* quand le `lastWorkDir` n'est plus présent dans store, faire un fall back sur homeDir [#51](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/51) ([69888fb](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/69888fb1e03a2bbdcfa0f47d37fa377f4599d445))
+
 ## [1.3.20](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.19...electron-v1.3.20) (2024-08-29)
 
 
