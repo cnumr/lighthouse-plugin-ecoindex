@@ -1,11 +1,10 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
-import { getNodeDir, setNpmDir } from '../../../shared/memory'
+import { getMainWindow, getNodeDir, setNpmDir } from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import path from 'path'
 
