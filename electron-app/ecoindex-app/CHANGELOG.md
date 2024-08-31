@@ -1,5 +1,17 @@
 
 
+## [1.3.29](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.28...electron-v1.3.29) (2024-08-31)
+
+
+### Bug Fixes
+
+* reduce chown cmd Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([74c53aa](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/74c53aada5fb101aee7432f13305089fa0989062))
+
+
+### Features
+
+* better display initialization datas in console Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([7d53256](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/7d532562e10973e660727a88c4c3245a79d1b6fe))
+
 ## [1.3.28](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.27...electron-v1.3.28) (2024-08-31)
 
 
