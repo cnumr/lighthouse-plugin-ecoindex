@@ -677,7 +677,7 @@ function TheApp() {
 
                             default:
                                 alert(
-                                    'ConfigData.errorType not handle in App.tsx'
+                                    `ConfigData.errorType=${configData.errorType} not handle in App.tsx`
                                 )
                             // throw new Error(
                             //     'ConfigData.errorType not handle in App.tsx'
@@ -686,7 +686,9 @@ function TheApp() {
                         break
 
                     default:
-                        alert('ConfigData.type not handle in App.tsx')
+                        alert(
+                            `ConfigData.type=${configData.type} not handle in App.tsx`
+                        )
                     // throw new Error('ConfigData not handle in App.tsx')
                 }
             }
