@@ -1,5 +1,13 @@
 
 
+## [1.3.36](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.35...electron-v1.3.36) (2024-08-31)
+
+
+### Features
+
+* add more browser to install Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([b902c2a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b902c2accf18e47d4c4bf5fc0d6f6b859b8e2df4))
+* baddlu handler errors returned Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([52144cc](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/52144cc4f3d47a341151a6ac54144f7bbfe12e76))
+
 ## [1.3.35](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.34...electron-v1.3.35) (2024-08-31)
 
 
