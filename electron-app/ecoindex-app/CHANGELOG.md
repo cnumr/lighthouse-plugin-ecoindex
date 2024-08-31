@@ -1,5 +1,12 @@
 
 
+## [1.3.30](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.29...electron-v1.3.30) (2024-08-31)
+
+
+### Features
+
+* change user for chown Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([be4a86c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/be4a86cb2ebffd2fb241638e05e63df9eaddd194))
+
 ## [1.3.29](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.28...electron-v1.3.29) (2024-08-31)
 
 
