@@ -1,5 +1,9 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
-import { channels, store as storeConstants } from '../../shared/constants'
+import {
+    channels,
+    store as storeConstants,
+    utils,
+} from '../../shared/constants'
 import {
     initPluginCanInstall,
     initSudoFixNpmDirRights,
@@ -16,7 +20,7 @@ import { initIsNodeNodeVersionOK } from './initHandlers/isNodeVersionOK'
 import { initPluginGetLastVersion } from './initHandlers/plugin_getLastVersion'
 import { initPluginIsIntalled } from './initHandlers/plugin_isInstalled'
 import { initPluginNormalInstallation } from './initHandlers/plugin_installNormally'
-import { initPluginSudoInstallation } from './initHandlers/plugin_installWithSudo'
+// import { initPluginSudoInstallation } from './initHandlers/plugin_installWithSudo'
 import { initPuppeteerBrowserInstallation } from './initHandlers/puppeteerBrowser_installation'
 import { initPuppeteerBrowserIsInstalled } from './initHandlers/puppeteerBrowser_isInstalled'
 import { initSetNpmDir } from './initHandlers/setNpmDir'
@@ -59,6 +63,18 @@ export const initialization = async (
     try {
         mainLog.log(`Initialization start...`)
         // #region Check First launch
+        // eslint-disable-next-line no-constant-condition
+        if (false) {
+            const sendFakeStop = new ConfigData(
+                'app_can_not_be_launched',
+                'error_type_cant_fix_user_rights'
+            )
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                sendFakeStop
+            )
+            return false
+        }
         if (!forceInitialisation) {
             mainLog.log(`0. Is first launch?`)
             const hasBeenInstalledOnce = store.get(
@@ -113,9 +129,12 @@ export const initialization = async (
         )
         if (isNodeReturned.error) {
             mainLog.info(`Without Node 20, the app can't work. Stop and alert.`)
-            const stopWithoutNode20 = new ConfigData('app_can_not_be_launched')
-            stopWithoutNode20.error = `No Node 20 installed`
-            stopWithoutNode20.message = `Without Node 20, the app can't work. Stop and alert.`
+            const stopWithoutNode20 = new ConfigData(
+                'app_can_not_be_launched'
+                // 'error_type_node_version_error'
+            )
+            stopWithoutNode20.error = `No Node ${utils.LOWER_NODE_VERSION} installed`
+            stopWithoutNode20.message = `Without Node ${utils.LOWER_NODE_VERSION}, the app can't work. Stop and alert.`
             getMainWindow().webContents.send(
                 channels.INITIALIZATION_DATAS,
                 stopWithoutNode20
@@ -156,6 +175,14 @@ export const initialization = async (
             os.platform() === 'darwin' &&
             !initializedDatas.initPluginCanInstall
         ) {
+            mainLog.debug(
+                `os.platform() === 'darwin'`,
+                os.platform() === 'darwin'
+            )
+            mainLog.debug(
+                `!initializedDatas.initPluginCanInstall`,
+                !initializedDatas.initPluginCanInstall
+            )
             // #region Fix User rights
             const getSudoFixNpmDirRightsReturned =
                 await initSudoFixNpmDirRights(event)
@@ -174,12 +201,21 @@ export const initialization = async (
                     channels.INITIALIZATION_DATAS,
                     cantFixUserRights
                 )
+                mainLog.log(cantFixUserRights)
                 return false
             }
         } else if (
             os.platform() !== 'darwin' &&
             !initializedDatas.initPluginCanInstall
         ) {
+            mainLog.debug(
+                `os.platform() !== 'darwin'`,
+                os.platform() !== 'darwin'
+            )
+            mainLog.debug(
+                `!initializedDatas.initPluginCanInstall`,
+                !initializedDatas.initPluginCanInstall
+            )
             // #region Can't Fix User rights
             const cantFixUserRights = new ConfigData(
                 'app_can_not_be_launched',

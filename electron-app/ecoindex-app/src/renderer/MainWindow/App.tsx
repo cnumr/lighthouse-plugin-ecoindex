@@ -124,7 +124,7 @@ function TheApp() {
         if (loadingScreen === STEPS) {
             initReloadButton(true)
             // frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
-            frontLog.log(`All data readed! 👀`)
+            frontLog.log(`All initialization datas readed! 👀`)
             // frontLog.log(`isNodeInstalled`, isNodeInstalled)
             // frontLog.log(
             //     `isLighthouseEcoindexPluginInstalled`,
@@ -134,7 +134,7 @@ function TheApp() {
             //     `isPuppeteerBrowserInstalled`,
             //     isPuppeteerBrowserInstalled
             // )
-            checkAppReady()
+            // checkAppReady()
             setDisplayPopin(false)
             const _n: any = {}
             _n.body = t('Application succefully loaded.\nWelcome 👋')
@@ -678,14 +678,18 @@ function TheApp() {
                                 break
 
                             default:
-                                throw new Error(
+                                alert(
                                     'ConfigData.errorType not handle in App.tsx'
                                 )
+                            // throw new Error(
+                            //     'ConfigData.errorType not handle in App.tsx'
+                            // )
                         }
                         break
 
                     default:
-                        throw new Error('ConfigData not handle in App.tsx')
+                        alert('ConfigData.type not handle in App.tsx')
+                    // throw new Error('ConfigData not handle in App.tsx')
                 }
             }
         )

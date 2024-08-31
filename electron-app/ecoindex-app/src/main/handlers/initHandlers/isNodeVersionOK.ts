@@ -1,9 +1,9 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
+import { channels, utils } from '../../../shared/constants'
 import { getMainWindow, setNodeV } from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
-import { channels } from '../../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../../main'
 import { handle_CMD_Actions } from '../HandleCMDActions'
@@ -33,7 +33,7 @@ export const initIsNodeNodeVersionOK = async (
                 // mainLog.debug(`Node version: ${returned}`)
                 const major = returned.replace('v', '').split('.')[0]
                 // if (stderr) mainLog.error(`stderr: ${stderr}`)
-                toReturned.result = Number(major) >= 18
+                toReturned.result = Number(major) >= utils.LOWER_NODE_VERSION
                 toReturned.message = returned
                 setNodeV(returned)
                 store.set(`nodeVersion`, returned)
@@ -66,7 +66,7 @@ const initIsNodeNodeVersionOKOLD = async (
         if (returned === '') {
             toReturned.error = `Node version not found`
         } else {
-            toReturned.result = Number(major) >= 18
+            toReturned.result = Number(major) >= utils.LOWER_NODE_VERSION
             toReturned.message = returned
         }
         mainLog.debug(toReturned)

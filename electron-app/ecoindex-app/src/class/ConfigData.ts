@@ -17,6 +17,7 @@ export class ConfigData {
     static PUPPETEER_BROWSER_INSTALLATION = 'puppeteer_browser_installation'
     static APP_CAN_NOT_BE_LAUNCHED = 'app_can_not_be_launched'
     static ERROR_TYPE_NO_NODE = 'error_type_no_node'
+    static ERROR_TYPE_NODE_VERSION_ERROR = 'error_type_node_version_error'
     static ERROR_TYPE_NO_WRITE_ACCESS = 'error_type_no_write_access'
     static ERROR_TYPE_CANT_FIX_USER_RIGHTS = 'error_type_cant_fix_user_rights'
     static ERROR_TYPE_FIRST_INSTALL = 'error_type_first_install'
@@ -45,7 +46,7 @@ export class ConfigData {
      * @param {string} type type of ConfigData object.
      * @param {string} errorType type of error handle by ConfigData object.
      */
-    constructor(
+    public constructor(
         type:
             | 'workDir'
             | 'homeDir'
@@ -62,17 +63,13 @@ export class ConfigData {
             | 'app_can_not_be_launched',
         errorType?:
             | 'error_type_no_node'
+            | 'error_type_node_version_error'
             | 'error_type_no_write_access'
             | 'error_type_first_install'
             | 'error_type_cant_fix_user_rights'
     ) {
         this.type = type
         this.errorType = errorType
-        if (errorType && type !== 'app_can_not_be_launched') {
-            throw new Error(
-                "`errorType `can't be used outside of `type` of `app_can_not_be_launched`."
-            )
-        }
     }
     /**
      * Return a string representation of the object

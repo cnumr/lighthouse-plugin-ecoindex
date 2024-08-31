@@ -2,7 +2,11 @@ type IConstants = {
     store: { [key: string]: string }
     channels: { [key: string]: string }
     scripts: { [key: string]: string }
-    utils: { JSON_FILE_NAME: string; DEFAULT_JSON_DATA: IJsonMesureData }
+    utils: {
+        JSON_FILE_NAME: string
+        DEFAULT_JSON_DATA: IJsonMesureData
+        LOWER_NODE_VERSION: number
+    }
 }
 const constants: IConstants = {
     store: {
@@ -45,6 +49,7 @@ const constants: IConstants = {
         UPDATED_PLUGIN: 'update-plugin',
     },
     utils: {
+        LOWER_NODE_VERSION: 18,
         JSON_FILE_NAME: 'input-file.json',
         DEFAULT_JSON_DATA: {
             'extra-header': {
