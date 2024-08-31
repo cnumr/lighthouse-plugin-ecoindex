@@ -190,18 +190,18 @@ export const initialization = async (
                 getSudoFixNpmDirRightsReturned.result as boolean
             mainLog.log(getSudoFixNpmDirRightsReturned)
             if (getSudoFixNpmDirRightsReturned.error) {
-                const cantFixUserRights = new ConfigData(
+                const errorOnFixingUserRights = new ConfigData(
                     'app_can_not_be_launched',
                     'error_type_cant_fix_user_rights'
                 )
-                cantFixUserRights.error =
+                errorOnFixingUserRights.error =
                     getSudoFixNpmDirRightsReturned.error.toString()
-                cantFixUserRights.message = `Need to fix user rights on ${os.platform()}`
+                errorOnFixingUserRights.message = `Error on fixing user rights on ${os.platform()}.\n${getSudoFixNpmDirRightsReturned.error.toString()}`
                 getMainWindow().webContents.send(
                     channels.INITIALIZATION_DATAS,
-                    cantFixUserRights
+                    errorOnFixingUserRights
                 )
-                mainLog.log(cantFixUserRights)
+                mainLog.log(errorOnFixingUserRights)
                 return false
             }
         } else if (

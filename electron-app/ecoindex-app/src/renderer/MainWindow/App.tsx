@@ -610,13 +610,11 @@ function TheApp() {
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
                 // frontLog.debug(`sendConfigDatasToFront`, configData)
-                // todo
                 if (configData.error) {
                     frontLog.error(configData)
                     window.alert(
                         `${configData.type} : ${configData.message ? configData.message : configData.error}`
                     )
-                    return
                 }
                 switch (configData.type) {
                     case ConfigData.WORKDIR:
