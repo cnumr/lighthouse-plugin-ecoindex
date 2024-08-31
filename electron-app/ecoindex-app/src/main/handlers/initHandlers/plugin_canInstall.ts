@@ -83,10 +83,7 @@ export const initSudoFixNpmDirRights = (
         mainLog.debug(`Fix User rights on NPM Dir with sudo.`)
         const toReturned = new ConfigData('fix_npm_user_rights')
         return new Promise<ConfigData>((resolve) => {
-            // const cmd = `chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}`
-            // const cmd = `chown -R $(whoami) $(npm config get prefix)/lib/node_modules`
-            // const cmd = `chown -R root:admin $(npm config get prefix)/lib/node_modules`
-            const cmd = `chown -R $USER $(npm config get prefix)/lib/node_modules && echo "Done"`
+            const cmd = `chown -R $USER $(npm config get prefix)/{lib/node_modules,bin,share} && echo "Done"`
             sudoPrompt.exec(
                 cmd,
                 { name: 'Fix user permissions on Node' },
