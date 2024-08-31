@@ -1,5 +1,13 @@
 
 
+## [1.3.35](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.34...electron-v1.3.35) (2024-08-31)
+
+
+### Features
+
+* better handling Browser error Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([ed70a2a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ed70a2a9729687be4d5132ba71811fd053370f04))
+* try fix not matching Puppeteer version Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([eafa310](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/eafa310bf7426b247411d3b7ab1e329a42f19b23))
+
 ## [1.3.34](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.33...electron-v1.3.34) (2024-08-31)
 
 
