@@ -1,5 +1,12 @@
 
 
+## [1.3.38](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.37...electron-v1.3.38) (2024-08-31)
+
+
+### Features
+
+* try to fix puppeteer test version... Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([b2cbb03](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b2cbb03f31297413f753d761c17d68241f1d2ff0))
+
 ## [1.3.37](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.36...electron-v1.3.37) (2024-08-31)
 
 
