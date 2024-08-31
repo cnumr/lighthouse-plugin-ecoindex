@@ -1,25 +1,40 @@
 import { Bug, ClipboardCopy } from 'lucide-react'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '../ui/card'
 
 import { Button } from '../ui/button'
 import { FC } from 'react'
 import { SimpleTooltip } from './simple-tooltip'
 import { Textarea } from '../ui/textarea'
-import { TypographyH2 } from '../ui/typography/TypographyH2'
 import { TypographyH3 } from '../ui/typography/TypographyH3'
 import { useTranslation } from 'react-i18next'
 
 interface ILayout {
     datasFromHost: any
     id?: string
+    appReady?: boolean
+    isFirstStart?: boolean
+    isNodeInstalled?: boolean
+    isLighthouseEcoindexPluginInstalled?: boolean
+    isPuppeteerBrowserInstalled?: boolean
+    isNodeVersionOK?: boolean
+    workDir?: string
+    homeDir?: string
+    puppeteerBrowserInstalled?: string
+    userCanWrite?: boolean
 }
-export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
+export const ConsoleApp: FC<ILayout> = ({
+    datasFromHost,
+    id,
+    appReady,
+    isFirstStart,
+    isNodeInstalled,
+    isLighthouseEcoindexPluginInstalled,
+    isPuppeteerBrowserInstalled,
+    isNodeVersionOK,
+    workDir,
+    homeDir,
+    puppeteerBrowserInstalled,
+    userCanWrite,
+}) => {
     const copyToClipBoard = () => {
         navigator.clipboard.writeText(JSON.stringify(datasFromHost, null, 2))
     }
@@ -78,6 +93,29 @@ export const ConsoleApp: FC<ILayout> = ({ datasFromHost, id }) => {
                         {JSON.stringify(datasFromHost, null, 2)}
                     </code>
                 </pre>
+                <TypographyH3>{t('Configuration datas')}</TypographyH3>
+                <div className="flex w-full flex-col text-sm">
+                    <div>appReady: {appReady ? 'true' : 'false'}</div>
+                    <div>isFirstStart: {isFirstStart ? 'true' : 'false'}</div>
+                    <div>
+                        isNodeInstalled: {isNodeInstalled ? 'true' : 'false'}
+                    </div>
+                    <div>
+                        isLighthouseEcoindexPluginInstalled:{' '}
+                        {isLighthouseEcoindexPluginInstalled ? 'true' : 'false'}
+                    </div>
+                    <div>
+                        isPuppeteerBrowserInstalled:{' '}
+                        {isPuppeteerBrowserInstalled ? 'true' : 'false'}
+                    </div>
+                    <div>
+                        isNodeVersionOK: {isNodeVersionOK ? 'true' : 'false'}
+                    </div>
+                    <div>workDir: {workDir}</div>
+                    <div>homeDir: {homeDir}</div>
+                    <div>PuppeteerBrowser: {puppeteerBrowserInstalled}</div>
+                    <div>userCanWrite: {userCanWrite ? 'true' : 'false'}</div>
+                </div>
             </div>
         </details>
         // <Card className="w-full border-primary">

@@ -764,7 +764,7 @@ function TheApp() {
                 <div className="flex flex-col items-center gap-4">
                     <Header />
                     {false && (
-                        <>
+                        <div className="flex flex-col text-sm">
                             <div>appReady: {appReady ? 'true' : 'false'}</div>
                             <div>
                                 isFirstStart: {isFirstStart ? 'true' : 'false'}
@@ -792,7 +792,10 @@ function TheApp() {
                             <div>
                                 PuppeteerBrowser: {puppeteerBrowserInstalled}
                             </div>
-                        </>
+                            <div>
+                                userCanWrite: {userCanWrite ? 'true' : 'false'}
+                            </div>
+                        </div>
                     )}
                     {!initializing && !appReady && isFirstStart && (
                         <AlertBox title={t('First launch')} variant="default">
@@ -812,7 +815,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && isNodeInstalled && (
+                    {!initializing && !appReady && !isNodeInstalled && (
                         <AlertBox title={t('Error on Node')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -830,7 +833,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && isNodeVersionOK && (
+                    {!initializing && !appReady && !isNodeVersionOK && (
                         <AlertBox title={t('Error on Node Version')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -852,14 +855,14 @@ function TheApp() {
                             <div className="flex items-center justify-between gap-4">
                                 <span>
                                     {t(
-                                        `You don't have permission to install on of the addon, lanch the specific installer.<br/>Your administrator password wil be requested.`
+                                        `You must accept and enter your password, when prompted, in order to install the necessary elements.`
                                     )}
                                 </span>
                                 <Button
                                     variant="destructive"
-                                    onClick={installNode}
+                                    onClick={forceRefresh}
                                 >
-                                    {t('Install addons as Administrator')}
+                                    {t('Retry')}
                                 </Button>
                             </div>
                         </AlertBox>
@@ -982,7 +985,20 @@ function TheApp() {
                         </>
                     )}
                     {/* display here the echoReadable line */}
-                    <ConsoleApp id="echo" datasFromHost={datasFromHost} />
+                    <ConsoleApp
+                        id="echo"
+                        datasFromHost={datasFromHost}
+                        appReady
+                        isFirstStart
+                        isNodeInstalled
+                        isLighthouseEcoindexPluginInstalled
+                        isPuppeteerBrowserInstalled
+                        isNodeVersionOK
+                        workDir={workDir}
+                        homeDir={homeDir}
+                        puppeteerBrowserInstalled={puppeteerBrowserInstalled}
+                        userCanWrite
+                    />
                 </div>
                 <Footer
                     nodeVersion={nodeVersion}
