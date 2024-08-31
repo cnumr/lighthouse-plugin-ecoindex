@@ -17,11 +17,11 @@ export const initPuppeteerBrowserInstallation = async (
     const toReturned = new ConfigData('puppeteer_browser_installation')
     return new Promise<ConfigData>((resolve) => {
         const cmds = [
-            `npm install -g puppeteer --loglevel=error`,
+            // `npm install -g puppeteer --loglevel=error`,
             `npm install -g puppeteer@21.9.0 --loglevel=error`,
-            `npx puppeteer browsers install chrome`,
+            // `npx puppeteer browsers install chrome`,
             `npx puppeteer browsers install chrome-headless-shell`,
-            `npx puppeteer browsers install chrome@121.0.6167.85`,
+            // `npx puppeteer browsers install chrome@121.0.6167.85`,
             `npx puppeteer browsers install chrome-headless-shell@121.0.6167.85`,
         ]
         const cmd = cmds.join(` && `)
