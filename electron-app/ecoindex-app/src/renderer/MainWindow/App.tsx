@@ -850,7 +850,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && userCanWrite && (
+                    {!initializing && !appReady && !userCanWrite && (
                         <AlertBox title={t('Permissions Error')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>

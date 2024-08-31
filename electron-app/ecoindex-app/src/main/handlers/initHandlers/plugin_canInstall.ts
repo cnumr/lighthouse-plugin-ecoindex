@@ -86,7 +86,7 @@ export const initSudoFixNpmDirRights = (
             // const cmd = `chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}`
             // const cmd = `chown -R $(whoami) $(npm config get prefix)/lib/node_modules`
             // const cmd = `chown -R root:admin $(npm config get prefix)/lib/node_modules`
-            const cmd = `chown -R $USER $(npm config get prefix)/lib/node_modules && $(whoami) && echo "Done"`
+            const cmd = `chown -R $USER $(npm config get prefix)/lib/node_modules && echo "Done"`
             sudoPrompt.exec(
                 cmd,
                 { name: 'Fix user permissions on Node' },
