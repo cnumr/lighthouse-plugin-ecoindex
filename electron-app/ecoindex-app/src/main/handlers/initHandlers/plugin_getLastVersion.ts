@@ -34,7 +34,6 @@ export const initPluginGetLastVersion = (
             if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
                 // mainLog.debug(`latest version: ${stdout.trim()}`)
-                // if (stderr) mainLog.error(`stderr: ${stderr}`)
 
                 latestVersion = stdout.replace(`\n`, ``).trim()
                 if (

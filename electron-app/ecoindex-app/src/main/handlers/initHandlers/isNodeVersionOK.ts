@@ -11,6 +11,7 @@ import { handle_CMD_Actions } from '../HandleCMDActions'
 const store = new Store()
 
 export const initIsNodeNodeVersionOK = async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent
 ) => {
     const mainLog = getMainLog().scope(
@@ -46,6 +47,8 @@ export const initIsNodeNodeVersionOK = async (
         })
     })
 }
+// #region DEPRECATED
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const initIsNodeNodeVersionOKOLD = async (
     _event: IpcMainEvent | IpcMainInvokeEvent
 ) => {

@@ -39,6 +39,8 @@ export const initPuppeteerBrowserInstallation = async (
         })
     })
 }
+// #region DEPRECATED
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const initPuppeteerBrowserInstallationOLD = async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent

@@ -27,7 +27,7 @@ export const initSetNpmDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
         store.set(`npmDir`, npmPath)
     }
 
-    return new Promise<ConfigData>((resolve, reject) => {
+    return new Promise<ConfigData>((resolve) => {
         try {
             toReturned.result = store.get(`npmDir`) as string
             getMainWindow().webContents.send(

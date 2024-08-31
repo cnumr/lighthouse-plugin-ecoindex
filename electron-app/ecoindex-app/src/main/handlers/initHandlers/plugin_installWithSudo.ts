@@ -1,6 +1,4 @@
-import * as path from 'node:path'
-
-import { IpcMainEvent, IpcMainInvokeEvent, app } from 'electron'
+import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 
 import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
