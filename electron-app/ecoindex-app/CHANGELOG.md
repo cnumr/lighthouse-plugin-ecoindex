@@ -1,5 +1,17 @@
 
 
+## [1.3.22](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.21...electron-v1.3.22) (2024-08-31)
+
+
+### Bug Fixes
+
+* win32 setup app not upload in release [#52](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/52) ([17802fb](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/17802fbfb1e5ccfff21ab392d513f646dd9e853a))
+
+
+### Features
+
+* change user rights on npm Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([6d98c34](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6d98c344b1e9d45837b9a43c3ac66c93323ad850))
+
 ## [1.3.21](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.20...electron-v1.3.21) (2024-08-30)
 
 
