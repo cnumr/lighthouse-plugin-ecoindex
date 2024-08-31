@@ -16,7 +16,7 @@ export const initPuppeteerBrowserInstallation = async (
     )
     const toReturned = new ConfigData('puppeteer_browser_installation')
     return new Promise<ConfigData>((resolve) => {
-        const cmd = `npm install -g puppeteer && npx puppeteer browsers install chrome && npx puppeteer browsers install chrome@121.0.6167.85`
+        const cmd = `npm install -g puppeteer && npx puppeteer browsers install chrome && npx puppeteer browsers install chrome-headless-shell && npx puppeteer browsers install chrome@121.0.6167.85`
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
                 mainLog.error(`exec error: ${error}`)
