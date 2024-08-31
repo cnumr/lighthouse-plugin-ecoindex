@@ -1,5 +1,12 @@
 
 
+## [1.3.34](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.33...electron-v1.3.34) (2024-08-31)
+
+
+### Features
+
+* install browser Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([96e287a](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/96e287a057944e3a0b66ca7f7d202c68c193eb8c))
+
 ## [1.3.33](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.32...electron-v1.3.33) (2024-08-31)
 
 
