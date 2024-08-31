@@ -21,6 +21,7 @@ export class ConfigData {
     static ERROR_TYPE_NO_WRITE_ACCESS = 'error_type_no_write_access'
     static ERROR_TYPE_CANT_FIX_USER_RIGHTS = 'error_type_cant_fix_user_rights'
     static ERROR_TYPE_FIRST_INSTALL = 'error_type_first_install'
+    static ERROR_TYPE_BROWSER_NOT_INSTALLED = 'error_type_browser_no_installed'
 
     /**
      * The type of the content.
@@ -67,6 +68,7 @@ export class ConfigData {
             | 'error_type_no_write_access'
             | 'error_type_first_install'
             | 'error_type_cant_fix_user_rights'
+            | 'error_type_browser_no_installed'
     ) {
         this.type = type
         this.errorType = errorType
