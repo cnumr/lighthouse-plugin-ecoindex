@@ -1,5 +1,12 @@
 
 
+## [1.3.31](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.30...electron-v1.3.31) (2024-08-31)
+
+
+### Features
+
+* try again Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([3f4e810](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/3f4e81024f89936d539791c3d0ed30d320b3e1e0))
+
 ## [1.3.30](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.29...electron-v1.3.30) (2024-08-31)
 
 
