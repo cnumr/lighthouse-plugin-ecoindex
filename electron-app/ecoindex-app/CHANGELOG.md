@@ -1,5 +1,12 @@
 
 
+## [1.3.24](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.23...electron-v1.3.24) (2024-08-31)
+
+
+### Bug Fixes
+
+* baddly handling error on fixing rights Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([adb3fa4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/adb3fa474a303e77cc685d75f2c1637828e89faa))
+
 ## [1.3.23](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.22...electron-v1.3.23) (2024-08-31)
 
 
