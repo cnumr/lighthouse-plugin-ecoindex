@@ -130,8 +130,8 @@ export const initialization = async (
         if (isNodeReturned.error) {
             mainLog.info(`Without Node 20, the app can't work. Stop and alert.`)
             const stopWithoutNode20 = new ConfigData(
-                'app_can_not_be_launched'
-                // 'error_type_node_version_error'
+                'app_can_not_be_launched',
+                'error_type_node_version_error'
             )
             stopWithoutNode20.error = `No Node ${utils.LOWER_NODE_VERSION} installed`
             stopWithoutNode20.message = `Without Node ${utils.LOWER_NODE_VERSION}, the app can't work. Stop and alert.`
@@ -268,7 +268,8 @@ export const initialization = async (
                 `Without Puppeteer Browser, the app can't work. Stop and alert.`
             )
             const stopWithoutPuppeteerBrowser = new ConfigData(
-                'app_can_not_be_launched'
+                'app_can_not_be_launched',
+                'error_type_browser_no_installed'
             )
             stopWithoutPuppeteerBrowser.error = `No Puppeteer Browser installed`
             stopWithoutPuppeteerBrowser.message = `Without Puppeteer Browser, the app can't work. Stop and alert.`

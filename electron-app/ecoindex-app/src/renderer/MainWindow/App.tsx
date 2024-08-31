@@ -674,6 +674,12 @@ function TheApp() {
                             case ConfigData.ERROR_TYPE_CANT_FIX_USER_RIGHTS:
                                 setUserCanWrite(false)
                                 break
+                            case ConfigData.ERROR_TYPE_BROWSER_NOT_INSTALLED:
+                                setIsPuppeteerBrowserInstalled(false)
+                                break
+                            case ConfigData.ERROR_TYPE_NODE_VERSION_ERROR:
+                                setIsNodeVersionOK(false)
+                                break
 
                             default:
                                 alert(
