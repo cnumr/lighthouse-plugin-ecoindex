@@ -90,7 +90,7 @@ export const initSudoFixNpmDirRights = (
                 (error, stdout, stderr) => {
                     if (error) {
                         mainLog.error(`exec error: ${error}`)
-                        toReturned.result = false
+                        toReturned.error = error
                         toReturned.message = `CAN'T fix Npm user rights`
                         return resolve(toReturned)
                     }

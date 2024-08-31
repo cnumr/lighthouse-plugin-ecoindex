@@ -673,6 +673,10 @@ function TheApp() {
                                 setDisplayPopin(false)
                                 setUserCanWrite(false)
                                 break
+                            case ConfigData.ERROR_TYPE_CANT_FIX_USER_RIGHTS:
+                                setDisplayPopin(false)
+                                setUserCanWrite(false)
+                                break
 
                             default:
                                 throw new Error(
