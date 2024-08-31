@@ -167,7 +167,8 @@ export const initialization = async (
                     'app_can_not_be_launched',
                     'error_type_cant_fix_user_rights'
                 )
-                cantFixUserRights.error = `Error on fixing user rights`
+                cantFixUserRights.error =
+                    getSudoFixNpmDirRightsReturned.error.toString()
                 cantFixUserRights.message = `Need to fix user rights on ${os.platform()}`
                 getMainWindow().webContents.send(
                     channels.INITIALIZATION_DATAS,

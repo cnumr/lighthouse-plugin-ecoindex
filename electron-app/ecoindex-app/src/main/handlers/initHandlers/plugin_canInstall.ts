@@ -99,10 +99,10 @@ export const initSudoFixNpmDirRights = (
                         const returned: string = (stdout as string).trim()
                         toReturned.result = true
                         toReturned.message = `User rights FIXED returned ${returned}`
-                        getMainWindow().webContents.send(
-                            channels.HOST_INFORMATIONS_BACK,
-                            toReturned
-                        )
+                        // getMainWindow().webContents.send(
+                        //     channels.HOST_INFORMATIONS_BACK,
+                        //     toReturned
+                        // )
                         return resolve(toReturned)
                     }
                 }

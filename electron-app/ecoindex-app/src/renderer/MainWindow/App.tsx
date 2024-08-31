@@ -659,22 +659,21 @@ function TheApp() {
                         setAppReady(configData.result as boolean)
                         break
                     case ConfigData.APP_CAN_NOT_BE_LAUNCHED:
-                        // setAppReady(configData.result as boolean)
+                        frontLog.log(
+                            `Init Error detected ${configData.errorType}`
+                        )
+                        setDisplayPopin(false)
                         switch (configData.errorType) {
                             case ConfigData.ERROR_TYPE_FIRST_INSTALL:
-                                setDisplayPopin(false)
                                 setIsFirstStart(true)
                                 break
                             case ConfigData.ERROR_TYPE_NO_NODE:
-                                setDisplayPopin(false)
                                 setIsNodeInstalled(false)
                                 break
                             case ConfigData.ERROR_TYPE_NO_WRITE_ACCESS:
-                                setDisplayPopin(false)
                                 setUserCanWrite(false)
                                 break
                             case ConfigData.ERROR_TYPE_CANT_FIX_USER_RIGHTS:
-                                setDisplayPopin(false)
                                 setUserCanWrite(false)
                                 break
 
