@@ -162,6 +162,19 @@ export const initialization = async (
             initializedDatas.initSudoFixNpmDirRights =
                 getSudoFixNpmDirRightsReturned.result as boolean
             mainLog.log(getSudoFixNpmDirRightsReturned)
+            if (getSudoFixNpmDirRightsReturned.error) {
+                const cantFixUserRights = new ConfigData(
+                    'app_can_not_be_launched',
+                    'error_type_cant_fix_user_rights'
+                )
+                cantFixUserRights.error = `Error on fixing user rights`
+                cantFixUserRights.message = `Need to fix user rights on ${os.platform()}`
+                getMainWindow().webContents.send(
+                    channels.INITIALIZATION_DATAS,
+                    cantFixUserRights
+                )
+                return false
+            }
         } else if (
             os.platform() !== 'darwin' &&
             !initializedDatas.initPluginCanInstall
