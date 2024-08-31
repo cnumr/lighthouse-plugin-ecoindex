@@ -815,7 +815,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && !isNodeInstalled && (
+                    {!initializing && !appReady && isNodeInstalled && (
                         <AlertBox title={t('Error on Node')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -833,7 +833,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && !isNodeVersionOK && (
+                    {!initializing && !appReady && isNodeVersionOK && (
                         <AlertBox title={t('Error on Node Version')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -850,7 +850,7 @@ function TheApp() {
                             </div>
                         </AlertBox>
                     )}
-                    {!initializing && !appReady && !userCanWrite && (
+                    {!initializing && !appReady && userCanWrite && (
                         <AlertBox title={t('Permissions Error')}>
                             <div className="flex items-center justify-between gap-4">
                                 <span>
@@ -988,16 +988,20 @@ function TheApp() {
                     <ConsoleApp
                         id="echo"
                         datasFromHost={datasFromHost}
-                        appReady
-                        isFirstStart
-                        isNodeInstalled
-                        isLighthouseEcoindexPluginInstalled
-                        isPuppeteerBrowserInstalled
-                        isNodeVersionOK
+                        appReady={appReady}
+                        isFirstStart={isFirstStart}
+                        isNodeInstalled={isNodeInstalled}
+                        isLighthouseEcoindexPluginInstalled={
+                            isLighthouseEcoindexPluginInstalled
+                        }
+                        isPuppeteerBrowserInstalled={
+                            isPuppeteerBrowserInstalled
+                        }
+                        isNodeVersionOK={isNodeVersionOK}
                         workDir={workDir}
                         homeDir={homeDir}
                         puppeteerBrowserInstalled={puppeteerBrowserInstalled}
-                        userCanWrite
+                        userCanWrite={userCanWrite}
                     />
                 </div>
                 <Footer
