@@ -1,5 +1,12 @@
 
 
+## [1.3.28](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.27...electron-v1.3.28) (2024-08-31)
+
+
+### Features
+
+* better error handling errors Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([7ecadf0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/7ecadf0b8753a88a5c2274ce53a4019c86759b2f))
+
 ## [1.3.27](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.26...electron-v1.3.27) (2024-08-31)
 
 
