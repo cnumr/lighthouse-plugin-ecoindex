@@ -25,12 +25,12 @@ export const initPuppeteerBrowserIsInstalled = async (
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const browser = await puppeteer.launch({
             headless: true,
-            args: [
-                '--disable-gpu',
-                '--disable-dev-shm-usage',
-                '--disable-setuid-sandbox',
-                '--no-sandbox',
-            ],
+            // args: [
+            //     '--disable-gpu',
+            //     '--disable-dev-shm-usage',
+            //     '--disable-setuid-sandbox',
+            //     '--no-sandbox',
+            // ],
         })
         const puppeterVersion = await (await browser.newPage())
             .browser()
