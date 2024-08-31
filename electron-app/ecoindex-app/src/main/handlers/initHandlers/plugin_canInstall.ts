@@ -8,18 +8,22 @@ import { getMainLog } from '../../main'
 import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import path from 'node:path'
+import sudoPrompt from '@vscode/sudo-prompt'
 
+/**
+ * Detect if User can install plugins.
+ * @param {IpcMainEvent | IpcMainInvokeEvent} _event electron event
+ * @returns {Promise<ConfigData>}
+ */
 export const initPluginCanInstall = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent
 ) => {
     const mainLog = getMainLog().scope(
-        'main/initialization/initPluginGetLastVersion'
+        'main/initialization/initPluginCanInstall'
     )
-    mainLog.debug(
-        `Check latest version of lighthouse-plugin-ecoindex on registry.`
-    )
-    const toReturned = new ConfigData('plugin_installed')
+    mainLog.debug(`Check if User can install plugins with NPM.`)
+    const toReturned = new ConfigData('plugins_can_be_installed')
     return new Promise<ConfigData>((resolve) => {
         // npm config get prefix
         const cmd = `npm config get prefix`
@@ -27,7 +31,7 @@ export const initPluginCanInstall = (
             if (error) {
                 mainLog.error(`exec error: ${error}`)
                 toReturned.result = false
-                toReturned.message = `Cant't if user can write`
+                toReturned.message = `User can't install plugins with NPM`
                 return resolve(toReturned)
             }
             if (stderr) mainLog.debug(`stderr: ${stderr}`)
@@ -38,13 +42,12 @@ export const initPluginCanInstall = (
                     `node_modules`
                 )
                 // mainLog.debug(`Node path: ${returned}`)
-                // if (stderr) mainLog.error(`stderr: ${stderr}`)
                 toReturned.result = true
-                toReturned.message = `User can is instal plugin in ${returned}`
+                toReturned.message = `User can install plugins in ${returned}`
                 try {
                     accessSync(returned, constants.R_OK && constants.W_OK)
                     toReturned.result = true
-                    toReturned.message = `User can write in ${returned}`
+                    toReturned.message = `User can install in ${returned}`
                     getMainWindow().webContents.send(
                         channels.HOST_INFORMATIONS_BACK,
                         toReturned
@@ -52,7 +55,7 @@ export const initPluginCanInstall = (
                     return resolve(toReturned)
                 } catch (error) {
                     toReturned.result = false
-                    toReturned.message = `User CAN'T write in ${returned}`
+                    toReturned.message = `User CAN'T install in ${returned}`
                     getMainWindow().webContents.send(
                         channels.HOST_INFORMATIONS_BACK,
                         toReturned
@@ -63,6 +66,56 @@ export const initPluginCanInstall = (
         })
     })
 }
+
+/**
+ * Fix User Rights on NPM Dir (fix bug with Node install on darwin).
+ * @param {IpcMainEvent | IpcMainInvokeEvent} _event electron event
+ * @returns {Promise<ConfigData>}
+ */
+export const initSudoFixNpmDirRights = (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: IpcMainEvent | IpcMainInvokeEvent
+) => {
+    const mainLog = getMainLog().scope(
+        'main/initialization/initSudoFixNpmDirRights'
+    )
+    if (os.platform() === 'darwin') {
+        mainLog.debug(`Fix User rights on NPM Dir with sudo.`)
+        const toReturned = new ConfigData('fix_npm_user_rights')
+        return new Promise<ConfigData>((resolve) => {
+            const cmd = `chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}`
+            sudoPrompt.exec(
+                cmd,
+                { name: 'Fix user permissions on Node' },
+                (error, stdout, stderr) => {
+                    if (error) {
+                        mainLog.error(`exec error: ${error}`)
+                        toReturned.result = false
+                        toReturned.message = `CAN'T fix Npm user rights`
+                        return resolve(toReturned)
+                    }
+                    if (stderr) mainLog.debug(`stderr: ${stderr}`)
+                    if (stdout) {
+                        const returned: string = (stdout as string).trim()
+                        toReturned.result = true
+                        toReturned.message = `User rights FIXED returned ${returned}`
+                        getMainWindow().webContents.send(
+                            channels.HOST_INFORMATIONS_BACK,
+                            toReturned
+                        )
+                        return resolve(toReturned)
+                    }
+                }
+            )
+        })
+    } else {
+        mainLog.debug(
+            `NOT ON DARWIN PLATFORM, CAN'T Fix User rights on NPM Dir.`
+        )
+    }
+}
+// #region DEPRECATED
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const initPluginCanInstallOLD = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent

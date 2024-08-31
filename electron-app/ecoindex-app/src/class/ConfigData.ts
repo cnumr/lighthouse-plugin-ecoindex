@@ -7,6 +7,8 @@ export class ConfigData {
     static HOMEDIR = 'homeDir'
     static NPMDIR = 'npmDir'
     static APP_READY = 'appReady'
+    static PLUGINS_CAN_BE_INSTALLED = 'plugins_can_be_installed'
+    static FIX_NPM_USER_RIGHTS = 'fix_npm_user_rights'
     static PLUGIN_INSTALLED = 'plugin_installed'
     static PLUGIN_VERSION = 'plugin_version'
     static NODE_INSTALLED = 'node_installed'
@@ -16,6 +18,7 @@ export class ConfigData {
     static APP_CAN_NOT_BE_LAUNCHED = 'app_can_not_be_launched'
     static ERROR_TYPE_NO_NODE = 'error_type_no_node'
     static ERROR_TYPE_NO_WRITE_ACCESS = 'error_type_no_write_access'
+    static ERROR_TYPE_CANT_FIX_USER_RIGHTS = 'error_type_cant_fix_user_rights'
     static ERROR_TYPE_FIRST_INSTALL = 'error_type_first_install'
 
     /**
@@ -48,6 +51,8 @@ export class ConfigData {
             | 'homeDir'
             | 'npmDir'
             | 'appReady'
+            | 'plugins_can_be_installed'
+            | 'fix_npm_user_rights'
             | 'plugin_installed'
             | 'plugin_version'
             | 'node_installed'
@@ -59,6 +64,7 @@ export class ConfigData {
             | 'error_type_no_node'
             | 'error_type_no_write_access'
             | 'error_type_first_install'
+            | 'error_type_cant_fix_user_rights'
     ) {
         this.type = type
         this.errorType = errorType

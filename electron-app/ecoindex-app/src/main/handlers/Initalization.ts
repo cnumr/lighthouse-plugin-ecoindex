@@ -1,5 +1,9 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { channels, store as storeConstants } from '../../shared/constants'
+import {
+    initPluginCanInstall,
+    initSudoFixNpmDirRights,
+} from './initHandlers/plugin_canInstall'
 
 import { ConfigData } from '../../class/ConfigData'
 import Store from 'electron-store'
@@ -9,7 +13,6 @@ import { initGetHomeDir } from './initHandlers/getHomeDir'
 import { initGetWorkDir } from './initHandlers/getWorkDir'
 import { initIsNodeInstalled } from './initHandlers/IsNodeInstalled'
 import { initIsNodeNodeVersionOK } from './initHandlers/isNodeVersionOK'
-import { initPluginCanInstall } from './initHandlers/plugin_canInstall'
 import { initPluginGetLastVersion } from './initHandlers/plugin_getLastVersion'
 import { initPluginIsIntalled } from './initHandlers/plugin_isInstalled'
 import { initPluginNormalInstallation } from './initHandlers/plugin_installNormally'
@@ -17,6 +20,7 @@ import { initPluginSudoInstallation } from './initHandlers/plugin_installWithSud
 import { initPuppeteerBrowserInstallation } from './initHandlers/puppeteerBrowser_installation'
 import { initPuppeteerBrowserIsInstalled } from './initHandlers/puppeteerBrowser_isInstalled'
 import { initSetNpmDir } from './initHandlers/setNpmDir'
+import os from 'node:os'
 
 const store = new Store()
 
@@ -28,8 +32,9 @@ type initializedDatas = {
     initSetNpmDir?: string
     initPuppeteerBrowserIsInstalled?: boolean
     initPluginIsIntalled?: boolean | string
-    initPluginGetLastVersion?: string
     initPluginCanInstall?: boolean
+    initSudoFixNpmDirRights?: boolean
+    initPluginGetLastVersion?: string
     initPluginNormalInstallation?: boolean
     initPluginSudoInstallation?: boolean
 }
@@ -38,6 +43,12 @@ const readInitalizedDatas = (value: initializedDatas): boolean => {
     return value.initIsNodeInstalled && value.initIsNodeNodeVersionOK
 }
 
+/**
+ * Launch initialization of the app (installs and checks).
+ * @param event Electron event
+ * @param forceInitialisation Force installation instead of scope not set.
+ * @returns
+ */
 export const initialization = async (
     event: IpcMainEvent | IpcMainInvokeEvent,
     forceInitialisation = false
@@ -135,7 +146,43 @@ export const initialization = async (
             channels.INITIALIZATION_DATAS,
             getWorkDirReturned
         )
-        mainLog.log(`6. Is a Puppeteer Browser installed ...`)
+        // #region User can install ?
+        mainLog.log(`6. Check if user can install elements ...`)
+        const getPluginCanInstallReturned = await initPluginCanInstall(event)
+        initializedDatas.initPluginCanInstall =
+            getPluginCanInstallReturned.result as boolean
+        mainLog.log(getPluginCanInstallReturned)
+        if (
+            os.platform() === 'darwin' &&
+            !initializedDatas.initPluginCanInstall
+        ) {
+            // #region Fix User rights
+            const getSudoFixNpmDirRightsReturned =
+                await initSudoFixNpmDirRights(event)
+            initializedDatas.initSudoFixNpmDirRights =
+                getSudoFixNpmDirRightsReturned.result as boolean
+            mainLog.log(getSudoFixNpmDirRightsReturned)
+        } else if (
+            os.platform() !== 'darwin' &&
+            !initializedDatas.initPluginCanInstall
+        ) {
+            // #region Can't Fix User rights
+            const cantFixUserRights = new ConfigData(
+                'app_can_not_be_launched',
+                'error_type_cant_fix_user_rights'
+            )
+            cantFixUserRights.error = `Can't fix user rights`
+            cantFixUserRights.message = `Need to fix user rights on ${os.platform()}`
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                cantFixUserRights
+            )
+            return false
+        } else {
+            mainLog.log(`User can install plugins`)
+        }
+        // ...User can install
+        mainLog.log(`7. Is a Puppeteer Browser installed ...`)
         // #region Puppeteer Browser Installed
         let getPuppeteerBrowserIsInstalledReturned =
             await initPuppeteerBrowserIsInstalled(event)
@@ -143,13 +190,13 @@ export const initialization = async (
             getPuppeteerBrowserIsInstalledReturned.result !== null
         // #region Puppeteer Browser Installation
         if (getPuppeteerBrowserIsInstalledReturned.error) {
-            mainLog.log(`6.a Puppeteer Browser need to be installed ...`)
+            mainLog.log(`7.a Puppeteer Browser need to be installed ...`)
             const getPuppeteerBrowserInstallationReturned =
                 await initPuppeteerBrowserInstallation(event)
             // #region Puppeteer Browser Verification
             if (getPuppeteerBrowserInstallationReturned.result !== null) {
                 mainLog.log(
-                    `6.b Verification Puppeteer installed after installation ...`
+                    `7.b Verification Puppeteer installed after installation ...`
                 )
                 getPuppeteerBrowserIsInstalledReturned =
                     await initPuppeteerBrowserIsInstalled(event)
@@ -183,7 +230,7 @@ export const initialization = async (
             return false
         }
 
-        mainLog.log(`7.1 Is a Plugin installed on host ...`)
+        mainLog.log(`8.1 Is a Plugin installed on host ...`)
         // #region Plugin Installed
         const getPluginIsInstalledReturned = await initPluginIsIntalled(event)
         initializedDatas.initPluginIsIntalled =
@@ -192,12 +239,12 @@ export const initialization = async (
         // #region Plugin Last Version
         if (initializedDatas.initPluginIsIntalled) {
             // plugin installed
-            mainLog.log(`7.2 Plugin is Installed on host ...`)
-            mainLog.log(`7.2 Check plugin last version on registry ...`)
+            mainLog.log(`8.2 Plugin is Installed on host ...`)
+            mainLog.log(`8.2 Check plugin last version on registry ...`)
             const getPluginGetLastVersionReturned =
                 await initPluginGetLastVersion(
                     event,
-                    initializedDatas.initPluginIsIntalled
+                    initializedDatas.initPluginIsIntalled as string
                 )
             initializedDatas.initPluginGetLastVersion =
                 getPluginGetLastVersionReturned.result as string
@@ -224,58 +271,56 @@ export const initialization = async (
             }
         } else {
             // plugin not installed
-            mainLog.log(`7.2 Plugin NOT installed on host ...`)
-            mainLog.log(`7.2 Check if electron can install plugin ...`)
+            mainLog.log(`8.2 Plugin NOT installed on host ...`)
+            mainLog.log(`8.2 Check if electron can install plugin ...`)
             const getPluginCanInstallReturned =
                 await initPluginCanInstall(event)
             initializedDatas.initPluginCanInstall =
                 getPluginCanInstallReturned.result as boolean
             mainLog.log(getPluginCanInstallReturned)
-            if (initializedDatas.initPluginCanInstall) {
-                mainLog.log(`7.3 Electron install plugin ...`)
-                mainLog.log(`7.3 Plugin installation ...`)
-                const getPluginNormalInstallationReturned =
-                    await initPluginNormalInstallation(event)
-                initializedDatas.initPluginNormalInstallation =
-                    getPluginNormalInstallationReturned.result as boolean
-                mainLog.log(getPluginNormalInstallationReturned)
-                const normalPluginInstallation = new ConfigData(
-                    'plugin_installed'
-                )
-                normalPluginInstallation.result =
-                    initializedDatas.initPluginNormalInstallation
-                normalPluginInstallation.message =
-                    initializedDatas.initPluginNormalInstallation
-                        ? `Plugin installed`
-                        : `Installation plugin failed`
-                getMainWindow().webContents.send(
-                    channels.INITIALIZATION_DATAS,
-                    normalPluginInstallation
-                )
-            } else {
-                mainLog.log(`7.3 Electron CAN'T install plugin ...`)
-                mainLog.log(`7.3 Plugin SUDO installation ...`)
-                const getPluginSudoInstallationReturned =
-                    await initPluginSudoInstallation(event)
-                initializedDatas.initPluginSudoInstallation =
-                    getPluginSudoInstallationReturned.result as boolean
-                mainLog.log(getPluginSudoInstallationReturned)
-                const sudoPluginInstallation = new ConfigData(
-                    'plugin_installed'
-                )
-                sudoPluginInstallation.result =
-                    initializedDatas.initPluginNormalInstallation
-                sudoPluginInstallation.message =
-                    initializedDatas.initPluginNormalInstallation
-                        ? `Plugin installed`
-                        : `Installation plugin failed`
-                getMainWindow().webContents.send(
-                    channels.INITIALIZATION_DATAS,
-                    sudoPluginInstallation
-                )
-            }
-            mainLog.log(`7.2 Plugin NOT installed on host ...`)
-            mainLog.log(`7.3 Verify plugin version after install ...`)
+            // if (initializedDatas.initPluginCanInstall) {
+            mainLog.log(`8.3 Electron install plugin ...`)
+            mainLog.log(`8.3 Plugin installation ...`)
+            const getPluginNormalInstallationReturned =
+                await initPluginNormalInstallation(event)
+            initializedDatas.initPluginNormalInstallation =
+                getPluginNormalInstallationReturned.result as boolean
+            mainLog.log(getPluginNormalInstallationReturned)
+            const normalPluginInstallation = new ConfigData('plugin_installed')
+            normalPluginInstallation.result =
+                initializedDatas.initPluginNormalInstallation
+            normalPluginInstallation.message =
+                initializedDatas.initPluginNormalInstallation
+                    ? `Plugin installed`
+                    : `Installation plugin failed`
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                normalPluginInstallation
+            )
+            // } else {
+            //     mainLog.log(`7.3 Electron CAN'T install plugin ...`)
+            //     mainLog.log(`7.3 Plugin SUDO installation ...`)
+            //     const getPluginSudoInstallationReturned =
+            //         await initPluginSudoInstallation(event)
+            //     initializedDatas.initPluginSudoInstallation =
+            //         getPluginSudoInstallationReturned.result as boolean
+            //     mainLog.log(getPluginSudoInstallationReturned)
+            //     const sudoPluginInstallation = new ConfigData(
+            //         'plugin_installed'
+            //     )
+            //     sudoPluginInstallation.result =
+            //         initializedDatas.initPluginNormalInstallation
+            //     sudoPluginInstallation.message =
+            //         initializedDatas.initPluginNormalInstallation
+            //             ? `Plugin installed`
+            //             : `Installation plugin failed`
+            //     getMainWindow().webContents.send(
+            //         channels.INITIALIZATION_DATAS,
+            //         sudoPluginInstallation
+            //     )
+            // }
+            mainLog.log(`8.2 Plugin NOT installed on host ...`)
+            mainLog.log(`8.3 Verify plugin version after install ...`)
             const getPluginGetLastVersionReturned =
                 await initPluginGetLastVersion(event, `uninstalled`)
             initializedDatas.initPluginGetLastVersion =
