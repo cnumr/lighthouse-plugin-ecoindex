@@ -1,5 +1,17 @@
 
 
+## [1.3.41](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.40...electron-v1.3.41) (2024-09-01)
+
+
+### Bug Fixes
+
+* fix path for win32 Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([a1b5f43](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a1b5f4350919576068fe6e981bfe68a1b3612f7c))
+
+
+### Features
+
+* better handling npmDir for check rights and add to the consol component Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([58920d0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/58920d04a1bc21833cfe8b129cc4c1d96de60e36))
+
 ## [1.3.40](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.39...electron-v1.3.40) (2024-09-01)
 
 
