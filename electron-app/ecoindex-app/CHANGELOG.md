@@ -1,5 +1,17 @@
 
 
+## [1.3.40](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.39...electron-v1.3.40) (2024-09-01)
+
+
+### Bug Fixes
+
+* add pupeeteer free version Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([c1e163e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c1e163e9c7353892f9556daea9717b8c197599a7))
+
+
+### Features
+
+* change timer befor reload Nouvelle initialisation de l'application [#47](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/47) ([4ba1990](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4ba1990ba37d2e7e9fe90d1dbb650b2c216979c4))
+
 ## [1.3.39](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.38...electron-v1.3.39) (2024-09-01)
 
 
