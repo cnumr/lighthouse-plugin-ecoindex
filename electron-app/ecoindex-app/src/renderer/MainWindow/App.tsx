@@ -580,8 +580,9 @@ function TheApp() {
 
     // #region initialisationAPI
     const initReloadButton = async (clear = false) => {
+        const waitSeconds = 90
         setDisplayReloadButton(false)
-        await _sleep(30000, clear)
+        await _sleep(waitSeconds * 1000, clear)
         setDisplayReloadButton(true)
     }
     const launchInitialization = async (forceInitialisation: boolean) => {
