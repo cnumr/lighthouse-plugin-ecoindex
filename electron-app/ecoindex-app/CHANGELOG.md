@@ -1,5 +1,12 @@
 
 
+## [1.3.39](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.38...electron-v1.3.39) (2024-09-01)
+
+
+### Features
+
+* change puppeteer version ([cd45366](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cd4536656483b6882fe254dad329ea03df21c16e))
+
 ## [1.3.38](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.37...electron-v1.3.38) (2024-08-31)
 
 
