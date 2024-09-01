@@ -72,6 +72,7 @@
     "Hide App": "Masquer l'application",
     "Hide Others": "Masquer les autres applications",
     "Host Informations:": "Informations de votre ordinateur",
+    "If you want to generate statement, you must select json too.": "Si vous souhaitez générer une déclaration, vous devez également sélectionner json.",
     "Install": "Installer",
     "Install addons as Administrator": "Installer les modules complémentaires en tant qu'administrateur",
     "Internal Electron informations: Chrome": "Informations de l'application: Chrome",

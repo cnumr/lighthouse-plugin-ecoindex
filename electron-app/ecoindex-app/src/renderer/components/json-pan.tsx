@@ -200,6 +200,17 @@ export const JsonPanMesure: FC<ILayout> = ({
             alert(t('You must set only 1 best-page on courses.'))
             return
         }
+        if (
+            jsonDatas.output.includes(`statement`) &&
+            !jsonDatas.output.includes(`json`)
+        ) {
+            alert(
+                t(
+                    'If you want to generate statement, you must select json too.'
+                )
+            )
+            return
+        }
         mesure()
         setUpdated(false)
     }
