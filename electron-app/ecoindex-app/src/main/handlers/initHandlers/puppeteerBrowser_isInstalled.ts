@@ -1,4 +1,5 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
+import { accessSync, constants } from 'node:fs'
 
 import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
@@ -16,21 +17,20 @@ export const initPuppeteerBrowserIsInstalled = async (
     )
     const toReturned = new ConfigData('puppeteer_browser_installed')
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     try {
-        const { homedir } = os.userInfo()
-        const { platform, arch } = os
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const executablePath = `${homedir}/.cache/puppeteer/chrome-headless-shell/${platform}_${arch}-127.0.6533.119`
-        // mainLog.debug(`executablePath`, executablePath)
+        const executablePath = puppeteer.executablePath()
+        mainLog.debug(`executablePath`, executablePath)
+        accessSync(executablePath, constants.F_OK)
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const browser = await puppeteer.launch({
             headless: true,
-            // args: [
-            //     '--disable-gpu',
-            //     '--disable-dev-shm-usage',
-            //     '--disable-setuid-sandbox',
-            //     '--no-sandbox',
-            // ],
+            args: [
+                '--disable-gpu',
+                '--disable-dev-shm-usage',
+                '--disable-setuid-sandbox',
+                '--no-sandbox',
+            ],
         })
         const puppeterVersion = await (await browser.newPage())
             .browser()
@@ -43,6 +43,7 @@ export const initPuppeteerBrowserIsInstalled = async (
         toReturned.error = `Error on initPuppeteerBrowserIsInstalled 🚫`
         toReturned.message = `Error on initPuppeteerBrowserIsInstalled 🚫`
     }
+
     return new Promise<ConfigData>((resolve) => {
         getMainWindow().webContents.send(
             channels.HOST_INFORMATIONS_BACK,
