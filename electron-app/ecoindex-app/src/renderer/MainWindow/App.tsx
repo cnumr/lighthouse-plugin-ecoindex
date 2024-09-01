@@ -43,6 +43,7 @@ function TheApp() {
     const [nodeVersion, setNodeVersion] = useState('')
     const [workDir, setWorkDir] = useState('loading...')
     const [homeDir, setHomeDir] = useState('loading...')
+    const [npmDir, setNpmDir] = useState('loading...')
     const [appReady, setAppReady] = useState(false)
     const [datasFromHost, setDatasFromHost] = useState({})
     const [displayPopin, setDisplayPopin] = useState(false)
@@ -610,7 +611,7 @@ function TheApp() {
 
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
-                // frontLog.debug(`sendConfigDatasToFront`, configData)
+                frontLog.debug(`sendConfigDatasToFront`, configData)
                 if (configData.error) {
                     frontLog.error(configData)
                     window.alert(
@@ -644,6 +645,9 @@ function TheApp() {
                     case ConfigData.PLUGIN_VERSION:
                         setPluginVersion(configData.result as string)
                         increment()
+                        break
+                    case ConfigData.NPMDIR:
+                        setNpmDir(configData.result as string)
                         break
                     case ConfigData.PUPPETEER_BROWSER_INSTALLED:
                         setIsPuppeteerBrowserInstalled(
@@ -680,6 +684,9 @@ function TheApp() {
                                 break
                             case ConfigData.ERROR_TYPE_NODE_VERSION_ERROR:
                                 setIsNodeVersionOK(false)
+                                break
+                            case ConfigData.ERROR_TYPE_NO_NPM_DIR:
+                                setNpmDir(null)
                                 break
 
                             default:
@@ -1009,6 +1016,7 @@ function TheApp() {
                         isNodeVersionOK={isNodeVersionOK}
                         workDir={workDir}
                         homeDir={homeDir}
+                        npmDir={npmDir}
                         puppeteerBrowserInstalled={puppeteerBrowserInstalled}
                         userCanWrite={userCanWrite}
                     />

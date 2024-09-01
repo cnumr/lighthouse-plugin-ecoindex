@@ -147,6 +147,26 @@ export const initialization = async (
         const getNpmDirReturned = await initSetNpmDir(event)
         initializedDatas.initSetNpmDir = getNpmDirReturned.result as string
         mainLog.log(getNpmDirReturned)
+        if (getNpmDirReturned.error) {
+            mainLog.info(`Without Npm Dir, the app can't work. Stop and alert.`)
+            const stopWithoutNpmDir = new ConfigData(
+                'app_can_not_be_launched',
+                'error_type_no_npm_dir'
+            )
+            stopWithoutNpmDir.error = `No Npm dir founded`
+            stopWithoutNpmDir.message = `Without Npm Dir, the app can't work. Stop and alert.`
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                stopWithoutNpmDir
+            )
+            // stop all
+            return false
+        } else {
+            getMainWindow().webContents.send(
+                channels.INITIALIZATION_DATAS,
+                getNpmDirReturned
+            )
+        }
         mainLog.log(`4. Get User HomeDir...`)
         // #region Home Dir
         const getHomeDirReturned = await initGetHomeDir(event)

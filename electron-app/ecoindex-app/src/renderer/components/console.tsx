@@ -18,6 +18,7 @@ interface ILayout {
     isNodeVersionOK?: boolean
     workDir?: string
     homeDir?: string
+    npmDir?: string
     puppeteerBrowserInstalled?: string
     userCanWrite?: boolean
 }
@@ -32,6 +33,7 @@ export const ConsoleApp: FC<ILayout> = ({
     isNodeVersionOK,
     workDir,
     homeDir,
+    npmDir,
     puppeteerBrowserInstalled,
     userCanWrite,
 }) => {
@@ -95,26 +97,51 @@ export const ConsoleApp: FC<ILayout> = ({
                 </pre>
                 <TypographyH3>{t('Configuration datas')}</TypographyH3>
                 <div className="flex w-full flex-col text-sm">
-                    <div>appReady: {appReady ? 'true' : 'false'}</div>
-                    <div>isFirstStart: {isFirstStart ? 'true' : 'false'}</div>
-                    <div>
-                        isNodeInstalled: {isNodeInstalled ? 'true' : 'false'}
-                    </div>
-                    <div>
-                        isLighthouseEcoindexPluginInstalled:{' '}
-                        {isLighthouseEcoindexPluginInstalled ? 'true' : 'false'}
-                    </div>
-                    <div>
-                        isPuppeteerBrowserInstalled:{' '}
-                        {isPuppeteerBrowserInstalled ? 'true' : 'false'}
-                    </div>
-                    <div>
-                        isNodeVersionOK: {isNodeVersionOK ? 'true' : 'false'}
-                    </div>
-                    <div>workDir: {workDir}</div>
-                    <div>homeDir: {homeDir}</div>
-                    <div>PuppeteerBrowser: {puppeteerBrowserInstalled}</div>
-                    <div>userCanWrite: {userCanWrite ? 'true' : 'false'}</div>
+                    {appReady && (
+                        <div>appReady: {appReady ? 'true' : 'false'}</div>
+                    )}
+                    {isFirstStart && (
+                        <div>
+                            isFirstStart: {isFirstStart ? 'true' : 'false'}
+                        </div>
+                    )}
+                    {isNodeInstalled && (
+                        <div>
+                            isNodeInstalled:{' '}
+                            {isNodeInstalled ? 'true' : 'false'}
+                        </div>
+                    )}
+                    {isLighthouseEcoindexPluginInstalled && (
+                        <div>
+                            isLighthouseEcoindexPluginInstalled:{' '}
+                            {isLighthouseEcoindexPluginInstalled
+                                ? 'true'
+                                : 'false'}
+                        </div>
+                    )}
+                    {isPuppeteerBrowserInstalled && (
+                        <div>
+                            isPuppeteerBrowserInstalled:{' '}
+                            {isPuppeteerBrowserInstalled ? 'true' : 'false'}
+                        </div>
+                    )}
+                    {isNodeVersionOK && (
+                        <div>
+                            isNodeVersionOK:{' '}
+                            {isNodeVersionOK ? 'true' : 'false'}
+                        </div>
+                    )}
+                    {workDir && <div>workDir: {workDir}</div>}
+                    {homeDir && <div>homeDir: {homeDir}</div>}
+                    {npmDir && <div>npmDir: {npmDir}</div>}
+                    {puppeteerBrowserInstalled && (
+                        <div>PuppeteerBrowser: {puppeteerBrowserInstalled}</div>
+                    )}
+                    {userCanWrite && (
+                        <div>
+                            userCanWrite: {userCanWrite ? 'true' : 'false'}
+                        </div>
+                    )}
                 </div>
             </div>
         </details>

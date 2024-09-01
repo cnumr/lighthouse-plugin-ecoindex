@@ -1,14 +1,16 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { accessSync, constants } from 'node:fs'
+import { getMainWindow, getNpmDir } from '../../../shared/memory'
 
 import { ConfigData } from '../../../class/ConfigData'
+import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
-import { exec } from 'child_process'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
 import os from 'node:os'
 import path from 'node:path'
 import sudoPrompt from '@vscode/sudo-prompt'
+
+const store = new Store()
 
 /**
  * Detect if User can install plugins.
@@ -25,44 +27,25 @@ export const initPluginCanInstall = (
     mainLog.debug(`Check if User can install plugins with NPM.`)
     const toReturned = new ConfigData('plugins_can_be_installed')
     return new Promise<ConfigData>((resolve) => {
-        // npm config get prefix
-        const cmd = `npm config get prefix`
-        exec(cmd, (error, stdout, stderr) => {
-            if (error) {
-                mainLog.error(`exec error: ${error}`)
-                toReturned.result = false
-                toReturned.message = `User can't install plugins with NPM`
-                return resolve(toReturned)
-            }
-            if (stderr) mainLog.debug(`stderr: ${stderr}`)
-            if (stdout) {
-                const returned: string =
-                    os.platform() === 'win32'
-                        ? path.join(stdout.trim(), `node_modules`)
-                        : path.join(stdout.trim(), `lib`, `node_modules`)
-                // mainLog.debug(`Node path: ${returned}`)
-                toReturned.result = true
-                toReturned.message = `User can install plugins in ${returned}`
-                try {
-                    accessSync(returned, constants.R_OK && constants.W_OK)
-                    toReturned.result = true
-                    toReturned.message = `User can install in ${returned}`
-                    getMainWindow().webContents.send(
-                        channels.HOST_INFORMATIONS_BACK,
-                        toReturned
-                    )
-                    return resolve(toReturned)
-                } catch (error) {
-                    toReturned.result = false
-                    toReturned.message = `User CAN'T install in ${returned}`
-                    getMainWindow().webContents.send(
-                        channels.HOST_INFORMATIONS_BACK,
-                        toReturned
-                    )
-                    return resolve(toReturned)
-                }
-            }
-        })
+        const returned = (store.get(`npmDir`, null) || getNpmDir()) as string
+        try {
+            accessSync(returned, constants.R_OK && constants.W_OK)
+            toReturned.result = true
+            toReturned.message = `User can install in ${returned}`
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
+            return resolve(toReturned)
+        } catch (error) {
+            toReturned.result = false
+            toReturned.message = `User CAN'T install in ${returned}`
+            getMainWindow().webContents.send(
+                channels.HOST_INFORMATIONS_BACK,
+                toReturned
+            )
+            return resolve(toReturned)
+        }
     })
 }
 

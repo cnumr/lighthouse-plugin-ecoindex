@@ -17,6 +17,7 @@ export class ConfigData {
     static PUPPETEER_BROWSER_INSTALLATION = 'puppeteer_browser_installation'
     static APP_CAN_NOT_BE_LAUNCHED = 'app_can_not_be_launched'
     static ERROR_TYPE_NO_NODE = 'error_type_no_node'
+    static ERROR_TYPE_NO_NPM_DIR = 'error_type_no_npm_dir'
     static ERROR_TYPE_NODE_VERSION_ERROR = 'error_type_node_version_error'
     static ERROR_TYPE_NO_WRITE_ACCESS = 'error_type_no_write_access'
     static ERROR_TYPE_CANT_FIX_USER_RIGHTS = 'error_type_cant_fix_user_rights'
@@ -69,6 +70,7 @@ export class ConfigData {
             | 'error_type_first_install'
             | 'error_type_cant_fix_user_rights'
             | 'error_type_browser_no_installed'
+            | 'error_type_no_npm_dir'
     ) {
         this.type = type
         this.errorType = errorType
