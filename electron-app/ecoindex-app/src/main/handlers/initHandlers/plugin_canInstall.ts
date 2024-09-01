@@ -36,11 +36,10 @@ export const initPluginCanInstall = (
             }
             if (stderr) mainLog.debug(`stderr: ${stderr}`)
             if (stdout) {
-                const returned: string = path.join(
-                    stdout.trim(),
-                    `lib`,
-                    `node_modules`
-                )
+                const returned: string =
+                    os.platform() === 'win32'
+                        ? path.join(stdout.trim(), `node_modules`)
+                        : path.join(stdout.trim(), `lib`, `node_modules`)
                 // mainLog.debug(`Node path: ${returned}`)
                 toReturned.result = true
                 toReturned.message = `User can install plugins in ${returned}`
