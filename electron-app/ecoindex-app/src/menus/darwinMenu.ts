@@ -1,5 +1,5 @@
 import { BrowserWindow, app as ElectronApp, app, shell } from 'electron'
-import { getWelcomeWindow, setHasShowedWelcomeWindow } from '../shared/memory'
+import { getWelcomeWindow, setHasShowedWelcomeWindow } from '../main/memory'
 
 import Store from 'electron-store'
 import { config } from '../configs/app.config'

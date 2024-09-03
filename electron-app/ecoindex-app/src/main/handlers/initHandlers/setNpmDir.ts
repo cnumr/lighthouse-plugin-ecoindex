@@ -1,5 +1,5 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
-import { getMainWindow, setNpmDir } from '../../../shared/memory'
+import { getMainWindow, setNpmDir } from '../../memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
@@ -11,23 +11,15 @@ import path from 'node:path'
 
 const store = new Store()
 
+/**
+ * Initialization, Read and store the Npm Dir use on host.
+ * @param _event MainEvent.
+ * @returns Promise&lt;ConfigData>
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const initSetNpmDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
     const mainLog = getMainLog().scope('main/initialization/initGetWorkDir')
     const toReturned = new ConfigData('npmDir')
-    // if (os.platform() === `darwin`) {
-    //     const npmPath: string =
-    //         getNodeDir()?.replace(/\/bin\/node$/, '') +
-    //         '/lib/node_modules'.replace(/\//gm, path.sep)
-    //     setNpmDir(npmPath)
-    //     store.set(`npmDir`, npmPath)
-    // } else {
-    //     const npmPath: string =
-    //         os.userInfo().homedir + `\\AppData\\Roaming\\npm\\node_modules`
-    //     setNpmDir(npmPath)
-    //     store.set(`npmDir`, npmPath)
-    // }
-
     return new Promise<ConfigData>((resolve) => {
         try {
             // npm config get prefix

@@ -15,12 +15,13 @@ import os from 'node:os'
 
 /**
  * Handlers, Generic CMD action
+ * @deprecated Scripts `sh` or `cmd` not used. Kipping file to reuse.
  * @param log Logger.MainLogger
  * @param event IpcMainEvent
  * @param action string
  * @returns Promise<string>
  */
-export const handle_CMD_Actions = (
+const handle_CMD_Actions = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent | null,
     action: string

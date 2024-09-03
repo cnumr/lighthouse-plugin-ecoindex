@@ -77,6 +77,43 @@ function TheApp() {
 
     // endregion
 
+    // region utils
+
+    let timeOut: NodeJS.Timeout = null
+    /**
+     * Utils, wait method.
+     * @param {number} ms Milisecond of the timer.
+     * @param {boolean} clear clear and stop the timer.
+     * @returns Promise<unknown>
+     */
+    async function _sleep(ms: number, clear = false) {
+        if (clear) {
+            frontLog.debug(`sleep cleared.`)
+            clearTimeout(timeOut)
+            return
+        }
+        return new Promise((resolve) => {
+            frontLog.debug(`wait ${ms / 1000}s`)
+            if (timeOut) {
+                clearTimeout(timeOut)
+                frontLog.debug(`sleep reseted.`)
+            }
+            timeOut = setTimeout(resolve, ms)
+        })
+    }
+
+    /**
+     * Notify user.
+     * @param title string
+     * @param options any
+     */
+    const showNotification = (title: string, options: any) => {
+        const _t = title === '' ? packageJson.productName : title
+        new window.Notification(_t, options)
+    }
+
+    // #endregion
+
     // region popin
     /**
      * Necessary display waiting popin.
@@ -124,25 +161,13 @@ function TheApp() {
         setPopinText(`${t('Loading...')} ${loadingScreen}/${STEPS}`)
         if (loadingScreen === STEPS) {
             initReloadButton(true)
-            // frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             frontLog.log(`All initialization datas readed! 👀`)
-            // frontLog.log(`isNodeInstalled`, isNodeInstalled)
-            // frontLog.log(
-            //     `isLighthouseEcoindexPluginInstalled`,
-            //     isLighthouseEcoindexPluginInstalled
-            // )
-            // frontLog.log(
-            //     `isPuppeteerBrowserInstalled`,
-            //     isPuppeteerBrowserInstalled
-            // )
-            // checkAppReady()
             setDisplayPopin(false)
             const _n: any = {}
             _n.body = t('Application succefully loaded.\nWelcome 👋')
             _n.subtitle = t('You can now start measures')
             _n.priority = 'critical'
             showNotification('', _n)
-            // frontLog.log(`<><><><><><><><><><><><><><><><><><>`)
             setDisplayReloadButton(false)
         } else {
             setAppReady(false)
@@ -281,51 +306,6 @@ function TheApp() {
         )
     }
 
-    // /**
-    //  * Handler to install Puppetter, Puppetter/Chrome Browser and lighthouse-plugin-ecoindex.
-    //  */
-    // const installEcoindexPlugin = async () => {
-    //   try {
-    //     await window.electronAPI.handleLighthouseEcoindexPluginInstall()
-    //   } catch (error) {
-    //     frontLog.error(`installEcoindexPlugin`, error)
-    //   }
-    // }
-
-    // #region utils
-    let timeOut: NodeJS.Timeout = null
-    /**
-     * Utils, wait method.
-     * @param {number} ms Milisecond of the timer.
-     * @param {boolean} clear clear and stop the timer.
-     * @returns Promise<unknown>
-     */
-    async function _sleep(ms: number, clear = false) {
-        if (clear) {
-            frontLog.debug(`sleep cleared.`)
-            clearTimeout(timeOut)
-            return
-        }
-        return new Promise((resolve) => {
-            frontLog.debug(`wait ${ms / 1000}s`)
-            if (timeOut) {
-                clearTimeout(timeOut)
-                frontLog.debug(`sleep reseted.`)
-            }
-            timeOut = setTimeout(resolve, ms)
-        })
-    }
-
-    /**
-     * Notify user.
-     * @param title string
-     * @param options any
-     */
-    const showNotification = (title: string, options: any) => {
-        const _t = title === '' ? packageJson.productName : title
-        new window.Notification(_t, options)
-    }
-
     /**
      * Handler to copy in clipboard the content of datasFromHost.
      */
@@ -341,176 +321,53 @@ function TheApp() {
         window.location.reload()
     }
 
+    // #endregion
+
+    // #region initialisationAPI
     /**
-     * Send text to console on front.
-     * @param message string
+     * Init and Reset Reload Button.
+     * @param clear Reset counter
      */
-    const sendLogToFront = (message: string) => {
-        const textArea = document.getElementById('echo') as HTMLTextAreaElement
-        textArea.value = textArea.value + '\n' + message
-        textArea.scrollTop = textArea.scrollHeight
+    const initReloadButton = async (clear = false) => {
+        const waitSeconds = 90
+        setDisplayReloadButton(false)
+        await _sleep(waitSeconds * 1000, clear)
+        setDisplayReloadButton(true)
     }
 
     /**
-     * Handler, check and update if App is ready to use.
+     * Launch Initialization.
+     * @param forceInitialisation
      */
-    const checkAppReady = () => {
-        frontLog.log(`%%%%%%%%%%%%%%% checkAppReady %%%%%%%%%%%%%%%`)
-        frontLog.log('isNodeInstalled', isNodeInstalled)
-        frontLog.log(
-            'isLighthouseEcoindexPluginInstalled',
-            isLighthouseEcoindexPluginInstalled
+    const launchInitialization = async (forceInitialisation: boolean) => {
+        frontLog.debug(`initializeApplication start 🚀`)
+        setDisplayPopin(true)
+        setInitializing(true)
+        setDisplayReloadButton(false)
+        initReloadButton()
+        if (
+            forceInitialisation ||
+            (await window.store.get(storeConstants.APP_INSTALLED_ONCE, false))
         )
-        frontLog.log('isPuppeteerBrowserInstalled', isPuppeteerBrowserInstalled)
-        let count = 0
-        if (isNodeInstalled) count++
-        if (isLighthouseEcoindexPluginInstalled) count++
-        if (isPuppeteerBrowserInstalled) count++
-        setAppReady(count === 3)
-        frontLog.log(`%%%%%%%%%%%%%%% checkAppReady ${count} %%%%%%%%%%%%%%%`)
-    }
-
-    /**
-     * Display information in log and check if App is ready.
-     */
-    const logEventAndCheckAppReady = useCallback((name: string) => {
-        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-        frontLog.debug(`Binded on [${name}]`)
-        checkAppReady()
-        frontLog.debug(`appReady`, appReady)
-        frontLog.debug(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
-    }, [])
-
-    const handleDisplayReloadButton = async () => {
+            setIsFirstStart(false)
+        const result =
+            await window.initialisationAPI.initializeApplication(
+                forceInitialisation
+            )
+        setInitializing(false)
         frontLog.debug(
-            `handleDisplayReloadButton launched, isLighthouseEcoindexPluginInstalled`,
-            isLighthouseEcoindexPluginInstalled
+            `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
         )
-        if (!isLighthouseEcoindexPluginInstalled) {
-            setDisplayReloadButton(false)
-            await _sleep(30000)
-            setDisplayReloadButton(true)
-        } else {
-            frontLog.debug(`handleDisplayReloadButton canceled`)
-        }
     }
 
     // #endregion
 
     // #region useEffect
+
+    /**
+     * Detect window opening.
+     */
     useEffect(() => {
-        /**
-         * Handlers, install Puppeteer Browser on Host
-         */
-        const fetchIsPuppeteerBrowserInstalled = async () => {
-            return new Promise<string | boolean>((resolve, reject) => {
-                window.electronAPI
-                    .handleIsPuppeteerBrowserInstalled()
-                    .then((value) => {
-                        frontLog.debug(
-                            `fetchIsPuppeteerBrowserInstalled Done 🎉`,
-                            value
-                        )
-                        resolve(value as boolean)
-                    })
-                    .catch((value) => {
-                        frontLog.error(
-                            `fetchIsPuppeteerBrowserInstalled Failed 🚫`,
-                            value
-                        )
-                        reject(value as boolean)
-                    })
-            }).then((value: boolean) => {
-                setIsLighthouseEcoindexPluginInstalled(value)
-                increment()
-            })
-        }
-        /**
-         * Handlers, Node Version
-         */
-        const fetchNodeVersion = async () => {
-            const result = await window.versions.getNodeVersion()
-            setNodeVersion(result)
-            const major = nodeVersion.replace('v', '').split('.')[0]
-
-            if (Number(major) >= 20) {
-                setIsNodeVersionOK(false)
-            }
-            increment()
-        }
-
-        /**
-         * Handlers, Get WorkDir
-         */
-        const fetchWorkDir = async () => {
-            const result = await window.electronAPI.getWorkDir('')
-            frontLog.debug(`fetchWorkDir result: `, result)
-            const storedWorkDir = await window.store.get(
-                `lastWorkDir`,
-                result !== '' ? result : homeDir
-            )
-            frontLog.debug(`fetchWorkDir storedWorkDir:`, storedWorkDir)
-            setWorkDir(storedWorkDir)
-            increment()
-        }
-        /**
-         * LAUNCH FIRST! Handlers, Get ans Set NodeDir, NpmDir and NodeVersion.
-         */
-        const fetchNodeInstalled = async () => {
-            const result = await window.electronAPI.isNodeInstalled()
-            frontLog.debug(`fetchNodeInstalledRESULT`, result === true)
-            setIsNodeInstalled(result === true)
-            increment()
-        }
-
-        /**
-         * Handler, force update of lighthouse-plugin-ecoindex
-         */
-        const fetchIsLighthousePluginEcoindexInstalled = async () => {
-            try {
-                handleDisplayReloadButton()
-                const result =
-                    await window.electronAPI.isLighthouseEcoindexPluginInstalled()
-                setIsLighthouseEcoindexPluginInstalled(result.result)
-                setPluginVersion(result.targetVersion)
-                frontLog.debug(result.message)
-                // sendLogToFront(`Lighthouse-plugin-ecoindex installed.`)
-                increment()
-            } catch (error) {
-                frontLog.error(
-                    `fetchIsLighthousePluginEcoindexInstalled`,
-                    error
-                )
-            }
-        }
-
-        /**
-         * Handlers, to get user home dir.
-         */
-        const fetchHomeDir = async () => {
-            const filePath = await window.electronAPI.getHomeDir()
-            setHomeDir(filePath)
-        }
-
-        /**
-         * Launch the mandatory actions at startup, once.
-         */
-        // fetchHomeDir().then(() => {
-        //     fetchWorkDir().then(() => {
-        //         fetchNodeInstalled().then(() => {
-        //             fetchNodeVersion().then(() => {
-        //                 fetchIsPuppeteerBrowserInstalled().then(() => {
-        //                     fetchIsLighthousePluginEcoindexInstalled().then(
-        //                         () => {
-        //                             setDisplayReloadButton(false)
-        //                         }
-        //                     )
-        //                 })
-        //             })
-        //         })
-        //     })
-        // })
-
         /**
          * Handler (main->front), get data from main
          */
@@ -566,9 +423,12 @@ function TheApp() {
             }
         })
 
+        /**
+         * Read language set in Store.
+         */
         const getLanguage = async () => {
             try {
-                const gettedLng = await window.store.get(`language`)
+                const gettedLng = await window.store.get(`language`, `fr`)
                 if (gettedLng) {
                     i18nResources.changeLanguage(gettedLng)
                 }
@@ -576,39 +436,18 @@ function TheApp() {
                 frontLog.debug(error)
             }
         }
+        /**
+         * On Window opening, Launch read language in Store.
+         */
         getLanguage()
-    }, [])
-
-    // #region initialisationAPI
-    const initReloadButton = async (clear = false) => {
-        const waitSeconds = 90
-        setDisplayReloadButton(false)
-        await _sleep(waitSeconds * 1000, clear)
-        setDisplayReloadButton(true)
-    }
-    const launchInitialization = async (forceInitialisation: boolean) => {
-        frontLog.debug(`initializeApplication start 🚀`)
-        setDisplayPopin(true)
-        setInitializing(true)
-        setDisplayReloadButton(false)
-        initReloadButton()
-        if (
-            forceInitialisation ||
-            (await window.store.get(storeConstants.APP_INSTALLED_ONCE, false))
-        )
-            setIsFirstStart(false)
-        const result =
-            await window.initialisationAPI.initializeApplication(
-                forceInitialisation
-            )
-        setInitializing(false)
-        frontLog.debug(
-            `initializeApplication ended with ${result ? 'OK 👍' : 'KO 🚫'} status.`
-        )
-    }
-    useEffect(() => {
+        /**
+         * On Window opening, Launch intialization.
+         */
         launchInitialization(false)
 
+        /**
+         * Add "listeners" for initialisationAPI.sendConfigDatasToFront()
+         */
         window.initialisationAPI.sendConfigDatasToFront(
             (configData: ConfigData) => {
                 frontLog.debug(`sendConfigDatasToFront`, configData)
@@ -708,27 +547,6 @@ function TheApp() {
             }
         )
     }, [])
-
-    /**
-     * Detect isNodeInstalled change.
-     */
-    // useEffect(() => {
-    //     logEventAndCheckAppReady(`isNodeInstalled`)
-    // }, [isNodeInstalled, logEventAndCheckAppReady])
-
-    /**
-     * Detect isLighthouseEcoindexPluginInstalled change.
-     */
-    // useEffect(() => {
-    //     logEventAndCheckAppReady(`isLighthouseEcoindexPluginInstalled`)
-    // }, [isLighthouseEcoindexPluginInstalled, logEventAndCheckAppReady])
-
-    /**
-     * Detect setIsPuppeteerBrowserInstalled change.
-     */
-    // useEffect(() => {
-    //     logEventAndCheckAppReady(`setIsPuppeteerBrowserInstalled`)
-    // }, [setIsPuppeteerBrowserInstalled, logEventAndCheckAppReady])
 
     /**
      * Detect workDir change.

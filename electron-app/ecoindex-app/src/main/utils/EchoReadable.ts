@@ -3,7 +3,7 @@ import { chomp, chunksToLinesAsync } from '@rauschma/stringio'
 
 import { channels } from '../../shared/constants'
 import { cleanLogString } from './CleanLogString'
-import { isDev } from '../../shared/memory'
+import { isDev } from '../memory'
 import log from 'electron-log/main'
 
 log.initialize()

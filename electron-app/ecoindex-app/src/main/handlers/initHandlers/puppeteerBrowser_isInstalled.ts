@@ -4,10 +4,14 @@ import { accessSync, constants } from 'node:fs'
 import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
-import os from 'node:os'
+import { getMainWindow } from '../../memory'
 import puppeteer from 'puppeteer'
 
+/**
+ * Initialization, Check if Puppeteer browsers are installed on host.
+ * @param _event MainEvent.
+ * @returns Promise&lt;ConfigData>
+ */
 export const initPuppeteerBrowserIsInstalled = async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent

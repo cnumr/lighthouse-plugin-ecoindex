@@ -1,4 +1,4 @@
-import { getHomeDir, isDev } from '../../shared/memory'
+import { getHomeDir, isDev } from '../memory'
 
 import { IpcMainEvent } from 'electron'
 import Store from 'electron-store'

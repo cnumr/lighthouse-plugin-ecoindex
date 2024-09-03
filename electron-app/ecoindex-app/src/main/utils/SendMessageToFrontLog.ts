@@ -1,6 +1,6 @@
 import { channels } from '../../shared/constants'
 import { getMainLog } from '../main'
-import { getMainWindow } from '../../shared/memory'
+import { getMainWindow } from '../memory'
 
 /**
  * Send message to DEV consol log

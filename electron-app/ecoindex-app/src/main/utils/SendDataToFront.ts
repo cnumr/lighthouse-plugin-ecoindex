@@ -1,5 +1,5 @@
 import { channels } from '../../shared/constants'
-import { getMainWindow } from '../../shared/memory'
+import { getMainWindow } from '../memory'
 
 /**
  * Utils, Send data to Front.

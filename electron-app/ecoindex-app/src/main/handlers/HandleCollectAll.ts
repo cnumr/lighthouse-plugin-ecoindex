@@ -1,6 +1,6 @@
 import { ChildProcess, spawn } from 'child_process'
 import { IpcMainEvent, shell } from 'electron'
-import { getNodeDir, getNpmDir, getWorkDir, isDev } from '../../shared/memory'
+import { getNodeDir, getNpmDir, getWorkDir, isDev } from '../memory'
 
 import { _debugLogs } from '../utils/MultiDebugLogs'
 import { _echoReadable } from '../utils/EchoReadable'

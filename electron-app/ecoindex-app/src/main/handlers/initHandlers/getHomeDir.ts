@@ -3,7 +3,7 @@ import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
+import { getMainWindow } from '../../memory'
 import os from 'node:os'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

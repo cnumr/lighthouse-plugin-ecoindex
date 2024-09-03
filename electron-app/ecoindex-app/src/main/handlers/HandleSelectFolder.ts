@@ -1,7 +1,7 @@
 import { IpcMainEvent, IpcMainInvokeEvent, dialog } from 'electron'
 
 import { getMainLog } from '../main'
-import { setWorkDir } from '../../shared/memory'
+import { setWorkDir } from '../memory'
 
 /**
  * Handlers, SelectFolder

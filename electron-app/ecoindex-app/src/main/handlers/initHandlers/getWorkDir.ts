@@ -5,11 +5,16 @@ import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
 import fs from 'node:fs'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
+import { getMainWindow } from '../../memory'
 import os from 'node:os'
 
 const store = new Store()
 
+/**
+ * Initialization, get Work Dir.
+ * @param _event MainEvent.
+ * @returns Promise&lt;ConfigData>
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const initGetWorkDir = (_event: IpcMainEvent | IpcMainInvokeEvent) => {
     const mainLog = getMainLog().scope('main/initialization/initGetWorkDir')

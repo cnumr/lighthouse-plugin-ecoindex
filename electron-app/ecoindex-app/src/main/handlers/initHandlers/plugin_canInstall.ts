@@ -1,21 +1,20 @@
 import { IpcMainEvent, IpcMainInvokeEvent } from 'electron'
 import { accessSync, constants } from 'node:fs'
-import { getMainWindow, getNpmDir } from '../../../shared/memory'
+import { getMainWindow, getNpmDir } from '../../memory'
 
 import { ConfigData } from '../../../class/ConfigData'
 import Store from 'electron-store'
 import { channels } from '../../../shared/constants'
 import { getMainLog } from '../../main'
 import os from 'node:os'
-import path from 'node:path'
 import sudoPrompt from '@vscode/sudo-prompt'
 
 const store = new Store()
 
 /**
- * Detect if User can install plugins.
- * @param {IpcMainEvent | IpcMainInvokeEvent} _event electron event
- * @returns {Promise<ConfigData>}
+ * Initialization, Detect if User can install plugins.
+ * @param _event MainEvent.
+ * @returns Promise&lt;ConfigData>
  */
 export const initPluginCanInstall = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -51,8 +50,8 @@ export const initPluginCanInstall = (
 
 /**
  * Fix User Rights on NPM Dir (fix bug with Node install on darwin).
- * @param {IpcMainEvent | IpcMainInvokeEvent} _event electron event
- * @returns {Promise<ConfigData>}
+ * @param _event MainEvent.
+ * @returns Promise&lt;ConfigData>
  */
 export const initSudoFixNpmDirRights = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -95,43 +94,4 @@ export const initSudoFixNpmDirRights = (
             `NOT ON DARWIN PLATFORM, CAN'T Fix User rights on NPM Dir.`
         )
     }
-}
-// #region DEPRECATED
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const initPluginCanInstallOLD = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event: IpcMainEvent | IpcMainInvokeEvent
-) => {
-    const mainLog = getMainLog().scope(
-        'main/initialization/initPluginGetLastVersion'
-    )
-    mainLog.debug(
-        `Check latest version of lighthouse-plugin-ecoindex on registry.`
-    )
-    const toReturned = new ConfigData('plugin_installed')
-    return new Promise<ConfigData>((resolve) => {
-        try {
-            const { homedir } = os.userInfo()
-            // for testing `/Users/normaluser/Public` is not writable or readable
-            // const npmPath = path.join(
-            //     os.platform() === 'win32' ? `C:\\` : `/`,
-            //     `Users`,
-            //     `normaluser`,
-            //     `Public`
-            // )
-            // npm config get prefix
-            const npmPath = path.join(homedir, '.npm')
-            accessSync(npmPath, constants.R_OK && constants.W_OK)
-            toReturned.result = true
-            toReturned.message = `User can write`
-        } catch (error) {
-            toReturned.result = false
-            toReturned.message = `User CAN'T write`
-        }
-        getMainWindow().webContents.send(
-            channels.HOST_INFORMATIONS_BACK,
-            toReturned
-        )
-        resolve(toReturned)
-    })
 }

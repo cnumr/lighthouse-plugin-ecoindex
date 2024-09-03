@@ -1,4 +1,4 @@
-import { getWorkDir, isDev } from '../../shared/memory'
+import { getWorkDir, isDev } from '../memory'
 
 import { IpcMainEvent } from 'electron'
 import { _debugLogs } from '../utils/MultiDebugLogs'

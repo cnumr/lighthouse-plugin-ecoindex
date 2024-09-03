@@ -4,8 +4,14 @@ import { ConfigData } from '../../../class/ConfigData'
 import { channels } from '../../../shared/constants'
 import { exec } from 'child_process'
 import { getMainLog } from '../../main'
-import { getMainWindow } from '../../../shared/memory'
+import { getMainWindow } from '../../memory'
 
+/**
+ * Initialization, Read on registery the last version of the `lighthouse-plugin-ecoindex`.
+ * @param _event MainEvent.
+ * @param currentInstalledVersion The current version of `lighthouse-plugin-ecoindex` installed on host.
+ * @returns Promise&lt;ConfigData>
+ */
 export const initPluginGetLastVersion = (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: IpcMainEvent | IpcMainInvokeEvent,

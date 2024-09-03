@@ -58,7 +58,7 @@ function HelloApp() {
         })
 
         const getLanguage = async () => {
-            const gettedLng = await window.store.get(`language`)
+            const gettedLng = await window.store.get(`language`, `fr`)
             if (gettedLng) {
                 i18nResources.changeLanguage(gettedLng)
                 setLanguage(gettedLng)

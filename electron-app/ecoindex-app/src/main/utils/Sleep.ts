@@ -1,5 +1,5 @@
 import { getMainLog } from '../main'
-import { isDev } from '../../shared/memory'
+import { isDev } from '../memory'
 
 /**
  * Utils, wait method.
