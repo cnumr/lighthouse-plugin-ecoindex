@@ -1,5 +1,12 @@
 
 
+## [1.3.42](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.41...electron-v1.3.42) (2024-09-03)
+
+
+### Features
+
+* forcer la génération des json (qui sont mandatory) lors de l'export du statement/Déclaration environnemental [#53](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/53) ([e8664b2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e8664b28cac5f0fcc47f23bbd43bdf8eaf02d7a1))
+
 ## [1.3.41](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.40...electron-v1.3.41) (2024-09-01)
 
 
