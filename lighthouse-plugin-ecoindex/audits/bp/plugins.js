@@ -5,7 +5,7 @@
  */
 
 import { Audit } from 'lighthouse'
-import Plugins from 'lighthouse/core/audits/seo/plugins.js'
+import Plugins from './lighthouse/core/plugins.js'
 import refsURLS from './refs-urls.js'
 
 class PluginsCustomAudit extends Audit {
