@@ -12,10 +12,14 @@ links:
     link: https://asso.greenit.fr/
     target: blank
     icon: organization
-  - text: Ecoindex
+  - text: ecoindex.fr
     link: https://www.ecoindex.fr/
     target: blank
     icon: info
+  - text: EcoindexApp
+    link: https://github.com/cnumr/EcoindexApp/releases/latest
+    target: blank
+    icon: desktop-download
   - text: NPM
     link: https://www.npmjs.com/package/lighthouse-plugin-ecoindex
     target: blank

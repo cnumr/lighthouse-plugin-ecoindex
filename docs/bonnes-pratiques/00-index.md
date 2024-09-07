@@ -1,5 +1,5 @@
 ---
-Label: Introductions
+Label: Introduction
 icon: info
 order: 1000
 ---

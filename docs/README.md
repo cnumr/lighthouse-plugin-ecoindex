@@ -24,11 +24,12 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 - Des rapports HTML, JSON ou la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – une initiative de GreenIT.fr®
 - Des résultats automatiquement ajoutés à votre CI/CD ou un à serveur Lighthouse.
 
-### Il peut être utilisé de trois manières différentes :
+### Il peut être utilisé de quatre manières différentes :
 
 - En ligne de commande `npx lighthouse-plugin-ecoindex <command> <options>` avec le cli fourni par le plugin ;
-- Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>`.
+- Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>` ;
 - Avec [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) ;
+- Avec l'application compagnon [EcoindexApp](https://github.com/cnumr/EcoindexApp/releases/latest), installable et utilisable sur votre ordinateur.
 
 ### En respectant des contraintes permettant :
 
