@@ -1,5 +1,14 @@
 
 
+# [4.2.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.42...4.2.0) (2024-09-06)
+
+
+### Features
+
+* update all dependencies ([a0ed252](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/a0ed25246de1648bbe3b2e5dcffd19df3c895a6b))
+* update because audit was removed from lighthouse 12 ([c8091f4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c8091f4da5ff30b93c3cc56dc214112deca4c528))
+* update to node 20 ([60cab42](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/60cab4276c37c3e284056bfe32d991bdbe7dad81))
+
 ## [4.1.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.0.6...4.1.1) (2024-08-11)
 
 
