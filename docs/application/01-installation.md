@@ -10,7 +10,7 @@ order: 999
 
 ## Commun
 
-Lors du premier lancement, et lors des lancements suivant un ensemble d'actions et de vérifications sont réalisés.
+Après l'installation, lors du premier lancement, et lors des lancements suivant un ensemble d'actions et de vérifications sont réalisés.
 
 Les éléments suivants seront vérifiés et installés :
 
@@ -37,13 +37,19 @@ Pour créer un installateur validé par Microsoft, il faut un compte développeu
 
 #### 1. Téléchargement
 
-Suivant le navigateur utilisé (comme Edge), il vous demandera si vous êtes sur de vouloir télécharger le fichier. Allez au bout des (ennuyeuses) questions.
+Suivant le navigateur utilisé (comme Edge), il vous demandera si vous êtes sûr de vouloir télécharger le fichier. Allez au bout des (ennuyeuses) questions.
+
+|Etape 1|Étape 2|Étape 3|
+|---|---|---|
+|![i1](../static/electron-app-download-1.png) Dans le menu :icon-kebab-horizontal:, Cliquez sur **Conserver**|![i2](../static/electron-app-download-2.png) Cliquez sur **Afficher plus :icon-chevron-down:**|![i3](../static/electron-app-download-3.png) Cliquez sur **Conserver quand même**|
 
 #### 2. Installation
 
-Une fois l'application `ecoindex-app-{version}-win32-x64-setup.exe` téléchargée, vous devrez double-cliquer sur le fichier pour lancer l'installation.
+Une fois l'application `ecoindex-app-{version}-win32-x64-setup.exe` téléchargée, vous devrez double-cliquer sur le fichier pour lancer l'installation. Elle aussi vous posera des questions de sécurité.
 
-> TODO (ajouter les étapes et les captures d'écrans)
+|Etape 1|Étape 2|
+|---|---|
+|![e1](../static/electron-app-install-1.png) Cliquez sur **Insformations complémentaires**|![i2](../static/electron-app-install-2.png) Cliquez sur **Exécuter quand même**|
 
 ### Mac (M1 ou Intel)
 
