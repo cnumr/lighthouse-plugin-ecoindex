@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779012819236">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779099444387">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -34,11 +34,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.779012819236" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.779099444387" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779012819236" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779099444387" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779012819236" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779099444387" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -282,7 +282,8 @@
         <span>Usage</span>
     </h2>
 </doc-anchor-target>
-<p>Ce mode &quot;complexe&quot; permet de mesurer des parcours entier.</p>
+<p>Ce mode complet permet de mesurer des parcours entier.</p>
+<p>Un fichier JSON sauvegarde vos paramètres afin de relancer simplement et de multiple fois la mesure de vos parcours pour visualiser l&#x27;évolution de l&#x27;impact écologique des pages, suite à vos actions.</p>
 <doc-anchor-target id="il-permet-dobtenir-">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#il-permet-dobtenir-">#</doc-anchor-trigger>
@@ -291,7 +292,7 @@
 </doc-anchor-target>
 <ul>
 <li>Les mesures d&#x27;impact environnementale multicritères de votre site ;</li>
-<li>Une évalation de la mise en oeuvre des bonnes pratiques du Green IT ;</li>
+<li>Une évalation de la mise en oeuvre des bonnes pratiques du Green IT.</li>
 </ul>
 <doc-anchor-target id="en-générant-">
     <h3>
@@ -310,8 +311,194 @@
     </h2>
 </doc-anchor-target>
 <blockquote>
-<p>TODO</p>
+<p>Nous allons détailler l&#x27;écran de haut en bas.</p>
 </blockquote>
+<doc-anchor-target id="1-sélectionner-le-dossier-de-génération">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-sélectionner-le-dossier-de-génération">#</doc-anchor-trigger>
+        <span>1. Sélectionner le dossier de génération</span>
+    </h3>
+</doc-anchor-target>
+<p>Spécifiez le dossier où vous voudrez sauvegarder les mesures.</p>
+<ul>
+<li>Si le dossier est vide, une configuration par défaut est proposée, à adapter ;</li>
+<li>Si le dossier contient déjà un fichier de configuration, elle sera automatiquement rechargée et remplacera la configuration par défaut.</li>
+</ul>
+<doc-anchor-target id="2-configuration-des-parcours">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-configuration-des-parcours">#</doc-anchor-trigger>
+        <span>2. Configuration des parcours</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="gestion-du-fichier-de-configuration">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#gestion-du-fichier-de-configuration">#</doc-anchor-trigger>
+        <span>Gestion du fichier de configuration</span>
+    </h4>
+</doc-anchor-target>
+<p>Les boutons <code v-pre>Recharger</code> / <code v-pre>Enregistrer</code> agissent sur le fichier de sauvegarde.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-300"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-300" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5><span class="docs-emoji">&#x26A1;</span> Tip <span class="docs-emoji">&#x26A1;</span></h5>
+<p>Lors du lancement de la mesure, une sauvegarde du fichier JSON est automatiquement effectuée.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="extra-header">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#extra-header">#</doc-anchor-trigger>
+        <span>Extra-Header</span>
+    </h4>
+</doc-anchor-target>
+<p>Cette partie gère les données envoyées dans les headers de chaque chargement de page. Elle peut permettre de passer des paramètres d&#x27;authentifications, de gestion de cookies...</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-300"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-300" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5><span class="docs-emoji">&#x26A1;</span> Tip <span class="docs-emoji">&#x26A1;</span></h5>
+<p>Si vous n&#x27;en avez pas l&#x27;usage, vous pouvez mettre n&#x27;importe quoi, ça n&#x27;a pas d&#x27;impact direct sur la mesure.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="choisissez-les-rapports-que-vous-souhaitez-générer">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#choisissez-les-rapports-que-vous-souhaitez-générer">#</doc-anchor-trigger>
+        <span>Choisissez les rapports que vous souhaitez générer</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>HTML: Les rapports Lighthouse au format HTML contenant l&#x27;écoindex ;</li>
+<li>JSON: Les rapports Lighthouse au format JSON contenant l&#x27;écoindex ;</li>
+<li>Statement : La déclaration environnementale.</li>
+</ul>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5><span class="docs-emoji">&#x1F6A8;</span> Point d&#x27;attention <span class="docs-emoji">&#x1F6A8;</span></h5>
+<p>Si vous souhaitez générer la déclaration environnementale, la génération des fichiers JSON doit être obligatoirement sélectionnée.</p>
+        </div>
+    </div>
+</div>
+<doc-anchor-target id="parcours">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#parcours">#</doc-anchor-trigger>
+        <span>Parcours</span>
+    </h4>
+</doc-anchor-target>
+<p>Vous pouvez ajouter et retirer des parcours, selon vos besoins.</p>
+<p><strong>Composant d&#x27;un parcours :</strong></p>
+<ul>
+<li><strong>Nom du parcours</strong> : obligatoire car servant au nom du fichier de sortie (HTML et JSON) ;</li>
+<li><strong>Objectif</strong> : Information nécessaire pour la déclaration environnementale ;</li>
+<li><strong>Description</strong> : Information nécessaire pour la déclaration environnementale ;</li>
+<li><strong>Parcours des Meilleurs pages</strong> : Information nécessaire pour la déclaration environnementale, 1 seul parcours doit être identifié comme <code v-pre>Parcours des Meilleurs pages</code> ;</li>
+<li><strong>Urls à mesurer</strong> : Vous pouvez ajouter et retirer des URLS, selon vos besoins.</li>
+</ul>
+<doc-anchor-target id="3-lancer-la-mesure">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-lancer-la-mesure">#</doc-anchor-trigger>
+        <span>3. Lancer la mesure</span>
+    </h4>
+</doc-anchor-target>
+<ol>
+<li>Cliquez sur mesurer et patientez ;</li>
+<li>Contrairement à la mesure simple, votre navigateur web ne vas pas se lancer, vu que plusieurs fichiers vont être générés. Votre explorateur de fichier s&#x27;ouvrira, à la racine du dossier spécifié au point 1.</li>
+</ol>
+<doc-anchor-target id="raports">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#raports">#</doc-anchor-trigger>
+        <span>Raports</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="../../static/mesure-json-folder.png" alt="Le dossier des mesures et le JSON de configuration">
+    <figcaption class="caption">Le dossier des mesures et le JSON de configuration</figcaption>
+</figure>
+</p>
+<p><strong>Contenu du dossier racine</strong></p>
+<ul>
+<li><strong>input-file.json</strong> : Le fichier de configuration de mesure de parcours ;</li>
+<li>Des dossiers contenant vos mesures, au format date &amp; heure.</li>
+</ul>
+<p><strong>Contenu d&#x27;un dossier de mesure</strong></p>
+<blockquote>
+<p>On part du postulat que vous effectué 1 mesure de 2 parcours, nommé &quot;Best pages&quot;, &quot;Discovery&quot;. Vous avez demandez la génération des fichiers HTML, JSON et la déclaration environnementale.</p>
+</blockquote>
+<ul>
+<li><code v-pre>*.report.html</code> : Les rapports Lighthouse+ecoindex HTML :
+<ul>
+<li>best-pages.report.html ;</li>
+<li>discovery.report.html ;</li>
+</ul>
+</li>
+<li><code v-pre>*.report.json</code> : Les rapports Lighthouse+ecoindex JSON :
+<ul>
+<li>best-pages.report.json ;</li>
+<li>discovery.report.json ;</li>
+</ul>
+</li>
+<li><code v-pre>summary.report.json</code> : Une version simplifié et fusionné des fichiers <code v-pre>*.report.json</code> ;</li>
+<li>Fichiers statements pour la déclaration environnementale (EIS) :
+<ul>
+<li>Un fichier <code v-pre>README.md</code> expliquant comment utiliser l&#x27;EIS ;</li>
+<li>Un dossier <code v-pre>assets</code> contenant des éléments images ;</li>
+<li>Un dossier <code v-pre>statements</code> contenant 3 versions de l&#x27;EIS :
+<ul>
+<li><code v-pre>.html</code></li>
+<li><code v-pre>.md</code> (Markdown)</li>
+<li><code v-pre>.json</code> La version JSON du EIS doit être déposé à la racine du site, afin d&#x27;être consultable suivant cette URL type <code v-pre>https://domain.tld/ecoindex-environmental-statement.json</code> (domain.tld est à remplacer par votre nom de domain).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-300"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-300" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>La version JSON du EIS</h5>
+<p>Ce fichier est généré en prévision d&#x27;une lecture automatisée des EIS par des bots.</p>
+        </div>
+    </div>
+</div>
 
                                 
                                 <!-- Required only on API pages -->
