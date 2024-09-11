@@ -1,11 +1,15 @@
+import {
+  checkIfMandatoryBrowserInstalled,
+  installMandatoryBrowser,
+} from '../install-browser.cjs'
 import { dateToFileString, listAudits } from './commands.js'
 import { generateEnvironmentalStatement, runCourses } from './run.js'
 
-import logSymbols from 'log-symbols'
-import path from 'path'
+import { cleanPath } from './converters.js'
 import { fileURLToPath } from 'url'
 import { getFlags } from './cli-flags.js'
-import { cleanPath } from './converters.js'
+import logSymbols from 'log-symbols'
+import path from 'path'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -58,6 +62,16 @@ async function begin() {
     }
 
     console.log(`${logSymbols.success} Mesure(s) and report(s) finished 👋`)
+    process.exit(0)
+  } else if (cliFlags._[0] === 'browser-install') {
+    await installMandatoryBrowser().catch(error => {
+      console.log(error)
+    })
+    process.exit(0)
+  } else if (cliFlags._[0] === 'browser-check') {
+    await checkIfMandatoryBrowserInstalled().catch(error => {
+      console.log(error)
+    })
     process.exit(0)
   }
   console.error(
