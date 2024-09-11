@@ -1,5 +1,12 @@
 
 
+## [5.0.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.1...5.0.2) (2024-09-11)
+
+
+### Features
+
+* better browser install return ([247cbde](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/247cbdedb34b29722025571e8c9735f38559a839))
+
 ## [5.0.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.0...5.0.1) (2024-09-11)
 
 
