@@ -25,12 +25,13 @@ const installMandatoryBrowser = async () => {
     `${info} Install ${Browser.CHROMEHEADLESSSHELL}@${PUPPETEER_BROWSER_BUILD_ID} start ⏳`,
   )
 
-  await install({
+  const browserInstalled = await install({
     browser: Browser.CHROMEHEADLESSSHELL,
     buildId: PUPPETEER_BROWSER_BUILD_ID,
     cacheDir,
   })
   console.log(`${success} Install finished 👋`)
+  return browserInstalled
 }
 
 /**
