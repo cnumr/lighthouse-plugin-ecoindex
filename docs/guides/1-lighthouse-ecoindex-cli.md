@@ -25,12 +25,19 @@ A la sortie, vous obtiendrez :
 ## Installation
 
 !!!info
-Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`, mais il écessite `puppeteer` et Chrome à la version `121.0.6167.85`.
+Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`, mais il écessite `puppeteer` et Chrome à une version spécifique (la ou une des dernières).
 !!!
 
 ```bash
 # Installation de `puppeteer` et de Chrome
-npx puppeteer browsers install chrome@121.0.6167.85
+npx lighthouse-plugin-ecoindex browser-install
+```
+
+Pour vérifier l'installation
+
+```bash
+# Vérification de `puppeteer` et de Chrome
+npx lighthouse-plugin-ecoindex browser-check
 ```
 
 Si vous le désirez, vous pouvez installer le plugin via npm :
