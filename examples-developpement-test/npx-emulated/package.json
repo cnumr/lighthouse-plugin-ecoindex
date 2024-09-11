@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Test locally `npx-emulated`",
   "scripts": {
+    "help": "node lighthouse-plugin-ecoindex/cli/index.js --help",
+    "browser:install": "node lighthouse-plugin-ecoindex/cli/index.js browser-install",
+    "browser:check": "node lighthouse-plugin-ecoindex/cli/index.js browser-check",
     "direct:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
     "direct:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",
     "file:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -j ./input-file.json",
