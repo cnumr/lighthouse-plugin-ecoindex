@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779353586918">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779395098940">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.779353586918" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.779395098940" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779353586918" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779395098940" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779353586918" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.779353586918" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779395098940" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.779395098940" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -58,7 +58,7 @@
                                 <img class="max-h-10 hidden dark:inline-block" src="../../static/greenit_icone_intro-alt.png">
                             </span>
                             <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Plugin Ecoindex Lighthouse</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">4.2.1</span>
+                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">5.0.0</span>
                     </div>
         
                     <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
@@ -311,13 +311,18 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>Le plugin ne necessite pas d&#x27;installation, il est directement utilisable via <code v-pre>npx</code>, mais il écessite <code v-pre>puppeteer</code> et Chrome à la version <code v-pre>121.0.6167.85</code>.</p>
+<p>Le plugin ne necessite pas d&#x27;installation, il est directement utilisable via <code v-pre>npx</code>, mais il écessite <code v-pre>puppeteer</code> et Chrome à une version spécifique (la ou une des dernières).</p>
         </div>
     </div>
 </div>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash"># Installation de `puppeteer` et de Chrome
-npx puppeteer browsers install chrome@121.0.6167.85</code></pre>
+npx lighthouse-plugin-ecoindex browser-install</code></pre>
+</doc-codeblock></div>
+<p>Pour vérifier l&#x27;installation</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash"># Vérification de `puppeteer` et de Chrome
+npx lighthouse-plugin-ecoindex browser-check</code></pre>
 </doc-codeblock></div>
 <p>Si vous le désirez, vous pouvez installer le plugin via npm :</p>
 <div class="codeblock-wrapper"><doc-codeblock>
