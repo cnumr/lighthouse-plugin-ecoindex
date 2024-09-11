@@ -1,5 +1,17 @@
 
 
+# [5.0.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.2.1...5.0.0) (2024-09-11)
+
+
+### Features
+
+* **Puppeteer Browser:** use specific version of Puppeteer Brower in mesure process ([e4fe1d6](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e4fe1d6f754dda828ab3e46584bd21ef55c35ada))
+
+
+### BREAKING CHANGES
+
+* **Puppeteer Browser:** install browser with `npx lighthouse-plugin-ecoindex browser-install`
+
 ## [4.2.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.2.0...4.2.1) (2024-09-11)
 
 
