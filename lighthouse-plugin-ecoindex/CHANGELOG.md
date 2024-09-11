@@ -1,5 +1,12 @@
 
 
+## [4.2.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.2.0...4.2.1) (2024-09-11)
+
+
+### Features
+
+* add installer and verify browser ([116e4f5](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/116e4f53df8356b46cc6c1cca9225bebf4984cc0))
+
 # [4.2.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/electron-v1.3.42...4.2.0) (2024-09-06)
 
 
