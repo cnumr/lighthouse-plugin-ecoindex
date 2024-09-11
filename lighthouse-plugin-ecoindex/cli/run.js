@@ -37,9 +37,14 @@ async function runCourse(urls, cliFlags, course = undefined) {
   } else {
     console.log(`${logSymbols.info} Mesure(s) start 🚀`)
   }
+  const options = await getPuppeteerConfig()
+  console.debug(
+    `${logSymbols.info} puppeteer executablePath`,
+    options.executablePath,
+  )
 
   // Launch a headless browser.
-  const browser = await puppeteer.launch(getPuppeteerConfig)
+  const browser = await puppeteer.launch(options)
 
   // Create a new page.
   const page = await browser.newPage()

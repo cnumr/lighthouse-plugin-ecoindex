@@ -1,11 +1,12 @@
 import * as constants from 'lighthouse/core/config/constants.js'
 
+import _slugify from 'slugify'
+import { cleanPath } from './converters.js'
 import fs from 'fs'
+import { getMandatoryBrowserExecutablePath } from '../install-browser.cjs'
+import { isDate } from 'util/types'
 import logSymbols from 'log-symbols'
 import path from 'path'
-import _slugify from 'slugify'
-import { isDate } from 'util/types'
-import { cleanPath } from './converters.js'
 
 const moduleDir = '../'
 
@@ -194,14 +195,18 @@ const userAgentStrings = [
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
 ]
 
-const getPuppeteerConfig = {
-  headless: 'new',
-  args: [
-    '--disable-gpu',
-    '--disable-dev-shm-usage',
-    '--disable-setuid-sandbox',
-    '--no-sandbox',
-  ],
+async function getPuppeteerConfig() {
+  return {
+    headless: true,
+    executablePath: await getMandatoryBrowserExecutablePath(),
+    ignoreHTTPSErrors: true,
+    args: [
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+      '--disable-setuid-sandbox',
+      '--no-sandbox',
+    ],
+  }
 }
 
 function getEnvStatementsObj(exportPath, withStatement = true) {

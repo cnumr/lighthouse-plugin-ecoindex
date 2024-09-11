@@ -2,6 +2,8 @@ const {
   Browser,
   install,
   getInstalledBrowsers,
+  computeExecutablePath,
+  detectBrowserPlatform,
 } = require('@puppeteer/browsers')
 const os = require('node:os')
 const path = require('path')
@@ -48,15 +50,47 @@ const checkIfMandatoryBrowserInstalled = async () => {
   )
 
   console.debug(`Installed Puppeteer browsers list`, installedBrowsers)
-  console.debug(
+  console.log(
     `Puppeteer mandatory browser is installed?`,
     mandatoryBrowserIsInstalled.length > 0,
   )
   return mandatoryBrowserIsInstalled.length > 0
 }
 
+/**
+ * Get the executablePath of the Mandatory Browser.
+ * @returns {string}
+ */
+const getMandatoryBrowserExecutablePath = async () => {
+  try {
+    const cacheDir = path.join(os.homedir(), '.cache', 'puppeteer')
+    const browser = Browser.CHROMEHEADLESSSHELL
+    const platform = detectBrowserPlatform()
+    const options = {
+      browser,
+      buildId: PUPPETEER_BROWSER_BUILD_ID,
+      cacheDir,
+      platform,
+    }
+    // console.debug(`computeExecutablePath(options)`, options)
+    const mandatoryBrowserExecutablePath = computeExecutablePath(options)
+    // const installedBrowsers = await getInstalledBrowsers({ cacheDir })
+    // console.debug(`Installed Puppeteer browsers list`, installedBrowsers)
+    if (mandatoryBrowserExecutablePath === '')
+      throw new Error('Browser not found.')
+    const outputArr = mandatoryBrowserExecutablePath.split(path.sep)
+    // outputArr.pop()
+    const output = outputArr.join(path.sep)
+    // console.log(`MandatoryBrowserExecutablePath`, output)
+    return output
+  } catch (error) {
+    throw new Error(`Browser not found: ${error}`)
+  }
+}
+
 module.exports = {
   installMandatoryBrowser,
   checkIfMandatoryBrowserInstalled,
+  getMandatoryBrowserExecutablePath,
   PUPPETEER_BROWSER_BUILD_ID,
 }
