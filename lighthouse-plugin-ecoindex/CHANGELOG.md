@@ -1,5 +1,12 @@
 
 
+## [5.0.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.0...5.0.1) (2024-09-11)
+
+
+### Features
+
+* better return (with version number `buildId`) ([11b67b9](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/11b67b90377a327d4bba1b93e9450e7cab531fb9))
+
 # [5.0.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/4.2.1...5.0.0) (2024-09-11)
 
 

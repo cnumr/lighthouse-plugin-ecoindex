@@ -33,7 +33,7 @@
     "lighthouse-ecoindex": "./cli/index.js",
     "lighthouse-plugin-ecoindex": "./cli/index.js"
   },
-  "version": "5.0.0",
+  "version": "5.0.1",
   "type": "module",
   "scripts": {
     "release": "release-it"
