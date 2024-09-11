@@ -35,7 +35,7 @@ const installMandatoryBrowser = async () => {
 
 /**
  * Test if the Puppeteer Browser with the `buildId` equal to `PUPPETEER_BROWSER_BUILD_ID`.
- * @returns {boolean}
+ * @returns {boolean|null}
  */
 const checkIfMandatoryBrowserInstalled = async () => {
   const { info } = (await import('log-symbols')).default
@@ -55,6 +55,8 @@ const checkIfMandatoryBrowserInstalled = async () => {
     mandatoryBrowserIsInstalled.length > 0,
   )
   return mandatoryBrowserIsInstalled.length > 0
+    ? mandatoryBrowserIsInstalled[0]
+    : null
 }
 
 /**
