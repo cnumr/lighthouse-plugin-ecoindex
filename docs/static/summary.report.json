@@ -1,0 +1,416 @@
+[
+	[
+		{
+			"url": "https://www.ecoindex.fr/",
+			"score": "1.00",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 1,
+				"lighthouse-plugin-ecoindex": 0.88
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.88",
+					"displayValue": "88/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.85",
+					"displayValue": "1.85 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.24",
+					"displayValue": "1.24 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 195,
+					"displayValue": "195 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 31509,
+					"displayValue": "32 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/comment-ca-marche/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.84
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.84",
+					"displayValue": "84/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.97",
+					"displayValue": "1.97 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.31",
+					"displayValue": "1.31 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 294,
+					"displayValue": "294 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 39946,
+					"displayValue": "40 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 6,
+					"displayValue": "6 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/ecoconception/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.84
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.84",
+					"displayValue": "84/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.97",
+					"displayValue": "1.97 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.31",
+					"displayValue": "1.31 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 299,
+					"displayValue": "299 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 34801,
+					"displayValue": "35 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/a-propos/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.88
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.88",
+					"displayValue": "88/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.87",
+					"displayValue": "1.87 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.25",
+					"displayValue": "1.25 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 213,
+					"displayValue": "213 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 32207,
+					"displayValue": "32 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/nous-rejoindre/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.9
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.90",
+					"displayValue": "90/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.79",
+					"displayValue": "1.79 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.19",
+					"displayValue": "1.19 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 124,
+					"displayValue": "124 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 30646,
+					"displayValue": "31 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		}
+	],
+	[
+		{
+			"url": "https://www.ecoindex.fr/",
+			"score": "1.00",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 1,
+				"lighthouse-plugin-ecoindex": 0.88
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.88",
+					"displayValue": "88/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.85",
+					"displayValue": "1.85 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.24",
+					"displayValue": "1.24 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 195,
+					"displayValue": "195 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 31508,
+					"displayValue": "32 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/comment-ca-marche/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.84
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.84",
+					"displayValue": "84/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.97",
+					"displayValue": "1.97 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.31",
+					"displayValue": "1.31 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 294,
+					"displayValue": "294 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 39946,
+					"displayValue": "40 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 6,
+					"displayValue": "6 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/ecoconception/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.84
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.84",
+					"displayValue": "84/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.97",
+					"displayValue": "1.97 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.31",
+					"displayValue": "1.31 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 299,
+					"displayValue": "299 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 34808,
+					"displayValue": "35 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/a-propos/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.88
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.88",
+					"displayValue": "88/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.87",
+					"displayValue": "1.87 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.25",
+					"displayValue": "1.25 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 213,
+					"displayValue": "213 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 32207,
+					"displayValue": "32 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		},
+		{
+			"url": "https://www.ecoindex.fr/nous-rejoindre/",
+			"score": "0.98",
+			"detail": {
+				"performance": 1,
+				"accessibility": 1,
+				"best-practices": 1,
+				"seo": 0.92,
+				"lighthouse-plugin-ecoindex": 0.9
+			},
+			"ecoindex": {
+				"eco-index-score": {
+					"score": "0.90",
+					"displayValue": "90/100"
+				},
+				"eco-index-grade": {
+					"score": "A",
+					"displayValue": "A"
+				},
+				"eco-index-water": {
+					"score": "1.79",
+					"displayValue": "1.79 cl"
+				},
+				"eco-index-ghg": {
+					"score": "1.19",
+					"displayValue": "1.19 eqCO2"
+				},
+				"eco-index-nodes": {
+					"score": 124,
+					"displayValue": "124 DOM elements"
+				},
+				"eco-index-size": {
+					"score": 30621,
+					"displayValue": "31 KiB (transfered)"
+				},
+				"eco-index-requests": {
+					"score": 5,
+					"displayValue": "5 requests"
+				}
+			}
+		}
+	]
+]
