@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779482905034">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.779483500648">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.779482905034" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.779483500648" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779482905034" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.779483500648" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779482905034" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.779482905034" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.779483500648" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.5.0.779483500648" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -320,7 +320,425 @@
     </div>
 </div>
 <p>Exemple de fichier généré lors d&#x27;une mesure de parcours.</p>
-:::code source=&quot;../static/summary.report.json&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">[
+	[
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/&quot;,
+			&quot;score&quot;: &quot;1.00&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 1,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.88
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.88&quot;,
+					&quot;displayValue&quot;: &quot;88/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.85&quot;,
+					&quot;displayValue&quot;: &quot;1.85 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.24&quot;,
+					&quot;displayValue&quot;: &quot;1.24 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 195,
+					&quot;displayValue&quot;: &quot;195 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 31509,
+					&quot;displayValue&quot;: &quot;32 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/comment-ca-marche/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.84
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.84&quot;,
+					&quot;displayValue&quot;: &quot;84/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.97&quot;,
+					&quot;displayValue&quot;: &quot;1.97 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.31&quot;,
+					&quot;displayValue&quot;: &quot;1.31 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 294,
+					&quot;displayValue&quot;: &quot;294 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 39946,
+					&quot;displayValue&quot;: &quot;40 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 6,
+					&quot;displayValue&quot;: &quot;6 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/ecoconception/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.84
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.84&quot;,
+					&quot;displayValue&quot;: &quot;84/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.97&quot;,
+					&quot;displayValue&quot;: &quot;1.97 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.31&quot;,
+					&quot;displayValue&quot;: &quot;1.31 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 299,
+					&quot;displayValue&quot;: &quot;299 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 34801,
+					&quot;displayValue&quot;: &quot;35 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/a-propos/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.88
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.88&quot;,
+					&quot;displayValue&quot;: &quot;88/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.87&quot;,
+					&quot;displayValue&quot;: &quot;1.87 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.25&quot;,
+					&quot;displayValue&quot;: &quot;1.25 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 213,
+					&quot;displayValue&quot;: &quot;213 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 32207,
+					&quot;displayValue&quot;: &quot;32 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/nous-rejoindre/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.9
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.90&quot;,
+					&quot;displayValue&quot;: &quot;90/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.79&quot;,
+					&quot;displayValue&quot;: &quot;1.79 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.19&quot;,
+					&quot;displayValue&quot;: &quot;1.19 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 124,
+					&quot;displayValue&quot;: &quot;124 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 30646,
+					&quot;displayValue&quot;: &quot;31 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		}
+	],
+	[
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/&quot;,
+			&quot;score&quot;: &quot;1.00&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 1,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.88
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.88&quot;,
+					&quot;displayValue&quot;: &quot;88/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.85&quot;,
+					&quot;displayValue&quot;: &quot;1.85 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.24&quot;,
+					&quot;displayValue&quot;: &quot;1.24 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 195,
+					&quot;displayValue&quot;: &quot;195 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 31508,
+					&quot;displayValue&quot;: &quot;32 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/comment-ca-marche/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.84
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.84&quot;,
+					&quot;displayValue&quot;: &quot;84/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.97&quot;,
+					&quot;displayValue&quot;: &quot;1.97 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.31&quot;,
+					&quot;displayValue&quot;: &quot;1.31 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 294,
+					&quot;displayValue&quot;: &quot;294 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 39946,
+					&quot;displayValue&quot;: &quot;40 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 6,
+					&quot;displayValue&quot;: &quot;6 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/ecoconception/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.84
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.84&quot;,
+					&quot;displayValue&quot;: &quot;84/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.97&quot;,
+					&quot;displayValue&quot;: &quot;1.97 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.31&quot;,
+					&quot;displayValue&quot;: &quot;1.31 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 299,
+					&quot;displayValue&quot;: &quot;299 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 34808,
+					&quot;displayValue&quot;: &quot;35 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/a-propos/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.88
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.88&quot;,
+					&quot;displayValue&quot;: &quot;88/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.87&quot;,
+					&quot;displayValue&quot;: &quot;1.87 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.25&quot;,
+					&quot;displayValue&quot;: &quot;1.25 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 213,
+					&quot;displayValue&quot;: &quot;213 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 32207,
+					&quot;displayValue&quot;: &quot;32 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		},
+		{
+			&quot;url&quot;: &quot;https://www.ecoindex.fr/nous-rejoindre/&quot;,
+			&quot;score&quot;: &quot;0.98&quot;,
+			&quot;detail&quot;: {
+				&quot;performance&quot;: 1,
+				&quot;accessibility&quot;: 1,
+				&quot;best-practices&quot;: 1,
+				&quot;seo&quot;: 0.92,
+				&quot;lighthouse-plugin-ecoindex&quot;: 0.9
+			},
+			&quot;ecoindex&quot;: {
+				&quot;eco-index-score&quot;: {
+					&quot;score&quot;: &quot;0.90&quot;,
+					&quot;displayValue&quot;: &quot;90/100&quot;
+				},
+				&quot;eco-index-grade&quot;: {
+					&quot;score&quot;: &quot;A&quot;,
+					&quot;displayValue&quot;: &quot;A&quot;
+				},
+				&quot;eco-index-water&quot;: {
+					&quot;score&quot;: &quot;1.79&quot;,
+					&quot;displayValue&quot;: &quot;1.79 cl&quot;
+				},
+				&quot;eco-index-ghg&quot;: {
+					&quot;score&quot;: &quot;1.19&quot;,
+					&quot;displayValue&quot;: &quot;1.19 eqCO2&quot;
+				},
+				&quot;eco-index-nodes&quot;: {
+					&quot;score&quot;: 124,
+					&quot;displayValue&quot;: &quot;124 DOM elements&quot;
+				},
+				&quot;eco-index-size&quot;: {
+					&quot;score&quot;: 30621,
+					&quot;displayValue&quot;: &quot;31 KiB (transfered)&quot;
+				},
+				&quot;eco-index-requests&quot;: {
+					&quot;score&quot;: 5,
+					&quot;displayValue&quot;: &quot;5 requests&quot;
+				}
+			}
+		}
+	]
+]</code></pre>
+</doc-codeblock></div>
+
                                 
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
