@@ -25,9 +25,9 @@ Un devcontainers à été mis en place pour faciliter le développement. Il suff
 
 - Cloner le projet
 - Ouvrir le projet dans Visual Studio Code
-- Ouvrir le dossier `.devcontainer` et cliquer sur le bouton `Reopen in Container`
+- Il va détecter la présence du dossier `.devcontainer` et cliquer sur le bouton `Reopen in Container` attendez le chargement...
 - Ouvrir un terminal et lancer la commande `npm install`
-- Consulter les sous-dossiers de `examples` pour voir les exemples d'utilisation et suivre les `README.md` pour les lancer.
+- Consulter les sous-dossiers de `examples-developpement-test` pour voir les exemples d'utilisation et suivre les `README.md` pour les lancer.
 
 Ce devcontainer contient notamment un [serveur Lighthouse](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/server.md) pour tester le plugin en mode [!badge text="Lighthouse CI" icon="pulse"](./guides/3-lighthouse-ci.md)
 

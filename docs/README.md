@@ -1,7 +1,7 @@
 ---
 label: Home
 icon: home
-order: 1000
+order: 2000
 ---
 
 ![](./static/ecoindex-intro.png)
@@ -29,7 +29,7 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 - En ligne de commande `npx lighthouse-plugin-ecoindex <command> <options>` avec le cli fourni par le plugin ;
 - Avec [Lighthouse cli](https://github.com/GoogleChrome/lighthouse#using-the-node-cli) `npm lighthouse <url> <options>` ;
 - Avec [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci#readme) ;
-- Avec l'application compagnon [EcoindexApp](https://github.com/cnumr/EcoindexApp/releases/latest), installable et utilisable sur votre ordinateur.
+- Avec l'application compagnon [EcoindexApp](https://github.com/cnumr/EcoindexApp/releases/latest), installable et utilisable **sans limitations** sur votre ordinateur.
 
 ### En respectant des contraintes permettant :
 
@@ -71,9 +71,10 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 
 ## Documentation des usages
 
-[!ref lighthouse-plugin-ecoindex CLI](/guides/1-lighthouse-ecoindex-cli.md)
-[!ref Lighthouse CLI](/guides/2-lighthouse-cli.md)
-[!ref Lighthouse CI](/guides/3-lighthouse-ci.md)
+[!ref icon="terminal" text="lighthouse-plugin-ecoindex CLI"](./guides/1-lighthouse-ecoindex-cli.md)
+[!ref icon="terminal" text="Lighthouse CLI"](./guides/2-lighthouse-cli.md)
+[!ref icon="pulse" text="Lighthouse CI"](./guides/3-lighthouse-ci.md)
+[!ref icon="device-desktop" text="EcoindexApp"](./application/00-index.md)
 
 ![Details of plugin results](./static/ecoindex-results.png)
 

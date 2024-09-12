@@ -13,7 +13,9 @@ L'application reste à tester et la documentation à écrire.
 **N'hésitez pas à nous faire des retours !**
 !!!
 
-Si vous rencontrez un problème au lancement de l'application, n'hésitez pas à nous contacter à renaud@greenit.fr.
+Si vous rencontrez un problème au lancement de l'application, lors des mesures... n'hésitez pas à contacter renaud@greenit.fr ou via le matermost de l'association Green IT.
+
+[!ref Mattermost de l'association](https://chat.greenit.eco/)
 
 Envoyez le contenu du fichier `log` que vous pourrez consulter depuis l'application dans `Aide/Help > Log...`
 
@@ -23,4 +25,4 @@ Vous trouverez en bas de l'application, un élément qui peut se plier/déplier 
 
 Vous y touverez la console (ce que retourne `lighthouse-plugin-ecoindex`) et les éléments testés et retournés lors du lancement de l'installation (que l'on peut retrouver dans les logs).
 
-![debug-pan](../static/electron-app-debug.png)
+![Debug zone](../static/electron-app-debug.png)

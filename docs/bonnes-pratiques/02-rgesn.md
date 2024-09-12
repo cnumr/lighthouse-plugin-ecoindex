@@ -1,5 +1,5 @@
 ---
-label: Ref. RGESN
+label: Ref. RGESN v0
 icon: file-badge
 order: 200
 ---
@@ -8,7 +8,7 @@ order: 200
 
 [!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/)
 
-## Liste (partielle) des critères RGESN
+## Liste (partielle) des critères RGESN v0
 
 > Liste des critères du RGESN possiblement mesurables avec lighthouse-ecoindex
 
@@ -31,14 +31,16 @@ order: 200
 - [ ] 8.6 Le service numérique utilise-t-il un hébergement dont son WUE (Water Usage Effectiveness) est communiqué ?
 - [ ] 8.7 Le service numérique utilise-t-il un hébergement dont la consommation d'électricité est majoritairement d'origine renouvelable ?
 
-## RGESN v1
-
-[!ref icon="file-badge" target="blank" text="Référentiel RGESN à télécharger (data.gouv)"](https://www.data.gouv.fr/fr/datasets/referentiel-general-decoconception-de-services-numeriques/)
-
-==- RGESN v1 au format "JSON"
+==- RGESN v0 au format "JSON"
 
 > https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1
+
+**Attention, il est indique v1 dans le fichier, mais c'est la v0.**
 
 :::code source="./02-rgesn_v1.json" :::
 
 ===
+
+## RGESN a télécharger
+
+[!ref icon="file-badge" target="blank" text="Référentiel RGESN à télécharger (data.gouv)"](https://www.data.gouv.fr/fr/datasets/referentiel-general-decoconception-de-services-numeriques/)

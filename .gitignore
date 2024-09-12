@@ -6,6 +6,8 @@ node_modules
 *.report.html
 *.report.json
 **/reports/**/*.*
+!docs/*.report.json
+!docs/**/reports/**/*.*
 flags-*
 lhr-*
 reports/*

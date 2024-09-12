@@ -28,25 +28,27 @@ A la sortie, vous obtiendrez :
 Le plugin ne necessite pas d'installation, il est directement utilisable via `npx`, mais il écessite `puppeteer` et Chrome à une version spécifique (la ou une des dernières).
 !!!
 
-```bash
-# Installation de `puppeteer` et de Chrome
-npx lighthouse-plugin-ecoindex browser-install
-```
-
-Pour vérifier l'installation
-
-```bash
-# Vérification de `puppeteer` et de Chrome
-npx lighthouse-plugin-ecoindex browser-check
-```
-
 Si vous le désirez, vous pouvez installer le plugin via npm :
 
 ```bash
 # en global
 npm install -g lighthouse-plugin-ecoindex
-# ou dans un projet
-npm install --save-dev lighthouse-plugin-ecoindex
+# ou directement en lançant l'aide
+npx lighthouse-plugin-ecoindex -h
+```
+
+Un navigateur, sans interface graphique et nécessaire aux mesures, doit s'intaller en même temps que l'installation du plugin, mais vous pouvez le lancer à la main via :
+
+```bash
+# Installation de Chrome headless (sans interface graphique)
+npx lighthouse-plugin-ecoindex browser-install
+```
+
+Pour vérifier l'installation de ce navigateur :
+
+```bash
+# Vérification de la bonne installation de Chrome headless (sans interface graphique)
+npx lighthouse-plugin-ecoindex browser-check
 ```
 
 ## Utilisation
@@ -68,6 +70,18 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 `npx lighthouse-plugin-ecoindex convert <options>`
 
 Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l'initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n'a pas été générée lors de la collecte.
+
++++ browser-install
+
+`npx lighthouse-plugin-ecoindex browser-install`
+
+Installation de Chrome headless (sans interface graphique)
+
++++ browser-check
+
+`npx lighthouse-plugin-ecoindex browser-check`
+
+Vérification de la bonne installation de Chrome headless (sans interface graphique).
 
 +++
 

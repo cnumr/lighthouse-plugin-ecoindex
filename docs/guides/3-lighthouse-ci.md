@@ -22,7 +22,10 @@ Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dess
 !!!
 
 ```bash
-npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
+# Ajout à un projet existant
+npm install lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
+# ou glablement
+npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer
 ```
 
 ## Utilisation

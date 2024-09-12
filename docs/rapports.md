@@ -1,7 +1,7 @@
 ---
 label: Mesures
 icon: codescan-checkmark
-order: 900
+order: 1000
 ---
 
 # Que mesure lighthouse-ecoindex ?

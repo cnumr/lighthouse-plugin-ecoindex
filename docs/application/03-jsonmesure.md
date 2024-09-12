@@ -4,7 +4,7 @@ icon: iterations
 order: 700
 ---
 
-![electron-app-json](../static/electron-app-json.png)
+![EcoindexApp en mode Mesure de parcours (mode complet)](../static/electron-app-json.png)
 
 ## Usage
 
@@ -30,8 +30,8 @@ Un fichier JSON sauvegarde vos paramètres afin de relancer simplement et de mul
 
 Spécifiez le dossier où vous voudrez sauvegarder les mesures.
 
-* Si le dossier est vide, une configuration par défaut est proposée, à adapter ;
-* Si le dossier contient déjà un fichier de configuration, elle sera automatiquement rechargée et remplacera la configuration par défaut.
+- Si le dossier est vide, une configuration par défaut est proposée, à adapter ;
+- Si le dossier contient déjà un fichier de configuration, elle sera automatiquement rechargée et remplacera la configuration par défaut.
 
 ### 2. Configuration des parcours
 
@@ -78,7 +78,6 @@ Vous pouvez ajouter et retirer des parcours, selon vos besoins.
 1. Cliquez sur mesurer et patientez ;
 2. Contrairement à la mesure simple, votre navigateur web ne vas pas se lancer, vu que plusieurs fichiers vont être générés. Votre explorateur de fichier s'ouvrira, à la racine du dossier spécifié au point 1.
 
-
 ## Raports
 
 ![Le dossier des mesures et le JSON de configuration](../static/mesure-json-folder.png)
@@ -110,3 +109,9 @@ Vous pouvez ajouter et retirer des parcours, selon vos besoins.
 !!!info La version JSON du EIS
 Ce fichier est généré en prévision d'une lecture automatisée des EIS par des bots.
 !!!
+
+## Rapports
+
+[!ref Rapports au format HTML](../reports/rapport-html.md)
+[!ref Rapports au format JSON Simplifié](../reports/rapport-json-summary.md)
+[!ref Rapports au format JSON Complet](../reports/rapport-json.md)

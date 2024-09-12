@@ -19,7 +19,7 @@ links:
   - text: EcoindexApp
     link: https://github.com/cnumr/EcoindexApp/releases/latest
     target: blank
-    icon: desktop-download
+    icon: device-desktop
   - text: NPM
     link: https://www.npmjs.com/package/lighthouse-plugin-ecoindex
     target: blank

@@ -9,6 +9,7 @@ _Summary of results_
 
 ## CHANGELOG
 
+- `BREAKING CHANGES` between V4 and V5 see: [commit description](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e4fe1d6f754dda828ab3e46584bd21ef55c35ada)
 - `BREAKING CHANGES` between V3 and V4 see: [commit description](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/77775177677b6499b8be04a8146d97ee1529a76a)
 
 ## FILES
