@@ -10,24 +10,24 @@
     <meta name="generator" content="Retype 3.5.0">
 
     <!-- Primary Meta Tags -->
-    <title>Utilisation avec lighthouse CLI - Ecoindex Lighthouse Plugin</title>
-    <meta name="title" content="Utilisation avec lighthouse CLI - Ecoindex Lighthouse Plugin">
-    <meta name="description" content="Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.">
+    <title>Format JSON Simplif&#233; - Ecoindex Lighthouse Plugin</title>
+    <meta name="title" content="Format JSON Simplifé - Ecoindex Lighthouse Plugin">
+    <meta name="description" content="Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/2-lighthouse-cli/">
+    <link rel="canonical" href="https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/2-lighthouse-cli/">
-    <meta property="og:title" content="Utilisation avec lighthouse CLI - Ecoindex Lighthouse Plugin">
-    <meta property="og:description" content="Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.">
+    <meta property="og:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary/">
+    <meta property="og:title" content="Format JSON Simplifé - Ecoindex Lighthouse Plugin">
+    <meta property="og:description" content="Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/2-lighthouse-cli/">
-    <meta property="twitter:title" content="Utilisation avec lighthouse CLI - Ecoindex Lighthouse Plugin">
-    <meta property="twitter:description" content="Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.">
+    <meta property="twitter:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary/">
+    <meta property="twitter:title" content="Format JSON Simplifé - Ecoindex Lighthouse Plugin">
+    <meta property="twitter:description" content="Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
@@ -264,25 +264,30 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="utilisation-avec-lighthouse-cli" class="break-words">
+<doc-anchor-target id="format-json-simplifé" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#utilisation-avec-lighthouse-cli">#</doc-anchor-trigger>
-        <span>Utilisation avec lighthouse CLI</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#format-json-simplifé">#</doc-anchor-trigger>
+        <span>Format JSON Simplifé</span>
     </h1>
 </doc-anchor-target>
-<doc-anchor-target id="objectifs">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#objectifs">#</doc-anchor-trigger>
-        <span>Objectifs</span>
-    </h2>
-</doc-anchor-target>
-<p>Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.</p>
-<doc-anchor-target id="recommandation">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recommandation">#</doc-anchor-trigger>
-        <span>Recommandation</span>
-    </h2>
-</doc-anchor-target>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-300"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-300" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Rapport JSON <strong>Summary/Simplifié</strong> contenant les données essentielles de Lighthouse avec l&#x27;intégration des mesures et bonnes pratiques Écoindex.</p>
+<p>Utile, par exemple, pour faire des rapports d&#x27;audit automatisé à une date précise, sans charger les rapports Lighthouse + Ecoindex complet.</p>
+        </div>
+    </div>
+</div>
 <div class="flex mb-6">
     <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
     <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
@@ -295,179 +300,34 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>Comme lighthouse en mode cli ne permet pas d&#x27;utiliser le scénario de navigation <code v-pre>Puppeteer</code> et ne permet de lancer l&#x27;analyse que d&#x27;une seule page à fois (<em>sans mettre à jour le fichier de configuration</em>), <strong>il est recommandé d&#x27;utiliser le client interne fourni par le plugin</strong>.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse &lt;url&gt; --config-path=./custom-config.cjs
-# equivaut à
-npx lighthouse-plugin-ecoindex &lt;command&gt; &lt;options&gt;
-# soit
-npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/</code></pre>
-</doc-codeblock></div>
+<p>Ce fichier n&#x27;est généré que lors de la mesure d&#x27;un parcours avec la commande
+<code v-pre>npx lighthouse-plugin-ecoindex collect &lt;options&gt; --json-file &lt;filename.json&gt;</code></p>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
     <div class="flex items-center text-blue-500 dark:text-blue-400">
         <span class="inline-block mb-px">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
         </span>
-        <span class="inline-block font-medium ml-2">lighthouse-plugin-ecoindex CLI</span>
+        <span class="inline-block font-medium ml-2">Collect d&#x27;un parcours</span>
     </div>
     <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>../1-lighthouse-ecoindex-cli/</span>
+        <span>../../guides/1-lighthouse-ecoindex-cli/#command-collect</span>
     </div>
-    <a href="../1-lighthouse-ecoindex-cli/" class="absolute block inset-0"></a>
+    <a href="../../guides/1-lighthouse-ecoindex-cli/#command-collect" class="absolute block inset-0"></a>
 </div>
 </p>
         </div>
     </div>
 </div>
-<doc-anchor-target id="installation">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#installation">#</doc-anchor-trigger>
-        <span>Installation</span>
-    </h2>
-</doc-anchor-target>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
-    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-<p>Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dessous) pour pouvoir utiliser le plugin lighthouse-ecoindex.</p>
-        </div>
-    </div>
-</div>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash"># Ajout à un projet existant
-npm install lighthouse lighthouse-plugin-ecoindex --save-dev
-# ou glablement
-npm install -g lighthouse lighthouse-plugin-ecoindex</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="utilisation">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#utilisation">#</doc-anchor-trigger>
-        <span>Utilisation</span>
-    </h2>
-</doc-anchor-target>
-<p>Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.</p>
-<doc-panel id="modèle-de-fichier-de-configuration-de-lighthouse" collapsed>
-    <template #title>Modèle de fichier de configuration de Lighthouse</template>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">/**
- * @license
- * Copyright 2018 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-const path = require('path')
-function getGatherersPath(file) {
-  return path.join(
-    require.resolve('lighthouse-plugin-ecoindex'),
-    '../gatherers/' + file,
-  )
-}
-/** @type {LH.Config} */
-module.exports = {
-  formFactor: 'desktop',
-  // https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js
-  throttling: {
-    rttMs: 40,
-    throughputKbps: 10 * 1024,
-    cpuSlowdownMultiplier: 1,
-    requestLatencyMs: 0, // 0 means unset
-    downloadThroughputKbps: 0,
-    uploadThroughputKbps: 0,
-  },
-  screenEmulation: {
-    mobile: false,
-    width: 1920,
-    height: 1080,
-  },
-  emulatedUserAgent: 'desktop',
-  maxWaitForLoad: 60 * 1000,
-  plugins: ['lighthouse-plugin-ecoindex'],
-  disableStorageReset: true,
-  preset: 'desktop',
-  extends: 'lighthouse:default',
-  artifacts: [
-    { id: 'DOMInformations', gatherer: getGatherersPath('dom-informations') },
-  ],
-}</code></pre>
-</doc-codeblock></div>
-</doc-panel>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse &lt;url&gt; --config-path=./custom-config.cjs</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="exemples">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#exemples">#</doc-anchor-trigger>
-        <span>Exemples</span>
-    </h2>
-</doc-anchor-target>
-<p>Lancer la mesure sur une URL :</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse https://novagaia.fr --config-path=./custom-config.cjs</code></pre>
-</doc-codeblock></div>
-<p>
-<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
-    <div class="flex items-center text-blue-500 dark:text-blue-400">
-        <span class="inline-block mb-px">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
-        </span>
-        <span class="inline-block font-medium ml-2">Projet example pour lighthouse CLI</span>
-    </div>
-    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lighthouse-cli</span>
-    </div>
-    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lighthouse-cli" target="_blank" class="absolute block inset-0"></a>
-</div>
-</p>
-<doc-anchor-target id="documentation-externe-des-dépendances">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#documentation-externe-des-dépendances">#</doc-anchor-trigger>
-        <span>Documentation externe des dépendances</span>
-    </h2>
-</doc-anchor-target>
-<p>
-<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
-    <div class="flex items-center text-blue-500 dark:text-blue-400">
-        <span class="inline-block mb-px">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
-        </span>
-        <span class="inline-block font-medium ml-2">lighthouse CLI</span>
-    </div>
-    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://github.com/GoogleChrome/lighthouse#using-the-node-cli</span>
-    </div>
-    <a href="https://github.com/GoogleChrome/lighthouse#using-the-node-cli" target="_blank" class="absolute block inset-0"></a>
-</div>
-</p>
-<p>
-<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
-    <div class="flex items-center text-blue-500 dark:text-blue-400">
-        <span class="inline-block mb-px">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
-        </span>
-        <span class="inline-block font-medium ml-2">Puppeteer</span>
-    </div>
-    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://pptr.dev/</span>
-    </div>
-    <a href="https://pptr.dev/" target="_blank" class="absolute block inset-0"></a>
-</div>
-</p>
-
+<p>Exemple de fichier généré lors d&#x27;une mesure de parcours.</p>
+:::code source=&quot;../static/summary.report.json&quot; :::
                                 
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
                             </div>
                             <footer class="clear-both">
                                 <div class="flex flex-wrap items-center justify-between mt-14">
-                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/cnumr/lighthouse-plugin-ecoindex/blob/main/./docs/guides/2-lighthouse-cli.md" target="_blank" rel="noopener">
+                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/cnumr/lighthouse-plugin-ecoindex/blob/main/./docs/reports/rapport-json-summary.md" target="_blank" rel="noopener">
                                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         <span>Modifier sur GitHub</span>
                                     </a>
@@ -475,20 +335,20 @@ module.exports = {
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/4-lhci-server/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../reports/rapport-html/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">Server pour Lighthouse CI</span>
+                                                <span class="block mt-1">Format HTML</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/9-adv-conf/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../reports/rapport-json/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">Configurations avancées</span>
+                                                <span class="block mt-1">Format JSON Complet</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -552,6 +412,6 @@ module.exports = {
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "🟠 Lighthouse CLI", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Format JSON Simplifé", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
