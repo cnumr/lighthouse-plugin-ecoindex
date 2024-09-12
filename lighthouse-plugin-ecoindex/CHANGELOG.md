@@ -1,5 +1,12 @@
 
 
+## [5.0.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.2...5.0.3) (2024-09-12)
+
+
+### Features
+
+* add auto intallatoion of the mandatory browser with `postinstall` in package.json ([8bfac00](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/8bfac00dba2762425fb45b18665f03f14aa41534))
+
 ## [5.0.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.1...5.0.2) (2024-09-11)
 
 
