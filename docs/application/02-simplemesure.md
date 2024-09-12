@@ -4,7 +4,7 @@ icon: goal
 order: 800
 ---
 
-![EcoindexApp en mode Mesure d'URLs (mode simple)'](../static/electron-app.png)
+![EcoindexApp en mode Mesure d'URLs (mode simple)](../static/electron-app.png)
 
 ## Usage
 
