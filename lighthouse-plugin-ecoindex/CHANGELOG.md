@@ -1,5 +1,12 @@
 
 
+## [5.0.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.4...5.0.5) (2024-09-25)
+
+
+### Bug Fixes
+
+* bad export ([b48c342](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/b48c342270eede2253e7d56e5c868bd65c901b14))
+
 ## [5.0.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.3...5.0.4) (2024-09-25)
 
 
