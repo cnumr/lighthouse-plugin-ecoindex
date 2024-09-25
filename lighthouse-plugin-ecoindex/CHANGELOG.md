@@ -1,5 +1,12 @@
 
 
+## [5.0.4](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.3...5.0.4) (2024-09-25)
+
+
+### Features
+
+* runCourses in mjs ([1e4c5e4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/1e4c5e4479b3cd5532406af73a4dae7d6cf3deef))
+
 ## [5.0.3](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.2...5.0.3) (2024-09-12)
 
 
