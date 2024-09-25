@@ -1,5 +1,3 @@
-#!/usr/bin/env node
+const { runCourses } = require('./cli/run')
 
-import { runCourses } from './cli/run.js'
-
-await runCourses()
+module.exports = { runCourses }
