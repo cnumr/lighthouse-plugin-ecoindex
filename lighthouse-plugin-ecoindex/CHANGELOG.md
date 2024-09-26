@@ -1,5 +1,12 @@
 
 
+## [5.0.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.5...5.0.6) (2024-09-26)
+
+
+### Bug Fixes
+
+* #!/usr/bin/env node ([f0cf7bd](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f0cf7bd6f0d61d30fb5ab334db52c873650654e5))
+
 ## [5.0.5](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.4...5.0.5) (2024-09-25)
 
 
