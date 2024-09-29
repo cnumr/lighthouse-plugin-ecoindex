@@ -1,5 +1,12 @@
 
 
+## [5.0.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.6...5.0.7) (2024-09-29)
+
+
+### Features
+
+* begin/index in mjs ([fe24cd8](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fe24cd819ce99dc8534d51fbd8a0b8ef3df0c1df))
+
 ## [5.0.6](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.5...5.0.6) (2024-09-26)
 
 
