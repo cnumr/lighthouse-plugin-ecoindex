@@ -199,7 +199,7 @@ function formatMetric(metric, value) {
     case 'water':
       return value + ' cl'
     case 'ghg':
-      return value + ' eqCO2'
+      return value + ' g eqCO2'
     case 'nodes':
       return value + ' DOM elements'
     case 'size':
@@ -243,7 +243,7 @@ function getMetricNumericUnit(metric) {
     case 'water':
       return 'cl'
     case 'ghg':
-      return 'eqCO2'
+      return 'g eqCO2'
     case 'nodes':
       return 'DOM elements'
     case 'size':
