@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781220602528">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.782004046867">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -34,11 +34,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.6.0.781220602528" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.782004046867" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.781220602528" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.782004046867" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.781220602528" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.782004046867" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -409,9 +409,100 @@
         <span>Linux</span>
     </h3>
 </doc-anchor-target>
+<doc-anchor-target id="ubuntu-deb">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ubuntu-deb">#</doc-anchor-trigger>
+        <span>Ubuntu (.deb)</span>
+    </h4>
+</doc-anchor-target>
 <blockquote>
-<p>Documentation faire et à application à tester.</p>
+<p>Vous avez deux méthode pour installer l&#x27;application sous Ubuntu</p>
 </blockquote>
+<doc-anchor-target id="méthode-1-software-center">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#méthode-1-software-center">#</doc-anchor-trigger>
+        <span>Méthode 1: Software Center</span>
+    </h5>
+</doc-anchor-target>
+<p>Pour installer un paquet deb avec le Software Center (Ubuntu Software), suivez les étapes simples ci-dessous :</p>
+<ol>
+<li>Localisez le paquetage deb téléchargé. Par défaut, le système stocke les fichiers téléchargés dans le répertoire <em>Downloads</em>.</li>
+</ol>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/deb-package-downloads.png" alt="Paquet Deb dans Téléchargements">
+    <figcaption class="caption">Paquet Deb dans Téléchargements</figcaption>
+</figure>
+</p>
+<ol start="2">
+<li><p>Faites un clic droit sur le fichier deb et choisissez <strong>Ouvrir avec une autre application</strong>.</p>
+</li>
+<li><p>Sélectionnez <strong>Software Installer</strong> dans la liste des programmes.</p>
+</li>
+</ol>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/open-with-software-install-deb-package.png" alt="Fichier deb Ouvrir avec le menu de l'installateur de logiciels">
+    <figcaption class="caption">Fichier deb Ouvrir avec le menu de l&#x27;installateur de logiciels</figcaption>
+</figure>
+</p>
+<p>Une nouvelle boîte de dialogue s&#x27;ouvre avec des détails sur le logiciel.</p>
+<ol start="4">
+<li>Cliquez sur le bouton <strong>Installer</strong> pour continuer.</li>
+</ol>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/deb-package-install-software-center.png" alt="deb package install from software center">
+    <figcaption class="caption">deb package install from software center</figcaption>
+</figure>
+</p>
+<ol start="5">
+<li>Saisissez le mot de passe de l&#x27;utilisateur lorsque vous y êtes invité et appuyez sur <strong>Entrée</strong> pour vous authentifier.</li>
+</ol>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/software-install-authentication.png" alt="Demande d'authentification pour l'installation du logiciel">
+    <figcaption class="caption">Demande d&#x27;authentification pour l&#x27;installation du logiciel</figcaption>
+</figure>
+</p>
+<ol start="6">
+<li>Attendez la fin de l&#x27;installation. Une fois l&#x27;installation terminée, le logiciel est prêt à être utilisé.</li>
+</ol>
+<doc-anchor-target id="méthode-2-installer-les-fichiers-deb-à-laide-du-terminal">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#méthode-2-installer-les-fichiers-deb-à-laide-du-terminal">#</doc-anchor-trigger>
+        <span>Méthode 2: Installer les fichiers deb à l&#x27;aide du terminal</span>
+    </h5>
+</doc-anchor-target>
+<p>Le terminal Ubuntu permet d&#x27;installer des paquets en utilisant différents gestionnaires de paquets et commandes. Vous trouverez ci-dessous quelques options pour installer des paquets deb à l&#x27;aide de commandes du terminal.</p>
+<p><strong>Option 1 : Commande dpkg</strong></p>
+<p>La commande dpkg est un gestionnaire de paquets qui permet d&#x27;installer, de supprimer et de construire des paquets.</p>
+<p>Pour installer un paquetage deb à l&#x27;aide de la commande dpkg, exécutez la commande suivante :</p>
+<p><code v-pre>sudo dpkg -i &lt;chemin du paquet&gt;</code></p>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/sudo-dpkg-i-terminal-output.png" alt="sudo dpkg -i sortie du terminal">
+    <figcaption class="caption">sudo dpkg -i sortie du terminal</figcaption>
+</figure>
+Indiquez le mot de passe de l&#x27;utilisateur et attendez la fin de l&#x27;installation. Si un paquetage repose sur des dépendances non disponibles, la commande dpkg renvoie une erreur. Téléchargez les dépendances manuellement.</p>
+<p><strong>Option 2 : Gestionnaire de paquets apt</strong></p>
+<p>La commande apt lance le gestionnaire de paquets apt. Pour installer un paquet deb à l&#x27;aide de la commande apt, exécutez la commande suivante</p>
+<p><code v-pre>sudo apt install &lt;chemin du paquet&gt;</code></p>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/sudo-apt-install-deb-package-terminal-output.png" alt="sudo apt install deb package terminal output">
+    <figcaption class="caption">sudo apt install deb package terminal output</figcaption>
+</figure>
+Indiquez le mot de passe de l&#x27;utilisateur si on vous le demande. Le gestionnaire de paquets localise et installe automatiquement toutes les dépendances.</p>
+<p><strong>Option 3 : Installateur de paquets GDebi</strong></p>
+<p>L&#x27;outil GDebi fonctionne également comme un outil en ligne de commande pour l&#x27;installation de paquets. Pour installer un paquet deb avec GDebi en ligne de commande, exécutez ce qui suit dans le terminal :</p>
+<p><code v-pre>sudo gdebi &lt;chemin du paquet&gt;</code></p>
+<p><figure class="content-center">
+    <img src="../../static/install-ubuntu/sudo-gdebi-install-deb-package.png" alt="sudo gdebi install deb paquet">
+    <figcaption class="caption">sudo gdebi install deb paquet</figcaption>
+</figure>
+Appuyez sur Y pour confirmer l&#x27;installation et entrez le mot de passe de l&#x27;utilisateur.</p>
+<doc-anchor-target id="red-hat-rpm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#red-hat-rpm">#</doc-anchor-trigger>
+        <span>Red Hat (.rpm)</span>
+    </h4>
+</doc-anchor-target>
+<p>Consulter leur documentation <a href="https://access.redhat.com/solutions/1189">ici</a>.</p>
 <doc-anchor-target id="problèmes-et-bugs">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#problèmes-et-bugs">#</doc-anchor-trigger>
