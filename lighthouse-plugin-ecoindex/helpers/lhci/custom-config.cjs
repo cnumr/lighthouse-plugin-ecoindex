@@ -5,9 +5,10 @@
  */
 const path = require('path');
 function getGathererPath(file) {
-  const gathererPath = path.join(
-      require.resolve('../../gatherers/' + file),
-    )
+  // const gathererPath = path.join(
+  //     require.resolve('../../gatherers/' + file),
+  //   )
+    const gathererPath = path.join(__dirname, '..', '..', 'gatherers', file)
   return gathererPath;
 }
 /** @type {LH.Config} */

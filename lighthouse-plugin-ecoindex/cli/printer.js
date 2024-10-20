@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url'
 import logSymbols from 'log-symbols'
 
 const SEPARATOR = '\n---------------------------------\n'
-const __dirname = fileURLToPath(dirname(import.meta.url))
+const _dirname = fileURLToPath(dirname(import.meta.url))
 
 Handlebars.registerHelper('toDateString', function (date) {
   const _date = new Date(date)
@@ -205,19 +205,19 @@ async function printEnvStatementDocuments(cliFlags) {
       recursive: true,
     })
     await fs.copyFileSync(
-      cleanPath(path.join(__dirname, `templates/fr_FR/docs/README.md`)),
+      cleanPath(path.join(_dirname, `templates/fr_FR/docs/README.md`)),
       cleanPath(`${exportPath}/README.md`),
     )
     await fs.copyFileSync(
       cleanPath(
-        path.join(__dirname, `templates/fr_FR/docs/assets/eco-conception.png`),
+        path.join(_dirname, `templates/fr_FR/docs/assets/eco-conception.png`),
       ),
       cleanPath(`${exportPath}/assets/eco-conception.png`),
     )
     await fs.copyFileSync(
       cleanPath(
         path.join(
-          __dirname,
+          _dirname,
           `templates/fr_FR/docs/assets/logo-asso-greenit.svg`,
         ),
       ),
@@ -232,7 +232,7 @@ async function printEnvStatementDocuments(cliFlags) {
   // Markdown
   try {
     const sourceMD = fs.readFileSync(
-      cleanPath(path.join(__dirname, `templates/fr_FR/markdown.handlebars`)),
+      cleanPath(path.join(_dirname, `templates/fr_FR/markdown.handlebars`)),
       'utf8',
     )
     const templateMD = Handlebars.compile(sourceMD)
@@ -249,7 +249,7 @@ async function printEnvStatementDocuments(cliFlags) {
   }
   try {
     const sourceHTML = fs.readFileSync(
-      cleanPath(path.join(__dirname, `templates/fr_FR/html.handlebars`)),
+      cleanPath(path.join(_dirname, `templates/fr_FR/html.handlebars`)),
       'utf8',
     )
     const templateHTML = Handlebars.compile(sourceHTML)

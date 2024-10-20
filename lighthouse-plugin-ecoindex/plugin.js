@@ -1,16 +1,24 @@
 // eslint-disable-next-line no-unused-vars
 import * as i18n from 'lighthouse/core/lib/i18n/i18n.js'
 
+import { dirname, join } from 'path'
+
 import { fileURLToPath } from 'url'
 import fs from 'fs'
-import path from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 function getVersion() {
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = path.dirname(__filename)
-  const rawdata = fs.readFileSync(__dirname + '/package.json')
-  const pluginPackage = JSON.parse(rawdata)
-  return pluginPackage.version
+  // const __filename = fileURLToPath(import.meta.url)
+  // const __dirname = path.dirname(__filename)
+  // const rawdata = fs.readFileSync(__dirname + '/package.json')
+  // const pluginPackage = JSON.parse(rawdata)
+  // return pluginPackage.version
+  const packageJson = JSON.parse(
+    fs.readFileSync(join(__dirname, 'package.json'), 'utf8'),
+  )
+  return packageJson.version
 }
 /** @type {LH.Config.Plugin} */
 export default {

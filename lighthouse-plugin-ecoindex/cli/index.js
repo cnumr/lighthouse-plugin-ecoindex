@@ -2,4 +2,8 @@
 
 import { begin } from './bin.js'
 
-await begin()
+async function main() {
+  await begin()
+}
+
+main().catch(console.error)

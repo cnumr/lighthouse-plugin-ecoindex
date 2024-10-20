@@ -1,14 +1,19 @@
 import * as constants from 'lighthouse/core/config/constants.js'
 
+import path, { dirname, join } from 'path'
+
 import _slugify from 'slugify'
 import { cleanPath } from './converters.js'
+import { fileURLToPath } from 'url'
 import fs from 'fs'
 import { getMandatoryBrowserExecutablePath } from '../install-browser.cjs'
 import { isDate } from 'util/types'
 import logSymbols from 'log-symbols'
-import path from 'path'
 
-const moduleDir = '../'
+// const moduleDir = '../'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const moduleDir = join(__dirname, '..')
 
 /**
  * Returns list of audit names for external querying.

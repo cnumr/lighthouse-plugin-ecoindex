@@ -4,12 +4,12 @@ import {
 } from '../install-browser.cjs'
 import { dateToFileString, listAudits } from './commands.js'
 import { generateEnvironmentalStatement, runCourses } from './run.js'
+import path, { dirname } from 'path'
 
 import { cleanPath } from './converters.js'
 import { fileURLToPath } from 'url'
 import { getFlags } from './cli-flags.js'
 import logSymbols from 'log-symbols'
-import path from 'path'
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -24,7 +24,15 @@ import path from 'path'
  *               cli-flags        lh-core/index
  */
 
-const DEMO_INPUT_FILE_PATH = '/../demo/example-input-file.json'
+// const DEMO_INPUT_FILE_PATH = '/../demo/example-input-file.json'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const DEMO_INPUT_FILE_PATH = path.join(
+  __dirname,
+  '..',
+  'demo',
+  'example-input-file.json',
+)
 
 /**
  * @return {Promise<void>}
