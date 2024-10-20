@@ -1,5 +1,18 @@
 
 
+# [5.1.0-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.7...5.1.0-rc.0) (2024-10-20)
+
+
+### Bug Fixes
+
+* corriger les erreurs de path pour utiliser le plugin dans EcoindexApp [#59](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/59) ([fb007ac](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/fb007ac6860224c5fe6a9fc7872fc3951de93c4d))
+* missing gramme for GHG ([bae6055](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/bae605583831072de10fe153acbde5b543ad4a0c))
+
+
+### Features
+
+* add GNU AFFERO GENERAL PUBLIC LICENSE ([f289c45](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f289c4598a2686efa7bbddca5c9aa554e7b1866d))
+
 ## [5.0.7](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.6...5.0.7) (2024-09-29)
 
 
