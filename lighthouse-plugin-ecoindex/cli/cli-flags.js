@@ -70,8 +70,16 @@ function collectCommand(yargs) {
       'Generates multiples reports for multiples courses.',
     )
     .example(
-      'lighthouse-ecoindex collect --url https://ecoindex.fr/ ',
+      'lighthouse-ecoindex collect --url https://ecoindex.fr/',
       'Generates one report for one URL.',
+    )
+    .example(
+      'lighthouse-ecoindex collect --url https://ecoindex.fr/ --url https://www.ecoindex.fr/a-propos/',
+      'Generates one report for muliple URLs.',
+    )
+    .example(
+      `lighthouse-ecoindex collect --login.url https://site.tld/login/ --login.submit.target '#submit' --login.user.target '#username' --login.user.value username --login.pass.target '#password' --login.pass.value password --url https://site.tld/page-2/`,
+      'Generates one report for one URL (or more) with Authentication form. Login page and navigated page are mesured.',
     )
     .option('demo', {
       alias: 'd',
@@ -134,7 +142,7 @@ function collectCommand(yargs) {
       type: 'string',
       default: null,
       description:
-        'Authentication with a form, as first step of each parcours. Use `login.url`, `login.user.id`, `login.user.value`, `login.pass.id` and `login.pass.value`.',
+        'Authentication with a form, as first step of each parcours. Use `login.url`, `login.submit.target`, `login.user.target`, `login.user.value`, `login.pass.target` and `login.pass.value`.',
     })
     .epilogue(EPILOGUE_STRING)
 }
@@ -215,8 +223,19 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: user.id is undefined.`
-      _ = login.user.id
+      es = `${logSymbols.error} Login option error: submit.target is undefined.`
+      _ = login.submit.target
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Login option error: user.target is undefined.`
+      _ = login.user.target
       if (!_) {
         console.error(es)
         exit(1)
@@ -237,8 +256,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: pass.id is undefined.`
-      _ = login.pass.id
+      es = `${logSymbols.error} Login option error: pass.target is undefined.`
+      _ = login.pass.target
       if (!_) {
         console.error(es)
         exit(1)
@@ -262,7 +281,7 @@ function getFlags(manualArgv, options = {}) {
       `${logSymbols.info} Authentication with Login form informations:`,
     )
     console.log(login)
-    exit(1)
+    // exit(1)
   }
 
   // Prepare statements reports name
