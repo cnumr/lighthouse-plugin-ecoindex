@@ -1,6 +1,8 @@
 import * as yargsHelpers from 'yargs/helpers'
 
+import { exit } from 'node:process'
 import fs from 'fs'
+import logSymbols from 'log-symbols'
 import path from 'path'
 import { readFile } from 'node:fs/promises'
 import yargs from 'yargs'
@@ -128,6 +130,12 @@ function collectCommand(yargs) {
       description:
         'User agent to use for the browser. Default is "random" to help by-pass anti-bots.',
     })
+    .option('login', {
+      type: 'string',
+      default: null,
+      description:
+        'Authentication with a form, as first step of each parcours. Use `login.url`, `login.user.id`, `login.user.value`, `login.pass.id` and `login.pass.value`.',
+    })
     .epilogue(EPILOGUE_STRING)
 }
 
@@ -188,6 +196,74 @@ function getFlags(manualArgv, options = {}) {
 
   // Save results as reports.
   cliFlags['generationDate'] = new Date().toISOString()
+
+  // test if login/auth option are full filled.
+  if (cliFlags['login'] != null) {
+    const login = cliFlags['login']
+
+    var _ = ''
+    var es = ''
+    try {
+      es = `${logSymbols.error} Login option error: url is undefined.`
+      _ = login.url
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Login option error: user.id is undefined.`
+      _ = login.user.id
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Login option error: user.value is undefined.`
+      _ = login.user.value
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Login option error: pass.id is undefined.`
+      _ = login.pass.id
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Login option error: pass.value is undefined.`
+      _ = login.pass.value
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    console.log(
+      `${logSymbols.info} Authentication with Login form informations:`,
+    )
+    console.log(login)
+    exit(1)
+  }
 
   // Prepare statements reports name
   // if (!cliFlags['input-report']) {
