@@ -281,7 +281,6 @@ function getFlags(manualArgv, options = {}) {
       `${logSymbols.info} Authentication with Login form informations:`,
     )
     console.log(login)
-    // exit(1)
   }
 
   // Prepare statements reports name
