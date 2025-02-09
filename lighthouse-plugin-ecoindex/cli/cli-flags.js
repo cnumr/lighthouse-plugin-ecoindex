@@ -142,7 +142,7 @@ function collectCommand(yargs) {
       type: 'string',
       default: null,
       description:
-        'Authentication with a form, as first step of each parcours. Use `auth.url`, `auth.submit.target`, `auth.user.target`, `auth.user.value`, `auth.pass.target` and `auth.pass.value`.',
+        'Authentication with a form, as first step of each parcours. Use `auth.url`, `auth.user.target`, `auth.user.value`, `auth.pass.target` and `auth.pass.value`.',
     })
     .epilogue(EPILOGUE_STRING)
 }
@@ -223,17 +223,6 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Authentication option error: submit.target is undefined.`
-      _ = auth.submit.target
-      if (!_) {
-        console.error(es)
-        exit(1)
-      }
-    } catch (error) {
-      console.error(es)
-      exit(1)
-    }
-    try {
       es = `${logSymbols.error} Authentication option error: user.target is undefined.`
       _ = auth.user.target
       if (!_) {
@@ -277,7 +266,7 @@ function getFlags(manualArgv, options = {}) {
       console.error(es)
       exit(1)
     }
-    console.de(`${logSymbols.info} Authentication informations:`)
+    console.log(`${logSymbols.info} Authentication informations:`)
     console.log(auth)
   }
 

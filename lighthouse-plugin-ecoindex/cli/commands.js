@@ -143,10 +143,43 @@ async function startEcoindexPageMesure(page, session) {
 
 /**
  * End Ecoindex flow. Wait 3s.
+ * @param {UserFlow} flow
+ * @param {boolean} [snapshotEnabled=false]
  */
 async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
   await new Promise(r => setTimeout(r, 3 * 1000))
   if (snapshotEnabled) await flow.snapshot()
+}
+
+/**
+ * Authenticate process
+ * @param {Page} page
+ * @param {Browser} browser
+ * @param {CDPSession} session
+ * @param {object} authenticate
+ */
+async function authenticateEcoindexPageMesure(
+  page,
+  browser,
+  session,
+  authenticate,
+) {
+  page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  await page.goto(authenticate.url)
+  await page.type(authenticate.user.target, authenticate.user.value)
+  await page.type(authenticate.pass.target, authenticate.pass.value)
+  await page.click('[type="submit"]')
+  try {
+    await page.waitForNavigation()
+    // close session for next run
+    // await page.close()
+    console.log(`Authenticated!`)
+  } catch (error) {
+    throw new Error(`Connection failed!`)
+  }
 }
 
 /**
@@ -270,6 +303,7 @@ const slugify = children => {
 }
 
 export {
+  authenticateEcoindexPageMesure,
   dateToFileString,
   endEcoindexPageMesure,
   getEnvStatementsObj,

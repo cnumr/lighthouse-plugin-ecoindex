@@ -1,4 +1,5 @@
 import {
+  authenticateEcoindexPageMesure,
   dateToFileString,
   endEcoindexPageMesure,
   getLighthouseConfig,
@@ -28,6 +29,7 @@ const SEPARATOR = '\n---------------------------------\n'
  */
 async function runCourse(urls, cliFlags, course = undefined) {
   console.log(SEPARATOR)
+  const auth = cliFlags['auth']
   if (course) {
     console.log(
       `${logSymbols.info} Mesure(s) start${
@@ -67,7 +69,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
   const flow = await startFlow(
     page,
     getLighthouseConfig(
-      false,
+      true, // try to avoid Invalid dependency graph created, cycle detected
       `Warm Navigation: ${urls[0]}`,
       cliFlags['audit-category'],
       cliFlags['user-agent'],
@@ -75,33 +77,63 @@ async function runCourse(urls, cliFlags, course = undefined) {
   )
 
   console.log(`${logSymbols.info} Mesuring...`)
-  console.log(`Mesure 0: ${urls[0]}`)
-
-  // Navigate with first URL
-  await flow.navigate(urls[0], {
-    stepName: urls[0],
-  })
-
-  await startEcoindexPageMesure(page, session)
-  await endEcoindexPageMesure(flow)
-
-  // Navigate with next URLs
-  for (var i = 1; i < urls.length; i++) {
-    if (urls[i].trim() !== '') {
-      console.log(`Mesure ${i}: ${urls[i]}`)
+  for (let index = 0; index < urls.length; index++) {
+    if (index === 0) {
+      await flow.navigate(urls[index], {
+        name: `Warm Navigation: ${urls[index]}`,
+      })
+    } else {
       await flow.navigate(
-        urls[i],
+        urls[index],
         getLighthouseConfig(
           true,
-          `Cold Navigation: ${urls[i]}`,
+          `Cold Navigation: ${urls[index]}`,
           cliFlags['audit-category'],
           cliFlags['user-agent'],
         ),
       )
+    }
+    console.log(`Mesure ${index}: ${urls[index]}`)
+
+    if (auth && urls[index] === auth.url) {
+      // Authenticate if current URL == auth URL
+      console.log(`${logSymbols.info} Authentication page detected!`)
+
+      await authenticateEcoindexPageMesure(page, browser, session, auth)
+    } else {
+      // Normal mesure
       await startEcoindexPageMesure(page, session)
       await endEcoindexPageMesure(flow)
     }
   }
+  // exit(1)
+
+  // console.log(`Mesure 0: ${urls[0]}`)
+  // // Navigate with first URL
+  // await flow.navigate(urls[0], {
+  //   stepName: urls[0],
+  // })
+
+  // await startEcoindexPageMesure(page, session)
+  // await endEcoindexPageMesure(flow)
+
+  // // Navigate with next URLs
+  // for (var i = 1; i < urls.length; i++) {
+  //   if (urls[i].trim() !== '') {
+  //     console.log(`Mesure ${i}: ${urls[i]}`)
+  //     await flow.navigate(
+  //       urls[i],
+  //       getLighthouseConfig(
+  //         true,
+  //         `Cold Navigation: ${urls[i]}`,
+  //         cliFlags['audit-category'],
+  //         cliFlags['user-agent'],
+  //       ),
+  //     )
+  //     await startEcoindexPageMesure(page, session)
+  //     await endEcoindexPageMesure(flow)
+  //   }
+  // }
 
   console.log(`${logSymbols.success} Mesure(s) ended`)
   console.log(SEPARATOR)
