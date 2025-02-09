@@ -9,7 +9,7 @@
     "browser:check": "node lighthouse-plugin-ecoindex/cli/index.js browser-check",
     "direct:help": "node lighthouse-plugin-ecoindex/cli/index.js collect --help",
     "direct:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -d",
-    "direct:login:test": "node lighthouse-plugin-ecoindex/cli/index.js collect --url https://www.example.com --login.url https://novagaia.fr/ --login.submit.target '#submit' --login.user.target '#username' --login.user.value username --login.pass.target '#password' --login.pass.value password",
+    "direct:auth:test": "node lighthouse-plugin-ecoindex/cli/index.js collect --url https://www.example.com --auth.url https://novagaia.fr/ --auth.submit.target '#submit' --auth.user.target '#username' --auth.user.value username --auth.pass.target '#password' --auth.pass.value password",
     "file:demo": "node lighthouse-plugin-ecoindex/cli/index.js collect -j ./input-file.json",
     "direct:issue_12": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://www.spie.com/en/about-us/spie-around-world -o html -p './reports/with whitespace'",
     "serve": "npx http-server -o reports --no-dotfiles",

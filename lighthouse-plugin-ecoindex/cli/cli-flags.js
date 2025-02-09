@@ -138,11 +138,11 @@ function collectCommand(yargs) {
       description:
         'User agent to use for the browser. Default is "random" to help by-pass anti-bots.',
     })
-    .option('login', {
+    .option('auth', {
       type: 'string',
       default: null,
       description:
-        'Authentication with a form, as first step of each parcours. Use `login.url`, `login.submit.target`, `login.user.target`, `login.user.value`, `login.pass.target` and `login.pass.value`.',
+        'Authentication with a form, as first step of each parcours. Use `auth.url`, `auth.submit.target`, `auth.user.target`, `auth.user.value`, `auth.pass.target` and `auth.pass.value`.',
     })
     .epilogue(EPILOGUE_STRING)
 }
@@ -206,14 +206,14 @@ function getFlags(manualArgv, options = {}) {
   cliFlags['generationDate'] = new Date().toISOString()
 
   // test if login/auth option are full filled.
-  if (cliFlags['login'] != null) {
-    const login = cliFlags['login']
+  if (cliFlags['auth'] != null) {
+    const auth = cliFlags['auth']
 
     var _ = ''
     var es = ''
     try {
-      es = `${logSymbols.error} Login option error: url is undefined.`
-      _ = login.url
+      es = `${logSymbols.error} Authentication option error: url is undefined.`
+      _ = auth.url
       if (!_) {
         console.error(es)
         exit(1)
@@ -223,8 +223,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: submit.target is undefined.`
-      _ = login.submit.target
+      es = `${logSymbols.error} Authentication option error: submit.target is undefined.`
+      _ = auth.submit.target
       if (!_) {
         console.error(es)
         exit(1)
@@ -234,8 +234,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: user.target is undefined.`
-      _ = login.user.target
+      es = `${logSymbols.error} Authentication option error: user.target is undefined.`
+      _ = auth.user.target
       if (!_) {
         console.error(es)
         exit(1)
@@ -245,8 +245,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: user.value is undefined.`
-      _ = login.user.value
+      es = `${logSymbols.error} Authentication option error: user.value is undefined.`
+      _ = auth.user.value
       if (!_) {
         console.error(es)
         exit(1)
@@ -256,8 +256,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: pass.target is undefined.`
-      _ = login.pass.target
+      es = `${logSymbols.error} Authentication option error: pass.target is undefined.`
+      _ = auth.pass.target
       if (!_) {
         console.error(es)
         exit(1)
@@ -267,8 +267,8 @@ function getFlags(manualArgv, options = {}) {
       exit(1)
     }
     try {
-      es = `${logSymbols.error} Login option error: pass.value is undefined.`
-      _ = login.pass.value
+      es = `${logSymbols.error} Authentication option error: pass.value is undefined.`
+      _ = auth.pass.value
       if (!_) {
         console.error(es)
         exit(1)
@@ -277,10 +277,8 @@ function getFlags(manualArgv, options = {}) {
       console.error(es)
       exit(1)
     }
-    console.log(
-      `${logSymbols.info} Authentication with Login form informations:`,
-    )
-    console.log(login)
+    console.de(`${logSymbols.info} Authentication informations:`)
+    console.log(auth)
   }
 
   // Prepare statements reports name
