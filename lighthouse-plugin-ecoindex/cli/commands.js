@@ -4,6 +4,7 @@ import path, { dirname, join } from 'path'
 
 import _slugify from 'slugify'
 import { cleanPath } from './converters.js'
+import { exit } from 'process'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import { getMandatoryBrowserExecutablePath } from '../install-browser.cjs'
@@ -168,17 +169,20 @@ async function authenticateEcoindexPageMesure(
     width: 1920,
     height: 1080,
   })
-  await page.goto(authenticate.url)
-  await page.type(authenticate.user.target, authenticate.user.value)
-  await page.type(authenticate.pass.target, authenticate.pass.value)
-  await page.click('[type="submit"]')
   try {
+    await page.goto(authenticate.url)
+    await page.type(authenticate.user.target, authenticate.user.value)
+    await page.type(authenticate.pass.target, authenticate.pass.value)
+    await page.click('[type="submit"]')
     await page.waitForNavigation()
     // close session for next run
     // await page.close()
     console.log(`Authenticated!`)
   } catch (error) {
-    throw new Error(`Connection failed!`)
+    // throw new Error(`Connection failed!`)
+    console.error(`${logSymbols.error} Connection failed!`)
+    console.error(error)
+    exit(1)
   }
 }
 
