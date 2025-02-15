@@ -40,21 +40,21 @@
     "postinstall": "node auto-install.mjs"
   },
   "devDependencies": {
-    "@j-ulrich/release-it-regex-bumper": "^5.1.0",
-    "@release-it/conventional-changelog": "^8.0.1",
-    "auto-changelog": "^2.4.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.0.0",
-    "release-it": "^17.6.0"
+    "@j-ulrich/release-it-regex-bumper": "^5.2.0",
+    "@release-it/conventional-changelog": "^10.0.0",
+    "auto-changelog": "^2.5.0",
+    "prettier": "^3.5.1",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "release-it": "^18.1.2"
   },
   "dependencies": {
     "ecoindex_reference": "^1.0.2",
     "handlebars": "^4.7.8",
-    "jsdom": "^25.0.0",
-    "lighthouse": "^12.2.0",
+    "jsdom": "^26.0.0",
+    "lighthouse": "^12.3.0",
     "lodash.round": "^4.0.4",
     "log-symbols": "^7.0.0",
-    "puppeteer": "^23.3.0",
+    "puppeteer": "^24.2.1",
     "slugify": "^1.6.6",
     "yargs": "^17.7.2"
   }
