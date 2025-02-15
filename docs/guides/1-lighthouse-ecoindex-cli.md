@@ -162,8 +162,10 @@ Le format du fichier doit être respecté !
 | `courses.urls`          | `array`   | Liste des urls à mesurer.                                                                                                       |
 | `auth`                  | `object`  | Gestion de l'authentification.                                                                                                  |
 | `auth.url`              | `string`  | Url de la page d'authentification (**MANDATORY** Cette URL doit aussi être indiquée dans les URLs à mesurer dans les parcours). |
+| `auth.user`             | `object`  | Identifiant de l'utilisateur.                                                                                                   |
 | `auth.user.target`      | `string`  | Target (.class ou #id) du champs de l'identifiant de l'utilisateur.                                                             |
 | `auth.user.value`       | `string`  | Valeur de l'identifiant de l'utilisateur.                                                                                       |
+| `auth.pass`             | `object`  | Password de l'utilisateur.                                                                                                      |
 | `auth.pass.target`      | `string`  | Target (.class ou #id) du champs du password de l'utilisateur.                                                                  |
 | `auth.pass.value`       | `string`  | Valeur du password de l'utilisateur.                                                                                            |
 
