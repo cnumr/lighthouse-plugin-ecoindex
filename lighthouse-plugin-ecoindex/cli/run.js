@@ -93,7 +93,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
       )
     }
     console.log(`Mesure ${index}: ${urls[index]}`)
-    const cookies = await page.cookies(urls[index])
+    const cookies = await browser.cookies(urls[index])
     console.debug(`cookies`, cookies.length)
 
     if (auth && urls[index] === auth.url) {
@@ -192,6 +192,14 @@ async function runCourses(cliFlags) {
       `${logSymbols.warning} User-agent overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
+  }
+  if (cliFlags['jsonFileObj']?.['auth']) {
+    console.log(
+      `${logSymbols.warning} Authentification (auth) overrided by \`${cliFlags['json-file']}\` file.`,
+    )
+    cliFlags['auth'] = cliFlags['jsonFileObj']['auth']
+    console.log(`${logSymbols.info} Authentication informations:`)
+    console.log(cliFlags['auth'])
   }
   if (
     !cliFlags['output'].includes('json') &&
