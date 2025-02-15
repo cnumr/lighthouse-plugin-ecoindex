@@ -105,6 +105,7 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `-o, --output` : Rapporteur pour les résultats, supporte plusieurs valeurs. Choix : "json", "html", "statement". ATTENTION : "csv" n'est pas disponible.
 - `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs.
 - `--user-agent` : User-Agent à utiliser pour les requêtes.
+- `--auth` : Moyen de s'authentifier pendant les mesures (`--auth.url`, `--auth.user.target`, `--auth.user.value`, etc. voir le tableau plus bas).
 - `--help` : Affiche l'aide.
 
 #### Exemples
@@ -147,19 +148,24 @@ Le format du fichier doit être respecté !
 
 ##### Explications
 
-| Propriété               | Type      | Description                                                                                                                |
-| ----------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `extra-header`          | `object`  | Les informations nécessaires pour votre audit (authentification, cookies, etc).                                            |
-| `output`                | `array`   | Les types d'export souhaités : `"html", "json", "statement"` (statement = déclation environnementale).                     |
-| `user-agent`            | `string`  | `"random"` ou un user agent spécifique. Utilisez `"random"` pour ne pas vous faire détecter et bloquer par les anti-bot.   |
-| `output-path`           | `string`  | Dossier ou exporter les rapports.                                                                                          |
-| `output-name`           | `string`  | _je ne sais plus._ :)                                                                                                      |
-| `courses`               | `array`   | Les parcours à auditer.                                                                                                    |
-| `courses.name`          | `string`  | nom du parcours, qui sera affiché dans la déclaration en environnementale.                                                 |
-| `courses.target`        | `string`  | Objectif du parcours, qui sera affiché dans la déclaration en environnementale.                                            |
-| `courses.course`        | `string`  | Parcours cible. Rapide liste des pages parcourues, qui sera affichée dans la déclaration en environnementale.              |
-| `courses.is-best-pages` | `boolean` | Indique si ce parcours est celui utilisé dans la déclaration environnementale comme les 5 pages les plus visitées du site. |
-| `courses.urls`          | `array`   | Liste des urls à mesurer.                                                                                                  |
+| Propriété               | Type      | Description                                                                                                                     |
+| ----------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `extra-header`          | `object`  | Les informations nécessaires pour votre audit (authentification, cookies, etc).                                                 |
+| `output`                | `array`   | Les types d'export souhaités : `"html", "json", "statement"` (statement = déclation environnementale).                          |
+| `user-agent`            | `string`  | `"random"` ou un user agent spécifique. Utilisez `"random"` pour ne pas vous faire détecter et bloquer par les anti-bot.        |
+| `output-path`           | `string`  | Dossier ou exporter les rapports.                                                                                               |
+| `courses`               | `array`   | Les parcours à auditer.                                                                                                         |
+| `courses.name`          | `string`  | nom du parcours, qui sera affiché dans la déclaration en environnementale.                                                      |
+| `courses.target`        | `string`  | Objectif du parcours, qui sera affiché dans la déclaration en environnementale.                                                 |
+| `courses.course`        | `string`  | Parcours cible. Rapide liste des pages parcourues, qui sera affichée dans la déclaration en environnementale.                   |
+| `courses.is-best-pages` | `boolean` | Indique si ce parcours est celui utilisé dans la déclaration environnementale comme les 5 pages les plus visitées du site.      |
+| `courses.urls`          | `array`   | Liste des urls à mesurer.                                                                                                       |
+| `auth`                  | `object`  | Gestion de l'authentification.                                                                                                  |
+| `auth.url`              | `string`  | Url de la page d'authentification (**MANDATORY** Cette URL doit aussi être indiquée dans les URLs à mesurer dans les parcours). |
+| `auth.user.target`      | `string`  | Target (.class ou #id) du champs de l'identifiant de l'utilisateur.                                                             |
+| `auth.user.value`       | `string`  | Valeur de l'identifiant de l'utilisateur.                                                                                       |
+| `auth.pass.target`      | `string`  | Target (.class ou #id) du champs du password de l'utilisateur.                                                                  |
+| `auth.pass.value`       | `string`  | Valeur du password de l'utilisateur.                                                                                            |
 
 ### command `convert`
 
