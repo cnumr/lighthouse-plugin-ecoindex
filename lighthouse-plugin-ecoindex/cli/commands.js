@@ -181,7 +181,7 @@ async function authenticateEcoindexPageMesure(
       el => el.value,
     )
     console.log(
-      `${logSymbols.info} ${authenticate.user.target} setted with`,
+      `${logSymbols.info} (test) ${authenticate.user.target} setted with`,
       searchValue,
     )
 
