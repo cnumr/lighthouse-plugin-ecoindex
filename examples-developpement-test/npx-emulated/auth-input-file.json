@@ -1,0 +1,59 @@
+{
+  "$schema": "/Users/renaudheluin/DEV/DEV_GREENIT/lighthouse-plugin-ecoindex/docs/static/schema/5.1/schema.json",
+  "extra-header": {
+    "Cookie": "monster=blue",
+    "x-men": "wolverine"
+  },
+  "output": ["html", "json", "statement"],
+  "user-agent": "random",
+  "output-path": "./reports/multi",
+  "output-name": "ecoindex",
+  "login": {
+    "url": "http://domain.tld/login-page/",
+    "submit": {
+      "target": "#submit"
+    },
+    "user": {
+      "target": "#username",
+      "value": "username"
+    },
+    "pass": {
+      "target": "#password",
+      "value": "password"
+    }
+  },
+  "courses": [
+    {
+      "name": "Découvrir ecoindex et l'écoconception",
+      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+      "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+      "is-best-pages": true,
+      "urls": [
+        "https://www.ecoindex.fr/",
+        "https://www.ecoindex.fr/comment-ca-marche/",
+        "https://www.ecoindex.fr/ecoconception/"
+      ]
+    },
+    {
+      "name": "Rejoindre la communauté",
+      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+      "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+      "is-best-pages": false,
+      "urls": [
+        "https://www.ecoindex.fr/",
+        "https://www.ecoindex.fr/a-propos/",
+        "https://www.ecoindex.fr/nous-rejoindre/"
+      ]
+    },
+    {
+      "name": "Revoir d'anciens résultats",
+      "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
+      "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
+      "is-best-pages": false,
+      "urls": [
+        "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+        "https://www.ecoindex.fr/"
+      ]
+    }
+  ]
+}
