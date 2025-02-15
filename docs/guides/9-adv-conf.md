@@ -38,6 +38,10 @@ npx lighthouse-plugin-ecoindex collect -u https://greenit.eco/ -u https://greeni
 
 ### En mode mesure de parcours (avec le fichier de config JSON)
 
+!!!warning
+La page d'authentiifcation doit faire partie de la liste de page à mesurer, cela pour chaque parcours dont une partie ou la totalité des pages sont sécurisée.
+!!!
+
 ```json
 {
 "$schema": "/workspace/docs/static/schema/5.1/schema.json",
