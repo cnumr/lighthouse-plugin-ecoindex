@@ -49,7 +49,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
   const browser = await puppeteer.launch(options)
 
   // Create a new page.
-  const page = await browser.newPage()
+  let page = await browser.newPage()
   console.log('List of urls:', urls)
   console.log(SEPARATOR)
 
@@ -64,7 +64,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
     console.log(SEPARATOR)
   }
   // Get a session handle to be able to send protocol commands to the page.
-  const session = await page.target().createCDPSession()
+  const session = await page.createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
   const flow = await startFlow(
     page,
@@ -86,7 +86,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
       await flow.navigate(
         urls[index],
         getLighthouseConfig(
-          true,
+          false,
           `Cold Navigation: ${urls[index]}`,
           cliFlags['audit-category'],
           cliFlags['user-agent'],
@@ -94,12 +94,21 @@ async function runCourse(urls, cliFlags, course = undefined) {
       )
     }
     console.log(`Mesure ${index}: ${urls[index]}`)
+    const cookies = await page.cookies(urls[index])
+    console.debug(`cookies`, cookies)
 
     if (auth && urls[index] === auth.url) {
       // Authenticate if current URL == auth URL
       console.log(`${logSymbols.info} Authentication page detected!`)
 
-      await authenticateEcoindexPageMesure(page, browser, session, auth)
+      page = await authenticateEcoindexPageMesure(
+        page,
+        auth,
+        browser,
+        session,
+        flow,
+      )
+      console.log(`auth ended!`)
     } else {
       // Normal mesure
       await startEcoindexPageMesure(page, session)

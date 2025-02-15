@@ -106,7 +106,7 @@ async function readExtraHeaderFile(cliFlags) {
 /**
  * Init Ecoindex flow. Wait 3s, then navigate to bottom of page.
  * @param {puppeteer.Page} page
- * @param {lighthouse.UserFlow} session
+ * @param {puppeteer.CDPSession} session
  */
 async function startEcoindexPageMesure(page, session) {
   page.setViewport({
@@ -144,7 +144,7 @@ async function startEcoindexPageMesure(page, session) {
 
 /**
  * End Ecoindex flow. Wait 3s.
- * @param {UserFlow} flow
+ * @param {lighthouse.UserFlow} flow
  * @param {boolean} [snapshotEnabled=false]
  */
 async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
@@ -154,30 +154,51 @@ async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
 
 /**
  * Authenticate process
- * @param {Page} page
- * @param {Browser} browser
- * @param {CDPSession} session
+ * @param {puppeteer.Page} page
+ * @param {puppeteer.Browser} browser
+ * @param {puppeteer.CDPSession} session
  * @param {object} authenticate
  */
 async function authenticateEcoindexPageMesure(
   page,
+  authenticate,
   browser,
   session,
-  authenticate,
+  flow,
 ) {
-  page.setViewport({
+  await page.setViewport({
     width: 1920,
     height: 1080,
   })
   try {
-    await page.goto(authenticate.url)
+    // await page.goto(authenticate.url)
+    await flow.navigate(authenticate.url)
+    // ne fonctionne pas
+    // await Promise.all([
+    //   page.type(authenticate.user.target, authenticate.user.value),
+    //   page.type(authenticate.pass.target, authenticate.pass.value),
+    //   page.$eval(authenticate.user.target, el => console.log(el.value)),
+    //   page.click('[type="submit"]'),
+    //   page.waitForNavigation(),
+    // ])
     await page.type(authenticate.user.target, authenticate.user.value)
+    const searchValue = await page.$eval(
+      authenticate.user.target,
+      el => el.value,
+    )
+    console.log(searchValue)
+
     await page.type(authenticate.pass.target, authenticate.pass.value)
-    await page.click('[type="submit"]')
-    await page.waitForNavigation()
+    // await page.click('[type="submit"]')
+    await flow.navigate(async () => {
+      await page.click('[type="submit"]')
+    })
+    // await page.waitForNavigation()
+    await flow.endNavigation()
+    const u = page.url()
+    console.log(`Authenticated! Gone to`, u)
     // close session for next run
     // await page.close()
-    console.log(`Authenticated!`)
   } catch (error) {
     // throw new Error(`Connection failed!`)
     console.error(`${logSymbols.error} Connection failed!`)
