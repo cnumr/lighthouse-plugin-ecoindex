@@ -30,21 +30,36 @@ order: 0
 
 ## Audit d'un site à accès sécurisé
 
-Utilisation d'un `.puppeteerrc.cjs` custom.
+### En mode simple (liste d'URLs)
 
-> À adapter suivant le type d'authentification.
+```shell
+npx lighthouse-plugin-ecoindex collect -u https://greenit.eco/ -u https://greenit.eco/wp-login.php/ -u https://greenit.eco/wp-admin/plugins.php --auth.url %test_url% --auth.user.target '#user_login' --auth.user.value %username_value% --auth.pass.target '#user_pass' --auth.pass.value %password_value% -o html
+```
 
-```javascript
-module.exports = async (browser, context) => {
-  // launch browser for LHCI
-  const page = await browser.newPage(context.options)
-  page.authenticate({ username: '<to adapte>', password: '<to adapte>' })
-  const session = await page.target().createCDPSession()
-  await page.goto(context.url, { waitUntil: 'networkidle0' })
-  await startEcoindexPageMesure(page, session)
-  await endEcoindexPageMesure()
-  // close session for next run
-  await page.close()
+### En mode mesure de parcours (avec le fichier de config JSON)
+
+```json
+{
+"$schema": "/workspace/docs/static/schema/5.1/schema.json",
+  "extra-header": {
+    "Cookie": "monster=blue",
+    "x-men": "wolverine"
+  },
+  "output": ["html", "json", "statement"],
+  "user-agent": "random",
+  "output-path": "./reports/multi",
+  "auth": {
+    "url": "https://domain.ltd/login/",
+    "user": {
+      "target": "#user_login",
+      "value": "******"
+    },
+    "pass": {
+      "target": "#user_pass",
+      "value": "*****"
+    }
+  },
+  "courses": [...]
 }
 ```
 
