@@ -1,9 +1,11 @@
+import * as LH from 'lighthouse/types/lh.js'
 import * as constants from 'lighthouse/core/config/constants.js'
 
 import path, { dirname, join } from 'path'
 
 import _slugify from 'slugify'
 import { cleanPath } from './converters.js'
+import { exit } from 'process'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import { getMandatoryBrowserExecutablePath } from '../install-browser.cjs'
@@ -14,6 +16,9 @@ import logSymbols from 'log-symbols'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const moduleDir = join(__dirname, '..')
+
+// eslint-disable-next-line no-unused-vars
+const fake = LH.Audit
 
 /**
  * Returns list of audit names for external querying.
@@ -104,8 +109,8 @@ async function readExtraHeaderFile(cliFlags) {
 
 /**
  * Init Ecoindex flow. Wait 3s, then navigate to bottom of page.
- * @param {puppeteer.Page} page
- * @param {lighthouse.UserFlow} session
+ * @param {PUPPETEER.Page} page
+ * @param {PUPPETEER.CDPSession} session
  */
 async function startEcoindexPageMesure(page, session) {
   page.setViewport({
@@ -143,10 +148,59 @@ async function startEcoindexPageMesure(page, session) {
 
 /**
  * End Ecoindex flow. Wait 3s.
+ * @param {LH.UserFlow} flow
+ * @param {boolean} [snapshotEnabled=false]
  */
 async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
   await new Promise(r => setTimeout(r, 3 * 1000))
   if (snapshotEnabled) await flow.snapshot()
+}
+
+/**
+ * Authenticate process
+ * @param {PUPPETEER.Page} page
+ * @param {PUPPETEER.Browser} browser
+ * @param {PUPPETEER.CDPSession} session
+ * @param {object} authenticate
+ */
+async function authenticateEcoindexPageMesure(
+  page,
+  authenticate,
+  browser,
+  session,
+  flow,
+) {
+  await page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  try {
+    await page.type(authenticate.user.target, authenticate.user.value)
+    const searchValue = await page.$eval(
+      authenticate.user.target,
+      el => el.value,
+    )
+    console.log(
+      `${logSymbols.info} (test) ${authenticate.user.target} setted with`,
+      searchValue,
+    )
+
+    await page.type(authenticate.pass.target, authenticate.pass.value)
+    await page.click('[type="submit"]')
+    await page.waitForNavigation()
+    const u = page.url()
+    console.log(`${logSymbols.info} Authenticated! Landed on`, u)
+    // try to mesure landed page, NOT WORKING.
+    // await flow.navigate(u, { name: 'Navigate only' })
+    startEcoindexPageMesure(page, session)
+    endEcoindexPageMesure(flow)
+    await flow.snapshot({ name: 'Landed page' })
+    return u
+  } catch (error) {
+    console.error(`${logSymbols.error} Connection failed!`)
+    console.error(error)
+    exit(1)
+  }
 }
 
 /**
@@ -270,6 +324,7 @@ const slugify = children => {
 }
 
 export {
+  authenticateEcoindexPageMesure,
   dateToFileString,
   endEcoindexPageMesure,
   getEnvStatementsObj,

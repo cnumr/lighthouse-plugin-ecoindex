@@ -57,7 +57,9 @@ function convertCourseResults(flows, course) {
   // get pages
   flows.steps.forEach(flow => {
     // 3.1 Add page to course output
-    obj.pages.push(convertPagesResults(flow.lhr))
+    // ommit "snapshot" and "timestamp"
+    if (flow.lhr['gatherMode'] === 'navigation')
+      obj.pages.push(convertPagesResults(flow.lhr))
   })
   // calculate summary
   obj.summary['eco-index-grade'] = getEcoIndexGrade(

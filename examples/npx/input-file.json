@@ -1,4 +1,5 @@
 {
+  "$schema": "https://lighthouse-ecoindex.greenit.eco/static/schema/5.1/schema.json",
   "extra-header": {
     "Cookie": "monster=blue",
     "x-men": "wolverine"

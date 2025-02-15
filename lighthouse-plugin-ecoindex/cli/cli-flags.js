@@ -1,9 +1,15 @@
+import * as LH from 'lighthouse/types/lh.js'
 import * as yargsHelpers from 'yargs/helpers'
 
+import { exit } from 'node:process'
 import fs from 'fs'
+import logSymbols from 'log-symbols'
 import path from 'path'
 import { readFile } from 'node:fs/promises'
 import yargs from 'yargs'
+
+// eslint-disable-next-line no-unused-vars
+const fake = LH.Audit
 
 const fileUrl = new URL('../package.json', import.meta.url)
 const jsonPackage = JSON.parse(await readFile(fileUrl, 'utf8'))
@@ -68,8 +74,16 @@ function collectCommand(yargs) {
       'Generates multiples reports for multiples courses.',
     )
     .example(
-      'lighthouse-ecoindex collect --url https://ecoindex.fr/ ',
+      'lighthouse-ecoindex collect --url https://ecoindex.fr/',
       'Generates one report for one URL.',
+    )
+    .example(
+      'lighthouse-ecoindex collect --url https://ecoindex.fr/ --url https://www.ecoindex.fr/a-propos/',
+      'Generates one report for muliple URLs.',
+    )
+    .example(
+      `lighthouse-ecoindex collect --login.url https://site.tld/login/ --login.submit.target '#submit' --login.user.target '#username' --login.user.value username --login.pass.target '#password' --login.pass.value password --url https://site.tld/page-2/`,
+      'Generates one report for one URL (or more) with Authentication form. Login page and navigated page are mesured.',
     )
     .option('demo', {
       alias: 'd',
@@ -127,6 +141,12 @@ function collectCommand(yargs) {
       default: 'random',
       description:
         'User agent to use for the browser. Default is "random" to help by-pass anti-bots.',
+    })
+    .option('auth', {
+      type: 'string',
+      default: null,
+      description:
+        'Authentication with a form, as first step of each parcours. Use `auth.url`, `auth.user.target`, `auth.user.value`, `auth.pass.target` and `auth.pass.value`.',
     })
     .epilogue(EPILOGUE_STRING)
 }
@@ -188,6 +208,71 @@ function getFlags(manualArgv, options = {}) {
 
   // Save results as reports.
   cliFlags['generationDate'] = new Date().toISOString()
+
+  // test if login/auth option are full filled.
+  if (cliFlags['auth'] != null) {
+    const auth = cliFlags['auth']
+
+    var _ = ''
+    var es = ''
+    try {
+      es = `${logSymbols.error} Authentication option error: url is undefined.`
+      _ = auth.url
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Authentication option error: user.target is undefined.`
+      _ = auth.user.target
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Authentication option error: user.value is undefined.`
+      _ = auth.user.value
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Authentication option error: pass.target is undefined.`
+      _ = auth.pass.target
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    try {
+      es = `${logSymbols.error} Authentication option error: pass.value is undefined.`
+      _ = auth.pass.value
+      if (!_) {
+        console.error(es)
+        exit(1)
+      }
+    } catch (error) {
+      console.error(es)
+      exit(1)
+    }
+    console.log(`${logSymbols.info} Authentication informations:`)
+    console.log(auth)
+  }
 
   // Prepare statements reports name
   // if (!cliFlags['input-report']) {

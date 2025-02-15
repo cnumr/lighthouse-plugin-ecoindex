@@ -1,4 +1,5 @@
 import {
+  authenticateEcoindexPageMesure,
   dateToFileString,
   endEcoindexPageMesure,
   getLighthouseConfig,
@@ -19,7 +20,6 @@ import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
 
 const SEPARATOR = '\n---------------------------------\n'
-
 /**
  * Run a course of URLs.
  * @param {*} urls
@@ -27,7 +27,9 @@ const SEPARATOR = '\n---------------------------------\n'
  * @param {*} course
  */
 async function runCourse(urls, cliFlags, course = undefined) {
+  let landingUrl = null
   console.log(SEPARATOR)
+  const auth = cliFlags['auth']
   if (course) {
     console.log(
       `${logSymbols.info} Mesure(s) start${
@@ -47,7 +49,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
   const browser = await puppeteer.launch(options)
 
   // Create a new page.
-  const page = await browser.newPage()
+  let page = await browser.newPage()
   console.log('List of urls:', urls)
   console.log(SEPARATOR)
 
@@ -62,46 +64,73 @@ async function runCourse(urls, cliFlags, course = undefined) {
     console.log(SEPARATOR)
   }
   // Get a session handle to be able to send protocol commands to the page.
-  const session = await page.target().createCDPSession()
+  const session = await page.createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
   const flow = await startFlow(
     page,
     getLighthouseConfig(
-      false,
+      true, // try to avoid Invalid dependency graph created, cycle detected
       `Warm Navigation: ${urls[0]}`,
       cliFlags['audit-category'],
       cliFlags['user-agent'],
     ),
   )
-
   console.log(`${logSymbols.info} Mesuring...`)
-  console.log(`Mesure 0: ${urls[0]}`)
-
-  // Navigate with first URL
-  await flow.navigate(urls[0], {
-    stepName: urls[0],
-  })
-
-  await startEcoindexPageMesure(page, session)
-  await endEcoindexPageMesure(flow)
-
-  // Navigate with next URLs
-  for (var i = 1; i < urls.length; i++) {
-    if (urls[i].trim() !== '') {
-      console.log(`Mesure ${i}: ${urls[i]}`)
+  for (let index = 0; index < urls.length; index++) {
+    if (index === 0) {
+      await flow.navigate(urls[index], {
+        name: `Warm Navigation: ${urls[index]}`,
+      })
+    } else {
       await flow.navigate(
-        urls[i],
+        urls[index],
         getLighthouseConfig(
-          true,
-          `Cold Navigation: ${urls[i]}`,
+          false,
+          `Cold Navigation: ${urls[index]}`,
           cliFlags['audit-category'],
           cliFlags['user-agent'],
         ),
       )
+    }
+    console.log(`Mesure ${index}: ${urls[index]}`)
+    const cookies = await browser.cookies(urls[index])
+    console.debug(`cookies`, cookies.length)
+
+    if (auth && urls[index] === auth.url) {
+      // Authenticate if current URL == auth URL
+      console.log(`${logSymbols.info} Authentication page detected!`)
+
+      // eslint-disable-next-line no-unused-vars
+      landingUrl = await authenticateEcoindexPageMesure(
+        page,
+        auth,
+        browser,
+        session,
+        flow,
+      )
+    } else {
+      // Normal mesure
       await startEcoindexPageMesure(page, session)
       await endEcoindexPageMesure(flow)
     }
   }
+  // try to mesure landed page, NOT WORKING.
+  // if (landingUrl) {
+  //   console.log(
+  //     `${logSymbols.info} Mesure Authentication landing page ${landingUrl}`,
+  //   )
+  //   await flow.navigate(
+  //     landingUrl,
+  //     getLighthouseConfig(
+  //       false,
+  //       `Mesure Authentication landing page (Cold Navigation): ${landingUrl}`,
+  //       cliFlags['audit-category'],
+  //       cliFlags['user-agent'],
+  //     ),
+  //   )
+  //   await startEcoindexPageMesure(page, session)
+  //   await endEcoindexPageMesure(flow)
+  // }
 
   console.log(`${logSymbols.success} Mesure(s) ended`)
   console.log(SEPARATOR)
@@ -163,6 +192,14 @@ async function runCourses(cliFlags) {
       `${logSymbols.warning} User-agent overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
+  }
+  if (cliFlags['jsonFileObj']?.['auth']) {
+    console.log(
+      `${logSymbols.warning} Authentification (auth) overrided by \`${cliFlags['json-file']}\` file.`,
+    )
+    cliFlags['auth'] = cliFlags['jsonFileObj']['auth']
+    console.log(`${logSymbols.info} Authentication informations:`)
+    console.log(cliFlags['auth'])
   }
   if (
     !cliFlags['output'].includes('json') &&

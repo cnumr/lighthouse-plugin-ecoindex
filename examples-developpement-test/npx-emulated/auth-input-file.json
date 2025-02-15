@@ -7,6 +7,17 @@
   "output": ["html", "json", "statement"],
   "user-agent": "random",
   "output-path": "./reports/multi",
+  "auth": {
+    "url": "https://domain.ltd/login/",
+    "user": {
+      "target": "#user_login",
+      "value": "******"
+    },
+    "pass": {
+      "target": "#user_pass",
+      "value": "*****"
+    }
+  },
   "courses": [
     {
       "name": "Découvrir ecoindex et l'écoconception",
@@ -14,9 +25,9 @@
       "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
       "is-best-pages": true,
       "urls": [
-        "https://www.ecoindex.fr/",
-        "https://www.ecoindex.fr/comment-ca-marche/",
-        "https://www.ecoindex.fr/ecoconception/"
+        "https://greenit.eco/",
+        "https://greenit.eco/wp-login.php/",
+        "https://greenit.eco/wp-admin/plugins.php"
       ]
     },
     {
@@ -25,9 +36,9 @@
       "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
       "is-best-pages": false,
       "urls": [
-        "https://www.ecoindex.fr/",
-        "https://www.ecoindex.fr/a-propos/",
-        "https://www.ecoindex.fr/nous-rejoindre/"
+        "https://greenit.eco/",
+        "https://greenit.eco/wp-login.php/",
+        "https://greenit.eco/wp-admin/plugins.php"
       ]
     },
     {
@@ -36,8 +47,9 @@
       "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
       "is-best-pages": false,
       "urls": [
-        "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
-        "https://www.ecoindex.fr/"
+        "https://greenit.eco/",
+        "https://greenit.eco/wp-login.php/",
+        "https://greenit.eco/wp-admin/plugins.php"
       ]
     }
   ]
