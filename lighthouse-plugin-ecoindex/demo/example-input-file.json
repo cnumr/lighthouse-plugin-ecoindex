@@ -1,4 +1,5 @@
 {
+  "$schema": "https://lighthouse-ecoindex.greenit.eco/static/schema/5.1/schema.json",
   "extra-header": {
     "Cookie": "monster=blue",
     "x-men": "wolverine"
@@ -6,7 +7,6 @@
   "output": ["html", "json", "statement"],
   "user-agent": "random",
   "output-path": "./reports/multi",
-  "output-name": "ecoindex",
   "courses": [
     {
       "name": "Découvrir ecoindex et l'écoconception",
