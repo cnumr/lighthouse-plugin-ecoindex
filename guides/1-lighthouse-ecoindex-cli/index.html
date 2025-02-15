@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.792941060335">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.792941892011">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.6.0.792941060335" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.792941892011" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.792941060335" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.792941892011" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.792941060335" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.6.0.792941060335" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.792941892011" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.6.0.792941892011" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -408,6 +408,7 @@ npx lighthouse-plugin-ecoindex browser-check</code></pre>
 <li><code v-pre>-o, --output</code> : Rapporteur pour les résultats, supporte plusieurs valeurs. Choix : &quot;json&quot;, &quot;html&quot;, &quot;statement&quot;. ATTENTION : &quot;csv&quot; n&#x27;est pas disponible.</li>
 <li><code v-pre>-a, --audit-category</code> : Audit à exécuter, supporte plusieurs valeurs.</li>
 <li><code v-pre>--user-agent</code> : User-Agent à utiliser pour les requêtes.</li>
+<li><code v-pre>--auth</code> : Moyen de s&#x27;authentifier pendant les mesures (<code v-pre>--auth.url</code>, <code v-pre>--auth.user.target</code>, <code v-pre>--auth.user.value</code>, etc. voir le tableau plus bas).</li>
 <li><code v-pre>--help</code> : Affiche l&#x27;aide.</li>
 </ul>
 <doc-anchor-target id="exemples">
@@ -460,6 +461,7 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
     <template #title>Modèle de fichier JSON</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-json"><code v-pre class="language-json">{
+  &quot;$schema&quot;: &quot;https://lighthouse-ecoindex.greenit.eco/static/schema/5.1/schema.json&quot;,
   &quot;extra-header&quot;: {
     &quot;Cookie&quot;: &quot;monster=blue&quot;,
     &quot;x-men&quot;: &quot;wolverine&quot;
@@ -467,7 +469,6 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
   &quot;output&quot;: [&quot;html&quot;, &quot;json&quot;, &quot;statement&quot;],
   &quot;user-agent&quot;: &quot;random&quot;,
   &quot;output-path&quot;: &quot;./reports/multi&quot;,
-  &quot;output-name&quot;: &quot;ecoindex&quot;,
   &quot;courses&quot;: [
     {
       &quot;name&quot;: &quot;Découvrir ecoindex et l'écoconception&quot;,
@@ -542,11 +543,6 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
 <td>Dossier ou exporter les rapports.</td>
 </tr>
 <tr>
-<td><code v-pre>output-name</code></td>
-<td><code v-pre>string</code></td>
-<td><em>je ne sais plus.</em> :)</td>
-</tr>
-<tr>
 <td><code v-pre>courses</code></td>
 <td><code v-pre>array</code></td>
 <td>Les parcours à auditer.</td>
@@ -575,6 +571,36 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
 <td><code v-pre>courses.urls</code></td>
 <td><code v-pre>array</code></td>
 <td>Liste des urls à mesurer.</td>
+</tr>
+<tr>
+<td><code v-pre>auth</code></td>
+<td><code v-pre>object</code></td>
+<td>Gestion de l&#x27;authentification.</td>
+</tr>
+<tr>
+<td><code v-pre>auth.url</code></td>
+<td><code v-pre>string</code></td>
+<td>Url de la page d&#x27;authentification (<strong>MANDATORY</strong> Cette URL doit aussi être indiquée dans les URLs à mesurer dans les parcours).</td>
+</tr>
+<tr>
+<td><code v-pre>auth.user.target</code></td>
+<td><code v-pre>string</code></td>
+<td>Target (.class ou #id) du champs de l&#x27;identifiant de l&#x27;utilisateur.</td>
+</tr>
+<tr>
+<td><code v-pre>auth.user.value</code></td>
+<td><code v-pre>string</code></td>
+<td>Valeur de l&#x27;identifiant de l&#x27;utilisateur.</td>
+</tr>
+<tr>
+<td><code v-pre>auth.pass.target</code></td>
+<td><code v-pre>string</code></td>
+<td>Target (.class ou #id) du champs du password de l&#x27;utilisateur.</td>
+</tr>
+<tr>
+<td><code v-pre>auth.pass.value</code></td>
+<td><code v-pre>string</code></td>
+<td>Valeur du password de l&#x27;utilisateur.</td>
 </tr>
 </tbody>
 </table>
