@@ -283,6 +283,8 @@ async function printSummary(cliFlags) {
     const o = JSON.parse(json)
     const datas = []
     o.steps.forEach(item => {
+      // ommit "snapshot" and "timestamp"
+      if (item.lhr['gatherMode'] !== 'navigation') return null
       const it = {
         url: item.lhr.finalDisplayedUrl,
         score: 0,
