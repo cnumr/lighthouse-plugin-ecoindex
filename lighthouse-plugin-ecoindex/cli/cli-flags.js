@@ -1,3 +1,4 @@
+import * as LH from 'lighthouse/types/lh.js'
 import * as yargsHelpers from 'yargs/helpers'
 
 import { exit } from 'node:process'
@@ -6,6 +7,9 @@ import logSymbols from 'log-symbols'
 import path from 'path'
 import { readFile } from 'node:fs/promises'
 import yargs from 'yargs'
+
+// eslint-disable-next-line no-unused-vars
+const fake = LH.Audit
 
 const fileUrl = new URL('../package.json', import.meta.url)
 const jsonPackage = JSON.parse(await readFile(fileUrl, 'utf8'))
