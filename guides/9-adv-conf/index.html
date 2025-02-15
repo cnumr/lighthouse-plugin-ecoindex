@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.792942070688">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.792942441644">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.6.0.792942070688" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.792942441644" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.792942070688" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.792942441644" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.792942070688" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.6.0.792942070688" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.792942441644" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.6.0.792942441644" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -309,21 +309,43 @@
         <span>Audit d&#x27;un site à accès sécurisé</span>
     </h2>
 </doc-anchor-target>
-<p>Utilisation d&#x27;un <code v-pre>.puppeteerrc.cjs</code> custom.</p>
-<blockquote>
-<p>À adapter suivant le type d&#x27;authentification.</p>
-</blockquote>
+<doc-anchor-target id="en-mode-simple-liste-durls">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#en-mode-simple-liste-durls">#</doc-anchor-trigger>
+        <span>En mode simple (liste d&#x27;URLs)</span>
+    </h3>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">module.exports = async (browser, context) =&gt; {
-  // launch browser for LHCI
-  const page = await browser.newPage(context.options)
-  page.authenticate({ username: '&lt;to adapte&gt;', password: '&lt;to adapte&gt;' })
-  const session = await page.target().createCDPSession()
-  await page.goto(context.url, { waitUntil: 'networkidle0' })
-  await startEcoindexPageMesure(page, session)
-  await endEcoindexPageMesure()
-  // close session for next run
-  await page.close()
+<pre class="language-bash"><code v-pre class="language-bash">npx lighthouse-plugin-ecoindex collect -u https://greenit.eco/ -u https://greenit.eco/wp-login.php/ -u https://greenit.eco/wp-admin/plugins.php --auth.url %test_url% --auth.user.target '#user_login' --auth.user.value %username_value% --auth.pass.target '#user_pass' --auth.pass.value %password_value% -o html</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="en-mode-mesure-de-parcours-avec-le-fichier-de-config-json">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#en-mode-mesure-de-parcours-avec-le-fichier-de-config-json">#</doc-anchor-trigger>
+        <span>En mode mesure de parcours (avec le fichier de config JSON)</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+&quot;$schema&quot;: &quot;/workspace/docs/static/schema/5.1/schema.json&quot;,
+  &quot;extra-header&quot;: {
+    &quot;Cookie&quot;: &quot;monster=blue&quot;,
+    &quot;x-men&quot;: &quot;wolverine&quot;
+  },
+  &quot;output&quot;: [&quot;html&quot;, &quot;json&quot;, &quot;statement&quot;],
+  &quot;user-agent&quot;: &quot;random&quot;,
+  &quot;output-path&quot;: &quot;./reports/multi&quot;,
+  &quot;auth&quot;: {
+    &quot;url&quot;: &quot;https://domain.ltd/login/&quot;,
+    &quot;user&quot;: {
+      &quot;target&quot;: &quot;#user_login&quot;,
+      &quot;value&quot;: &quot;******&quot;
+    },
+    &quot;pass&quot;: {
+      &quot;target&quot;: &quot;#user_pass&quot;,
+      &quot;value&quot;: &quot;*****&quot;
+    }
+  },
+  &quot;courses&quot;: [...]
 }</code></pre>
 </doc-codeblock></div>
 <doc-panel id="modèle-de-fichier-de-configuration-de-puppeteer-complet-sans-authentification" collapsed>
