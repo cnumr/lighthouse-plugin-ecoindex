@@ -1,4 +1,29 @@
+# Changelog
 
+# [5.1.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.1.0-rc.0...5.1.0) (2025-02-15)
+
+
+### Bug Fixes
+
+* new gatherMode, ommit "snapshot" and "timestamp" ([cb6ee15](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/cb6ee15edbabddee5f3947c54a248b1be76c362a))
+* try to fix path error with `EcoindexApp` ([6cb8f9b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6cb8f9ba7885bfabcf9e125959755e9feeb199f1))
+* workflow must be updated ([6fdf6d0](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/6fdf6d0941c161ee907b400a1d716e28eb1c22bb))
+
+
+### Features
+
+* add authenticate process ([68e35c4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/68e35c444d6aac8225ab19b4625c6a2d24c57d4a))
+* add new login form args ([606bb5e](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/606bb5e941d294ac86842ecf5bd7b106be684798))
+* add schema ([303823c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/303823cc19c74d9a2e85f441e81c98d87d7cb72e))
+* add schema ([264029d](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/264029d456ec92760ff292d84381bbf2754a763a))
+* add schema ([0f1cb37](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0f1cb37195742be0a227fe8e0cab1691a812e74b))
+* add submit and refacto / ajouter la possibilité de se connecter en début de parcours [#60](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/60) ([f46c3c2](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/f46c3c2f1589509defff83e98548b74a661878c9))
+* better error handling ([0aa533f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0aa533f15cc38063415c76d50e7bcee44427e1b4))
+* continue the auth process (NOT WORKING) ([ddec140](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ddec140765ea5012a57fbd1a7a7ce4ea2b92ff56))
+* init ([97b31e3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/97b31e334c47636aeb2f7d4d1f68d1685b37847d))
+* new test ([0746b39](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/0746b39e2758173c5be80b15b58c13ce67ae8dfc))
+* read auth in json-file ([81f3f86](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/81f3f862b2d1517527831248fe8204b632d4d65f))
+* update dependencies ([563226c](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/563226c555949d78860bfbd57d056d5aa6a54b8b))
 
 # [5.1.0-rc.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.0.7...5.1.0-rc.0) (2024-10-20)
 
@@ -123,7 +148,7 @@
 
 * get path compatible with darwin, linux, win32 ([ccc3edf](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/ccc3edf1aeb137108e0186f7d179935c0301e5da))
 
-### Changelog
+##
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
