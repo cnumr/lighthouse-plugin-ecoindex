@@ -28,6 +28,15 @@ const SEPARATOR = '\n---------------------------------\n'
  */
 async function runCourse(urls, cliFlags, course = undefined) {
   let landingUrl = null
+  // remove duplicate URLs
+  const uniqUrls = [...new Set(urls)]
+  if (uniqUrls.length !== urls.length) {
+    console.log(
+      `${logSymbols.warning} ${
+        urls.length - uniqUrls.length
+      } duplicate(s) url has been removed from list!`,
+    )
+  }
   console.log(SEPARATOR)
   const auth = cliFlags['auth']
   if (course) {
@@ -50,7 +59,7 @@ async function runCourse(urls, cliFlags, course = undefined) {
 
   // Create a new page.
   let page = await browser.newPage()
-  console.log('List of urls:', urls)
+  console.log('List of urls:', uniqUrls)
   console.log(SEPARATOR)
 
   // Add extra-header
@@ -70,36 +79,38 @@ async function runCourse(urls, cliFlags, course = undefined) {
     page,
     getLighthouseConfig(
       true, // try to avoid Invalid dependency graph created, cycle detected
-      `Warm Navigation: ${urls[0]}`,
+      `Warm Navigation: ${uniqUrls[0]}`,
       cliFlags['audit-category'],
       cliFlags['user-agent'],
     ),
   )
   console.log(`${logSymbols.info} Mesuring...`)
-  for (let index = 0; index < urls.length; index++) {
-    if (urls[index] === landingUrl) {
-      console.log(`${logSymbols.warning} duplicate mesure on ${landingUrl}`)
+  for (let index = 0; index < uniqUrls.length; index++) {
+    if (landingUrl && uniqUrls[index] === landingUrl) {
+      console.log(
+        `${logSymbols.warning} Skipped duplicate mesure on ${landingUrl}`,
+      )
     } else {
       if (index === 0) {
-        await flow.navigate(urls[index], {
-          name: `Warm Navigation: ${urls[index]}`,
+        await flow.navigate(uniqUrls[index], {
+          name: `Warm Navigation: ${uniqUrls[index]}`,
         })
       } else {
         await flow.navigate(
-          urls[index],
+          uniqUrls[index],
           getLighthouseConfig(
             false,
-            `Cold Navigation: ${urls[index]}`,
+            `Cold Navigation: ${uniqUrls[index]}`,
             cliFlags['audit-category'],
             cliFlags['user-agent'],
           ),
         )
       }
-      console.log(`Mesure ${index}: ${urls[index]}`)
-      const cookies = await browser.cookies(urls[index])
+      console.log(`Mesure ${index}: ${uniqUrls[index]}`)
+      const cookies = await browser.cookies(uniqUrls[index])
       console.debug(`cookies`, cookies.length)
 
-      if (auth && urls[index] === auth.url) {
+      if (auth && uniqUrls[index] === auth.url) {
         // Authenticate if current URL == auth URL
         console.log(`${logSymbols.info} Authentication page detected!`)
 
@@ -118,7 +129,27 @@ async function runCourse(urls, cliFlags, course = undefined) {
       }
     }
   }
-  // try to mesure landed page, NOT WORKING.
+  // Second mesure for the auth landing page is NOT WORKING
+  // trying...
+  // let stepToRM = -1
+  // flow._gatherSteps.forEach((step, index) => {
+  //   if (!step.artifacts.URL.requestedUrl) {
+  //     console.log(
+  //       `Clean step ${index} with ${step.artifacts.URL.finalDisplayedUrl}, try to retry...`,
+  //     )
+  //     stepToRM = index
+  //   }
+  // })
+  // // clean
+  // if (stepToRM > -1) {
+  //   flow._gatherSteps.splice(stepToRM, 1)
+  // }
+  // // verify
+  // flow._gatherSteps.forEach(step => {
+  //   console.debug(step.artifacts.URL)
+  // })
+
+  // // try to mesure landed page.
   // if (landingUrl) {
   //   console.log(
   //     `${logSymbols.info} Mesure Authentication landing page ${landingUrl}`,
