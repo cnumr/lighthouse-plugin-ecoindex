@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.1.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.1.0...5.1.1) (2025-02-16)
+
+
+### Bug Fixes
+
+* better DX ([d45996b](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/d45996b05c5ae6933755c09de6cec7875fcebeb5))
+* hide the readme of the schema ([5ec4339](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/5ec4339e738ff28a0766ced24fa368804addd71b))
+* retirer la page d'atterissage d'authentification des la liste des mesures = duplicate hang process in userflow [#65](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/65) ([4d7b8d3](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4d7b8d30c912fb3b6c0e8e1c85c497a2d4153715))
+* retirer la page d'atterissage d'authentification des la liste des mesures = duplicate hang process in userflow [#65](https://github.com/cnumr/lighthouse-plugin-ecoindex/issues/65) ([4be4724](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/4be4724e75dfd188d101a4cf9b5e36f7a522d896))
+
 # [5.1.0](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.1.0-rc.0...5.1.0) (2025-02-15)
 
 
