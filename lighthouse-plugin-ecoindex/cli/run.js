@@ -77,41 +77,45 @@ async function runCourse(urls, cliFlags, course = undefined) {
   )
   console.log(`${logSymbols.info} Mesuring...`)
   for (let index = 0; index < urls.length; index++) {
-    if (index === 0) {
-      await flow.navigate(urls[index], {
-        name: `Warm Navigation: ${urls[index]}`,
-      })
+    if (urls[index] === landingUrl) {
+      console.log(`${logSymbols.warning} duplicate mesure on ${landingUrl}`)
     } else {
-      await flow.navigate(
-        urls[index],
-        getLighthouseConfig(
-          false,
-          `Cold Navigation: ${urls[index]}`,
-          cliFlags['audit-category'],
-          cliFlags['user-agent'],
-        ),
-      )
-    }
-    console.log(`Mesure ${index}: ${urls[index]}`)
-    const cookies = await browser.cookies(urls[index])
-    console.debug(`cookies`, cookies.length)
+      if (index === 0) {
+        await flow.navigate(urls[index], {
+          name: `Warm Navigation: ${urls[index]}`,
+        })
+      } else {
+        await flow.navigate(
+          urls[index],
+          getLighthouseConfig(
+            false,
+            `Cold Navigation: ${urls[index]}`,
+            cliFlags['audit-category'],
+            cliFlags['user-agent'],
+          ),
+        )
+      }
+      console.log(`Mesure ${index}: ${urls[index]}`)
+      const cookies = await browser.cookies(urls[index])
+      console.debug(`cookies`, cookies.length)
 
-    if (auth && urls[index] === auth.url) {
-      // Authenticate if current URL == auth URL
-      console.log(`${logSymbols.info} Authentication page detected!`)
+      if (auth && urls[index] === auth.url) {
+        // Authenticate if current URL == auth URL
+        console.log(`${logSymbols.info} Authentication page detected!`)
 
-      // eslint-disable-next-line no-unused-vars
-      landingUrl = await authenticateEcoindexPageMesure(
-        page,
-        auth,
-        browser,
-        session,
-        flow,
-      )
-    } else {
-      // Normal mesure
-      await startEcoindexPageMesure(page, session)
-      await endEcoindexPageMesure(flow)
+        // eslint-disable-next-line no-unused-vars
+        landingUrl = await authenticateEcoindexPageMesure(
+          page,
+          auth,
+          browser,
+          session,
+          flow,
+        )
+      } else {
+        // Normal mesure
+        await startEcoindexPageMesure(page, session)
+        await endEcoindexPageMesure(flow)
+      }
     }
   }
   // try to mesure landed page, NOT WORKING.

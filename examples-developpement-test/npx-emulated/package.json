@@ -15,7 +15,7 @@
     "serve": "npx http-server -o reports --no-dotfiles",
     "clean": "rm -rf reports/* && touch reports/.gitkeep",
     "test": "node lighthouse-plugin-ecoindex/cli/index.js collect -u https://novagaia.fr/ -u https://novagaia.fr/a-propos/ -o html && npm run serve",
-    "test:auth": "dotenv -- cross-var node lighthouse-plugin-ecoindex/cli/index.js collect -u https://greenit.eco/ -u https://greenit.eco/wp-login.php/ -u https://greenit.eco/wp-admin/plugins.php --auth.url %test_url% --auth.user.target '#user_login' --auth.user.value %username_value% --auth.pass.target '#user_pass' --auth.pass.value %password_value% -o html && npm run serve",
+    "test:auth": "dotenv -- cross-var node lighthouse-plugin-ecoindex/cli/index.js collect -u https://greenit.eco/ -u https://greenit.eco/wp-login.php/ -u https://greenit.eco/wp-admin/plugins.php -u https://greenit.eco/wp-admin/ -u https://greenit.eco/wp-admin/users.php --auth.url %test_url% --auth.user.target '#user_login' --auth.user.value %username_value% --auth.pass.target '#user_pass' --auth.pass.value %password_value% -o html && npm run serve",
     "test:auth:file": "node lighthouse-plugin-ecoindex/cli/index.js collect -j ./auth-input-file.json -o html && npm run serve"
   },
   "keywords": [],
