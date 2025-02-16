@@ -161,6 +161,7 @@ async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
  * @param {PUPPETEER.Page} page
  * @param {PUPPETEER.Browser} browser
  * @param {PUPPETEER.CDPSession} session
+ * @param {LH.UserFlow} flow
  * @param {object} authenticate
  */
 async function authenticateEcoindexPageMesure(
@@ -189,6 +190,7 @@ async function authenticateEcoindexPageMesure(
     await page.click('[type="submit"]')
     await page.waitForNavigation()
     const u = page.url()
+
     console.log(`${logSymbols.info} Authenticated! Landed on`, u)
     // try to mesure landed page, NOT WORKING.
     // await flow.navigate(u, { name: 'Navigate only' })
