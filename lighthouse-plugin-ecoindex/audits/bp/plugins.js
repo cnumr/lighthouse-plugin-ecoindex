@@ -6,6 +6,7 @@
 
 import { Audit } from 'lighthouse'
 import Plugins from './lighthouse/core/plugins.js'
+// eslint-disable-next-line no-unused-vars
 import refsURLS from './refs-urls.js'
 
 class PluginsCustomAudit extends Audit {
