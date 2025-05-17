@@ -54,7 +54,7 @@
     "lighthouse": "12.5.1",
     "lodash.round": "^4.0.4",
     "log-symbols": "^7.0.0",
-    "puppeteer": "^24.2.1",
+    "puppeteer": "24.8.0",
     "puppeteer-core": "24.8.0",
     "slugify": "^1.6.6",
     "yargs": "^17.7.2"
