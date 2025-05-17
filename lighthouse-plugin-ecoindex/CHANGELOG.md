@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.1.2](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.1.1...5.1.2) (2025-05-17)
+
+
+### Bug Fixes
+
+* ajouter le support des modes 'navigation', 'timespan' et 'snapshot' dans l'audit WarnNodesCount ([c9b5de4](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/c9b5de45b4782d0910be7679ef82517bc5d65075))
+* ajouter un commentaire pour désactiver l'avertissement ESLint sur une variable non utilisée dans plugins.js ([befaf2f](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/befaf2f1d436ee56b31d3f4f69729d872c453e56))
+* mettre à jour les dépendances vers les versions FIXE 12.5.1 de Lighthouse et 24.8.0 de Puppeteer, ainsi que d'autres mises à jour de dépendances dans package-lock.json ([73af918](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/73af9186bbd3cd924b56b31a3c3bfcf444bcf647))
+
 ## [5.1.1](https://github.com/cnumr/lighthouse-plugin-ecoindex/compare/5.1.0...5.1.1) (2025-02-16)
 
 
