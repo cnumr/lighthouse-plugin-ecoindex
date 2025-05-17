@@ -5,9 +5,9 @@
  */
 
 import { Audit } from 'lighthouse'
-import commons from './commons.js'
 import { getEcoindexNodes } from '../utils/index.js'
 import refsURLS from './bp/refs-urls.js'
+import commons from './commons.js'
 
 class WarnNodesCount extends Audit {
   static get meta() {
@@ -20,6 +20,7 @@ class WarnNodesCount extends Audit {
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: commons.requiredArtifacts,
+      supportedModes: ['navigation', 'timespan', 'snapshot'],
     }
   }
 
