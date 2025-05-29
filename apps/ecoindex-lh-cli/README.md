@@ -1,6 +1,12 @@
-# lighthouse-plugin-ecoindex
+# `LHEx` — lighthouse-plugin-ecoindex
 
-![npm](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex) ![GitHub License](https://img.shields.io/github/license/NovaGaia/lighthouse-plugin-ecoindex)
+| Package                              | Version                                                                                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `lighthouse-plugin-ecoindex`         | ![npm lighthouse-plugin-ecoindex](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex)                 |
+| `lighthouse-plugin-ecoindex-core`    | ![npm lighthouse-plugin-ecoindex-core](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex-core)       |
+| `lighthouse-plugin-ecoindex-courses` | ![npm lighthouse-plugin-ecoindex-courses](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex-courses) |
+
+![GitHub License](https://img.shields.io/github/license/cnumr/lighthouse-plugin-ecoindex)
 
 ![Summary of results](docs/static/ecoindex-intro.png)
 _Summary of results_
@@ -20,3 +26,7 @@ _Summary of results_
 
 ![Details of plugin results](docs/static/ecoindex-results.png)
 _Details of plugin results_
+
+## Stack
+
+![documentation](./stack.excalidraw.png)
