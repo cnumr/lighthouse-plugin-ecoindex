@@ -1,0 +1,89 @@
+{
+  "name": "lighthouse-plugin-ecoindex-core",
+  "description": "Lighthouse plugin that include Ecoindex results.",
+  "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/cnumr/lighthouse-plugin-ecoindex/libs/ecoindex-lh-plugin-ts#readme",
+  "bugs": "https://github.com/cnumr/lighthouse-plugin-ecoindex/issues",
+  "author": {
+    "name": "Renaud Héluin",
+    "email": "renaud.heluin@novagaia.fr",
+    "url": "https://novagaia.fr"
+  },
+  "contributors": [
+    {
+      "name": "Renaud Héluin",
+      "email": "rheluin@novagaia.fr"
+    },
+    {
+      "name": "Jérôme Moly@capybarbu",
+      "email": "jerome@capybara.consulting"
+    }
+  ],
+  "keywords": [
+    "lighthouse",
+    "plugin",
+    "ecoindex",
+    "GreenIT.fr"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git",
+    "directory": "libs/ecoindex-lh-plugin-ts"
+  },
+  "version": "1.1.0",
+  "type": "module",
+  "main": "dist/plugin.js",
+  "types": "dist/plugin.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/plugin.d.ts",
+      "default": "./dist/plugin.js"
+    },
+    "./get-audits-list": {
+      "types": "./dist/utils/get-audits-list.d.ts",
+      "default": "./dist/utils/get-audits-list.js"
+    },
+    "./helpers/custom-config": {
+      "types": "./dist/helpers/lhci/custom-config.d.ts",
+      "default": "./dist/helpers/lhci/custom-config.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test here, use @ecoindex-lh-test/plugin-core\"",
+    "lint": "eslint --config eslint.config.js",
+    "lint:fix": "eslint --config eslint.config.js --fix",
+    "prebuild": "rimraf ./dist",
+    "build": "tsup",
+    "postbuild": "pnpm copy-types",
+    "copy-types": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+  },
+  "dependencies": {
+    "ecoindex": "1.0.5",
+    "lighthouse": "12.5.1",
+    "lighthouse-logger": "^2.0.1",
+    "lodash.round": "^4.0.4",
+    "log-symbols": "4.1.0",
+    "puppeteer-core": "24.8.0"
+  },
+  "devDependencies": {
+    "@dual-bundle/import-meta-resolve": "^4.1.0",
+    "@eslint/js": "^9.23.0",
+    "@types/lodash.round": "^4.0.9",
+    "@types/node": "^22.7.5",
+    "copyfiles": "^2.4.1",
+    "eslint": "^9.23.0",
+    "eslint-config-eslint": "^11.0.0",
+    "globals": "^16.0.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.28.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@ecoindex-lh-test/test-org-thegreenwebfoundation-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "rimraf ./reports && mkdir -p ./reports",
+    "test": "bru run --reporter-html ./reports/results.html",
+    "build": "echo \"No build because this is test project\"",
+    "lint": "echo \"No lint because this is test project\"",
+    "lint:fix": "echo \"No lint:fix because this is test project\"",
+    "typecheck": "echo \"No typecheck because this is test project\"",
+    "format:write": "echo \"No format:write because this is test project\"",
+    "format:check": "echo \"No format:check because this is test project\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@usebruno/cli": "^2.2.2"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

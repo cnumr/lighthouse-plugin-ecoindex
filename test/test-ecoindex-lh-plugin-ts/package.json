@@ -1,0 +1,30 @@
+{
+  "name": "@ecoindex-lh-test/plugin-core",
+  "private": true,
+  "version": "5.1.1",
+  "type": "module",
+  "description": "Tests avec le plugin en TS (avec `lighthouse-plugin-ecoindex-core`)",
+  "scripts": {
+    "pretest": "rimraf ./.lighthouseci",
+    "test": "lhci collect && lhci open && echo \"Test Done! 🚀\"",
+    "lhci": "lhci",
+    "build": "echo \"No build because this is test project\"",
+    "lint": "echo \"No lint because this is test project\"",
+    "lint:fix": "echo \"No lint:fix because this is test project\"",
+    "typecheck": "echo \"No typecheck because this is test project\"",
+    "format:write": "echo \"No format:write because this is test project\"",
+    "format:check": "echo \"No format:check because this is test project\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lhci/cli": "^0.14.0",
+    "lighthouse": "^12.4.0",
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "puppeteer": "^24.4.0"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

@@ -1,0 +1,37 @@
+meta {
+  name: greencheck
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://api.thegreenwebfoundation.org/api/v3/greencheck/:hostname
+  body: none
+  auth: inherit
+}
+
+params:path {
+  hostname: {{hostname}}
+}
+
+vars:pre-request {
+  hostname: novagaia.fr
+}
+
+assert {
+  res.status: eq 200
+  res.body.url: eq {{hostname}}
+  res.body.green: isBoolean
+}
+
+tests {
+  let hostname = bru.getRequestVar("hostname");
+  
+  test("should be able to connect", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test(`url must be equal to ${hostname}`, function () {
+    expect(res.getBody().url).to.equal(hostname);
+  });
+}

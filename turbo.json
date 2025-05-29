@@ -1,0 +1,34 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "lint": { "outputLogs": "new-only" },
+    "lint:fix": { "outputLogs": "new-only" },
+    "typecheck": { "outputLogs": "new-only" },
+    "format:check": {
+      "cache": false,
+      "outputs": []
+    },
+    "format:write": {
+      "cache": false,
+      "outputs": []
+    },
+    "prebuild": { "outputLogs": "new-only" },
+    "postbuild": { "outputLogs": "new-only", "dependsOn": ["^build"] },
+    "build": {
+      "outputLogs": "new-only",
+      "inputs": ["src/**"],
+      "dependsOn": ["^lint", "^prebuild", "^build"],
+      "outputs": ["dist/**"]
+    },
+    "test": {
+      "inputs": ["src/**"],
+      "cache": false,
+      "dependsOn": ["^build"],
+      "outputs": ["reports/**", ".lighthouseci/*"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    }
+  }
+}

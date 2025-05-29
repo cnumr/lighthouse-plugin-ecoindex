@@ -1,0 +1,12 @@
+{
+  "prettier.configPath": "prettier.config.cjs",
+  "prettier.prettierPath": "./node_modules/prettier/index.cjs",
+  "[typescript]": {
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": true
+  },
+  // Default (format when you paste)
+  "editor.formatOnPaste": true,
+  // Default (format when you save)
+  "editor.formatOnSave": true
+}

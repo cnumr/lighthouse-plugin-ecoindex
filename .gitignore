@@ -1,0 +1,29 @@
+.DS_Store
+.cache
+node_modules
+.pnpm-store
+.yarn
+
+# output files and folders
+*.report.html
+*.report.json
+**/reports/**/*.*
+!docs/static/*.report.json
+!docs/**/reports/**/*.*
+flags-*
+lhr-*
+reports/*
+.lighthouseci/*
+**/.lighthouseci/links.json
+
+
+# input files to keep locally
+example-urls-list*
+!example-urls-list
+
+private-*.json
+private-*/
+private-*
+
+
+.turbo

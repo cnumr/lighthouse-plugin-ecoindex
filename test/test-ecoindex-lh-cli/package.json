@@ -1,0 +1,32 @@
+{
+  "name": "@ecoindex-lh-test/cli",
+  "private": true,
+  "version": "5.1.1",
+  "description": "",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "pnpm test:input-json && pnpm test:url",
+    "test:input-json": "pnpm --filter @ecoindex-lh-test/cli run npx collect --json-file ./input-file.json",
+    "test:demo": "pnpm --filter @ecoindex-lh-test/cli run npx collect --demo",
+    "test:url": "pnpm --filter @ecoindex-lh-test/cli run npx collect -u https://novagaia.fr",
+    "lint": "echo \"No lint because this is a test app\"",
+    "lint:fix": "echo \"No lint because this is a test app\"",
+    "pretest": "rimraf reports",
+    "npx": "lighthouse-plugin-ecoindex",
+    "typecheck": "echo \"No typecheck because this is a test app\"",
+    "format:write": "echo \"No format:write because this is a test app\"",
+    "format:check": "echo \"No format:check because this is a test app\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse-plugin-ecoindex-courses": "workspace:*",
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "lighthouse-plugin-ecoindex": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

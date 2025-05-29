@@ -1,0 +1,7 @@
+packages:
+  # all packages in direct subdirs of packages/
+  - 'apps/ecoindex-lh-cli'
+  - 'apps/econindex-app-tauri'
+  - 'libs/*'
+  - 'test/*'
+  - 'tools/*'

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": true,
+  "fixed": [],
+  "linked": [
+    ["lighthouse-plugin-ecoindex-core", "lighthouse-plugin-ecoindex-courses"]
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "lighthouse-plugin-ecoindex",
+    "lighthouse-plugin-ecoindex-bps",
+    "@ecoindex-lh-test/cli",
+    "@ecoindex-lh-test/courses",
+    "@ecoindex-lh-test/plugin-core",
+    "@ecoindex-lh-test/test-org-thegreenwebfoundation-api"
+  ]
+}
