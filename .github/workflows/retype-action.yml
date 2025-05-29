@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    branches-ignore:
-      - 'changeset-release/**'
 
 jobs:
   publish:
