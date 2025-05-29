@@ -6,7 +6,6 @@ on:
       - main
     branches-ignore:
       - 'changeset-release/**'
-      - 'changeset-release-next/**'
 
 jobs:
   publish:
