@@ -1,7 +1,0 @@
-{
-  "arrowParens": "avoid",
-  "singleQuote": true,
-  "semi": false,
-  "organizeImportsSkipDestructiveCodeActions": true,
-  "plugins": ["prettier-plugin-organize-imports"]
-}
