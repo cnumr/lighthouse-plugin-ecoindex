@@ -1,5 +1,13 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 6.0.0-next.2
+
+### Patch Changes
+
+- 90ba012: Documenatation and missing demo file
+- Updated dependencies [90ba012]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.2
+
 ## 6.0.0-next.1
 
 ### Patch Changes
