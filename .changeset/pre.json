@@ -12,6 +12,7 @@
     "@ecoindex-lh-test/test-org-thegreenwebfoundation-api": "1.0.0"
   },
   "changesets": [
+    "dirty-boats-grow",
     "dull-wasps-sit",
     "fancy-snakes-attack",
     "good-rivers-double",
