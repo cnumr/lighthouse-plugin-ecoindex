@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.1
+
+### Patch Changes
+
+- f3d3bae: Passage au mono-repo
+
 ## 6.0.0-next.0
 
 ### Minor Changes
