@@ -10,7 +10,6 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "lighthouse-plugin-ecoindex",
     "lighthouse-plugin-ecoindex-bps",
     "@ecoindex-lh-test/cli",
     "@ecoindex-lh-test/courses",
