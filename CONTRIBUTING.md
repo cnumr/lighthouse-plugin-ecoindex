@@ -7,9 +7,11 @@ Cette stack est composée de 2 blocs principaux :
 - Les applications ;
 - Les librairies.
 
+![documentation](./stack.excalidraw.png)
+
 ## le code
 
-### Les librairies — `libs`
+## Code legacy
 
 #### `legacy/ecoindex-lh-plugin` — lighthouse-plugin-ecoindex legacy
 
@@ -24,6 +26,8 @@ Mais elle ne répond plus à nos besoins :
 - Elle n'est pas développée en TypeScript.
 
 > **Cette version ne sera pas maintenue.**
+
+### Les librairies — `libs`
 
 #### `libs/ecoindex-lh-courses` — **lighthouse-plugin-ecoindex-courses**
 
@@ -66,6 +70,8 @@ Son périmètre est uniquement les interactions en CLI de la librairie `libs/eco
 
 > Pour rappel, l'objectif de cette stack est de gérer tout ce code en monrepos et en TypeScript. Mais ElectronJS n'est pas compatible avec le monorepo pnpm ou yarn, il lui faut les librairies dans son dossier `node_modules` et ne permet pas d'utiliser les symlinks ou les workspaces.
 > Ce qui a comme conséquence que les applications Electron ne peuvent pas être dans le monorepo et sera dans son propre repo, comme avant :'(
+
+Repo de l'application : https://github.com/cnumr/EcoindexApp
 
 Cette application est une application Electron qui permet de lancer les mesures lighthouse et écoindex, et générer des rapports et staitements (Déclaration de conformité environnementale).
 
