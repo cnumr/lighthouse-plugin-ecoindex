@@ -1,0 +1,58 @@
+{
+  "name": "lighthouse-plugin-ecoindex-legacy",
+  "description": "Lighthouse plugin that include Ecoindex results.",
+  "homepage": "https://github.com/cnumr/lighthouse-plugin-ecoindex#readme",
+  "bugs": "https://github.com/cnumr/lighthouse-plugin-ecoindex/issues",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "author": {
+    "name": "Renaud Héluin",
+    "email": "renaud.heluin@novagaia.fr",
+    "url": "https://novagaia.fr"
+  },
+  "contributors": [
+    {
+      "name": "Renaud Héluin",
+      "email": "rheluin@novagaia.fr"
+    },
+    {
+      "name": "Jérôme Moly@capybarbu",
+      "email": "jerome@capybara.consulting"
+    }
+  ],
+  "keywords": [
+    "lighthouse",
+    "plugin",
+    "ecoindex",
+    "GreenIT.fr"
+  ],
+  "scripts": {
+    "postinstall": "npx puppeteer browsers install chrome && npx puppeteer browsers install chrome-headless-shell && node auto-install.mjs",
+    "test": "echo \"Error: no test here, use @ecoindex-lh-test/plugin-legacy\"",
+    "build": "echo \"No build because this is a legacy plugin in CommonJS\"",
+    "lint": "echo \"No lint because this is a legacy plugin in CommonJS\"",
+    "lint:fix": "echo \"No lint:fix because this is a legacy plugin in CommonJS\"",
+    "typecheck": "echo \"No typecheck because this is a legacy plugin in CommonJS\""
+  },
+  "main": "./plugin.js",
+  "files": [
+    "plugin.js",
+    "auto-install.mjs",
+    "gatherers/dom-informations.js",
+    "gatherers/dom-informations.cjs"
+  ],
+  "version": "5.1.1",
+  "type": "module",
+  "dependencies": {
+    "@lhci/cli": "^0.14.0",
+    "ecoindex": "1.0.5",
+    "lighthouse": "12.5.1",
+    "lodash.round": "^4.0.4",
+    "log-symbols": "^7.0.0",
+    "puppeteer": "24.8.0",
+    "puppeteer-core": "24.8.0"
+  },
+  "peerDependencies": {
+    "@puppeteer/browsers": "^2.8.0"
+  }
+}

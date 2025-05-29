@@ -1,7 +1,7 @@
 ---
 Label: Déclaration Environnementale
 icon: checklist
-order: 600
+order: 30
 ---
 
 # Déclaration Environnementale, l'initiative de GreenIT.fr®

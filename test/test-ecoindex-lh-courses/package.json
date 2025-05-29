@@ -1,0 +1,34 @@
+{
+  "name": "@ecoindex-lh-test/courses",
+  "private": true,
+  "version": "5.1.1",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "rimraf ./reports",
+    "test": "pnpm run test:browser && pnpm run test:file && pnpm run test:obj",
+    "test:file": "node test-file-esm.mjs",
+    "test:obj": "node test-obj-esm.mjs",
+    "test:browser": "pnpm test:check:installed:browser && pnpm test:auto:install:browser",
+    "clean:puppeteer:cache": "rimraf ~/.cache/puppeteer",
+    "test:check:installed:browser": "node ./browser-test.mjs",
+    "test:check:install:mandatory:browser": "node ./browser-install.mjs",
+    "test:auto:install:browser": "node ./node_modules/lighthouse-plugin-ecoindex-courses/auto-install.js",
+    "lint": "echo \"No lint because this is a test app\"",
+    "lint:fix": "echo \"No lint:fix because this is a test app\"",
+    "typecheck": "echo \"No typecheck because this is a test app\"",
+    "format:write": "echo \"No format:write because this is a test app\"",
+    "format:check": "echo \"No format:check because this is a test app\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse-plugin-ecoindex-courses": "workspace:*",
+    "lighthouse-plugin-ecoindex-core": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

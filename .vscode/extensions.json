@@ -8,6 +8,8 @@
     "mutantdino.resourcemonitor",
     "yzhang.markdown-all-in-one",
     "adam-bender.commit-message-editor",
-    "mhutchie.git-graph"
+    "mhutchie.git-graph",
+    "dotenv.dotenv-vscode",
+    "pomdtr.excalidraw-editor"
   ]
 }

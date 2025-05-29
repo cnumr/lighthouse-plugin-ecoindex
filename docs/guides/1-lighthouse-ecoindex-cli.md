@@ -103,7 +103,7 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `-h, --extra-header` : Objet de configuration supplémentaire pour Lighthouse. Chaîne JSON ou chemin vers un fichier JSON.
 - `-p, --output-path` : Dossier de sortie.
 - `-o, --output` : Rapporteur pour les résultats, supporte plusieurs valeurs. Choix : "json", "html", "statement". ATTENTION : "csv" n'est pas disponible.
-- `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs.
+- `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs. Available categories: "accessibility", "best-practices", "performance", "seo" and "lighthouse-plugin-ecoindex-core".
 - `--user-agent` : User-Agent à utiliser pour les requêtes.
 - `--auth` : Moyen de s'authentifier pendant les mesures (`--auth.url`, `--auth.user.target`, `--auth.user.value`, etc. voir le tableau plus bas).
 - `--help` : Affiche l'aide.

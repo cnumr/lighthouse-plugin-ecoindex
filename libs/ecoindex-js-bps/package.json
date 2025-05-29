@@ -1,0 +1,19 @@
+{
+  "name": "lighthouse-plugin-ecoindex-bps",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified in lighthouse-plugin-ecoindex-bps\"",
+    "build": "echo \"No build because this is a library in CommonJS\"",
+    "lint": "echo \"No lint because this is a library in CommonJS\"",
+    "lint:fix": "echo \"No lint:fix because this is a library in CommonJS\"",
+    "typecheck": "echo \"No typecheck because this is a library in CommonJS\"",
+    "format:write": "echo \"No format:write because this is a library in CommonJS\"",
+    "format:check": "echo \"No format:check because this is a library in CommonJS\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

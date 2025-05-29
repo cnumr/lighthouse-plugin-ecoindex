@@ -1,29 +1,85 @@
-# How to contribute to this project
+# Contributing
 
-We'd love to accept your patches and contributions to this project. There are just a few small guidelines you need to follow.
+Objectif (non atteint) : Gérer tout cette stack en monrepos et en TypeScript.
 
-# Development environment setup
+Cette stack est composée de 2 blocs principaux :
 
-Use Docker, VSCODE as your IDE with and devcontainer extension installed.
+- Les applications ;
+- Les librairies.
 
-The decontainer will setup the development environment for you. It will install all the necessary tools and dependencies (recommanded plugins, lighthouse server aka lhci preconfigured w/ bdd embed, etc).
+## le code
 
-Two versions of the devcontainer are available:
+### Les librairies — `libs`
 
-- `silicon/devcontainer.json` for Apple silicon M\* processors — linux/amd64
-- `intel/devcontainer.json` for Intel processors (NOT TESTED)
+#### `legacy/ecoindex-lh-plugin` — lighthouse-plugin-ecoindex legacy
 
-After you launched the devcontainer, you **NEED** to run the following commands to finish the setup of the development server:
+On y trouve, pour mémoire, la première version du plugin, tout en un et en CommonJS.
 
-```bash
-sh /workspace/.devcontainer/commons/updateContentCommand/updateContentCommand.sh
-```
+C'est la version hitorique qui à été publiée en 2024 et qui fonctionne très bien.
 
-# Elements
+Mais elle ne répond plus à nos besoins :
 
-- `lighthouse-plugin-ecoindex/` folder contains the plugin code
-- `examples-developpement-test/` folder contains the developpements to test the plugin for `lhci`, `lighthouse` and `npx lighthouse-plugin-ecoindex` commands
-- `examples/` folder contains the examples of the plugin for `lhci`, `lighthouse` and `npx lighthouse-plugin-ecoindex` commands, for the documentation
-- `docs` folder contains the documentation of the plugin
+- Elle est lourde et centralise trop de fonctionnalités ;
+- Elle ne permet pas d'être utilisée dans l'application Electron car en étant en CommonJS, elle génère des erreurs ;
+- Elle n'est pas développée en TypeScript.
 
-> Don't forget to sync the `examples-developpement-test/` folder with the `examples/` folder before pushing your changes and to update the documentation in the `docs` folder. If you change the devcontainer, don't forget to sync your updates to the `silicon` and `intel` folders.
+> **Cette version ne sera pas maintenue.**
+
+#### `libs/ecoindex-lh-courses` — **lighthouse-plugin-ecoindex-courses**
+
+Cette librairie permet de lancer les mesures lighthouse et écoindex, et générer des rapports et staitements (Déclaration de conformité environnementale).
+
+En splitant en plusieurs librairies, on peut l'utiliser dans des applications différentes, CLI ou Electron.
+
+> **Cette library sera maintenue.**
+
+#### `libs/ecoindex-lh-plugin-ts` — **lighthouse-plugin-ecoindex-core**
+
+**Cette librairie est le coeur de cette stack, elle est LE plugin lighthouse.**
+
+Elle contient :
+
+- des audits de base ;
+  - le score de écoindex et le grade écuivalent, ainsi que des métriques d'émissions de CO2 et d'accaparement en eau ;
+  - les audits de bonnes pratiques issues des 115 bonnes pratiques d'écoconception issue de Green IT ;
+- un nouveau convertisseur de données (Gatherer) donnant les mesures du DOM comme l'écoindex le souhaite ;
+- une configuration par défaut pour `lighthouse-ci` ;
+- l'installation automatique d'un navigateur headless pour puppeteer.
+
+Elle est utilisée par la librairie `libs/ecoindex-lh-courses | lighthouse-plugin-ecoindex-courses` et permet d'être utilisée par `lighthouse-ci`.
+
+> **Cette library sera maintenue.**
+
+### Les applications — `apps`
+
+#### `apps/ecoindex-lh-cli` — **lighthouse-plugin-ecoindex**
+
+Cette version est une refonte en TypeScript de la [version précédente/legacy](#libsecoindex-lh-plugin--lighthouse-plugin-ecoindex-legacy), mais elle n'a pas le même périmètre fonctionnel, même si elle est compatible avec la version précédente.
+
+la version précédente était une version tout en un, cette version est une version modulaire, ce qui permet de l'utiliser dans des applications différentes.
+
+Son périmètre est uniquement les interactions en CLI de la librairie `libs/ecoindex-lh-courses`.
+
+> **Cette application CLI sera maintenue et devient la version officielle.**
+
+### `apps/???` — **EcoindexApp**
+
+> Pour rappel, l'objectif de cette stack est de gérer tout ce code en monrepos et en TypeScript. Mais ElectronJS n'est pas compatible avec le monorepo pnpm ou yarn, il lui faut les librairies dans son dossier `node_modules` et ne permet pas d'utiliser les symlinks ou les workspaces.
+> Ce qui a comme conséquence que les applications Electron ne peuvent pas être dans le monorepo et sera dans son propre repo, comme avant :'(
+
+Cette application est une application Electron qui permet de lancer les mesures lighthouse et écoindex, et générer des rapports et staitements (Déclaration de conformité environnementale).
+
+Elle utilise la librairie `libs/ecoindex-lh-courses | lighthouse-plugin-ecoindex-courses`.
+
+## Les tests — `test`
+
+Chaque librairie et l'application CLI, ont leurs propres tests.
+
+## Les outils de développement
+
+- [`pnpm`](https://pnpm.io/pnpm-workspace_yaml) pour le monorepo et les workspaces ;
+- [`turbo`](https://turbo.build/repo/docs) pour le lint, le build et le test ;
+- [`@changesets/cli`](https://changesets-docs.vercel.app/en) pour les changelog et la gestion des versions et des releases ;
+- [`prettier`](https://prettier.io/docs/en/options) pour le formatage.
+- [`eslint`](https://eslint.org/docs/latest/use/getting-started) pour le lint.
+- [`lhci-server`](https://github.com/GoogleChrome/lighthouse-ci/tree/main/packages/server) pour le serveur lhci.

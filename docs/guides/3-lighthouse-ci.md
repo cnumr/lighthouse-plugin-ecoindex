@@ -4,6 +4,12 @@ icon: pulse
 order: 800
 ---
 
+!!!warning
+A mettre à jour pour utiliser le package `lighthouse-plugin-ecoindex-core`.  
+Mettre a jour les lignes de commandes, les fichiers de configuration et le lien vers le projet d'example.  
+Mettre à jour l'usage dans GitLab CI.
+!!!
+
 # Utilisation avec Lighthouse CI
 
 ## Objectifs

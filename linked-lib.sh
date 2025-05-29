@@ -1,1 +1,0 @@
-cd /workspace/lighthouse-plugin-ecoindex && npm link

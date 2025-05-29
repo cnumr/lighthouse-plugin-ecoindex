@@ -58,16 +58,17 @@ Ce plugin ajoute EcoIndex® à Lighthouse®.
 ## Récapitulatif des fonctionnalités
 
 - [!button size="xs" text="cli (int)" icon="terminal"](./guides/1-lighthouse-ecoindex-cli.md) client interne `npx lighthouse-plugin-ecoindex <command> <options>` ;
-- [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse `npm lighthouse <url> <options>` ;
-- [!button size="xs" text="CI" icon="pulse"](./guides/3-lighthouse-ci.md) Lighthouse CI
+- [!button size="xs" text="CI" icon="pulse"](./guides/3-lighthouse-ci.md) Lighthouse CI ;
+- [!button size="xs" text="cli (lh)" icon="terminal"](./guides/2-lighthouse-cli.md) client Lighthouse **[Usage non recommandé]** `npm lighthouse <url> <options>`.
 
-| Fonctionnalités                                          | :icon-terminal: cli(int) | :icon-terminal: cli(lh) | :icon-pulse: CI |
-| :------------------------------------------------------- | ------------------------ | ----------------------- | --------------- |
-| Rapports Lighthouse avec les audits ecoindex             | ✅                       | ✅                      | ✅              |
-| Bonnes pratiques Green IT                                | ✅                       | ✅                      | ✅              |
-| Déclaration Environnementale                             | ✅                       | ❌                      | ❌              |
-| Publication des données d'audits à un serveur Lighthouse | ❌                       | ❌                      | ✅              |
-| Puppeteer                                                | ✅                       | ❌                      | ✅              |
+| Fonctionnalités                                          | :icon-terminal: cli(int) | :icon-pulse: CI | :icon-terminal: cli(lh) |
+| :------------------------------------------------------- | ------------------------ | --------------- | ----------------------- |
+| ⚠️ Recommandation d'usage                                | ✅                       | ✅              | ❌                      |
+| Rapports Lighthouse avec les audits ecoindex             | ✅                       | ✅              | ✅                      |
+| Bonnes pratiques Green IT                                | ✅                       | ✅              | ✅                      |
+| Déclaration Environnementale                             | ✅                       | ❌              | ❌                      |
+| Publication des données d'audits à un serveur Lighthouse | ❌                       | ✅              | ❌                      |
+| Puppeteer                                                | ✅                       | ✅              | ❌                      |
 
 ## Documentation des usages
 

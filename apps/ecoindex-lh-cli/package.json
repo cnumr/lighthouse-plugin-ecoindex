@@ -1,0 +1,77 @@
+{
+  "name": "lighthouse-plugin-ecoindex",
+  "description": "Courses for the Lighthouse plugin that include Ecoindex results.",
+  "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/cnumr/lighthouse-plugin-ecoindex#readme",
+  "bugs": "https://github.com/cnumr/lighthouse-plugin-ecoindex/issues",
+  "author": {
+    "name": "Renaud Héluin",
+    "email": "renaud.heluin@novagaia.fr",
+    "url": "https://novagaia.fr"
+  },
+  "contributors": [
+    {
+      "name": "Renaud Héluin",
+      "email": "rheluin@novagaia.fr"
+    },
+    {
+      "name": "Jérôme Moly@capybarbu",
+      "email": "jerome@capybara.consulting"
+    }
+  ],
+  "keywords": [
+    "lighthouse",
+    "plugin",
+    "ecoindex",
+    "GreenIT.fr"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git",
+    "directory": "apps/ecoindex-lh-cli"
+  },
+  "version": "6.0.0-next.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "index.js"
+  ],
+  "bin": {
+    "lighthouse-ecoindex": "index.js",
+    "lighthouse-plugin-ecoindex": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified lighthouse-plugin-ecoindex\"",
+    "prebuild": "rimraf ./dist",
+    "lint": "eslint --config eslint.config.js",
+    "lint:fix": "eslint --config eslint.config.js --fix",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+  },
+  "dependencies": {
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "lighthouse-plugin-ecoindex-courses": "workspace:*",
+    "log-symbols": "4.1.0",
+    "yargs": "^17.7.2"
+  },
+  "peerDependencies": {
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "lighthouse-plugin-ecoindex-courses": "workspace:*"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/node": "^20.11.24",
+    "@types/yargs": "^17.0.33",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "lighthouse": "12.5.1",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.2.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.28.0"
+  }
+}

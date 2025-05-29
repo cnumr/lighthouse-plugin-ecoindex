@@ -1,6 +1,8 @@
 .DS_Store
 .cache
 node_modules
+.pnpm-store
+.yarn
 
 # output files and folders
 *.report.html
@@ -22,3 +24,6 @@ example-urls-list*
 private-*.json
 private-*/
 private-*
+
+
+.turbo

@@ -1,7 +1,7 @@
 ---
 label: Contribuer
 icon: git-pull-request
-order: 200
+order: 20
 ---
 
 # Contribuer à ce projet

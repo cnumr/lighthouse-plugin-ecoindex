@@ -23,7 +23,7 @@ jobs:
 
       - uses: retypeapp/action-build@latest
         with:
-          config: ./docs/retype.yml
+          config_path: ./docs/retype.yml
 
       - uses: retypeapp/action-github-pages@latest
         with:

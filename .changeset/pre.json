@@ -1,0 +1,39 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "lighthouse-plugin-ecoindex": "5.1.2",
+    "lighthouse-plugin-ecoindex-bps": "1.0.0",
+    "lighthouse-plugin-ecoindex-courses": "5.1.2",
+    "lighthouse-plugin-ecoindex-core": "5.1.2",
+    "@ecoindex-lh-test/cli": "5.1.1",
+    "@ecoindex-lh-test/courses": "5.1.1",
+    "@ecoindex-lh-test/plugin-core": "5.1.1",
+    "@ecoindex-lh-test/test-org-thegreenwebfoundation-api": "1.0.0"
+  },
+  "changesets": [
+    "dull-wasps-sit",
+    "fancy-snakes-attack",
+    "good-rivers-double",
+    "khaki-monkeys-listen",
+    "khaki-wolves-poke",
+    "legal-hornets-notice",
+    "metal-results-burn",
+    "metal-shoes-refuse",
+    "orange-zebras-speak",
+    "polite-jokes-live",
+    "puny-ties-fall",
+    "purple-corners-think",
+    "quick-clouds-tell",
+    "social-hotels-hope",
+    "soft-carpets-teach",
+    "solid-buckets-talk",
+    "some-chefs-stay",
+    "spicy-masks-work",
+    "stupid-vans-relax",
+    "tangy-chicken-refuse",
+    "thin-bags-matter",
+    "violet-corners-love",
+    "wicked-areas-travel"
+  ]
+}

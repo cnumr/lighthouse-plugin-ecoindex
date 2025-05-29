@@ -1,0 +1,32 @@
+{
+  "name": "@ecoindex-lh-test/plugin-legacy",
+  "private": true,
+  "version": "5.1.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "rimraf ./.lighthouseci",
+    "test": "echo \"No test because this is legacy project\"",
+    "test:collect": "lhci collect && lhci open && echo \"Test Done! 🚀\"",
+    "test:install:browser": "node ./node_modules/lighthouse-plugin-ecoindex-legacy/auto-install.mjs",
+    "lhci": "lhci",
+    "build": "echo \"No build because this is test project\"",
+    "lint": "echo \"No lint because this is test project\"",
+    "lint:fix": "echo \"No lint:fix because this is test project\"",
+    "typecheck": "echo \"No typecheck because this is test project\"",
+    "format:write": "echo \"No format:write because this is test project\"",
+    "format:check": "echo \"No format:check because this is test project\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse-plugin-ecoindex-legacy": "workspace:*",
+    "@lhci/cli": "^0.14.0",
+    "lighthouse": "^12.4.0",
+    "puppeteer": "^24.4.0"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
