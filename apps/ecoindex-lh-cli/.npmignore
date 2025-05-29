@@ -13,3 +13,4 @@ types
 eslint.config.js
 tsconfig.json
 tsup.config.ts
+!demo/example-input-file.json
