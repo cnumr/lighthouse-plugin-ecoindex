@@ -30,7 +30,7 @@
     "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git",
     "directory": "libs/ecoindex-lh-courses"
   },
-  "version": "6.0.0-next.0",
+  "version": "6.0.0-next.1",
   "main": "dist/run.js",
   "types": "dist/types/index.d.ts",
   "type": "module",
