@@ -30,7 +30,7 @@
     "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git",
     "directory": "apps/ecoindex-lh-cli"
   },
-  "version": "5.1.1",
+  "version": "5.1.2",
   "private": true,
   "type": "module",
   "main": "./dist/index.js",
