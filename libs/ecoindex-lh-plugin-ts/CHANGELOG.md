@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.2
+
+### Patch Changes
+
+- 90ba012: Documenatation and missing demo file
+
 ## 6.0.0-next.1
 
 ### Patch Changes
