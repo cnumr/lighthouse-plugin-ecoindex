@@ -1,5 +1,13 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 6.0.0-next.3
+
+### Patch Changes
+
+- 1c50a53: Disable the retype action from secondary actions from changeset
+- Updated dependencies [1c50a53]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.3
+
 ## 6.0.0-next.2
 
 ### Patch Changes
