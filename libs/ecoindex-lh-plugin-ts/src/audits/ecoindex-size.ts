@@ -7,17 +7,17 @@ import {
 } from '../utils/calcul-helper.js'
 
 import { Audit } from 'lighthouse'
-import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import { MetricValue } from '../types/index.js'
-import refsURLS from './bp/refs-urls.js'
+import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
+import refsURLS from './bp/refs-urls.js'
 
 class EcoindexSizeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-size',
-      title: 'Page size in kilobytes',
-      failureTitle: 'Page size in kilobytes, your page is too heavy',
+      title: 'Page size',
+      failureTitle: 'Page size, your page is too heavy',
       description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
