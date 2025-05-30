@@ -1,5 +1,13 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 6.0.0-next.4
+
+### Patch Changes
+
+- fb5fe3b: Cleaner Audits name and update GHG and Water display
+- Updated dependencies [fb5fe3b]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.4
+
 ## 6.0.0-next.3
 
 ### Patch Changes
