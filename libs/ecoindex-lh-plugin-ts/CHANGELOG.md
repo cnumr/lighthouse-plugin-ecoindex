@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.4
+
+### Patch Changes
+
+- fb5fe3b: Cleaner Audits name and update GHG and Water display
+
 ## 6.0.0-next.3
 
 ### Patch Changes
