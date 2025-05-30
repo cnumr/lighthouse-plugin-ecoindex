@@ -210,13 +210,16 @@ function formatMetric(metric: string, value: string | number): string {
     case 'grade':
       return value + ''
     case 'water':
-      return value + ' cl'
+      return convertWaterValue(value as number, '1')
     case 'ghg':
-      return value + ' g eqCO2'
+      return convertGhgValue(value as number, '1')
     case 'nodes':
-      return value + ' DOM elements'
+      return value + ` ${getMetricNumericUnit(metric)}`
     case 'size':
-      return ((value as number) / B_TO_KB).toFixed(0) + ' KiB (transfered)'
+      return (
+        ((value as number) / B_TO_KB).toFixed(0) +
+        ` ${getMetricNumericUnit(metric)}`
+      )
     case 'requests':
       return value + ' requests'
     default:
@@ -246,7 +249,11 @@ function normalizeMetricValue(metric: string, value: string | number) {
   }
 }
 
-/** @param {string} metric */
+/**
+ * Get the numeric unit of a metric.
+ * @param {string} metric
+ * @param {number | string} value
+ */
 function getMetricNumericUnit(metric: string): string {
   switch (metric) {
     case 'score':
@@ -268,6 +275,53 @@ function getMetricNumericUnit(metric: string): string {
   }
 }
 
+/**
+ * Convert cl to a more readable format.
+ * @param {number} cl
+ * @param {string} to
+ * @returns {string}
+ */
+function convertWaterValue(
+  cl: number,
+  to: '1' | '10' | '1000' | '100000',
+): string {
+  switch (to) {
+    case '1':
+      return `${cl} cl`
+    case '10':
+      return `${cl * 10} cl`
+    case '1000':
+      return `${cl * 10} L`
+    case '100000':
+      return `${cl * 1000} L`
+    default:
+      return `${cl} cl`
+  }
+}
+
+/**
+ * Convert g eqCO2 to a more readable format.
+ * @param {number} g
+ * @param {string} to
+ * @returns {string}
+ */
+function convertGhgValue(
+  g: number,
+  to: '1' | '10' | '1000' | '100000',
+): string {
+  switch (to) {
+    case '1':
+      return `${g} g eqCO2`
+    case '10':
+      return `${g * 10} g eqCO2`
+    case '1000':
+      return `${g} kg eqCO2`
+    case '100000':
+      return `${g / 10} t eqCO2`
+    default:
+      return `${g} g eqCO2`
+  }
+}
 /**
  * Create informations table.
  * @param metric
@@ -301,14 +355,30 @@ function createInformationsTable(
       break
     case 'water':
       items.push({
-        label: 'Water Consumption',
-        data: `${value} ${getMetricNumericUnit(metric)}`,
+        label: 'Water Consumption for 10 visitors',
+        data: convertWaterValue(value as number, '10'),
+      })
+      items.push({
+        label: 'Water Consumption for 1000 visitors',
+        data: convertWaterValue(value as number, '1000'),
+      })
+      items.push({
+        label: 'Water Consumption for 100000 visitors',
+        data: convertWaterValue(value as number, '100000'),
       })
       break
     case 'ghg':
       items.push({
-        label: 'Greenhouse Gas Emission',
-        data: `${value} ${getMetricNumericUnit(metric)}`,
+        label: 'Greenhouse Gas Emission for 10 visitors',
+        data: convertGhgValue(value as number, '10'),
+      })
+      items.push({
+        label: 'Greenhouse Gas Emission for 1000 visitors',
+        data: convertGhgValue(value as number, '1000'),
+      })
+      items.push({
+        label: 'Greenhouse Gas Emission for 100000 visitors',
+        data: convertGhgValue(value as number, '100000'),
       })
       break
     case 'nodes':
