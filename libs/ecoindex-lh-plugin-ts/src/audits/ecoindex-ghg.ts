@@ -7,18 +7,18 @@ import {
 } from '../utils/calcul-helper.js'
 
 import { Audit } from 'lighthouse'
-import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import { MetricValue } from '../types/index.js'
-import refsURLS from './bp/refs-urls.js'
+import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
+import refsURLS from './bp/refs-urls.js'
 
 class EcoindexGreenhouseGasEmissionAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-ghg',
-      title: 'Greenhouse Gas Emission (eqCO2)',
+      title: 'Greenhouse Gas Emission',
       failureTitle:
-        'Greenhouse Gas Emission (eqCO2), your page generates a lot of greenhouse gas',
+        'Greenhouse Gas Emission, your page generates a lot of greenhouse gas',
       description: `Greenhouse Gas Emission (eqCO2) of your page. [See Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
