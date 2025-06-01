@@ -5,6 +5,23 @@
   "default": {},
   "title": "lighthouse-plugin-ecoindex Schema",
   "required": ["output", "courses"],
+  "dependentRequired": {},
+  "if": {
+    "properties": {
+      "audit-category": {
+        "type": "array"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "audit-category": {
+        "contains": {
+          "const": "lighthouse-plugin-ecoindex-core"
+        }
+      }
+    }
+  },
   "properties": {
     "extra-header": {
       "type": "object",
@@ -19,6 +36,25 @@
         }
       ],
       "description": "Parameters to be passed in the header. Ex. Authorization: Bearer mytoken123..."
+    },
+    "audit-category": {
+      "type": "array",
+      "default": ["lighthouse-plugin-ecoindex-core"],
+      "title": "The audit-category Schema",
+      "items": {
+        "type": "string",
+        "title": "A Schema",
+        "examples": ["lighthouse-plugin-ecoindex-core"],
+        "enum": [
+          "performance",
+          "seo",
+          "accessibility",
+          "best-practices",
+          "lighthouse-plugin-ecoindex-core"
+        ]
+      },
+      "examples": [["lighthouse-plugin-ecoindex-core"]],
+      "description": "The audit category to run. Default is \"lighthouse-plugin-ecoindex-core\"."
     },
     "output": {
       "type": "array",
@@ -292,6 +328,13 @@
         "x-men": "wolverine"
       },
       "output": ["html", "json", "statement"],
+      "audit-category": [
+        "performance",
+        "seo",
+        "accessibility",
+        "best-practices",
+        "lighthouse-plugin-ecoindex-core"
+      ],
       "user-agent": "random",
       "output-path": "./reports/multi",
       "output-name": "ecoindex",
