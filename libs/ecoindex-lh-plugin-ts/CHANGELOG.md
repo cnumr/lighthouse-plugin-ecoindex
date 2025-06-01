@@ -1,5 +1,18 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.5
+
+### Patch Changes
+
+- 6c4de97: Many changes:
+
+  - Update schema and add `audit-category` in the schema
+  - Add `audit-category` in the process of the measure
+  - Update tests in `@ecoindex-lh-test/courses`
+  - Update tests in `@ecoindex-lh-test/cli`
+  - Update description of the audit `warn-nodes-count`
+  - Update the description of the audits to be more Lightouse like
+
 ## 6.0.0-next.4
 
 ### Patch Changes
