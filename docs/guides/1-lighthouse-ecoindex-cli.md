@@ -143,7 +143,7 @@ Le format du fichier doit être respecté !
 !!!
 
 ==- Modèle de fichier JSON
-:::code source="../../lighthouse-plugin-ecoindex/demo/example-input-file.json" :::
+:::code source="../../libs/ecoindex-lh-plugin-ts/src/helpers/demo-input-file.json" :::
 ===
 
 ##### Explications
@@ -189,4 +189,4 @@ Convertir le(s) rapport(s) JSON généré(s) par `lighthouse-ecoindex` en fichie
 npx lighthouse-plugin-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
 ```
 
-[!ref target="blank" text="Projet example pour `npx lighthouse-plugin-ecoindex`"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/npx)
+[!ref target="blank" text="Projet example pour `npx lighthouse-plugin-ecoindex`"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/test/test-ecoindex-lh-cli)

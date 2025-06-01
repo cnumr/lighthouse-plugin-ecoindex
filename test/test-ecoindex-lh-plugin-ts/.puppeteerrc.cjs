@@ -11,9 +11,9 @@ module.exports = async (browser, context) => {
   const authenticate = {
     loginPage: `https://greenit.eco/wp-login.php/`,
     loginField: '#user_login',
-    loginValue: 'hrenaud',
+    loginValue: process.env.LOGIN_VALUE || '********',
     passField: '#user_pass',
-    passValue: '****',
+    passValue: process.env.PASS_VALUE || '********',
   }
 
   // Test if current page is the login URL page

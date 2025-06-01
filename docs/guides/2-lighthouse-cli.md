@@ -44,14 +44,14 @@ npm install -g lighthouse lighthouse-plugin-ecoindex
 Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.
 
 ==- Modèle de fichier de configuration de Lighthouse
-:::code source="../../lighthouse-plugin-ecoindex/demo/example-lighthouse-cli-custom-config.cjs" :::
+:::code source="../static/demo-files/example-lighthouse-cli-custom-config.cjs" :::
 ===
 
 ```bash
 npx lighthouse <url> --config-path=./custom-config.cjs
 ```
 
-## Exemples
+## Exemples à adapter suivant votre CI/CD
 
 Lancer la mesure sur une URL :
 
