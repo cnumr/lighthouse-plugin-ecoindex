@@ -18,7 +18,7 @@ class EcoindexSizeAudit extends Audit {
       id: 'eco-index-size',
       title: 'Page size',
       failureTitle: 'Page size, your page is too heavy',
-      description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [See Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
+      description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,

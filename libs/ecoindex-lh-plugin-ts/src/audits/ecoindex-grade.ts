@@ -7,10 +7,10 @@ import {
 } from '../utils/calcul-helper.js'
 
 import { Audit } from 'lighthouse'
-import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import { MetricValue } from '../types/index.js'
-import refsURLS from './bp/refs-urls.js'
+import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
+import refsURLS from './bp/refs-urls.js'
 
 class EcoindexGradeAudit extends Audit {
   static get meta() {
@@ -18,7 +18,7 @@ class EcoindexGradeAudit extends Audit {
       id: 'eco-index-grade',
       title: 'Grade',
       failureTitle: 'Grade, your page has a big impact',
-      description: `The EcoIndex score evaluating the environmental impact of the page. [See Ecoindex, Calculating the score](${refsURLS.ecoindex.grade.en})`,
+      description: `The EcoIndex score evaluating the environmental impact of the page. [Learn more about the Ecoindex, Calculating the score](${refsURLS.ecoindex.grade.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,

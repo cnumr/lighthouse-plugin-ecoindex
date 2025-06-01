@@ -1,11 +1,17 @@
 {
-  "$schema": "https://lighthouse-ecoindex.greenit.eco/static/schema/5.1/schema.json",
+  "$schema": "./schema.json",
   "extra-header": {
     "Cookie": "monster=blue",
     "x-men": "wolverine"
   },
   "output": ["html", "json", "statement"],
-
+  "audit-category": [
+    "performance",
+    "seo",
+    "accessibility",
+    "best-practices",
+    "lighthouse-plugin-ecoindex-core"
+  ],
   "user-agent": "random",
   "output-path": "./reports/file",
   "courses": [

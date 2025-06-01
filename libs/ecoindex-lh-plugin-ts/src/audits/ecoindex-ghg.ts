@@ -19,7 +19,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
       title: 'Greenhouse Gas Emission',
       failureTitle:
         'Greenhouse Gas Emission, your page generates a lot of greenhouse gas',
-      description: `Greenhouse Gas Emission (eqCO2) of your page. [See Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
+      description: `Greenhouse Gas Emission (eqCO2) of your page. [Learn more about the Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,

@@ -40,6 +40,15 @@ export interface JSONFile {
   'user-agent': never | string
   'extra-header': never | Record<string, string>
   'output-path': never | string
+  'audit-category':
+    | never
+    | (
+        | 'accessibility'
+        | 'best-practices'
+        | 'performance'
+        | 'seo'
+        | 'lighthouse-plugin-ecoindex-core'
+      )[]
   output: never | ('statement' | 'json' | 'html')[]
   auth: never | Auth
   courses: never | Course[]
