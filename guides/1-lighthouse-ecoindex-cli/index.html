@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.801917173190">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.802076749661">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.9.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.9.0.801917173190" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.9.0.802076749661" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.9.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.801917173190" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.802076749661" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -458,7 +458,46 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
 </div>
 <doc-panel id="modèle-de-fichier-json" collapsed>
     <template #title>Modèle de fichier JSON</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/demo/example-input-file.json&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+    &quot;extra-header&quot;: {
+        &quot;Cookie&quot;: &quot;monster=blue&quot;,
+        &quot;x-men&quot;: &quot;wolverine&quot;
+    },
+    &quot;output&quot;: [
+        &quot;html&quot;,
+        &quot;json&quot;,
+        &quot;statement&quot;
+    ],
+    &quot;output-path&quot;: &quot;./reports&quot;,
+    &quot;output-name&quot;: &quot;ecoindex&quot;,
+    &quot;parcours&quot;: [
+        {
+            &quot;name&quot;: &quot;Découvrir ecoindex et l'écoconception&quot;,
+            &quot;urls&quot;: [
+                &quot;https://www.ecoindex.fr/&quot;,
+                &quot;https://www.ecoindex.fr/comment-ca-marche/&quot;,
+                &quot;https://www.ecoindex.fr/ecoconception/&quot;
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;Rejoindre la communauté&quot;,
+            &quot;urls&quot;: [
+                &quot;https://www.ecoindex.fr/&quot;,
+                &quot;https://www.ecoindex.fr/a-propos/&quot;,
+                &quot;https://www.ecoindex.fr/nous-rejoindre/&quot;
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;Revoir d'anciens résultats&quot;,
+            &quot;urls&quot;: [
+                &quot;https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09&quot;,
+                &quot;https://www.ecoindex.fr/&quot;
+            ]
+        }
+    ]
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <doc-anchor-target id="explications">
     <h5>
@@ -607,9 +646,9 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
         <span class="inline-block font-medium ml-2">Projet example pour <code v-pre>npx lighthouse-plugin-ecoindex</code></span>
     </div>
     <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/npx</span>
+        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/test/test-ecoindex-lh-cli</span>
     </div>
-    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/npx" target="_blank" class="absolute block inset-0"></a>
+    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/test/test-ecoindex-lh-cli" target="_blank" class="absolute block inset-0"></a>
 </div>
 </p>
 

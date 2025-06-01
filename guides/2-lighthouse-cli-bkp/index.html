@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.801917173190">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.802076749661">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.9.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.9.0.801917173190" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.9.0.802076749661" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.9.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.801917173190" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.802076749661" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -310,7 +310,47 @@
 <p>Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.</p>
 <doc-panel id="modèle-de-fichier-de-configuration-de-lighthouse" collapsed>
     <template #title>Modèle de fichier de configuration de Lighthouse</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/demo/example-lighthouse-cli-custom-config.cjs&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const path = require('path')
+function getGatherersPath(file) {
+  return path.join(
+    require.resolve('lighthouse-plugin-ecoindex-core'),
+    '../gatherers/' + file,
+  )
+}
+/** @type {LH.Config} */
+module.exports = {
+  formFactor: 'desktop',
+  // https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js
+  throttling: {
+    rttMs: 40,
+    throughputKbps: 10 * 1024,
+    cpuSlowdownMultiplier: 1,
+    requestLatencyMs: 0, // 0 means unset
+    downloadThroughputKbps: 0,
+    uploadThroughputKbps: 0,
+  },
+  screenEmulation: {
+    mobile: false,
+    width: 1920,
+    height: 1080,
+  },
+  emulatedUserAgent: 'desktop',
+  maxWaitForLoad: 60 * 1000,
+  plugins: ['lighthouse-plugin-ecoindex-core'],
+  disableStorageReset: true,
+  preset: 'desktop',
+  extends: 'lighthouse:default',
+  artifacts: [
+    { id: 'DOMInformations', gatherer: getGatherersPath('dom-informations') },
+  ],
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">npx lighthouse &lt;url&gt; --config-path=./custom-config.cjs</code></pre>
@@ -358,7 +398,104 @@
 </div>
 <doc-panel id="modèle-de-fichier-de-configuration-de-puppeteer" collapsed>
     <template #title>Modèle de fichier de configuration de Puppeteer</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">// https://pptr.dev/guides/configuration
+// https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#puppeteerscript
+/**
+ * @param {puppeteer.Browser} browser
+ * @param {{url: string, options: LHCI.CollectCommand.Options}} context
+ */
+module.exports = async (browser, context) =&gt; {
+  // launch browser for LHCI
+  var page = await browser.newPage(context.options)
+  // To be set by env vars
+  const authenticate = {
+    loginPage: `https://greenit.eco/wp-login.php/`,
+    loginField: '#user_login',
+    loginValue: process.env.LOGIN_VALUE || '********',
+    passField: '#user_pass',
+    passValue: process.env.PASS_VALUE || '********',
+  }
+
+  // Test if current page is the login URL page
+  if (context.url === authenticate.loginPage) {
+    console.log(`Authenticate on`, authenticate.loginPage)
+    connect(page, browser, authenticate)
+  } else {
+    const session = await page.target().createCDPSession()
+    try {
+      await page.goto(context.url, {
+        waitUntil: 'networkidle0',
+        timeout: 10000, // change timeout to 10s for crashing tests faster.
+      })
+    } catch (error) {
+      console.error('Error getting page:', error.message)
+      console.error('Retry...')
+      await page.goto(context.url)
+    }
+    await startEcoindexPageMesure(page, session)
+    await endEcoindexPageMesure()
+    // close session for next run
+    await page.close()
+  }
+}
+async function connect(page, browser, authenticate) {
+  page = await browser.newPage()
+  await page.goto(authenticate.loginPage)
+  await page.type(authenticate.loginField, authenticate.loginValue)
+  await page.type(authenticate.passField, authenticate.passValue)
+  await page.click('[type=&quot;submit&quot;]')
+  try {
+    await page.waitForNavigation()
+    // close session for next run
+    await page.close()
+    console.log(`Authenticated!`)
+  } catch (error) {
+    throw new Error(`Connection failed!`)
+  }
+}
+
+async function startEcoindexPageMesure(page, session) {
+  page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+  const dimensions = await page.evaluate(() =&gt; {
+    var body = document.body,
+      html = document.documentElement
+
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    )
+    return {
+      width: document.documentElement.clientWidth,
+      height: height,
+      deviceScaleFactor: window.devicePixelRatio,
+    }
+  })
+  // console.log('dimensions', dimensions)
+  // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
+  // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
+  await session.send('Input.synthesizeScrollGesture', {
+    x: 100,
+    y: 600,
+    yDistance: -dimensions.height,
+    speed: 1000,
+  })
+}
+
+/**
+ * End Ecoindex flow. Wait 3s.
+ */
+async function endEcoindexPageMesure() {
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <doc-anchor-target id="exemples">
     <h2>

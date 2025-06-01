@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.801917173190">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.802076749661">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.9.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Utilisation avec Lighthouse CI - Ecoindex Lighthouse Plugin</title>
     <meta name="title" content="Utilisation avec Lighthouse CI - Ecoindex Lighthouse Plugin">
-    <meta name="description" content="A mettre à jour pour utiliser le package lighthouse-plugin-ecoindex-core. Mettre a jour les lignes de commandes, les fichiers de configuration et le...">
+    <meta name="description" content="Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/3-lighthouse-ci/">
@@ -21,23 +21,23 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/3-lighthouse-ci/">
     <meta property="og:title" content="Utilisation avec Lighthouse CI - Ecoindex Lighthouse Plugin">
-    <meta property="og:description" content="A mettre à jour pour utiliser le package lighthouse-plugin-ecoindex-core. Mettre a jour les lignes de commandes, les fichiers de configuration et le...">
+    <meta property="og:description" content="Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/3-lighthouse-ci/">
     <meta property="twitter:title" content="Utilisation avec Lighthouse CI - Ecoindex Lighthouse Plugin">
-    <meta property="twitter:description" content="A mettre à jour pour utiliser le package lighthouse-plugin-ecoindex-core. Mettre a jour les lignes de commandes, les fichiers de configuration et le...">
+    <meta property="twitter:description" content="Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.9.0.801917173190" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.9.0.802076749661" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.9.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.801917173190" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.802076749661" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -263,24 +263,6 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-yellow-500"></div>
-    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr-lg rounded-br-lg doc-callout bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-<p>A mettre à jour pour utiliser le package <code v-pre>lighthouse-plugin-ecoindex-core</code>.<br />
-Mettre a jour les lignes de commandes, les fichiers de configuration et le lien vers le projet d&#x27;example.<br />
-Mettre à jour l&#x27;usage dans GitLab CI.</p>
-        </div>
-    </div>
-</div>
 <doc-anchor-target id="utilisation-avec-lighthouse-ci" class="break-words">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#utilisation-avec-lighthouse-ci">#</doc-anchor-trigger>
@@ -323,9 +305,7 @@ Mettre à jour l&#x27;usage dans GitLab CI.</p>
 </div>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash"># Ajout à un projet existant
-npm install lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
-# ou glablement
-npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer</code></pre>
+npm install lighthouse lighthouse-plugin-ecoindex-core puppeteer --save-dev</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="utilisation">
     <h2>
@@ -336,7 +316,51 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer</code></pre>
 <p>Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.</p>
 <doc-panel id="modèle-de-fichier-de-configuration-de-lighthouse" collapsed>
     <template #title>Modèle de fichier de configuration de Lighthouse</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/demo/example-lhci-config.js&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">const path = require('path')
+
+/**
+ * Get the path to the custom Lighthouse config file.
+ * @returns {string} The path to the custom Lighthouse config file.
+ */
+const getLighthouseConfig = () =&gt; {
+  return path.join(
+    require.resolve('lighthouse-plugin-ecoindex-core'),
+    '../helpers/lhci/custom-config.js',
+  )
+}
+
+module.exports = {
+  ci: {
+    collect: {
+      url: [
+        'https://www.ecoindex.fr/',
+        'https://novagaia.fr/',
+        // 'https://www.relocalisons.bzh/',
+        // 'https://www.neuro-mav-france.org/',
+        // 'https://www.alodokter.com/',
+      ],
+      numberOfRuns: 1,
+      settings: {
+        configPath: getLighthouseConfig(),
+      },
+      puppeteerLaunchOptions: {
+        headless: 'new',
+        args: [
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--disable-setuid-sandbox',
+          '--no-sandbox',
+        ],
+      },
+      puppeteerScript: './.puppeteerrc.cjs',
+    },
+    assert: {
+      preset: 'lighthouse:default',
+    },
+  },
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-600 bg-blue-100 h-6 px-2 text-xs rounded-md">
     <span><svg xmlns="http://www.w3.org/2000/svg" class="mb-px inline-flex mr-2" width="18" height="18" viewBox="0 0 24 24" role="presentation"><g fill="currentColor"><path d="M12 2.5c-3.81 0-6.5 2.743-6.5 6.119 0 1.536.632 2.572 1.425 3.56.172.215.347.422.527.635l.096.112c.21.25.427.508.63.774.404.531.783 1.128.995 1.834a.75.75 0 0 1-1.436.432c-.138-.46-.397-.89-.753-1.357a18.111 18.111 0 0 0-.582-.714l-.092-.11c-.18-.212-.37-.436-.555-.667C4.87 12.016 4 10.651 4 8.618 4 4.363 7.415 1 12 1s8 3.362 8 7.619c0 2.032-.87 3.397-1.755 4.5-.185.23-.375.454-.555.667l-.092.109c-.21.248-.405.481-.582.714-.356.467-.615.898-.753 1.357a.751.751 0 0 1-1.437-.432c.213-.706.592-1.303.997-1.834.202-.266.419-.524.63-.774l.095-.112c.18-.213.355-.42.527-.634.793-.99 1.425-2.025 1.425-3.561C18.5 5.243 15.81 2.5 12 2.5ZM8.75 18h6.5a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1 0-1.5Zm.75 3.75a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1-.75-.75Z"/></g></svg></span>
@@ -381,7 +405,104 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer</code></pre>
 </div>
 <doc-panel id="modèle-de-fichier-de-configuration-de-puppeteer" collapsed>
     <template #title>Modèle de fichier de configuration de Puppeteer</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">// https://pptr.dev/guides/configuration
+// https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#puppeteerscript
+/**
+ * @param {puppeteer.Browser} browser
+ * @param {{url: string, options: LHCI.CollectCommand.Options}} context
+ */
+module.exports = async (browser, context) =&gt; {
+  // launch browser for LHCI
+  var page = await browser.newPage(context.options)
+  // To be set by env vars
+  const authenticate = {
+    loginPage: `https://greenit.eco/wp-login.php/`,
+    loginField: '#user_login',
+    loginValue: process.env.LOGIN_VALUE || '********',
+    passField: '#user_pass',
+    passValue: process.env.PASS_VALUE || '********',
+  }
+
+  // Test if current page is the login URL page
+  if (context.url === authenticate.loginPage) {
+    console.log(`Authenticate on`, authenticate.loginPage)
+    connect(page, browser, authenticate)
+  } else {
+    const session = await page.target().createCDPSession()
+    try {
+      await page.goto(context.url, {
+        waitUntil: 'networkidle0',
+        timeout: 10000, // change timeout to 10s for crashing tests faster.
+      })
+    } catch (error) {
+      console.error('Error getting page:', error.message)
+      console.error('Retry...')
+      await page.goto(context.url)
+    }
+    await startEcoindexPageMesure(page, session)
+    await endEcoindexPageMesure()
+    // close session for next run
+    await page.close()
+  }
+}
+async function connect(page, browser, authenticate) {
+  page = await browser.newPage()
+  await page.goto(authenticate.loginPage)
+  await page.type(authenticate.loginField, authenticate.loginValue)
+  await page.type(authenticate.passField, authenticate.passValue)
+  await page.click('[type=&quot;submit&quot;]')
+  try {
+    await page.waitForNavigation()
+    // close session for next run
+    await page.close()
+    console.log(`Authenticated!`)
+  } catch (error) {
+    throw new Error(`Connection failed!`)
+  }
+}
+
+async function startEcoindexPageMesure(page, session) {
+  page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+  const dimensions = await page.evaluate(() =&gt; {
+    var body = document.body,
+      html = document.documentElement
+
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    )
+    return {
+      width: document.documentElement.clientWidth,
+      height: height,
+      deviceScaleFactor: window.devicePixelRatio,
+    }
+  })
+  // console.log('dimensions', dimensions)
+  // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
+  // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
+  await session.send('Input.synthesizeScrollGesture', {
+    x: 100,
+    y: 600,
+    yDistance: -dimensions.height,
+    speed: 1000,
+  })
+}
+
+/**
+ * End Ecoindex flow. Wait 3s.
+ */
+async function endEcoindexPageMesure() {
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <doc-anchor-target id="exemple">
     <h2>
@@ -398,9 +519,9 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer</code></pre>
         <span class="inline-block font-medium ml-2">Projet example pour lighthouse-ci</span>
     </div>
     <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lhci</span>
+        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/blob/main/test/test-ecoindex-lh-plugin-ts</span>
     </div>
-    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lhci" target="_blank" class="absolute block inset-0"></a>
+    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/blob/main/test/test-ecoindex-lh-plugin-ts" target="_blank" class="absolute block inset-0"></a>
 </div>
 </p>
 <doc-anchor-target id="exemples-à-adapter-suivant-votre-cicd">
@@ -437,13 +558,239 @@ jobs:
 <template #title>GitLab CI</template>
 <p><code v-pre>.gitlab-ci.yml</code></p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-yaml"><code v-pre class="language-yaml">image: cypress/browsers:node16.17.0-chrome106
-lhci:
+<pre class="language-yaml"><code v-pre class="language-yaml">default:
+  cache: # Cache modules using lock file
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  before_script:
+    - npm ci --cache .npm --prefer-offline --loglevel=error
+
+lighthouse:
+  image: registry.gitlab.com/gitlab-ci-utils/lighthouse:latest
+  stage: test
+  when: manual
   script:
-    - npm install
-    - npm run build
-    - npm install -g @lhci/cli@0.12.x
-    - lhci autorun --upload.target=temporary-public-storage --collect.settings.chromeFlags=&quot;--no-sandbox&quot; || echo &quot;LHCI failed!&quot;</code></pre>
+    - npm run lhci:collect || echo &quot;LHCI:Collect failed!&quot;
+    - npm run lhci:upload || echo &quot;LHCI:Upload failed!&quot;
+  artifacts:
+    # Always save artifacts. This is needed if lighthouse is run configured
+    # to fail on certain criteria, and will ensure the report is saved.
+    when: always
+    # Save the lighthouse report, which by default is named for the site
+    # analyzed and the current time.
+    paths:
+      - .lighthouseci/*</code></pre>
+</doc-codeblock></div>
+<p><code v-pre>package.json</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-json"><code v-pre class="language-json">{
+  &quot;name&quot;: &quot;poc-mesure-automatisee-ecoindex-lighthouse&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;lhci&quot;: &quot;npm run lhci:collect &amp;&amp; npm run lhci:upload&quot;,
+    &quot;lhci:collect&quot;: &quot;lhci collect&quot;,
+    &quot;lhci:upload&quot;: &quot;lhci upload --upload.basicAuth.username=******** --upload.basicAuth.********&quot;,
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;@lhci/cli&quot;: &quot;^0.14.0&quot;,
+    &quot;lighthouse-plugin-ecoindex-core&quot;: &quot;^5.0.0&quot;,
+    &quot;puppeteer&quot;: &quot;^23.3.0&quot;,
+    &quot;puppeteer-core&quot;: &quot;^23.3.0&quot;
+  }
+}</code></pre>
+</doc-codeblock></div>
+<p><code v-pre>.lighthouserc.js</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">const path = require('path')
+
+/**
+ * Get the path to the custom Lighthouse config file.
+ * @returns {string} The path to the custom Lighthouse config file.
+ */
+const getLighthouseConfig = () =&gt; {
+  return path.join(
+    require.resolve('lighthouse-plugin-ecoindex-core'),
+    '../helpers/lhci/custom-config.js',
+  )
+}
+
+module.exports = {
+  ci: {
+    collect: {
+      url: [
+        'https://www.ecoindex.fr/',
+        'https://novagaia.fr/',
+        // 'https://www.relocalisons.bzh/',
+        // 'https://www.neuro-mav-france.org/',
+        // 'https://www.alodokter.com/',
+      ],
+      numberOfRuns: 1,
+      settings: {
+        configPath: getLighthouseConfig(),
+      },
+      puppeteerLaunchOptions: {
+        headless: 'new',
+        args: [
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--disable-setuid-sandbox',
+          '--no-sandbox',
+        ],
+      },
+      puppeteerScript: './.puppeteerrc.cjs',
+    },
+    assert: {
+      preset: 'lighthouse:default',
+    },
+  },
+}</code></pre>
+</doc-codeblock></div>
+<p><code v-pre>.puppeteerrc.cjs</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">// https://pptr.dev/guides/configuration
+// https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#puppeteerscript
+/**
+ * @param {puppeteer.Browser} browser
+ * @param {{url: string, options: LHCI.CollectCommand.Options}} context
+ */
+module.exports = async (browser, context) =&gt; {
+  // launch browser for LHCI
+  var page = await browser.newPage(context.options)
+  // To be set by env vars
+  const authenticate = {
+    loginPage: `https://greenit.eco/wp-login.php/`,
+    loginField: '#user_login',
+    loginValue: process.env.LOGIN_VALUE || '********',
+    passField: '#user_pass',
+    passValue: process.env.PASS_VALUE || '********',
+  }
+
+  // Test if current page is the login URL page
+  if (context.url === authenticate.loginPage) {
+    console.log(`Authenticate on`, authenticate.loginPage)
+    connect(page, browser, authenticate)
+  } else {
+    const session = await page.target().createCDPSession()
+    try {
+      await page.goto(context.url, {
+        waitUntil: 'networkidle0',
+        timeout: 10000, // change timeout to 10s for crashing tests faster.
+      })
+    } catch (error) {
+      console.error('Error getting page:', error.message)
+      console.error('Retry...')
+      await page.goto(context.url)
+    }
+    await startEcoindexPageMesure(page, session)
+    await endEcoindexPageMesure()
+    // close session for next run
+    await page.close()
+  }
+}
+async function connect(page, browser, authenticate) {
+  page = await browser.newPage()
+  await page.goto(authenticate.loginPage)
+  await page.type(authenticate.loginField, authenticate.loginValue)
+  await page.type(authenticate.passField, authenticate.passValue)
+  await page.click('[type=&quot;submit&quot;]')
+  try {
+    await page.waitForNavigation()
+    // close session for next run
+    await page.close()
+    console.log(`Authenticated!`)
+  } catch (error) {
+    throw new Error(`Connection failed!`)
+  }
+}
+
+async function startEcoindexPageMesure(page, session) {
+  page.setViewport({
+    width: 1920,
+    height: 1080,
+  })
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+  const dimensions = await page.evaluate(() =&gt; {
+    var body = document.body,
+      html = document.documentElement
+
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    )
+    return {
+      width: document.documentElement.clientWidth,
+      height: height,
+      deviceScaleFactor: window.devicePixelRatio,
+    }
+  })
+  // console.log('dimensions', dimensions)
+  // We need the ability to scroll like a user. There's not a direct puppeteer function for this, but we can use the DevTools Protocol and issue a Input.synthesizeScrollGesture event, which has convenient parameters like repetitions and delay to somewhat simulate a more natural scrolling gesture.
+  // https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-synthesizeScrollGesture
+  await session.send('Input.synthesizeScrollGesture', {
+    x: 100,
+    y: 600,
+    yDistance: -dimensions.height,
+    speed: 1000,
+  })
+}
+
+/**
+ * End Ecoindex flow. Wait 3s.
+ */
+async function endEcoindexPageMesure() {
+  await new Promise(r =&gt; setTimeout(r, 3 * 1000))
+}</code></pre>
+</doc-codeblock></div>
+<p><code v-pre>lighthouse-metrics.js</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">const fs = require('fs')
+
+const scoreScalingFactor = 100
+const categories = ['accessibility', 'lighthouse-plugin-ecoindex-core']
+
+// get all the report files
+const reportFileNames = fs.readdirSync('./').filter(fn =&gt; fn.endsWith('.json'))
+// read the report files
+reportFileNames.forEach(report =&gt; {
+  // read the report file
+  const results = JSON.parse(fs.readFileSync(report, 'utf8'))
+  // get the URL
+  const url = results.finalUrl
+  console.log(`Metrics for ${url}`)
+  // must slugify the URL to avoid special characters in the file name
+  const slug = url.replace(/[^a-z0-9]/gi, '-').toLowerCase()
+  // generate the file name
+  const metricsFileName = `lighthouse-metrics-${slug}.txt`
+  // generate the metrics
+  const metrics = categories
+    .map(category =&gt; {
+      if (category === 'lighthouse-plugin-ecoindex-core') {
+        return `lighthouse{category=&quot;ecoindex&quot;} ${
+          results?.categories['lighthouse-plugin-ecoindex-core']?.score *
+          scoreScalingFactor
+        }`
+      } else {
+        return `lighthouse{category=&quot;${category}&quot;} ${
+          results?.categories[category]?.score * scoreScalingFactor
+        }`
+      }
+    })
+    .join('\n')
+  // write the metrics to the file
+  fs.writeFileSync(metricsFileName, metrics)
+})</code></pre>
 </doc-codeblock></div>
 </doc-tab>
 <doc-tab v-cloak id="circleci">

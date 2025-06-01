@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.801917173190">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.802076749661">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.9.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.9.0.801917173190" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.9.0.802076749661" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.9.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.801917173190" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.801917173190" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.802076749661" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.802076749661" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -356,15 +356,55 @@ npm install -g lighthouse lighthouse-plugin-ecoindex</code></pre>
 <p>Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.</p>
 <doc-panel id="modèle-de-fichier-de-configuration-de-lighthouse" collapsed>
     <template #title>Modèle de fichier de configuration de Lighthouse</template>
-:::code source=&quot;../../lighthouse-plugin-ecoindex/demo/example-lighthouse-cli-custom-config.cjs&quot; :::
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const path = require('path')
+function getGatherersPath(file) {
+  return path.join(
+    require.resolve('lighthouse-plugin-ecoindex-core'),
+    '../gatherers/' + file,
+  )
+}
+/** @type {LH.Config} */
+module.exports = {
+  formFactor: 'desktop',
+  // https://github.com/GoogleChrome/lighthouse/blob/main/core/config/constants.js
+  throttling: {
+    rttMs: 40,
+    throughputKbps: 10 * 1024,
+    cpuSlowdownMultiplier: 1,
+    requestLatencyMs: 0, // 0 means unset
+    downloadThroughputKbps: 0,
+    uploadThroughputKbps: 0,
+  },
+  screenEmulation: {
+    mobile: false,
+    width: 1920,
+    height: 1080,
+  },
+  emulatedUserAgent: 'desktop',
+  maxWaitForLoad: 60 * 1000,
+  plugins: ['lighthouse-plugin-ecoindex-core'],
+  disableStorageReset: true,
+  preset: 'desktop',
+  extends: 'lighthouse:default',
+  artifacts: [
+    { id: 'DOMInformations', gatherer: getGatherersPath('dom-informations') },
+  ],
+}</code></pre>
+</doc-codeblock></div>
 </doc-panel>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">npx lighthouse &lt;url&gt; --config-path=./custom-config.cjs</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="exemples">
+<doc-anchor-target id="exemples-à-adapter-suivant-votre-cicd">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#exemples">#</doc-anchor-trigger>
-        <span>Exemples</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#exemples-à-adapter-suivant-votre-cicd">#</doc-anchor-trigger>
+        <span>Exemples à adapter suivant votre CI/CD</span>
     </h2>
 </doc-anchor-target>
 <p>Lancer la mesure sur une URL :</p>
