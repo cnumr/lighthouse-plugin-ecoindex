@@ -1,3 +1,4 @@
+import type { CliFlags, Course } from './types/index.js'
 import {
   authenticateEcoindexPageMesure,
   dateToFileString,
@@ -14,11 +15,10 @@ import {
   printEnvStatementReport,
   printSummary,
 } from './printer.js'
-import type { CliFlags, Course } from './types/index.js'
 
-import { startFlow } from 'lighthouse'
 import logSymbols from 'log-symbols'
 import puppeteer from 'puppeteer'
+import { startFlow } from 'lighthouse'
 
 const SEPARATOR = '\n---------------------------------\n'
 /**
@@ -231,6 +231,28 @@ async function runCourses(cliFlags: CliFlags) {
       `${logSymbols.warning} User-agent overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
+  }
+  if (cliFlags['jsonFileObj']?.['audit-category']) {
+    console.log(
+      `${logSymbols.warning} Audit category overrided by \`${cliFlags['json-file']}\` file.`,
+    )
+    console.log(
+      `${logSymbols.info} using ${JSON.stringify(cliFlags['jsonFileObj']['audit-category'])}`,
+    )
+    cliFlags['audit-category'] = cliFlags['jsonFileObj']['audit-category']
+  } else {
+    cliFlags['audit-category'] = [
+      'performance',
+      'seo',
+      'accessibility',
+      'best-practices',
+      'lighthouse-plugin-ecoindex-core',
+    ]
+    console.log(
+      `${logSymbols.info} Using default audit category: ${JSON.stringify(
+        cliFlags['audit-category'],
+      )}`,
+    )
   }
   if (cliFlags['jsonFileObj']?.['auth']) {
     console.log(
