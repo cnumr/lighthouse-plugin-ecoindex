@@ -1,3 +1,6 @@
+![Summary of results](docs/static/ecoindex-intro.png)
+_Summary of results_
+
 # Lighthouse Plugin Ecoindex Core en TS
 
 ## Description
@@ -5,6 +8,11 @@
 Plugin pour Lighthouse qui calcule l'Ecoindex des pages web.
 
 Il peut être utilisé directement avec `lighthouse-ci` en tant que plugin.
+
+![Details of plugin results](docs/static/ecoindex-results.png)
+_Details of plugin results_
+
+[Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
 
 ## changelog
 

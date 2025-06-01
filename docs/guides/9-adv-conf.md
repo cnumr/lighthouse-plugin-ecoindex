@@ -68,5 +68,5 @@ La page d'authentiifcation doit faire partie de la liste de page à mesurer, cel
 ```
 
 ==- Modèle de fichier de configuration de Puppeteer (complet) sans authentification
-:::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.puppeteerrc.cjs" :::
 ===

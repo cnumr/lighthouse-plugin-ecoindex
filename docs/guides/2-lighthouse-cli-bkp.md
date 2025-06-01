@@ -26,7 +26,7 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
 Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.
 
 ==- Modèle de fichier de configuration de Lighthouse
-:::code source="../../lighthouse-plugin-ecoindex/demo/example-lighthouse-cli-custom-config.cjs" :::
+:::code source="../static/demo-files/example-lighthouse-cli-custom-config.cjs" :::
 ===
 
 ```bash
@@ -43,7 +43,7 @@ Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spé
 [!button text="Voir les explications" icon="checklist"](../README.md#les-contraintes--process-reproductible-)
 !!!
 ==- Modèle de fichier de configuration de Puppeteer
-:::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.puppeteerrc.cjs" :::
 ===
 
 ## Exemples

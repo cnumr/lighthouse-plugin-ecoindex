@@ -4,12 +4,6 @@ icon: pulse
 order: 800
 ---
 
-!!!warning
-A mettre à jour pour utiliser le package `lighthouse-plugin-ecoindex-core`.  
-Mettre a jour les lignes de commandes, les fichiers de configuration et le lien vers le projet d'example.  
-Mettre à jour l'usage dans GitLab CI.
-!!!
-
 # Utilisation avec Lighthouse CI
 
 ## Objectifs
@@ -29,9 +23,7 @@ Vous devez utiliser les fichiers de configuration de Lighthouse (exemple ci-dess
 
 ```bash
 # Ajout à un projet existant
-npm install lighthouse lighthouse-plugin-ecoindex puppeteer --save-dev
-# ou glablement
-npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer
+npm install lighthouse lighthouse-plugin-ecoindex-core puppeteer --save-dev
 ```
 
 ## Utilisation
@@ -39,7 +31,7 @@ npm install -g lighthouse lighthouse-plugin-ecoindex puppeteer
 Vous devez utiliser le fichiers configuration de Lighthouse pour pouvoir utiliser le plugin lighthouse-ecoindex.
 
 ==- Modèle de fichier de configuration de Lighthouse
-:::code source="../../lighthouse-plugin-ecoindex/demo/example-lhci-config.js" :::
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.lighthouserc.cjs" :::
 ===
 
 [!badge text="Tip" icon="light-bulb"] Placer le fichier `.lighthouserc.js` à la racine de votre projet.
@@ -52,12 +44,12 @@ Ne modifier pas le fichier Puppeteer sauf si vous devez ajouter des actions spé
 [!button text="Voir les explications" icon="checklist"](../README.md#les-contraintes--process-reproductible-)
 !!!
 ==- Modèle de fichier de configuration de Puppeteer
-:::code source="../../lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs" :::
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.puppeteerrc.cjs" :::
 ===
 
 ## Exemple
 
-[!ref target="blank" text="Projet example pour lighthouse-ci"](https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/examples/lhci)
+[!ref target="blank" text="Projet example pour lighthouse-ci"](https://github.com/cnumr/lighthouse-plugin-ecoindex/blob/main/test/test-ecoindex-lh-plugin-ts)
 
 ## Exemples à adapter suivant votre CI/CD
 
@@ -88,13 +80,106 @@ jobs:
 `.gitlab-ci.yml`
 
 ```yaml
-image: cypress/browsers:node16.17.0-chrome106
-lhci:
+default:
+  cache: # Cache modules using lock file
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  before_script:
+    - npm ci --cache .npm --prefer-offline --loglevel=error
+
+lighthouse:
+  image: registry.gitlab.com/gitlab-ci-utils/lighthouse:latest
+  stage: test
+  when: manual
   script:
-    - npm install
-    - npm run build
-    - npm install -g @lhci/cli@0.12.x
-    - lhci autorun --upload.target=temporary-public-storage --collect.settings.chromeFlags="--no-sandbox" || echo "LHCI failed!"
+    - npm run lhci:collect || echo "LHCI:Collect failed!"
+    - npm run lhci:upload || echo "LHCI:Upload failed!"
+  artifacts:
+    # Always save artifacts. This is needed if lighthouse is run configured
+    # to fail on certain criteria, and will ensure the report is saved.
+    when: always
+    # Save the lighthouse report, which by default is named for the site
+    # analyzed and the current time.
+    paths:
+      - .lighthouseci/*
+```
+
+`package.json`
+
+```json
+{
+  "name": "poc-mesure-automatisee-ecoindex-lighthouse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lhci": "npm run lhci:collect && npm run lhci:upload",
+    "lhci:collect": "lhci collect",
+    "lhci:upload": "lhci upload --upload.basicAuth.username=******** --upload.basicAuth.********",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lhci/cli": "^0.14.0",
+    "lighthouse-plugin-ecoindex-core": "^5.0.0",
+    "puppeteer": "^23.3.0",
+    "puppeteer-core": "^23.3.0"
+  }
+}
+```
+
+`.lighthouserc.js`
+
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.lighthouserc.cjs" :::
+
+`.puppeteerrc.cjs`
+
+:::code source="../../test/test-ecoindex-lh-plugin-ts/.puppeteerrc.cjs" :::
+
+`lighthouse-metrics.js`
+
+```js
+const fs = require('fs')
+
+const scoreScalingFactor = 100
+const categories = ['accessibility', 'lighthouse-plugin-ecoindex-core']
+
+// get all the report files
+const reportFileNames = fs.readdirSync('./').filter(fn => fn.endsWith('.json'))
+// read the report files
+reportFileNames.forEach(report => {
+  // read the report file
+  const results = JSON.parse(fs.readFileSync(report, 'utf8'))
+  // get the URL
+  const url = results.finalUrl
+  console.log(`Metrics for ${url}`)
+  // must slugify the URL to avoid special characters in the file name
+  const slug = url.replace(/[^a-z0-9]/gi, '-').toLowerCase()
+  // generate the file name
+  const metricsFileName = `lighthouse-metrics-${slug}.txt`
+  // generate the metrics
+  const metrics = categories
+    .map(category => {
+      if (category === 'lighthouse-plugin-ecoindex-core') {
+        return `lighthouse{category="ecoindex"} ${
+          results?.categories['lighthouse-plugin-ecoindex-core']?.score *
+          scoreScalingFactor
+        }`
+      } else {
+        return `lighthouse{category="${category}"} ${
+          results?.categories[category]?.score * scoreScalingFactor
+        }`
+      }
+    })
+    .join('\n')
+  // write the metrics to the file
+  fs.writeFileSync(metricsFileName, metrics)
+})
 ```
 
 +++ CircleCI

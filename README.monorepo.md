@@ -53,4 +53,4 @@
 - https://github.com/tostaylo/lighthouse-plugin-has-captcha-on-page-load/blob/master/audits/has-captcha-on-page-load.ts
 - https://github.com/carrier-io/perf-ui-demo-scripts/tree/9fde22019b08ac2e3015a4c103137f7a26785e83/lighthouse_v11
 
-![documentation](./stack.excalidraw.png)
+![documentation](./docs/static/stack.excalidraw.png)

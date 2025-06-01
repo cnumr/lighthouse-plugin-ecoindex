@@ -16,8 +16,14 @@ Les éléments suivants seront vérifiés et installés :
 
 - La présence de **NodeJS** et sa version ;
 - Un **navigateur sans interface** (Chrome headless avec Puppeteer) pour réaliser les mesures ;
-- **Notre outil de mesure** `lighthouse-plugin-ecoindex`.
+- **Notre outil de mesure** `lighthouse-plugin-ecoindex` (en réalité les packages `lighthouse-plugin-ecoindex-core` et `lighthouse-plugin-ecoindex-course`).
 
+!!!warning
+Vous devrez installer NodeJS manuellement si vous n'en avez pas déjà une version installée.  
+ [Télécharger NodeJS](https://nodejs.org/fr/download)
+!!!
+
+<!--
 Suivant votre configuration, des actions seront peut-être à réaliser manuellement, comme l'**installation de NodeJS**.
 
 Toujours suivant votre configuration, **votre mot de passe administateur sera peut-être demandé** pour corriger un problème inhérent à l'installation manuelle de NodeJS sur Mac.
@@ -25,6 +31,7 @@ Toujours suivant votre configuration, **votre mot de passe administateur sera pe
 !!!info Mise à jour automatique
 Une fois l'application installée, un système de mise à jour maintiendra l'application à jour. Il se pourrait à l'avenir que des modifications soient apportées et des actions pourront vous être demandée de nouveau.
 !!!
+-->
 
 ## Systèmes d'exploitation
 
