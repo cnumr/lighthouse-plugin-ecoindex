@@ -5,6 +5,7 @@
     "x-men": "wolverine"
   },
   "output": ["html", "json", "statement"],
+
   "user-agent": "random",
   "output-path": "./reports/file",
   "courses": [
