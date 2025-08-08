@@ -149,12 +149,20 @@ async function runCourse(
       )
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      puppeteerScript = await import(
-        path.join(process.cwd(), cliFlags['puppeteer-script'])
-      )
-      console.log(
-        `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed.`,
-      )
+      try {
+        puppeteerScript = await import(
+          path.join(process.cwd(), cliFlags['puppeteer-script'])
+        )
+        console.log(
+          `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed.`,
+        )
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        console.error(
+          `${logSymbols.error} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} not found.`,
+        )
+        process.exit(1)
+      }
     }
     for (let index = 0; index < uniqUrls.length; index++) {
       if (index === 0) {
