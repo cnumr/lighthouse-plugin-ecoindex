@@ -7,9 +7,10 @@
   "main": "index.js",
   "scripts": {
     "pretest": "rimraf ./reports",
-    "test": "pnpm run test:browser && pnpm run test:file && pnpm run test:obj",
+    "test": "pnpm run test:browser && pnpm run test:obj:custom-puppeteer && pnpm run test:obj && pnpm run test:file",
     "test:file": "node test-file-esm.mjs",
     "test:obj": "node test-obj-esm.mjs",
+    "test:obj:custom-puppeteer": "node test-obj-esm-custom-puppeteer.mjs",
     "test:browser": "pnpm test:check:installed:browser && pnpm test:auto:install:browser",
     "clean:puppeteer:cache": "rimraf ~/.cache/puppeteer",
     "test:check:installed:browser": "node ./browser-test.mjs",
@@ -26,7 +27,8 @@
   "license": "ISC",
   "dependencies": {
     "lighthouse-plugin-ecoindex-courses": "workspace:*",
-    "lighthouse-plugin-ecoindex-core": "workspace:*"
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "puppeteer-core": "24.8.0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"

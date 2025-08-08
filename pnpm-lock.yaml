@@ -224,6 +224,9 @@ importers:
       lighthouse-plugin-ecoindex-courses:
         specifier: workspace:*
         version: link:../../libs/ecoindex-lh-courses
+      puppeteer-core:
+        specifier: 24.8.0
+        version: 24.8.0
     devDependencies:
       rimraf:
         specifier: ^6.0.1
@@ -3747,6 +3750,9 @@ packages:
   third-party-web@0.26.6:
     resolution: {integrity: sha512-GsjP92xycMK8qLTcQCacgzvffYzEqe29wyz3zdKVXlfRD5Kz1NatCTOZEeDaSd6uCZXvGd2CNVtQ89RNIhJWvA==}
 
+  third-party-web@0.27.0:
+    resolution: {integrity: sha512-h0JYX+dO2Zr3abCQpS6/uFjujaOjA1DyDzGQ41+oFn9VW/ARiq9g5ln7qEP9+BTzDpOMyIfsfj4OvfgXAsMUSA==}
+
   through2@2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
 
@@ -5407,11 +5413,11 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.44':
     dependencies:
-      third-party-web: 0.26.6
+      third-party-web: 0.27.0
 
   '@paulirish/trace_engine@0.0.50':
     dependencies:
-      third-party-web: 0.26.6
+      third-party-web: 0.27.0
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -8691,6 +8697,8 @@ snapshots:
   third-party-web@0.26.5: {}
 
   third-party-web@0.26.6: {}
+
+  third-party-web@0.27.0: {}
 
   through2@2.0.5:
     dependencies:
