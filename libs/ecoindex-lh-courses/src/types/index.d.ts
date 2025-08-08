@@ -34,6 +34,7 @@ export interface CliFlags {
       }
   'input-report'?: never | string
   envStatementsObj?: never | StatementsObj
+  'puppeteer-script'?: never | string
 }
 
 export interface JSONFile {
