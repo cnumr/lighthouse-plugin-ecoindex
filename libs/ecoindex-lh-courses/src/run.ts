@@ -141,6 +141,21 @@ async function runCourse(
     console.log(
       `${logSymbols.info} Using custom puppeteer-script. ${cliFlags['puppeteer-script']}`,
     )
+    let puppeteerScript = null
+    try {
+      puppeteerScript = await import(cliFlags['puppeteer-script'])
+      console.log(
+        `${logSymbols.success} File ${cliFlags['puppeteer-script']} readed.`,
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      puppeteerScript = await import(
+        path.join(process.cwd(), cliFlags['puppeteer-script'])
+      )
+      console.log(
+        `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed.`,
+      )
+    }
     for (let index = 0; index < uniqUrls.length; index++) {
       if (index === 0) {
         await flow.navigate(uniqUrls[index], {
@@ -160,18 +175,8 @@ async function runCourse(
       console.log(`Mesure ${index}: ${uniqUrls[index]}`)
       const cookies = await browser.cookies()
       console.debug(`cookies`, cookies.length)
-      try {
-        const puppeteerScript = await import(cliFlags['puppeteer-script'])
-        await puppeteerScript.default(page, session, flow)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
-        const puppeteerScript = await import(
-          path.join(process.cwd(), cliFlags['puppeteer-script'])
-        )
-        await puppeteerScript.default(page, session, flow)
-      }
 
-      // await puppeteerScript(page, session, flow)
+      await puppeteerScript.default(page, session, flow)
     }
   }
 
@@ -253,12 +258,16 @@ async function runCourses(cliFlags: CliFlags) {
       'lighthouse-plugin-ecoindex-core',
     ]
 
-    if (cliFlags['puppeteer-script']) {
+    if (
+      cliFlags['puppeteer-script'] ||
+      cliFlags['jsonFileObj']?.['puppeteer-script']
+    ) {
+      if (cliFlags['jsonFileObj']?.['puppeteer-script']) {
+        cliFlags['puppeteer-script'] =
+          cliFlags['jsonFileObj']['puppeteer-script']
+      }
       console.log(
-        `${logSymbols.warning} Using custom puppeteer-script: ${cliFlags['puppeteer-script']}`,
-      )
-      console.log(
-        `${logSymbols.warning} Authentification (auth) will be ignored.`,
+        `${logSymbols.warning} Using custom puppeteer-script: ${cliFlags['puppeteer-script']} ⇒ ${logSymbols.info} Authentification (auth) will be ignored.`,
       )
     } else {
       console.log(`${logSymbols.info} Using default puppeteer-script.`)

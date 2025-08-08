@@ -41,6 +41,7 @@ export interface JSONFile {
   'user-agent': never | string
   'extra-header': never | Record<string, string>
   'output-path': never | string
+  'puppeteer-script'?: never | string
   'audit-category':
     | never
     | (
