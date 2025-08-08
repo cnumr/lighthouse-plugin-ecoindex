@@ -19,6 +19,7 @@ import {
 } from './printer.js'
 
 import logSymbols from 'log-symbols'
+import path from 'node:path'
 import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
 
@@ -159,8 +160,17 @@ async function runCourse(
       console.log(`Mesure ${index}: ${uniqUrls[index]}`)
       const cookies = await browser.cookies()
       console.debug(`cookies`, cookies.length)
-      const puppeteerScript = await import(cliFlags['puppeteer-script'])
-      await puppeteerScript.default(page, session, flow)
+      try {
+        const puppeteerScript = await import(cliFlags['puppeteer-script'])
+        await puppeteerScript.default(page, session, flow)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        const puppeteerScript = await import(
+          path.join(process.cwd(), cliFlags['puppeteer-script'])
+        )
+        await puppeteerScript.default(page, session, flow)
+      }
+
       // await puppeteerScript(page, session, flow)
     }
   }
