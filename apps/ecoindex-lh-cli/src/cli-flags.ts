@@ -104,6 +104,12 @@ function collectCommand(yargs: Yargs.Argv) {
       description:
         'Extra object config for Lighthouse. JSON string or path to a JSON file.',
     })
+    .option('puppeteer-script', {
+      type: 'string',
+      default: null,
+      description:
+        'Puppeteer relative path to a script to use for the browser (like custom authentication). Do not use if you want to use the default puppeteer script.',
+    })
     .option('output-path', {
       alias: 'p',
       type: 'string',
