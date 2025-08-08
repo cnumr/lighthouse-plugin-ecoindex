@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.6
+
+### Patch Changes
+
+- 2200618: Adds the ability to use your own puppeteer script to manage authentication that is more complex than the one provided.
+
 ## 6.0.0-next.5
 
 ### Patch Changes
