@@ -1,13 +1,15 @@
 import type { CliFlags, Course } from './types/index.js'
 import {
   authenticateEcoindexPageMesure,
-  dateToFileString,
   endEcoindexPageMesure,
+  startEcoindexPageMesure,
+} from './utils/default-puppeteer.js'
+import {
+  dateToFileString,
   getLighthouseConfig,
   getPuppeteerConfig,
   readExtraHeaderFile,
   readJSONFile,
-  startEcoindexPageMesure,
 } from './commands.js'
 import {
   print,
@@ -17,6 +19,7 @@ import {
 } from './printer.js'
 
 import logSymbols from 'log-symbols'
+import path from 'node:path'
 import puppeteer from 'puppeteer'
 import { startFlow } from 'lighthouse'
 
@@ -90,12 +93,70 @@ async function runCourse(
     ),
   )
   console.log(`${logSymbols.info} Mesuring...`)
-  for (let index = 0; index < uniqUrls.length; index++) {
-    if (landingUrl && uniqUrls[index] === landingUrl) {
+  if (cliFlags['puppeteer-script'] === 'default') {
+    for (let index = 0; index < uniqUrls.length; index++) {
+      if (landingUrl && uniqUrls[index] === landingUrl) {
+        console.log(
+          `${logSymbols.warning} Skipped duplicate mesure on ${landingUrl}`,
+        )
+      } else {
+        if (index === 0) {
+          await flow.navigate(uniqUrls[index], {
+            name: `Warm Navigation: ${uniqUrls[index]}`,
+          })
+        } else {
+          await flow.navigate(
+            uniqUrls[index],
+            getLighthouseConfig(
+              false,
+              `Cold Navigation: ${uniqUrls[index]}`,
+              cliFlags['audit-category'],
+              cliFlags['user-agent'],
+            ),
+          )
+        }
+        console.log(`Mesure ${index}: ${uniqUrls[index]}`)
+        const cookies = await browser.cookies()
+        console.debug(`cookies`, cookies.length)
+
+        if (auth && uniqUrls[index] === auth.url) {
+          // Authenticate if current URL == auth URL
+          console.log(`${logSymbols.info} Authentication page detected!`)
+
+          landingUrl = await authenticateEcoindexPageMesure(
+            page,
+            auth,
+            browser,
+            session,
+            flow,
+          )
+        } else {
+          // Normal mesure
+          await startEcoindexPageMesure(page, session)
+          await endEcoindexPageMesure(flow)
+        }
+      }
+    }
+  } else {
+    console.log(
+      `${logSymbols.info} Using custom puppeteer-script. ${cliFlags['puppeteer-script']}`,
+    )
+    let puppeteerScript = null
+    try {
+      puppeteerScript = await import(cliFlags['puppeteer-script'])
       console.log(
-        `${logSymbols.warning} Skipped duplicate mesure on ${landingUrl}`,
+        `${logSymbols.success} File ${cliFlags['puppeteer-script']} readed.`,
       )
-    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      puppeteerScript = await import(
+        path.join(process.cwd(), cliFlags['puppeteer-script'])
+      )
+      console.log(
+        `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed.`,
+      )
+    }
+    for (let index = 0; index < uniqUrls.length; index++) {
       if (index === 0) {
         await flow.navigate(uniqUrls[index], {
           name: `Warm Navigation: ${uniqUrls[index]}`,
@@ -115,61 +176,9 @@ async function runCourse(
       const cookies = await browser.cookies()
       console.debug(`cookies`, cookies.length)
 
-      if (auth && uniqUrls[index] === auth.url) {
-        // Authenticate if current URL == auth URL
-        console.log(`${logSymbols.info} Authentication page detected!`)
-
-        landingUrl = await authenticateEcoindexPageMesure(
-          page,
-          auth,
-          browser,
-          session,
-          flow,
-        )
-      } else {
-        // Normal mesure
-        await startEcoindexPageMesure(page, session)
-        await endEcoindexPageMesure(flow)
-      }
+      await puppeteerScript.default(page, session, flow)
     }
   }
-  // Second mesure for the auth landing page is NOT WORKING
-  // trying...
-  // let stepToRM = -1
-  // flow._gatherSteps.forEach((step, index) => {
-  //   if (!step.artifacts.URL.requestedUrl) {
-  //     console.log(
-  //       `Clean step ${index} with ${step.artifacts.URL.finalDisplayedUrl}, try to retry...`,
-  //     )
-  //     stepToRM = index
-  //   }
-  // })
-  // // clean
-  // if (stepToRM > -1) {
-  //   flow._gatherSteps.splice(stepToRM, 1)
-  // }
-  // // verify
-  // flow._gatherSteps.forEach(step => {
-  //   console.debug(step.artifacts.URL)
-  // })
-
-  // // try to mesure landed page.
-  // if (landingUrl) {
-  //   console.log(
-  //     `${logSymbols.info} Mesure Authentication landing page ${landingUrl}`,
-  //   )
-  //   await flow.navigate(
-  //     landingUrl,
-  //     getLighthouseConfig(
-  //       false,
-  //       `Mesure Authentication landing page (Cold Navigation): ${landingUrl}`,
-  //       cliFlags['audit-category'],
-  //       cliFlags['user-agent'],
-  //     ),
-  //   )
-  //   await startEcoindexPageMesure(page, session)
-  //   await endEcoindexPageMesure(flow)
-  // }
 
   console.log(`${logSymbols.success} Mesure(s) ended`)
   console.log(SEPARATOR)
@@ -248,6 +257,23 @@ async function runCourses(cliFlags: CliFlags) {
       'best-practices',
       'lighthouse-plugin-ecoindex-core',
     ]
+
+    if (
+      cliFlags['puppeteer-script'] ||
+      cliFlags['jsonFileObj']?.['puppeteer-script']
+    ) {
+      if (cliFlags['jsonFileObj']?.['puppeteer-script']) {
+        cliFlags['puppeteer-script'] =
+          cliFlags['jsonFileObj']['puppeteer-script']
+      }
+      console.log(
+        `${logSymbols.warning} Using custom puppeteer-script: ${cliFlags['puppeteer-script']} ⇒ ${logSymbols.info} Authentification (auth) will be ignored.`,
+      )
+    } else {
+      console.log(`${logSymbols.info} Using default puppeteer-script.`)
+      cliFlags['puppeteer-script'] = 'default'
+    }
+
     console.log(
       `${logSymbols.info} Using default audit category: ${JSON.stringify(
         cliFlags['audit-category'],
