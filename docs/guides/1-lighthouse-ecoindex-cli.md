@@ -102,6 +102,7 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `-j, --json-file` : Fichier structuré, doit respecter un schéma (voir plus bas).
 - `-h, --extra-header` : Objet de configuration supplémentaire pour Lighthouse. Chaîne JSON ou chemin vers un fichier JSON.
 - `-p, --output-path` : Dossier de sortie.
+- `-s, --puppeteer-script` : Chemin vers un script puppeteer à utiliser pour les mesures (pratique pour les authentifications complexes).
 - `-o, --output` : Rapporteur pour les résultats, supporte plusieurs valeurs. Choix : "json", "html", "statement". ATTENTION : "csv" n'est pas disponible.
 - `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs. Available categories: "accessibility", "best-practices", "performance", "seo" and "lighthouse-plugin-ecoindex-core".
 - `--user-agent` : User-Agent à utiliser pour les requêtes.
@@ -154,6 +155,7 @@ Le format du fichier doit être respecté !
 | `output`                | `array`   | Les types d'export souhaités : `"html", "json", "statement"` (statement = déclation environnementale).                          |
 | `user-agent`            | `string`  | `"random"` ou un user agent spécifique. Utilisez `"random"` pour ne pas vous faire détecter et bloquer par les anti-bot.        |
 | `output-path`           | `string`  | Dossier ou exporter les rapports.                                                                                               |
+| `puppeteer-script`      | `string`  | Chemin vers un script puppeteer à utiliser pour les mesures (pratique pour les authentifications complexes).                    |
 | `courses`               | `array`   | Les parcours à auditer.                                                                                                         |
 | `courses.name`          | `string`  | nom du parcours, qui sera affiché dans la déclaration en environnementale.                                                      |
 | `courses.target`        | `string`  | Objectif du parcours, qui sera affiché dans la déclaration en environnementale.                                                 |
