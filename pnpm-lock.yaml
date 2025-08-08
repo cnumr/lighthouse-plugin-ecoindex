@@ -211,6 +211,9 @@ importers:
       lighthouse-plugin-ecoindex-courses:
         specifier: workspace:*
         version: link:../../libs/ecoindex-lh-courses
+      puppeteer-core:
+        specifier: 24.8.0
+        version: 24.8.0
     devDependencies:
       rimraf:
         specifier: ^6.0.1
