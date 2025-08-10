@@ -70,3 +70,41 @@ La page d'authentiifcation doit faire partie de la liste de page à mesurer, cel
 ==- Modèle de fichier de configuration de Puppeteer (complet) sans authentification
 :::code source="../../test/test-ecoindex-lh-plugin-ts/.puppeteerrc.cjs" :::
 ===
+
+## Utilisation d'un fichier de script Puppeteer custom
+
+!!!info
+L'utilisation d'un fichier de script Puppeteer custom est recommandée pour les audits de sites nécessitant une authentification complexe.
+!!!
+
+!!!warning
+**Points d'attention:**
+
+- Due à une limitation de Lighthouse, **on ne peut pas mesurer plusieurs fois la même url**. Le workaround est d'appeler les urls avec des faux paramètres de navigation, ex. https://greenit.eco/?test=123 pour les différencier.
+- Les scénarios complexes avec des pages d'authentifications et des soumissions de formulaires, des pages de redirection, etc. seront mal mesurées (à cause des navigations entre les pages). Il faut donc être vigilant sur les pages à mesurer et ne pas hésiter à ajouter plusieurs pages dans le fichier de configuration en utilisant des faux paramètres de navigation (ex. https://greenit.eco/?test=123).
+- Hors des pages d'authentification, les pages doivent être utilisée avec les scénarios de mesure de parcours standards `startEcoindexPageMesure(page, session)` et `endEcoindexPageMesure(flow)`.
+  !!!
+
+### Utilisation en ligne de commande
+
+```shell
+npx lighthouse-plugin-ecoindex collect -u https://greenit.eco/ -u https://greenit.eco/wp-login.php/ -u https://greenit.eco/wp-admin/plugins.php --puppeteer-script ./puppeteer-script.mjs
+```
+
+==- Modèle de fichier de script Puppeteer custom
+:::code source="../../test/test-ecoindex-lh-cli/puppeteer-script.mjs" :::
+===
+
+### Utilisation avec un fichier de configuration `input-file.json`
+
+```json
+{
+  // ...
+  "puppeteer-script": "./puppeteer-script.mjs"
+  // ...
+}
+```
+
+==- Modèle de fichier de script Puppeteer custom
+:::code source="../../test/test-ecoindex-lh-cli/puppeteer-script.mjs" :::
+===
