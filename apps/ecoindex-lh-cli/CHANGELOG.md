@@ -1,5 +1,16 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.0-next.7
+
+### Patch Changes
+
+- 789eb47: - fix: amélioration de la gestion des erreurs lors de l'importation du script Puppeteer, ajout d'un message d'erreur si le fichier n'est pas trouvé.
+  - feat: mise à jour de l'importation dynamique du script Puppeteer pour inclure des options supplémentaires (position et urls) dans l'appel de la fonction
+  - docs: ajout d'une section sur l'utilisation de fichiers de script Puppeteer personnalisés pour les audits avec authentification complexe, incluant des avertissements et des exemples de configuration.
+- Updated dependencies [789eb47]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.7
+  - lighthouse-plugin-ecoindex-courses@6.0.0-next.7
+
 ## 6.0.0-next.6
 
 ### Patch Changes
