@@ -143,18 +143,27 @@ async function runCourse(
     )
     let puppeteerScript = null
     try {
+      // Try dynamic import first
       puppeteerScript = await import(cliFlags['puppeteer-script'])
       console.log(
-        `${logSymbols.success} File ${cliFlags['puppeteer-script']} readed.`,
+        `${logSymbols.success} File ${cliFlags['puppeteer-script']} readed with dynamic import.`,
       )
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      puppeteerScript = await import(
-        path.join(process.cwd(), cliFlags['puppeteer-script'])
-      )
-      console.log(
-        `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed.`,
-      )
+      try {
+        puppeteerScript = await import(
+          path.join(process.cwd(), cliFlags['puppeteer-script'])
+        )
+        console.log(
+          `${logSymbols.success} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} readed with dynamic import.`,
+        )
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        console.error(
+          `${logSymbols.error} File ${path.join(process.cwd(), cliFlags['puppeteer-script'])} not found.`,
+        )
+        process.exit(1)
+      }
     }
     for (let index = 0; index < uniqUrls.length; index++) {
       if (index === 0) {
@@ -176,7 +185,13 @@ async function runCourse(
       const cookies = await browser.cookies()
       console.debug(`cookies`, cookies.length)
 
-      await puppeteerScript.default(page, session, flow)
+      await puppeteerScript.default({
+        page,
+        session,
+        flow,
+        position: index,
+        urls: uniqUrls,
+      })
     }
   }
 
