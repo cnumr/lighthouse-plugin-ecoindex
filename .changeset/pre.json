@@ -12,6 +12,7 @@
     "@ecoindex-lh-test/test-org-thegreenwebfoundation-api": "1.0.0"
   },
   "changesets": [
+    "busy-cobras-fold",
     "clear-geckos-notice",
     "dirty-boats-grow",
     "dull-wasps-sit",
