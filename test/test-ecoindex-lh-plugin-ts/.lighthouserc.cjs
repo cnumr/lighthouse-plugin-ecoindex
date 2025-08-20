@@ -16,9 +16,10 @@ module.exports = {
     collect: {
       url: [
         'https://www.ecoindex.fr/',
-        'https://novagaia.fr/',
+        // 'https://novagaia.fr/',
         // 'https://www.relocalisons.bzh/',
         // 'https://www.neuro-mav-france.org/',
+        'https://practice.expandtesting.com/shadowdom/',
         // 'https://www.alodokter.com/',
       ],
       numberOfRuns: 1,

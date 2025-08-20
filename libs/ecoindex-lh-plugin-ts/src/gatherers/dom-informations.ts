@@ -17,38 +17,77 @@ class DOMInformations extends Gatherer {
       if (document === undefined) return null
 
       // Fonction récursive pour compter tous les éléments, y compris dans les shadow roots
-      const countElements = (element: Element): number => {
+      const countElements = (
+        element: Element,
+        visited = new Set<Element>(),
+      ): number => {
+        // Protection contre les boucles infinies
+        if (visited.has(element)) {
+          return 0
+        }
+        visited.add(element)
+
         let count = 1
         Array.from(element.children).forEach(child => {
-          count += countElements(child)
+          count += countElements(child, visited)
         })
 
         if (element.shadowRoot) {
           Array.from(element.shadowRoot.children).forEach(sChild => {
-            count += countElements(sChild)
+            count += countElements(sChild, visited)
           })
         }
         return count
       }
 
       // Fonction pour compter les éléments SVG, y compris dans les shadow roots
-      const countSVGElements = (element: Element): number => {
+      const countSVGElements = (
+        element: Element,
+        visited = new Set<Element>(),
+      ): number => {
+        // Protection contre les boucles infinies
+        if (visited.has(element)) {
+          return 0
+        }
+        visited.add(element)
+
         let count = 0
-        // Si l'élément est un SVG, on compte tous ses enfants
+
+        // Si l'élément est un SVG, on compte tous ses descendants
         if (element.tagName.toLowerCase() === 'svg') {
-          count += Array.from(element.children).length
+          // Fonction récursive pour compter tous les descendants de l'élément SVG
+          const countAllDescendants = (
+            el: Element,
+            descendantsVisited = new Set<Element>(),
+          ): number => {
+            // Protection contre les boucles infinies dans les descendants
+            if (descendantsVisited.has(el)) {
+              return 0
+            }
+            descendantsVisited.add(el)
+
+            let descendantCount = 0
+            Array.from(el.children).forEach(child => {
+              descendantCount +=
+                1 + countAllDescendants(child, descendantsVisited) // +1 pour l'enfant + ses descendants
+            })
+            return descendantCount
+          }
+          count += countAllDescendants(element)
         }
 
-        // On continue la récursion pour tous les enfants
+        // On continue la récursion pour tous les enfants (pour trouver d'autres SVG)
         Array.from(element.children).forEach(child => {
-          count += countSVGElements(child)
+          count += countSVGElements(child, visited)
         })
 
+        // On vérifie aussi dans les shadow roots
         if (element.shadowRoot) {
           Array.from(element.shadowRoot.children).forEach(sChild => {
-            count += countSVGElements(sChild)
+            count += countSVGElements(sChild, visited)
           })
         }
+
         return count
       }
 
