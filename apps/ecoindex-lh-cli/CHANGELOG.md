@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.0-next.8
+
+### Patch Changes
+
+- 56b7be4: better node count
+- Updated dependencies [56b7be4]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.8
+  - lighthouse-plugin-ecoindex-courses@6.0.0-next.8
+
 ## 6.0.0-next.7
 
 ### Patch Changes
