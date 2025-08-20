@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.8
+
+### Patch Changes
+
+- 56b7be4: better node count
+
 ## 6.0.0-next.7
 
 ### Patch Changes
