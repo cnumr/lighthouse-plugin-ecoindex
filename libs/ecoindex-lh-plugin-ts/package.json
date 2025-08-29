@@ -65,7 +65,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
-    "ecoindex": "1.0.5",
+    "ecoindex": "^2.0.1",
     "lighthouse": "12.5.1",
     "lighthouse-logger": "^2.0.1",
     "lodash.round": "^4.0.4",
