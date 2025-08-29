@@ -90,8 +90,8 @@ importers:
         specifier: 2.10.3
         version: 2.10.3
       ecoindex:
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: ^2.0.1
+        version: 2.0.1
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
@@ -145,8 +145,8 @@ importers:
   libs/ecoindex-lh-plugin-ts:
     dependencies:
       ecoindex:
-        specifier: 1.0.5
-        version: 1.0.5
+        specifier: 2.0.1
+        version: 2.0.1
       lighthouse:
         specifier: 12.5.1
         version: 12.5.1
@@ -2008,9 +2008,9 @@ packages:
   ecc-jsbn@0.1.2:
     resolution: {integrity: sha512-eh9O+hwRHNbG4BLTjEl3nw044CkGm5X6LoaCf7LPp7UU8Qrt47JYNi6nPX8xjW97TKGKm1ouctg0QSpZe9qrnw==}
 
-  ecoindex@1.0.5:
-    resolution: {integrity: sha512-/GuVgjIVWckQ7IbFa0dUbVZbrUgRxwohT0gU4Eayk81d9tL+jo+IjoPXiaT+7doFRWFdIeqTx+2EQ3KKWm2wvw==}
-    engines: {node: '>=16.0.0'}
+  ecoindex@2.0.1:
+    resolution: {integrity: sha512-62wNhERrLcrJ7ItG1BXCOEGZCWt2f9wHq1nXua73tQ/2PKV1vup5Kj2bQiqQxBzslmNYQ8H79CQOtyHbmiQqxA==}
+    engines: {node: '>=18.20.0'}
 
   ecoindex_reference@1.0.2:
     resolution: {integrity: sha512-IKse3tu6IQfhrpGsVuxmC1K4xlc1FCZtaNYjLUj+Yxm5wthuVyS7C/miVPqSN7UZaNViUO2013ri+WJJhZfCUA==}
@@ -3349,11 +3349,13 @@ packages:
   puppeteer@24.4.0:
     resolution: {integrity: sha512-E4JhJzjS8AAI+6N/b+Utwarhz6zWl3+MR725fal+s3UlOlX2eWdsvYYU+Q5bXMjs9eZEGkNQroLkn7j11s2k1Q==}
     engines: {node: '>=18'}
+    deprecated: < 24.9.0 is no longer supported
     hasBin: true
 
   puppeteer@24.8.0:
     resolution: {integrity: sha512-8GPlUKXvZK8ANxab75UerMar14ZnJTJpPok3XN9Nx6f7SKyabyFK39pQruMni6zfrwVBrPXp3Mo6ztwKEmXaDQ==}
     engines: {node: '>=18'}
+    deprecated: < 24.9.0 is no longer supported
     hasBin: true
 
   qs@6.13.0:
@@ -3598,6 +3600,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   spawndamnit@3.0.1:
     resolution: {integrity: sha512-MmnduQUuHCoFckZoWnXsTg7JaiLBJrKFj9UI2MbRPGaJeVpsLcVBu6P/IGZovziM/YBsellCmsprgNA+w0CzVg==}
@@ -6010,7 +6013,7 @@ snapshots:
       '@usebruno/lang': 0.22.0
       '@usebruno/requests': 0.1.0
       '@usebruno/vm2': 3.9.19
-      aws4-axios: 3.4.0(axios@1.9.0(debug@4.4.0))
+      aws4-axios: 3.4.0(axios@1.9.0)
       axios: 1.9.0(debug@4.4.0)
       axios-ntlm: 1.4.4(debug@4.4.0)
       chai: 4.5.0
@@ -6188,7 +6191,7 @@ snapshots:
 
   aws-sign2@0.7.0: {}
 
-  aws4-axios@3.4.0(axios@1.9.0(debug@4.4.0)):
+  aws4-axios@3.4.0(axios@1.9.0):
     dependencies:
       '@aws-sdk/client-sts': 3.806.0
       aws4: 1.13.2
@@ -6722,7 +6725,7 @@ snapshots:
       jsbn: 0.1.1
       safer-buffer: 2.1.2
 
-  ecoindex@1.0.5:
+  ecoindex@2.0.1:
     dependencies:
       ecoindex_reference: 1.0.2
 
