@@ -145,7 +145,7 @@ importers:
   libs/ecoindex-lh-plugin-ts:
     dependencies:
       ecoindex:
-        specifier: 2.0.1
+        specifier: ^2.0.1
         version: 2.0.1
       lighthouse:
         specifier: 12.5.1
@@ -6013,7 +6013,7 @@ snapshots:
       '@usebruno/lang': 0.22.0
       '@usebruno/requests': 0.1.0
       '@usebruno/vm2': 3.9.19
-      aws4-axios: 3.4.0(axios@1.9.0)
+      aws4-axios: 3.4.0(axios@1.9.0(debug@4.4.0))
       axios: 1.9.0(debug@4.4.0)
       axios-ntlm: 1.4.4(debug@4.4.0)
       chai: 4.5.0
@@ -6191,7 +6191,7 @@ snapshots:
 
   aws-sign2@0.7.0: {}
 
-  aws4-axios@3.4.0(axios@1.9.0):
+  aws4-axios@3.4.0(axios@1.9.0(debug@4.4.0)):
     dependencies:
       '@aws-sdk/client-sts': 3.806.0
       aws4: 1.13.2
