@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.0-next.9
+
+### Patch Changes
+
+- 998653b: Update version of ecoindex lib (2.0.1)
+- Updated dependencies [998653b]
+  - lighthouse-plugin-ecoindex-core@6.0.0-next.9
+  - lighthouse-plugin-ecoindex-courses@6.0.0-next.9
+
 ## 6.0.0-next.8
 
 ### Patch Changes
