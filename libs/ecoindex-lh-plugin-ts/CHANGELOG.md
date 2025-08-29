@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.0-next.9
+
+### Patch Changes
+
+- 998653b: Update version of ecoindex lib (2.0.1)
+
 ## 6.0.0-next.8
 
 ### Patch Changes
