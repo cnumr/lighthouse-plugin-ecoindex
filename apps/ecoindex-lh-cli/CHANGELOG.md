@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.3
+
+### Patch Changes
+
+- b969940: Fix error on puppeteer-script
+- Updated dependencies [b969940]
+  - lighthouse-plugin-ecoindex-core@6.0.3
+  - lighthouse-plugin-ecoindex-courses@6.0.3
+
 ## 6.0.2
 
 ### Patch Changes
