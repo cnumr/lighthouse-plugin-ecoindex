@@ -4,4 +4,4 @@
 'lighthouse-plugin-ecoindex-core': patch
 ---
 
-fix test
+Add logs and fix test.
