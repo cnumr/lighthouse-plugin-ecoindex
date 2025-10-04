@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.2
+
+### Patch Changes
+
+- b34be47: bump
+- Updated dependencies [b34be47]
+  - lighthouse-plugin-ecoindex-core@6.0.2
+  - lighthouse-plugin-ecoindex-courses@6.0.2
+
 ## 6.0.1
 
 ### Patch Changes

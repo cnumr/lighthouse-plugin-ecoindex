@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.2
+
+### Patch Changes
+
+- b34be47: bump
+
 ## 6.0.1
 
 ### Patch Changes
