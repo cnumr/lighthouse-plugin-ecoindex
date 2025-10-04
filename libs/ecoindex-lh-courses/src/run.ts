@@ -261,7 +261,7 @@ async function runCourses(cliFlags: CliFlags) {
       `${logSymbols.warning} Audit category overrided by \`${cliFlags['json-file']}\` file.`,
     )
     console.log(
-      `${logSymbols.info} using ${JSON.stringify(cliFlags['jsonFileObj']['audit-category'])}`,
+      `${logSymbols.info} Using ${JSON.stringify(cliFlags['jsonFileObj']['audit-category'])}`,
     )
     cliFlags['audit-category'] = cliFlags['jsonFileObj']['audit-category']
   } else {
@@ -272,6 +272,14 @@ async function runCourses(cliFlags: CliFlags) {
       'best-practices',
       'lighthouse-plugin-ecoindex-core',
     ]
+
+    console.log(`****************************`)
+    console.log(`cliFlags['puppeteer-script']`, cliFlags['puppeteer-script'])
+    console.log(
+      `cliFlags['jsonFileObj']?.['puppeteer-script']`,
+      cliFlags['jsonFileObj']?.['puppeteer-script'],
+    )
+    console.log(`****************************`)
 
     if (
       cliFlags['puppeteer-script'] ||

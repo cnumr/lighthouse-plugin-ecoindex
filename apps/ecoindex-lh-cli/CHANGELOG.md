@@ -4,8 +4,8 @@
 
 ### Patch Changes
 
-- 14eb404: Trigger Build
-- Updated dependencies [14eb404]
+- 2c51205: Add logs and fix test.
+- Updated dependencies [2c51205]
   - lighthouse-plugin-ecoindex-courses@6.0.1
   - lighthouse-plugin-ecoindex-core@6.0.1
 

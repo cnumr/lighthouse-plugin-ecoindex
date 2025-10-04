@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 14eb404: Trigger Build
+- 2c51205: Add logs and fix test.
 
 ## 6.0.0
 

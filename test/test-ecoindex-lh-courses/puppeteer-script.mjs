@@ -48,7 +48,11 @@ async function endEcoindexPageMesure(flow, snapshotEnabled = false) {
   await new Promise(r => setTimeout(r, 3 * 1000))
   if (snapshotEnabled) await flow.snapshot()
 }
-export default async (page, session, flow) => {
+export default async function (options) {
+  const { page, session, flow, position, urls } = options
+  console.log('position', position)
+  console.log('urls', urls)
+
   await startEcoindexPageMesure(page, session)
   await endEcoindexPageMesure(flow)
 }
