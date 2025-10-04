@@ -1,5 +1,13 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 6.0.1
+
+### Patch Changes
+
+- 14eb404: Trigger Build
+- Updated dependencies [14eb404]
+  - lighthouse-plugin-ecoindex-core@6.0.1
+
 ## 6.0.0
 
 ### Minor Changes
