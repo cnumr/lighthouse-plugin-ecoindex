@@ -273,36 +273,36 @@ async function runCourses(cliFlags: CliFlags) {
       'lighthouse-plugin-ecoindex-core',
     ]
 
-    console.log(`****************************`)
-    console.log(`cliFlags['puppeteer-script']`, cliFlags['puppeteer-script'])
-    console.log(
-      `cliFlags['jsonFileObj']?.['puppeteer-script']`,
-      cliFlags['jsonFileObj']?.['puppeteer-script'],
-    )
-    console.log(`****************************`)
-
-    if (
-      cliFlags['puppeteer-script'] ||
-      cliFlags['jsonFileObj']?.['puppeteer-script']
-    ) {
-      if (cliFlags['jsonFileObj']?.['puppeteer-script']) {
-        cliFlags['puppeteer-script'] =
-          cliFlags['jsonFileObj']['puppeteer-script']
-      }
-      console.log(
-        `${logSymbols.warning} Using custom puppeteer-script: ${cliFlags['puppeteer-script']} ⇒ ${logSymbols.info} Authentification (auth) will be ignored.`,
-      )
-    } else {
-      console.log(`${logSymbols.info} Using default puppeteer-script.`)
-      cliFlags['puppeteer-script'] = 'default'
-    }
-
     console.log(
       `${logSymbols.info} Using default audit category: ${JSON.stringify(
         cliFlags['audit-category'],
       )}`,
     )
   }
+
+  console.log(`****************************`)
+  console.log(`cliFlags['puppeteer-script']`, cliFlags['puppeteer-script'])
+  console.log(
+    `cliFlags['jsonFileObj']?.['puppeteer-script']`,
+    cliFlags['jsonFileObj']?.['puppeteer-script'],
+  )
+  console.log(`****************************`)
+
+  if (
+    cliFlags['puppeteer-script'] ||
+    cliFlags['jsonFileObj']?.['puppeteer-script']
+  ) {
+    if (cliFlags['jsonFileObj']?.['puppeteer-script']) {
+      cliFlags['puppeteer-script'] = cliFlags['jsonFileObj']['puppeteer-script']
+    }
+    console.log(
+      `${logSymbols.warning} Using custom puppeteer-script: ${cliFlags['puppeteer-script']} ⇒ ${logSymbols.info} Authentification (auth) will be ignored.`,
+    )
+  } else {
+    console.log(`${logSymbols.info} Using default puppeteer-script.`)
+    cliFlags['puppeteer-script'] = 'default'
+  }
+
   if (cliFlags['jsonFileObj']?.['auth']) {
     console.log(
       `${logSymbols.warning} Authentification (auth) overrided by \`${cliFlags['json-file']}\` file.`,
