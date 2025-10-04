@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.1
+
+### Patch Changes
+
+- 2c51205: Add logs and fix test.
+
 ## 6.0.0
 
 ### Minor Changes

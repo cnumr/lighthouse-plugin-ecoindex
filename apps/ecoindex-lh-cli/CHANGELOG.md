@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.1
+
+### Patch Changes
+
+- 2c51205: Add logs and fix test.
+- Updated dependencies [2c51205]
+  - lighthouse-plugin-ecoindex-courses@6.0.1
+  - lighthouse-plugin-ecoindex-core@6.0.1
+
 ## 6.0.0
 
 ### Patch Changes
