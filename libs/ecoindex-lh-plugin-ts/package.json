@@ -30,7 +30,7 @@
     "url": "https://github.com/cnumr/lighthouse-plugin-ecoindex.git",
     "directory": "libs/ecoindex-lh-plugin-ts"
   },
-  "version": "6.0.2",
+  "version": "6.0.3",
   "type": "module",
   "main": "dist/plugin.js",
   "types": "dist/plugin.d.ts",

@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.3
+
+### Patch Changes
+
+- b969940: Fix error on puppeteer-script
+
 ## 6.0.2
 
 ### Patch Changes
