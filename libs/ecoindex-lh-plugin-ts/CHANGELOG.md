@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.1
+
+### Patch Changes
+
+- 14eb404: Trigger Build
+
 ## 6.0.0
 
 ### Minor Changes
