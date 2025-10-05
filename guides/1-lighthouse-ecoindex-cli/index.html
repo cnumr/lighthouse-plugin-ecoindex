@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.812905820826">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.812967588497">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -32,12 +32,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../../static/greenit_icone_intro-alt.png" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.11.0.812905820826" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.812967588497" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.812905820826" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.812967588497" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.812905820826" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.812905820826" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.812967588497" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.812967588497" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -278,7 +278,7 @@
 </doc-anchor-target>
 <p>Cet utilitaire en ligne de commande (cli) permet, au travers de Lighthouse, d&#x27;obtenir des rapports d&#x27;audits Green IT de votre site web. Cela pour :</p>
 <ul>
-<li>des parcours (1 parcours = 1 liste d&#x27;URL) via un fichier JSON ;</li>
+<li>des parcours (1 parcours = 1 liste d&#x27;URL) via un fichier JSON (voir <a href="../20-input-file-json/">input-file.json</a>) ;</li>
 <li>une liste d&#x27;URLs ;</li>
 <li>une URL unique.</li>
 </ul>
@@ -462,42 +462,56 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
     <template #title>Modèle de fichier JSON</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-    &quot;extra-header&quot;: {
-        &quot;Cookie&quot;: &quot;monster=blue&quot;,
-        &quot;x-men&quot;: &quot;wolverine&quot;
+  &quot;$schema&quot;: &quot;./schema.json&quot;,
+  &quot;extra-header&quot;: {
+    &quot;Cookie&quot;: &quot;monster=blue&quot;,
+    &quot;x-men&quot;: &quot;wolverine&quot;
+  },
+  &quot;output&quot;: [&quot;html&quot;, &quot;json&quot;, &quot;statement&quot;],
+  &quot;audit-category&quot;: [
+    &quot;performance&quot;,
+    &quot;seo&quot;,
+    &quot;accessibility&quot;,
+    &quot;best-practices&quot;,
+    &quot;lighthouse-plugin-ecoindex-core&quot;
+  ],
+  &quot;user-agent&quot;: &quot;random&quot;,
+  &quot;output-path&quot;: &quot;./reports/file&quot;,
+  &quot;puppeteer-script&quot;: &quot;./puppeteer-script.mjs&quot;,
+  &quot;courses&quot;: [
+    {
+      &quot;name&quot;: &quot;Découvrir ecoindex et l'écoconception&quot;,
+      &quot;target&quot;: &quot;Venir sur le site, le découvrir et rejoindre la communauté.&quot;,
+      &quot;course&quot;: &quot;Attérir sur la \&quot;Page d'accueil\&quot;, page \&quot;Comment ça marche\&quot;, page \&quot;Écoconception\&quot;&quot;,
+      &quot;is-best-pages&quot;: true,
+      &quot;urls&quot;: [
+        &quot;https://www.ecoindex.fr/&quot;,
+        &quot;https://www.ecoindex.fr/comment-ca-marche/&quot;,
+        &quot;https://www.ecoindex.fr/ecoconception/&quot;
+      ]
     },
-    &quot;output&quot;: [
-        &quot;html&quot;,
-        &quot;json&quot;,
-        &quot;statement&quot;
-    ],
-    &quot;output-path&quot;: &quot;./reports&quot;,
-    &quot;output-name&quot;: &quot;ecoindex&quot;,
-    &quot;parcours&quot;: [
-        {
-            &quot;name&quot;: &quot;Découvrir ecoindex et l'écoconception&quot;,
-            &quot;urls&quot;: [
-                &quot;https://www.ecoindex.fr/&quot;,
-                &quot;https://www.ecoindex.fr/comment-ca-marche/&quot;,
-                &quot;https://www.ecoindex.fr/ecoconception/&quot;
-            ]
-        },
-        {
-            &quot;name&quot;: &quot;Rejoindre la communauté&quot;,
-            &quot;urls&quot;: [
-                &quot;https://www.ecoindex.fr/&quot;,
-                &quot;https://www.ecoindex.fr/a-propos/&quot;,
-                &quot;https://www.ecoindex.fr/nous-rejoindre/&quot;
-            ]
-        },
-        {
-            &quot;name&quot;: &quot;Revoir d'anciens résultats&quot;,
-            &quot;urls&quot;: [
-                &quot;https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09&quot;,
-                &quot;https://www.ecoindex.fr/&quot;
-            ]
-        }
-    ]
+    {
+      &quot;name&quot;: &quot;Rejoindre la communauté&quot;,
+      &quot;target&quot;: &quot;Venir sur le site, le découvrir et rejoindre la communauté.&quot;,
+      &quot;course&quot;: &quot;Attérir sur la \&quot;Page d'accueil\&quot;, page \&quot;A propos\&quot;, page \&quot;Nous rejoindre\&quot;&quot;,
+      &quot;is-best-pages&quot;: false,
+      &quot;urls&quot;: [
+        &quot;https://www.ecoindex.fr/&quot;,
+        &quot;https://www.ecoindex.fr/a-propos/&quot;,
+        &quot;https://www.ecoindex.fr/nous-rejoindre/&quot;
+      ]
+    },
+    {
+      &quot;name&quot;: &quot;Revoir d'anciens résultats&quot;,
+      &quot;target&quot;: &quot;Venir consulter une ancienne mesure et en relancer une nouvelle.&quot;,
+      &quot;course&quot;: &quot;Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure&quot;,
+      &quot;is-best-pages&quot;: false,
+      &quot;urls&quot;: [
+        &quot;https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09&quot;,
+        &quot;https://www.ecoindex.fr/&quot;
+      ]
+    }
+  ]
 }</code></pre>
 </doc-codeblock></div>
 </doc-panel>
