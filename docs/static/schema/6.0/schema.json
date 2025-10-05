@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://lighthouse-ecoindex.novagaia.fr/static/schema/6.0/schema.json",
+  "type": "object",
+  "default": {},
+  "title": "lighthouse-plugin-ecoindex Schema",
+  "required": ["output", "courses"],
+  "dependentRequired": {},
+  "if": {
+    "properties": {
+      "audit-category": {
+        "type": "array"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "audit-category": {
+        "contains": {
+          "const": "lighthouse-plugin-ecoindex-core"
+        }
+      }
+    }
+  },
+  "properties": {
+    "extra-header": {
+      "type": "object",
+      "default": {},
+      "title": "The extra-header Schema",
+      "required": [],
+      "properties": {},
+      "examples": [
+        {
+          "Cookie": "monster=blue",
+          "x-men": "wolverine"
+        }
+      ],
+      "description": "Parameters to be passed in the header. Ex. Authorization: Bearer mytoken123..."
+    },
+    "audit-category": {
+      "type": "array",
+      "default": ["lighthouse-plugin-ecoindex-core"],
+      "title": "The audit-category Schema",
+      "items": {
+        "type": "string",
+        "title": "A Schema",
+        "examples": ["lighthouse-plugin-ecoindex-core"],
+        "enum": [
+          "performance",
+          "seo",
+          "accessibility",
+          "best-practices",
+          "lighthouse-plugin-ecoindex-core"
+        ]
+      },
+      "examples": [["lighthouse-plugin-ecoindex-core"]],
+      "description": "The audit category to run. Default is \"lighthouse-plugin-ecoindex-core\"."
+    },
+    "output": {
+      "type": "array",
+      "default": ["html"],
+      "title": "The output Schema",
+      "items": {
+        "type": "string",
+        "title": "A Schema",
+        "examples": ["html", "json", "statement"],
+        "enum": ["html", "json", "statement"]
+      },
+      "examples": [["html", "json", "statement"]],
+      "description": "Reporter for the results, supports multiple values. choices: \"json\", \"html\", \"statement\". WARN: \"statement\" need \"json\", \"csv\" is not avalailable."
+    },
+    "user-agent": {
+      "type": "string",
+      "default": "random",
+      "title": "The user-agent Schema",
+      "examples": ["random"],
+      "description": "User agent to use for the browser. Default is \"random\" to help by-pass anti-bots."
+    },
+    "output-path": {
+      "type": "string",
+      "default": "./reports",
+      "title": "The output-path Schema",
+      "examples": ["./reports/multi"],
+      "description": "Output folder. A sub-folder, in date-time format, will be automatically generated for each measure. The result will be \"\u003coutput-path\u003e/\u003cdate-time\u003e\"."
+    },
+    "puppeteer-script": {
+      "type": "string",
+      "default": null,
+      "title": "The puppeteer-script Schema",
+      "examples": ["./puppeteer-script.mjs", null],
+      "description": "Puppeteer script to use for the browser. Default is \"null\" to not use a custom puppeteer script."
+    },
+    "courses": {
+      "type": "array",
+      "default": [],
+      "title": "The courses Schema",
+      "items": {
+        "type": "object",
+        "title": "A Schema",
+        "required": ["name", "target", "course", "is-best-pages", "urls"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "The name Schema",
+            "examples": [
+              "Découvrir ecoindex et l'écoconception",
+              "Rejoindre la communauté",
+              "Revoir d'anciens résultats"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "title": "The target Schema",
+            "examples": [
+              "Venir sur le site, le découvrir et rejoindre la communauté.",
+              "Venir consulter une ancienne mesure et en relancer une nouvelle."
+            ]
+          },
+          "course": {
+            "type": "string",
+            "title": "The course Schema",
+            "examples": [
+              "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+              "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+              "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure"
+            ]
+          },
+          "is-best-pages": {
+            "type": "boolean",
+            "title": "The is-best-pages Schema",
+            "examples": [true, false],
+            "description": "The field must be set at `true` only once!"
+          },
+          "urls": {
+            "type": "array",
+            "title": "The urls Schema",
+            "items": {
+              "type": "string",
+              "title": "A Schema",
+              "examples": [
+                "https://www.ecoindex.fr/",
+                "https://www.ecoindex.fr/comment-ca-marche/",
+                "https://www.ecoindex.fr/ecoconception/",
+                "https://www.ecoindex.fr/a-propos/",
+                "https://www.ecoindex.fr/nous-rejoindre/",
+                "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09"
+              ]
+            },
+            "examples": [
+              [
+                "https://www.ecoindex.fr/",
+                "https://www.ecoindex.fr/comment-ca-marche/",
+                "https://www.ecoindex.fr/ecoconception/"
+              ],
+              [
+                "https://www.ecoindex.fr/",
+                "https://www.ecoindex.fr/a-propos/",
+                "https://www.ecoindex.fr/nous-rejoindre/"
+              ],
+              [
+                "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+                "https://www.ecoindex.fr/"
+              ]
+            ]
+          }
+        },
+        "examples": [
+          {
+            "name": "Découvrir ecoindex et l'écoconception",
+            "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+            "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+            "is-best-pages": true,
+            "urls": [
+              "https://www.ecoindex.fr/",
+              "https://www.ecoindex.fr/comment-ca-marche/",
+              "https://www.ecoindex.fr/ecoconception/"
+            ]
+          },
+          {
+            "name": "Rejoindre la communauté",
+            "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+            "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+            "is-best-pages": false,
+            "urls": [
+              "https://www.ecoindex.fr/",
+              "https://www.ecoindex.fr/a-propos/",
+              "https://www.ecoindex.fr/nous-rejoindre/"
+            ]
+          },
+          {
+            "name": "Revoir d'anciens résultats",
+            "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
+            "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
+            "is-best-pages": false,
+            "urls": [
+              "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+              "https://www.ecoindex.fr/"
+            ]
+          }
+        ]
+      },
+      "examples": [
+        [
+          {
+            "name": "Découvrir ecoindex et l'écoconception",
+            "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+            "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+            "is-best-pages": true,
+            "urls": [
+              "https://www.ecoindex.fr/",
+              "https://www.ecoindex.fr/comment-ca-marche/",
+              "https://www.ecoindex.fr/ecoconception/"
+            ]
+          },
+          {
+            "name": "Rejoindre la communauté",
+            "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+            "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+            "is-best-pages": false,
+            "urls": [
+              "https://www.ecoindex.fr/",
+              "https://www.ecoindex.fr/a-propos/",
+              "https://www.ecoindex.fr/nous-rejoindre/"
+            ]
+          },
+          {
+            "name": "Revoir d'anciens résultats",
+            "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
+            "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
+            "is-best-pages": false,
+            "urls": [
+              "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+              "https://www.ecoindex.fr/"
+            ]
+          }
+        ]
+      ],
+      "minItems": 1
+    },
+    "auth": {
+      "type": "object",
+      "default": {},
+      "title": "The login Schema",
+      "required": ["url", "user", "pass"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "default": "",
+          "title": "The login page URL",
+          "examples": ["http://domain.tld/login-page/"]
+        },
+        "user": {
+          "type": "object",
+          "default": {},
+          "title": "User configuration",
+          "required": ["target", "value"],
+          "properties": {
+            "target": {
+              "type": "string",
+              "default": "",
+              "title": "The `#id` or the `.class` of the Login field.",
+              "examples": ["#username"]
+            },
+            "value": {
+              "type": "string",
+              "default": "",
+              "title": "The value of the Login field.",
+              "examples": ["username"]
+            }
+          },
+          "examples": [
+            {
+              "target": "#username",
+              "value": "username"
+            }
+          ]
+        },
+        "pass": {
+          "type": "object",
+          "default": {},
+          "title": "Password configuration",
+          "required": ["target", "value"],
+          "properties": {
+            "target": {
+              "type": "string",
+              "default": "",
+              "title": "The `#id` or the `.class` of the Password field.",
+              "examples": ["#password"]
+            },
+            "value": {
+              "type": "string",
+              "default": "",
+              "title": "The value of the Password field.",
+              "examples": ["password"]
+            }
+          },
+          "examples": [
+            {
+              "target": "#password",
+              "value": "password"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "url": "http://domain.tld/login-page/",
+          "submit": {
+            "target": "#submit"
+          },
+          "user": {
+            "target": "#username",
+            "value": "username"
+          },
+          "pass": {
+            "target": "#password",
+            "value": "password"
+          }
+        }
+      ],
+      "description": "If you need to log in to take measurements. The authentication page must be included in the list of course pages. Otherwise, authentication will not take place."
+    },
+    "output-name": {
+      "type": "string",
+      "default": "",
+      "title": "The output-name Schema",
+      "examples": ["ecoindex"],
+      "deprecated": true
+    }
+  },
+  "examples": [
+    {
+      "extra-header": {
+        "Cookie": "monster=blue",
+        "x-men": "wolverine"
+      },
+      "output": ["html", "json", "statement"],
+      "audit-category": [
+        "performance",
+        "seo",
+        "accessibility",
+        "best-practices",
+        "lighthouse-plugin-ecoindex-core"
+      ],
+      "user-agent": "random",
+      "output-path": "./reports/multi",
+      "puppeteer-script": "./puppeteer-script.mjs",
+      "output-name": "ecoindex",
+      "courses": [
+        {
+          "name": "Découvrir ecoindex et l'écoconception",
+          "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+          "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+          "is-best-pages": true,
+          "urls": [
+            "https://www.ecoindex.fr/",
+            "https://www.ecoindex.fr/comment-ca-marche/",
+            "https://www.ecoindex.fr/ecoconception/"
+          ]
+        },
+        {
+          "name": "Rejoindre la communauté",
+          "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
+          "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+          "is-best-pages": false,
+          "urls": [
+            "https://www.ecoindex.fr/",
+            "https://www.ecoindex.fr/a-propos/",
+            "https://www.ecoindex.fr/nous-rejoindre/"
+          ]
+        },
+        {
+          "name": "Revoir d'anciens résultats",
+          "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
+          "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
+          "is-best-pages": false,
+          "urls": [
+            "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
+            "https://www.ecoindex.fr/"
+          ]
+        }
+      ],
+      "auth": {
+        "url": "http://domain.tld/login-page/",
+        "user": {
+          "target": "#username",
+          "value": "username"
+        },
+        "pass": {
+          "target": "#password",
+          "value": "password"
+        }
+      }
+    }
+  ]
+}

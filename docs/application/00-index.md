@@ -10,6 +10,8 @@ Une application (créé en [Electron](https://www.electronjs.org/)) est disponib
 
 L'application est téléchargeable sur GitHub. Vous trouverez plusieurs version de celle-ci. Installez celle adaptée à votre ordinateur.
 
+[![Release Electron app](https://github.com/cnumr/EcoindexApp/actions/workflows/release.yml/badge.svg)](https://github.com/cnumr/EcoindexApp/actions/workflows/release.yml)
+
 - **Linux (Ubuntu)**: ecoindex-app\_`{version}`\_amd64.deb (non testé)
 - **Linux (Red Hat)**: ecoindex-app-`{version}`-1.x86_64.rpm (non testé)
 - **Windows** ecoindex-app-`{version}`-win32-x64-setup.exe ([Information d'installation](./01-installation.md/#windows))

@@ -10,7 +10,7 @@ order: 1000
 
 Cet utilitaire en ligne de commande (cli) permet, au travers de Lighthouse, d'obtenir des rapports d'audits Green IT de votre site web. Cela pour :
 
-- des parcours (1 parcours = 1 liste d'URL) via un fichier JSON ;
+- des parcours (1 parcours = 1 liste d'URL) via un fichier JSON (voir [input-file.json](./20-input-file-json.md)) ;
 - une liste d'URLs ;
 - une URL unique.
 
@@ -144,7 +144,7 @@ Le format du fichier doit être respecté !
 !!!
 
 ==- Modèle de fichier JSON
-:::code source="../../libs/ecoindex-lh-plugin-ts/src/helpers/demo-input-file.json" :::
+:::code source="../../docs/static/schema/6.0/input-file.json" :::
 ===
 
 ##### Explications
