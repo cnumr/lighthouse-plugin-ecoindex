@@ -73,11 +73,9 @@ async function runCourse(
   // Add extra-header
   if (cliFlags['extraHeaderObj']) {
     console.log(`${logSymbols.info} Setting extra-header...`)
-    console.log(
-      `${logSymbols.success} extra-header`,
-      cliFlags['extraHeaderObj'],
-    )
-    await page.setExtraHTTPHeaders(cliFlags['extraHeaderObj'])
+    const eh = JSON.parse(cliFlags['extraHeaderObj'] as unknown as string)
+    console.log(`${logSymbols.success} extra-header`, eh)
+    await page.setExtraHTTPHeaders(eh)
     console.log(SEPARATOR)
   }
   // Get a session handle to be able to send protocol commands to the page.
