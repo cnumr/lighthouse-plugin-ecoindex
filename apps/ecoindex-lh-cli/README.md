@@ -1,4 +1,4 @@
-![Summary of results](docs/static/ecoindex-intro.png)
+![Summary of results](../../../../docs/static/ecoindex-intro.png)
 _Summary of results_
 
 # `LHEx` — lighthouse-plugin-ecoindex
@@ -11,7 +11,7 @@ _Summary of results_
 
 ![GitHub License](https://img.shields.io/github/license/cnumr/lighthouse-plugin-ecoindex)
 
-![Details of plugin results](docs/static/ecoindex-results.png)
+![Details of plugin results](../../docs/static/ecoindex-results.png)
 _Details of plugin results_
 
 [Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
@@ -29,9 +29,9 @@ _Details of plugin results_
 > CHANGELOG auto-generate: [CHANGELOG.md](./lighthouse-plugin-ecoindex/CHANGELOG.md)  
 > CONTRIBUTING: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-![Details of plugin results](docs/static/ecoindex-results.png)
+![Details of plugin results](../../docs/static/ecoindex-results.png)
 _Details of plugin results_
 
 ## Stack
 
-![documentation](docs/static/stack.excalidraw.png)
+![documentation](../../docs/static/stack.excalidraw.png)
