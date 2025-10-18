@@ -20,7 +20,7 @@ const cliFlags = {
   'extra-header':
     '{"Cookie":"monster=blue","x-men":"wolverine","Authorization":"Basic c3BpZTpFaXBzRXJnb1N1bTQyJA=="}',
   'user-agent': 'random',
-  exportPath: resolve(__dirname, './reports/obj'),
+  exportPath: resolve(__dirname, './reports/obj-puppeteer'),
   'puppeteer-script': resolve(__dirname, './puppeteer-script.mjs'),
 }
 
