@@ -1,5 +1,14 @@
 # lighthouse-plugin-ecoindex
 
+## 6.0.4
+
+### Patch Changes
+
+- 34d996e: Update Course to match EcoindexApp
+- Updated dependencies [34d996e]
+  - lighthouse-plugin-ecoindex-core@6.0.4
+  - lighthouse-plugin-ecoindex-courses@6.0.4
+
 ## 6.0.3
 
 ### Patch Changes
