@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 6.0.5
+
+### Patch Changes
+
+- 5ddc1b4: Fix extra-header baddly convert
+
 ## 6.0.4
 
 ### Patch Changes
