@@ -9,7 +9,7 @@ meta:
   title: ' - Ecoindex Lighthouse Plugin'
 links:
   - text: Association GreenIT
-    link: https://asso.greenit.fr/
+    link: https://greenit.eco/
     target: blank
     icon: organization
   - text: ecoindex.fr
@@ -29,13 +29,13 @@ links:
     target: blank
     icon: mark-github
 footer:
-  copyright: '&copy; Copyright {{ year }}. All rights reserved to GreenIT.fr.'
+  copyright: '&copy; Copyright {{ year }}. All rights reserved to GreenIT.eco'
   links:
     - text: License
       link: ./licence.md
       icon: shield
-    - text: Association GreenIT.fr
-      link: https://asso.greenit.fr/
+    - text: Association GreenIT
+      link: https://greenit.eco/
       target: blank
       icon: organization
 edit:

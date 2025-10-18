@@ -225,14 +225,20 @@ async function runCourses(cliFlags: CliFlags) {
   }
   // Read config file
   await readJSONFile(cliFlags)
-  // Read extra-header file
+
+  // Read extra-header file or json datas
   await readExtraHeaderFile(cliFlags)
+
   // save `extra-header` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['extra-header']) {
     console.log(
       `${logSymbols.warning} Extra-header overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['extraHeaderObj'] = cliFlags['jsonFileObj']?.['extra-header']
+  } else if (cliFlags['extra-header']) {
+    cliFlags['extraHeaderObj'] = cliFlags['extra-header']
+  } else {
+    // do nothing, no default values.
   }
   // save `output-path` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['output-path']) {
@@ -243,6 +249,17 @@ async function runCourses(cliFlags: CliFlags) {
       cliFlags['jsonFileObj']?.['output-path']
     }/${await dateToFileString(cliFlags['generationDate'])}`
   }
+  // save `output-path` from input file in specific vars.
+  if (
+    !cliFlags['exportPath'] &&
+    cliFlags['output-path'] &&
+    cliFlags['generationDate']
+  ) {
+    cliFlags['exportPath'] = `${
+      cliFlags['output-path']
+    }/${await dateToFileString(cliFlags['generationDate'])}`
+  }
+
   // save `output` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['output']) {
     console.log(
@@ -250,12 +267,16 @@ async function runCourses(cliFlags: CliFlags) {
     )
     cliFlags['output'] = cliFlags['jsonFileObj']?.['output']
   }
+
+  // save `user-agent` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['user-agent']) {
     console.log(
       `${logSymbols.warning} User-agent overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['user-agent'] = cliFlags['jsonFileObj']['user-agent']
   }
+
+  // save `audit-category` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['audit-category']) {
     console.log(
       `${logSymbols.warning} Audit category overrided by \`${cliFlags['json-file']}\` file.`,
@@ -264,6 +285,11 @@ async function runCourses(cliFlags: CliFlags) {
       `${logSymbols.info} Using ${JSON.stringify(cliFlags['jsonFileObj']['audit-category'])}`,
     )
     cliFlags['audit-category'] = cliFlags['jsonFileObj']['audit-category']
+  } else if (
+    cliFlags['audit-category'] &&
+    cliFlags['audit-category'].length > 0
+  ) {
+    // use passed values
   } else {
     cliFlags['audit-category'] = [
       'performance',
@@ -288,6 +314,7 @@ async function runCourses(cliFlags: CliFlags) {
   )
   console.log(`****************************`)
 
+  // save `puppeteer-script` from input file in specific var.
   if (
     cliFlags['puppeteer-script'] ||
     cliFlags['jsonFileObj']?.['puppeteer-script']
@@ -303,6 +330,7 @@ async function runCourses(cliFlags: CliFlags) {
     cliFlags['puppeteer-script'] = 'default'
   }
 
+  // save `auth` from input file in specific var.
   if (cliFlags['jsonFileObj']?.['auth']) {
     console.log(
       `${logSymbols.warning} Authentification (auth) overrided by \`${cliFlags['json-file']}\` file.`,
@@ -311,6 +339,9 @@ async function runCourses(cliFlags: CliFlags) {
     console.log(`${logSymbols.info} Authentication informations:`)
     console.log(cliFlags['auth'])
   }
+
+  // test if `output.statement` and `output.json` are set together.
+  // `json` are mandatory with `statement` output.
   if (
     !cliFlags['output'].includes('json') &&
     cliFlags['output'].includes('statement')
@@ -326,6 +357,7 @@ async function runCourses(cliFlags: CliFlags) {
     }
     process.exit(1)
   }
+
   // send to the right workflow
   if (cliFlags['url']) {
     console.log(`${logSymbols.info} Course an array of urls`)
