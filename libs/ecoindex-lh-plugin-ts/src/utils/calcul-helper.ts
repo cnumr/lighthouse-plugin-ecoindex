@@ -40,13 +40,18 @@ export async function getLoadingExperience(
 ): Promise<MetricValue | EcoindexResults> {
   const domSize = await getEcoindexNodes(artifacts as DOMInformationsArtifacts)
 
-  // repiqué de https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/byte-efficiency/total-byte-weight.js#L61
-  const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS]
+  // In Lighthouse 13+, devtoolsLogs (plural) has been replaced by DevtoolsLog (singular, capital D)
+  // See https://github.com/GoogleChrome/lighthouse/issues/15306
+  // DevtoolsLog is guaranteed to be available since it's in requiredArtifacts
+  const devtoolsLog = artifacts.DevtoolsLog
 
+  // Get network records from the devtools log using NetworkRecords computed artifact
   const records = await NetworkRecords.request(devtoolsLog, context)
+
   const { numericValue: totalByteWeight, details: totalByteDetails } =
     await TotalByteWeight.audit(artifacts, context)
 
+  // Calculate total compressed size and request count from network records
   let totalCompressedSize = 0
   let requestCount = 0
   records.forEach(record => {
@@ -63,6 +68,7 @@ export async function getLoadingExperience(
     totalCompressedSize += result.totalBytes
     requestCount += 1
   })
+
   // console.log(`totalByteWeight`, totalByteWeight)
   // console.log(`{totalCompressedSize kB:${totalCompressedSize * 0.001}},`)
   // console.log(`{totalCompressedSize MB:${totalCompressedSize * 0.000001}},`)

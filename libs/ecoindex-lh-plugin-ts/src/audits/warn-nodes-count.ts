@@ -29,16 +29,12 @@ class WarnNodesCount extends Audit {
 
   static async audit(artifacts: LH.Artifacts) {
     const value = await getEcoindexNodes(artifacts as DOMInformationsArtifacts)
-    const DOMStats = artifacts.DOMStats.totalBodyElements
 
+    // Note: DOMStats is no longer available in Lighthouse 13+
+    // We can only display the Ecoindex value as an informational warning
     return {
-      score: value !== DOMStats ? 0.8 : 1,
-      displayValue: `Ecoindex: ${value} - Lighthouse: ${DOMStats}`,
-      // displayValue: `DOMInformations: ${JSON.stringify(
-      //   (artifacts as DOMInformationsArtifacts).DOMInformations,
-      //   null,
-      //   2,
-      // )}`,
+      score: 1, // Always pass, this is just an informational warning
+      displayValue: `Ecoindex nodes: ${value}`,
       numericValue: value,
       numericUnit: 'DOM elements' as 'element',
     }
