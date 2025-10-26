@@ -73,7 +73,11 @@ async function runCourse(
   // Add extra-header
   if (cliFlags['extraHeaderObj']) {
     console.log(`${logSymbols.info} Setting extra-header...`)
-    const eh = JSON.parse(cliFlags['extraHeaderObj'] as unknown as string)
+    // extraHeaderObj can be either an object (from JSON file) or a string (from CLI)
+    const eh =
+      typeof cliFlags['extraHeaderObj'] === 'string'
+        ? JSON.parse(cliFlags['extraHeaderObj'])
+        : cliFlags['extraHeaderObj']
     console.log(`${logSymbols.success} extra-header`, eh)
     await page.setExtraHTTPHeaders(eh)
     console.log(SEPARATOR)
@@ -228,12 +232,17 @@ async function runCourses(cliFlags: CliFlags) {
   await readExtraHeaderFile(cliFlags)
 
   // save `extra-header` from input file in specific var.
+  // Priority: jsonFileObj > readExtraHeaderFile result > CLI direct
   if (cliFlags['jsonFileObj']?.['extra-header']) {
     console.log(
       `${logSymbols.warning} Extra-header overrided by \`${cliFlags['json-file']}\` file.`,
     )
     cliFlags['extraHeaderObj'] = cliFlags['jsonFileObj']?.['extra-header']
+  } else if (cliFlags['extraHeaderObj']) {
+    // Already set by readExtraHeaderFile (from CLI or external file)
+    // Do nothing, already processed
   } else if (cliFlags['extra-header']) {
+    // Fallback: set directly from CLI (should not happen if readExtraHeaderFile works)
     cliFlags['extraHeaderObj'] = cliFlags['extra-header']
   } else {
     // do nothing, no default values.
