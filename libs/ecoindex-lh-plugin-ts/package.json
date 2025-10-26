@@ -66,11 +66,11 @@
   },
   "dependencies": {
     "ecoindex": "^2.0.1",
-    "lighthouse": "12.5.1",
+    "lighthouse": "13.0.1",
     "lighthouse-logger": "^2.0.1",
     "lodash.round": "^4.0.4",
     "log-symbols": "4.1.0",
-    "puppeteer-core": "24.8.0"
+    "puppeteer-core": "24.26.1"
   },
   "devDependencies": {
     "@dual-bundle/import-meta-resolve": "^4.1.0",

@@ -6,7 +6,9 @@
   "description": "Tests avec le plugin en TS (avec `lighthouse-plugin-ecoindex-core`)",
   "scripts": {
     "pretest": "rimraf ./.lighthouseci",
-    "test": "lhci collect && lhci open && echo \"Test Done! 🚀\"",
+    "test": "pnpm test:collect && pnpm verify && echo 'Test Done! 🚀'",
+    "test:collect": "lhci collect",
+    "verify": "node ../test-pages/verify-results.js ./.lighthouseci",
     "lhci": "lhci",
     "build": "echo \"No build because this is test project\"",
     "lint": "echo \"No lint because this is test project\"",
@@ -20,9 +22,9 @@
   "license": "ISC",
   "dependencies": {
     "@lhci/cli": "^0.14.0",
-    "lighthouse": "^12.4.0",
+    "lighthouse": "13.0.1",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
-    "puppeteer": "^24.4.0"
+    "puppeteer": "^24.26.1"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"

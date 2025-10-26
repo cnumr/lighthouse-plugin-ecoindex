@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM Test Page - Ecoindex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .shadow-host {
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shadow DOM Test Page</h1>
+            <p>Test page for Shadow DOM counting</p>
+        </header>
+        
+        <main>
+            <article>
+                <h2>Shadow DOM Elements</h2>
+                <p>This page contains elements with Shadow DOM to test if they are correctly counted.</p>
+                
+                <div class="shadow-host" id="host1">
+                    <p>This content is in the light DOM</p>
+                </div>
+                
+                <div class="shadow-host" id="host2">
+                    <p>This is also in the light DOM</p>
+                </div>
+            </article>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Test Page</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create Shadow DOM for testing
+        const host1 = document.getElementById('host1');
+        const shadow1 = host1.attachShadow({ mode: 'open' });
+        shadow1.innerHTML = `
+            <div class="shadow-content">
+                <h3>Shadow Content 1</h3>
+                <p>This is inside Shadow DOM</p>
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                </ul>
+            </div>
+        `;
+
+        const host2 = document.getElementById('host2');
+        const shadow2 = host2.attachShadow({ mode: 'open' });
+        shadow2.innerHTML = `
+            <div class="shadow-content">
+                <h3>Shadow Content 2</h3>
+                <p>Another Shadow DOM element</p>
+                <button>Click me</button>
+            </div>
+        `;
+    </script>
+</body>
+</html>

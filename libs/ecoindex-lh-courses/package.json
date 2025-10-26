@@ -75,14 +75,14 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
-    "@puppeteer/browsers": "2.10.3",
+    "@puppeteer/browsers": "2.10.12",
     "ecoindex": "^2.0.1",
     "handlebars": "^4.7.8",
-    "lighthouse": "12.5.1",
+    "lighthouse": "13.0.1",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
     "log-symbols": "4.1.0",
-    "puppeteer": "24.8.0",
-    "puppeteer-core": "24.8.0",
+    "puppeteer": "24.26.1",
+    "puppeteer-core": "24.26.1",
     "slugify": "^1.6.6"
   },
   "devDependencies": {

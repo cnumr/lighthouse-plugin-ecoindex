@@ -1,0 +1,28 @@
+{
+  "name": "@ecoindex-lh-test/test-pages",
+  "version": "1.0.0",
+  "description": "Local test pages for Lighthouse Ecoindex plugin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "start:bg": "node server.js &",
+    "test": "echo \"No test specified\"",
+    "build": "echo \"No build because this is test project\"",
+    "lint": "echo \"No lint because this is test project\"",
+    "lint:fix": "echo \"No lint:fix because this is test project\"",
+    "typecheck": "echo \"No typecheck because this is test project\"",
+    "format:write": "echo \"No format:write because this is test project\"",
+    "format:check": "echo \"No format:check because this is test project\""
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": [
+    "test",
+    "lighthouse",
+    "ecoindex"
+  ],
+  "author": "Renaud Héluin",
+  "license": "AGPL-3.0-only"
+}

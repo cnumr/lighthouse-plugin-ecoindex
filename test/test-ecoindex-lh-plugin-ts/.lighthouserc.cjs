@@ -15,14 +15,16 @@ module.exports = {
   ci: {
     collect: {
       url: [
-        'https://www.ecoindex.fr/',
-        // 'https://novagaia.fr/',
-        // 'https://www.relocalisons.bzh/',
-        // 'https://www.neuro-mav-france.org/',
-        'https://practice.expandtesting.com/shadowdom/',
-        // 'https://www.alodokter.com/',
+        'http://localhost:3000/simple',
+        'http://localhost:3000/svg',
+        'http://localhost:3000/shadow-dom',
+        'http://localhost:3000/svg-shadow-dom',
+        'http://localhost:3000/complex',
       ],
       numberOfRuns: 1,
+      startServerCommand: 'node ../../test/ensure-test-server.mjs start',
+      startServerReadyPattern: 'Test server ready',
+      startServerReadyTimeout: 30000,
       settings: {
         configPath: getLighthouseConfig(),
       },

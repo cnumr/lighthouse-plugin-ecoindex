@@ -16,6 +16,9 @@
     "test:check:installed:browser": "node ./browser-test.mjs",
     "test:check:install:mandatory:browser": "node ./browser-install.mjs",
     "test:auto:install:browser": "node ./node_modules/lighthouse-plugin-ecoindex-courses/auto-install.js",
+    "server:start": "node ../../test/ensure-test-server.mjs start",
+    "server:stop": "node ../../test/ensure-test-server.mjs stop",
+    "server:check": "node ../../test/ensure-test-server.mjs check",
     "lint": "echo \"No lint because this is a test app\"",
     "lint:fix": "echo \"No lint:fix because this is a test app\"",
     "typecheck": "echo \"No typecheck because this is a test app\"",
@@ -26,8 +29,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lighthouse": "13.0.1",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
     "lighthouse-plugin-ecoindex-courses": "workspace:*",
+    "puppeteer": "24.26.1",
     "puppeteer-core": "24.8.0"
   },
   "devDependencies": {

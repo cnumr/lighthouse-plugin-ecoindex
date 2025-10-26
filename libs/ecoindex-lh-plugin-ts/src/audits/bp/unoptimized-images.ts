@@ -34,10 +34,23 @@ class UnoptimizedImage extends Audit {
   }
 
   static audit(artifacts: Artifacts) {
-    const images = artifacts.OptimizedImages
-    const imageElements = artifacts.ImageElements
-    const headers = images.map((image: Artifacts.OptimizedImage) => {
-      const element = imageElements.find(e => e.src === image.url)
+    // Note: OptimizedImages and ImageElements may not be available in Lighthouse 13+
+    type OptimizedImage = { url: string; jpegSize?: number }
+    type ImageElement = {
+      src: string
+      naturalDimensions?: { height: number; width: number }
+    }
+
+    const images = ((
+      artifacts as unknown as { OptimizedImages?: OptimizedImage[] }
+    ).OptimizedImages || []) as OptimizedImage[]
+    const imageElements = ((
+      artifacts as unknown as { ImageElements?: ImageElement[] }
+    ).ImageElements || []) as ImageElement[]
+    const headers = images.map((image: OptimizedImage) => {
+      const element = imageElements.find(
+        (e: ImageElement) => e.src === image.url,
+      )
       // Calculate byte-per-pixel ratio using lighthouse's guidance on jpeg size and webp size
       if (image['jpegSize'] === undefined) return
       if (element === undefined) return
@@ -88,7 +101,15 @@ class UnoptimizedImage extends Audit {
             valueType: 'text',
           },
         ],
-        items: headers.filter(n => n !== undefined),
+        items: headers.filter(
+          (
+            n,
+          ): n is {
+            url: string
+            lossyPolicyHeader: string
+            losslessPolicyHeader: string
+          } => n !== undefined,
+        ),
       } as LH.Audit.Details.Table,
     }
   }

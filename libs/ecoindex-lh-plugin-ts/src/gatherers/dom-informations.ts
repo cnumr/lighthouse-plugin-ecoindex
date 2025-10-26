@@ -3,35 +3,75 @@ import * as LH from 'lighthouse/types/lh.js'
 import { Gatherer } from 'lighthouse'
 import { getVersion } from '../utils/index.js'
 
+/**
+ * DOM Informations Gatherer for Ecoindex metrics.
+ *
+ * Collects DOM size information according to Ecoindex specifications:
+ * - Counts all DOM elements including Shadow DOM
+ * - Excludes direct children of SVG elements (not recursive)
+ * - Supports navigation, timespan, and snapshot modes
+ *
+ * The gatherer runs in the browser context during Lighthouse navigation.
+ * It counts the number of DOM nodes to calculate the Ecoindex score.
+ */
 class DOMInformations extends Gatherer {
   meta: LH.Gatherer.GathererMeta = {
     supportedModes: ['navigation', 'timespan', 'snapshot'],
   }
 
+  /**
+   * Collect DOM information artifacts.
+   * Executes DOM counting logic in the browser context.
+   *
+   * @param passContext - Lighthouse driver and execution context
+   * @returns DOM metrics including total count, body count, and SVG children count
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getArtifact(passContext: { driver: any }) {
     const { driver } = passContext
     const { executionContext } = driver
 
+    /**
+     * Count DOM elements and calculate Ecoindex metrics.
+     *
+     * According to Ecoindex specifications:
+     * - All elements are counted recursively
+     * - Shadow DOM elements are included
+     * - Direct children of SVG elements are excluded (not counted twice)
+     *
+     * @param version - Plugin version number
+     * @returns Object containing DOM metrics
+     */
     function getDOMInformations(version: string) {
       if (document === undefined) return null
 
-      // Fonction récursive pour compter tous les éléments, y compris dans les shadow roots
+      /**
+       * Recursively count all DOM elements including Shadow DOM.
+       * Uses a visited Set to prevent infinite loops in circular references.
+       *
+       * @param element - Element to count
+       * @param visited - Set of already visited elements to prevent cycles
+       * @returns Total count of elements (including the element itself)
+       */
       const countElements = (
         element: Element,
         visited = new Set<Element>(),
       ): number => {
-        // Protection contre les boucles infinies
+        // Protection against infinite loops (circular references in DOM)
         if (visited.has(element)) {
           return 0
         }
         visited.add(element)
 
+        // Count this element
         let count = 1
+
+        // Recursively count all children
         Array.from(element.children).forEach(child => {
           count += countElements(child, visited)
         })
 
+        // Also count elements in Shadow DOM (if present)
         if (element.shadowRoot) {
           Array.from(element.shadowRoot.children).forEach(sChild => {
             count += countElements(sChild, visited)
@@ -40,12 +80,28 @@ class DOMInformations extends Gatherer {
         return count
       }
 
-      // Fonction pour compter les éléments SVG, y compris dans les shadow roots
-      const countSVGElements = (
+      /**
+       * Count direct children of SVG elements.
+       *
+       * According to Ecoindex methodology, direct children of SVG elements
+       * should not be counted as DOM nodes. This encourages the use of SVG
+       * over bitmap images.
+       *
+       * Logic:
+       * - If element is an SVG, count only its direct children
+       * - Return immediately to avoid double counting
+       * - Search for other SVG elements in the tree
+       * - Also search in Shadow DOM
+       *
+       * @param element - Element to check
+       * @param visited - Set of already visited elements to prevent cycles
+       * @returns Number of SVG children to exclude from count
+       */
+      const countSVGChildren = (
         element: Element,
         visited = new Set<Element>(),
       ): number => {
-        // Protection contre les boucles infinies
+        // Protection against infinite loops
         if (visited.has(element)) {
           return 0
         }
@@ -53,72 +109,57 @@ class DOMInformations extends Gatherer {
 
         let count = 0
 
-        // Si l'élément est un SVG, on compte tous ses descendants
+        // If it's an SVG element, count only its direct children
+        // (not recursive descendants, just the first level)
         if (element.tagName.toLowerCase() === 'svg') {
-          // Fonction récursive pour compter tous les descendants de l'élément SVG
-          const countAllDescendants = (
-            el: Element,
-            descendantsVisited = new Set<Element>(),
-          ): number => {
-            // Protection contre les boucles infinies dans les descendants
-            if (descendantsVisited.has(el)) {
-              return 0
-            }
-            descendantsVisited.add(el)
+          count += element.children.length
 
-            let descendantCount = 0
-            Array.from(el.children).forEach(child => {
-              descendantCount +=
-                1 + countAllDescendants(child, descendantsVisited) // +1 pour l'enfant + ses descendants
-            })
-            return descendantCount
-          }
-          count += countAllDescendants(element)
+          // Stop here for this SVG: we only count direct children
+          // and don't recurse into children to avoid double counting
+          return count
         }
 
-        // On continue la récursion pour tous les enfants (pour trouver d'autres SVG)
+        // For non-SVG elements, continue recursion to find other SVG elements
         Array.from(element.children).forEach(child => {
-          count += countSVGElements(child, visited)
+          count += countSVGChildren(child, visited)
         })
 
-        // On vérifie aussi dans les shadow roots
+        // Also search in Shadow DOM for SVG elements
         if (element.shadowRoot) {
           Array.from(element.shadowRoot.children).forEach(sChild => {
-            count += countSVGElements(sChild, visited)
+            count += countSVGChildren(sChild, visited)
           })
         }
 
         return count
       }
 
-      // Comptage pour tout le document
+      // Count all elements in the document (minus 1 for html element itself)
       const nodesCount = countElements(document.documentElement) - 1
-      const nodesSVGChildsCount = countSVGElements(document.documentElement)
+      const nodesSVGChildsCount = countSVGChildren(document.documentElement)
 
-      // Comptage pour le body uniquement
-      // const body = document.getElementsByTagName('body')[0]
+      // Count all elements in body only
       const nodesBodyCount = countElements(document.body) - 1
-      const nodesBodySVGChildsCount = countSVGElements(document.body)
+      const nodesBodySVGChildsCount = countSVGChildren(document.body)
 
+      // Return calculated metrics
       return {
         'lighthouse-plugin-ecoindex-core': version,
         nodesCount: nodesCount,
         nodesBodyCount: nodesBodyCount,
         nodesSVGChildsCount: nodesSVGChildsCount,
         nodesBodySVGChildsCount: nodesBodySVGChildsCount,
+        // Total body nodes excluding SVG children (used for Ecoindex score)
         nodesBodyWithoutSVGChildsCount:
           nodesBodyCount - nodesBodySVGChildsCount,
+        // Total document nodes excluding SVG children
         nodesWithoutSVGChildsCount: nodesCount - nodesSVGChildsCount,
       }
     }
 
-    // await driver.defaultSession.sendCommand('DOMInformations.enable')
-
     const results = await executionContext.evaluate(getDOMInformations, {
       args: [getVersion()],
     })
-
-    // await driver.defaultSession.sendCommand('DOMInformations.disable')
 
     return results
   }

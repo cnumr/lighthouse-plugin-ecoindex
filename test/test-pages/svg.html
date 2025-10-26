@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Test Page - Ecoindex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        svg {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SVG Test Page</h1>
+            <p>Test page for SVG children counting</p>
+        </header>
+        
+        <main>
+            <article>
+                <h2>SVG Elements</h2>
+                <p>This page contains SVG elements to test if their direct children are correctly excluded from DOM count.</p>
+                
+                <!-- SVG with 3 direct children (circle, rect, path) -->
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <circle cx="50" cy="50" r="30" fill="blue"/>
+                    <rect x="100" y="100" width="50" height="50" fill="red"/>
+                    <path d="M150 150 L200 150 L175 175 Z" fill="green"/>
+                </svg>
+                
+                <!-- Another SVG with 2 direct children -->
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <circle cx="75" cy="75" r="40" fill="yellow"/>
+                    <text x="75" y="85" text-anchor="middle" fill="black">Test</text>
+                </svg>
+                
+                <section>
+                    <h3>Expected Results</h3>
+                    <p>Total SVG elements: 2</p>
+                    <p>SVG children (to be excluded): 3 + 2 = 5</p>
+                </section>
+            </article>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Test Page</p>
+        </footer>
+    </div>
+</body>
+</html>
