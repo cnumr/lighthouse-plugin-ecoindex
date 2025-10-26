@@ -2,10 +2,14 @@
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": true,
-  "fixed": [],
-  "linked": [
-    ["lighthouse-plugin-ecoindex-core", "lighthouse-plugin-ecoindex-courses"]
+  "fixed": [
+    [
+      "lighthouse-plugin-ecoindex-core",
+      "lighthouse-plugin-ecoindex-courses",
+      "lighthouse-plugin-ecoindex"
+    ]
   ],
+  "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
