@@ -23,9 +23,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lighthouse-plugin-ecoindex-courses": "workspace:*",
-    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "lighthouse": "13.0.1",
     "lighthouse-plugin-ecoindex": "workspace:*",
+    "lighthouse-plugin-ecoindex-core": "workspace:*",
+    "lighthouse-plugin-ecoindex-courses": "workspace:*",
+    "puppeteer": "24.26.1",
     "puppeteer-core": "24.8.0"
   },
   "devDependencies": {
