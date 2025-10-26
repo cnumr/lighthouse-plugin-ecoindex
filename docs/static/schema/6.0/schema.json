@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "$id": "https://lighthouse-ecoindex.novagaia.fr/static/schema/6.0/schema.json",
+  "$id": "https://unpkg.com/lighthouse-plugin-ecoindex-core@latest/input-file/schema.json",
   "type": "object",
   "default": {},
   "title": "lighthouse-plugin-ecoindex Schema",
