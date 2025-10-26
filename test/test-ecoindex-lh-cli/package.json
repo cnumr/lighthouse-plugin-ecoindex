@@ -9,7 +9,7 @@
     "test": "pnpm test:input-json && pnpm test:url",
     "test:input-json": "pnpm --filter @ecoindex-lh-test/cli run npx collect --json-file ./input-file.json",
     "test:demo": "pnpm --filter @ecoindex-lh-test/cli run npx collect --demo",
-    "test:url": "pnpm --filter @ecoindex-lh-test/cli run npx collect -u https://novagaia.fr --puppeteer-script ./puppeteer-script.mjs",
+    "test:url": "pnpm --filter @ecoindex-lh-test/cli run npx collect -u https://novagaia.fr --puppeteer-script ./puppeteer-script.mjs --extra-header ./extra-header.json",
     "test:help": "pnpm --filter @ecoindex-lh-test/cli run npx collect --help",
     "lint": "echo \"No lint because this is a test app\"",
     "lint:fix": "echo \"No lint because this is a test app\"",
