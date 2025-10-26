@@ -1,6 +1,10 @@
 /**
- * Calcule de l'Ecoindex. Code original de https://github.com/ecoindex/ecoindex-js
- * FALLBACK, N'EST PAS UTILISÉ.
+ * Ecoindex calculation utilities.
+ * Fallback implementation from https://github.com/ecoindex/ecoindex-js
+ *
+ * NOTE: This is a FALLBACK and is NOT USED by the plugin.
+ * The plugin uses the 'ecoindex' npm package instead.
+ *
  * @see https://github.com/ecoindex/ecoindex-js
  */
 const reference = {
@@ -69,15 +73,21 @@ const reference = {
 }
 
 /**
- * Return grades list.
+ * Get the list of Ecoindex grades (A-G) with their thresholds and colors.
+ * Each grade has a minimum value, letter grade, and associated color.
+ *
+ * @returns Array of grade objects with value, grade, and color properties
  */
 export function getEcoIndexGradesList() {
   return reference.grades
 }
 
 /**
- * Return quantiles list.
- * @returns {{dom: number[], size: number[], req: number[]}}
+ * Get the quantile reference data for Ecoindex calculation.
+ * Contains percentile thresholds for DOM size, number of requests, and response size.
+ * Used to compute the quantile position of a metric value.
+ *
+ * @returns Object containing arrays of quantiles for DOM, requests, and size metrics
  */
 export function getQuantiles(): {
   dom: number[]
@@ -92,11 +102,17 @@ export function getQuantiles(): {
 }
 
 /**
- * Compute ecoIndex based on formula from web site www.ecoindex.fr
- * @param {number}  dom     Number of elements in DOM.
- * @param {number}  req     Number of requests.
- * @param {number}  size    Size of request.
- * @returns {number} EcoIndex value.
+ * Compute Ecoindex score based on the formula from www.ecoindex.fr.
+ * Uses quantile interpolation for DOM size, requests, and response size.
+ *
+ * Formula: 100 - (5 × (3 × q_dom + 2 × q_req + q_size)) / 6
+ * - Weights: DOM (3×), requests (2×), size (1×)
+ * - Score range: 0-100 (higher is better)
+ *
+ * @param dom - Number of elements in DOM
+ * @param req - Number of HTTP requests
+ * @param size - Total response size in KB
+ * @returns Ecoindex score between 0 and 100
  */
 export function computeEcoIndex(
   dom: number,
@@ -112,11 +128,12 @@ export function computeEcoIndex(
 }
 
 /**
- * Get quantile index for given quantiles list and value.
+ * Compute quantile index for a given value using linear interpolation.
+ * Finds the position of a value within quantile boundaries and interpolates.
  *
- * @param {number[]}  quantiles   Quantiles list.
- * @param {number}    value       Value.
- * @returns {number}  Quantile index.
+ * @param quantiles - Array of quantile boundaries
+ * @param value - Value to find quantile position for
+ * @returns Interpolated quantile index (decimal)
  */
 export function computeQuantile(quantiles: number[], value: number): number {
   for (let i = 1; i < quantiles.length; i++) {
@@ -129,9 +146,11 @@ export function computeQuantile(quantiles: number[], value: number): number {
 }
 
 /**
- * Return the grade associated to the ecoIndex value.
- * @param {number}    ecoIndex   The ecoIndex value.
- * @returns {string}  The associated grade.
+ * Get the letter grade (A-G) associated with an Ecoindex score.
+ * Returns false if the score is outside the valid range (0-100).
+ *
+ * @param ecoIndex - The Ecoindex score (0-100)
+ * @returns Letter grade (A-G) or false if invalid
  */
 export function getEcoIndexGrade(ecoIndex: number): string | boolean {
   if (ecoIndex < 0 || ecoIndex > 100) {
@@ -151,9 +170,12 @@ export function getEcoIndexGrade(ecoIndex: number): string | boolean {
 }
 
 /**
- * Get gases emission from EcoIndex value.
- * @param {number} ecoIndex   The ecoIndex value.
- * @returns {string}  The gas emission.
+ * Calculate greenhouse gas emission (in grams eqCO2) based on Ecoindex score.
+ * Formula: 2 + (2 × (50 - ecoIndex)) / 100
+ * Higher scores result in lower emissions.
+ *
+ * @param ecoIndex - The Ecoindex score (0-100)
+ * @returns Greenhouse gas emission in grams eqCO2 (formatted to 2 decimal places)
  */
 export function computeGreenhouseGasesEmissionfromEcoIndex(
   ecoIndex: number,
@@ -162,9 +184,12 @@ export function computeGreenhouseGasesEmissionfromEcoIndex(
 }
 
 /**
- * Get water consumption from EcoIndex value.
- * @param {number}  ecoIndex  The ecoIndex value.
- * @returns {string}  The water consumption.
+ * Calculate water consumption (in centiliters) based on Ecoindex score.
+ * Formula: 3 + (3 × (50 - ecoIndex)) / 100
+ * Higher scores result in lower water consumption.
+ *
+ * @param ecoIndex - The Ecoindex score (0-100)
+ * @returns Water consumption in centiliters (formatted to 2 decimal places)
  */
 export function computeWaterConsumptionfromEcoIndex(ecoIndex: number): string {
   return (3 + (3 * (50 - ecoIndex)) / 100).toFixed(2)
