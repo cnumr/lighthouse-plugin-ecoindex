@@ -1,0 +1,80 @@
+{
+  "simple": {
+    "description": "Minimal HTML page",
+    "expectedScore": {
+      "min": 95,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 17,
+      "tolerance": 3
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    }
+  },
+  "svg": {
+    "description": "Page with SVG elements",
+    "expectedScore": {
+      "min": 95,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 16,
+      "tolerance": 3
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    },
+    "note": "SVG direct children should be excluded from node count"
+  },
+  "shadow-dom": {
+    "description": "Page with Shadow DOM",
+    "expectedScore": {
+      "min": 95,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 25,
+      "tolerance": 5
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    },
+    "note": "Shadow DOM elements should be included in node count"
+  },
+  "svg-shadow-dom": {
+    "description": "Complex page with SVG inside Shadow DOM",
+    "expectedScore": {
+      "min": 90,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 51,
+      "tolerance": 5
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    },
+    "note": "Tests that SVG children in Shadow DOM are correctly excluded (5 direct children total)"
+  },
+  "complex": {
+    "description": "Realistic page with multiple elements",
+    "expectedScore": {
+      "min": 95,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 40,
+      "tolerance": 5
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    }
+  }
+}

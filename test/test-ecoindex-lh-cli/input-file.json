@@ -10,35 +10,37 @@
   "puppeteer-script": "./puppeteer-script.mjs",
   "courses": [
     {
-      "name": "Découvrir ecoindex et l'écoconception",
-      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
-      "course": "Attérir sur la \"Page d'accueil\", page \"Comment ça marche\", page \"Écoconception\"",
+      "name": "Simple Test Page",
+      "target": "Test minimal HTML structure",
+      "course": "Testing DOM counting on simple page",
       "is-best-pages": true,
-      "urls": [
-        "https://www.ecoindex.fr/",
-        "https://www.ecoindex.fr/comment-ca-marche/",
-        "https://www.ecoindex.fr/ecoconception/"
-      ]
+      "urls": ["http://localhost:3000/simple"]
     },
     {
-      "name": "Rejoindre la communauté",
-      "target": "Venir sur le site, le découvrir et rejoindre la communauté.",
-      "course": "Attérir sur la \"Page d'accueil\", page \"A propos\", page \"Nous rejoindre\"",
+      "name": "Shadow DOM Test",
+      "target": "Test Shadow DOM counting",
+      "course": "Verify that Shadow DOM elements are included",
       "is-best-pages": false,
-      "urls": [
-        "https://www.ecoindex.fr/",
-        "https://www.ecoindex.fr/a-propos/",
-        "https://www.ecoindex.fr/nous-rejoindre/"
-      ]
+      "urls": ["http://localhost:3000/shadow-dom"]
     },
     {
-      "name": "Revoir d'anciens résultats",
-      "target": "Venir consulter une ancienne mesure et en relancer une nouvelle.",
-      "course": "Attérir sur l'ancienne mesure (en venant depuis l'extension chrome par exemple), aller sur la page d'accueil, lancer une nouvelle mesure",
+      "name": "Complex Test",
+      "target": "Test complex case: SVG + Shadow DOM",
+      "course": "Verify SVG exclusion within Shadow DOM",
+      "is-best-pages": false,
+      "urls": ["http://localhost:3000/svg-shadow-dom"]
+    },
+    {
+      "name": "Complete Test Suite",
+      "target": "Run all test pages",
+      "course": "Full validation of DOM counting logic",
       "is-best-pages": false,
       "urls": [
-        "https://www.ecoindex.fr/resultat/?id=23dfca6a-5fd6-4cf0-b899-6a2d3a597d09",
-        "https://www.ecoindex.fr/"
+        "http://localhost:3000/simple",
+        "http://localhost:3000/svg",
+        "http://localhost:3000/shadow-dom",
+        "http://localhost:3000/svg-shadow-dom",
+        "http://localhost:3000/complex"
       ]
     }
   ]

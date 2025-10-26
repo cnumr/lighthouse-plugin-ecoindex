@@ -18,6 +18,7 @@
     "@ecoindex-lh-test/cli",
     "@ecoindex-lh-test/courses",
     "@ecoindex-lh-test/plugin-core",
-    "@ecoindex-lh-test/test-org-thegreenwebfoundation-api"
+    "@ecoindex-lh-test/test-org-thegreenwebfoundation-api",
+    "@ecoindex-lh-test/test-pages"
   ]
 }

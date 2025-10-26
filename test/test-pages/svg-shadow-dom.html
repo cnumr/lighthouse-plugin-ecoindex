@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG + Shadow DOM Test Page - Ecoindex</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .shadow-host {
+        border: 2px solid #4caf50;
+        padding: 15px;
+        margin: 15px 0;
+        background: #f9f9f9;
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>SVG + Shadow DOM Test Page</h1>
+        <p>Tests SVG children exclusion within Shadow DOM</p>
+      </header>
+
+      <main>
+        <article>
+          <h2>Complex Test Case</h2>
+          <p>This page tests that our DOM counting logic correctly handles:</p>
+          <ul>
+            <li>Elements in Shadow DOM</li>
+            <li>SVG elements in Shadow DOM</li>
+            <li>SVG direct children exclusion (even in Shadow DOM)</li>
+          </ul>
+
+          <!-- Regular Shadow DOM without SVG -->
+          <div class="shadow-host" id="shadow-no-svg">
+            <p>Shadow DOM without SVG</p>
+          </div>
+
+          <!-- Shadow DOM with SVG -->
+          <div class="shadow-host" id="shadow-with-svg">
+            <p>Shadow DOM with SVG (see shadow root)</p>
+          </div>
+
+          <!-- Multiple SVGs in Shadow DOM -->
+          <div class="shadow-host" id="shadow-multi-svg">
+            <p>Shadow DOM with multiple SVGs</p>
+          </div>
+
+          <div class="test-section">
+            <h3>Expected Results</h3>
+            <p><strong>Light DOM elements:</strong> ~25-30 elements</p>
+            <p>
+              <strong>Shadow DOM elements:</strong> Elements from 3 shadow roots
+              should be counted
+            </p>
+            <p>
+              <strong>SVG children in Shadow DOM:</strong> Should be excluded
+              from count
+            </p>
+            <p>
+              <strong>Total nodes:</strong> Light DOM + Shadow DOM - SVG direct
+              children
+            </p>
+          </div>
+        </article>
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Test Page - Complex SVG + Shadow DOM</p>
+      </footer>
+    </div>
+
+    <script>
+      // Shadow DOM 1: No SVG (basic test)
+      const host1 = document.getElementById('shadow-no-svg')
+      const shadow1 = host1.attachShadow({ mode: 'open' })
+      shadow1.innerHTML = `
+            <div class="shadow-content">
+                <h3>Regular Shadow DOM</h3>
+                <p>This shadow DOM has no SVG</p>
+                <ul>
+                    <li>Item A</li>
+                    <li>Item B</li>
+                    <li>Item C</li>
+                </ul>
+                <button>Click me</button>
+            </div>
+        `
+
+      // Shadow DOM 2: Single SVG
+      const host2 = document.getElementById('shadow-with-svg')
+      const shadow2 = host2.attachShadow({ mode: 'open' })
+      shadow2.innerHTML = `
+            <div class="shadow-content">
+                <h3>Shadow DOM with SVG</h3>
+                <p>This shadow DOM contains an SVG</p>
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="50" fill="red"/>
+                    <rect x="50" y="50" width="100" height="100" fill="blue" opacity="0.5"/>
+                    <path d="M50 50 Q100 20 150 50" stroke="green" stroke-width="3" fill="none"/>
+                </svg>
+                <p>3 SVG direct children should be excluded</p>
+            </div>
+        `
+
+      // Shadow DOM 3: Multiple SVGs
+      const host3 = document.getElementById('shadow-multi-svg')
+      const shadow3 = host3.attachShadow({ mode: 'open' })
+      shadow3.innerHTML = `
+            <div class="shadow-content">
+                <h3>Shadow DOM with Multiple SVGs</h3>
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <circle cx="75" cy="75" r="40" fill="yellow"/>
+                    <text x="75" y="85" text-anchor="middle" fill="black">1</text>
+                </svg>
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <rect x="20" y="20" width="110" height="110" fill="purple" stroke="black" stroke-width="2"/>
+                    <circle cx="75" cy="75" r="30" fill="pink"/>
+                    <path d="M40 40 L75 75 L110 40" stroke="orange" stroke-width="2" fill="none"/>
+                </svg>
+                <p>First SVG: 2 direct children</p>
+                <p>Second SVG: 3 direct children</p>
+                <p>Total SVG children to exclude: 5</p>
+            </div>
+        `
+    </script>
+  </body>
+</html>
