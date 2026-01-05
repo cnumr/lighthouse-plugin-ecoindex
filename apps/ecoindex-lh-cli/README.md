@@ -11,7 +11,7 @@ _Summary of results_
 
 ![GitHub License](https://img.shields.io/github/license/cnumr/lighthouse-plugin-ecoindex)
 
-![Details of plugin results](../../docs/static/ecoindex-results.png)
+![Details of plugin results](./docs/static/ecoindex-results.png)
 _Details of plugin results_
 
 [Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
