@@ -6,7 +6,7 @@ rm -rf ~/.cache/puppeteer/* -y
 
 # Start test server for the entire session
 echo "🚀 Starting test server..."
-node test/ensure-test-server.mjs start
+node ../test/ensure-test-server.mjs start
 
 # Test in first to install the browser
 echo "📦 Testing @ecoindex-lh-test/courses (installing browser)..."
@@ -24,6 +24,6 @@ turbo test --filter @ecoindex-lh-test/test-org-thegreenwebfoundation-api
 
 # Stop test server
 echo "🛑 Stopping test server..."
-node test/ensure-test-server.mjs stop
+node ../test/ensure-test-server.mjs stop
 
 echo "🎉 All tests completed!"

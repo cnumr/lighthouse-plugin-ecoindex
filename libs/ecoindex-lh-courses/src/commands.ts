@@ -198,6 +198,9 @@ async function getPuppeteerConfig() {
       '--disable-dev-shm-usage',
       '--disable-setuid-sandbox',
       '--no-sandbox',
+      '--enable-automation',
+      '--disable-save-password-bubble',
+      '--disable-notifications',
     ],
   }
 }
