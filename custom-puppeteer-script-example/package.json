@@ -1,0 +1,21 @@
+{
+  "name": "custom-puppeteer-script-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "puppeteer": "^24.26.1"
+  },
+  "dependencies": {
+    "log-symbols": "^7.0.1"
+  }
+}
