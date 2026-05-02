@@ -18,7 +18,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        node-version: [22]
+        node-version: [24]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -32,9 +32,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Upgrade npm
-        run: npm install -g npm@latest
 
       - name: Install Dependencies
         run: pnpm install
