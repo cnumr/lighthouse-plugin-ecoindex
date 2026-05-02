@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
       <li><a href="/shadow-dom">Shadow DOM Page</a> - Test Shadow DOM counting</li>
       <li><a href="/svg-shadow-dom">SVG + Shadow DOM Page</a> - Test SVG in Shadow DOM</li>
       <li><a href="/complex">Complex Page</a> - Realistic page with images</li>
+      <li><a href="/heavy">Heavy Page</a> - High impact page (ecoindex &lt; 65)</li>
     </ul>
   `)
 })
@@ -44,6 +45,10 @@ app.get('/complex', (req, res) => {
   res.sendFile(path.join(__dirname, 'complex.html'))
 })
 
+app.get('/heavy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'heavy.html'))
+})
+
 // Serve static files (for any other assets)
 app.use(express.static(__dirname))
 
@@ -55,4 +60,5 @@ app.listen(PORT, () => {
   console.log('  - http://localhost:3000/shadow-dom')
   console.log('  - http://localhost:3000/svg-shadow-dom')
   console.log('  - http://localhost:3000/complex')
+  console.log('  - http://localhost:3000/heavy')
 })

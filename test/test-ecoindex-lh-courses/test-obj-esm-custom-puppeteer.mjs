@@ -14,6 +14,7 @@ const cliFlags = {
     'http://localhost:3000/shadow-dom',
     'http://localhost:3000/svg-shadow-dom',
     'http://localhost:3000/complex',
+    'http://localhost:3000/heavy',
   ],
   output: ['json', 'html'],
   'audit-category': ['accessibility', 'lighthouse-plugin-ecoindex-core'],
