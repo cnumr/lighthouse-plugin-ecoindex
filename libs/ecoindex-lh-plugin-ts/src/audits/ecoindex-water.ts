@@ -16,8 +16,8 @@ class EcoindexWaterConsumptionAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-water',
-      title: 'Water Consumption',
-      failureTitle: 'Water Consumption, your page consumes a lot of water',
+      title: 'Water Consumption.',
+      failureTitle: 'Water Consumption, your page consumes a lot of water.',
       description: `The quantity of water consumed by the page. [Learn more about the Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
@@ -34,7 +34,7 @@ class EcoindexWaterConsumptionAudit extends Audit {
         'water',
       ) as LH.Audit.Product
     } catch (error) {
-      createErrorResult(error)
+      return createErrorResult(error as Error)
     }
   }
 }

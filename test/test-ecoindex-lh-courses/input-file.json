@@ -31,6 +31,13 @@
       "urls": ["http://localhost:3000/svg-shadow-dom"]
     },
     {
+      "name": "Heavy Impact Test",
+      "target": "Test high environmental impact page",
+      "course": "Verify ecoindex < 65 with 800+ DOM nodes",
+      "is-best-pages": false,
+      "urls": ["http://localhost:3000/heavy"]
+    },
+    {
       "name": "Complete Test Suite",
       "target": "Run all test pages",
       "course": "Full validation of DOM counting logic",
@@ -40,7 +47,8 @@
         "http://localhost:3000/svg",
         "http://localhost:3000/shadow-dom",
         "http://localhost:3000/svg-shadow-dom",
-        "http://localhost:3000/complex"
+        "http://localhost:3000/complex",
+        "http://localhost:3000/heavy"
       ]
     }
   ]

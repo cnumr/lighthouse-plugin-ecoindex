@@ -95,10 +95,27 @@ function stopServer() {
       execSync(`kill ${pid} 2>/dev/null || true`, { stdio: 'ignore' })
     }
     execSync(`rm -f ${SERVER_PID_FILE}`, { stdio: 'ignore' })
-    console.log('✅ Test server stopped')
-  } catch (e) {
-    console.log('ℹ️  No server to stop')
+  } catch {
+    // ignore PID file errors
   }
+  // Kill any remaining process still bound to the port (e.g. started outside this script)
+  try {
+    const pids = execSync(`lsof -ti :${SERVER_PORT} 2>/dev/null || true`)
+      .toString()
+      .trim()
+    if (pids) {
+      pids.split('\n').forEach(p => {
+        try {
+          execSync(`kill -9 ${p}`, { stdio: 'ignore' })
+        } catch {
+          // already gone
+        }
+      })
+    }
+  } catch {
+    // nothing left to kill
+  }
+  console.log('✅ Test server stopped')
 }
 
 // CLI usage

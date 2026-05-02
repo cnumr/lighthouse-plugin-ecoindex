@@ -76,5 +76,20 @@
       "value": 1,
       "tolerance": 1
     }
+  },
+  "heavy": {
+    "description": "High environmental impact page with 800+ DOM nodes",
+    "expectedScore": {
+      "min": 0,
+      "max": 64
+    },
+    "expectedNodes": {
+      "value": 800,
+      "tolerance": 50
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 1
+    }
   }
 }

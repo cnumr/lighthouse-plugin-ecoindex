@@ -16,9 +16,9 @@ class EcoindexRequestsAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-requests',
-      title: 'Number of requests',
+      title: 'Number of requests.',
       failureTitle:
-        'Number of requests, your page calls too many external resources',
+        'Number of requests, your page calls too many external resources.',
       description: `The number of \`Network.loadingFinished\` logs indicates the number of requests made to external resources. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
@@ -35,7 +35,7 @@ class EcoindexRequestsAudit extends Audit {
         'requests',
       ) as LH.Audit.Product
     } catch (error) {
-      createErrorResult(error)
+      return createErrorResult(error as Error)
     }
   }
 }

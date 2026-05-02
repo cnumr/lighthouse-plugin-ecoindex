@@ -20,6 +20,7 @@ module.exports = {
         'http://localhost:3000/shadow-dom',
         'http://localhost:3000/svg-shadow-dom',
         'http://localhost:3000/complex',
+        'http://localhost:3000/heavy',
       ],
       numberOfRuns: 1,
       startServerCommand: 'node ../../test/ensure-test-server.mjs start',

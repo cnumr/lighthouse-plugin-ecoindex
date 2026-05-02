@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heavy Test Page - Ecoindex</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        td, th { border: 1px solid #ccc; padding: 4px 8px; font-size: 12px; }
+        th { background: #eee; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+        .cell { border: 1px solid #ddd; padding: 8px; }
+        .list-section { columns: 4; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Heavy Test Page</h1>
+    <p>Page designed to produce a high environmental impact (ecoindex &lt; 65).</p>
+
+    <!-- Table 1: 50 rows x 10 cols = 500 td + 50 tr + thead/tbody/table = 555 nodes -->
+    <h2>Data Table 1</h2>
+    <table>
+        <thead><tr><th>Col 1</th><th>Col 2</th><th>Col 3</th><th>Col 4</th><th>Col 5</th><th>Col 6</th><th>Col 7</th><th>Col 8</th><th>Col 9</th><th>Col 10</th></tr></thead>
+        <tbody>
+            <tr><td>R1C1</td><td>R1C2</td><td>R1C3</td><td>R1C4</td><td>R1C5</td><td>R1C6</td><td>R1C7</td><td>R1C8</td><td>R1C9</td><td>R1C10</td></tr>
+            <tr><td>R2C1</td><td>R2C2</td><td>R2C3</td><td>R2C4</td><td>R2C5</td><td>R2C6</td><td>R2C7</td><td>R2C8</td><td>R2C9</td><td>R2C10</td></tr>
+            <tr><td>R3C1</td><td>R3C2</td><td>R3C3</td><td>R3C4</td><td>R3C5</td><td>R3C6</td><td>R3C7</td><td>R3C8</td><td>R3C9</td><td>R3C10</td></tr>
+            <tr><td>R4C1</td><td>R4C2</td><td>R4C3</td><td>R4C4</td><td>R4C5</td><td>R4C6</td><td>R4C7</td><td>R4C8</td><td>R4C9</td><td>R4C10</td></tr>
+            <tr><td>R5C1</td><td>R5C2</td><td>R5C3</td><td>R5C4</td><td>R5C5</td><td>R5C6</td><td>R5C7</td><td>R5C8</td><td>R5C9</td><td>R5C10</td></tr>
+            <tr><td>R6C1</td><td>R6C2</td><td>R6C3</td><td>R6C4</td><td>R6C5</td><td>R6C6</td><td>R6C7</td><td>R6C8</td><td>R6C9</td><td>R6C10</td></tr>
+            <tr><td>R7C1</td><td>R7C2</td><td>R7C3</td><td>R7C4</td><td>R7C5</td><td>R7C6</td><td>R7C7</td><td>R7C8</td><td>R7C9</td><td>R7C10</td></tr>
+            <tr><td>R8C1</td><td>R8C2</td><td>R8C3</td><td>R8C4</td><td>R8C5</td><td>R8C6</td><td>R8C7</td><td>R8C8</td><td>R8C9</td><td>R8C10</td></tr>
+            <tr><td>R9C1</td><td>R9C2</td><td>R9C3</td><td>R9C4</td><td>R9C5</td><td>R9C6</td><td>R9C7</td><td>R9C8</td><td>R9C9</td><td>R9C10</td></tr>
+            <tr><td>R10C1</td><td>R10C2</td><td>R10C3</td><td>R10C4</td><td>R10C5</td><td>R10C6</td><td>R10C7</td><td>R10C8</td><td>R10C9</td><td>R10C10</td></tr>
+            <tr><td>R11C1</td><td>R11C2</td><td>R11C3</td><td>R11C4</td><td>R11C5</td><td>R11C6</td><td>R11C7</td><td>R11C8</td><td>R11C9</td><td>R11C10</td></tr>
+            <tr><td>R12C1</td><td>R12C2</td><td>R12C3</td><td>R12C4</td><td>R12C5</td><td>R12C6</td><td>R12C7</td><td>R12C8</td><td>R12C9</td><td>R12C10</td></tr>
+            <tr><td>R13C1</td><td>R13C2</td><td>R13C3</td><td>R13C4</td><td>R13C5</td><td>R13C6</td><td>R13C7</td><td>R13C8</td><td>R13C9</td><td>R13C10</td></tr>
+            <tr><td>R14C1</td><td>R14C2</td><td>R14C3</td><td>R14C4</td><td>R14C5</td><td>R14C6</td><td>R14C7</td><td>R14C8</td><td>R14C9</td><td>R14C10</td></tr>
+            <tr><td>R15C1</td><td>R15C2</td><td>R15C3</td><td>R15C4</td><td>R15C5</td><td>R15C6</td><td>R15C7</td><td>R15C8</td><td>R15C9</td><td>R15C10</td></tr>
+            <tr><td>R16C1</td><td>R16C2</td><td>R16C3</td><td>R16C4</td><td>R16C5</td><td>R16C6</td><td>R16C7</td><td>R16C8</td><td>R16C9</td><td>R16C10</td></tr>
+            <tr><td>R17C1</td><td>R17C2</td><td>R17C3</td><td>R17C4</td><td>R17C5</td><td>R17C6</td><td>R17C7</td><td>R17C8</td><td>R17C9</td><td>R17C10</td></tr>
+            <tr><td>R18C1</td><td>R18C2</td><td>R18C3</td><td>R18C4</td><td>R18C5</td><td>R18C6</td><td>R18C7</td><td>R18C8</td><td>R18C9</td><td>R18C10</td></tr>
+            <tr><td>R19C1</td><td>R19C2</td><td>R19C3</td><td>R19C4</td><td>R19C5</td><td>R19C6</td><td>R19C7</td><td>R19C8</td><td>R19C9</td><td>R19C10</td></tr>
+            <tr><td>R20C1</td><td>R20C2</td><td>R20C3</td><td>R20C4</td><td>R20C5</td><td>R20C6</td><td>R20C7</td><td>R20C8</td><td>R20C9</td><td>R20C10</td></tr>
+            <tr><td>R21C1</td><td>R21C2</td><td>R21C3</td><td>R21C4</td><td>R21C5</td><td>R21C6</td><td>R21C7</td><td>R21C8</td><td>R21C9</td><td>R21C10</td></tr>
+            <tr><td>R22C1</td><td>R22C2</td><td>R22C3</td><td>R22C4</td><td>R22C5</td><td>R22C6</td><td>R22C7</td><td>R22C8</td><td>R22C9</td><td>R22C10</td></tr>
+            <tr><td>R23C1</td><td>R23C2</td><td>R23C3</td><td>R23C4</td><td>R23C5</td><td>R23C6</td><td>R23C7</td><td>R23C8</td><td>R23C9</td><td>R23C10</td></tr>
+            <tr><td>R24C1</td><td>R24C2</td><td>R24C3</td><td>R24C4</td><td>R24C5</td><td>R24C6</td><td>R24C7</td><td>R24C8</td><td>R24C9</td><td>R24C10</td></tr>
+            <tr><td>R25C1</td><td>R25C2</td><td>R25C3</td><td>R25C4</td><td>R25C5</td><td>R25C6</td><td>R25C7</td><td>R25C8</td><td>R25C9</td><td>R25C10</td></tr>
+            <tr><td>R26C1</td><td>R26C2</td><td>R26C3</td><td>R26C4</td><td>R26C5</td><td>R26C6</td><td>R26C7</td><td>R26C8</td><td>R26C9</td><td>R26C10</td></tr>
+            <tr><td>R27C1</td><td>R27C2</td><td>R27C3</td><td>R27C4</td><td>R27C5</td><td>R27C6</td><td>R27C7</td><td>R27C8</td><td>R27C9</td><td>R27C10</td></tr>
+            <tr><td>R28C1</td><td>R28C2</td><td>R28C3</td><td>R28C4</td><td>R28C5</td><td>R28C6</td><td>R28C7</td><td>R28C8</td><td>R28C9</td><td>R28C10</td></tr>
+            <tr><td>R29C1</td><td>R29C2</td><td>R29C3</td><td>R29C4</td><td>R29C5</td><td>R29C6</td><td>R29C7</td><td>R29C8</td><td>R29C9</td><td>R29C10</td></tr>
+            <tr><td>R30C1</td><td>R30C2</td><td>R30C3</td><td>R30C4</td><td>R30C5</td><td>R30C6</td><td>R30C7</td><td>R30C8</td><td>R30C9</td><td>R30C10</td></tr>
+            <tr><td>R31C1</td><td>R31C2</td><td>R31C3</td><td>R31C4</td><td>R31C5</td><td>R31C6</td><td>R31C7</td><td>R31C8</td><td>R31C9</td><td>R31C10</td></tr>
+            <tr><td>R32C1</td><td>R32C2</td><td>R32C3</td><td>R32C4</td><td>R32C5</td><td>R32C6</td><td>R32C7</td><td>R32C8</td><td>R32C9</td><td>R32C10</td></tr>
+            <tr><td>R33C1</td><td>R33C2</td><td>R33C3</td><td>R33C4</td><td>R33C5</td><td>R33C6</td><td>R33C7</td><td>R33C8</td><td>R33C9</td><td>R33C10</td></tr>
+            <tr><td>R34C1</td><td>R34C2</td><td>R34C3</td><td>R34C4</td><td>R34C5</td><td>R34C6</td><td>R34C7</td><td>R34C8</td><td>R34C9</td><td>R34C10</td></tr>
+            <tr><td>R35C1</td><td>R35C2</td><td>R35C3</td><td>R35C4</td><td>R35C5</td><td>R35C6</td><td>R35C7</td><td>R35C8</td><td>R35C9</td><td>R35C10</td></tr>
+            <tr><td>R36C1</td><td>R36C2</td><td>R36C3</td><td>R36C4</td><td>R36C5</td><td>R36C6</td><td>R36C7</td><td>R36C8</td><td>R36C9</td><td>R36C10</td></tr>
+            <tr><td>R37C1</td><td>R37C2</td><td>R37C3</td><td>R37C4</td><td>R37C5</td><td>R37C6</td><td>R37C7</td><td>R37C8</td><td>R37C9</td><td>R37C10</td></tr>
+            <tr><td>R38C1</td><td>R38C2</td><td>R38C3</td><td>R38C4</td><td>R38C5</td><td>R38C6</td><td>R38C7</td><td>R38C8</td><td>R38C9</td><td>R38C10</td></tr>
+            <tr><td>R39C1</td><td>R39C2</td><td>R39C3</td><td>R39C4</td><td>R39C5</td><td>R39C6</td><td>R39C7</td><td>R39C8</td><td>R39C9</td><td>R39C10</td></tr>
+            <tr><td>R40C1</td><td>R40C2</td><td>R40C3</td><td>R40C4</td><td>R40C5</td><td>R40C6</td><td>R40C7</td><td>R40C8</td><td>R40C9</td><td>R40C10</td></tr>
+            <tr><td>R41C1</td><td>R41C2</td><td>R41C3</td><td>R41C4</td><td>R41C5</td><td>R41C6</td><td>R41C7</td><td>R41C8</td><td>R41C9</td><td>R41C10</td></tr>
+            <tr><td>R42C1</td><td>R42C2</td><td>R42C3</td><td>R42C4</td><td>R42C5</td><td>R42C6</td><td>R42C7</td><td>R42C8</td><td>R42C9</td><td>R42C10</td></tr>
+            <tr><td>R43C1</td><td>R43C2</td><td>R43C3</td><td>R43C4</td><td>R43C5</td><td>R43C6</td><td>R43C7</td><td>R43C8</td><td>R43C9</td><td>R43C10</td></tr>
+            <tr><td>R44C1</td><td>R44C2</td><td>R44C3</td><td>R44C4</td><td>R44C5</td><td>R44C6</td><td>R44C7</td><td>R44C8</td><td>R44C9</td><td>R44C10</td></tr>
+            <tr><td>R45C1</td><td>R45C2</td><td>R45C3</td><td>R45C4</td><td>R45C5</td><td>R45C6</td><td>R45C7</td><td>R45C8</td><td>R45C9</td><td>R45C10</td></tr>
+            <tr><td>R46C1</td><td>R46C2</td><td>R46C3</td><td>R46C4</td><td>R46C5</td><td>R46C6</td><td>R46C7</td><td>R46C8</td><td>R46C9</td><td>R46C10</td></tr>
+            <tr><td>R47C1</td><td>R47C2</td><td>R47C3</td><td>R47C4</td><td>R47C5</td><td>R47C6</td><td>R47C7</td><td>R47C8</td><td>R47C9</td><td>R47C10</td></tr>
+            <tr><td>R48C1</td><td>R48C2</td><td>R48C3</td><td>R48C4</td><td>R48C5</td><td>R48C6</td><td>R48C7</td><td>R48C8</td><td>R48C9</td><td>R48C10</td></tr>
+            <tr><td>R49C1</td><td>R49C2</td><td>R49C3</td><td>R49C4</td><td>R49C5</td><td>R49C6</td><td>R49C7</td><td>R49C8</td><td>R49C9</td><td>R49C10</td></tr>
+            <tr><td>R50C1</td><td>R50C2</td><td>R50C3</td><td>R50C4</td><td>R50C5</td><td>R50C6</td><td>R50C7</td><td>R50C8</td><td>R50C9</td><td>R50C10</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Grid of 100 cells = 100 div.cell nodes -->
+    <h2>Element Grid</h2>
+    <div class="grid">
+        <div class="cell"><span>1</span></div><div class="cell"><span>2</span></div><div class="cell"><span>3</span></div><div class="cell"><span>4</span></div><div class="cell"><span>5</span></div>
+        <div class="cell"><span>6</span></div><div class="cell"><span>7</span></div><div class="cell"><span>8</span></div><div class="cell"><span>9</span></div><div class="cell"><span>10</span></div>
+        <div class="cell"><span>11</span></div><div class="cell"><span>12</span></div><div class="cell"><span>13</span></div><div class="cell"><span>14</span></div><div class="cell"><span>15</span></div>
+        <div class="cell"><span>16</span></div><div class="cell"><span>17</span></div><div class="cell"><span>18</span></div><div class="cell"><span>19</span></div><div class="cell"><span>20</span></div>
+        <div class="cell"><span>21</span></div><div class="cell"><span>22</span></div><div class="cell"><span>23</span></div><div class="cell"><span>24</span></div><div class="cell"><span>25</span></div>
+        <div class="cell"><span>26</span></div><div class="cell"><span>27</span></div><div class="cell"><span>28</span></div><div class="cell"><span>29</span></div><div class="cell"><span>30</span></div>
+        <div class="cell"><span>31</span></div><div class="cell"><span>32</span></div><div class="cell"><span>33</span></div><div class="cell"><span>34</span></div><div class="cell"><span>35</span></div>
+        <div class="cell"><span>36</span></div><div class="cell"><span>37</span></div><div class="cell"><span>38</span></div><div class="cell"><span>39</span></div><div class="cell"><span>40</span></div>
+        <div class="cell"><span>41</span></div><div class="cell"><span>42</span></div><div class="cell"><span>43</span></div><div class="cell"><span>44</span></div><div class="cell"><span>45</span></div>
+        <div class="cell"><span>46</span></div><div class="cell"><span>47</span></div><div class="cell"><span>48</span></div><div class="cell"><span>49</span></div><div class="cell"><span>50</span></div>
+    </div>
+
+    <!-- Long list: 100 li nodes -->
+    <h2>Item List</h2>
+    <div class="list-section">
+        <ul>
+            <li>Item 1</li><li>Item 2</li><li>Item 3</li><li>Item 4</li><li>Item 5</li>
+            <li>Item 6</li><li>Item 7</li><li>Item 8</li><li>Item 9</li><li>Item 10</li>
+            <li>Item 11</li><li>Item 12</li><li>Item 13</li><li>Item 14</li><li>Item 15</li>
+            <li>Item 16</li><li>Item 17</li><li>Item 18</li><li>Item 19</li><li>Item 20</li>
+            <li>Item 21</li><li>Item 22</li><li>Item 23</li><li>Item 24</li><li>Item 25</li>
+            <li>Item 26</li><li>Item 27</li><li>Item 28</li><li>Item 29</li><li>Item 30</li>
+            <li>Item 31</li><li>Item 32</li><li>Item 33</li><li>Item 34</li><li>Item 35</li>
+            <li>Item 36</li><li>Item 37</li><li>Item 38</li><li>Item 39</li><li>Item 40</li>
+            <li>Item 41</li><li>Item 42</li><li>Item 43</li><li>Item 44</li><li>Item 45</li>
+            <li>Item 46</li><li>Item 47</li><li>Item 48</li><li>Item 49</li><li>Item 50</li>
+            <li>Item 51</li><li>Item 52</li><li>Item 53</li><li>Item 54</li><li>Item 55</li>
+            <li>Item 56</li><li>Item 57</li><li>Item 58</li><li>Item 59</li><li>Item 60</li>
+            <li>Item 61</li><li>Item 62</li><li>Item 63</li><li>Item 64</li><li>Item 65</li>
+            <li>Item 66</li><li>Item 67</li><li>Item 68</li><li>Item 69</li><li>Item 70</li>
+            <li>Item 71</li><li>Item 72</li><li>Item 73</li><li>Item 74</li><li>Item 75</li>
+            <li>Item 76</li><li>Item 77</li><li>Item 78</li><li>Item 79</li><li>Item 80</li>
+            <li>Item 81</li><li>Item 82</li><li>Item 83</li><li>Item 84</li><li>Item 85</li>
+            <li>Item 86</li><li>Item 87</li><li>Item 88</li><li>Item 89</li><li>Item 90</li>
+            <li>Item 91</li><li>Item 92</li><li>Item 93</li><li>Item 94</li><li>Item 95</li>
+            <li>Item 96</li><li>Item 97</li><li>Item 98</li><li>Item 99</li><li>Item 100</li>
+        </ul>
+    </div>
+
+    <footer><p>Heavy test page &mdash; total DOM nodes ~800+</p></footer>
+</body>
+</html>

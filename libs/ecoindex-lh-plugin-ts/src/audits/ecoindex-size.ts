@@ -16,8 +16,8 @@ class EcoindexSizeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-size',
-      title: 'Page size',
-      failureTitle: 'Page size, your page is too heavy',
+      title: 'Page size.',
+      failureTitle: 'Page size, your page is too heavy.',
       description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
@@ -34,7 +34,7 @@ class EcoindexSizeAudit extends Audit {
         'size',
       ) as LH.Audit.Product
     } catch (error) {
-      createErrorResult(error)
+      return createErrorResult(error as Error)
     }
   }
 }

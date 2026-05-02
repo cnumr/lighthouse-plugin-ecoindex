@@ -332,32 +332,34 @@ async function printSummary(cliFlags: CliFlags): Promise<void> {
       ).toFixed(2) as unknown as number
       it.ecoindex = {
         'eco-index-score': {
-          score: item.lhr.audits['eco-index-score'].numericValue.toFixed(2),
-          displayValue: item.lhr.audits['eco-index-score'].displayValue,
+          score: (
+            item.lhr.audits['eco-index-score']?.numericValue ?? 0
+          ).toFixed(2),
+          displayValue: item.lhr.audits['eco-index-score']?.displayValue,
         },
         'eco-index-grade': {
-          score: item.lhr.audits['eco-index-grade'].numericValue,
-          displayValue: item.lhr.audits['eco-index-grade'].displayValue,
+          score: item.lhr.audits['eco-index-grade']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-grade']?.displayValue,
         },
         'eco-index-water': {
-          score: item.lhr.audits['eco-index-water'].numericValue,
-          displayValue: item.lhr.audits['eco-index-water'].displayValue,
+          score: item.lhr.audits['eco-index-water']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-water']?.displayValue,
         },
         'eco-index-ghg': {
-          score: item.lhr.audits['eco-index-ghg'].numericValue,
-          displayValue: item.lhr.audits['eco-index-ghg'].displayValue,
+          score: item.lhr.audits['eco-index-ghg']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-ghg']?.displayValue,
         },
         'eco-index-nodes': {
-          score: item.lhr.audits['eco-index-nodes'].numericValue,
-          displayValue: item.lhr.audits['eco-index-nodes'].displayValue,
+          score: item.lhr.audits['eco-index-nodes']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-nodes']?.displayValue,
         },
         'eco-index-size': {
-          score: item.lhr.audits['eco-index-size'].numericValue,
-          displayValue: item.lhr.audits['eco-index-size'].displayValue,
+          score: item.lhr.audits['eco-index-size']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-size']?.displayValue,
         },
         'eco-index-requests': {
-          score: item.lhr.audits['eco-index-requests'].numericValue,
-          displayValue: item.lhr.audits['eco-index-requests'].displayValue,
+          score: item.lhr.audits['eco-index-requests']?.numericValue,
+          displayValue: item.lhr.audits['eco-index-requests']?.displayValue,
         },
       }
       datas.push(it)

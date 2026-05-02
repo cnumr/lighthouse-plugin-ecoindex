@@ -54,8 +54,18 @@ export async function extractNetworkMetrics(
   const records = await NetworkRecords.request(devtoolsLog, context)
 
   // Get total byte weight from Lighthouse audit
-  const { numericValue: totalByteWeight, details: totalByteDetails } =
-    await TotalByteWeight.audit(artifacts, context)
+  // TotalByteWeight.audit can throw when there are no network records (e.g. fully cached or inline pages)
+  let totalByteWeight = 0
+  let totalByteDetails: LH.Audit.Details.Table | undefined = undefined
+  try {
+    const byteWeightResult = await TotalByteWeight.audit(artifacts, context)
+    totalByteWeight = byteWeightResult?.numericValue ?? 0
+    totalByteDetails = byteWeightResult?.details as
+      | LH.Audit.Details.Table
+      | undefined
+  } catch {
+    // fallback to 0 when the audit cannot run
+  }
 
   // Calculate total compressed size and request count from network records
   let totalCompressedSize = 0

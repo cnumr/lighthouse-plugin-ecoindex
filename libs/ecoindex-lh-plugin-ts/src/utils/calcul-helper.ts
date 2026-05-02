@@ -14,6 +14,7 @@ import {
 import { extractDOMSize, extractNetworkMetrics } from './network-metrics.js'
 import {
   formatMetric,
+  getExplanationForMetric,
   getMetricNumericUnit,
   normalizeMetricValue,
 } from './format-helper.js'
@@ -84,6 +85,11 @@ export function createValueResult(metricValue: MetricValue, metric: string) {
   let score: number | undefined
 
   // Get numeric value and calculate score based on metric type
+  const explanationValue =
+    metric === 'grade'
+      ? (metricValue['score'] as number)
+      : (metricValue[metric] as number)
+
   switch (metric) {
     case 'grade':
       numericValue = metricValue[metric] as number
@@ -108,6 +114,7 @@ export function createValueResult(metricValue: MetricValue, metric: string) {
     score: score,
     numericUnit: getMetricNumericUnit(metric),
     displayValue: formatMetric(metric, metricValue[metric]),
+    explanation: getExplanationForMetric(metric, explanationValue),
     details: createInformationsTable(metric, metricValue[metric]),
   }
 }
@@ -139,10 +146,16 @@ function computeEcoindexResults(
   requestCount: number,
   totalCompressedSize: number,
 ): EcoindexResults {
+  const safeDom = Number.isFinite(domSize) ? Math.max(0, domSize) : 0
+  const safeReq = Number.isFinite(requestCount) ? Math.max(0, requestCount) : 0
+  const safeSize = Number.isFinite(totalCompressedSize)
+    ? Math.max(0, totalCompressedSize)
+    : 0
+
   const _ecoindex = computeEcoIndex(
-    domSize,
-    requestCount,
-    totalCompressedSize / 1000, // Convert bytes to KB
+    safeDom,
+    safeReq,
+    safeSize / 1000, // Convert bytes to KB
   )
 
   const value: EcoindexResults = {
