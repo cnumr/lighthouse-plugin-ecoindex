@@ -16,8 +16,8 @@ class EcoindexGradeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-grade',
-      title: 'Grade',
-      failureTitle: 'Grade, your page has a big impact',
+      title: 'Grade.',
+      failureTitle: 'Grade, your page could be improved.',
       description: `The EcoIndex score evaluating the environmental impact of the page. [Learn more about the Ecoindex, Calculating the score](${refsURLS.ecoindex.grade.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
@@ -33,7 +33,7 @@ class EcoindexGradeAudit extends Audit {
         'grade',
       ) as LH.Audit.Product
     } catch (error) {
-      return createErrorResult(error)
+      return createErrorResult(error as Error)
     }
   }
 }

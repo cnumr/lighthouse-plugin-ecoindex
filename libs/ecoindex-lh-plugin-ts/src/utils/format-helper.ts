@@ -1,4 +1,4 @@
-import { B_TO_KB } from './score-helper.js'
+import { B_TO_KB, METRIC_RANGES } from './score-helper.js'
 
 /**
  * Format metric value for display in audit results.
@@ -140,4 +140,69 @@ export function normalizeMetricValue(
     default:
       throw new Error(`Invalid metric when normalize: ${metric}`)
   }
+}
+
+export function getExplanationForMetric(
+  metric: string,
+  value: number,
+): string {
+  const { good, poor, lowIsBeter } = METRIC_RANGES[metric] ?? {}
+
+  if (lowIsBeter === undefined) {
+    throw new Error(`Invalid metric explanation: ${metric}`)
+  }
+
+  const effectiveValue =
+    metric === 'size' ? value / B_TO_KB : value
+
+  if (lowIsBeter) {
+    if (effectiveValue <= good) return explanationLabels[metric].low
+    if (effectiveValue <= good * 2) return explanationLabels[metric].moderate
+    return explanationLabels[metric].high
+  } else {
+    if (effectiveValue >= good) return explanationLabels[metric].low
+    if (effectiveValue >= poor) return explanationLabels[metric].moderate
+    return explanationLabels[metric].high
+  }
+}
+
+const explanationLabels: Record<
+  string,
+  { low: string; moderate: string; high: string }
+> = {
+  score: {
+    low: 'Low environmental impact.',
+    moderate: 'Moderate environmental impact.',
+    high: 'High environmental impact.',
+  },
+  grade: {
+    low: 'Low environmental impact.',
+    moderate: 'Moderate environmental impact.',
+    high: 'High environmental impact.',
+  },
+  water: {
+    low: 'Low water consumption.',
+    moderate: 'Moderate water consumption.',
+    high: 'High water consumption.',
+  },
+  ghg: {
+    low: 'Low greenhouse gas emissions.',
+    moderate: 'Moderate greenhouse gas emissions.',
+    high: 'High greenhouse gas emissions.',
+  },
+  nodes: {
+    low: 'Low DOM complexity.',
+    moderate: 'Moderate DOM complexity.',
+    high: 'High DOM complexity.',
+  },
+  size: {
+    low: 'Low page weight.',
+    moderate: 'Moderate page weight.',
+    high: 'High page weight.',
+  },
+  requests: {
+    low: 'Low number of requests.',
+    moderate: 'Moderate number of requests.',
+    high: 'High number of requests.',
+  },
 }
