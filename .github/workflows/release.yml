@@ -31,6 +31,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
         run: pnpm install
@@ -41,7 +42,7 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          publish: npm run release
+          publish: NODE_AUTH_TOKEN= npm run release
           version: npm run version
           commit: 'chore: new release'
           title: 'chore: new release candidate'
