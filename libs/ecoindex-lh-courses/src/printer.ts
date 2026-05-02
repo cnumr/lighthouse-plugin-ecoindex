@@ -332,7 +332,9 @@ async function printSummary(cliFlags: CliFlags): Promise<void> {
       ).toFixed(2) as unknown as number
       it.ecoindex = {
         'eco-index-score': {
-          score: (item.lhr.audits['eco-index-score']?.numericValue ?? 0).toFixed(2),
+          score: (
+            item.lhr.audits['eco-index-score']?.numericValue ?? 0
+          ).toFixed(2),
           displayValue: item.lhr.audits['eco-index-score']?.displayValue,
         },
         'eco-index-grade': {

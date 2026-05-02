@@ -142,18 +142,14 @@ export function normalizeMetricValue(
   }
 }
 
-export function getExplanationForMetric(
-  metric: string,
-  value: number,
-): string {
+export function getExplanationForMetric(metric: string, value: number): string {
   const { good, poor, lowIsBeter } = METRIC_RANGES[metric] ?? {}
 
   if (lowIsBeter === undefined) {
     throw new Error(`Invalid metric explanation: ${metric}`)
   }
 
-  const effectiveValue =
-    metric === 'size' ? value / B_TO_KB : value
+  const effectiveValue = metric === 'size' ? value / B_TO_KB : value
 
   if (lowIsBeter) {
     if (effectiveValue <= good) return explanationLabels[metric].low

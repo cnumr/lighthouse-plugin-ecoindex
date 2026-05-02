@@ -60,7 +60,9 @@ export async function extractNetworkMetrics(
   try {
     const byteWeightResult = await TotalByteWeight.audit(artifacts, context)
     totalByteWeight = byteWeightResult?.numericValue ?? 0
-    totalByteDetails = byteWeightResult?.details as LH.Audit.Details.Table | undefined
+    totalByteDetails = byteWeightResult?.details as
+      | LH.Audit.Details.Table
+      | undefined
   } catch {
     // fallback to 0 when the audit cannot run
   }
