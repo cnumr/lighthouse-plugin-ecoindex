@@ -1,0 +1,46 @@
+﻿#  - Ecoindex Lighthouse Plugin
+
+> npm GitHub License
+
+- [Plugin Ecoindex pour Lighthouse](https://cnumr.github.io/lighthouse-plugin-ecoindex/readme.md): Plugin Ecoindex pour Lighthouse
+- [Que mesure lighthouse-ecoindex ?](https://cnumr.github.io/lighthouse-plugin-ecoindex/rapports.md): Le plugin lighthouse-ecoindex mesure les critères suivants :
+- [Déclaration Environnementale, l'initiative de GreenIT.fr®](https://cnumr.github.io/lighthouse-plugin-ecoindex/rapport-environnemental.md): Comme toute production numérique, un site web a des impacts environnementaux qui peuvent être mesurés, affichés et réduits.
+- [Contribuer à ce projet](https://cnumr.github.io/lighthouse-plugin-ecoindex/contribute.md): Ils restent encore beaucoup de choses à faire pour améliorer ce projet. Vous pouvez nous aider en contribuant à ce projet.
+- [A propos de ce projet](https://cnumr.github.io/lighthouse-plugin-ecoindex/about.md): Une contribution de l'association GreenIT.fr à la communauté de l'écoconception.
+
+## Guides
+
+- [Utilisation de lighthouse-ecoindex](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/1-lighthouse-ecoindex-cli.md): Cet utilitaire en ligne de commande (cli) permet, au travers de Lighthouse, d'obtenir des rapports d'audits Green IT de votre site web. Cela pour :
+- [Utilisation avec lighthouse CLI](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/2-lighthouse-cli.md): Utiliser le plugin lighthouse-ecoindex avec le client Lighthouse CLI.
+- [Utilisation avec Lighthouse CI](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/3-lighthouse-ci.md): Utiliser le plugin lighthouse-ecoindex avec Lighthouse CI dans vos outils de CI/CD ou vos repositories CI/Cd.
+- [Utilisation avec LHCI Server](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/4-lhci-server.md): LHCI Server est un serveur web qui permet de stocker et de visualiser les rapports d'audits Lighthouse. Vous avez ainsi la possibilité de suivre l'évolution de la performance de votre site web, à travers le temps (à chaque commit, par exemple).
+- [Cas d'usages et configurations avancées](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/9-adv-conf.md): Obligation de créer cookie pour fermer une popin, par exemple.
+- [Mesure avec une authentification complexe NEW](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/10-custom-puppeteer-script.md): Suivant votre contexte, il peut être nécessaire de réaliser des audits de sites nécessitant une authentification complexe (ex. WordPress, Prestashop,
+- [input-file.json](https://cnumr.github.io/lighthouse-plugin-ecoindex/guides/20-input-file-json.md): Le fichier input-file.json est un fichier de configuration de mesures de parcours. Il est utilisé pour configurer le plugin Ecoindex en mode CLI (Exemple de command, npx lighthouse-plugin-ecoindex collect --json-file ./input-file.json) et l'application EcoindexApp (autogénéré par l'application).
+
+## Application Ecoindex App
+
+- [L'Application desktop, EcoindexApp](https://cnumr.github.io/lighthouse-plugin-ecoindex/application/00-index.md): Une application (créé en Electron) est disponible afin d'utiliser lighthouse-plugin-ecoindex simplement, sans besoin utiliser les lignes de commandes dans le terminal.
+- [Processus d'installation](https://cnumr.github.io/lighthouse-plugin-ecoindex/application/01-installation.md): Télécharger l'application
+- [Mesures simple](https://cnumr.github.io/lighthouse-plugin-ecoindex/application/02-simplemesure.md): EcoindexApp en mode Mesure d'URLs (mode simple)
+- [Mesures de parcours](https://cnumr.github.io/lighthouse-plugin-ecoindex/application/03-jsonmesure.md): EcoindexApp en mode Mesure de parcours (mode complet)
+- [ Problèmes et bugs](https://cnumr.github.io/lighthouse-plugin-ecoindex/application/10-problemes.md): La multiplicité des configurations possibles et les différentes systèmes d'exploitation ont été testés, mais il y a peut-être des "trous dans la raquette".
+
+## Packages
+
+- [Monorepo](https://cnumr.github.io/lighthouse-plugin-ecoindex/packages/00.monorepo.md): Ce projet est un monorepo qui contient les différents packages du plugin-lighthouse-ecoindex.
+- [plugin-lighthouse-ecoindex (cli)](https://cnumr.github.io/lighthouse-plugin-ecoindex/packages/03.package-cli.md): Ce package permet de réaliser les mesures de parcours et de générer des rapports d'écoindex en ligne de commande.
+- [plugin-lighthouse-ecoindex-courses](https://cnumr.github.io/lighthouse-plugin-ecoindex/packages/02.package-courses.md): Ce package permet de réaliser les mesures de parcours et de générer des rapports d'écoindex.
+- [plugin-lighthouse-ecoindex-core](https://cnumr.github.io/lighthouse-plugin-ecoindex/packages/01.package-core.md): Ce pakage est le package principal du plugin-lighthouse-ecoindex. Il contient les fonctionnalités principales du plugin lighthouse et ajoute les fonctionnalités spécifiques à l'écoindex.
+
+## Bonnes pratiques
+
+- [Les audits du plugin](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/00-index.md): Les bonnes pratiques proposées comme audits dans le plugin Ecoindex Lighthouse
+- [#RWEB - Les « 115 bonnes pratiques » du Collectif GreenIT](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/01-bp-greenit.md): Listes des bonnes pratiques GreenIT opposables, présentent dans l'outil GreenIT analysis.
+- [Référentiel général d'écoconception de services numériques (RGESN)](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/02-rgesn.md): Référentiel RGESN
+
+## Annexes: Types de rapports générés
+
+- [Format HTML](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-html.md): Rapport HTML Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
+- [Format JSON Simplifé](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary.md): Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
+- [Format JSON Complet](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json.md): Rapport JSON Lighthouse complet avec l'intégration des mesures et bonnes pratiques Écoindex.
