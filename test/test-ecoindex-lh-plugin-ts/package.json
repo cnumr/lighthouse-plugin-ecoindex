@@ -22,9 +22,9 @@
   "license": "ISC",
   "dependencies": {
     "@lhci/cli": "^0.14.0",
-    "lighthouse": "13.0.1",
+    "lighthouse": "13.2.0",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
-    "puppeteer": "^24.26.1"
+    "puppeteer": "^24.42.0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
