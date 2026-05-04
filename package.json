@@ -29,7 +29,7 @@
   "main": "index.js",
   "scripts": {
     "doc": "cd docs && retype start",
-    "update": "pnpm update:puppeteer && pnpm update:lighthouse",
+    "update:libs": "pnpm update:puppeteer && pnpm update:lighthouse",
     "update:puppeteer": "sh scripts/update-puppeteer.sh",
     "update:lighthouse": "sh scripts/update-lighthouse.sh",
     "clean": "pnpm clean:npm && pnpm clean:lighthouseci",
