@@ -1,11 +1,16 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.0.1
+
+### Patch Changes
+
+- b7b4690: Update lighthouse from 13.0.1 to 13.2.0 and puppeteer from 24.26.1 to 24.42.0.
+
 ## 7.0.0
 
 ### Minor Changes
 
 - 1c02665: Add high-impact test page and fix null/undefined metric handling
-
   - Add `/heavy` route (800+ DOM nodes) to cover pages with no external network requests
   - Guard `TotalByteWeight.audit` with try-catch to prevent crash on pages with no network records
   - Add `Number.isFinite` guards in `computeEcoindexResults` to safely handle null/undefined inputs
@@ -19,14 +24,12 @@
 ### Patch Changes
 
 - 2f895f6: **Added**: Schema published to unpkg.com for IDE autocomplete
-
   - Input-file schema now available at `https://unpkg.com/lighthouse-plugin-ecoindex-core@latest/input-file/schema.json`
   - Automatic schema copy to package during build
   - Updated all test files to reference unpkg URL
   - Created `scripts/manage-schema.sh` to automate schema version management
 
   **Refactored**: Test infrastructure with automatic verification
-
   - All test projects now automatically verify results after generation
   - Created unified `test/ensure-test-server.mjs` for centralized server management
   - Added automatic verification to `@ecoindex-lh-test/plugin-core`, `@ecoindex-lh-test/courses`, and `@ecoindex-lh-test/cli`
@@ -34,7 +37,6 @@
   - Verification script detects latest timestamped subdirectories automatically
 
   **Improved**: Script organization and documentation
-
   - Moved all utility scripts to `scripts/` directory
   - Added comprehensive `scripts/README.md` documentation
   - Updated all script paths in package.json and documentation
@@ -47,7 +49,6 @@
 - bf6e97f: Upgraded to Lighthouse 13.0.1 with breaking changes adaptation and `extra-header` fix
 
   **Major Changes (Lighthouse 12 → 13):**
-
   - Upgraded Lighthouse dependency from 12.4.0 to 13.0.1
   - **Breaking Changes Addressed:**
     - Changed `artifacts.devtoolsLogs[Audit.DEFAULT_PASS]` to `artifacts.DevtoolsLog` (API change)
@@ -56,7 +57,6 @@
     - Updated `requiredArtifacts` in audits to use `'DevtoolsLog'` instead of `'devtoolsLogs'`
 
   **Refactored:**
-
   - Split monolithic `calcul-helper.ts` into focused modules:
     - `network-metrics.ts` - Network metrics extraction
     - `score-helper.ts` - Score calculation logic
@@ -65,7 +65,6 @@
   - Enhanced code readability and maintainability
 
   **Fixed:**
-
   - Fixed DOM counting logic for SVG children (now correctly counts only direct children, not recursive descendants)
   - Fixed `extra-header` parsing error when provided as an object in JSON file (`input-file.json`) vs string from CLI
   - Fixed circular dependency issue between `extractDOMSize` and `getEcoindexNodes`
@@ -73,13 +72,11 @@
   - Improved error handling for external `extra-header` file references
 
   **Improved:**
-
   - Added comprehensive JSDoc documentation to `dom-informations.ts` gatherer
   - Documented DOM counting logic according to Ecoindex specifications (SVG children exclusion, Shadow DOM support)
   - Enhanced code comments explaining the recursive counting algorithms
 
   The fix ensures `extra-header` works correctly in all three scenarios:
-
   - String JSON from CLI: `--extra-header '{"Cookie":"value"}'`
   - Object from JSON file: `{"extra-header": {"Cookie":"value"}}`
   - External file reference: `--extra-header ./headers.json`
@@ -131,7 +128,6 @@
 - 6f29d32: ajout de peerDependencies pour les plugins lighthouse dans les fichiers package.json des projets ecoindex-lh-cli et ecoindex-lh-courses
 - 2200618: Adds the ability to use your own puppeteer script to manage authentication that is more complex than the one provided.
 - 6c4de97: Many changes:
-
   - Update schema and add `audit-category` in the schema
   - Add `audit-category` in the process of the measure
   - Update tests in `@ecoindex-lh-test/courses`
@@ -140,7 +136,6 @@
   - Update the description of the audits to be more Lightouse like
 
 - 6f29d32: Change reading Node Count because of baddly implement #shadow-root (Shadow DOM).
-
   1. Fix error when getting page
   2. Fix unoptimized images audit
   3. Fix bad sized images audit
@@ -188,7 +183,6 @@
 - 6f29d32: Fix les fichiers non publiés dans npm
 - 6f29d32: ajout de peerDependencies pour les plugins lighthouse dans les fichiers package.json des projets ecoindex-lh-cli et ecoindex-lh-courses
 - 6f29d32: Change reading Node Count because of baddly implement #shadow-root (Shadow DOM).
-
   1. Fix error when getting page
   2. Fix unoptimized images audit
   3. Fix bad sized images audit
