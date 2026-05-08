@@ -54,3 +54,16 @@ export interface EcoindexResults {
   water: number
   ghg: number
 }
+
+export interface BPArtifacts extends Artifacts {
+  BPGatherer: BPGathererResult
+}
+
+export interface BPGathererResult {
+  autoplaying: number
+  serviceWorkerActive: boolean
+  canvasCount: number
+  inlineScripts: number
+  inlineStyles: number
+  animatedElements: number
+}
