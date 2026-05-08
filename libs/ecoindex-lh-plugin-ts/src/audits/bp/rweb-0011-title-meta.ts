@@ -27,21 +27,25 @@ class BPRweb0011TitleMeta extends Audit {
   static audit(artifacts: LH.Artifacts): LH.Audit.Product {
     const html = artifacts.MainDocumentContent
 
-    // Check for non-empty title
+    // Check <title>
     const titleMatch = html.match(/<title>([^<]+)<\/title>/i)
-    const hasTitle = titleMatch && titleMatch[1]?.trim().length > 0
+    const hasTitle = !!(titleMatch && titleMatch[1].trim().length > 0)
 
-    // Check for non-empty meta description
-    const metaMatch =
-      html.match(
-        /<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i,
-      ) ||
-      html.match(
-        /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i,
-      )
-    const hasDescription = metaMatch && metaMatch[1]?.trim().length > 0
+    // Check <meta name="description" content="..."> — handle both attribute orders and both quote types
+    const metaTagMatch = html.match(/<meta[^>]+>/gi)
+    let hasMetaDescription = false
+    if (metaTagMatch) {
+      for (const tag of metaTagMatch) {
+        const hasName = /name=["']description["']/i.test(tag)
+        const contentMatch = tag.match(/content=["']([^"']*)["']/i)
+        if (hasName && contentMatch && contentMatch[1].trim().length > 0) {
+          hasMetaDescription = true
+          break
+        }
+      }
+    }
 
-    const hasBoth = hasTitle && hasDescription
+    const hasBoth = hasTitle && hasMetaDescription
 
     return {
       score: hasBoth ? 1 : 0,
