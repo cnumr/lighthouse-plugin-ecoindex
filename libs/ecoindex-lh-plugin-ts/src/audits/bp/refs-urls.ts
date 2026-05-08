@@ -29,42 +29,6 @@ export default {
     },
   },
   rweb: {
-    bp_0027: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0027-mettre-en-place-une-architecture-elastique',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0027-set-up-an-elastic-architecture',
-    },
-    bp_0034: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0034-utiliser-le-rechargement-partiel-d-une-zone-de-contenu',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0034-use-partial-content-reloading',
-    },
-    bp_0041: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0041-ecrire-des-selecteurs-css-efficaces',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0041-write-efficient-css-selectors',
-    },
-    bp_0070: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0070-utiliser-un-cdn',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0070-use-a-cdn',
-    },
-    bp_0077: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0077-minifier-les-fichiers-css-javascript-html-et-svg',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0077-minifying-text-files-css-js-html-and-svg',
-    },
-    bp_0078: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0078-combiner-les-fichiers-css-et-javascript',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0078-combining-css-and-javascript-files',
-    },
-    bp_0095: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0095-privilegier-un-fournisseur-d-electricite-ecoresponsable',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0095-choose-an-eco-friendly-electricity-provider',
-    },
-    bp_0101: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0101-n-utiliser-que-des-fichiers-double-opt-in',
-      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0101-only-use-e-mails-validated-by-double-consent',
-    },
-    bp_4006: {
-      fr: 'https://rweb.greenit.fr/fr/fiches/4006',
-      en: 'https://rweb.greenit.fr/en/fiches/4006',
-    },
     rweb_0009: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0009-eviter-les-animations-javascript-css',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0009-avoid-javascriptcss-animations',
