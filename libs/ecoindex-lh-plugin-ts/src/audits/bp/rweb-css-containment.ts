@@ -1,16 +1,10 @@
 import * as LH from 'lighthouse/types/lh.js'
 
-import {
-  ContextualBaseArtifacts,
-  GathererArtifacts,
-  UniversalBaseArtifacts,
-} from 'lighthouse/types/artifacts.js'
-
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0039CSSContainment extends Audit {
+class BPRwebCssContainment extends Audit {
   static get meta() {
     return {
       id: 'rweb-0039-css-containment',
@@ -52,4 +46,4 @@ class BPRweb0039CSSContainment extends Audit {
   }
 }
 
-export default BPRweb0039CSSContainment
+export default BPRwebCssContainment

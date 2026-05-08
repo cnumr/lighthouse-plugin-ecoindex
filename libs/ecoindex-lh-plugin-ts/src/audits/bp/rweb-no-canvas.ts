@@ -10,13 +10,13 @@ import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0042NoInlineAssets extends Audit {
+class BPRwebNoCanvas extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0042-no-inline-assets',
-      title: 'RWEB_0042 - Minimize inline assets',
-      failureTitle: 'RWEB_0042 - Inline assets detected',
-      description: `Minimize the use of inline scripts and styles. [See RWEB_0042](${refsURLS.rweb.rweb_0042.en})`,
+      id: 'rweb-0055-no-canvas',
+      title: 'RWEB_0055 - Avoid canvas elements',
+      failureTitle: 'RWEB_0055 - Canvas elements detected',
+      description: `Minimize the use of canvas elements. [See RWEB_0055](${refsURLS.rweb.rweb_0055.en})`,
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -26,16 +26,15 @@ class BPRweb0042NoInlineAssets extends Audit {
   }
 
   static audit(artifacts: LH.Artifacts & BPArtifacts) {
-    const { inlineScripts, inlineStyles } = artifacts.BPGatherer
-    const totalInlineAssets = inlineScripts + inlineStyles
+    const { canvasCount } = artifacts.BPGatherer
 
     return {
-      score: totalInlineAssets <= 2 ? 1 : 0,
+      score: canvasCount === 0 ? 1 : 0,
       displayValue:
-        totalInlineAssets === 0
-          ? 'No inline assets'
-          : `${totalInlineAssets} inline asset(s) found`,
-      numericValue: totalInlineAssets,
+        canvasCount === 0
+          ? 'No canvas elements'
+          : `${canvasCount} canvas element(s) found`,
+      numericValue: canvasCount,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
@@ -45,4 +44,4 @@ class BPRweb0042NoInlineAssets extends Audit {
   }
 }
 
-export default BPRweb0042NoInlineAssets
+export default BPRwebNoCanvas

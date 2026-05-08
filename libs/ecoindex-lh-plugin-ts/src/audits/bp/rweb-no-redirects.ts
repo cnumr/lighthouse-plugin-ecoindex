@@ -12,7 +12,7 @@ import refsURLS from './refs-urls.js'
 const REDIRECT_STATUSES = [301, 302, 307, 308]
 const MAX_REDIRECTS = 1
 
-class BPRweb0112NoRedirects extends Audit {
+class BPRwebNoRedirects extends Audit {
   static get meta() {
     return {
       id: 'rweb-0112-no-redirects',
@@ -47,4 +47,4 @@ class BPRweb0112NoRedirects extends Audit {
   }
 }
 
-export default BPRweb0112NoRedirects
+export default BPRwebNoRedirects

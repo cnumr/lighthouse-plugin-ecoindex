@@ -10,15 +10,24 @@ import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
 
-const MAX_DOMAINS = 5
+const MAX_FONT_FAMILIES = 2
 
-class BPRweb0082LimitDomains extends Audit {
+const FONT_DOMAINS = [
+  'fonts.googleapis.com',
+  'use.typekit.net',
+  'fonts.bunny.net',
+  'fonts.adobe.com',
+  'use.fontawesome.com',
+  'cdn.fontawesome.com',
+]
+
+class BPRwebLimitFonts extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0082-limit-domains',
-      title: `RWEB_0082 - Limit resource domains (≤ ${MAX_DOMAINS})`,
-      failureTitle: `RWEB_0082 - Too many resource domains (> ${MAX_DOMAINS})`,
-      description: `Reduce the number of unique domains serving page resources. [See RWEB_0082](${refsURLS.rweb.rweb_0082.en})`,
+      id: 'rweb-0032-limit-fonts',
+      title: `RWEB_0032 - Limit font families (≤ ${MAX_FONT_FAMILIES})`,
+      failureTitle: `RWEB_0032 - Too many external font families (> ${MAX_FONT_FAMILIES})`,
+      description: `Reduce the number of external font families loaded. [See RWEB_0032](${refsURLS.rweb.rweb_0032.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -30,22 +39,24 @@ class BPRweb0082LimitDomains extends Audit {
   static async audit(artifacts: LH.Artifacts, context: LH.Audit.Context) {
     const records = await NetworkRecords.request(artifacts.DevtoolsLog, context)
 
-    const domains = new Set<string>()
+    const fontFamilies = new Set<string>()
     for (const record of records) {
       if (NetworkRequest.isNonNetworkRequest(record)) continue
       try {
         const { hostname } = new URL(record.url)
-        domains.add(hostname)
+        if (FONT_DOMAINS.includes(hostname)) {
+          fontFamilies.add(hostname)
+        }
       } catch {
         // ignore malformed URLs
       }
     }
 
-    const count = domains.size
+    const count = fontFamilies.size
 
     return {
-      score: count <= MAX_DOMAINS ? 1 : 0,
-      displayValue: `${count} unique domain(s)`,
+      score: count <= MAX_FONT_FAMILIES ? 1 : 0,
+      displayValue: `${count} external font famil${count !== 1 ? 'ies' : 'y'}`,
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -56,4 +67,4 @@ class BPRweb0082LimitDomains extends Audit {
   }
 }
 
-export default BPRweb0082LimitDomains
+export default BPRwebLimitFonts

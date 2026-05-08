@@ -10,13 +10,13 @@ import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0055NoCanvas extends Audit {
+class BPRwebServiceWorker extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0055-no-canvas',
-      title: 'RWEB_0055 - Avoid canvas elements',
-      failureTitle: 'RWEB_0055 - Canvas elements detected',
-      description: `Minimize the use of canvas elements. [See RWEB_0055](${refsURLS.rweb.rweb_0055.en})`,
+      id: 'rweb-0060-service-worker',
+      title: 'RWEB_0060 - Service Worker active',
+      failureTitle: 'RWEB_0060 - No active Service Worker detected',
+      description: `A Service Worker improves caching and reduces network requests. [See RWEB_0060](${refsURLS.rweb.rweb_0060.en})`,
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -26,15 +26,14 @@ class BPRweb0055NoCanvas extends Audit {
   }
 
   static audit(artifacts: LH.Artifacts & BPArtifacts) {
-    const { canvasCount } = artifacts.BPGatherer
+    const { serviceWorkerActive } = artifacts.BPGatherer
 
     return {
-      score: canvasCount === 0 ? 1 : 0,
-      displayValue:
-        canvasCount === 0
-          ? 'No canvas elements'
-          : `${canvasCount} canvas element(s) found`,
-      numericValue: canvasCount,
+      score: serviceWorkerActive ? 1 : 0,
+      displayValue: serviceWorkerActive
+        ? 'Service Worker active'
+        : 'No Service Worker',
+      numericValue: serviceWorkerActive ? 1 : 0,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
@@ -44,4 +43,4 @@ class BPRweb0055NoCanvas extends Audit {
   }
 }
 
-export default BPRweb0055NoCanvas
+export default BPRwebServiceWorker

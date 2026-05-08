@@ -10,7 +10,7 @@ import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0009NoAnimations extends Audit {
+class BPRwebNoAnimations extends Audit {
   static get meta() {
     return {
       id: 'rweb-0009-no-animations',
@@ -44,4 +44,4 @@ class BPRweb0009NoAnimations extends Audit {
   }
 }
 
-export default BPRweb0009NoAnimations
+export default BPRwebNoAnimations

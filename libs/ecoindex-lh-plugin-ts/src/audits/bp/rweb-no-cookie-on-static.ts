@@ -1,17 +1,11 @@
 import * as LH from 'lighthouse/types/lh.js'
 
-import {
-  ContextualBaseArtifacts,
-  GathererArtifacts,
-  UniversalBaseArtifacts,
-} from 'lighthouse/types/artifacts.js'
-
 import { Audit, NetworkRecords } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
 const STATIC_RESOURCE_TYPES = new Set(['Image', 'Stylesheet', 'Script', 'Font'])
 
-class BPRweb0081NoCookieOnStatic extends Audit {
+class BPRwebNoCookieOnStatic extends Audit {
   static get meta() {
     return {
       id: 'rweb-0081-no-cookie-on-static',
@@ -31,8 +25,13 @@ class BPRweb0081NoCookieOnStatic extends Audit {
     const staticWithCookie = networkRecords.filter(record => {
       if (!STATIC_RESOURCE_TYPES.has(record.resourceType ?? '')) return false
       const hasCookie =
-        (record as any).requestHeaders?.some(
-          (h: any) => h.name.toLowerCase() === 'cookie' && h.value.length > 0,
+        (
+          record as unknown as {
+            requestHeaders?: Array<{ name: string; value: string }>
+          }
+        ).requestHeaders?.some(
+          (h: { name: string; value: string }) =>
+            h.name.toLowerCase() === 'cookie' && h.value.length > 0,
         ) ?? false
       return hasCookie
     })
@@ -54,4 +53,4 @@ class BPRweb0081NoCookieOnStatic extends Audit {
   }
 }
 
-export default BPRweb0081NoCookieOnStatic
+export default BPRwebNoCookieOnStatic

@@ -10,7 +10,7 @@ import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0099NoGif extends Audit {
+class BPRwebNoGif extends Audit {
   static get meta() {
     return {
       id: 'rweb-0099-no-gif',
@@ -63,4 +63,4 @@ class BPRweb0099NoGif extends Audit {
   }
 }
 
-export default BPRweb0099NoGif
+export default BPRwebNoGif

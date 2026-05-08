@@ -24,7 +24,7 @@ const ANALYTICS_DOMAINS = [
   'js.hsforms.net',
 ]
 
-class BPRweb0111LimitAnalytics extends Audit {
+class BPRwebLimitAnalytics extends Audit {
   static get meta() {
     return {
       id: 'rweb-0111-limit-analytics',
@@ -66,4 +66,4 @@ class BPRweb0111LimitAnalytics extends Audit {
   }
 }
 
-export default BPRweb0111LimitAnalytics
+export default BPRwebLimitAnalytics

@@ -9,7 +9,7 @@ import type { GathererArtifacts } from 'lighthouse'
 import { Audit } from 'lighthouse'
 import refsURLS from './../bp/refs-urls.js'
 
-class BPPrintCSS extends Audit {
+class BPRwebPrintCss extends Audit {
   static get meta() {
     return {
       id: 'rweb-0031-print-css',
@@ -44,4 +44,4 @@ class BPPrintCSS extends Audit {
   }
 }
 
-export default BPPrintCSS
+export default BPRwebPrintCss

@@ -1,18 +1,12 @@
 import * as LH from 'lighthouse/types/lh.js'
 
-import {
-  ContextualBaseArtifacts,
-  GathererArtifacts,
-  UniversalBaseArtifacts,
-} from 'lighthouse/types/artifacts.js'
-
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
 
 const CAROUSEL_LIBS = ['swiper', 'slick', 'owl', 'splide', 'glide']
 
-class BPRweb0010NoCarousel extends Audit {
+class BPRwebNoCarousel extends Audit {
   static get meta() {
     return {
       id: 'rweb-0010-no-carousel',
@@ -61,4 +55,4 @@ class BPRweb0010NoCarousel extends Audit {
   }
 }
 
-export default BPRweb0010NoCarousel
+export default BPRwebNoCarousel

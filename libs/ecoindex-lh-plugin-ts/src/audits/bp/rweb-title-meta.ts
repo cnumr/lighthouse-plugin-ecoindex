@@ -9,7 +9,7 @@ import {
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0011TitleMeta extends Audit {
+class BPRwebTitleMeta extends Audit {
   static get meta() {
     return {
       id: 'rweb-0011-title-meta',
@@ -62,4 +62,4 @@ class BPRweb0011TitleMeta extends Audit {
   }
 }
 
-export default BPRweb0011TitleMeta
+export default BPRwebTitleMeta

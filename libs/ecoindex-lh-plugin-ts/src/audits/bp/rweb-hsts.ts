@@ -1,15 +1,9 @@
 import * as LH from 'lighthouse/types/lh.js'
 
-import {
-  ContextualBaseArtifacts,
-  GathererArtifacts,
-  UniversalBaseArtifacts,
-} from 'lighthouse/types/artifacts.js'
-
 import { Audit, NetworkRecords } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0084HSTS extends Audit {
+class BPRwebHsts extends Audit {
   static get meta() {
     return {
       id: 'rweb-0084-hsts',
@@ -51,4 +45,4 @@ class BPRweb0084HSTS extends Audit {
   }
 }
 
-export default BPRweb0084HSTS
+export default BPRwebHsts

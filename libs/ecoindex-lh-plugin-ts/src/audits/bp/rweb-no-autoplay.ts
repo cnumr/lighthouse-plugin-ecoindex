@@ -10,7 +10,7 @@ import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0106NoAutoplay extends Audit {
+class BPRwebNoAutoplay extends Audit {
   static get meta() {
     return {
       id: 'rweb-0106-no-autoplay',
@@ -32,9 +32,13 @@ class BPRweb0106NoAutoplay extends Audit {
       score: autoplaying === 0 ? 1 : 0,
       displayValue: `${autoplaying} autoplay element(s)`,
       numericValue: autoplaying,
-      numericUnit: 'unitless' as 'unitless' | 'byte' | 'millisecond' | 'element',
+      numericUnit: 'unitless' as
+        | 'unitless'
+        | 'byte'
+        | 'millisecond'
+        | 'element',
     }
   }
 }
 
-export default BPRweb0106NoAutoplay
+export default BPRwebNoAutoplay

@@ -19,7 +19,7 @@ const SOCIAL_SDK_DOMAINS = [
   'platform.instagram.com',
 ]
 
-class BPRweb0059NoSocialSdk extends Audit {
+class BPRwebNoSocialSdk extends Audit {
   static get meta() {
     return {
       id: 'rweb-0059-no-social-sdk',
@@ -54,4 +54,4 @@ class BPRweb0059NoSocialSdk extends Audit {
   }
 }
 
-export default BPRweb0059NoSocialSdk
+export default BPRwebNoSocialSdk

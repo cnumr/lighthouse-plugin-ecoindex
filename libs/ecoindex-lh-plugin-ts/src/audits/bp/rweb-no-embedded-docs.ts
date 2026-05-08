@@ -9,7 +9,7 @@ import {
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
 
-class BPRweb0033NoEmbeddedDocs extends Audit {
+class BPRwebNoEmbeddedDocs extends Audit {
   static get meta() {
     return {
       id: 'rweb-0033-no-embedded-docs',
@@ -51,4 +51,4 @@ class BPRweb0033NoEmbeddedDocs extends Audit {
   }
 }
 
-export default BPRweb0033NoEmbeddedDocs
+export default BPRwebNoEmbeddedDocs
