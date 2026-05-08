@@ -11,6 +11,7 @@ class BPRwebCssContainment extends Audit {
       title: 'RWEB_0039 - Use CSS containment',
       failureTitle: 'RWEB_0039 - CSS containment not verified',
       description: `Use CSS containment property to optimize rendering performance. [See RWEB_0039](${refsURLS.rweb.rweb_0039.en})`,
+      scoreDisplayMode: 'manual' as LH.Audit.ScoreDisplayMode,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -33,15 +34,10 @@ class BPRwebCssContainment extends Audit {
     // Informational audit: cannot automatically verify CSS property content via DevtoolsLog
     // Score is null (not applicable for automatic scoring)
     return {
-      score: null as unknown as number,
-      notApplicable: false,
-      displayValue: `Manual check required: ${cssResources.length} CSS file(s) loaded. Verify 'contain' property usage in stylesheets.`,
+      score: null as number | null,
+      displayValue: `${cssResources.length} CSS file(s) loaded — verify 'contain' property usage manually.`,
       numericValue: cssResources.length,
-      numericUnit: 'unitless' as
-        | 'unitless'
-        | 'byte'
-        | 'millisecond'
-        | 'element',
+      numericUnit: 'unitless' as 'unitless' | 'byte' | 'millisecond' | 'element',
     }
   }
 }
