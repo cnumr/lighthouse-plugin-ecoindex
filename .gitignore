@@ -31,3 +31,7 @@ private-*
 # claude
 CLAUDE.md
 .claude
+
+# graphify
+graphify-*
+.graphifyignore
