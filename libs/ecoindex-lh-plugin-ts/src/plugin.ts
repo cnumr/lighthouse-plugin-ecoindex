@@ -31,6 +31,60 @@ export default {
       path: `${__dirname}/audits/bp/print-css.js`,
     },
     {
+      path: `${__dirname}/audits/bp/rweb-0031-print-css.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0106-no-autoplay.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0059-no-social-sdk.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0111-limit-analytics.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0082-limit-domains.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0112-no-redirects.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0060-service-worker.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0042-no-inline-assets.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0055-no-canvas.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0032-limit-fonts.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0011-title-meta.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0099-no-gif.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0009-no-animations.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0010-no-carousel.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0033-no-embedded-docs.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0039-css-containment.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0084-hsts.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-0081-no-cookie-on-static.js`,
+    },
+    {
       path: `${__dirname}/audits/bp/thegreenwebfoundation.js`,
     },
     // {
@@ -111,6 +165,24 @@ export default {
       { id: 'unoptimized-images', weight: 0, group: 'ecoindex-best-practices' },
       { id: 'badly-sized-images', weight: 0, group: 'ecoindex-best-practices' },
       { id: 'bp-print-css', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0031-print-css', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0106-no-autoplay', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0059-no-social-sdk', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0111-limit-analytics', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0082-limit-domains', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0112-no-redirects', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0060-service-worker', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0042-no-inline-assets', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0055-no-canvas', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0032-limit-fonts', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0011-title-meta', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0099-no-gif', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0009-no-animations', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0010-no-carousel', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0033-no-embedded-docs', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0039-css-containment', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0084-hsts', weight: 0, group: 'ecoindex-best-practices' },
+      { id: 'rweb-0081-no-cookie-on-static', weight: 0, group: 'ecoindex-best-practices' },
       // {
       //   id: 'bp-add-headers-expire-and-cache-control',
       //   weight: 0,
