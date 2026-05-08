@@ -1,3 +1,4 @@
+import bpGatherer from '../../gatherers/bp-gatherer.js'
 import domInformationsGatherer from '../../gatherers/dom-informations.js'
 
 /** @type {LH.Config} */
@@ -30,6 +31,12 @@ export default {
       id: 'DOMInformations',
       gatherer: {
         implementation: domInformationsGatherer,
+      },
+    },
+    {
+      id: 'BPGatherer',
+      gatherer: {
+        implementation: bpGatherer,
       },
     },
   ],
