@@ -37,7 +37,11 @@ class BPRwebCssContainment extends Audit {
       score: null as number | null,
       displayValue: `${cssResources.length} CSS file(s) loaded — verify 'contain' property usage manually.`,
       numericValue: cssResources.length,
-      numericUnit: 'unitless' as 'unitless' | 'byte' | 'millisecond' | 'element',
+      numericUnit: 'unitless' as
+        | 'unitless'
+        | 'byte'
+        | 'millisecond'
+        | 'element',
     }
   }
 }
