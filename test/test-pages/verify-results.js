@@ -14,6 +14,7 @@ const URL_TO_PAGE_KEY = {
   'http://localhost:3000/shadow-dom': 'shadow-dom',
   'http://localhost:3000/svg-shadow-dom': 'svg-shadow-dom',
   'http://localhost:3000/complex': 'complex',
+  'http://localhost:3000/heavy': 'heavy',
   'http://localhost:3000/bp-violations': 'bp-violations',
 }
 

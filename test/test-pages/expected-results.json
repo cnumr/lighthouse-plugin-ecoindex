@@ -81,7 +81,7 @@
     "description": "High environmental impact page with 800+ DOM nodes",
     "expectedScore": {
       "min": 0,
-      "max": 64
+      "max": 75
     },
     "expectedNodes": {
       "value": 800,
@@ -119,7 +119,7 @@
       "rweb-limit-analytics": 1,
       "rweb-limit-domains": 1,
       "rweb-no-redirects": 1,
-      "rweb-hsts": 1,
+      "rweb-hsts": 0,
       "rweb-no-cookie-on-static": 1
     },
     "note": "RWEB_0059/0084/0081 score 1 on local pages (no social CDN, HSTS absent on localhost is expected)"

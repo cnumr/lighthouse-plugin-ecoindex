@@ -15,6 +15,7 @@ const cliFlags = {
     'http://localhost:3000/svg-shadow-dom',
     'http://localhost:3000/complex',
     'http://localhost:3000/heavy',
+    'http://localhost:3000/bp-violations',
   ],
   // auditCategory: ['accessibility', 'lighthouse-plugin-ecoindex-core'],
   exportPath: resolve(__dirname, './reports/obj'),
