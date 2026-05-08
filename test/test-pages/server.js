@@ -49,6 +49,10 @@ app.get('/heavy', (req, res) => {
   res.sendFile(path.join(__dirname, 'heavy.html'))
 })
 
+app.get('/bp-violations', (req, res) => {
+  res.sendFile(path.join(__dirname, 'bp-violations.html'))
+})
+
 // Serve static files (for any other assets)
 app.use(express.static(__dirname))
 

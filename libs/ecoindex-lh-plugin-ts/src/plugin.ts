@@ -161,7 +161,6 @@ export default {
       // best-practices
       { id: 'unoptimized-images', weight: 0, group: 'ecoindex-best-practices' },
       { id: 'badly-sized-images', weight: 0, group: 'ecoindex-best-practices' },
-      { id: 'bp-print-css', weight: 0, group: 'ecoindex-best-practices' },
       {
         id: 'rweb-print-css',
         weight: 0,
