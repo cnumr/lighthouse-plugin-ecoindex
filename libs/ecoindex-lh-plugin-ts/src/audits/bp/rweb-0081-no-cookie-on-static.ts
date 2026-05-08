@@ -7,10 +7,9 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
-import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
 
-const STATIC_RESOURCE_TYPES = ['Image', 'Stylesheet', 'Script', 'Font']
+const STATIC_RESOURCE_TYPES = new Set(['Image', 'Stylesheet', 'Script', 'Font'])
 
 class BPRweb0081NoCookieOnStatic extends Audit {
   static get meta() {
@@ -29,19 +28,23 @@ class BPRweb0081NoCookieOnStatic extends Audit {
       context,
     )
 
-    // Count static resources loaded
-    const staticResources = networkRecords.filter(record => {
-      if (NetworkRequest.isNonNetworkRequest(record)) return false
-      return STATIC_RESOURCE_TYPES.includes(record.resourceType)
-    }).length
+    const staticWithCookie = networkRecords.filter(record => {
+      if (!STATIC_RESOURCE_TYPES.has(record.resourceType ?? '')) return false
+      const hasCookie =
+        (record as any).requestHeaders?.some(
+          (h: any) => h.name.toLowerCase() === 'cookie' && h.value.length > 0,
+        ) ?? false
+      return hasCookie
+    })
 
-    // Informational audit: cannot automatically verify request cookies via DevtoolsLog
-    // Score is always 1 (informational - audit cannot be automatically verified)
+    const count = staticWithCookie.length
     return {
-      score: 1,
-      notApplicable: false,
-      displayValue: `Manual check required: ${staticResources} static resource(s) loaded. Verify no cookies sent with these requests.`,
-      numericValue: staticResources,
+      score: count === 0 ? 1 : 0,
+      displayValue:
+        count === 0
+          ? 'No static resources with Cookie header'
+          : `${count} static resource${count > 1 ? 's' : ''} sent with Cookie header`,
+      numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
