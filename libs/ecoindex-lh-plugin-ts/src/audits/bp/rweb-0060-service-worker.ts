@@ -17,7 +17,7 @@ class BPRweb0060ServiceWorker extends Audit {
       title: 'RWEB_0060 - Service Worker active',
       failureTitle: 'RWEB_0060 - No active Service Worker detected',
       description: `A Service Worker improves caching and reduces network requests. [See RWEB_0060](${refsURLS.rweb.rweb_0060.en})`,
-      requiredArtifacts: ['BPGatherer'] as (
+      requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
         | keyof GathererArtifacts

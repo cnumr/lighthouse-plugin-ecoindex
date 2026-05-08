@@ -17,7 +17,7 @@ class BPRweb0106NoAutoplay extends Audit {
       title: 'RWEB_0106 - No video/audio autoplay',
       failureTitle: 'RWEB_0106 - Autoplay video/audio detected',
       description: `Avoid autoplay on video and audio elements. [See RWEB_0106](${refsURLS.rweb.rweb_0106.en})`,
-      requiredArtifacts: ['BPGatherer'] as (
+      requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
         | keyof GathererArtifacts
