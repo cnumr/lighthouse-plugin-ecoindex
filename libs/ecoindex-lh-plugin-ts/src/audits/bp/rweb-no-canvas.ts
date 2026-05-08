@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoCanvas extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0055-no-canvas',
+      id: 'rweb-no-canvas',
       title: 'RWEB_0055 - Avoid canvas elements',
       failureTitle: 'RWEB_0055 - Canvas elements detected',
       description: `Minimize the use of canvas elements. [See RWEB_0055](${refsURLS.rweb.rweb_0055.en})`,

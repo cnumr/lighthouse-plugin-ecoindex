@@ -9,7 +9,7 @@ const CAROUSEL_LIBS = ['swiper', 'slick', 'owl', 'splide', 'glide']
 class BPRwebNoCarousel extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0010-no-carousel',
+      id: 'rweb-no-carousel',
       title: 'RWEB_0010 - Avoid carousels',
       failureTitle: 'RWEB_0010 - Carousel library detected',
       description: `Avoid using carousel/slider libraries when possible. [See RWEB_0010](${refsURLS.rweb.rweb_0010.en})`,

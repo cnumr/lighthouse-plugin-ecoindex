@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoAutoplay extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0106-no-autoplay',
+      id: 'rweb-no-autoplay',
       title: 'RWEB_0106 - No video/audio autoplay',
       failureTitle: 'RWEB_0106 - Autoplay video/audio detected',
       description: `Avoid autoplay on video and audio elements. [See RWEB_0106](${refsURLS.rweb.rweb_0106.en})`,

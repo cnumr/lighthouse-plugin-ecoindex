@@ -30,8 +30,8 @@ class BPGatherer extends Gatherer {
 
       const serviceWorkerActive = Boolean(
         'serviceWorker' in navigator &&
-          navigator.serviceWorker &&
-          navigator.serviceWorker.controller,
+        navigator.serviceWorker &&
+        navigator.serviceWorker.controller,
       )
 
       const canvasCount = document.querySelectorAll('canvas').length
@@ -44,9 +44,9 @@ class BPGatherer extends Gatherer {
           (s.textContent || '').trim().length > 0,
       ).length
 
-      const inlineStyles = Array.from(document.querySelectorAll('style')).filter(
-        s => (s.textContent || '').trim().length > 0,
-      ).length
+      const inlineStyles = Array.from(
+        document.querySelectorAll('style'),
+      ).filter(s => (s.textContent || '').trim().length > 0).length
 
       let animatedElements = 0
       const allElements = Array.from(document.querySelectorAll('*'))

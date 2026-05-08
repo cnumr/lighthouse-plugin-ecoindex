@@ -24,7 +24,7 @@ const FONT_DOMAINS = [
 class BPRwebLimitFonts extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0032-limit-fonts',
+      id: 'rweb-limit-fonts',
       title: `RWEB_0032 - Limit font families (≤ ${MAX_FONT_FAMILIES})`,
       failureTitle: `RWEB_0032 - Too many external font families (> ${MAX_FONT_FAMILIES})`,
       description: `Reduce the number of external font families loaded. [See RWEB_0032](${refsURLS.rweb.rweb_0032.en})`,

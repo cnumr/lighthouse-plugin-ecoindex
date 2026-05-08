@@ -12,7 +12,7 @@ import refsURLS from './../bp/refs-urls.js'
 class BPRwebPrintCss extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0031-print-css',
+      id: 'rweb-print-css',
       title: 'RWEB_0031 - Print CSS',
       failureTitle: 'RWEB_0031 - No print css implemented.',
       description: `A print css must be implemented to hide useless elements when printing. [See RWEB_0031](${refsURLS.rweb.rweb_0031.en})`,

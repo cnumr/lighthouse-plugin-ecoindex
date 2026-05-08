@@ -12,7 +12,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoEmbeddedDocs extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0033-no-embedded-docs',
+      id: 'rweb-no-embedded-docs',
       title: 'RWEB_0033 - No embedded documents',
       failureTitle: 'RWEB_0033 - Embedded documents detected',
       description: `Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](${refsURLS.rweb.rweb_0033.en})`,

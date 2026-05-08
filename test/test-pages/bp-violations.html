@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- No <title> intentionally: triggers rweb-title-meta -->
+    <!-- No <meta name="description"> intentionally: triggers rweb-title-meta -->
+
+    <!-- Inline styles (×2): triggers rweb-no-inline-assets -->
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+    </style>
+    <style>
+        .animated {
+            animation: spin 1s infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Inline scripts (×3): triggers rweb-no-inline-assets -->
+    <script>console.log('inline script 1')</script>
+    <script>console.log('inline script 2')</script>
+    <script>console.log('inline script 3')</script>
+
+    <h1>BP Violations Test Page</h1>
+    <p>This page intentionally triggers BP audit violations detectable without external network calls.</p>
+
+    <!-- canvas: triggers rweb-no-canvas -->
+    <canvas id="test-canvas" width="200" height="100"></canvas>
+
+    <!-- video autoplay: triggers rweb-no-autoplay -->
+    <video autoplay muted width="200">
+        <source src="data:video/mp4;base64,AAAAHG" type="video/mp4">
+    </video>
+
+    <!-- GIF image: triggers rweb-no-gif -->
+    <img src="placeholder.gif" alt="placeholder gif" width="10" height="10">
+
+    <!-- Embedded document: triggers rweb-no-embedded-docs -->
+    <embed src="doc.pdf" type="application/pdf" width="400" height="300">
+
+    <!-- Animated element: triggers rweb-no-animations -->
+    <div class="animated">Spinning element</div>
+</body>
+</html>

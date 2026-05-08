@@ -12,7 +12,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebTitleMeta extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0011-title-meta',
+      id: 'rweb-title-meta',
       title: 'RWEB_0011 - Page has title and meta description',
       failureTitle: 'RWEB_0011 - Missing title or meta description',
       description: `Ensure the page has a non-empty title and meta description. [See RWEB_0011](${refsURLS.rweb.rweb_0011.en})`,

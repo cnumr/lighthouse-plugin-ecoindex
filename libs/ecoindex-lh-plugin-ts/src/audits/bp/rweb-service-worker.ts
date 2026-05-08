@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebServiceWorker extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0060-service-worker',
+      id: 'rweb-service-worker',
       title: 'RWEB_0060 - Service Worker active',
       failureTitle: 'RWEB_0060 - No active Service Worker detected',
       description: `A Service Worker improves caching and reduces network requests. [See RWEB_0060](${refsURLS.rweb.rweb_0060.en})`,

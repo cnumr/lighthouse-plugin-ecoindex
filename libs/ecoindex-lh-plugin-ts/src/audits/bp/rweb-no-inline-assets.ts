@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoInlineAssets extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0042-no-inline-assets',
+      id: 'rweb-no-inline-assets',
       title: 'RWEB_0042 - Minimize inline assets',
       failureTitle: 'RWEB_0042 - Inline assets detected',
       description: `Minimize the use of inline scripts and styles. [See RWEB_0042](${refsURLS.rweb.rweb_0042.en})`,

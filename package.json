@@ -60,7 +60,9 @@
     "react:make": "pnpm --filter react-electron-app make",
     "lhci:server:start": "docker compose -f tools/lhci-server/docker-compose.yml up -d",
     "lhci:server:stop": "docker compose -f tools/lhci-server/docker-compose.yml down",
-    "lhci:install:git-lfs": "sh tools/lhci-server/install-git-lfs.sh"
+    "lhci:install:git-lfs": "sh tools/lhci-server/install-git-lfs.sh",
+    "refs:update": "tsx scripts/generate-refs-urls.ts",
+    "refs:update:version": "tsx scripts/generate-refs-urls.ts -- --version"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -79,6 +81,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "tsx": "^4.19.4",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "eslint-plugin-prettier": "^5.5.5",

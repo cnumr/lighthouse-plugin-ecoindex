@@ -22,7 +22,7 @@ const SOCIAL_SDK_DOMAINS = [
 class BPRwebNoSocialSdk extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0059-no-social-sdk',
+      id: 'rweb-no-social-sdk',
       title: 'RWEB_0059 - No official social network buttons',
       failureTitle: 'RWEB_0059 - Official social network SDK detected',
       description: `Replace official social network buttons with static links to reduce third-party requests. [See RWEB_0059](${refsURLS.rweb.rweb_0059.en})`,

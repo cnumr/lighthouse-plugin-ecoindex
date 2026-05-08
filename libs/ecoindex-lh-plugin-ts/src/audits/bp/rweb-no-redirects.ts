@@ -15,7 +15,7 @@ const MAX_REDIRECTS = 1
 class BPRwebNoRedirects extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0112-no-redirects',
+      id: 'rweb-no-redirects',
       title: `RWEB_0112 - Avoid HTTP redirects (≤ ${MAX_REDIRECTS})`,
       failureTitle: `RWEB_0112 - Too many HTTP redirects (> ${MAX_REDIRECTS})`,
       description: `Reduce HTTP redirects to avoid unnecessary round trips. [See RWEB_0112](${refsURLS.rweb.rweb_0112.en})`,

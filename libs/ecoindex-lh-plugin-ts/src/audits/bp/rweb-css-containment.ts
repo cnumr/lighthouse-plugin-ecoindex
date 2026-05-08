@@ -7,7 +7,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebCssContainment extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0039-css-containment',
+      id: 'rweb-css-containment',
       title: 'RWEB_0039 - Use CSS containment',
       failureTitle: 'RWEB_0039 - CSS containment not verified',
       description: `Use CSS containment property to optimize rendering performance. [See RWEB_0039](${refsURLS.rweb.rweb_0039.en})`,

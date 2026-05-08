@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoAnimations extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0009-no-animations',
+      id: 'rweb-no-animations',
       title: 'RWEB_0009 - No animated elements',
       failureTitle: 'RWEB_0009 - Animated elements detected',
       description: `Avoid animations and transitions to reduce CPU and battery usage. [See RWEB_0009](${refsURLS.rweb.rweb_0009.en})`,

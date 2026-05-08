@@ -6,7 +6,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebHsts extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0084-hsts',
+      id: 'rweb-hsts',
       title: 'RWEB_0084 - Enable HSTS header',
       failureTitle: 'RWEB_0084 - HSTS header missing',
       description: `Enable HSTS (HTTP Strict-Transport-Security) header to enforce HTTPS. [See RWEB_0084](${refsURLS.rweb.rweb_0084.en})`,

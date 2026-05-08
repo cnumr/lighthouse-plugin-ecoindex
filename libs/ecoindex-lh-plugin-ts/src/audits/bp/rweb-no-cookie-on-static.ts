@@ -8,7 +8,7 @@ const STATIC_RESOURCE_TYPES = new Set(['Image', 'Stylesheet', 'Script', 'Font'])
 class BPRwebNoCookieOnStatic extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0081-no-cookie-on-static',
+      id: 'rweb-no-cookie-on-static',
       title: 'RWEB_0081 - No cookies on static resources',
       failureTitle: 'RWEB_0081 - Cookies detected on static resources',
       description: `Avoid sending cookies with static resources (images, CSS, JS, fonts). [See RWEB_0081](${refsURLS.rweb.rweb_0081.en})`,

@@ -13,7 +13,7 @@ import refsURLS from './refs-urls.js'
 class BPRwebNoGif extends Audit {
   static get meta() {
     return {
-      id: 'rweb-0099-no-gif',
+      id: 'rweb-no-gif',
       title: 'RWEB_0099 - Avoid using GIFs',
       failureTitle: 'RWEB_0099 - GIFs detected',
       description: `Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](${refsURLS.rweb.rweb_0099.en})`,

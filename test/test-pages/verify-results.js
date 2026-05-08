@@ -14,6 +14,7 @@ const URL_TO_PAGE_KEY = {
   'http://localhost:3000/shadow-dom': 'shadow-dom',
   'http://localhost:3000/svg-shadow-dom': 'svg-shadow-dom',
   'http://localhost:3000/complex': 'complex',
+  'http://localhost:3000/bp-violations': 'bp-violations',
 }
 
 /**
@@ -120,6 +121,24 @@ function verifyResultsWithLHR(lhr, expectedResultsKey) {
   }
   if (scoreAudit) {
     console.log(`ℹ️  Ecoindex score: ${scoreAudit.numericValue}/100`)
+  }
+
+  // Verify BP audits
+  if (expected.expectedBPAudits) {
+    for (const [auditId, expectedScore] of Object.entries(expected.expectedBPAudits)) {
+      const audit = lhr.audits[auditId]
+      if (!audit) {
+        console.log(`⚠️  BP audit not found: ${auditId}`)
+        continue
+      }
+      const actualScore = audit.score
+      if (actualScore === expectedScore) {
+        console.log(`✅ BP ${auditId}: score=${actualScore}`)
+      } else {
+        console.error(`❌ BP ${auditId}: score=${actualScore} (expected: ${expectedScore})`)
+        allPassed = false
+      }
+    }
   }
 
   if (expected.note) {

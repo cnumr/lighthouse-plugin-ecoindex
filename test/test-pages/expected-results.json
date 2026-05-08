@@ -91,5 +91,37 @@
       "value": 1,
       "tolerance": 1
     }
+  },
+  "bp-violations": {
+    "description": "Page intentionally triggering BP audit violations (no external network)",
+    "expectedScore": {
+      "min": 0,
+      "max": 100
+    },
+    "expectedNodes": {
+      "value": 15,
+      "tolerance": 10
+    },
+    "expectedRequests": {
+      "value": 1,
+      "tolerance": 2
+    },
+    "expectedBPAudits": {
+      "rweb-no-autoplay": 0,
+      "rweb-no-canvas": 0,
+      "rweb-no-inline-assets": 0,
+      "rweb-no-gif": 0,
+      "rweb-title-meta": 0,
+      "rweb-no-embedded-docs": 0,
+      "rweb-no-animations": 0,
+      "rweb-service-worker": 0,
+      "rweb-no-social-sdk": 1,
+      "rweb-limit-analytics": 1,
+      "rweb-limit-domains": 1,
+      "rweb-no-redirects": 1,
+      "rweb-hsts": 1,
+      "rweb-no-cookie-on-static": 1
+    },
+    "note": "RWEB_0059/0084/0081 score 1 on local pages (no social CDN, HSTS absent on localhost is expected)"
   }
 }
