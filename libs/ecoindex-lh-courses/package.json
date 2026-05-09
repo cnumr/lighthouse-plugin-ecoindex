@@ -97,6 +97,6 @@
     "typescript-eslint": "^8.28.0"
   },
   "peerDependencies": {
-    "lighthouse-plugin-ecoindex-core": "workspace:*"
+    "lighthouse-plugin-ecoindex-core": "^7.0.0"
   }
 }

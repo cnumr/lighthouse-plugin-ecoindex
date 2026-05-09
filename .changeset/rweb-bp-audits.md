@@ -1,5 +1,7 @@
 ---
 'lighthouse-plugin-ecoindex-core': minor
+'lighthouse-plugin-ecoindex': minor
+'lighthouse-plugin-ecoindex-courses': minor
 ---
 
 Add 36 RWEB GreenIT best-practice audits
