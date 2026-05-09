@@ -92,6 +92,7 @@ const checkIfMandatoryBrowserInstalled = async (
   if (mandatoryBrowserIsInstalled.length > 0) {
     return mandatoryBrowserIsInstalled[0]
   } else {
+    console.log(`${info} Browser not installed — installation required.`)
     return null
   }
 }
