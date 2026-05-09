@@ -14,6 +14,8 @@ const URL_TO_PAGE_KEY = {
   'http://localhost:3000/shadow-dom': 'shadow-dom',
   'http://localhost:3000/svg-shadow-dom': 'svg-shadow-dom',
   'http://localhost:3000/complex': 'complex',
+  'http://localhost:3000/heavy': 'heavy',
+  'http://localhost:3000/bp-violations': 'bp-violations',
 }
 
 /**
@@ -122,6 +124,24 @@ function verifyResultsWithLHR(lhr, expectedResultsKey) {
     console.log(`ℹ️  Ecoindex score: ${scoreAudit.numericValue}/100`)
   }
 
+  // Verify BP audits
+  if (expected.expectedBPAudits) {
+    for (const [auditId, expectedScore] of Object.entries(expected.expectedBPAudits)) {
+      const audit = lhr.audits[auditId]
+      if (!audit) {
+        console.log(`⚠️  BP audit not found: ${auditId}`)
+        continue
+      }
+      const actualScore = audit.score
+      if (actualScore === expectedScore) {
+        console.log(`✅ BP ${auditId}: score=${actualScore}`)
+      } else {
+        console.error(`❌ BP ${auditId}: score=${actualScore} (expected: ${expectedScore})`)
+        allPassed = false
+      }
+    }
+  }
+
   if (expected.note) {
     console.log(`📝 Note: ${expected.note}`)
   }
@@ -191,50 +211,56 @@ function verifyDirectory(dirPath) {
     const filePath = path.join(actualDir, file)
     const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'))
 
-    // Support both formats: direct LHR or courses format with steps
-    let lhr
-    if (fileContent.steps && fileContent.steps[0] && fileContent.steps[0].lhr) {
-      // Courses format: extract lhr from steps
-      lhr = fileContent.steps[0].lhr
+    // Build array of LHRs to verify:
+    // - generic.report.json (URL mode): all steps, one LHR per URL
+    // - coursename.report.json (course/file mode): only steps[0], represents the course
+    // - lhr-*.json: direct LHR format, no steps
+    let lhrs
+    if (fileContent.steps && Array.isArray(fileContent.steps)) {
+      const isGenericReport = file === 'generic.report.json'
+      const stepsToVerify = isGenericReport
+        ? fileContent.steps
+        : fileContent.steps.slice(0, 1)
+      lhrs = stepsToVerify.filter(step => step.lhr).map(step => step.lhr)
     } else {
-      // Direct LHR format
-      lhr = fileContent
+      lhrs = [fileContent]
     }
 
-    // Extract URL from LHR
-    const url = lhr.requestedUrl || lhr.finalUrl
+    for (const lhr of lhrs) {
+      // Extract URL from LHR
+      const url = lhr.requestedUrl || lhr.finalUrl
 
-    if (!url) {
-      console.log(`⚠️  No URL found in LHR file: ${file}`)
-      continue
+      if (!url) {
+        console.log(`⚠️  No URL found in LHR step from: ${file}`)
+        continue
+      }
+
+      const pageKey = getPageKeyFromUrl(url)
+
+      if (!pageKey) {
+        console.log(`⚠️  Unknown URL: ${url}`)
+        console.log(`   File: ${file}`)
+        continue
+      }
+
+      // Get expected results
+      const expectedResults = JSON.parse(
+        fs.readFileSync(path.join(__dirname, 'expected-results.json'), 'utf8'),
+      )
+      const expected = expectedResults[pageKey]
+
+      if (!expected) {
+        console.log(`⚠️  No expected results for: ${pageKey}`)
+        continue
+      }
+
+      console.log(`\n📄 File: ${file}`)
+      console.log(`🔗 URL: ${url}`)
+
+      const passed = verifyResultsWithLHR(lhr, pageKey)
+      results.push({ file, pageKey, passed })
+      if (!passed) allPassed = false
     }
-
-    const pageKey = getPageKeyFromUrl(url)
-
-    if (!pageKey) {
-      console.log(`⚠️  Unknown URL: ${url}`)
-      console.log(`   File: ${file}`)
-      continue
-    }
-
-    // Get expected results
-    const expectedResults = JSON.parse(
-      fs.readFileSync(path.join(__dirname, 'expected-results.json'), 'utf8'),
-    )
-    const expected = expectedResults[pageKey]
-
-    if (!expected) {
-      console.log(`⚠️  No expected results for: ${pageKey}`)
-      continue
-    }
-
-    console.log(`\n📄 File: ${file}`)
-    console.log(`🔗 URL: ${url}`)
-
-    // For courses format, we need to pass the lhr object, not the file path
-    const passed = verifyResultsWithLHR(lhr, pageKey)
-    results.push({ file, pageKey, passed })
-    if (!passed) allPassed = false
   }
 
   // Summary

@@ -19,39 +19,39 @@ L'endpoint accepte trois paramètres :
 - `lang` : code de langue (`fr`, `en`, `es`…)
 - `version` : version du référentiel (ex: `1.0.0`) ou `latest`
 
-- [ ] Écrire un script `scripts/generate-refs-urls.ts` qui :
+- [x] Écrire un script `scripts/generate-refs-urls.ts` qui :
   - Prend en config la version du référentiel cible (défaut : `latest`) et les locales souhaitées (`fr`, `en`)
   - Pour chaque ID RWEB utilisé dans les audits, appelle `GET /api/fiches/{id}?lang={locale}&version={version}` pour récupérer l'URL canonique
   - Génère `libs/ecoindex-lh-plugin-ts/src/audits/bp/refs-urls.ts` avec les URLs par locale
   - Inscrit en commentaire en-tête la version du référentiel utilisée (pour traçabilité)
-- [ ] Exposer via `pnpm refs:update` et `pnpm refs:update -- --version 1.0.0`
-- [ ] Supprimer les URLs vers GitHub dans `refs-urls.ts` au profit des URLs API
+- [x] Exposer via `pnpm refs:update` et `pnpm refs:update -- --version 1.0.0`
+- [x] Supprimer les URLs vers GitHub dans `refs-urls.ts` au profit des URLs API
 
 ---
 
 ## Tier 1 — Impact élevé, détection réseau simple
 
-- [ ] **RWEB_0106** — Éviter l'autoplay vidéo/audio (impact 4/5, priorité 4/5)
+- [x] **RWEB_0106** — Éviter l'autoplay vidéo/audio (impact 4/5, priorité 4/5)
   - Détecter `<video autoplay>`, `<audio autoplay>`, `preload="auto"`
   - Seuil : 0 élément autoplay
 
-- [ ] **RWEB_0059** — Remplacer les boutons officiels des réseaux sociaux (impact 4/5, priorité 5/5)
+- [x] **RWEB_0059** — Remplacer les boutons officiels des réseaux sociaux (impact 4/5, priorité 5/5)
   - Détecter les requêtes vers `connect.facebook.net`, `platform.twitter.com`, `platform.linkedin.com`, etc.
   - Seuil : 0 SDK social
 
-- [ ] **RWEB_0111** — Limiter les outils analytics (impact 4/5, priorité 4/5)
+- [x] **RWEB_0111** — Limiter les outils analytics (impact 4/5, priorité 4/5)
   - Compter les domaines analytics distincts : GA, GTM, Hotjar, Matomo, Mixpanel, Segment…
   - Seuil : max 1 outil
 
-- [ ] **RWEB_0082** — Limiter le nombre de domaines servant les ressources (impact 3/5, priorité 3/5)
+- [x] **RWEB_0082** — Limiter le nombre de domaines servant les ressources (impact 3/5, priorité 3/5)
   - Compter les hostnames uniques dans les network records
   - Seuil : max 5 domaines
 
-- [ ] **RWEB_0112** — Éviter les redirections HTTP (impact 4/5, priorité 4/5)
+- [x] **RWEB_0112** — Éviter les redirections HTTP (impact 4/5, priorité 4/5)
   - Détecter les réponses 301/302/307/308 dans les network records
   - Seuil : max 1 redirection
 
-- [ ] **RWEB_0060** — Service Worker actif (impact 4/5, priorité 4/5)
+- [x] **RWEB_0060** — Service Worker actif (impact 4/5, priorité 4/5)
   - Vérifier `navigator.serviceWorker.controller !== null` via page evaluation
   - Seuil : présence obligatoire (audit informatif)
 
@@ -59,24 +59,24 @@ L'endpoint accepte trois paramètres :
 
 ## Tier 2 — DOM, impact élevé
 
-- [ ] **RWEB_0042** — Externaliser CSS et JavaScript (impact 4/5, priorité 5/5)
+- [x] **RWEB_0042** — Externaliser CSS et JavaScript (impact 4/5, priorité 5/5)
   - Compter les blocs `<style>` et `<script>` inline dans le HTML (hors critical CSS autorisé)
   - Seuil : max 2 blocs inline
 
-- [ ] **RWEB_0055** — Limiter les canvas (impact 4/5, priorité 5/5)
+- [x] **RWEB_0055** — Limiter les canvas (impact 4/5, priorité 5/5)
   - Compter les éléments `<canvas>` dans le DOM
   - Seuil : max 0 (signal d'alerte)
 
-- [ ] **RWEB_0032** — Favoriser les polices standards (impact 4/5, priorité 4/5)
+- [x] **RWEB_0032** — Favoriser les polices standards (impact 4/5, priorité 4/5)
   - Détecter les requêtes vers `fonts.googleapis.com`, `use.typekit.net`, `fonts.bunny.net`, etc.
   - Compter le nombre de familles de polices externes
   - Seuil : max 2 familles
 
-- [ ] **RWEB_0011** — Titre de page et meta description (impact 4/5, priorité 5/5)
+- [x] **RWEB_0011** — Titre de page et meta description (impact 4/5, priorité 5/5)
   - Vérifier la présence et la non-vacuité de `<title>` et `<meta name="description">`
   - Seuil : présence des deux
 
-- [ ] **RWEB_0031** — CSS print (impact 3/5, priorité 3/5)
+- [x] **RWEB_0031** — CSS print (impact 3/5, priorité 3/5)
   - Vérifier `<link media="print">` ou règle `@media print` dans les CSS chargés
   - Seuil : présence obligatoire
 
@@ -84,31 +84,31 @@ L'endpoint accepte trois paramètres :
 
 ## Tier 3 — Détection heuristique / partielle
 
-- [ ] **RWEB_0099** — Limiter les GIFs animés (impact 3/5, priorité 3/5)
+- [x] **RWEB_0099** — Limiter les GIFs animés (impact 3/5, priorité 3/5)
   - Détecter `<img src="*.gif">` et requêtes réseau `.gif`
   - Seuil : 0 GIF animé
 
-- [ ] **RWEB_0009** — Éviter les animations CSS/JS (impact 5/5, priorité 4/5)
+- [x] **RWEB_0009** — Éviter les animations CSS/JS (impact 5/5, priorité 4/5)
   - Compter les éléments avec propriétés CSS `animation` ou `transition` actives
   - Détection partielle (heuristique)
 
-- [ ] **RWEB_0010** — Limiter les carrousels (impact 4/5, priorité 5/5)
+- [x] **RWEB_0010** — Limiter les carrousels (impact 4/5, priorité 5/5)
   - Détecter les librairies connues dans les scripts chargés : Swiper, Slick, Owl Carousel, Splide, etc.
   - Seuil : 0 carrousel (signal d'alerte)
 
-- [ ] **RWEB_0033** — Ne pas embarquer des documents dans la page (impact 4/5, priorité 2/5)
+- [x] **RWEB_0033** — Ne pas embarquer des documents dans la page (impact 4/5, priorité 2/5)
   - Détecter `<embed>`, `<object>`, `<iframe>` pointant vers des PDF ou documents Office
   - Seuil : 0 document embarqué
 
-- [ ] **RWEB_0039** — CSS containment (impact 4/5, priorité 3/5)
+- [x] **RWEB_0039** — CSS containment (impact 4/5, priorité 3/5)
   - Vérifier si la propriété `contain` est utilisée dans les stylesheets chargés
   - Audit informatif (encourager l'usage)
 
-- [ ] **RWEB_0084** — HSTS header (impact 4/5, priorité 4/5)
+- [x] **RWEB_0084** — HSTS header (impact 4/5, priorité 4/5)
   - Vérifier la présence du header `Strict-Transport-Security` sur la réponse principale
   - Seuil : présence obligatoire
 
-- [ ] **RWEB_0081** — Ressources statiques sans cookie (impact 4/5, priorité 4/5)
+- [x] **RWEB_0081** — Ressources statiques sans cookie (impact 4/5, priorité 4/5)
   - Vérifier que les requêtes images/CSS/JS ne contiennent pas le header `Cookie:`
   - Seuil : 0 ressource statique avec cookie
 

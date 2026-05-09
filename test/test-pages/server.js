@@ -49,6 +49,13 @@ app.get('/heavy', (req, res) => {
   res.sendFile(path.join(__dirname, 'heavy.html'))
 })
 
+app.get('/bp-violations', (req, res) => {
+  // Set an oversized cookie so sub-requests carry a Cookie header > 512 bytes
+  // This triggers the rweb-cookie-size audit (RWEB_0062)
+  res.cookie('bigcookie', 'x'.repeat(520), { httpOnly: false })
+  res.sendFile(path.join(__dirname, 'bp-violations.html'))
+})
+
 // Serve static files (for any other assets)
 app.use(express.static(__dirname))
 

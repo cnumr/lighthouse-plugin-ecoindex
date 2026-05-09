@@ -9,13 +9,13 @@ import type { GathererArtifacts } from 'lighthouse'
 import { Audit } from 'lighthouse'
 import refsURLS from './../bp/refs-urls.js'
 
-class BPPrintCSS extends Audit {
+class BPRwebPrintCss extends Audit {
   static get meta() {
     return {
-      id: 'bp-print-css',
-      title: '#RWEB_0027 - Print CSS',
-      failureTitle: '#RWEB_0027 - No print css implemented.',
-      description: `A print css must be implemented to hide useless elements when printing. [See #RWEB_0027](${refsURLS.rweb.bp_0027.en})`,
+      id: 'rweb-print-css',
+      title: 'RWEB_0031 - Print CSS',
+      failureTitle: 'RWEB_0031 - No print css implemented.',
+      description: `A print css must be implemented to hide useless elements when printing. [See RWEB_0031](${refsURLS.rweb.rweb_0031.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: ['LinkElements', 'DOMStats', 'devtoolsLogs'] as (
@@ -44,4 +44,4 @@ class BPPrintCSS extends Audit {
   }
 }
 
-export default BPPrintCSS
+export default BPRwebPrintCss
