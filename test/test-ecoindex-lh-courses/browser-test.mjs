@@ -7,5 +7,4 @@ console.log('************************')
 await initBuildId()
 console.log('************************')
 
-const installed = await checkIfMandatoryBrowserInstalled(true)
-console.log(installed)
+await checkIfMandatoryBrowserInstalled(true)

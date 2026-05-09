@@ -174,7 +174,7 @@ class TheGreenWebFoundation extends Audit {
     try {
       return (await checkUrl(artifacts.URL.requestedUrl)) as LH.Audit.Product
     } catch (error) {
-      createErrorResult(error)
+      createErrorResult(error as Error)
     }
   }
 }

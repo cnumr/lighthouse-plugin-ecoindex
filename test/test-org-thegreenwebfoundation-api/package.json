@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@usebruno/cli": "^2.2.2"
+    "@usebruno/cli": "^3.3.0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
