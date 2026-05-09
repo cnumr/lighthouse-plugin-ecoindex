@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.2.2
+
+### Patch Changes
+
+- b830700: Remove legacy directory and commented-out dead code in plugin.ts
+
 ## 7.2.1
 
 ## 7.2.0
