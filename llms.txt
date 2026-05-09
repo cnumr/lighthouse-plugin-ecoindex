@@ -36,7 +36,7 @@
 ## Bonnes pratiques
 
 - [Les audits du plugin](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/00-index.md): Les bonnes pratiques proposées comme audits dans le plugin Ecoindex Lighthouse
-- [#RWEB - Les « 115 bonnes pratiques » du Collectif GreenIT](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/01-bp-greenit.md): Listes des bonnes pratiques GreenIT opposables, présentent dans l'outil GreenIT analysis.
+- [Audits RWEB — Référentiel GreenIT](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/03-rweb.md): Les audits sont basés sur le référentiel RWEB 5.0 du collectif GreenIT.
 - [Référentiel général d'écoconception de services numériques (RGESN)](https://cnumr.github.io/lighthouse-plugin-ecoindex/bonnes-pratiques/02-rgesn.md): Référentiel RGESN
 
 ## Annexes: Types de rapports générés
