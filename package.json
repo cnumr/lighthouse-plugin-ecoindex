@@ -49,6 +49,7 @@
     "schema:create": "./scripts/manage-schema.sh create",
     "schema:update": "./scripts/manage-schema.sh update",
     "typecheck": "turbo run typecheck",
+    "typecheck:strict": "tsc --noEmit -p apps/ecoindex-lh-cli/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-courses/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-plugin-ts/tsconfig.json",
     "format:write": "turbo run format:write",
     "format:check": "turbo run format:check",
     "publish-packages": "turbo lint build test && changeset version && changeset publish",

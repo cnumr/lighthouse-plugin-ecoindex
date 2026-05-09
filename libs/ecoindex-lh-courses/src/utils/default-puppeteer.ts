@@ -71,7 +71,7 @@ async function endEcoindexPageMesure(
 async function authenticateEcoindexPageMesure(
   page: puppeteer.Page,
   authenticate: Auth,
-  browser: puppeteer.Browser,
+  _browser: puppeteer.Browser,
   session: puppeteer.CDPSession,
   flow: LH.UserFlow,
 ) {

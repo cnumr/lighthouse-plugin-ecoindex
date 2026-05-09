@@ -44,7 +44,7 @@ const cacheDir = path.join(os.homedir(), '.cache', 'puppeteer')
  * Install Pupperteer browser.
  */
 const installMandatoryBrowser = async (
-  type: Browser,
+  type: Browser = Browser.CHROMEHEADLESSSHELL,
 ): Promise<InstalledBrowser> => {
   const { success, info } = logSymbols
   await initBuildId()
@@ -70,7 +70,7 @@ const installMandatoryBrowser = async (
  */
 const checkIfMandatoryBrowserInstalled = async (
   debug: boolean = false,
-): Promise<InstalledBrowser | ''> => {
+): Promise<InstalledBrowser | null> => {
   const { info } = logSymbols
   await initBuildId()
   const installedBrowsers = await getInstalledBrowsers({ cacheDir })
