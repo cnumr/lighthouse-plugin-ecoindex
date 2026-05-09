@@ -1,5 +1,15 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.2.0
+
+### Minor Changes
+
+- 9764d21: Update vulnerable dependencies: bump @usebruno/cli to 3.3.0 (fixes critical axios supply chain alert), add pnpm overrides for postcss@^8.5.14 and fast-uri@^3.1.2.
+
+### Patch Changes
+
+- 9764d21: Fix TypeScript error cast in TheGreenWebFoundation audit error handler.
+
 ## 7.1.0
 
 ### Minor Changes
