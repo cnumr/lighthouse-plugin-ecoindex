@@ -1,5 +1,3 @@
-// import * as i18n from 'lighthouse/core/lib/i18n/i18n'
-
 import * as LH from 'lighthouse/types/lh.js'
 
 import { getVersion } from './utils/index.js'
@@ -138,36 +136,6 @@ export default {
     {
       path: `${__dirname}/audits/bp/thegreenwebfoundation.js`,
     },
-    // {
-    //   path: '${__dirname}/audits/bp/add-headers-expire-and-cache-control.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/unminified-css.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/unminified-javascript.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/uses-http2.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/errors-in-console.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/redirects.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/no-document-write.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/uses-text-compression.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/plugins.js',
-    // },
-    // {
-    //   path: '${__dirname}/audits/bp/image-size-responsive.js',
-    // },
   ],
   groups: {
     'ecoindex-ecologic': {
@@ -387,56 +355,6 @@ export default {
         weight: 0,
         group: 'ecoindex-best-practices',
       },
-      // {
-      //   id: 'bp-add-headers-expire-and-cache-control',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-unminified-css',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-unminified-javascript',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-uses-http2',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-errors-in-console',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-redirects',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-uses-text-compression',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-no-document-write',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-plugins',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
-      // {
-      //   id: 'bp-image-size-responsive',
-      //   weight: 0,
-      //   group: 'ecoindex-best-practices',
-      // },
       {
         id: 'bp-thegreenwebfoundation',
         weight: 0,
