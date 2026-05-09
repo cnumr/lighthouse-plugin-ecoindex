@@ -82,6 +82,60 @@ export default {
       path: `${__dirname}/audits/bp/rweb-no-cookie-on-static.js`,
     },
     {
+      path: `${__dirname}/audits/bp/rweb-cache-control.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-http-compression.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-uses-http2.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-cookie-size.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-http-errors.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-limit-css-files.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-combine-assets.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-lazy-loading.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-document-write.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-hidden-images.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-js-errors.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-plugins.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-minification.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-optimize-svg.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-prefer-css.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-bitmap-ui.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-no-unused-code.js`,
+    },
+    {
+      path: `${__dirname}/audits/bp/rweb-css-splitting.js`,
+    },
+    {
       path: `${__dirname}/audits/bp/thegreenwebfoundation.js`,
     },
     // {
@@ -240,6 +294,96 @@ export default {
       { id: 'rweb-hsts', weight: 0, group: 'ecoindex-best-practices' },
       {
         id: 'rweb-no-cookie-on-static',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-cache-control',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-http-compression',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-uses-http2',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-cookie-size',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-http-errors',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-limit-css-files',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-combine-assets',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-lazy-loading',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-document-write',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-hidden-images',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-js-errors',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-plugins',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-minification',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-optimize-svg',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-prefer-css',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-bitmap-ui',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-no-unused-code',
+        weight: 0,
+        group: 'ecoindex-best-practices',
+      },
+      {
+        id: 'rweb-css-splitting',
         weight: 0,
         group: 'ecoindex-best-practices',
       },

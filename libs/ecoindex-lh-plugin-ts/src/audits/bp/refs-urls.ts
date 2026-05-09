@@ -53,6 +53,22 @@ export default {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0033-ne-pas-afficher-les-documents-a-l-interieur-des-pages',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0033-do-not-display-documents-within-pages',
     },
+    rweb_0035: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0035-limiter-le-nombre-de-css',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0035-limit-the-number-of-css',
+    },
+    rweb_0036: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0036-decouper-les-css',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0036-divide-css',
+    },
+    rweb_0037: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0037-preferer-les-css-aux-images',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0037-use-css-instead-of-images',
+    },
+    rweb_0038: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0038-eviter-d-utiliser-des-images-matricielles-pour-l-interface',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0038-avoid-using-raster-images-for-the-interface',
+    },
     rweb_0039: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0039-utiliser-les-compartiments-css',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0039-use-css-containment',
@@ -60,6 +76,22 @@ export default {
     rweb_0042: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0042-externaliser-les-css-et-javascript',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0042-externalize-css-and-javascript',
+    },
+    rweb_0043: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0043-valider-votre-code-avec-un-linter',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter',
+    },
+    rweb_0044: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0044-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal',
+    },
+    rweb_0046: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0046-ne-charger-des-donneesdu-code-que-lorsqu-elles-sontil-est-necessaire',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0046-only-load-datacode-when-necessary',
+    },
+    rweb_0051: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0051-utiliser-le-chargement-paresseux',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0051-use-lazy-loading',
     },
     rweb_0055: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0055-limiter-le-recours-aux-canvas',
@@ -73,6 +105,26 @@ export default {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0060-economiser-de-la-bande-passante-grace-a-un-serviceworker',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0060-save-bandwidth-with-service-workers',
     },
+    rweb_0062: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0062-optimiser-la-taille-des-cookies',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size',
+    },
+    rweb_0075: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0075-ajouter-des-entetes-expires-ou-cache-control',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0075-add-expires-or-cache-control-headers',
+    },
+    rweb_0076: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0076-compresser-les-fichiers-css-javascript-html-et-svg',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0076-compressing-text-files-css-js-html-and-svg',
+    },
+    rweb_0077: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0077-minifier-les-fichiers-css-javascript-html-et-svg',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0077-minifying-text-files-css-js-html-and-svg',
+    },
+    rweb_0078: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0078-combiner-les-fichiers-css-et-javascript',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0078-combining-css-and-javascript-files',
+    },
     rweb_0081: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0081-heberger-les-ressources-cssjs-sur-un-domaine-sans-cookie',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0081-host-static-resources-on-a-cookie-free-domain',
@@ -81,6 +133,10 @@ export default {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0082-limiter-le-nombre-de-domaines-servant-les-ressources',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0082-limit-the-number-of-domains-serving-resources',
     },
+    rweb_0083: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0083-privilegier-http2-a-http1',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0083-http2-over-http1',
+    },
     rweb_0084: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0084-favoriser-hsts-preload-list-aux-redirections-301',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0084-favor-hsts-preload-list-over-301-redirects',
@@ -88,6 +144,10 @@ export default {
     rweb_0099: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0099-limiter-l-utilisation-des-gifs-animes',
       en: 'https://rweb.greenit.fr/en/fiches/RWEB_0099-limit-the-use-of-animated-gif',
+    },
+    rweb_0100: {
+      fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0100-optimiser-les-images-vectorielles',
+      en: 'https://rweb.greenit.fr/en/fiches/RWEB_0100-optimize-vector-images',
     },
     rweb_0106: {
       fr: 'https://rweb.greenit.fr/fr/fiches/RWEB_0106-eviter-la-lecture-et-le-chargement-automatique-des-videos-et-des-sons',

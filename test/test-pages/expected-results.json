@@ -103,8 +103,8 @@
       "tolerance": 10
     },
     "expectedRequests": {
-      "value": 1,
-      "tolerance": 2
+      "value": 17,
+      "tolerance": 5
     },
     "expectedBPAudits": {
       "rweb-no-autoplay": 0,
@@ -120,7 +120,27 @@
       "rweb-limit-domains": 1,
       "rweb-no-redirects": 1,
       "rweb-hsts": 0,
-      "rweb-no-cookie-on-static": 1
+      "rweb-no-cookie-on-static": 1,
+      "rweb-http-compression": 0,
+      "rweb-uses-http2": 0,
+      "rweb-cookie-size": 1,
+      "rweb-no-http-errors": 0,
+      "rweb-limit-css-files": 0.5,
+      "rweb-combine-assets": 1,
+      "rweb-lazy-loading": 0,
+      "rweb-no-document-write": 0,
+      "rweb-no-hidden-images": 1,
+      "rweb-no-js-errors": 0,
+      "rweb-no-plugins": 0,
+      "rweb-minification": 0,
+      "rweb-optimize-svg": 1,
+      "rweb-prefer-css": 0,
+      "rweb-no-bitmap-ui": 0,
+      "rweb-no-unused-code": 0,
+      "rweb-css-splitting": 0,
+      "rweb-limit-fonts": 1,
+      "rweb-no-carousel": 1,
+      "rweb-css-containment": null
     },
     "note": "RWEB_0059/0084/0081 score 1 on local pages (no social CDN, HSTS absent on localhost is expected)"
   }

@@ -50,6 +50,9 @@ app.get('/heavy', (req, res) => {
 })
 
 app.get('/bp-violations', (req, res) => {
+  // Set an oversized cookie so sub-requests carry a Cookie header > 512 bytes
+  // This triggers the rweb-cookie-size audit (RWEB_0062)
+  res.cookie('bigcookie', 'x'.repeat(520), { httpOnly: false })
   res.sendFile(path.join(__dirname, 'bp-violations.html'))
 })
 
