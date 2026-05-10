@@ -145,6 +145,7 @@ function getLighthouseConfig(
   stepName = `undefined`,
   onlyCategories = ['lighthouse-plugin-ecoindex-core'],
   userAgent: string,
+  lang: 'en' | 'fr' = 'en',
 ): LH.UserFlow.Options {
   return {
     name: stepName,
@@ -163,6 +164,7 @@ function getLighthouseConfig(
               ]
             : userAgent,
         disableStorageReset: isWarm,
+        locale: lang as LH.Locale,
       },
     },
   }
