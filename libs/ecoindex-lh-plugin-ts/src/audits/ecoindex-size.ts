@@ -11,13 +11,19 @@ import { MetricValue } from '../types/index.js'
 import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
 import refsURLS from './bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Page size.',
+  failureTitle: 'Page size, your page is too heavy.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class EcoindexSizeAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-size',
-      title: 'Page size.',
-      failureTitle: 'Page size, your page is too heavy.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `The sum of all the \`encodedDataLengths\` of these same requests + the html size of the page itself calculates the page weight. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,

@@ -8,6 +8,7 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MIN_CONTENT_LENGTH = 200
 const MIN_CHARS_PER_LINE = 80
@@ -19,13 +20,18 @@ function isUnminified(content: string): boolean {
   const avgCharsPerLine = content.length / lines.length
   return avgCharsPerLine < MIN_CHARS_PER_LINE
 }
+const UIStrings = {
+  title: 'RWEB_0077 - Minify inline CSS and JS',
+  failureTitle: 'RWEB_0077 - Unminified inline CSS/JS detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebMinification extends Audit {
   static get meta() {
     return {
       id: 'rweb-minification',
-      title: 'RWEB_0077 - Minify inline CSS and JS',
-      failureTitle: 'RWEB_0077 - Unminified inline CSS/JS detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Minify inline style and script blocks to reduce page weight. [See RWEB_0077](${refsURLS.rweb.rweb_0077.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

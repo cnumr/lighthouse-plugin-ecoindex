@@ -11,12 +11,17 @@ import { MetricValue } from '../types/index.js'
 import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
 import refsURLS from './bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Greenhouse Gas Emission.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class EcoindexGreenhouseGasEmissionAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-ghg',
-      title: 'Greenhouse Gas Emission.',
+      title: str_(UIStrings.title),
       failureTitle:
         'Greenhouse Gas Emission, your page generates a lot of greenhouse gas.',
       description: `Greenhouse Gas Emission (eqCO2) of your page. [Learn more about the Ecoindex, Environmental footprint](${refsURLS.ecoindex.footprint.en})`,

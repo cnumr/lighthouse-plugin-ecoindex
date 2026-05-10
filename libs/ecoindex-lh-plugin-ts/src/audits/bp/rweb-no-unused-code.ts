@@ -8,17 +8,23 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // External scripts without async or defer block the parser
 const BLOCKING_SCRIPT_RE =
   /<script\b(?=[^>]*\bsrc\b)(?![^>]*\b(?:async|defer)\b)[^>]*>/gi
+const UIStrings = {
+  title: 'RWEB_0046 - Avoid render-blocking external scripts',
+  failureTitle: 'RWEB_0046 - Blocking external scripts detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoUnusedCode extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-unused-code',
-      title: 'RWEB_0046 - Avoid render-blocking external scripts',
-      failureTitle: 'RWEB_0046 - Blocking external scripts detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Add async or defer to external scripts to prevent blocking the critical rendering path. [See RWEB_0046](${refsURLS.rweb.rweb_0046.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

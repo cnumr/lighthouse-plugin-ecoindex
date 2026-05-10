@@ -2,15 +2,21 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const STATIC_RESOURCE_TYPES = new Set(['Image', 'Stylesheet', 'Script', 'Font'])
+const UIStrings = {
+  title: 'RWEB_0081 - No cookies on static resources',
+  failureTitle: 'RWEB_0081 - Cookies detected on static resources',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoCookieOnStatic extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-cookie-on-static',
-      title: 'RWEB_0081 - No cookies on static resources',
-      failureTitle: 'RWEB_0081 - Cookies detected on static resources',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Avoid sending cookies with static resources (images, CSS, JS, fonts). [See RWEB_0081](${refsURLS.rweb.rweb_0081.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }

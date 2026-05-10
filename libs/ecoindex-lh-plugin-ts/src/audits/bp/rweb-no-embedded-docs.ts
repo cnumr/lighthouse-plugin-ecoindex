@@ -8,13 +8,19 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0033 - No embedded documents',
+  failureTitle: 'RWEB_0033 - Embedded documents detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoEmbeddedDocs extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-embedded-docs',
-      title: 'RWEB_0033 - No embedded documents',
-      failureTitle: 'RWEB_0033 - Embedded documents detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](${refsURLS.rweb.rweb_0033.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

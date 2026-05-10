@@ -9,13 +9,19 @@ import {
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0099 - Avoid using GIFs',
+  failureTitle: 'RWEB_0099 - GIFs detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoGif extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-gif',
-      title: 'RWEB_0099 - Avoid using GIFs',
-      failureTitle: 'RWEB_0099 - GIFs detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](${refsURLS.rweb.rweb_0099.en})`,
       requiredArtifacts: ['DevtoolsLog', 'MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

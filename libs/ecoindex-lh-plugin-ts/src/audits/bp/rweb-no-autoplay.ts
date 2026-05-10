@@ -9,13 +9,19 @@ import {
 import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0106 - No video/audio autoplay',
+  failureTitle: 'RWEB_0106 - Autoplay video/audio detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoAutoplay extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-autoplay',
-      title: 'RWEB_0106 - No video/audio autoplay',
-      failureTitle: 'RWEB_0106 - Autoplay video/audio detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Avoid autoplay on video and audio elements. [See RWEB_0106](${refsURLS.rweb.rweb_0106.en})`,
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts

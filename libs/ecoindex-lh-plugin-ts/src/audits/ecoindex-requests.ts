@@ -11,12 +11,17 @@ import { MetricValue } from '../types/index.js'
 import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
 import refsURLS from './bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Number of requests.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class EcoindexRequestsAudit extends Audit {
   static get meta() {
     return {
       id: 'eco-index-requests',
-      title: 'Number of requests.',
+      title: str_(UIStrings.title),
       failureTitle:
         'Number of requests, your page calls too many external resources.',
       description: `The number of \`Network.loadingFinished\` logs indicates the number of requests made to external resources. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,

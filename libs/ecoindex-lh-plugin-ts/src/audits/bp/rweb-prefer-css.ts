@@ -8,19 +8,25 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // Detect <img> directly inside <button> or <a> — likely icon usage replaceable by CSS
 const ICON_IMG_IN_BUTTON =
   /<button\b[^>]*>(?:[^<]|<(?!img\b))*<img\b[^>]*>(?:[^<]|<(?!\/button))*<\/button>/gi
 const ICON_IMG_IN_ANCHOR =
   /<a\b[^>]*>(?:[^<]|<(?!img\b))*<img\b[^>]*>(?:[^<]|<(?!\/a))*<\/a>/gi
+const UIStrings = {
+  title: 'RWEB_0037 - Prefer CSS over images for UI elements',
+  failureTitle: 'RWEB_0037 - Images used for UI icons (prefer CSS)',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebPreferCss extends Audit {
   static get meta() {
     return {
       id: 'rweb-prefer-css',
-      title: 'RWEB_0037 - Prefer CSS over images for UI elements',
-      failureTitle: 'RWEB_0037 - Images used for UI icons (prefer CSS)',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Replace bitmap or SVG icons inside buttons and links with CSS shapes or icon fonts to reduce HTTP requests. [See RWEB_0037](${refsURLS.rweb.rweb_0037.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

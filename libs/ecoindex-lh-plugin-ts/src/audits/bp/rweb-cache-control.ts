@@ -3,15 +3,21 @@ import * as LH from 'lighthouse/types/lh.js'
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const CACHEABLE_TYPES = new Set(['Document', 'Stylesheet', 'Script', 'Font'])
+const UIStrings = {
+  title: 'RWEB_0075 - Use Cache-Control headers',
+  failureTitle: 'RWEB_0075 - Resources missing Cache-Control header',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebCacheControl extends Audit {
   static get meta() {
     return {
       id: 'rweb-cache-control',
-      title: 'RWEB_0075 - Use Cache-Control headers',
-      failureTitle: 'RWEB_0075 - Resources missing Cache-Control header',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Set Cache-Control headers on HTML, CSS, JS and font resources to reduce repeated downloads. [See RWEB_0075](${refsURLS.rweb.rweb_0075.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }

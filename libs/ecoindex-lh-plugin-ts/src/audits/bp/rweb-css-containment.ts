@@ -3,13 +3,19 @@ import * as LH from 'lighthouse/types/lh.js'
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0039 - Use CSS containment',
+  failureTitle: 'RWEB_0039 - CSS containment not verified',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebCssContainment extends Audit {
   static get meta() {
     return {
       id: 'rweb-css-containment',
-      title: 'RWEB_0039 - Use CSS containment',
-      failureTitle: 'RWEB_0039 - CSS containment not verified',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Use CSS containment property to optimize rendering performance. [See RWEB_0039](${refsURLS.rweb.rweb_0039.en})`,
       scoreDisplayMode: 'manual' as LH.Audit.ScoreDisplayMode,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],

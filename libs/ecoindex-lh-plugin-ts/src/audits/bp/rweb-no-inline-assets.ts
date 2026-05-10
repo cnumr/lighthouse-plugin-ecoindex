@@ -9,13 +9,19 @@ import {
 import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0042 - Minimize inline assets',
+  failureTitle: 'RWEB_0042 - Inline assets detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoInlineAssets extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-inline-assets',
-      title: 'RWEB_0042 - Minimize inline assets',
-      failureTitle: 'RWEB_0042 - Inline assets detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Minimize the use of inline scripts and styles. [See RWEB_0042](${refsURLS.rweb.rweb_0042.en})`,
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts

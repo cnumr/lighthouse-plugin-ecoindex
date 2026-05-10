@@ -3,16 +3,22 @@ import * as LH from 'lighthouse/types/lh.js'
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const TEXT_TYPES = new Set(['Document', 'Stylesheet', 'Script'])
 const ENCODING_PATTERN = /gzip|br|deflate|zstd/i
+const UIStrings = {
+  title: 'RWEB_0076 - Compress text resources (≥ 95%)',
+  failureTitle: 'RWEB_0076 - Text resources not compressed',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebHttpCompression extends Audit {
   static get meta() {
     return {
       id: 'rweb-http-compression',
-      title: 'RWEB_0076 - Compress text resources (≥ 95%)',
-      failureTitle: 'RWEB_0076 - Text resources not compressed',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Enable gzip/brotli compression for HTML, CSS and JS resources. [See RWEB_0076](${refsURLS.rweb.rweb_0076.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }

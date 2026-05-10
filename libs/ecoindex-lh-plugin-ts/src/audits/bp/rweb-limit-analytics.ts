@@ -8,6 +8,7 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const ANALYTICS_DOMAINS = [
   'www.google-analytics.com',
@@ -23,13 +24,18 @@ const ANALYTICS_DOMAINS = [
   'js.hs-analytics.net',
   'js.hsforms.net',
 ]
+const UIStrings = {
+  title: 'RWEB_0111 - Limit analytics tools (≤ 1)',
+  failureTitle: 'RWEB_0111 - Multiple analytics tools detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebLimitAnalytics extends Audit {
   static get meta() {
     return {
       id: 'rweb-limit-analytics',
-      title: 'RWEB_0111 - Limit analytics tools (≤ 1)',
-      failureTitle: 'RWEB_0111 - Multiple analytics tools detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Limit analytics tools to one per page. [See RWEB_0111](${refsURLS.rweb.rweb_0111.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts

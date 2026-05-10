@@ -8,13 +8,19 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0051 - Use lazy loading for images',
+  failureTitle: 'RWEB_0051 - Images without lazy loading detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebLazyLoading extends Audit {
   static get meta() {
     return {
       id: 'rweb-lazy-loading',
-      title: 'RWEB_0051 - Use lazy loading for images',
-      failureTitle: 'RWEB_0051 - Images without lazy loading detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Add loading="lazy" to below-the-fold images to defer their download. [See RWEB_0051](${refsURLS.rweb.rweb_0051.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

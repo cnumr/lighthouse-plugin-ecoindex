@@ -8,13 +8,19 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0043 - No JavaScript errors in console',
+  failureTitle: 'RWEB_0043 - JavaScript errors detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoJsErrors extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-js-errors',
-      title: 'RWEB_0043 - No JavaScript errors in console',
-      failureTitle: 'RWEB_0043 - JavaScript errors detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](${refsURLS.rweb.rweb_0043.en})`,
       requiredArtifacts: ['ConsoleMessages'] as (
         | keyof UniversalBaseArtifacts

@@ -8,13 +8,19 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0011 - Page has title and meta description',
+  failureTitle: 'RWEB_0011 - Missing title or meta description',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebTitleMeta extends Audit {
   static get meta() {
     return {
       id: 'rweb-title-meta',
-      title: 'RWEB_0011 - Page has title and meta description',
-      failureTitle: 'RWEB_0011 - Missing title or meta description',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Ensure the page has a non-empty title and meta description. [See RWEB_0011](${refsURLS.rweb.rweb_0011.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

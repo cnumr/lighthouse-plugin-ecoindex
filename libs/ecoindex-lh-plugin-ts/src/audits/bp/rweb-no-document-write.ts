@@ -8,6 +8,7 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // Detects the presence of a DOM-blocking write call in inline scripts.
 // Matches both document.write( and document['write']( / document["write"](
@@ -16,13 +17,18 @@ const BLOCKING_WRITE_RE = new RegExp(
   'document(?:\\.' + 'write|\\[[\'"](write)[\'"]\\])\\s*\\(',
   'g',
 )
+const UIStrings = {
+  title: 'RWEB_0044 - Avoid DOM manipulation during traversal',
+  failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoDocumentWrite extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-document-write',
-      title: 'RWEB_0044 - Avoid DOM manipulation during traversal',
-      failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](${refsURLS.rweb.rweb_0044.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

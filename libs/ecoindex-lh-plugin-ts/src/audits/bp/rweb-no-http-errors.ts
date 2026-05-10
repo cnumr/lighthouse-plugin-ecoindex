@@ -2,13 +2,19 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Avoid HTTP request errors (4xx/5xx)',
+  failureTitle: 'HTTP request errors detected (4xx/5xx)',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoHttpErrors extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-http-errors',
-      title: 'Avoid HTTP request errors (4xx/5xx)',
-      failureTitle: 'HTTP request errors detected (4xx/5xx)',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description:
         'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],

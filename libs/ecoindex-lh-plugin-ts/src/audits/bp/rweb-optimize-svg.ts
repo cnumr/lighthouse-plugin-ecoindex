@@ -3,15 +3,21 @@ import * as LH from 'lighthouse/types/lh.js'
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const SVG_SIZE_THRESHOLD = 2048
+const UIStrings = {
+  title: 'RWEB_0100 - Optimize SVG files',
+  failureTitle: 'RWEB_0100 - Large SVG files detected (likely unoptimized)',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebOptimizeSvg extends Audit {
   static get meta() {
     return {
       id: 'rweb-optimize-svg',
-      title: 'RWEB_0100 - Optimize SVG files',
-      failureTitle: 'RWEB_0100 - Large SVG files detected (likely unoptimized)',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `SVG files over ${SVG_SIZE_THRESHOLD} bytes likely contain metadata or comments that can be removed. [See RWEB_0100](${refsURLS.rweb.rweb_0100.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }

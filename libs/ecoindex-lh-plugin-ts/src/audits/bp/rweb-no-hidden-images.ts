@@ -7,13 +7,19 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Avoid downloading images that are not displayed',
+  failureTitle: 'Images downloaded but not displayed detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoHiddenImages extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-hidden-images',
-      title: 'Avoid downloading images that are not displayed',
-      failureTitle: 'Images downloaded but not displayed detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description:
         'Images that are downloaded but hidden waste bandwidth. Use lazy loading or remove them.',
       requiredArtifacts: ['ImageElements'] as (

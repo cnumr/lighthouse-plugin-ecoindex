@@ -8,13 +8,19 @@ import {
 import type { GathererArtifacts } from 'lighthouse'
 import { Audit } from 'lighthouse'
 import refsURLS from './../bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0031 - Print CSS',
+  failureTitle: 'RWEB_0031 - No print css implemented.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebPrintCss extends Audit {
   static get meta() {
     return {
       id: 'rweb-print-css',
-      title: 'RWEB_0031 - Print CSS',
-      failureTitle: 'RWEB_0031 - No print css implemented.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `A print css must be implemented to hide useless elements when printing. [See RWEB_0031](${refsURLS.rweb.rweb_0031.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.

@@ -8,13 +8,19 @@ import {
 
 import { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import UrlUtils from 'lighthouse/core/lib/url-utils.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Do not resize images in the browser',
+  failureTitle: 'Images are resized in the browser!',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BadlySizedImage extends Audit {
   static get meta() {
     return {
       id: 'badly-sized-images',
-      title: 'Do not resize images in the browser',
-      failureTitle: 'Images are resized in the browser!',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description:
         'Do not resize images using the HTML attributes height and width. ' +
         'This sends images in their original size, wasting bandwidth and processor power. ' +

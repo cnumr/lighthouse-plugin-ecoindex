@@ -8,18 +8,24 @@ import {
 
 import { Audit } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const BITMAP_EXTENSIONS = /\.(png|jpe?g|bmp|webp)(\?[^"']*)?["']/i
 
 // Structural containers where bitmap images are most likely decorative/UI
 const UI_CONTAINER_RE = /<(header|nav|footer|button)\b[^>]*>([\s\S]*?)<\/\1>/gi
+const UIStrings = {
+  title: 'RWEB_0038 - Avoid bitmap images for UI elements',
+  failureTitle: 'RWEB_0038 - Bitmap images in UI containers detected',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoBitmapUi extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-bitmap-ui',
-      title: 'RWEB_0038 - Avoid bitmap images for UI elements',
-      failureTitle: 'RWEB_0038 - Bitmap images in UI containers detected',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Replace bitmap images (PNG/JPG/WebP) in headers, navs, footers and buttons with SVG or CSS. [See RWEB_0038](${refsURLS.rweb.rweb_0038.en})`,
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts

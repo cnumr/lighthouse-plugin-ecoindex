@@ -9,18 +9,23 @@ import {
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const CSS_SIZE_THRESHOLD = 10 * 1024 // 10 KB
 
 // Link tags that target all contexts (no media splitting)
 const UNSCOPED_LINK_RE = /<link\b[^>]*rel\s*=\s*["']stylesheet["'][^>]*>/gi
 const MEDIA_ATTR_RE = /\bmedia\s*=\s*["'](?!all\b|["'])/i
+const UIStrings = {
+  title: 'RWEB_0036 - Split CSS by media context',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebCssSplitting extends Audit {
   static get meta() {
     return {
       id: 'rweb-css-splitting',
-      title: 'RWEB_0036 - Split CSS by media context',
+      title: str_(UIStrings.title),
       failureTitle:
         'RWEB_0036 - Large CSS files without media targeting detected',
       description: `Split large CSS files by media type (print, mobile…) so only relevant styles are parsed. [See RWEB_0036](${refsURLS.rweb.rweb_0036.en})`,
