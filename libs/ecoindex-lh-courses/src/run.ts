@@ -92,6 +92,7 @@ async function runCourse(
       `Warm Navigation: ${uniqUrls[0]}`,
       cliFlags['audit-category'],
       cliFlags['user-agent'],
+      cliFlags['lang'],
     ),
   )
   console.log(`${logSymbols.info} Mesuring...`)
@@ -114,6 +115,7 @@ async function runCourse(
               `Cold Navigation: ${uniqUrls[index]}`,
               cliFlags['audit-category'],
               cliFlags['user-agent'],
+              cliFlags['lang'],
             ),
           )
         }
@@ -180,6 +182,7 @@ async function runCourse(
             `Cold Navigation: ${uniqUrls[index]}`,
             cliFlags['audit-category'],
             cliFlags['user-agent'],
+            cliFlags['lang'],
           ),
         )
       }
