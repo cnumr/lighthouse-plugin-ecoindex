@@ -8,11 +8,12 @@ import {
 
 import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0055 - Avoid canvas elements',
   failureTitle: 'RWEB_0055 - Canvas elements detected',
+  description:
+    'Minimize the use of canvas elements. [See RWEB_0055](https://rweb.greenit.fr/en/fiches/RWEB_0055-limit-canvas-use)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -22,7 +23,7 @@ class BPRwebNoCanvas extends Audit {
       id: 'rweb-no-canvas',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Minimize the use of canvas elements. [See RWEB_0055](${refsURLS.rweb.rweb_0055.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

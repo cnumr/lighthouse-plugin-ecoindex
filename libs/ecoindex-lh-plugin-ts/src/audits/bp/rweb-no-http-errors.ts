@@ -6,6 +6,8 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Avoid HTTP request errors (4xx/5xx)',
   failureTitle: 'HTTP request errors detected (4xx/5xx)',
+  description:
+    'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -15,8 +17,7 @@ class BPRwebNoHttpErrors extends Audit {
       id: 'rweb-no-http-errors',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description:
-        'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }

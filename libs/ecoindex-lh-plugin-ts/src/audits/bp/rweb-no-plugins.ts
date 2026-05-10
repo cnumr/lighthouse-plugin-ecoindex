@@ -24,6 +24,8 @@ const PLUGIN_PATTERN = new RegExp(
 const UIStrings = {
   title: 'Do not use browser plugins (Flash, Silverlight, Java)',
   failureTitle: 'Browser plugin detected (Flash, Silverlight, Java)',
+  description:
+    'Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported.',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -33,8 +35,7 @@ class BPRwebNoPlugins extends Audit {
       id: 'rweb-no-plugins',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description:
-        'Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported.',
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

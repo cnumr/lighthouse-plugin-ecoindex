@@ -10,11 +10,12 @@ import { Audit } from 'lighthouse'
 import { MetricValue } from '../types/index.js'
 import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
-import refsURLS from './bp/refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Ecoindex DOM elements.',
   failureTitle: 'Ecoindex DOM elements, your page is too complex.',
+  description:
+    'Explication: Counting all the DOM nodes on the page, excluding the child nodes of `svg` elements, gives us the number of DOM elements on the page. This method encourages you not to replace a complex svg with an image, simply to obtain a better score. [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -24,7 +25,7 @@ class EcoindexNodesAudit extends Audit {
       id: 'eco-index-nodes',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Explication: Counting all the DOM nodes on the page, excluding the child nodes of \`svg\` elements, gives us the number of DOM elements on the page. This method encourages you not to replace a complex svg with an image, simply to obtain a better score. [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,

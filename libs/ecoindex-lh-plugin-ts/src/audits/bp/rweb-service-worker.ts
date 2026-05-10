@@ -8,11 +8,12 @@ import {
 
 import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0060 - Service Worker active',
   failureTitle: 'RWEB_0060 - No active Service Worker detected',
+  description:
+    'A Service Worker improves caching and reduces network requests. [See RWEB_0060](https://rweb.greenit.fr/en/fiches/RWEB_0060-save-bandwidth-with-service-workers)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -22,7 +23,7 @@ class BPRwebServiceWorker extends Audit {
       id: 'rweb-service-worker',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `A Service Worker improves caching and reduces network requests. [See RWEB_0060](${refsURLS.rweb.rweb_0060.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

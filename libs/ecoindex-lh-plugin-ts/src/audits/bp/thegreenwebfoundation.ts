@@ -8,12 +8,13 @@ import {
 import { Audit } from 'lighthouse'
 import type { GathererArtifacts } from 'lighthouse'
 import { createErrorResult } from '../../utils/calcul-helper.js'
-import refsURLS from './../bp/refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const UIStrings = {
   title: 'The Green Web Foundation',
   failureTitle: 'Your website is not hosted on a green web host.',
+  description:
+    'The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](https://www.thegreenwebfoundation.org/)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -53,7 +54,7 @@ function makeTableDetails(
   ]
   const moreInfo = {
     label: `more info on The Green Web Foundation API v3`,
-    data: `see ${refsURLS.greenwebfoundation.api_doc.en}`,
+    data: `see https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/`,
   }
   switch (jsonResponse['data']) {
     case false:
@@ -154,7 +155,7 @@ class TheGreenWebFoundation extends Audit {
       id: 'bp-thegreenwebfoundation',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refsURLS.greenwebfoundation.home.en})`,
+      description: str_(UIStrings.description),
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: ['URL', 'devtoolsLogs'] as (

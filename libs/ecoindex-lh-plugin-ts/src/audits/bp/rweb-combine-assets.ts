@@ -2,11 +2,12 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0078 - Combine CSS and JS files (≤ 10 each)',
   failureTitle: 'RWEB_0078 - Too many separate CSS/JS files',
+  description:
+    'Concatenate CSS and JS files to reduce HTTP requests. [See RWEB_0078](https://rweb.greenit.fr/en/fiches/RWEB_0078-combining-css-and-javascript-files)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -16,7 +17,7 @@ class BPRwebCombineAssets extends Audit {
       id: 'rweb-combine-assets',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Concatenate CSS and JS files to reduce HTTP requests. [See RWEB_0078](${refsURLS.rweb.rweb_0078.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }

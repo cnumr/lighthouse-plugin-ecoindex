@@ -12,6 +12,8 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Do not resize images in the browser',
   failureTitle: 'Images are resized in the browser!',
+  description:
+    'Do not resize images using the HTML attributes height and width. This sends images in their original size, wasting bandwidth and processor power. A PNG-24 image measuring 350 x 300 px is 41 KB. If you were to resize the same image file in HTML and display it as a 70 x 60 px thumbnail, it would still be 41 KB, when in fact it should be no more than 3 KB! This means 38 KB downloaded for nothing. The best solution is to resize images using software such as Photoshop, without using HTML. When the content added by website users has no specific added value, it',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -21,13 +23,7 @@ class BadlySizedImage extends Audit {
       id: 'badly-sized-images',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description:
-        'Do not resize images using the HTML attributes height and width. ' +
-        'This sends images in their original size, wasting bandwidth and processor power. ' +
-        'A PNG-24 image measuring 350 x 300 px is 41 KB. ' +
-        'If you were to resize the same image file in HTML and display it as a 70 x 60 px thumbnail, it would still be 41 KB, when in fact it should be no more than 3 KB! ' +
-        'This means 38 KB downloaded for nothing. The best solution is to resize images using software such as Photoshop, without using HTML. ' +
-        "When the content added by website users has no specific added value, it's best to prevent them from inserting images using a WYSIWYG editor, such as CKEditor.",
+      description: str_(UIStrings.description),
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,
       // The name of the artifact provides input to this audit.
       requiredArtifacts: ['ImageElements'] as (

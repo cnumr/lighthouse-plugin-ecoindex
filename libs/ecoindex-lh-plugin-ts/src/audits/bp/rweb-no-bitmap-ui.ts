@@ -7,7 +7,6 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const BITMAP_EXTENSIONS = /\.(png|jpe?g|bmp|webp)(\?[^"']*)?["']/i
@@ -17,6 +16,8 @@ const UI_CONTAINER_RE = /<(header|nav|footer|button)\b[^>]*>([\s\S]*?)<\/\1>/gi
 const UIStrings = {
   title: 'RWEB_0038 - Avoid bitmap images for UI elements',
   failureTitle: 'RWEB_0038 - Bitmap images in UI containers detected',
+  description:
+    'Replace bitmap images (PNG/JPG/WebP) in headers, navs, footers and buttons with SVG or CSS. [See RWEB_0038](https://rweb.greenit.fr/en/fiches/RWEB_0038-avoid-using-raster-images-for-the-interface)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -26,7 +27,7 @@ class BPRwebNoBitmapUi extends Audit {
       id: 'rweb-no-bitmap-ui',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Replace bitmap images (PNG/JPG/WebP) in headers, navs, footers and buttons with SVG or CSS. [See RWEB_0038](${refsURLS.rweb.rweb_0038.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

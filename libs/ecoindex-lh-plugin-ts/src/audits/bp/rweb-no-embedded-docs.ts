@@ -7,11 +7,12 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0033 - No embedded documents',
   failureTitle: 'RWEB_0033 - Embedded documents detected',
+  description:
+    'Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](https://rweb.greenit.fr/en/fiches/RWEB_0033-do-not-display-documents-within-pages)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -21,7 +22,7 @@ class BPRwebNoEmbeddedDocs extends Audit {
       id: 'rweb-no-embedded-docs',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](${refsURLS.rweb.rweb_0033.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

@@ -7,11 +7,12 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0043 - No JavaScript errors in console',
   failureTitle: 'RWEB_0043 - JavaScript errors detected',
+  description:
+    'Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -21,7 +22,7 @@ class BPRwebNoJsErrors extends Audit {
       id: 'rweb-no-js-errors',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](${refsURLS.rweb.rweb_0043.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['ConsoleMessages'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

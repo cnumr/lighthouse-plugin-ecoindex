@@ -8,11 +8,12 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0099 - Avoid using GIFs',
   failureTitle: 'RWEB_0099 - GIFs detected',
+  description:
+    'Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](https://rweb.greenit.fr/en/fiches/RWEB_0099-limit-the-use-of-animated-gif)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -22,7 +23,7 @@ class BPRwebNoGif extends Audit {
       id: 'rweb-no-gif',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](${refsURLS.rweb.rweb_0099.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog', 'MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

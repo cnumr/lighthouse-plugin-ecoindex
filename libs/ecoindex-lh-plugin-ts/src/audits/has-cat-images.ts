@@ -9,6 +9,7 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Page has least one cat image',
   failureTitle: 'Page does not have at least one cat image',
+  description: 'Check whether the page contains at least one cat image.',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -18,9 +19,7 @@ class CatAudit extends Audit {
       id: 'has-cat-images-id',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description:
-        'Pages should have lots of cat images to keep users happy. ' +
-        'Consider adding a picture of a cat to your page improve engagement.',
+      description: str_(UIStrings.description),
       requiredArtifacts: ['ImageElements'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

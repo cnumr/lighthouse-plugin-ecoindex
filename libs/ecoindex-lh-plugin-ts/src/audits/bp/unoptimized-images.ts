@@ -8,6 +8,17 @@ import {
 
 import { Audit } from 'lighthouse'
 import { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+
+const UIStrings = {
+  title:
+    'Use feature policy to check for unoptimized images during development.',
+  failureTitle:
+    'Use feature policy to check for unoptimized images during development.',
+  description:
+    'Turn on feature policy for unoptimized-images to ensure your site is using the best performing images. See [Image policies for fast load times and more](https://web.dev/image-policies/?hl=en).',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 const roundUp = (decimal: number) => {
   return Math.ceil(decimal * 100) / 100
@@ -17,12 +28,9 @@ class UnoptimizedImage extends Audit {
   static get meta() {
     return {
       id: 'unoptimized-images',
-      title:
-        'Use feature policy to check for unoptimized images during development.',
-      failureTitle:
-        'Use feature policy to check for unoptimized images during development.',
-      description:
-        'Turn on feature policy for unoptimized-images to ensure your site is using the best performing images. See [Image policies for fast load times and more](https://web.dev/image-policies/?hl=en).',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,
       // The name of the artifact provides input to this audit.
       requiredArtifacts: ['OptimizedImages', 'ImageElements'] as (

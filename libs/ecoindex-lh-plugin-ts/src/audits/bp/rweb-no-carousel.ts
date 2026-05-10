@@ -2,13 +2,14 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const CAROUSEL_LIBS = ['swiper', 'slick', 'owl', 'splide', 'glide']
 const UIStrings = {
   title: 'RWEB_0010 - Avoid carousels',
   failureTitle: 'RWEB_0010 - Carousel library detected',
+  description:
+    'Avoid using carousel/slider libraries when possible. [See RWEB_0010](https://rweb.greenit.fr/en/fiches/RWEB_0010-limiting-the-use-of-carousels)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -18,7 +19,7 @@ class BPRwebNoCarousel extends Audit {
       id: 'rweb-no-carousel',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Avoid using carousel/slider libraries when possible. [See RWEB_0010](${refsURLS.rweb.rweb_0010.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }

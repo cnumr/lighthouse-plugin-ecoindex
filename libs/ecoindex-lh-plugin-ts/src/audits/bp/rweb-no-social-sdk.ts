@@ -7,7 +7,6 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // platform.twitter.com reste actif après le rebranding X ; platform.x.com ajouté par précaution
@@ -22,6 +21,8 @@ const SOCIAL_SDK_DOMAINS = [
 const UIStrings = {
   title: 'RWEB_0059 - No official social network buttons',
   failureTitle: 'RWEB_0059 - Official social network SDK detected',
+  description:
+    'Replace official social network buttons with static links to reduce third-party requests. [See RWEB_0059](https://rweb.greenit.fr/en/fiches/RWEB_0059-replace-the-official-social-network-sharing-buttons)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -31,7 +32,7 @@ class BPRwebNoSocialSdk extends Audit {
       id: 'rweb-no-social-sdk',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Replace official social network buttons with static links to reduce third-party requests. [See RWEB_0059](${refsURLS.rweb.rweb_0059.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

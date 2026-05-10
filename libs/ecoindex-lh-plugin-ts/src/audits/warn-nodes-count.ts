@@ -4,7 +4,6 @@ import { Audit } from 'lighthouse'
 import { DOMInformationsArtifacts } from '../types/index.js'
 import commons from './commons.js'
 import { getEcoindexNodes } from '../utils/calcul-helper.js'
-import refsURLS from './bp/refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const UIStrings = {
@@ -12,13 +11,10 @@ const UIStrings = {
     'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
   failureTitle:
     'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
+  description:
+    "Green IT would like web service designers to favor the use of SVGs over bitmap images (PNG, GIF, JPEG), which weigh down the page, whenever possible. To encourage this practice, Green IT has adapted its DOM calculation method, which explains why the results of Lighthouse and Ecoindex calculations are sometimes different. 1st difference: In order to maximize the use of SVG, which impacts the DOM, Green IT's calculation method excludes the sub-elements of an SVG tag from the calculation. Lighthouse, on the other hand, does not exclude any element ⇒ DOM.Lighthouse > DOM.Ecoindex. 2nd difference: Lighthouse performs its calculation when the page is rendered, but does not take into account elements added or modified in JavaScript, whereas the Ecoindex calculation engine does ⇒ DOM.Lighthouse < DOM.Ecoindex.  [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)",
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
-
-const warnDescriptionEN =
-  'Green IT would like web service designers to favor the use of SVGs over bitmap images (PNG, GIF, JPEG), which weigh down the page, whenever possible. To encourage this practice, Green IT has adapted its DOM calculation method, which explains why the results of Lighthouse and Ecoindex calculations are sometimes different. ' +
-  "1st difference: In order to maximize the use of SVG, which impacts the DOM, Green IT's calculation method excludes the sub-elements of an SVG tag from the calculation. Lighthouse, on the other hand, does not exclude any element ⇒ DOM.Lighthouse > DOM.Ecoindex. " +
-  '2nd difference: Lighthouse performs its calculation when the page is rendered, but does not take into account elements added or modified in JavaScript, whereas the Ecoindex calculation engine does ⇒ DOM.Lighthouse < DOM.Ecoindex. '
 
 class WarnNodesCount extends Audit {
   static get meta() {
@@ -26,7 +22,7 @@ class WarnNodesCount extends Audit {
       id: 'warn-nodes-count',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `${warnDescriptionEN} [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
+      description: str_(UIStrings.description),
 
       // The name of the custom gatherer class that provides input to this audit.
       requiredArtifacts: commons.requiredArtifacts,

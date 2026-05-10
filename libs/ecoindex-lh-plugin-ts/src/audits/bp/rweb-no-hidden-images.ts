@@ -11,6 +11,8 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Avoid downloading images that are not displayed',
   failureTitle: 'Images downloaded but not displayed detected',
+  description:
+    'Images that are downloaded but hidden waste bandwidth. Use lazy loading or remove them.',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -20,8 +22,7 @@ class BPRwebNoHiddenImages extends Audit {
       id: 'rweb-no-hidden-images',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description:
-        'Images that are downloaded but hidden waste bandwidth. Use lazy loading or remove them.',
+      description: str_(UIStrings.description),
       requiredArtifacts: ['ImageElements'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

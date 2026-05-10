@@ -8,7 +8,6 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MAX_FONT_FAMILIES = 2
@@ -16,6 +15,8 @@ const MAX_FONT_FAMILIES = 2
 const UIStrings = {
   title: 'RWEB_0032 - Limit font families (≤ 2)',
   failureTitle: 'RWEB_0032 - Too many external font families (> 2)',
+  description:
+    'Reduce the number of external font families loaded. [See RWEB_0032](https://rweb.greenit.fr/en/fiches/RWEB_0032-prefer-standard-fonts)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -34,7 +35,7 @@ class BPRwebLimitFonts extends Audit {
       id: 'rweb-limit-fonts',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Reduce the number of external font families loaded. [See RWEB_0032](${refsURLS.rweb.rweb_0032.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts

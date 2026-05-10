@@ -2,7 +2,6 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MAX_COOKIE_BYTES = 512
@@ -10,6 +9,8 @@ const MAX_COOKIE_BYTES = 512
 const UIStrings = {
   title: 'RWEB_0062 - Cookie size ≤ 512 bytes',
   failureTitle: 'RWEB_0062 - Cookie header exceeds 512 bytes',
+  description:
+    'Keep Cookie request headers under 512 bytes to reduce HTTP overhead. [See RWEB_0062](https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -19,7 +20,7 @@ class BPRwebCookieSize extends Audit {
       id: 'rweb-cookie-size',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Keep Cookie request headers under ${MAX_COOKIE_BYTES} bytes to reduce HTTP overhead. [See RWEB_0062](${refsURLS.rweb.rweb_0062.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }

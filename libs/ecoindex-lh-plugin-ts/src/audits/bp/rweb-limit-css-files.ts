@@ -2,11 +2,12 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'RWEB_0035 - Limit CSS stylesheets (≤ 7)',
   failureTitle: 'RWEB_0035 - Too many CSS stylesheets',
+  description:
+    'Keep the number of CSS files to 7 or fewer to reduce HTTP requests. [See RWEB_0035](https://rweb.greenit.fr/en/fiches/RWEB_0035-limit-the-number-of-css)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -16,7 +17,7 @@ class BPRwebLimitCssFiles extends Audit {
       id: 'rweb-limit-css-files',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
-      description: `Keep the number of CSS files to 7 or fewer to reduce HTTP requests. [See RWEB_0035](${refsURLS.rweb.rweb_0035.en})`,
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }

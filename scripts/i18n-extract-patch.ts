@@ -45,33 +45,61 @@ function extractStaticStrings(content: string): Record<string, string> {
 }
 
 function patchContent(content: string, strings: Record<string, string>): string {
-  // Add createIcuMessageFn import after the last import block
+  // Step 1: Add createIcuMessageFn import if not already there
   const importLine = `import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'`
   if (!content.includes('createIcuMessageFn')) {
-    // Find position after the contiguous import block at the top
-    content = content.replace(
-      /^((?:import[^\n]+\n)+)/m,
-      `$1${importLine}\n`,
-    )
+    // Find the last import line (handle multiline imports)
+    const lines = content.split('\n')
+    let lastImportIdx = -1
+    let inMultilineImport = false
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i]
+      if (line.startsWith('import ')) {
+        lastImportIdx = i
+        inMultilineImport = line.includes('{') && !line.includes('}')
+      } else if (inMultilineImport) {
+        lastImportIdx = i
+        if (line.includes('}')) {
+          inMultilineImport = false
+        }
+      }
+    }
+    if (lastImportIdx >= 0) {
+      lines.splice(lastImportIdx + 1, 0, importLine)
+      content = lines.join('\n')
+    }
   }
 
-  // Build UIStrings block
+  // Step 2: Build UIStrings block
   const entries = Object.entries(strings)
     .map(([k, v]) => `  ${k}: '${v.replace(/'/g, "\\'")}',`)
     .join('\n')
-  const uiBlock =
-    `\nconst UIStrings = {\n${entries}\n}\n` +
-    `const str_ = createIcuMessageFn(import.meta.url, UIStrings)\n`
+  const uiBlock = `const UIStrings = {\n${entries}\n}\nconst str_ = createIcuMessageFn(import.meta.url, UIStrings)`
 
-  // Insert UIStrings block just before the first export declaration
-  content = content.replace(/\n(export (default )?class )/, `${uiBlock}\n$1`)
+  // Step 3: Insert UIStrings before the class, replacing the blank line + class with uiBlock + blank + class
+  content = content.replace(
+    /\n\n(class\s+\w+\s+extends\s+\w+\s+\{)/,
+    `\n${uiBlock}\n\n$1`,
+  )
 
-  // Replace each matched string literal with str_(UIStrings.key)
-  for (const key of Object.keys(strings)) {
-    content = content.replace(
-      new RegExp(`(\\b${key}:\\s*)'(?:[^'\\\\]|\\\\.)*'`),
-      `$1str_(UIStrings.${key})`,
-    )
+  // Step 4: Replace string literals in the class, but NOT in UIStrings
+  // Find position after str_ definition to know where to start replacing
+  const strStartPos = content.indexOf('const str_ = createIcuMessageFn')
+  if (strStartPos >= 0) {
+    const strEndPos = content.indexOf('\n', strStartPos) + 1
+    const beforeStr = content.slice(0, strEndPos)
+    const afterStr = content.slice(strEndPos)
+
+    // Replace only in afterStr (the class part)
+    let replacedAfterStr = afterStr
+    for (const key of Object.keys(strings)) {
+      replacedAfterStr = replacedAfterStr.replace(
+        new RegExp(`(\\b${key}:\\s*)'(?:[^'\\\\]|\\\\.)*'`),
+        `$1str_(UIStrings.${key})`,
+      )
+    }
+
+    content = beforeStr + replacedAfterStr
   }
 
   return content
