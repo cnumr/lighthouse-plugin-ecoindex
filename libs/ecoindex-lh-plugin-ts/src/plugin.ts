@@ -1,6 +1,10 @@
 import * as LH from 'lighthouse/types/lh.js'
+import { registerLocaleData } from 'lighthouse/shared/localization/format.js'
 
 import { getVersion } from './utils/index.js'
+import frLocale from './locales/fr.json' with { type: 'json' }
+
+registerLocaleData('fr', frLocale)
 
 export default {
   // Additional audits to run on information Lighthouse gathered.
