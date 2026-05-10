@@ -17,6 +17,7 @@ const UNSCOPED_LINK_RE = /<link\b[^>]*rel\s*=\s*["']stylesheet["'][^>]*>/gi
 const MEDIA_ATTR_RE = /\bmedia\s*=\s*["'](?!all\b|["'])/i
 const UIStrings = {
   title: 'RWEB_0036 - Split CSS by media context',
+  failureTitle: 'RWEB_0036 - Large CSS files without media targeting detected',
   description:
     'Split large CSS files by media type (print, mobile…) so only relevant styles are parsed. [See RWEB_0036](https://rweb.greenit.fr/en/fiches/RWEB_0036-divide-css)',
 }
@@ -27,8 +28,7 @@ class BPRwebCssSplitting extends Audit {
     return {
       id: 'rweb-css-splitting',
       title: str_(UIStrings.title),
-      failureTitle:
-        'RWEB_0036 - Large CSS files without media targeting detected',
+      failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent', 'DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts

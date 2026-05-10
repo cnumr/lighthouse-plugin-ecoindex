@@ -9,6 +9,7 @@ import { Audit } from 'lighthouse'
 import type { GathererArtifacts } from 'lighthouse'
 import { createErrorResult } from '../../utils/calcul-helper.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+import refsURLS from './refs-urls.js'
 
 const UIStrings = {
   title: 'The Green Web Foundation',
@@ -54,7 +55,7 @@ function makeTableDetails(
   ]
   const moreInfo = {
     label: `more info on The Green Web Foundation API v3`,
-    data: `see https://developers.thegreenwebfoundation.org/api/greencheck/v3/check-single-domain/`,
+    data: `see ${refsURLS.greenwebfoundation.api_doc.en}`,
   }
   switch (jsonResponse['data']) {
     case false:

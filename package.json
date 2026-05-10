@@ -48,6 +48,7 @@
     "test:server:check": "node test/ensure-test-server.mjs check",
     "schema:create": "./scripts/manage-schema.sh create",
     "schema:update": "./scripts/manage-schema.sh update",
+    "check:i18n": "npx tsx scripts/check-i18n-coverage.ts",
     "typecheck": "turbo run typecheck",
     "typecheck:strict": "tsc --noEmit -p apps/ecoindex-lh-cli/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-courses/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-plugin-ts/tsconfig.json",
     "format:write": "turbo run format:write",

@@ -13,6 +13,8 @@ import commons from './commons.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Greenhouse Gas Emission.',
+  failureTitle:
+    'Greenhouse Gas Emission, your page generates a lot of greenhouse gas.',
   description:
     'Greenhouse Gas Emission (eqCO2) of your page. [Learn more about the Ecoindex, Environmental footprint](https://www.ecoindex.fr/comment-ca-marche/#lempreinte-environnementale)',
 }
@@ -23,8 +25,7 @@ class EcoindexGreenhouseGasEmissionAudit extends Audit {
     return {
       id: 'eco-index-ghg',
       title: str_(UIStrings.title),
-      failureTitle:
-        'Greenhouse Gas Emission, your page generates a lot of greenhouse gas.',
+      failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,

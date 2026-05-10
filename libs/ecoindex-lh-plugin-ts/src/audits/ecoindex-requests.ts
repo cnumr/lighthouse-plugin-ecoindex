@@ -13,6 +13,8 @@ import commons from './commons.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
   title: 'Number of requests.',
+  failureTitle:
+    'Number of requests, your page calls too many external resources.',
   description:
     'The number of `Network.loadingFinished` logs indicates the number of requests made to external resources. [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)',
 }
@@ -23,8 +25,7 @@ class EcoindexRequestsAudit extends Audit {
     return {
       id: 'eco-index-requests',
       title: str_(UIStrings.title),
-      failureTitle:
-        'Number of requests, your page calls too many external resources.',
+      failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: commons.requiredArtifacts,
       supportedModes: commons.supportedModes,
