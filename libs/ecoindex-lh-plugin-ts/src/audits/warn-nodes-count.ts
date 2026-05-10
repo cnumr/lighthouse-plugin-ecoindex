@@ -5,6 +5,15 @@ import { DOMInformationsArtifacts } from '../types/index.js'
 import commons from './commons.js'
 import { getEcoindexNodes } from '../utils/calcul-helper.js'
 import refsURLS from './bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+
+const UIStrings = {
+  title:
+    'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
+  failureTitle:
+    'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 const warnDescriptionEN =
   'Green IT would like web service designers to favor the use of SVGs over bitmap images (PNG, GIF, JPEG), which weigh down the page, whenever possible. To encourage this practice, Green IT has adapted its DOM calculation method, which explains why the results of Lighthouse and Ecoindex calculations are sometimes different. ' +
@@ -15,10 +24,8 @@ class WarnNodesCount extends Audit {
   static get meta() {
     return {
       id: 'warn-nodes-count',
-      title:
-        'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
-      failureTitle:
-        'Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `${warnDescriptionEN} [Learn more about the Ecoindex, Analysis methodology](${refsURLS.ecoindex.method.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.

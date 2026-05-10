@@ -8,16 +8,23 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const REDIRECT_STATUSES = [301, 302, 307, 308]
 const MAX_REDIRECTS = 1
+
+const UIStrings = {
+  title: 'RWEB_0112 - Avoid HTTP redirects (≤ 1)',
+  failureTitle: 'RWEB_0112 - Too many HTTP redirects (> 1)',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebNoRedirects extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-redirects',
-      title: `RWEB_0112 - Avoid HTTP redirects (≤ ${MAX_REDIRECTS})`,
-      failureTitle: `RWEB_0112 - Too many HTTP redirects (> ${MAX_REDIRECTS})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Reduce HTTP redirects to avoid unnecessary round trips. [See RWEB_0112](${refsURLS.rweb.rweb_0112.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts

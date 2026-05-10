@@ -77,5 +77,17 @@
   "audits/bp/rweb-title-meta.js | title": "RWEB_0011 - Page has title and meta description",
   "audits/bp/rweb-title-meta.js | failureTitle": "RWEB_0011 - Missing title or meta description",
   "audits/bp/rweb-uses-http2.js | title": "RWEB_0083 - Use HTTP/2",
-  "audits/bp/rweb-uses-http2.js | failureTitle": "RWEB_0083 - Resources served over HTTP/1"
+  "audits/bp/rweb-uses-http2.js | failureTitle": "RWEB_0083 - Resources served over HTTP/1",
+  "audits/warn-nodes-count.js | title": "Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.",
+  "audits/warn-nodes-count.js | failureTitle": "Information ⚠️ : Ecoindex nodes number might be ≠ Lighthouse nodes number.",
+  "audits/bp/thegreenwebfoundation.js | title": "The Green Web Foundation",
+  "audits/bp/thegreenwebfoundation.js | failureTitle": "Your website is not hosted on a green web host.",
+  "audits/bp/rweb-cookie-size.js | title": "RWEB_0062 - Cookie size ≤ 512 bytes",
+  "audits/bp/rweb-cookie-size.js | failureTitle": "RWEB_0062 - Cookie header exceeds 512 bytes",
+  "audits/bp/rweb-no-redirects.js | title": "RWEB_0112 - Avoid HTTP redirects (≤ 1)",
+  "audits/bp/rweb-no-redirects.js | failureTitle": "RWEB_0112 - Too many HTTP redirects (> 1)",
+  "audits/bp/rweb-limit-domains.js | title": "RWEB_0082 - Limit resource domains (≤ 5)",
+  "audits/bp/rweb-limit-domains.js | failureTitle": "RWEB_0082 - Too many resource domains (> 5)",
+  "audits/bp/rweb-limit-fonts.js | title": "RWEB_0032 - Limit font families (≤ 2)",
+  "audits/bp/rweb-limit-fonts.js | failureTitle": "RWEB_0032 - Too many external font families (> 2)"
 }

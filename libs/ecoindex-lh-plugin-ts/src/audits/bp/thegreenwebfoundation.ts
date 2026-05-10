@@ -9,6 +9,13 @@ import { Audit } from 'lighthouse'
 import type { GathererArtifacts } from 'lighthouse'
 import { createErrorResult } from '../../utils/calcul-helper.js'
 import refsURLS from './../bp/refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+
+const UIStrings = {
+  title: 'The Green Web Foundation',
+  failureTitle: 'Your website is not hosted on a green web host.',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 type TheGreenWebFoundationResponse = {
   green: boolean
@@ -145,8 +152,8 @@ class TheGreenWebFoundation extends Audit {
   static get meta() {
     return {
       id: 'bp-thegreenwebfoundation',
-      title: 'The Green Web Foundation',
-      failureTitle: 'Your website is not hosted on a green web host.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](${refsURLS.greenwebfoundation.home.en})`,
 
       // The name of the custom gatherer class that provides input to this audit.

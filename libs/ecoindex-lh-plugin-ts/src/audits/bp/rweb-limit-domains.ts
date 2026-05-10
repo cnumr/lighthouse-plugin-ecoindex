@@ -9,15 +9,22 @@ import {
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MAX_DOMAINS = 5
+
+const UIStrings = {
+  title: 'RWEB_0082 - Limit resource domains (≤ 5)',
+  failureTitle: 'RWEB_0082 - Too many resource domains (> 5)',
+}
+const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
 class BPRwebLimitDomains extends Audit {
   static get meta() {
     return {
       id: 'rweb-limit-domains',
-      title: `RWEB_0082 - Limit resource domains (≤ ${MAX_DOMAINS})`,
-      failureTitle: `RWEB_0082 - Too many resource domains (> ${MAX_DOMAINS})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: `Reduce the number of unique domains serving page resources. [See RWEB_0082](${refsURLS.rweb.rweb_0082.en})`,
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
