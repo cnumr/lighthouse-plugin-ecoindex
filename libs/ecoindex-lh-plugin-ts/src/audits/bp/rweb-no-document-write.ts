@@ -7,7 +7,7 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // Detects the presence of a DOM-blocking write call in inline scripts.
 // Matches both document.write( and document['write']( / document["write"](
@@ -16,14 +16,27 @@ const BLOCKING_WRITE_RE = new RegExp(
   'document(?:\\.' + 'write|\\[[\'"](write)[\'"]\\])\\s*\\(',
   'g',
 )
+const UIStrings = {
+  title: 'RWEB_0044 - Avoid DOM manipulation during traversal',
+  failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
+  description:
+    'Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal)',
+  displayValuePass: 'No blocking DOM write detected',
+  displayValueFail: '{count} blocking DOM write(s) in inline scripts',
+  colLabelScriptSnippet: 'Script snippet',
+}
+const str_ = createIcuMessageFn(
+  'audits/bp/rweb-no-document-write.js',
+  UIStrings,
+)
 
 class BPRwebNoDocumentWrite extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-document-write',
-      title: 'RWEB_0044 - Avoid DOM manipulation during traversal',
-      failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
-      description: `Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](${refsURLS.rweb.rweb_0044.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -52,8 +65,8 @@ class BPRwebNoDocumentWrite extends Audit {
       score: occurrences === 0 ? 1 : 0,
       displayValue:
         occurrences === 0
-          ? 'No blocking DOM write detected'
-          : `${occurrences} blocking DOM write(s) in inline scripts`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: occurrences }),
       numericValue: occurrences,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -65,7 +78,7 @@ class BPRwebNoDocumentWrite extends Audit {
         headings: [
           {
             key: 'snippet',
-            label: 'Script snippet',
+            label: str_(UIStrings.colLabelScriptSnippet),
             valueType: 'text' as const,
           },
         ],

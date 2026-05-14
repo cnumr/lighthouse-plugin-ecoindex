@@ -2,15 +2,24 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0039 - Use CSS containment',
+  failureTitle: 'RWEB_0039 - CSS containment not verified',
+  description:
+    'Use CSS containment property to optimize rendering performance. [See RWEB_0039](https://rweb.greenit.fr/en/fiches/RWEB_0039-use-css-containment)',
+  displayValue:
+    "{count} CSS file(s) loaded — verify 'contain' property usage manually.",
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-css-containment.js', UIStrings)
 
 class BPRwebCssContainment extends Audit {
   static get meta() {
     return {
       id: 'rweb-css-containment',
-      title: 'RWEB_0039 - Use CSS containment',
-      failureTitle: 'RWEB_0039 - CSS containment not verified',
-      description: `Use CSS containment property to optimize rendering performance. [See RWEB_0039](${refsURLS.rweb.rweb_0039.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: 'manual' as LH.Audit.ScoreDisplayMode,
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
@@ -35,7 +44,9 @@ class BPRwebCssContainment extends Audit {
     // Score is null (not applicable for automatic scoring)
     return {
       score: null as number | null,
-      displayValue: `${cssResources.length} CSS file(s) loaded — verify 'contain' property usage manually.`,
+      displayValue: str_(UIStrings.displayValue, {
+        count: cssResources.length,
+      }),
       numericValue: cssResources.length,
       numericUnit: 'unitless' as
         | 'unitless'

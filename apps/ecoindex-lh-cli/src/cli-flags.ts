@@ -150,6 +150,12 @@ function collectCommand(yargs: Yargs.Argv) {
       description:
         'Authentication with a form, as first step of each parcours. Use `auth.url`, `auth.user.target`, `auth.user.value`, `auth.pass.target` and `auth.pass.value`.',
     })
+    .option('lang', {
+      type: 'string',
+      choices: ['en', 'fr'] as const,
+      default: 'en' as const,
+      description: 'Language for the report output. Default is "en".',
+    })
     .epilogue(EPILOGUE_STRING)
 }
 

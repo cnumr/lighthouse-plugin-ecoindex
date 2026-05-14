@@ -17,6 +17,8 @@ export interface NetworkMetrics {
   totalByteWeight: number
   /** Details from Lighthouse total byte weight audit */
   totalByteDetails: LH.Audit.Details.Table | undefined
+  /** Filtered network records (non-network URIs excluded) */
+  filteredRecords: LH.Artifacts.NetworkRequest[]
 }
 
 /**
@@ -70,6 +72,7 @@ export async function extractNetworkMetrics(
   // Calculate total compressed size and request count from network records
   let totalCompressedSize = 0
   let requestCount = 0
+  const filteredRecords: LH.Artifacts.NetworkRequest[] = []
 
   records.forEach(record => {
     // Exclude non-network URIs since their size is reflected in other resources.
@@ -79,6 +82,7 @@ export async function extractNetworkMetrics(
 
     totalCompressedSize += record.transferSize
     requestCount += 1
+    filteredRecords.push(record)
   })
 
   return {
@@ -86,5 +90,6 @@ export async function extractNetworkMetrics(
     totalCompressedSize,
     totalByteWeight,
     totalByteDetails,
+    filteredRecords,
   }
 }

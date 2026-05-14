@@ -1,4 +1,30 @@
+import type * as LH from 'lighthouse/types/lh.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+
 import { B_TO_KB, METRIC_RANGES } from './score-helper.js'
+
+const UIStrings = {
+  scoreLow: 'Low environmental impact.',
+  scoreModerate: 'Moderate environmental impact.',
+  scoreHigh: 'High environmental impact.',
+  waterLow: 'Low water consumption.',
+  waterModerate: 'Moderate water consumption.',
+  waterHigh: 'High water consumption.',
+  ghgLow: 'Low greenhouse gas emissions.',
+  ghgModerate: 'Moderate greenhouse gas emissions.',
+  ghgHigh: 'High greenhouse gas emissions.',
+  nodesLow: 'Low DOM complexity.',
+  nodesModerate: 'Moderate DOM complexity.',
+  nodesHigh: 'High DOM complexity.',
+  sizeLow: 'Low page weight.',
+  sizeModerate: 'Moderate page weight.',
+  sizeHigh: 'High page weight.',
+  requestsLow: 'Low number of requests.',
+  requestsModerate: 'Moderate number of requests.',
+  requestsHigh: 'High number of requests.',
+}
+
+const str_ = createIcuMessageFn('utils/format-helper.js', UIStrings)
 
 /**
  * Format metric value for display in audit results.
@@ -142,7 +168,10 @@ export function normalizeMetricValue(
   }
 }
 
-export function getExplanationForMetric(metric: string, value: number): string {
+export function getExplanationForMetric(
+  metric: string,
+  value: number,
+): LH.IcuMessage {
   const { good, poor, lowIsBeter } = METRIC_RANGES[metric] ?? {}
 
   if (lowIsBeter === undefined) {
@@ -164,41 +193,41 @@ export function getExplanationForMetric(metric: string, value: number): string {
 
 const explanationLabels: Record<
   string,
-  { low: string; moderate: string; high: string }
+  { low: LH.IcuMessage; moderate: LH.IcuMessage; high: LH.IcuMessage }
 > = {
   score: {
-    low: 'Low environmental impact.',
-    moderate: 'Moderate environmental impact.',
-    high: 'High environmental impact.',
+    low: str_(UIStrings.scoreLow),
+    moderate: str_(UIStrings.scoreModerate),
+    high: str_(UIStrings.scoreHigh),
   },
   grade: {
-    low: 'Low environmental impact.',
-    moderate: 'Moderate environmental impact.',
-    high: 'High environmental impact.',
+    low: str_(UIStrings.scoreLow),
+    moderate: str_(UIStrings.scoreModerate),
+    high: str_(UIStrings.scoreHigh),
   },
   water: {
-    low: 'Low water consumption.',
-    moderate: 'Moderate water consumption.',
-    high: 'High water consumption.',
+    low: str_(UIStrings.waterLow),
+    moderate: str_(UIStrings.waterModerate),
+    high: str_(UIStrings.waterHigh),
   },
   ghg: {
-    low: 'Low greenhouse gas emissions.',
-    moderate: 'Moderate greenhouse gas emissions.',
-    high: 'High greenhouse gas emissions.',
+    low: str_(UIStrings.ghgLow),
+    moderate: str_(UIStrings.ghgModerate),
+    high: str_(UIStrings.ghgHigh),
   },
   nodes: {
-    low: 'Low DOM complexity.',
-    moderate: 'Moderate DOM complexity.',
-    high: 'High DOM complexity.',
+    low: str_(UIStrings.nodesLow),
+    moderate: str_(UIStrings.nodesModerate),
+    high: str_(UIStrings.nodesHigh),
   },
   size: {
-    low: 'Low page weight.',
-    moderate: 'Moderate page weight.',
-    high: 'High page weight.',
+    low: str_(UIStrings.sizeLow),
+    moderate: str_(UIStrings.sizeModerate),
+    high: str_(UIStrings.sizeHigh),
   },
   requests: {
-    low: 'Low number of requests.',
-    moderate: 'Moderate number of requests.',
-    high: 'High number of requests.',
+    low: str_(UIStrings.requestsLow),
+    moderate: str_(UIStrings.requestsModerate),
+    high: str_(UIStrings.requestsHigh),
   },
 }

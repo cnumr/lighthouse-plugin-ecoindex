@@ -19,7 +19,11 @@ import {
   normalizeMetricValue,
 } from './format-helper.js'
 
-import { createInformationsTable } from './table-helper.js'
+import { Audit as AuditClass } from 'lighthouse'
+import {
+  createInformationsTable,
+  createNetworkRecordsTable,
+} from './table-helper.js'
 import { getScoreForMetric } from './score-helper.js'
 
 /**
@@ -80,7 +84,11 @@ export async function getLoadingExperience(
  * @param metric - Name of the metric to process
  * @returns Audit result with score, display value, and details
  */
-export function createValueResult(metricValue: MetricValue, metric: string) {
+export function createValueResult(
+  metricValue: MetricValue,
+  metric: string,
+  networkRecords?: LH.Artifacts.NetworkRequest[],
+) {
   let numericValue: number | undefined
   let score: number | undefined
 
@@ -109,13 +117,22 @@ export function createValueResult(metricValue: MetricValue, metric: string) {
       break
   }
 
+  const infoTable = createInformationsTable(metric, metricValue[metric])
+  const details =
+    networkRecords && (metric === 'requests' || metric === 'size')
+      ? AuditClass.makeListDetails([
+          infoTable,
+          createNetworkRecordsTable(networkRecords),
+        ])
+      : infoTable
+
   return {
     numericValue: numericValue,
     score: score,
     numericUnit: getMetricNumericUnit(metric),
     displayValue: formatMetric(metric, metricValue[metric]),
     explanation: getExplanationForMetric(metric, explanationValue),
-    details: createInformationsTable(metric, metricValue[metric]),
+    details,
   }
 }
 

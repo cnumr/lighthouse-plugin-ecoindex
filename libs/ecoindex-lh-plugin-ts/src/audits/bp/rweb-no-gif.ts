@@ -8,15 +8,24 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0099 - Avoid using GIFs',
+  failureTitle: 'RWEB_0099 - GIFs detected',
+  description:
+    'Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](https://rweb.greenit.fr/en/fiches/RWEB_0099-limit-the-use-of-animated-gif)',
+  displayValuePass: 'No GIFs detected',
+  displayValueFail: '{count} GIF(s) detected',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-no-gif.js', UIStrings)
 
 class BPRwebNoGif extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-gif',
-      title: 'RWEB_0099 - Avoid using GIFs',
-      failureTitle: 'RWEB_0099 - GIFs detected',
-      description: `Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](${refsURLS.rweb.rweb_0099.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog', 'MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -52,7 +61,9 @@ class BPRwebNoGif extends Audit {
     return {
       score: gifCount === 0 ? 1 : 0,
       displayValue:
-        gifCount === 0 ? 'No GIFs detected' : `${gifCount} GIF(s) detected`,
+        gifCount === 0
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: gifCount }),
       numericValue: gifCount,
       numericUnit: 'unitless' as
         | 'unitless'

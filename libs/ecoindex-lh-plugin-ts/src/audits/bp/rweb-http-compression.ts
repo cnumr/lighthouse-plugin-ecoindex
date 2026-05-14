@@ -2,18 +2,30 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const TEXT_TYPES = new Set(['Document', 'Stylesheet', 'Script'])
 const ENCODING_PATTERN = /gzip|br|deflate|zstd/i
+const UIStrings = {
+  title: 'RWEB_0076 - Compress text resources (≥ 95%)',
+  failureTitle: 'RWEB_0076 - Text resources not compressed',
+  description:
+    'Enable gzip/brotli compression for HTML, CSS and JS resources. [See RWEB_0076](https://rweb.greenit.fr/en/fiches/RWEB_0076-compressing-text-files-css-js-html-and-svg)',
+  displayValueNoResources: 'No text resources to check',
+  displayValueCompressed:
+    '{compressed}/{total} text resources compressed ({ratio}%)',
+  colLabelUrl: 'URL',
+  colLabelUncompressedUrl: 'Uncompressed URL',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-http-compression.js', UIStrings)
 
 class BPRwebHttpCompression extends Audit {
   static get meta() {
     return {
       id: 'rweb-http-compression',
-      title: 'RWEB_0076 - Compress text resources (≥ 95%)',
-      failureTitle: 'RWEB_0076 - Text resources not compressed',
-      description: `Enable gzip/brotli compression for HTML, CSS and JS resources. [See RWEB_0076](${refsURLS.rweb.rweb_0076.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -40,7 +52,7 @@ class BPRwebHttpCompression extends Audit {
     if (total === 0) {
       return {
         score: 1,
-        displayValue: 'No text resources to check',
+        displayValue: str_(UIStrings.displayValueNoResources),
         numericValue: 1,
         numericUnit: 'unitless' as
           | 'unitless'
@@ -49,7 +61,13 @@ class BPRwebHttpCompression extends Audit {
           | 'element',
         details: {
           type: 'table' as const,
-          headings: [{ key: 'url', label: 'URL', valueType: 'url' as const }],
+          headings: [
+            {
+              key: 'url',
+              label: str_(UIStrings.colLabelUrl),
+              valueType: 'url' as const,
+            },
+          ],
           items: [],
         } as LH.Audit.Details.Table,
       }
@@ -58,7 +76,11 @@ class BPRwebHttpCompression extends Audit {
     const ratio = compressed / total
     return {
       score: ratio >= 0.95 ? 1 : 0,
-      displayValue: `${compressed}/${total} text resources compressed (${Math.round(ratio * 100)}%)`,
+      displayValue: str_(UIStrings.displayValueCompressed, {
+        compressed,
+        total,
+        ratio: Math.round(ratio * 100),
+      }),
       numericValue: compressed,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -68,7 +90,11 @@ class BPRwebHttpCompression extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Uncompressed URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUncompressedUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: uncompressed.map(url => ({ url })),
       } as LH.Audit.Details.Table,

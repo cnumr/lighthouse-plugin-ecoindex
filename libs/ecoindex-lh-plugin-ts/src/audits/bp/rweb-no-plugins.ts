@@ -7,6 +7,7 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const PLUGIN_MIME_TYPES = [
   'application/x-shockwave-flash',
@@ -20,15 +21,24 @@ const PLUGIN_PATTERN = new RegExp(
   `<(?:object|embed)\\b[^>]*type\\s*=\\s*["'](${PLUGIN_MIME_TYPES.map(t => t.replace(/\//g, '\\/')).join('|')})["'][^>]*>`,
   'gi',
 )
+const UIStrings = {
+  title: 'Do not use browser plugins (Flash, Silverlight, Java)',
+  failureTitle: 'Browser plugin detected (Flash, Silverlight, Java)',
+  description:
+    'Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported.',
+  displayValuePass: 'No browser plugins detected',
+  displayValueFail: '{count} browser plugin(s) detected',
+  colLabelPluginElement: 'Plugin element',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-no-plugins.js', UIStrings)
 
 class BPRwebNoPlugins extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-plugins',
-      title: 'Do not use browser plugins (Flash, Silverlight, Java)',
-      failureTitle: 'Browser plugin detected (Flash, Silverlight, Java)',
-      description:
-        'Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -46,8 +56,8 @@ class BPRwebNoPlugins extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'No browser plugins detected'
-          : `${count} browser plugin(s) detected`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -59,7 +69,7 @@ class BPRwebNoPlugins extends Audit {
         headings: [
           {
             key: 'element',
-            label: 'Plugin element',
+            label: str_(UIStrings.colLabelPluginElement),
             valueType: 'text' as const,
           },
         ],

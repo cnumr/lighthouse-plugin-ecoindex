@@ -1,6 +1,33 @@
 import * as LH from 'lighthouse/types/lh.js'
+import { registerLocaleData } from 'lighthouse/shared/localization/format.js'
+import { locales as lhLocales } from 'lighthouse/shared/localization/locales.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 import { getVersion } from './utils/index.js'
+import frLocale from './locales/fr.json' with { type: 'json' }
+
+// Merge our translations with Lighthouse's built-in fr locale to avoid overwriting core strings
+registerLocaleData('fr', {
+  ...(lhLocales['fr'] as Record<string, { message: string }>),
+  ...frLocale,
+})
+
+const UIStrings = {
+  groupEcologicTitle: 'Ecoindex results',
+  groupEcologicDescription: 'Ecoindex revealant metrics.',
+  groupTechnicTitle: 'Technical results',
+  groupTechnicDescription: 'Technical metrics.',
+  groupBpTitle: '#RWEB web eco-design: 115 best practices',
+  groupBpDescription:
+    'CNUMR (Collectif Conception Numérique Responsable) "115 best practices" reference framework.',
+  groupRgesnTitle:
+    '#RGESN General eco-design guidelines for digital servicesBest practices',
+  groupRgesnDescription: 'General eco-design guidelines for digital services.',
+  groupOtherTitle: 'Other ecodesign best practices',
+  groupOtherDescription: 'Various best practices in eco-design.',
+  categoryTitle: 'Ecoindex',
+}
+const str_ = createIcuMessageFn('plugin.js', UIStrings)
 
 export default {
   // Additional audits to run on information Lighthouse gathered.
@@ -139,31 +166,29 @@ export default {
   ],
   groups: {
     'ecoindex-ecologic': {
-      title: 'Ecoindex results',
-      description: 'Ecoindex revealant metrics.',
+      title: str_(UIStrings.groupEcologicTitle),
+      description: str_(UIStrings.groupEcologicDescription),
     },
     'ecoindex-technic': {
-      title: 'Technical results',
-      description: 'Technical metrics.',
+      title: str_(UIStrings.groupTechnicTitle),
+      description: str_(UIStrings.groupTechnicDescription),
     },
     'ecoindex-best-practices': {
-      title: '#RWEB web eco-design: 115 best practices',
-      description:
-        'CNUMR (Collectif Conception Numérique Responsable) "115 best practices" reference framework.',
+      title: str_(UIStrings.groupBpTitle),
+      description: str_(UIStrings.groupBpDescription),
     },
     'ecoindex-rgesn-practices': {
-      title:
-        '#RGESN General eco-design guidelines for digital servicesBest practices',
-      description: 'General eco-design guidelines for digital services.',
+      title: str_(UIStrings.groupRgesnTitle),
+      description: str_(UIStrings.groupRgesnDescription),
     },
     'ecoindex-other-practices': {
-      title: 'Other ecodesign best practices',
-      description: 'Various best practices in eco-design.',
+      title: str_(UIStrings.groupOtherTitle),
+      description: str_(UIStrings.groupOtherDescription),
     },
   },
   // A new category in the report for the plugin output.
   category: {
-    title: 'Ecoindex',
+    title: str_(UIStrings.categoryTitle),
     description:
       '[Ecoindex®](https://www.ecoindex.fr/) revealant metrics, by [GreenIT.fr®](https://www.greenit.fr).  ' +
       '[GitHub](https://github.com/NovaGaia/.). Version: ' +

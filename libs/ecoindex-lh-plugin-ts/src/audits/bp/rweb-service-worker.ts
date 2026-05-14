@@ -8,15 +8,24 @@ import {
 
 import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0060 - Service Worker active',
+  failureTitle: 'RWEB_0060 - No active Service Worker detected',
+  description:
+    'A Service Worker improves caching and reduces network requests. [See RWEB_0060](https://rweb.greenit.fr/en/fiches/RWEB_0060-save-bandwidth-with-service-workers)',
+  displayValuePass: 'Service Worker active',
+  displayValueFail: 'No Service Worker',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-service-worker.js', UIStrings)
 
 class BPRwebServiceWorker extends Audit {
   static get meta() {
     return {
       id: 'rweb-service-worker',
-      title: 'RWEB_0060 - Service Worker active',
-      failureTitle: 'RWEB_0060 - No active Service Worker detected',
-      description: `A Service Worker improves caching and reduces network requests. [See RWEB_0060](${refsURLS.rweb.rweb_0060.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -31,8 +40,8 @@ class BPRwebServiceWorker extends Audit {
     return {
       score: serviceWorkerActive ? 1 : 0,
       displayValue: serviceWorkerActive
-        ? 'Service Worker active'
-        : 'No Service Worker',
+        ? str_(UIStrings.displayValuePass)
+        : str_(UIStrings.displayValueFail),
       numericValue: serviceWorkerActive ? 1 : 0,
       numericUnit: 'unitless' as
         | 'unitless'

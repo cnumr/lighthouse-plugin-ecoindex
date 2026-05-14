@@ -48,6 +48,7 @@
     "test:server:check": "node test/ensure-test-server.mjs check",
     "schema:create": "./scripts/manage-schema.sh create",
     "schema:update": "./scripts/manage-schema.sh update",
+    "check:i18n": "npx tsx scripts/check-i18n-coverage.ts",
     "typecheck": "turbo run typecheck",
     "typecheck:strict": "tsc --noEmit -p apps/ecoindex-lh-cli/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-courses/tsconfig.json && tsc --noEmit -p libs/ecoindex-lh-plugin-ts/tsconfig.json",
     "format:write": "turbo run format:write",
@@ -63,7 +64,8 @@
     "lhci:server:stop": "docker compose -f tools/lhci-server/docker-compose.yml down",
     "lhci:install:git-lfs": "sh tools/lhci-server/install-git-lfs.sh",
     "refs:update": "tsx scripts/generate-refs-urls.ts",
-    "refs:update:version": "tsx scripts/generate-refs-urls.ts -- --version"
+    "refs:update:version": "tsx scripts/generate-refs-urls.ts -- --version",
+    "i18n:extract": "tsx scripts/i18n-extract-patch.ts"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -97,7 +99,8 @@
   "pnpm": {
     "overrides": {
       "postcss": "^8.5.14",
-      "fast-uri": "^3.1.2"
+      "fast-uri": "^3.1.2",
+      "@lhci/cli>lighthouse": "13.2.0"
     }
   }
 }

@@ -2,15 +2,24 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0035 - Limit CSS stylesheets (≤ 7)',
+  failureTitle: 'RWEB_0035 - Too many CSS stylesheets',
+  description:
+    'Keep the number of CSS files to 7 or fewer to reduce HTTP requests. [See RWEB_0035](https://rweb.greenit.fr/en/fiches/RWEB_0035-limit-the-number-of-css)',
+  displayValue: '{count} CSS stylesheet(s)',
+  colLabelStylesheetUrl: 'Stylesheet URL',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-css-files.js', UIStrings)
 
 class BPRwebLimitCssFiles extends Audit {
   static get meta() {
     return {
       id: 'rweb-limit-css-files',
-      title: 'RWEB_0035 - Limit CSS stylesheets (≤ 7)',
-      failureTitle: 'RWEB_0035 - Too many CSS stylesheets',
-      description: `Keep the number of CSS files to 7 or fewer to reduce HTTP requests. [See RWEB_0035](${refsURLS.rweb.rweb_0035.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -38,7 +47,7 @@ class BPRwebLimitCssFiles extends Audit {
 
     return {
       score,
-      displayValue: `${cssCount} CSS stylesheet(s)`,
+      displayValue: str_(UIStrings.displayValue, { count: cssCount }),
       numericValue: cssCount,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -48,7 +57,11 @@ class BPRwebLimitCssFiles extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Stylesheet URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelStylesheetUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: cssUrls.map(url => ({ url })),
       } as LH.Audit.Details.Table,

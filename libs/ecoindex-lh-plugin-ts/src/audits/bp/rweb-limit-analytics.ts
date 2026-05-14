@@ -7,7 +7,7 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const ANALYTICS_DOMAINS = [
   'www.google-analytics.com',
@@ -23,14 +23,22 @@ const ANALYTICS_DOMAINS = [
   'js.hs-analytics.net',
   'js.hsforms.net',
 ]
+const UIStrings = {
+  title: 'RWEB_0111 - Limit analytics tools (≤ 1)',
+  failureTitle: 'RWEB_0111 - Multiple analytics tools detected',
+  description:
+    'Limit analytics tools to one per page. [See RWEB_0111](https://rweb.greenit.fr/es/fiches/RWEB_0111-limitar-las-herramientas-de-analisis-y-los-datos-recopilados)',
+  displayValue: '{count} analytics tool(s) detected',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-analytics.js', UIStrings)
 
 class BPRwebLimitAnalytics extends Audit {
   static get meta() {
     return {
       id: 'rweb-limit-analytics',
-      title: 'RWEB_0111 - Limit analytics tools (≤ 1)',
-      failureTitle: 'RWEB_0111 - Multiple analytics tools detected',
-      description: `Limit analytics tools to one per page. [See RWEB_0111](${refsURLS.rweb.rweb_0111.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -55,7 +63,7 @@ class BPRwebLimitAnalytics extends Audit {
 
     return {
       score: count <= 1 ? 1 : 0,
-      displayValue: `${count} analytics tool(s) detected`,
+      displayValue: str_(UIStrings.displayValue, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'

@@ -8,20 +8,25 @@ import {
 
 import { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import UrlUtils from 'lighthouse/core/lib/url-utils.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Do not resize images in the browser',
+  failureTitle: 'Images are resized in the browser!',
+  description:
+    'Do not resize images using the HTML attributes height and width. This sends images in their original size, wasting bandwidth and processor power. A PNG-24 image measuring 350 x 300 px is 41 KB. If you were to resize the same image file in HTML and display it as a 70 x 60 px thumbnail, it would still be 41 KB, when in fact it should be no more than 3 KB! This means 38 KB downloaded for nothing. The best solution is to resize images using software such as Photoshop, without using HTML. When the content added by website users has no specific added value, it',
+  displayValue: 'Found {count} resized image(s)',
+  colLabelImageUrl: 'image URL',
+  colLabelImagesResized: 'Image(s) resized',
+}
+const str_ = createIcuMessageFn('audits/bp/badly-sized-images.js', UIStrings)
 
 class BadlySizedImage extends Audit {
   static get meta() {
     return {
       id: 'badly-sized-images',
-      title: 'Do not resize images in the browser',
-      failureTitle: 'Images are resized in the browser!',
-      description:
-        'Do not resize images using the HTML attributes height and width. ' +
-        'This sends images in their original size, wasting bandwidth and processor power. ' +
-        'A PNG-24 image measuring 350 x 300 px is 41 KB. ' +
-        'If you were to resize the same image file in HTML and display it as a 70 x 60 px thumbnail, it would still be 41 KB, when in fact it should be no more than 3 KB! ' +
-        'This means 38 KB downloaded for nothing. The best solution is to resize images using software such as Photoshop, without using HTML. ' +
-        "When the content added by website users has no specific added value, it's best to prevent them from inserting images using a WYSIWYG editor, such as CKEditor.",
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       scoreDisplayMode: 'numeric' as ScoreDisplayMode,
       // The name of the artifact provides input to this audit.
       requiredArtifacts: ['ImageElements'] as (
@@ -68,7 +73,7 @@ class BadlySizedImage extends Audit {
     return {
       score:
         headers.length === 0 ? 1 : 1 - headers.length / imageElements.length,
-      displayValue: `Found ${headers.length} resized image(s)`,
+      displayValue: str_(UIStrings.displayValue, { count: headers.length }),
       numericValue: headers.length,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -80,12 +85,12 @@ class BadlySizedImage extends Audit {
         headings: [
           {
             key: 'url',
-            label: 'image URL',
+            label: str_(UIStrings.colLabelImageUrl),
             valueType: 'url',
           },
           {
             key: 'message',
-            label: 'Image(s) resized',
+            label: str_(UIStrings.colLabelImagesResized),
             valueType: 'text',
           },
         ],

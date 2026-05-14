@@ -7,7 +7,7 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MIN_CONTENT_LENGTH = 200
 const MIN_CHARS_PER_LINE = 80
@@ -19,14 +19,25 @@ function isUnminified(content: string): boolean {
   const avgCharsPerLine = content.length / lines.length
   return avgCharsPerLine < MIN_CHARS_PER_LINE
 }
+const UIStrings = {
+  title: 'RWEB_0077 - Minify inline CSS and JS',
+  failureTitle: 'RWEB_0077 - Unminified inline CSS/JS detected',
+  description:
+    'Minify inline style and script blocks to reduce page weight. [See RWEB_0077](https://rweb.greenit.fr/en/fiches/RWEB_0077-minifying-text-files-css-js-html-and-svg)',
+  displayValuePass: 'All inline assets appear minified',
+  displayValueFail: '{count} unminified inline asset(s)',
+  colLabelType: 'Type',
+  colLabelContentSnippet: 'Content snippet',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-minification.js', UIStrings)
 
 class BPRwebMinification extends Audit {
   static get meta() {
     return {
       id: 'rweb-minification',
-      title: 'RWEB_0077 - Minify inline CSS and JS',
-      failureTitle: 'RWEB_0077 - Unminified inline CSS/JS detected',
-      description: `Minify inline style and script blocks to reduce page weight. [See RWEB_0077](${refsURLS.rweb.rweb_0077.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -58,8 +69,10 @@ class BPRwebMinification extends Audit {
       score: unminifiedBlocks.length === 0 ? 1 : 0,
       displayValue:
         unminifiedBlocks.length === 0
-          ? 'All inline assets appear minified'
-          : `${unminifiedBlocks.length} unminified inline asset(s)`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, {
+              count: unminifiedBlocks.length,
+            }),
       numericValue: unminifiedBlocks.length,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -69,10 +82,14 @@ class BPRwebMinification extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'type', label: 'Type', valueType: 'text' as const },
+          {
+            key: 'type',
+            label: str_(UIStrings.colLabelType),
+            valueType: 'text' as const,
+          },
           {
             key: 'snippet',
-            label: 'Content snippet',
+            label: str_(UIStrings.colLabelContentSnippet),
             valueType: 'text' as const,
           },
         ],

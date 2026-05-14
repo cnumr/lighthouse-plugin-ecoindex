@@ -2,17 +2,28 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const SVG_SIZE_THRESHOLD = 2048
+const UIStrings = {
+  title: 'RWEB_0100 - Optimize SVG files',
+  failureTitle: 'RWEB_0100 - Large SVG files detected (likely unoptimized)',
+  description:
+    'SVG files over 2048 bytes likely contain metadata or comments that can be removed. [See RWEB_0100](https://rweb.greenit.fr/en/fiches/RWEB_0100-optimize-vector-images)',
+  displayValuePass: 'All SVG files appear optimized',
+  displayValueFail: '{count} large SVG file(s) detected',
+  colLabelUrl: 'URL',
+  colLabelSize: 'Size (bytes)',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-optimize-svg.js', UIStrings)
 
 class BPRwebOptimizeSvg extends Audit {
   static get meta() {
     return {
       id: 'rweb-optimize-svg',
-      title: 'RWEB_0100 - Optimize SVG files',
-      failureTitle: 'RWEB_0100 - Large SVG files detected (likely unoptimized)',
-      description: `SVG files over ${SVG_SIZE_THRESHOLD} bytes likely contain metadata or comments that can be removed. [See RWEB_0100](${refsURLS.rweb.rweb_0100.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -38,8 +49,8 @@ class BPRwebOptimizeSvg extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'All SVG files appear optimized'
-          : `${count} large SVG file(s) detected`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -49,8 +60,16 @@ class BPRwebOptimizeSvg extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
-          { key: 'size', label: 'Size (bytes)', valueType: 'bytes' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+          {
+            key: 'size',
+            label: str_(UIStrings.colLabelSize),
+            valueType: 'bytes' as const,
+          },
         ],
         items: violations,
       } as LH.Audit.Details.Table,

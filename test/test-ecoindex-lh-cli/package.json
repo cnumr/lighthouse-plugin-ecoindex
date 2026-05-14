@@ -10,7 +10,7 @@
     "test": "pnpm test:input-json && pnpm test:url",
     "test:input-json": "pnpm --filter @ecoindex-lh-test/cli run npx collect --json-file ./input-file.json && pnpm verify:file",
     "test:demo": "pnpm --filter @ecoindex-lh-test/cli run npx collect --demo",
-    "test:url": "pnpm --filter @ecoindex-lh-test/cli run npx collect -u http://localhost:3000/simple -u http://localhost:3000/svg -u http://localhost:3000/shadow-dom -u http://localhost:3000/svg-shadow-dom -u http://localhost:3000/complex -u http://localhost:3000/heavy --output html --output json --puppeteer-script ./puppeteer-script.mjs --extra-header ./extra-header.json && pnpm verify:url",
+    "test:url": "pnpm --filter @ecoindex-lh-test/cli run npx collect -u http://localhost:3000/simple -u http://localhost:3000/svg -u http://localhost:3000/shadow-dom -u http://localhost:3000/svg-shadow-dom -u http://localhost:3000/complex -u http://localhost:3000/heavy --output html --output json --puppeteer-script ./puppeteer-script.mjs --extra-header ./extra-header.json --lang fr && pnpm verify:url",
     "test:help": "pnpm --filter @ecoindex-lh-test/cli run npx collect --help",
     "verify:file": "node ../test-pages/verify-results.js ./reports/file",
     "verify:url": "node ../test-pages/verify-results.js ./reports",

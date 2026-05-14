@@ -2,6 +2,7 @@
 // export import ecoindex = ecoindex_
 
 export interface CliFlags {
+  lang?: 'en' | 'fr'
   auth?: never | Auth
   // input
   'extra-header'?: never | { [key: string]: string }

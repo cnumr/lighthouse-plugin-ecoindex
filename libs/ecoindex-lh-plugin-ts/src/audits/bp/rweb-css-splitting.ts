@@ -8,22 +8,31 @@ import {
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const CSS_SIZE_THRESHOLD = 10 * 1024 // 10 KB
 
 // Link tags that target all contexts (no media splitting)
 const UNSCOPED_LINK_RE = /<link\b[^>]*rel\s*=\s*["']stylesheet["'][^>]*>/gi
 const MEDIA_ATTR_RE = /\bmedia\s*=\s*["'](?!all\b|["'])/i
+const UIStrings = {
+  title: 'RWEB_0036 - Split CSS by media context',
+  failureTitle: 'RWEB_0036 - Large CSS files without media targeting detected',
+  description:
+    'Split large CSS files by media type (print, mobile…) so only relevant styles are parsed. [See RWEB_0036](https://rweb.greenit.fr/en/fiches/RWEB_0036-divide-css)',
+  displayValuePass: 'All large CSS files are scoped by media type',
+  displayValueFail: '{count} large CSS file(s) without media targeting',
+  colLabelCssUrl: 'CSS URL',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-css-splitting.js', UIStrings)
 
 class BPRwebCssSplitting extends Audit {
   static get meta() {
     return {
       id: 'rweb-css-splitting',
-      title: 'RWEB_0036 - Split CSS by media context',
-      failureTitle:
-        'RWEB_0036 - Large CSS files without media targeting detected',
-      description: `Split large CSS files by media type (print, mobile…) so only relevant styles are parsed. [See RWEB_0036](${refsURLS.rweb.rweb_0036.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent', 'DevtoolsLog'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -66,8 +75,8 @@ class BPRwebCssSplitting extends Audit {
       score: violations === 0 ? 1 : 0,
       displayValue:
         violations === 0
-          ? 'All large CSS files are scoped by media type'
-          : `${violations} large CSS file(s) without media targeting`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: violations }),
       numericValue: violations,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -76,7 +85,13 @@ class BPRwebCssSplitting extends Audit {
         | 'element',
       details: {
         type: 'table' as const,
-        headings: [{ key: 'url', label: 'CSS URL', valueType: 'url' as const }],
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelCssUrl),
+            valueType: 'url' as const,
+          },
+        ],
         items: violatingUrls.map(url => ({ url })),
       } as LH.Audit.Details.Table,
     }

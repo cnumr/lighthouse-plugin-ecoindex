@@ -7,15 +7,25 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0043 - No JavaScript errors in console',
+  failureTitle: 'RWEB_0043 - JavaScript errors detected',
+  description:
+    'Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)',
+  displayValuePass: 'No JavaScript errors',
+  displayValueFail: '{count} JavaScript error(s)',
+  colLabelErrorMessage: 'Error message',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-no-js-errors.js', UIStrings)
 
 class BPRwebNoJsErrors extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-js-errors',
-      title: 'RWEB_0043 - No JavaScript errors in console',
-      failureTitle: 'RWEB_0043 - JavaScript errors detected',
-      description: `Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](${refsURLS.rweb.rweb_0043.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['ConsoleMessages'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -37,7 +47,9 @@ class BPRwebNoJsErrors extends Audit {
     return {
       score: count === 0 ? 1 : 0,
       displayValue:
-        count === 0 ? 'No JavaScript errors' : `${count} JavaScript error(s)`,
+        count === 0
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -49,7 +61,7 @@ class BPRwebNoJsErrors extends Audit {
         headings: [
           {
             key: 'message',
-            label: 'Error message',
+            label: str_(UIStrings.colLabelErrorMessage),
             valueType: 'text' as const,
           },
         ],

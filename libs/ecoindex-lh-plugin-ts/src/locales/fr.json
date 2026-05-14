@@ -1,0 +1,921 @@
+{
+  "audits/bp/badly-sized-images.js | colLabelImageUrl": {
+    "message": "URL de l'image"
+  },
+  "audits/bp/badly-sized-images.js | colLabelImagesResized": {
+    "message": "Image(s) redimensionnée(s)"
+  },
+  "audits/bp/badly-sized-images.js | description": {
+    "message": "Ne redimensionnez pas les images via les attributs HTML height et width. Cela envoie les images dans leur taille originale, gaspillant bande passante et puissance de calcul. Redimensionnez les images avec un logiciel tel que Photoshop plutôt qu'en HTML."
+  },
+  "audits/bp/badly-sized-images.js | displayValue": {
+    "message": "Trouvé {count} image(s) redimensionnée(s)"
+  },
+  "audits/bp/badly-sized-images.js | failureTitle": {
+    "message": "Des images sont redimensionnées dans le navigateur !"
+  },
+  "audits/bp/badly-sized-images.js | title": {
+    "message": "Ne pas redimensionner les images dans le navigateur"
+  },
+  "audits/bp/rweb-cache-control.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-cache-control.js | description": {
+    "message": "Définissez des en-têtes Cache-Control sur les ressources HTML, CSS, JS et les polices pour réduire les téléchargements répétés. [Voir RWEB_0075](https://rweb.greenit.fr/fr/fiches/RWEB_0075-ajouter-des-entetes-expires-ou-cache-control)"
+  },
+  "audits/bp/rweb-cache-control.js | displayValueFail": {
+    "message": "{count} ressource(s) sans Cache-Control"
+  },
+  "audits/bp/rweb-cache-control.js | displayValuePass": {
+    "message": "Toutes les ressources ont un Cache-Control"
+  },
+  "audits/bp/rweb-cache-control.js | failureTitle": {
+    "message": "RWEB_0075 - Ressources sans en-tête Cache-Control"
+  },
+  "audits/bp/rweb-cache-control.js | title": {
+    "message": "RWEB_0075 - Utiliser les en-têtes Cache-Control"
+  },
+  "audits/bp/rweb-combine-assets.js | colLabelType": {
+    "message": "Type"
+  },
+  "audits/bp/rweb-combine-assets.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-combine-assets.js | description": {
+    "message": "Concaténez les fichiers CSS et JS pour réduire les requêtes HTTP. [Voir RWEB_0078](https://rweb.greenit.fr/fr/fiches/RWEB_0078-combiner-les-fichiers-css-et-javascript)"
+  },
+  "audits/bp/rweb-combine-assets.js | displayValue": {
+    "message": "{cssCount} CSS + {jsCount} JS fichiers"
+  },
+  "audits/bp/rweb-combine-assets.js | failureTitle": {
+    "message": "RWEB_0078 - Trop de fichiers CSS/JS séparés"
+  },
+  "audits/bp/rweb-combine-assets.js | title": {
+    "message": "RWEB_0078 - Combiner les fichiers CSS et JS (≤ 10 chacun)"
+  },
+  "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
+    "message": "Taille du cookie (octets)"
+  },
+  "audits/bp/rweb-cookie-size.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-cookie-size.js | description": {
+    "message": "Maintenez les en-têtes de requête Cookie sous 512 octets pour réduire la surcharge HTTP. [Voir RWEB_0062](https://rweb.greenit.fr/fr/fiches/RWEB_0062-optimiser-la-taille-des-cookies)"
+  },
+  "audits/bp/rweb-cookie-size.js | displayValueFail": {
+    "message": "{count} requête(s) avec en-tête Cookie surdimensionné"
+  },
+  "audits/bp/rweb-cookie-size.js | displayValuePass": {
+    "message": "Aucun en-tête Cookie ne dépasse 512 octets"
+  },
+  "audits/bp/rweb-cookie-size.js | failureTitle": {
+    "message": "RWEB_0062 - L'en-tête cookie dépasse 512 octets"
+  },
+  "audits/bp/rweb-cookie-size.js | title": {
+    "message": "RWEB_0062 - Taille des cookies ≤ 512 octets"
+  },
+  "audits/bp/rweb-css-containment.js | description": {
+    "message": "Utilisez la propriété CSS containment pour optimiser les performances de rendu. [Voir RWEB_0039](https://rweb.greenit.fr/fr/fiches/RWEB_0039-utiliser-les-compartiments-css)"
+  },
+  "audits/bp/rweb-css-containment.js | displayValue": {
+    "message": "{count} fichier(s) CSS chargé(s) — vérifiez l'utilisation de la propriété 'contain' manuellement."
+  },
+  "audits/bp/rweb-css-containment.js | failureTitle": {
+    "message": "RWEB_0039 - Confinement CSS non vérifié"
+  },
+  "audits/bp/rweb-css-containment.js | title": {
+    "message": "RWEB_0039 - Utiliser le confinement CSS"
+  },
+  "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
+    "message": "URL CSS"
+  },
+  "audits/bp/rweb-css-splitting.js | description": {
+    "message": "Découpez les gros fichiers CSS par type de média (impression, mobile…) pour que seuls les styles pertinents soient analysés. [Voir RWEB_0036](https://rweb.greenit.fr/fr/fiches/RWEB_0036-decouper-les-css)"
+  },
+  "audits/bp/rweb-css-splitting.js | displayValueFail": {
+    "message": "{count} grand(s) fichier(s) CSS sans ciblage média"
+  },
+  "audits/bp/rweb-css-splitting.js | displayValuePass": {
+    "message": "Tous les grands fichiers CSS sont ciblés par type de média"
+  },
+  "audits/bp/rweb-css-splitting.js | failureTitle": {
+    "message": "RWEB_0036 - Des fichiers CSS volumineux sans ciblage média ont été détectés"
+  },
+  "audits/bp/rweb-css-splitting.js | title": {
+    "message": "RWEB_0036 - Séparer le CSS par contexte média"
+  },
+  "audits/bp/rweb-hsts.js | description": {
+    "message": "Activez l'en-tête HSTS (HTTP Strict-Transport-Security) pour imposer HTTPS. [Voir RWEB_0084](https://rweb.greenit.fr/fr/fiches/RWEB_0084-favoriser-hsts-preload-list-aux-redirections-301)"
+  },
+  "audits/bp/rweb-hsts.js | displayValueFail": {
+    "message": "En-tête HSTS absent"
+  },
+  "audits/bp/rweb-hsts.js | displayValuePass": {
+    "message": "En-tête HSTS présent"
+  },
+  "audits/bp/rweb-hsts.js | failureTitle": {
+    "message": "RWEB_0084 - En-tête HSTS manquant"
+  },
+  "audits/bp/rweb-hsts.js | title": {
+    "message": "RWEB_0084 - Activer l'en-tête HSTS"
+  },
+  "audits/bp/rweb-http-compression.js | colLabelUncompressedUrl": {
+    "message": "URL non compressée"
+  },
+  "audits/bp/rweb-http-compression.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-http-compression.js | description": {
+    "message": "Activez la compression gzip/brotli pour les ressources HTML, CSS et JS. [Voir RWEB_0076](https://rweb.greenit.fr/fr/fiches/RWEB_0076-compresser-les-fichiers-css-javascript-html-et-svg)"
+  },
+  "audits/bp/rweb-http-compression.js | displayValueCompressed": {
+    "message": "{compressed}/{total} ressources texte compressées ({ratio}%)"
+  },
+  "audits/bp/rweb-http-compression.js | displayValueNoResources": {
+    "message": "Aucune ressource texte à vérifier"
+  },
+  "audits/bp/rweb-http-compression.js | failureTitle": {
+    "message": "RWEB_0076 - Ressources texte non compressées"
+  },
+  "audits/bp/rweb-http-compression.js | title": {
+    "message": "RWEB_0076 - Compresser les ressources texte (≥ 95%)"
+  },
+  "audits/bp/rweb-lazy-loading.js | colLabelImageUrl": {
+    "message": "URL de l'image"
+  },
+  "audits/bp/rweb-lazy-loading.js | description": {
+    "message": "Ajoutez loading=\"lazy\" aux images sous la ligne de flottaison pour différer leur téléchargement. [Voir RWEB_0051](https://rweb.greenit.fr/fr/fiches/RWEB_0051-utiliser-le-chargement-paresseux)"
+  },
+  "audits/bp/rweb-lazy-loading.js | displayValueFail": {
+    "message": "{count} image(s) sans chargement différé"
+  },
+  "audits/bp/rweb-lazy-loading.js | displayValuePass": {
+    "message": "Toutes les images utilisent le chargement différé"
+  },
+  "audits/bp/rweb-lazy-loading.js | failureTitle": {
+    "message": "RWEB_0051 - Images sans chargement différé détectées"
+  },
+  "audits/bp/rweb-lazy-loading.js | title": {
+    "message": "RWEB_0051 - Utiliser le chargement différé pour les images"
+  },
+  "audits/bp/rweb-limit-analytics.js | description": {
+    "message": "Limitez les outils d'analytics à un par page. [Voir RWEB_0111](https://rweb.greenit.fr/fr/fiches/RWEB_0111-limiter-les-outils-d-analytics-et-les-donnees-collectees)"
+  },
+  "audits/bp/rweb-limit-analytics.js | displayValue": {
+    "message": "{count} outil(s) analytics détecté(s)"
+  },
+  "audits/bp/rweb-limit-analytics.js | failureTitle": {
+    "message": "RWEB_0111 - Plusieurs outils analytics détectés"
+  },
+  "audits/bp/rweb-limit-analytics.js | title": {
+    "message": "RWEB_0111 - Limiter les outils analytics (≤ 1)"
+  },
+  "audits/bp/rweb-limit-css-files.js | colLabelStylesheetUrl": {
+    "message": "URL de la feuille de style"
+  },
+  "audits/bp/rweb-limit-css-files.js | description": {
+    "message": "Limitez le nombre de fichiers CSS à 7 ou moins pour réduire les requêtes HTTP. [Voir RWEB_0035](https://rweb.greenit.fr/fr/fiches/RWEB_0035-limiter-le-nombre-de-css)"
+  },
+  "audits/bp/rweb-limit-css-files.js | displayValue": {
+    "message": "{count} feuille(s) de style CSS"
+  },
+  "audits/bp/rweb-limit-css-files.js | failureTitle": {
+    "message": "RWEB_0035 - Trop de feuilles de style CSS"
+  },
+  "audits/bp/rweb-limit-css-files.js | title": {
+    "message": "RWEB_0035 - Limiter les feuilles de style CSS (≤ 7)"
+  },
+  "audits/bp/rweb-limit-domains.js | description": {
+    "message": "Réduisez le nombre de domaines uniques servant les ressources de la page. [Voir RWEB_0082](https://rweb.greenit.fr/fr/fiches/RWEB_0082-limiter-le-nombre-de-domaines-servant-les-ressources)"
+  },
+  "audits/bp/rweb-limit-domains.js | displayValue": {
+    "message": "{count} domaine(s) unique(s)"
+  },
+  "audits/bp/rweb-limit-domains.js | failureTitle": {
+    "message": "RWEB_0082 - Trop de domaines de ressources (> 5)"
+  },
+  "audits/bp/rweb-limit-domains.js | title": {
+    "message": "RWEB_0082 - Limiter les domaines de ressources (≤ 5)"
+  },
+  "audits/bp/rweb-limit-fonts.js | description": {
+    "message": "Réduisez le nombre de familles de polices externes chargées. [Voir RWEB_0032](https://rweb.greenit.fr/fr/fiches/RWEB_0032-favoriser-les-polices-standards)"
+  },
+  "audits/bp/rweb-limit-fonts.js | displayValue": {
+    "message": "{count, plural, one {# famille de police externe} other {# familles de polices externes}}"
+  },
+  "audits/bp/rweb-limit-fonts.js | failureTitle": {
+    "message": "RWEB_0032 - Trop de familles de polices externes (> 2)"
+  },
+  "audits/bp/rweb-limit-fonts.js | title": {
+    "message": "RWEB_0032 - Limiter les familles de polices (≤ 2)"
+  },
+  "audits/bp/rweb-minification.js | colLabelContentSnippet": {
+    "message": "Extrait du contenu"
+  },
+  "audits/bp/rweb-minification.js | colLabelType": {
+    "message": "Type"
+  },
+  "audits/bp/rweb-minification.js | description": {
+    "message": "Minifiez les blocs de style et de script inline pour réduire le poids de la page. [Voir RWEB_0077](https://rweb.greenit.fr/fr/fiches/RWEB_0077-minifier-les-fichiers-css-javascript-html-et-svg)"
+  },
+  "audits/bp/rweb-minification.js | displayValueFail": {
+    "message": "{count} ressource(s) inline non minifiée(s)"
+  },
+  "audits/bp/rweb-minification.js | displayValuePass": {
+    "message": "Toutes les ressources inline semblent minifiées"
+  },
+  "audits/bp/rweb-minification.js | failureTitle": {
+    "message": "RWEB_0077 - CSS/JS inline non minifiés détectés"
+  },
+  "audits/bp/rweb-minification.js | title": {
+    "message": "RWEB_0077 - Minifier les CSS et JS inline"
+  },
+  "audits/bp/rweb-no-animations.js | description": {
+    "message": "Évitez les animations et transitions pour réduire l'utilisation du CPU et la consommation de batterie. [Voir RWEB_0009](https://rweb.greenit.fr/fr/fiches/RWEB_0009-eviter-les-animations-javascript-css)"
+  },
+  "audits/bp/rweb-no-animations.js | displayValueFail": {
+    "message": "{count} élément(s) animé(s) trouvé(s)"
+  },
+  "audits/bp/rweb-no-animations.js | displayValuePass": {
+    "message": "Aucun élément animé"
+  },
+  "audits/bp/rweb-no-animations.js | failureTitle": {
+    "message": "RWEB_0009 - Éléments animés détectés"
+  },
+  "audits/bp/rweb-no-animations.js | title": {
+    "message": "RWEB_0009 - Pas d'éléments animés"
+  },
+  "audits/bp/rweb-no-autoplay.js | description": {
+    "message": "Évitez la lecture automatique sur les éléments vidéo et audio. [Voir RWEB_0106](https://rweb.greenit.fr/fr/fiches/RWEB_0106-eviter-la-lecture-et-le-chargement-automatique-des-videos-et-des-sons)"
+  },
+  "audits/bp/rweb-no-autoplay.js | displayValue": {
+    "message": "{count} élément(s) avec lecture automatique"
+  },
+  "audits/bp/rweb-no-autoplay.js | failureTitle": {
+    "message": "RWEB_0106 - Lecture automatique vidéo/audio détectée"
+  },
+  "audits/bp/rweb-no-autoplay.js | title": {
+    "message": "RWEB_0106 - Pas de lecture automatique vidéo/audio"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | colLabelContainer": {
+    "message": "Conteneur"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | colLabelImageUrl": {
+    "message": "URL de l'image"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | description": {
+    "message": "Remplacez les images bitmap (PNG/JPG/WebP) dans les en-têtes, navigations, pieds de page et boutons par du SVG ou du CSS. [Voir RWEB_0038](https://rweb.greenit.fr/fr/fiches/RWEB_0038-eviter-d-utiliser-des-images-matricielles-pour-l-interface)"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | displayValueFail": {
+    "message": "{count} image(s) bitmap dans des conteneurs d'interface"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | displayValuePass": {
+    "message": "Aucune image bitmap dans des conteneurs d'interface"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | failureTitle": {
+    "message": "RWEB_0038 - Images bitmap dans des conteneurs d'interface détectées"
+  },
+  "audits/bp/rweb-no-bitmap-ui.js | title": {
+    "message": "RWEB_0038 - Éviter les images bitmap pour les éléments d'interface"
+  },
+  "audits/bp/rweb-no-canvas.js | description": {
+    "message": "Minimisez l'utilisation des éléments canvas. [Voir RWEB_0055](https://rweb.greenit.fr/fr/fiches/RWEB_0055-limiter-le-recours-aux-canvas)"
+  },
+  "audits/bp/rweb-no-canvas.js | displayValueFail": {
+    "message": "{count} élément(s) canvas trouvé(s)"
+  },
+  "audits/bp/rweb-no-canvas.js | displayValuePass": {
+    "message": "Aucun élément canvas"
+  },
+  "audits/bp/rweb-no-canvas.js | failureTitle": {
+    "message": "RWEB_0055 - Éléments canvas détectés"
+  },
+  "audits/bp/rweb-no-canvas.js | title": {
+    "message": "RWEB_0055 - Éviter les éléments canvas"
+  },
+  "audits/bp/rweb-no-carousel.js | description": {
+    "message": "Évitez d'utiliser des bibliothèques de carrousels/sliders quand c'est possible. [Voir RWEB_0010](https://rweb.greenit.fr/fr/fiches/RWEB_0010-limiter-le-recours-aux-carrousels)"
+  },
+  "audits/bp/rweb-no-carousel.js | displayValueFail": {
+    "message": "{count, plural, one {# bibliothèque de carrousel détectée} other {# bibliothèques de carrousel détectées}}"
+  },
+  "audits/bp/rweb-no-carousel.js | displayValuePass": {
+    "message": "Aucune bibliothèque de carrousel détectée"
+  },
+  "audits/bp/rweb-no-carousel.js | failureTitle": {
+    "message": "RWEB_0010 - Bibliothèque de carrousel détectée"
+  },
+  "audits/bp/rweb-no-carousel.js | title": {
+    "message": "RWEB_0010 - Éviter les carrousels"
+  },
+  "audits/bp/rweb-no-cookie-on-static.js | description": {
+    "message": "Évitez d'envoyer des cookies avec les ressources statiques (images, CSS, JS, polices). [Voir RWEB_0081](https://rweb.greenit.fr/fr/fiches/RWEB_0081-heberger-les-ressources-cssjs-sur-un-domaine-sans-cookie)"
+  },
+  "audits/bp/rweb-no-cookie-on-static.js | displayValueFail": {
+    "message": "{count} ressource(s) statique(s) envoyée(s) avec en-tête Cookie"
+  },
+  "audits/bp/rweb-no-cookie-on-static.js | displayValuePass": {
+    "message": "Aucune ressource statique avec en-tête Cookie"
+  },
+  "audits/bp/rweb-no-cookie-on-static.js | failureTitle": {
+    "message": "RWEB_0081 - Cookies détectés sur des ressources statiques"
+  },
+  "audits/bp/rweb-no-cookie-on-static.js | title": {
+    "message": "RWEB_0081 - Pas de cookies sur les ressources statiques"
+  },
+  "audits/bp/rweb-no-document-write.js | colLabelScriptSnippet": {
+    "message": "Extrait de script"
+  },
+  "audits/bp/rweb-no-document-write.js | description": {
+    "message": "Évitez d'utiliser des appels DOM bloquants dans les scripts inline car ils bloquent le parsing et forcent un nouveau parcours du DOM. [Voir RWEB_0044](https://rweb.greenit.fr/fr/fiches/RWEB_0044-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse)"
+  },
+  "audits/bp/rweb-no-document-write.js | displayValueFail": {
+    "message": "{count} écriture(s) DOM bloquante(s) dans les scripts inline"
+  },
+  "audits/bp/rweb-no-document-write.js | displayValuePass": {
+    "message": "Aucune écriture DOM bloquante détectée"
+  },
+  "audits/bp/rweb-no-document-write.js | failureTitle": {
+    "message": "RWEB_0044 - Écriture DOM bloquante détectée dans les scripts inline"
+  },
+  "audits/bp/rweb-no-document-write.js | title": {
+    "message": "RWEB_0044 - Éviter la manipulation du DOM pendant le parcours"
+  },
+  "audits/bp/rweb-no-embedded-docs.js | description": {
+    "message": "Évitez d'intégrer des documents (PDF, Word, etc.) directement dans le HTML. Utilisez des liens à la place. [Voir RWEB_0033](https://rweb.greenit.fr/fr/fiches/RWEB_0033-ne-pas-afficher-les-documents-a-l-interieur-des-pages)"
+  },
+  "audits/bp/rweb-no-embedded-docs.js | displayValueFail": {
+    "message": "{count} document(s) embarqué(s) trouvé(s)"
+  },
+  "audits/bp/rweb-no-embedded-docs.js | displayValuePass": {
+    "message": "Aucun document embarqué détecté"
+  },
+  "audits/bp/rweb-no-embedded-docs.js | failureTitle": {
+    "message": "RWEB_0033 - Documents embarqués détectés"
+  },
+  "audits/bp/rweb-no-embedded-docs.js | title": {
+    "message": "RWEB_0033 - Pas de documents embarqués"
+  },
+  "audits/bp/rweb-no-gif.js | description": {
+    "message": "Évitez d'utiliser des GIFs pour les animations ou images ; utilisez des formats modernes à la place. [Voir RWEB_0099](https://rweb.greenit.fr/fr/fiches/RWEB_0099-limiter-l-utilisation-des-gifs-animes)"
+  },
+  "audits/bp/rweb-no-gif.js | displayValueFail": {
+    "message": "{count} GIF(s) détecté(s)"
+  },
+  "audits/bp/rweb-no-gif.js | displayValuePass": {
+    "message": "Aucun GIF détecté"
+  },
+  "audits/bp/rweb-no-gif.js | failureTitle": {
+    "message": "RWEB_0099 - GIFs détectés"
+  },
+  "audits/bp/rweb-no-gif.js | title": {
+    "message": "RWEB_0099 - Éviter l'utilisation de GIFs"
+  },
+  "audits/bp/rweb-no-hidden-images.js | colLabelImageUrl": {
+    "message": "URL de l'image"
+  },
+  "audits/bp/rweb-no-hidden-images.js | description": {
+    "message": "Les images téléchargées mais masquées gaspillent de la bande passante. Utilisez le chargement différé ou supprimez-les."
+  },
+  "audits/bp/rweb-no-hidden-images.js | displayValueFail": {
+    "message": "{count} image(s) téléchargée(s) mais non affichée(s)"
+  },
+  "audits/bp/rweb-no-hidden-images.js | displayValuePass": {
+    "message": "Aucune image masquée téléchargée"
+  },
+  "audits/bp/rweb-no-hidden-images.js | failureTitle": {
+    "message": "Images téléchargées mais non affichées détectées"
+  },
+  "audits/bp/rweb-no-hidden-images.js | title": {
+    "message": "Éviter de télécharger des images non affichées"
+  },
+  "audits/bp/rweb-no-http-errors.js | colLabelStatusCode": {
+    "message": "Code de statut"
+  },
+  "audits/bp/rweb-no-http-errors.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-no-http-errors.js | description": {
+    "message": "Corrigez les ressources cassées (404, 500…) pour éviter une charge réseau inutile et améliorer l'expérience utilisateur."
+  },
+  "audits/bp/rweb-no-http-errors.js | displayValueFail": {
+    "message": "{count} erreur(s) HTTP détectée(s)"
+  },
+  "audits/bp/rweb-no-http-errors.js | displayValuePass": {
+    "message": "Aucune erreur HTTP"
+  },
+  "audits/bp/rweb-no-http-errors.js | failureTitle": {
+    "message": "Erreurs de requêtes HTTP détectées (4xx/5xx)"
+  },
+  "audits/bp/rweb-no-http-errors.js | title": {
+    "message": "Éviter les erreurs de requêtes HTTP (4xx/5xx)"
+  },
+  "audits/bp/rweb-no-inline-assets.js | description": {
+    "message": "Minimisez l'utilisation de scripts et styles inline. [Voir RWEB_0042](https://rweb.greenit.fr/fr/fiches/RWEB_0042-externaliser-les-css-et-javascript)"
+  },
+  "audits/bp/rweb-no-inline-assets.js | displayValueFail": {
+    "message": "{count} ressource(s) inline trouvée(s)"
+  },
+  "audits/bp/rweb-no-inline-assets.js | displayValuePass": {
+    "message": "Aucune ressource inline"
+  },
+  "audits/bp/rweb-no-inline-assets.js | failureTitle": {
+    "message": "RWEB_0042 - Ressources inline détectées"
+  },
+  "audits/bp/rweb-no-inline-assets.js | title": {
+    "message": "RWEB_0042 - Minimiser les ressources inline"
+  },
+  "audits/bp/rweb-no-js-errors.js | colLabelErrorMessage": {
+    "message": "Message d'erreur"
+  },
+  "audits/bp/rweb-no-js-errors.js | description": {
+    "message": "Corrigez les erreurs JavaScript pour éviter des fonctionnalités cassées et du traitement inutile. [Voir RWEB_0043](https://rweb.greenit.fr/fr/fiches/RWEB_0043-valider-votre-code-avec-un-linter)"
+  },
+  "audits/bp/rweb-no-js-errors.js | displayValueFail": {
+    "message": "{count} erreur(s) JavaScript"
+  },
+  "audits/bp/rweb-no-js-errors.js | displayValuePass": {
+    "message": "Aucune erreur JavaScript"
+  },
+  "audits/bp/rweb-no-js-errors.js | failureTitle": {
+    "message": "RWEB_0043 - Erreurs JavaScript détectées"
+  },
+  "audits/bp/rweb-no-js-errors.js | title": {
+    "message": "RWEB_0043 - Pas d'erreurs JavaScript dans la console"
+  },
+  "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
+    "message": "Élément plugin"
+  },
+  "audits/bp/rweb-no-plugins.js | description": {
+    "message": "Supprimez les éléments Flash, Silverlight et Java applet — ces plugins sont obsolètes, non sécurisés et non supportés."
+  },
+  "audits/bp/rweb-no-plugins.js | displayValueFail": {
+    "message": "{count} plugin(s) navigateur détecté(s)"
+  },
+  "audits/bp/rweb-no-plugins.js | displayValuePass": {
+    "message": "Aucun plugin navigateur détecté"
+  },
+  "audits/bp/rweb-no-plugins.js | failureTitle": {
+    "message": "Plugin navigateur détecté (Flash, Silverlight, Java)"
+  },
+  "audits/bp/rweb-no-plugins.js | title": {
+    "message": "Ne pas utiliser de plugins navigateur (Flash, Silverlight, Java)"
+  },
+  "audits/bp/rweb-no-redirects.js | description": {
+    "message": "Réduisez les redirections HTTP pour éviter des allers-retours inutiles. [Voir RWEB_0112](https://rweb.greenit.fr/fr/fiches/RWEB_0112-eviter-les-redirections)"
+  },
+  "audits/bp/rweb-no-redirects.js | displayValue": {
+    "message": "{count} redirection(s)"
+  },
+  "audits/bp/rweb-no-redirects.js | failureTitle": {
+    "message": "RWEB_0112 - Trop de redirections HTTP (> 1)"
+  },
+  "audits/bp/rweb-no-redirects.js | title": {
+    "message": "RWEB_0112 - Éviter les redirections HTTP (≤ 1)"
+  },
+  "audits/bp/rweb-no-social-sdk.js | description": {
+    "message": "Remplacez les boutons officiels des réseaux sociaux par des liens statiques pour réduire les requêtes tierces. [Voir RWEB_0059](https://rweb.greenit.fr/fr/fiches/RWEB_0059-remplacer-les-boutons-officiels-de-partage-des-reseaux-sociaux)"
+  },
+  "audits/bp/rweb-no-social-sdk.js | displayValue": {
+    "message": "{count} requête(s) SDK de réseau social détectée(s)"
+  },
+  "audits/bp/rweb-no-social-sdk.js | failureTitle": {
+    "message": "RWEB_0059 - SDK officiel de réseau social détecté"
+  },
+  "audits/bp/rweb-no-social-sdk.js | title": {
+    "message": "RWEB_0059 - Pas de boutons officiels de réseaux sociaux"
+  },
+  "audits/bp/rweb-no-unused-code.js | colLabelScriptUrl": {
+    "message": "URL du script"
+  },
+  "audits/bp/rweb-no-unused-code.js | description": {
+    "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. [Voir RWEB_0046](https://rweb.greenit.fr/fr/fiches/RWEB_0046-ne-charger-des-donneesdu-code-que-lorsqu-elles-sontil-est-necessaire)"
+  },
+  "audits/bp/rweb-no-unused-code.js | displayValueFail": {
+    "message": "{count} script(s) externe(s) bloquant(s) le rendu"
+  },
+  "audits/bp/rweb-no-unused-code.js | displayValuePass": {
+    "message": "Aucun script externe bloquant le rendu"
+  },
+  "audits/bp/rweb-no-unused-code.js | failureTitle": {
+    "message": "RWEB_0046 - Scripts externes bloquants détectés"
+  },
+  "audits/bp/rweb-no-unused-code.js | title": {
+    "message": "RWEB_0046 - Éviter les scripts externes bloquants"
+  },
+  "audits/bp/rweb-optimize-svg.js | colLabelSize": {
+    "message": "Taille (octets)"
+  },
+  "audits/bp/rweb-optimize-svg.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-optimize-svg.js | description": {
+    "message": "Les fichiers SVG de plus de 2048 octets contiennent probablement des métadonnées ou commentaires qui peuvent être supprimés. [Voir RWEB_0100](https://rweb.greenit.fr/fr/fiches/RWEB_0100-optimiser-les-images-vectorielles)"
+  },
+  "audits/bp/rweb-optimize-svg.js | displayValueFail": {
+    "message": "{count} grand(s) fichier(s) SVG détecté(s)"
+  },
+  "audits/bp/rweb-optimize-svg.js | displayValuePass": {
+    "message": "Tous les fichiers SVG semblent optimisés"
+  },
+  "audits/bp/rweb-optimize-svg.js | failureTitle": {
+    "message": "RWEB_0100 - Fichiers SVG volumineux détectés (probablement non optimisés)"
+  },
+  "audits/bp/rweb-optimize-svg.js | title": {
+    "message": "RWEB_0100 - Optimiser les fichiers SVG"
+  },
+  "audits/bp/rweb-prefer-css.js | colLabelContext": {
+    "message": "Contexte"
+  },
+  "audits/bp/rweb-prefer-css.js | colLabelElementSnippet": {
+    "message": "Extrait d'élément"
+  },
+  "audits/bp/rweb-prefer-css.js | description": {
+    "message": "Remplacez les icônes bitmap ou SVG dans les boutons et liens par des formes CSS ou des polices d'icônes pour réduire les requêtes HTTP. [Voir RWEB_0037](https://rweb.greenit.fr/fr/fiches/RWEB_0037-preferer-les-css-aux-images)"
+  },
+  "audits/bp/rweb-prefer-css.js | displayValueFail": {
+    "message": "{count} image(s) utilisée(s) comme icône(s) d'interface"
+  },
+  "audits/bp/rweb-prefer-css.js | displayValuePass": {
+    "message": "Aucune image icône dans les boutons/liens détectée"
+  },
+  "audits/bp/rweb-prefer-css.js | failureTitle": {
+    "message": "RWEB_0037 - Images utilisées pour des icônes d'interface (préférer CSS)"
+  },
+  "audits/bp/rweb-prefer-css.js | title": {
+    "message": "RWEB_0037 - Préférer CSS aux images pour les éléments d'interface"
+  },
+  "audits/bp/rweb-print-css.js | description": {
+    "message": "Un CSS d'impression doit être mis en place pour masquer les éléments inutiles lors de l'impression. [Voir RWEB_0031](https://rweb.greenit.fr/fr/fiches/RWEB_0031-fournir-une-css-print)"
+  },
+  "audits/bp/rweb-print-css.js | displayValue": {
+    "message": "Nombre de CSS d'impression : {count}"
+  },
+  "audits/bp/rweb-print-css.js | failureTitle": {
+    "message": "RWEB_0031 - Aucun CSS d'impression implémenté."
+  },
+  "audits/bp/rweb-print-css.js | title": {
+    "message": "RWEB_0031 - CSS d'impression"
+  },
+  "audits/bp/rweb-service-worker.js | description": {
+    "message": "Un Service Worker améliore la mise en cache et réduit les requêtes réseau. [Voir RWEB_0060](https://rweb.greenit.fr/fr/fiches/RWEB_0060-economiser-de-la-bande-passante-grace-a-un-serviceworker)"
+  },
+  "audits/bp/rweb-service-worker.js | displayValueFail": {
+    "message": "Aucun Service Worker"
+  },
+  "audits/bp/rweb-service-worker.js | displayValuePass": {
+    "message": "Service Worker actif"
+  },
+  "audits/bp/rweb-service-worker.js | failureTitle": {
+    "message": "RWEB_0060 - Aucun Service Worker actif détecté"
+  },
+  "audits/bp/rweb-service-worker.js | title": {
+    "message": "RWEB_0060 - Service Worker actif"
+  },
+  "audits/bp/rweb-title-meta.js | description": {
+    "message": "Assurez-vous que la page possède un titre et une meta description non vides. [Voir RWEB_0011](https://rweb.greenit.fr/fr/fiches/RWEB_0011-avoir-un-titre-de-page-et-une-metadescription-pertinents-avec-le-contenu-de-la-page)"
+  },
+  "audits/bp/rweb-title-meta.js | displayValueFail": {
+    "message": "Titre ou meta description manquant"
+  },
+  "audits/bp/rweb-title-meta.js | displayValuePass": {
+    "message": "Titre et meta description présents"
+  },
+  "audits/bp/rweb-title-meta.js | failureTitle": {
+    "message": "RWEB_0011 - Titre ou meta description manquant"
+  },
+  "audits/bp/rweb-title-meta.js | title": {
+    "message": "RWEB_0011 - La page a un titre et une meta description"
+  },
+  "audits/bp/rweb-uses-http2.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "audits/bp/rweb-uses-http2.js | description": {
+    "message": "Utilisez HTTP/2 pour bénéficier du multiplexage et de la compression des en-têtes. [Voir RWEB_0083](https://rweb.greenit.fr/fr/fiches/RWEB_0083-privilegier-http2-a-http1)"
+  },
+  "audits/bp/rweb-uses-http2.js | displayValueFail": {
+    "message": "{count} ressource(s) en HTTP/1"
+  },
+  "audits/bp/rweb-uses-http2.js | displayValuePass": {
+    "message": "Toutes les ressources utilisent HTTP/2+"
+  },
+  "audits/bp/rweb-uses-http2.js | failureTitle": {
+    "message": "RWEB_0083 - Ressources servies en HTTP/1"
+  },
+  "audits/bp/rweb-uses-http2.js | title": {
+    "message": "RWEB_0083 - Utiliser HTTP/2"
+  },
+  "audits/bp/thegreenwebfoundation.js | colLabelDescriptionValue": {
+    "message": "Description/valeur"
+  },
+  "audits/bp/thegreenwebfoundation.js | colLabelInformation": {
+    "message": "Information"
+  },
+  "audits/bp/thegreenwebfoundation.js | description": {
+    "message": "The Green Web Foundation est une organisation à but non lucratif dont la mission est de rendre le web vert en créant des outils pour un web durable. [Voir The Green Web Foundation](https://www.thegreenwebfoundation.org/)"
+  },
+  "audits/bp/thegreenwebfoundation.js | displayValueHostedGreen": {
+    "message": "{domain} est hébergé Vert."
+  },
+  "audits/bp/thegreenwebfoundation.js | displayValueHostedGrey": {
+    "message": "{domain} est hébergé Gris."
+  },
+  "audits/bp/thegreenwebfoundation.js | displayValueLocalhost": {
+    "message": "Localhost ne peut pas être vérifié."
+  },
+  "audits/bp/thegreenwebfoundation.js | displayValueServiceUnavailable": {
+    "message": "Le service The Green Web Foundation n'est pas disponible ou renvoie une erreur."
+  },
+  "audits/bp/thegreenwebfoundation.js | failureTitle": {
+    "message": "Votre site web n'est pas hébergé chez un hébergeur web vert."
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemForOwnersData": {
+    "message": "Partagez ce résultat avec votre hébergeur. Parlez à votre hébergeur et demandez-lui de collaborer avec The Green Web Foundation afin qu'il puisse collecter des données et des preuves sur la consommation d'énergie renouvelable de votre hébergement."
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemForOwnersLabel": {
+    "message": "POUR LES PROPRIÉTAIRES DE SITES WEB"
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemForProvidersData": {
+    "message": "Soumettez des données ou des corrections. Si vous pensez que ce résultat est incorrect et souhaitez le contester ou le mettre à jour, lisez le guide de The Green Web Foundation pour obtenir des explications et les prochaines étapes."
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemForProvidersLabel": {
+    "message": "POUR LES HÉBERGEURS"
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemNoHostData": {
+    "message": "N'EST PROBABLEMENT PAS HÉBERGÉ VERT."
+  },
+  "audits/bp/thegreenwebfoundation.js | greyItemNoHostLabel": {
+    "message": "Aucune information sur l'hébergeur trouvée..."
+  },
+  "audits/bp/thegreenwebfoundation.js | moreInfoLabel": {
+    "message": "plus d'infos sur l'API v3 de The Green Web Foundation"
+  },
+  "audits/bp/thegreenwebfoundation.js | tableItemHostLabel": {
+    "message": "hébergeur"
+  },
+  "audits/bp/thegreenwebfoundation.js | tableItemHostedGreen": {
+    "message": "{domain} est hébergé Vert"
+  },
+  "audits/bp/thegreenwebfoundation.js | tableItemHostedGrey": {
+    "message": "{domain} est hébergé Gris"
+  },
+  "audits/bp/thegreenwebfoundation.js | tableItemLastUpdatedLabel": {
+    "message": "dernière mise à jour"
+  },
+  "audits/bp/thegreenwebfoundation.js | title": {
+    "message": "The Green Web Foundation"
+  },
+  "audits/bp/unoptimized-images.js | colLabelImageUrl": {
+    "message": "URL de l'image"
+  },
+  "audits/bp/unoptimized-images.js | colLabelLosslessPolicyHeader": {
+    "message": "En-tête Feature Policy recommandé pour la compression sans perte"
+  },
+  "audits/bp/unoptimized-images.js | colLabelLossyPolicyHeader": {
+    "message": "En-tête Feature Policy recommandé pour la compression avec perte"
+  },
+  "audits/bp/unoptimized-images.js | description": {
+    "message": "Activez la feature policy pour les images non optimisées afin de garantir l'utilisation des images les plus performantes sur votre site."
+  },
+  "audits/bp/unoptimized-images.js | displayValue": {
+    "message": "Trouvé {count} image(s) non optimisée(s) détectable(s) en développement avec les en-têtes Feature Policy recommandés"
+  },
+  "audits/bp/unoptimized-images.js | failureTitle": {
+    "message": "Utilisez la Feature Policy pour détecter les images non optimisées pendant le développement."
+  },
+  "audits/bp/unoptimized-images.js | title": {
+    "message": "Utilisez la Feature Policy pour détecter les images non optimisées pendant le développement."
+  },
+  "audits/ecoindex-ghg.js | description": {
+    "message": "Émission de gaz à effet de serre (eqCO2) de votre page. [En savoir plus sur l'Ecoindex, Empreinte environnementale](https://www.ecoindex.fr/comment-ca-marche/#lempreinte-environnementale)"
+  },
+  "audits/ecoindex-ghg.js | failureTitle": {
+    "message": "Émission de gaz à effet de serre, votre page génère trop de gaz à effet de serre."
+  },
+  "audits/ecoindex-ghg.js | title": {
+    "message": "Émission de gaz à effet de serre."
+  },
+  "audits/ecoindex-grade.js | description": {
+    "message": "Le score EcoIndex évaluant l'impact environnemental de la page. [En savoir plus sur l'Ecoindex, Calcul de la note](https://www.ecoindex.fr/comment-ca-marche/#le-calcul-de-la-note)"
+  },
+  "audits/ecoindex-grade.js | failureTitle": {
+    "message": "Note, votre page pourrait être améliorée."
+  },
+  "audits/ecoindex-grade.js | title": {
+    "message": "Note."
+  },
+  "audits/ecoindex-nodes.js | description": {
+    "message": "Explication : Compter tous les nœuds DOM de la page, en excluant les nœuds enfants des éléments `svg`, donne le nombre d'éléments DOM de la page. Cette méthode encourage à ne pas remplacer un svg complexe par une image pour obtenir un meilleur score. [En savoir plus sur l'Ecoindex, Méthodologie d'analyse](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)"
+  },
+  "audits/ecoindex-nodes.js | failureTitle": {
+    "message": "Éléments DOM Ecoindex, votre page est trop complexe."
+  },
+  "audits/ecoindex-nodes.js | title": {
+    "message": "Éléments DOM Ecoindex."
+  },
+  "audits/ecoindex-requests.js | description": {
+    "message": "Le nombre de logs `Network.loadingFinished` indique le nombre de requêtes faites vers des ressources externes. [En savoir plus sur l'Ecoindex, Méthodologie d'analyse](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)"
+  },
+  "audits/ecoindex-requests.js | failureTitle": {
+    "message": "Nombre de requêtes, votre page appelle trop de ressources externes."
+  },
+  "audits/ecoindex-requests.js | title": {
+    "message": "Nombre de requêtes."
+  },
+  "audits/ecoindex-score.js | description": {
+    "message": "Le score EcoIndex évaluant l'impact environnemental de la page. [En savoir plus sur l'Ecoindex, Calcul de l'EcoIndex](https://www.ecoindex.fr/comment-ca-marche/#le-calcul-de-lecoindex)"
+  },
+  "audits/ecoindex-score.js | failureTitle": {
+    "message": "Ecoindex, votre page pourrait être améliorée."
+  },
+  "audits/ecoindex-score.js | title": {
+    "message": "Métriques Ecoindex révélatrices."
+  },
+  "audits/ecoindex-size.js | description": {
+    "message": "La somme de tous les `encodedDataLengths` de ces requêtes + la taille HTML de la page elle-même calcule le poids de la page. [En savoir plus sur l'Ecoindex, Méthodologie d'analyse](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)"
+  },
+  "audits/ecoindex-size.js | failureTitle": {
+    "message": "Taille de la page, votre page est trop lourde."
+  },
+  "audits/ecoindex-size.js | title": {
+    "message": "Taille de la page."
+  },
+  "audits/ecoindex-water.js | description": {
+    "message": "La quantité d'eau consommée par la page. [En savoir plus sur l'Ecoindex, Empreinte environnementale](https://www.ecoindex.fr/comment-ca-marche/#lempreinte-environnementale)"
+  },
+  "audits/ecoindex-water.js | failureTitle": {
+    "message": "Consommation d'eau, votre page consomme beaucoup d'eau."
+  },
+  "audits/ecoindex-water.js | title": {
+    "message": "Consommation d'eau."
+  },
+  "audits/has-cat-images.js | description": {
+    "message": "Les pages doivent avoir de nombreuses images de chats pour rendre les utilisateurs heureux. Envisagez d'ajouter une image de chat à votre page pour améliorer l'engagement."
+  },
+  "audits/has-cat-images.js | failureTitle": {
+    "message": "La page n'a pas au moins une image de chat"
+  },
+  "audits/has-cat-images.js | title": {
+    "message": "La page a au moins une image de chat"
+  },
+  "audits/warn-nodes-count.js | description": {
+    "message": "Green IT souhaite que les concepteurs de services web favorisent l'utilisation des SVG plutôt que des images bitmap (PNG, GIF, JPEG), qui alourdissent la page. Pour encourager cette pratique, Green IT a adapté sa méthode de calcul du DOM, ce qui explique pourquoi les résultats de Lighthouse et d'Ecoindex diffèrent parfois. 1re différence : Pour maximiser l'utilisation des SVG, qui impactent le DOM, la méthode de calcul de Green IT exclut les sous-éléments d'une balise SVG. Lighthouse, lui, n'exclut aucun élément ⇒ DOM.Lighthouse > DOM.Ecoindex. 2e différence : Lighthouse effectue son calcul lors du rendu de la page, mais ne prend pas en compte les éléments ajoutés ou modifiés en JavaScript, contrairement au moteur de calcul Ecoindex ⇒ DOM.Lighthouse < DOM.Ecoindex.  [En savoir plus sur l'Ecoindex, Méthodologie d'analyse](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)"
+  },
+  "audits/warn-nodes-count.js | displayValue": {
+    "message": "Nœuds Ecoindex : {count}"
+  },
+  "audits/warn-nodes-count.js | failureTitle": {
+    "message": "Information ⚠️ : Le nombre de nœuds Ecoindex peut différer du nombre de nœuds Lighthouse."
+  },
+  "audits/warn-nodes-count.js | title": {
+    "message": "Information ⚠️ : Le nombre de nœuds Ecoindex peut différer du nombre de nœuds Lighthouse."
+  },
+  "plugin.js | categoryTitle": {
+    "message": "Ecoindex"
+  },
+  "plugin.js | groupBpDescription": {
+    "message": "Référentiel \"115 bonnes pratiques\" du CNUMR (Collectif Conception Numérique Responsable)."
+  },
+  "plugin.js | groupBpTitle": {
+    "message": "#RWEB éco-conception web : 115 bonnes pratiques"
+  },
+  "plugin.js | groupEcologicDescription": {
+    "message": "Métriques révélatrices Ecoindex."
+  },
+  "plugin.js | groupEcologicTitle": {
+    "message": "Résultats Ecoindex"
+  },
+  "plugin.js | groupOtherDescription": {
+    "message": "Diverses bonnes pratiques en éco-conception."
+  },
+  "plugin.js | groupOtherTitle": {
+    "message": "Autres bonnes pratiques d'écoconception"
+  },
+  "plugin.js | groupRgesnDescription": {
+    "message": "Référentiel général d'écoconception des services numériques."
+  },
+  "plugin.js | groupRgesnTitle": {
+    "message": "#RGESN Référentiel général d'écoconception des services numériques"
+  },
+  "plugin.js | groupTechnicDescription": {
+    "message": "Métriques techniques."
+  },
+  "plugin.js | groupTechnicTitle": {
+    "message": "Résultats techniques"
+  },
+  "utils/format-helper.js | scoreLow": {
+    "message": "Faible impact environnemental."
+  },
+  "utils/format-helper.js | scoreModerate": {
+    "message": "Impact environnemental modéré."
+  },
+  "utils/format-helper.js | scoreHigh": {
+    "message": "Impact environnemental élevé."
+  },
+  "utils/format-helper.js | waterLow": {
+    "message": "Faible consommation d'eau."
+  },
+  "utils/format-helper.js | waterModerate": {
+    "message": "Consommation d'eau modérée."
+  },
+  "utils/format-helper.js | waterHigh": {
+    "message": "Consommation d'eau élevée."
+  },
+  "utils/format-helper.js | ghgLow": {
+    "message": "Faibles émissions de gaz à effet de serre."
+  },
+  "utils/format-helper.js | ghgModerate": {
+    "message": "Émissions de gaz à effet de serre modérées."
+  },
+  "utils/format-helper.js | ghgHigh": {
+    "message": "Émissions de gaz à effet de serre élevées."
+  },
+  "utils/format-helper.js | nodesLow": {
+    "message": "Complexité DOM faible."
+  },
+  "utils/format-helper.js | nodesModerate": {
+    "message": "Complexité DOM modérée."
+  },
+  "utils/format-helper.js | nodesHigh": {
+    "message": "Complexité DOM élevée."
+  },
+  "utils/format-helper.js | sizeLow": {
+    "message": "Poids de page faible."
+  },
+  "utils/format-helper.js | sizeModerate": {
+    "message": "Poids de page modéré."
+  },
+  "utils/format-helper.js | sizeHigh": {
+    "message": "Poids de page élevé."
+  },
+  "utils/format-helper.js | requestsLow": {
+    "message": "Faible nombre de requêtes."
+  },
+  "utils/format-helper.js | requestsModerate": {
+    "message": "Nombre de requêtes modéré."
+  },
+  "utils/format-helper.js | requestsHigh": {
+    "message": "Nombre de requêtes élevé."
+  },
+  "utils/table-helper.js | colLabelInfo": {
+    "message": "Information"
+  },
+  "utils/table-helper.js | colLabelDesc": {
+    "message": "Description / valeur"
+  },
+  "utils/table-helper.js | labelEcoindexScore": {
+    "message": "Score Ecoindex"
+  },
+  "utils/table-helper.js | labelEcoindexGrade": {
+    "message": "Grade Ecoindex"
+  },
+  "utils/table-helper.js | labelWater10": {
+    "message": "Consommation d'eau pour 10 visiteurs"
+  },
+  "utils/table-helper.js | labelWater1000": {
+    "message": "Consommation d'eau pour 1 000 visiteurs"
+  },
+  "utils/table-helper.js | labelWater100000": {
+    "message": "Consommation d'eau pour 100 000 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg10": {
+    "message": "Émissions de GES pour 10 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg1000": {
+    "message": "Émissions de GES pour 1 000 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg100000": {
+    "message": "Émissions de GES pour 100 000 visiteurs"
+  },
+  "utils/table-helper.js | labelDomElements": {
+    "message": "Éléments DOM"
+  },
+  "utils/table-helper.js | labelPageSize": {
+    "message": "Taille de la page"
+  },
+  "utils/table-helper.js | labelRequests": {
+    "message": "Nombre de requêtes"
+  },
+  "utils/table-helper.js | labelGood": {
+    "message": "Bon"
+  },
+  "utils/table-helper.js | labelPoor": {
+    "message": "Mauvais"
+  },
+  "utils/table-helper.js | thresholdLessText": {
+    "message": "moins de {value} {unit}"
+  },
+  "utils/table-helper.js | thresholdMoreText": {
+    "message": "plus de {value} {unit}"
+  },
+  "utils/table-helper.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "utils/table-helper.js | colLabelDomain": {
+    "message": "Domaine"
+  },
+  "utils/table-helper.js | colLabelTransferSize": {
+    "message": "Taille transférée (Kio)"
+  }
+}
+

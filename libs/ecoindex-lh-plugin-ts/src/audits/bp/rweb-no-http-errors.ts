@@ -2,15 +2,26 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'Avoid HTTP request errors (4xx/5xx)',
+  failureTitle: 'HTTP request errors detected (4xx/5xx)',
+  description:
+    'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
+  displayValuePass: 'No HTTP errors',
+  displayValueFail: '{count} HTTP error(s) detected',
+  colLabelUrl: 'URL',
+  colLabelStatusCode: 'Status code',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-no-http-errors.js', UIStrings)
 
 class BPRwebNoHttpErrors extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-http-errors',
-      title: 'Avoid HTTP request errors (4xx/5xx)',
-      failureTitle: 'HTTP request errors detected (4xx/5xx)',
-      description:
-        'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -30,7 +41,9 @@ class BPRwebNoHttpErrors extends Audit {
     return {
       score: count === 0 ? 1 : 0,
       displayValue:
-        count === 0 ? 'No HTTP errors' : `${count} HTTP error(s) detected`,
+        count === 0
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -40,10 +53,14 @@ class BPRwebNoHttpErrors extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
           {
             key: 'statusCode',
-            label: 'Status code',
+            label: str_(UIStrings.colLabelStatusCode),
             valueType: 'text' as const,
           },
         ],

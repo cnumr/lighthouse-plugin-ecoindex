@@ -7,15 +7,24 @@ import {
 } from 'lighthouse/types/artifacts.js'
 
 import { Audit } from 'lighthouse'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+const UIStrings = {
+  title: 'RWEB_0033 - No embedded documents',
+  failureTitle: 'RWEB_0033 - Embedded documents detected',
+  description:
+    'Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](https://rweb.greenit.fr/en/fiches/RWEB_0033-do-not-display-documents-within-pages)',
+  displayValuePass: 'No embedded documents detected',
+  displayValueFail: '{count} embedded document(s) found',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-no-embedded-docs.js', UIStrings)
 
 class BPRwebNoEmbeddedDocs extends Audit {
   static get meta() {
     return {
       id: 'rweb-no-embedded-docs',
-      title: 'RWEB_0033 - No embedded documents',
-      failureTitle: 'RWEB_0033 - Embedded documents detected',
-      description: `Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](${refsURLS.rweb.rweb_0033.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['MainDocumentContent'] as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
@@ -39,8 +48,8 @@ class BPRwebNoEmbeddedDocs extends Audit {
       score: total === 0 ? 1 : 0,
       displayValue:
         total === 0
-          ? 'No embedded documents detected'
-          : `${total} embedded document${total > 1 ? 's' : ''} found`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: total }),
       numericValue: total,
       numericUnit: 'unitless' as
         | 'unitless'

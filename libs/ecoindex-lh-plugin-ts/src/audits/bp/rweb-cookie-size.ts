@@ -2,17 +2,29 @@ import * as LH from 'lighthouse/types/lh.js'
 
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
-import refsURLS from './refs-urls.js'
+import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 const MAX_COOKIE_BYTES = 512
+
+const UIStrings = {
+  title: 'RWEB_0062 - Cookie size ≤ 512 bytes',
+  failureTitle: 'RWEB_0062 - Cookie header exceeds 512 bytes',
+  description:
+    'Keep Cookie request headers under 512 bytes to reduce HTTP overhead. [See RWEB_0062](https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size)',
+  displayValuePass: 'No Cookie header exceeds 512 bytes',
+  displayValueFail: '{count} request(s) with oversized Cookie header',
+  colLabelUrl: 'URL',
+  colLabelCookieSize: 'Cookie size (bytes)',
+}
+const str_ = createIcuMessageFn('audits/bp/rweb-cookie-size.js', UIStrings)
 
 class BPRwebCookieSize extends Audit {
   static get meta() {
     return {
       id: 'rweb-cookie-size',
-      title: `RWEB_0062 - Cookie size ≤ ${MAX_COOKIE_BYTES} bytes`,
-      failureTitle: `RWEB_0062 - Cookie header exceeds ${MAX_COOKIE_BYTES} bytes`,
-      description: `Keep Cookie request headers under ${MAX_COOKIE_BYTES} bytes to reduce HTTP overhead. [See RWEB_0062](${refsURLS.rweb.rweb_0062.en})`,
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
+      description: str_(UIStrings.description),
       requiredArtifacts: ['DevtoolsLog'] as (keyof LH.Artifacts)[],
     }
   }
@@ -41,8 +53,8 @@ class BPRwebCookieSize extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? `No Cookie header exceeds ${MAX_COOKIE_BYTES} bytes`
-          : `${count} request(s) with oversized Cookie header`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -52,10 +64,14 @@ class BPRwebCookieSize extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
           {
             key: 'size',
-            label: 'Cookie size (bytes)',
+            label: str_(UIStrings.colLabelCookieSize),
             valueType: 'bytes' as const,
           },
         ],
