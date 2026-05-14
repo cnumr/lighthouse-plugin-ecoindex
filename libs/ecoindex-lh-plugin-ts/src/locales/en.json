@@ -824,5 +824,59 @@
     "message": {
       "message": "Technical results"
     }
+  },
+  "utils/format-helper.js | scoreLow": {
+    "message": "Low environmental impact."
+  },
+  "utils/format-helper.js | scoreModerate": {
+    "message": "Moderate environmental impact."
+  },
+  "utils/format-helper.js | scoreHigh": {
+    "message": "High environmental impact."
+  },
+  "utils/format-helper.js | waterLow": {
+    "message": "Low water consumption."
+  },
+  "utils/format-helper.js | waterModerate": {
+    "message": "Moderate water consumption."
+  },
+  "utils/format-helper.js | waterHigh": {
+    "message": "High water consumption."
+  },
+  "utils/format-helper.js | ghgLow": {
+    "message": "Low greenhouse gas emissions."
+  },
+  "utils/format-helper.js | ghgModerate": {
+    "message": "Moderate greenhouse gas emissions."
+  },
+  "utils/format-helper.js | ghgHigh": {
+    "message": "High greenhouse gas emissions."
+  },
+  "utils/format-helper.js | nodesLow": {
+    "message": "Low DOM complexity."
+  },
+  "utils/format-helper.js | nodesModerate": {
+    "message": "Moderate DOM complexity."
+  },
+  "utils/format-helper.js | nodesHigh": {
+    "message": "High DOM complexity."
+  },
+  "utils/format-helper.js | sizeLow": {
+    "message": "Low page weight."
+  },
+  "utils/format-helper.js | sizeModerate": {
+    "message": "Moderate page weight."
+  },
+  "utils/format-helper.js | sizeHigh": {
+    "message": "High page weight."
+  },
+  "utils/format-helper.js | requestsLow": {
+    "message": "Low number of requests."
+  },
+  "utils/format-helper.js | requestsModerate": {
+    "message": "Moderate number of requests."
+  },
+  "utils/format-helper.js | requestsHigh": {
+    "message": "High number of requests."
   }
 }

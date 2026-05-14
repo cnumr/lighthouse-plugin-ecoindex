@@ -802,5 +802,60 @@
   },
   "plugin.js | groupTechnicTitle": {
     "message": "Résultats techniques"
+  },
+  "utils/format-helper.js | scoreLow": {
+    "message": "Faible impact environnemental."
+  },
+  "utils/format-helper.js | scoreModerate": {
+    "message": "Impact environnemental modéré."
+  },
+  "utils/format-helper.js | scoreHigh": {
+    "message": "Impact environnemental élevé."
+  },
+  "utils/format-helper.js | waterLow": {
+    "message": "Faible consommation d'eau."
+  },
+  "utils/format-helper.js | waterModerate": {
+    "message": "Consommation d'eau modérée."
+  },
+  "utils/format-helper.js | waterHigh": {
+    "message": "Consommation d'eau élevée."
+  },
+  "utils/format-helper.js | ghgLow": {
+    "message": "Faibles émissions de gaz à effet de serre."
+  },
+  "utils/format-helper.js | ghgModerate": {
+    "message": "Émissions de gaz à effet de serre modérées."
+  },
+  "utils/format-helper.js | ghgHigh": {
+    "message": "Émissions de gaz à effet de serre élevées."
+  },
+  "utils/format-helper.js | nodesLow": {
+    "message": "Complexité DOM faible."
+  },
+  "utils/format-helper.js | nodesModerate": {
+    "message": "Complexité DOM modérée."
+  },
+  "utils/format-helper.js | nodesHigh": {
+    "message": "Complexité DOM élevée."
+  },
+  "utils/format-helper.js | sizeLow": {
+    "message": "Poids de page faible."
+  },
+  "utils/format-helper.js | sizeModerate": {
+    "message": "Poids de page modéré."
+  },
+  "utils/format-helper.js | sizeHigh": {
+    "message": "Poids de page élevé."
+  },
+  "utils/format-helper.js | requestsLow": {
+    "message": "Faible nombre de requêtes."
+  },
+  "utils/format-helper.js | requestsModerate": {
+    "message": "Nombre de requêtes modéré."
+  },
+  "utils/format-helper.js | requestsHigh": {
+    "message": "Nombre de requêtes élevé."
   }
 }
+
