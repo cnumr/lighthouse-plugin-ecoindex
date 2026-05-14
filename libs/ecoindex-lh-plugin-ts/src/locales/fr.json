@@ -771,58 +771,36 @@
     "message": "Information ⚠️ : Le nombre de nœuds Ecoindex peut différer du nombre de nœuds Lighthouse."
   },
   "plugin.js | categoryTitle": {
-    "message": {
-      "message": "Ecoindex"
-    }
+    "message": "Ecoindex"
   },
   "plugin.js | groupBpDescription": {
-    "message": {
-      "message": "Référentiel \"115 bonnes pratiques\" du CNUMR (Collectif Conception Numérique Responsable)."
-    }
+    "message": "Référentiel \"115 bonnes pratiques\" du CNUMR (Collectif Conception Numérique Responsable)."
   },
   "plugin.js | groupBpTitle": {
-    "message": {
-      "message": "#RWEB éco-conception web : 115 bonnes pratiques"
-    }
+    "message": "#RWEB éco-conception web : 115 bonnes pratiques"
   },
   "plugin.js | groupEcologicDescription": {
-    "message": {
-      "message": "Métriques révélatrices Ecoindex."
-    }
+    "message": "Métriques révélatrices Ecoindex."
   },
   "plugin.js | groupEcologicTitle": {
-    "message": {
-      "message": "Résultats Ecoindex"
-    }
+    "message": "Résultats Ecoindex"
   },
   "plugin.js | groupOtherDescription": {
-    "message": {
-      "message": "Diverses bonnes pratiques en éco-conception."
-    }
+    "message": "Diverses bonnes pratiques en éco-conception."
   },
   "plugin.js | groupOtherTitle": {
-    "message": {
-      "message": "Autres bonnes pratiques d'écoconception"
-    }
+    "message": "Autres bonnes pratiques d'écoconception"
   },
   "plugin.js | groupRgesnDescription": {
-    "message": {
-      "message": "Référentiel général d'écoconception des services numériques."
-    }
+    "message": "Référentiel général d'écoconception des services numériques."
   },
   "plugin.js | groupRgesnTitle": {
-    "message": {
-      "message": "#RGESN Référentiel général d'écoconception des services numériques"
-    }
+    "message": "#RGESN Référentiel général d'écoconception des services numériques"
   },
   "plugin.js | groupTechnicDescription": {
-    "message": {
-      "message": "Métriques techniques."
-    }
+    "message": "Métriques techniques."
   },
   "plugin.js | groupTechnicTitle": {
-    "message": {
-      "message": "Résultats techniques"
-    }
+    "message": "Résultats techniques"
   }
 }

@@ -2,8 +2,8 @@
 "@cnumr/ecoindex-lh-plugin-ts": patch
 ---
 
-fix(i18n): merge plugin fr locale with Lighthouse built-in fr strings
+fix(i18n): fix French locale registration and fr.json format
 
-`registerLocaleData` replaces the entire locale object. Plugin now spreads
-`lhLocales['fr']` before adding its own strings, preserving Lighthouse core
-French translations while adding plugin-specific ones.
+Two fixes applied:
+- `registerLocaleData` now spreads `lhLocales['fr']` before adding plugin strings, preserving Lighthouse core French translations
+- Fixed 11 doubly-wrapped `{ message: { message: "..." } }` entries in `fr.json` (plugin.js group/category strings) that caused `message.replace is not a function` at runtime
