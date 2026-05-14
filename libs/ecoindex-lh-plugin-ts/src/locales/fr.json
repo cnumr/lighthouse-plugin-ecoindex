@@ -856,6 +856,66 @@
   },
   "utils/format-helper.js | requestsHigh": {
     "message": "Nombre de requêtes élevé."
+  },
+  "utils/table-helper.js | colLabelInfo": {
+    "message": "Information"
+  },
+  "utils/table-helper.js | colLabelDesc": {
+    "message": "Description / valeur"
+  },
+  "utils/table-helper.js | labelEcoindexScore": {
+    "message": "Score Ecoindex"
+  },
+  "utils/table-helper.js | labelEcoindexGrade": {
+    "message": "Grade Ecoindex"
+  },
+  "utils/table-helper.js | labelWater10": {
+    "message": "Consommation d'eau pour 10 visiteurs"
+  },
+  "utils/table-helper.js | labelWater1000": {
+    "message": "Consommation d'eau pour 1 000 visiteurs"
+  },
+  "utils/table-helper.js | labelWater100000": {
+    "message": "Consommation d'eau pour 100 000 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg10": {
+    "message": "Émissions de GES pour 10 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg1000": {
+    "message": "Émissions de GES pour 1 000 visiteurs"
+  },
+  "utils/table-helper.js | labelGhg100000": {
+    "message": "Émissions de GES pour 100 000 visiteurs"
+  },
+  "utils/table-helper.js | labelDomElements": {
+    "message": "Éléments DOM"
+  },
+  "utils/table-helper.js | labelPageSize": {
+    "message": "Taille de la page"
+  },
+  "utils/table-helper.js | labelRequests": {
+    "message": "Nombre de requêtes"
+  },
+  "utils/table-helper.js | labelGood": {
+    "message": "Bon"
+  },
+  "utils/table-helper.js | labelPoor": {
+    "message": "Mauvais"
+  },
+  "utils/table-helper.js | thresholdLessText": {
+    "message": "moins de {value} {unit}"
+  },
+  "utils/table-helper.js | thresholdMoreText": {
+    "message": "plus de {value} {unit}"
+  },
+  "utils/table-helper.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "utils/table-helper.js | colLabelDomain": {
+    "message": "Domaine"
+  },
+  "utils/table-helper.js | colLabelTransferSize": {
+    "message": "Taille transférée (Kio)"
   }
 }
 

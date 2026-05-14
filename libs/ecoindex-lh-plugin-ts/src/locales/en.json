@@ -878,5 +878,65 @@
   },
   "utils/format-helper.js | requestsHigh": {
     "message": "High number of requests."
+  },
+  "utils/table-helper.js | colLabelInfo": {
+    "message": "Information"
+  },
+  "utils/table-helper.js | colLabelDesc": {
+    "message": "Description/value"
+  },
+  "utils/table-helper.js | labelEcoindexScore": {
+    "message": "Ecoindex Score"
+  },
+  "utils/table-helper.js | labelEcoindexGrade": {
+    "message": "Ecoindex Grade"
+  },
+  "utils/table-helper.js | labelWater10": {
+    "message": "Water Consumption for 10 visitors"
+  },
+  "utils/table-helper.js | labelWater1000": {
+    "message": "Water Consumption for 1,000 visitors"
+  },
+  "utils/table-helper.js | labelWater100000": {
+    "message": "Water Consumption for 100,000 visitors"
+  },
+  "utils/table-helper.js | labelGhg10": {
+    "message": "Greenhouse Gas Emission for 10 visitors"
+  },
+  "utils/table-helper.js | labelGhg1000": {
+    "message": "Greenhouse Gas Emission for 1,000 visitors"
+  },
+  "utils/table-helper.js | labelGhg100000": {
+    "message": "Greenhouse Gas Emission for 100,000 visitors"
+  },
+  "utils/table-helper.js | labelDomElements": {
+    "message": "DOM elements"
+  },
+  "utils/table-helper.js | labelPageSize": {
+    "message": "Size of the page"
+  },
+  "utils/table-helper.js | labelRequests": {
+    "message": "Number of requests"
+  },
+  "utils/table-helper.js | labelGood": {
+    "message": "Good"
+  },
+  "utils/table-helper.js | labelPoor": {
+    "message": "Poor"
+  },
+  "utils/table-helper.js | thresholdLessText": {
+    "message": "less than {value} {unit}"
+  },
+  "utils/table-helper.js | thresholdMoreText": {
+    "message": "more than {value} {unit}"
+  },
+  "utils/table-helper.js | colLabelUrl": {
+    "message": "URL"
+  },
+  "utils/table-helper.js | colLabelDomain": {
+    "message": "Domain"
+  },
+  "utils/table-helper.js | colLabelTransferSize": {
+    "message": "Transfer size (KiB)"
   }
 }

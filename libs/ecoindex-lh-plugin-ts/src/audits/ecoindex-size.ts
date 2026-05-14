@@ -8,6 +8,7 @@ import {
 
 import { Audit } from 'lighthouse'
 import { MetricValue } from '../types/index.js'
+import { extractNetworkMetrics } from '../utils/network-metrics.js'
 import type { ScoreDisplayMode } from 'lighthouse/types/lhr/audit-result.js'
 import commons from './commons.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
@@ -35,10 +36,14 @@ class EcoindexSizeAudit extends Audit {
   static async audit(artifacts: LH.Artifacts, context: LH.Audit.Context) {
     try {
       const ecoIndexScore = await getLoadingExperience(artifacts, context, true)
-      // console.log('size', ecoIndexScore.size)
+      const { filteredRecords } = await extractNetworkMetrics(
+        artifacts,
+        context,
+      )
       return createValueResult(
         ecoIndexScore as MetricValue,
         'size',
+        filteredRecords,
       ) as LH.Audit.Product
     } catch (error) {
       return createErrorResult(error as Error)
