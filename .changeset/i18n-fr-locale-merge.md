@@ -1,5 +1,5 @@
 ---
-"@cnumr/ecoindex-lh-plugin-ts": patch
+"lighthouse-plugin-ecoindex-core": patch
 ---
 
 fix(i18n): fix French locale registration and fr.json format

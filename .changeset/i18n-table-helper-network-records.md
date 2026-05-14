@@ -1,5 +1,5 @@
 ---
-"@cnumr/ecoindex-lh-plugin-ts": minor
+"lighthouse-plugin-ecoindex-core": minor
 ---
 
 i18n: translate table-helper strings + add network resource table to requests/size audits

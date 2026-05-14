@@ -1,5 +1,5 @@
 ---
-"@cnumr/ecoindex-lh-plugin-ts": minor
+"lighthouse-plugin-ecoindex-core": minor
 ---
 
 i18n: migrate all bp audit runtime strings to Lighthouse native i18n system
