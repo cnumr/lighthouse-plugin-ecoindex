@@ -14,6 +14,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0055 - Canvas elements detected',
   description:
     'Minimize the use of canvas elements. [See RWEB_0055](https://rweb.greenit.fr/en/fiches/RWEB_0055-limit-canvas-use)',
+  displayValuePass: 'No canvas elements',
+  displayValueFail: '{count} canvas element(s) found',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -39,8 +41,8 @@ class BPRwebNoCanvas extends Audit {
       score: canvasCount === 0 ? 1 : 0,
       displayValue:
         canvasCount === 0
-          ? 'No canvas elements'
-          : `${canvasCount} canvas element(s) found`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: canvasCount }),
       numericValue: canvasCount,
       numericUnit: 'unitless' as
         | 'unitless'

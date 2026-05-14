@@ -14,6 +14,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0060 - No active Service Worker detected',
   description:
     'A Service Worker improves caching and reduces network requests. [See RWEB_0060](https://rweb.greenit.fr/en/fiches/RWEB_0060-save-bandwidth-with-service-workers)',
+  displayValuePass: 'Service Worker active',
+  displayValueFail: 'No Service Worker',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -38,8 +40,8 @@ class BPRwebServiceWorker extends Audit {
     return {
       score: serviceWorkerActive ? 1 : 0,
       displayValue: serviceWorkerActive
-        ? 'Service Worker active'
-        : 'No Service Worker',
+        ? str_(UIStrings.displayValuePass)
+        : str_(UIStrings.displayValueFail),
       numericValue: serviceWorkerActive ? 1 : 0,
       numericUnit: 'unitless' as
         | 'unitless'

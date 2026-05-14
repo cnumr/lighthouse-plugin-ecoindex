@@ -18,6 +18,10 @@ const UIStrings = {
   failureTitle: 'RWEB_0038 - Bitmap images in UI containers detected',
   description:
     'Replace bitmap images (PNG/JPG/WebP) in headers, navs, footers and buttons with SVG or CSS. [See RWEB_0038](https://rweb.greenit.fr/en/fiches/RWEB_0038-avoid-using-raster-images-for-the-interface)',
+  displayValuePass: 'No bitmap images in UI containers',
+  displayValueFail: '{count} bitmap image(s) in UI containers',
+  colLabelImageUrl: 'Image URL',
+  colLabelContainer: 'Container',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -60,8 +64,8 @@ class BPRwebNoBitmapUi extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'No bitmap images in UI containers'
-          : `${count} bitmap image(s) in UI containers`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -71,8 +75,16 @@ class BPRwebNoBitmapUi extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Image URL', valueType: 'url' as const },
-          { key: 'container', label: 'Container', valueType: 'text' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelImageUrl),
+            valueType: 'url' as const,
+          },
+          {
+            key: 'container',
+            label: str_(UIStrings.colLabelContainer),
+            valueType: 'text' as const,
+          },
         ],
         items: violations,
       } as LH.Audit.Details.Table,

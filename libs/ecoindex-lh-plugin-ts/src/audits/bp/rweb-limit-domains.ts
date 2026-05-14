@@ -17,6 +17,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0082 - Too many resource domains (> 5)',
   description:
     'Reduce the number of unique domains serving page resources. [See RWEB_0082](https://rweb.greenit.fr/en/fiches/RWEB_0082-limit-the-number-of-domains-serving-resources)',
+  displayValue: '{count} unique domain(s)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -53,7 +54,7 @@ class BPRwebLimitDomains extends Audit {
 
     return {
       score: count <= MAX_DOMAINS ? 1 : 0,
-      displayValue: `${count} unique domain(s)`,
+      displayValue: str_(UIStrings.displayValue, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'

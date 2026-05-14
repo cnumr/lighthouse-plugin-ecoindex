@@ -11,6 +11,11 @@ const UIStrings = {
   failureTitle: 'RWEB_0076 - Text resources not compressed',
   description:
     'Enable gzip/brotli compression for HTML, CSS and JS resources. [See RWEB_0076](https://rweb.greenit.fr/en/fiches/RWEB_0076-compressing-text-files-css-js-html-and-svg)',
+  displayValueNoResources: 'No text resources to check',
+  displayValueCompressed:
+    '{compressed}/{total} text resources compressed ({ratio}%)',
+  colLabelUrl: 'URL',
+  colLabelUncompressedUrl: 'Uncompressed URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -47,7 +52,7 @@ class BPRwebHttpCompression extends Audit {
     if (total === 0) {
       return {
         score: 1,
-        displayValue: 'No text resources to check',
+        displayValue: str_(UIStrings.displayValueNoResources),
         numericValue: 1,
         numericUnit: 'unitless' as
           | 'unitless'
@@ -56,7 +61,13 @@ class BPRwebHttpCompression extends Audit {
           | 'element',
         details: {
           type: 'table' as const,
-          headings: [{ key: 'url', label: 'URL', valueType: 'url' as const }],
+          headings: [
+            {
+              key: 'url',
+              label: str_(UIStrings.colLabelUrl),
+              valueType: 'url' as const,
+            },
+          ],
           items: [],
         } as LH.Audit.Details.Table,
       }
@@ -65,7 +76,11 @@ class BPRwebHttpCompression extends Audit {
     const ratio = compressed / total
     return {
       score: ratio >= 0.95 ? 1 : 0,
-      displayValue: `${compressed}/${total} text resources compressed (${Math.round(ratio * 100)}%)`,
+      displayValue: str_(UIStrings.displayValueCompressed, {
+        compressed,
+        total,
+        ratio: Math.round(ratio * 100),
+      }),
       numericValue: compressed,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -75,7 +90,11 @@ class BPRwebHttpCompression extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Uncompressed URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUncompressedUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: uncompressed.map(url => ({ url })),
       } as LH.Audit.Details.Table,

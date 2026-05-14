@@ -14,6 +14,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0042 - Inline assets detected',
   description:
     'Minimize the use of inline scripts and styles. [See RWEB_0042](https://rweb.greenit.fr/en/fiches/RWEB_0042-externalize-css-and-javascript)',
+  displayValuePass: 'No inline assets',
+  displayValueFail: '{count} inline asset(s) found',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -40,8 +42,8 @@ class BPRwebNoInlineAssets extends Audit {
       score: totalInlineAssets <= 2 ? 1 : 0,
       displayValue:
         totalInlineAssets === 0
-          ? 'No inline assets'
-          : `${totalInlineAssets} inline asset(s) found`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: totalInlineAssets }),
       numericValue: totalInlineAssets,
       numericUnit: 'unitless' as
         | 'unitless'

@@ -10,6 +10,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0075 - Resources missing Cache-Control header',
   description:
     'Set Cache-Control headers on HTML, CSS, JS and font resources to reduce repeated downloads. [See RWEB_0075](https://rweb.greenit.fr/en/fiches/RWEB_0075-add-expires-or-cache-control-headers)',
+  displayValuePass: 'All resources have Cache-Control',
+  displayValueFail: '{count} resource(s) missing Cache-Control',
+  colLabelUrl: 'URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -44,8 +47,8 @@ class BPRwebCacheControl extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'All resources have Cache-Control'
-          : `${count} resource(s) missing Cache-Control`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -54,7 +57,13 @@ class BPRwebCacheControl extends Audit {
         | 'element',
       details: {
         type: 'table' as const,
-        headings: [{ key: 'url', label: 'URL', valueType: 'url' as const }],
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
         items: violations.map(url => ({ url })),
       } as LH.Audit.Details.Table,
     }

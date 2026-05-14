@@ -28,6 +28,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0111 - Multiple analytics tools detected',
   description:
     'Limit analytics tools to one per page. [See RWEB_0111](https://rweb.greenit.fr/es/fiches/RWEB_0111-limitar-las-herramientas-de-analisis-y-los-datos-recopilados)',
+  displayValue: '{count} analytics tool(s) detected',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -62,7 +63,7 @@ class BPRwebLimitAnalytics extends Audit {
 
     return {
       score: count <= 1 ? 1 : 0,
-      displayValue: `${count} analytics tool(s) detected`,
+      displayValue: str_(UIStrings.displayValue, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'

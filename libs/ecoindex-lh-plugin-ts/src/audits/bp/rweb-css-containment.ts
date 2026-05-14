@@ -8,6 +8,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0039 - CSS containment not verified',
   description:
     'Use CSS containment property to optimize rendering performance. [See RWEB_0039](https://rweb.greenit.fr/en/fiches/RWEB_0039-use-css-containment)',
+  displayValue:
+    "{count} CSS file(s) loaded — verify 'contain' property usage manually.",
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -42,7 +44,9 @@ class BPRwebCssContainment extends Audit {
     // Score is null (not applicable for automatic scoring)
     return {
       score: null as number | null,
-      displayValue: `${cssResources.length} CSS file(s) loaded — verify 'contain' property usage manually.`,
+      displayValue: str_(UIStrings.displayValue, {
+        count: cssResources.length,
+      }),
       numericValue: cssResources.length,
       numericUnit: 'unitless' as
         | 'unitless'

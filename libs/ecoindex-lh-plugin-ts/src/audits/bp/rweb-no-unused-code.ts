@@ -17,6 +17,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0046 - Blocking external scripts detected',
   description:
     'Add async or defer to external scripts to prevent blocking the critical rendering path. [See RWEB_0046](https://rweb.greenit.fr/en/fiches/RWEB_0046-only-load-datacode-when-necessary)',
+  displayValuePass: 'No render-blocking external scripts',
+  displayValueFail: '{count} render-blocking external script(s)',
+  colLabelScriptUrl: 'Script URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -44,8 +47,8 @@ class BPRwebNoUnusedCode extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'No render-blocking external scripts'
-          : `${count} render-blocking external script(s)`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -55,7 +58,11 @@ class BPRwebNoUnusedCode extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Script URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelScriptUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: blocking.map(tag => {
           const srcMatch = tag.match(/src\s*=\s*["']([^"']+)["']/i)

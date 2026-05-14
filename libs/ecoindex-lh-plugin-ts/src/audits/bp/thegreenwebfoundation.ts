@@ -16,6 +16,26 @@ const UIStrings = {
   failureTitle: 'Your website is not hosted on a green web host.',
   description:
     'The Green Web Foundation is a non-profit organisation on a mission to make the web green by creating tools for a sustainable web. [See The Green Web Foundation](https://www.thegreenwebfoundation.org/)',
+  colLabelInformation: 'Information',
+  colLabelDescriptionValue: 'Description/value',
+  greyItemNoHostLabel: 'No Host information found...',
+  greyItemNoHostData: 'IS PROBABLY NOT HOSTED GREEN.',
+  greyItemForOwnersLabel: 'FOR WEBSITE OWNERS',
+  greyItemForOwnersData:
+    "Share this result with your hosting provider. Talk to your hosting provider and ask them to collaborate with The Green Web Foundation so that they can collect data and evidence on your hosting's renewable energy consumption.",
+  greyItemForProvidersLabel: 'FOR HOSTING PROVIDERS',
+  greyItemForProvidersData:
+    "Submit data or corrections. If you think this result is incorrect and would like to query or update it, read The Green Web Foundation's guide for explanations and next steps.",
+  moreInfoLabel: 'more info on The Green Web Foundation API v3',
+  tableItemHostedGrey: '{domain} is hosted Grey',
+  tableItemHostedGreen: '{domain} is hosted Green',
+  tableItemHostLabel: 'host',
+  tableItemLastUpdatedLabel: 'last updated',
+  displayValueLocalhost: "Localhost can't be checked.",
+  displayValueHostedGreen: '{domain} is hosted Green.',
+  displayValueHostedGrey: '{domain} is hosted Grey.',
+  displayValueServiceUnavailable:
+    'Service Green Web Foundation is not available or send an error.',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -35,33 +55,41 @@ function makeTableDetails(
   const { hosted_by, hosted_by_website, modified, supporting_documents } =
     jsonResponse
   const headings = [
-    { key: 'label', valueType: 'text', label: 'Information' },
-    { key: 'data', valueType: 'text', label: 'Description/value' },
+    {
+      key: 'label',
+      valueType: 'text',
+      label: str_(UIStrings.colLabelInformation),
+    },
+    {
+      key: 'data',
+      valueType: 'text',
+      label: str_(UIStrings.colLabelDescriptionValue),
+    },
   ] as LH.Audit.Details.TableColumnHeading[]
   const items = []
   const greyItems = [
     {
-      label: `No Host information found...`,
-      data: `IS PROBABLY NOT HOSTED GREEN.`,
+      label: str_(UIStrings.greyItemNoHostLabel),
+      data: str_(UIStrings.greyItemNoHostData),
     },
     {
-      label: `FOR WEBSITE OWNERS`,
-      data: `Share this result with your hosting provider. Talk to your hosting provider and ask them to collaborate with The Green Web Foundation so that they can collect data and evidence on your hosting's renewable energy consumption.`,
+      label: str_(UIStrings.greyItemForOwnersLabel),
+      data: str_(UIStrings.greyItemForOwnersData),
     },
     {
-      label: `FOR HOSTING PROVIDERS`,
-      data: `Submit data or corrections. If you think this result is incorrect and would like to query or update it, read The Green Web Foundation's guide for explanations and next steps.`,
+      label: str_(UIStrings.greyItemForProvidersLabel),
+      data: str_(UIStrings.greyItemForProvidersData),
     },
   ]
   const moreInfo = {
-    label: `more info on The Green Web Foundation API v3`,
+    label: str_(UIStrings.moreInfoLabel),
     data: `see ${refsURLS.greenwebfoundation.api_doc.en}`,
   }
   switch (jsonResponse['data']) {
     case false:
       items.push({
         label: domain,
-        data: `${domain} is hosted Grey`,
+        data: str_(UIStrings.tableItemHostedGrey, { domain }),
       })
       items.push(...greyItems)
       break
@@ -69,16 +97,16 @@ function makeTableDetails(
     default:
       items.push({
         label: domain,
-        data: `${domain} is hosted Green`,
+        data: str_(UIStrings.tableItemHostedGreen, { domain }),
       })
       items.push({
-        label: `host`,
+        label: str_(UIStrings.tableItemHostLabel),
         data: `by ${hosted_by}${
           hosted_by_website ? ' see website: ' + hosted_by_website : ''
         }`,
       })
       items.push({
-        label: `last updated`,
+        label: str_(UIStrings.tableItemLastUpdatedLabel),
         data: new Date(modified).toLocaleDateString(),
       })
       supporting_documents?.forEach(
@@ -120,7 +148,7 @@ async function checkUrl(requestedUrl: string) {
   if (domain === 'localhost') {
     return {
       score: 1,
-      displayValue: `Localhost can't be checked.`,
+      displayValue: str_(UIStrings.displayValueLocalhost),
       numericValue: 1,
     }
   }
@@ -135,7 +163,9 @@ async function checkUrl(requestedUrl: string) {
       const { green } = jsonResponse
       return {
         score: green ? 1 : 0,
-        displayValue: `${domain} is hosted ${green ? 'Green' : 'Grey'}.`,
+        displayValue: green
+          ? str_(UIStrings.displayValueHostedGreen, { domain })
+          : str_(UIStrings.displayValueHostedGrey, { domain }),
         numericValue: green ? 1 : 0,
         details: makeTableDetails(domain, jsonResponse),
       }
@@ -144,7 +174,7 @@ async function checkUrl(requestedUrl: string) {
       console.error(`Green Web Foundation API error: ${error.message}`)
       return {
         score: 0,
-        displayValue: `Service Green Web Foundation is not available or send an error.`,
+        displayValue: str_(UIStrings.displayValueServiceUnavailable),
         numericValue: 0,
       }
     })

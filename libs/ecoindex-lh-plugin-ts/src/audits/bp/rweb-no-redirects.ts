@@ -17,6 +17,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0112 - Too many HTTP redirects (> 1)',
   description:
     'Reduce HTTP redirects to avoid unnecessary round trips. [See RWEB_0112](https://rweb.greenit.fr/en/fiches/RWEB_0112-avoir-redirections)',
+  displayValue: '{count} redirect(s)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -44,7 +45,7 @@ class BPRwebNoRedirects extends Audit {
 
     return {
       score: redirects.length <= MAX_REDIRECTS ? 1 : 0,
-      displayValue: `${redirects.length} redirect(s)`,
+      displayValue: str_(UIStrings.displayValue, { count: redirects.length }),
       numericValue: redirects.length,
       numericUnit: 'unitless' as
         | 'unitless'

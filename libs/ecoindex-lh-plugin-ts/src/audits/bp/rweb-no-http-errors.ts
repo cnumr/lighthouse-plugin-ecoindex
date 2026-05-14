@@ -8,6 +8,10 @@ const UIStrings = {
   failureTitle: 'HTTP request errors detected (4xx/5xx)',
   description:
     'Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience.',
+  displayValuePass: 'No HTTP errors',
+  displayValueFail: '{count} HTTP error(s) detected',
+  colLabelUrl: 'URL',
+  colLabelStatusCode: 'Status code',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -37,7 +41,9 @@ class BPRwebNoHttpErrors extends Audit {
     return {
       score: count === 0 ? 1 : 0,
       displayValue:
-        count === 0 ? 'No HTTP errors' : `${count} HTTP error(s) detected`,
+        count === 0
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -47,10 +53,14 @@ class BPRwebNoHttpErrors extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
           {
             key: 'statusCode',
-            label: 'Status code',
+            label: str_(UIStrings.colLabelStatusCode),
             valueType: 'text' as const,
           },
         ],

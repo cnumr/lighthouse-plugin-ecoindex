@@ -13,6 +13,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0043 - JavaScript errors detected',
   description:
     'Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)',
+  displayValuePass: 'No JavaScript errors',
+  displayValueFail: '{count} JavaScript error(s)',
+  colLabelErrorMessage: 'Error message',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -44,7 +47,9 @@ class BPRwebNoJsErrors extends Audit {
     return {
       score: count === 0 ? 1 : 0,
       displayValue:
-        count === 0 ? 'No JavaScript errors' : `${count} JavaScript error(s)`,
+        count === 0
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -56,7 +61,7 @@ class BPRwebNoJsErrors extends Audit {
         headings: [
           {
             key: 'message',
-            label: 'Error message',
+            label: str_(UIStrings.colLabelErrorMessage),
             valueType: 'text' as const,
           },
         ],

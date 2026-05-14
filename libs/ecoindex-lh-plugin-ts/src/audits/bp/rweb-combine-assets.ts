@@ -8,6 +8,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0078 - Too many separate CSS/JS files',
   description:
     'Concatenate CSS and JS files to reduce HTTP requests. [See RWEB_0078](https://rweb.greenit.fr/en/fiches/RWEB_0078-combining-css-and-javascript-files)',
+  displayValue: '{cssCount} CSS + {jsCount} JS files',
+  colLabelUrl: 'URL',
+  colLabelType: 'Type',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -48,7 +51,7 @@ class BPRwebCombineAssets extends Audit {
 
     return {
       score,
-      displayValue: `${cssCount} CSS + ${jsCount} JS files`,
+      displayValue: str_(UIStrings.displayValue, { cssCount, jsCount }),
       numericValue: max,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -58,8 +61,16 @@ class BPRwebCombineAssets extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
-          { key: 'type', label: 'Type', valueType: 'text' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+          {
+            key: 'type',
+            label: str_(UIStrings.colLabelType),
+            valueType: 'text' as const,
+          },
         ],
         items: assets,
       } as LH.Audit.Details.Table,

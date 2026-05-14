@@ -11,6 +11,10 @@ const UIStrings = {
   failureTitle: 'RWEB_0062 - Cookie header exceeds 512 bytes',
   description:
     'Keep Cookie request headers under 512 bytes to reduce HTTP overhead. [See RWEB_0062](https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size)',
+  displayValuePass: 'No Cookie header exceeds 512 bytes',
+  displayValueFail: '{count} request(s) with oversized Cookie header',
+  colLabelUrl: 'URL',
+  colLabelCookieSize: 'Cookie size (bytes)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -49,8 +53,8 @@ class BPRwebCookieSize extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? `No Cookie header exceeds ${MAX_COOKIE_BYTES} bytes`
-          : `${count} request(s) with oversized Cookie header`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -60,10 +64,14 @@ class BPRwebCookieSize extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
           {
             key: 'size',
-            label: 'Cookie size (bytes)',
+            label: str_(UIStrings.colLabelCookieSize),
             valueType: 'bytes' as const,
           },
         ],

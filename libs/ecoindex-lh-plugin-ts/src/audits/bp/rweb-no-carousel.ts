@@ -10,6 +10,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0010 - Carousel library detected',
   description:
     'Avoid using carousel/slider libraries when possible. [See RWEB_0010](https://rweb.greenit.fr/en/fiches/RWEB_0010-limiting-the-use-of-carousels)',
+  displayValuePass: 'No carousel libraries detected',
+  displayValueFail:
+    '{count, plural, one {# carousel library detected} other {# carousel libraries detected}}',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -50,8 +53,8 @@ class BPRwebNoCarousel extends Audit {
       score: carouselCount === 0 ? 1 : 0,
       displayValue:
         carouselCount === 0
-          ? 'No carousel libraries detected'
-          : `${carouselCount} carousel library/libraries detected`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: carouselCount }),
       numericValue: carouselCount,
       numericUnit: 'unitless' as
         | 'unitless'

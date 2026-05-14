@@ -13,6 +13,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0011 - Missing title or meta description',
   description:
     'Ensure the page has a non-empty title and meta description. [See RWEB_0011](https://rweb.greenit.fr/en/fiches/RWEB_0011-relevant-page-titles-and-metadescriptions)',
+  displayValuePass: 'Title and meta description present',
+  displayValueFail: 'Missing title or meta description',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -57,8 +59,8 @@ class BPRwebTitleMeta extends Audit {
     return {
       score: hasBoth ? 1 : 0,
       displayValue: hasBoth
-        ? 'Title and meta description present'
-        : 'Missing title or meta description',
+        ? str_(UIStrings.displayValuePass)
+        : str_(UIStrings.displayValueFail),
       numericValue: hasBoth ? 1 : 0,
       numericUnit: 'unitless' as
         | 'unitless'

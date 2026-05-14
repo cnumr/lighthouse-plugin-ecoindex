@@ -13,6 +13,9 @@ const UIStrings = {
   failureTitle: 'Images downloaded but not displayed detected',
   description:
     'Images that are downloaded but hidden waste bandwidth. Use lazy loading or remove them.',
+  displayValuePass: 'No hidden downloaded images',
+  displayValueFail: '{count} image(s) downloaded but not displayed',
+  colLabelImageUrl: 'Image URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -50,8 +53,8 @@ class BPRwebNoHiddenImages extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'No hidden downloaded images'
-          : `${count} image(s) downloaded but not displayed`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -61,7 +64,11 @@ class BPRwebNoHiddenImages extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Image URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelImageUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: hidden.map(img => ({ url: img.src })),
       } as LH.Audit.Details.Table,

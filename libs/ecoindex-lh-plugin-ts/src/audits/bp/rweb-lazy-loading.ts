@@ -13,6 +13,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0051 - Images without lazy loading detected',
   description:
     'Add loading="lazy" to below-the-fold images to defer their download. [See RWEB_0051](https://rweb.greenit.fr/en/fiches/RWEB_0051-use-lazy-loading)',
+  displayValuePass: 'All images use lazy loading',
+  displayValueFail: '{count} image(s) without lazy loading',
+  colLabelImageUrl: 'Image URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -46,8 +49,8 @@ class BPRwebLazyLoading extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'All images use lazy loading'
-          : `${count} image(s) without lazy loading`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -57,7 +60,11 @@ class BPRwebLazyLoading extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Image URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelImageUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: violations.map(tag => {
           const srcMatch = tag.match(/src\s*=\s*["']([^"']+)["']/i)

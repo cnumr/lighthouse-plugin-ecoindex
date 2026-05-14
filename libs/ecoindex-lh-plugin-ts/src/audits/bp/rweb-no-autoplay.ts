@@ -14,6 +14,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0106 - Autoplay video/audio detected',
   description:
     'Avoid autoplay on video and audio elements. [See RWEB_0106](https://rweb.greenit.fr/es/fiches/RWEB_0106-evitar-la-reproduccion-y-carga-automatica-de-videos-y-sonidos)',
+  displayValue: '{count} autoplay element(s)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -37,7 +38,7 @@ class BPRwebNoAutoplay extends Audit {
 
     return {
       score: autoplaying === 0 ? 1 : 0,
-      displayValue: `${autoplaying} autoplay element(s)`,
+      displayValue: str_(UIStrings.displayValue, { count: autoplaying }),
       numericValue: autoplaying,
       numericUnit: 'unitless' as
         | 'unitless'

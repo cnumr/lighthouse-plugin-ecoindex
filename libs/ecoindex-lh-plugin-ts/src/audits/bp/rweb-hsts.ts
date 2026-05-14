@@ -7,6 +7,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0084 - HSTS header missing',
   description:
     'Enable HSTS (HTTP Strict-Transport-Security) header to enforce HTTPS. [See RWEB_0084](https://rweb.greenit.fr/en/fiches/RWEB_0084-favor-hsts-preload-list-over-301-redirects)',
+  displayValuePass: 'HSTS header is present',
+  displayValueFail: 'HSTS header is missing',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -40,8 +42,8 @@ class BPRwebHsts extends Audit {
     return {
       score: hasHSTS ? 1 : 0,
       displayValue: hasHSTS
-        ? 'HSTS header is present'
-        : 'HSTS header is missing',
+        ? str_(UIStrings.displayValuePass)
+        : str_(UIStrings.displayValueFail),
       numericValue: hasHSTS ? 1 : 0,
       numericUnit: 'unitless' as
         | 'unitless'

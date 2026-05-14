@@ -14,6 +14,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0009 - Animated elements detected',
   description:
     'Avoid animations and transitions to reduce CPU and battery usage. [See RWEB_0009](https://rweb.greenit.fr/en/fiches/RWEB_0009-avoid-javascriptcss-animations)',
+  displayValuePass: 'No animated elements',
+  displayValueFail: '{count} animated element(s) found',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -39,8 +41,8 @@ class BPRwebNoAnimations extends Audit {
       score: animatedElements === 0 ? 1 : 0,
       displayValue:
         animatedElements === 0
-          ? 'No animated elements'
-          : `${animatedElements} animated element${animatedElements > 1 ? 's' : ''} found`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: animatedElements }),
       numericValue: animatedElements,
       numericUnit: 'unitless' as
         | 'unitless'

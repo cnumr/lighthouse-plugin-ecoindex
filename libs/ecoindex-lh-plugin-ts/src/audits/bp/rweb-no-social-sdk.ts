@@ -23,6 +23,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0059 - Official social network SDK detected',
   description:
     'Replace official social network buttons with static links to reduce third-party requests. [See RWEB_0059](https://rweb.greenit.fr/en/fiches/RWEB_0059-replace-the-official-social-network-sharing-buttons)',
+  displayValue: '{count} social SDK request(s) detected',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -50,7 +51,7 @@ class BPRwebNoSocialSdk extends Audit {
 
     return {
       score: sdkRequests.length === 0 ? 1 : 0,
-      displayValue: `${sdkRequests.length} social SDK request(s) detected`,
+      displayValue: str_(UIStrings.displayValue, { count: sdkRequests.length }),
       numericValue: sdkRequests.length,
       numericUnit: 'unitless' as
         | 'unitless'

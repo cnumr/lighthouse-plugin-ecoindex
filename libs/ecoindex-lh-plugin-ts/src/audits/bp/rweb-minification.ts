@@ -24,6 +24,10 @@ const UIStrings = {
   failureTitle: 'RWEB_0077 - Unminified inline CSS/JS detected',
   description:
     'Minify inline style and script blocks to reduce page weight. [See RWEB_0077](https://rweb.greenit.fr/en/fiches/RWEB_0077-minifying-text-files-css-js-html-and-svg)',
+  displayValuePass: 'All inline assets appear minified',
+  displayValueFail: '{count} unminified inline asset(s)',
+  colLabelType: 'Type',
+  colLabelContentSnippet: 'Content snippet',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -65,8 +69,10 @@ class BPRwebMinification extends Audit {
       score: unminifiedBlocks.length === 0 ? 1 : 0,
       displayValue:
         unminifiedBlocks.length === 0
-          ? 'All inline assets appear minified'
-          : `${unminifiedBlocks.length} unminified inline asset(s)`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, {
+              count: unminifiedBlocks.length,
+            }),
       numericValue: unminifiedBlocks.length,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -76,10 +82,14 @@ class BPRwebMinification extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'type', label: 'Type', valueType: 'text' as const },
+          {
+            key: 'type',
+            label: str_(UIStrings.colLabelType),
+            valueType: 'text' as const,
+          },
           {
             key: 'snippet',
-            label: 'Content snippet',
+            label: str_(UIStrings.colLabelContentSnippet),
             valueType: 'text' as const,
           },
         ],

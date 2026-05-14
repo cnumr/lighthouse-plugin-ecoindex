@@ -8,6 +8,8 @@ const UIStrings = {
   failureTitle: 'RWEB_0035 - Too many CSS stylesheets',
   description:
     'Keep the number of CSS files to 7 or fewer to reduce HTTP requests. [See RWEB_0035](https://rweb.greenit.fr/en/fiches/RWEB_0035-limit-the-number-of-css)',
+  displayValue: '{count} CSS stylesheet(s)',
+  colLabelStylesheetUrl: 'Stylesheet URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -45,7 +47,7 @@ class BPRwebLimitCssFiles extends Audit {
 
     return {
       score,
-      displayValue: `${cssCount} CSS stylesheet(s)`,
+      displayValue: str_(UIStrings.displayValue, { count: cssCount }),
       numericValue: cssCount,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -55,7 +57,11 @@ class BPRwebLimitCssFiles extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'Stylesheet URL', valueType: 'url' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelStylesheetUrl),
+            valueType: 'url' as const,
+          },
         ],
         items: cssUrls.map(url => ({ url })),
       } as LH.Audit.Details.Table,

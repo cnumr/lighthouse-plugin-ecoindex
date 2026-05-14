@@ -17,6 +17,13 @@ const UIStrings = {
     'Use feature policy to check for unoptimized images during development.',
   description:
     'Turn on feature policy for unoptimized-images to ensure your site is using the best performing images. See [Image policies for fast load times and more](https://web.dev/image-policies/?hl=en).',
+  displayValue:
+    'Found {count} unoptimized images that can be caught during development if you use the recommended feature policy headers',
+  colLabelImageUrl: 'image URL',
+  colLabelLossyPolicyHeader:
+    'Recommended Feature Policy header for lossy compression',
+  colLabelLosslessPolicyHeader:
+    'Recommended Feature Policy header for lossless compression',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -83,7 +90,7 @@ class UnoptimizedImage extends Audit {
         imageElements.length === 0
           ? 1
           : 1 - images.length / imageElements.length,
-      displayValue: `Found ${images.length} unoptimized images that can be caught during development if you use the recommended feature policy headers`,
+      displayValue: str_(UIStrings.displayValue, { count: images.length }),
       numericValue: images.length,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -95,17 +102,17 @@ class UnoptimizedImage extends Audit {
         headings: [
           {
             key: 'url',
-            label: 'image URL',
+            label: str_(UIStrings.colLabelImageUrl),
             valueType: 'url',
           },
           {
             key: 'lossyPolicyHeader',
-            label: 'Recommended Feature Policy header for lossy compression',
+            label: str_(UIStrings.colLabelLossyPolicyHeader),
             valueType: 'text',
           },
           {
             key: 'losslessPolicyHeader',
-            label: 'Recommended Feature Policy header for lossless compression',
+            label: str_(UIStrings.colLabelLosslessPolicyHeader),
             valueType: 'text',
           },
         ],

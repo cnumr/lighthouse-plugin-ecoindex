@@ -13,6 +13,7 @@ const UIStrings = {
   failureTitle: 'RWEB_0031 - No print css implemented.',
   description:
     'A print css must be implemented to hide useless elements when printing. [See RWEB_0031](https://rweb.greenit.fr/en/fiches/RWEB_0031-provide-a-css-print)',
+  displayValue: 'Print CSS count: {count}',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -40,7 +41,7 @@ class BPRwebPrintCss extends Audit {
     )
     return {
       score: stylesheets.length > 0 ? 1 : 0,
-      displayValue: `Print CSS count: ${stylesheets.length}`,
+      displayValue: str_(UIStrings.displayValue, { count: stylesheets.length }),
       numericValue: stylesheets.length,
       numericUnit: 'unitless' as
         | 'unitless'

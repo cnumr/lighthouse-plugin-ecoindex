@@ -21,6 +21,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
   description:
     'Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal)',
+  displayValuePass: 'No blocking DOM write detected',
+  displayValueFail: '{count} blocking DOM write(s) in inline scripts',
+  colLabelScriptSnippet: 'Script snippet',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -59,8 +62,8 @@ class BPRwebNoDocumentWrite extends Audit {
       score: occurrences === 0 ? 1 : 0,
       displayValue:
         occurrences === 0
-          ? 'No blocking DOM write detected'
-          : `${occurrences} blocking DOM write(s) in inline scripts`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count: occurrences }),
       numericValue: occurrences,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -72,7 +75,7 @@ class BPRwebNoDocumentWrite extends Audit {
         headings: [
           {
             key: 'snippet',
-            label: 'Script snippet',
+            label: str_(UIStrings.colLabelScriptSnippet),
             valueType: 'text' as const,
           },
         ],

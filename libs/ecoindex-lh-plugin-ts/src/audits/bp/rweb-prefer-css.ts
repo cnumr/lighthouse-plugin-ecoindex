@@ -19,6 +19,10 @@ const UIStrings = {
   failureTitle: 'RWEB_0037 - Images used for UI icons (prefer CSS)',
   description:
     'Replace bitmap or SVG icons inside buttons and links with CSS shapes or icon fonts to reduce HTTP requests. [See RWEB_0037](https://rweb.greenit.fr/en/fiches/RWEB_0037-use-css-instead-of-images)',
+  displayValuePass: 'No icon images in buttons/links detected',
+  displayValueFail: '{count} image(s) used as UI icons',
+  colLabelContext: 'Context',
+  colLabelElementSnippet: 'Element snippet',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -52,8 +56,8 @@ class BPRwebPreferCss extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'No icon images in buttons/links detected'
-          : `${count} image(s) used as UI icons`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -63,10 +67,14 @@ class BPRwebPreferCss extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'context', label: 'Context', valueType: 'text' as const },
+          {
+            key: 'context',
+            label: str_(UIStrings.colLabelContext),
+            valueType: 'text' as const,
+          },
           {
             key: 'element',
-            label: 'Element snippet',
+            label: str_(UIStrings.colLabelElementSnippet),
             valueType: 'text' as const,
           },
         ],

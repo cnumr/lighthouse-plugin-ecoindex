@@ -10,6 +10,10 @@ const UIStrings = {
   failureTitle: 'RWEB_0100 - Large SVG files detected (likely unoptimized)',
   description:
     'SVG files over 2048 bytes likely contain metadata or comments that can be removed. [See RWEB_0100](https://rweb.greenit.fr/en/fiches/RWEB_0100-optimize-vector-images)',
+  displayValuePass: 'All SVG files appear optimized',
+  displayValueFail: '{count} large SVG file(s) detected',
+  colLabelUrl: 'URL',
+  colLabelSize: 'Size (bytes)',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -45,8 +49,8 @@ class BPRwebOptimizeSvg extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'All SVG files appear optimized'
-          : `${count} large SVG file(s) detected`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -56,8 +60,16 @@ class BPRwebOptimizeSvg extends Audit {
       details: {
         type: 'table' as const,
         headings: [
-          { key: 'url', label: 'URL', valueType: 'url' as const },
-          { key: 'size', label: 'Size (bytes)', valueType: 'bytes' as const },
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+          {
+            key: 'size',
+            label: str_(UIStrings.colLabelSize),
+            valueType: 'bytes' as const,
+          },
         ],
         items: violations,
       } as LH.Audit.Details.Table,

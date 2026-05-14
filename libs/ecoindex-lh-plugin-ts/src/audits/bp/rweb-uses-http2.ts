@@ -8,6 +8,9 @@ const UIStrings = {
   failureTitle: 'RWEB_0083 - Resources served over HTTP/1',
   description:
     'Use HTTP/2 to benefit from multiplexing and header compression. [See RWEB_0083](https://rweb.greenit.fr/en/fiches/RWEB_0083-http2-over-http1)',
+  displayValuePass: 'All resources use HTTP/2+',
+  displayValueFail: '{count} resource(s) on HTTP/1',
+  colLabelUrl: 'URL',
 }
 const str_ = createIcuMessageFn(import.meta.url, UIStrings)
 
@@ -42,8 +45,8 @@ class BPRwebUsesHttp2 extends Audit {
       score: count === 0 ? 1 : 0,
       displayValue:
         count === 0
-          ? 'All resources use HTTP/2+'
-          : `${count} resource(s) on HTTP/1`,
+          ? str_(UIStrings.displayValuePass)
+          : str_(UIStrings.displayValueFail, { count }),
       numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
@@ -52,7 +55,13 @@ class BPRwebUsesHttp2 extends Audit {
         | 'element',
       details: {
         type: 'table' as const,
-        headings: [{ key: 'url', label: 'URL', valueType: 'url' as const }],
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
         items: violations.map(url => ({ url })),
       } as LH.Audit.Details.Table,
     }
