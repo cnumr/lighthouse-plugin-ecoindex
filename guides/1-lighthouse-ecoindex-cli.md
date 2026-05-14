@@ -101,6 +101,7 @@ Sert à lancer la collecte des audits Lighthouse et EcoIndex suivant les options
 - `-a, --audit-category` : Audit à exécuter, supporte plusieurs valeurs. Available categories: "accessibility", "best-practices", "performance", "seo" and "lighthouse-plugin-ecoindex-core".
 - `--user-agent` : User-Agent à utiliser pour les requêtes.
 - `--auth` : Moyen de s'authentifier pendant les mesures (`--auth.url`, `--auth.user.target`, `--auth.user.value`, etc. voir le tableau plus bas).
+- `--lang` : Langue des rapports générés. Valeurs possibles : `"en"` (anglais), `"fr"` (français). Par défaut : `"en"`.
 - `--help` : Affiche l'aide.
 
 #### Exemples
