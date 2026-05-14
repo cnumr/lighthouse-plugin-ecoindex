@@ -1,5 +1,23 @@
 # lighthouse-plugin-ecoindex
 
+## 7.3.0
+
+### Minor Changes
+
+- 51d7ccb: feat(i18n): add --lang option and propagate locale to Lighthouse settings
+- 48c5e30: feat(i18n): migrate all audit UIStrings to Lighthouse native i18n
+
+  All 42 bp audits and core audits now use `createIcuMessageFn` + `str_()` for title, failureTitle, and description. English strings are registered in `en.json`; French translations are in `fr.json`. The plugin reads the locale passed by Lighthouse (set via `--lang` CLI flag) and resolves strings accordingly.
+
+### Patch Changes
+
+- Updated dependencies [215fe14]
+- Updated dependencies [72f6457]
+- Updated dependencies [51d7ccb]
+- Updated dependencies [e7c0cf7]
+  - lighthouse-plugin-ecoindex-core@7.3.0
+  - lighthouse-plugin-ecoindex-courses@7.3.0
+
 ## 7.2.2
 
 ### Patch Changes
