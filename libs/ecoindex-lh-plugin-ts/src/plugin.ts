@@ -1,11 +1,16 @@
 import * as LH from 'lighthouse/types/lh.js'
 import { registerLocaleData } from 'lighthouse/shared/localization/format.js'
+import { locales as lhLocales } from 'lighthouse/shared/localization/locales.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 import { getVersion } from './utils/index.js'
 import frLocale from './locales/fr.json' with { type: 'json' }
 
-registerLocaleData('fr', frLocale)
+// Merge our translations with Lighthouse's built-in fr locale to avoid overwriting core strings
+registerLocaleData('fr', {
+  ...(lhLocales['fr'] as Record<string, { message: string }>),
+  ...frLocale,
+})
 
 const UIStrings = {
   groupEcologicTitle: 'Ecoindex results',

@@ -29,6 +29,7 @@ module.exports = {
       startServerReadyTimeout: 30000,
       settings: {
         configPath: getLighthouseConfig(),
+        locale: 'fr',
       },
       puppeteerLaunchOptions: {
         headless: 'new',
