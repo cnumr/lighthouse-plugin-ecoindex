@@ -17,7 +17,7 @@ const UIStrings = {
   displayValueFail: '{count} JavaScript error(s)',
   colLabelErrorMessage: 'Error message',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-js-errors.js', UIStrings)
 
 class BPRwebNoJsErrors extends Audit {
   static get meta() {

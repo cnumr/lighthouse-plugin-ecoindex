@@ -25,7 +25,10 @@ const UIStrings = {
   displayValueFail: '{count} blocking DOM write(s) in inline scripts',
   colLabelScriptSnippet: 'Script snippet',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn(
+  'audits/bp/rweb-no-document-write.js',
+  UIStrings,
+)
 
 class BPRwebNoDocumentWrite extends Audit {
   static get meta() {

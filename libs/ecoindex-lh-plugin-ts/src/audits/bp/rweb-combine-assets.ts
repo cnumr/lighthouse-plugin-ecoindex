@@ -12,7 +12,7 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelType: 'Type',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-combine-assets.js', UIStrings)
 
 class BPRwebCombineAssets extends Audit {
   static get meta() {

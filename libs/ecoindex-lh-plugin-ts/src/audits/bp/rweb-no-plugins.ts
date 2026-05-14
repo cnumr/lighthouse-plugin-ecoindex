@@ -30,7 +30,7 @@ const UIStrings = {
   displayValueFail: '{count} browser plugin(s) detected',
   colLabelPluginElement: 'Plugin element',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-plugins.js', UIStrings)
 
 class BPRwebNoPlugins extends Audit {
   static get meta() {

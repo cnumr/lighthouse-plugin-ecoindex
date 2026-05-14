@@ -17,7 +17,7 @@ const UIStrings = {
   displayValueFail: '{count} image(s) downloaded but not displayed',
   colLabelImageUrl: 'Image URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-hidden-images.js', UIStrings)
 
 class BPRwebNoHiddenImages extends Audit {
   static get meta() {

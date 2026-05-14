@@ -22,7 +22,7 @@ const UIStrings = {
   groupOtherDescription: 'Various best practices in eco-design.',
   categoryTitle: 'Ecoindex',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('plugin.js', UIStrings)
 
 export default {
   // Additional audits to run on information Lighthouse gathered.

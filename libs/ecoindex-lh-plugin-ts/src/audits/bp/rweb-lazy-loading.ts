@@ -17,7 +17,7 @@ const UIStrings = {
   displayValueFail: '{count} image(s) without lazy loading',
   colLabelImageUrl: 'Image URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-lazy-loading.js', UIStrings)
 
 class BPRwebLazyLoading extends Audit {
   static get meta() {

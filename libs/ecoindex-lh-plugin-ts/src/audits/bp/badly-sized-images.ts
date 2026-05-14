@@ -18,7 +18,7 @@ const UIStrings = {
   colLabelImageUrl: 'image URL',
   colLabelImagesResized: 'Image(s) resized',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/badly-sized-images.js', UIStrings)
 
 class BadlySizedImage extends Audit {
   static get meta() {

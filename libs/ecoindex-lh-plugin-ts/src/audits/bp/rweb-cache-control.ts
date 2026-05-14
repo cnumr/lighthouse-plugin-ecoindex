@@ -14,7 +14,7 @@ const UIStrings = {
   displayValueFail: '{count} resource(s) missing Cache-Control',
   colLabelUrl: 'URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-cache-control.js', UIStrings)
 
 class BPRwebCacheControl extends Audit {
   static get meta() {

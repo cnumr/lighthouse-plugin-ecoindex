@@ -13,7 +13,7 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelStatusCode: 'Status code',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-http-errors.js', UIStrings)
 
 class BPRwebNoHttpErrors extends Audit {
   static get meta() {

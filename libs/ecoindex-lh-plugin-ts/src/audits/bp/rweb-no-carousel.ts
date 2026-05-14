@@ -14,7 +14,7 @@ const UIStrings = {
   displayValueFail:
     '{count, plural, one {# carousel library detected} other {# carousel libraries detected}}',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-carousel.js', UIStrings)
 
 class BPRwebNoCarousel extends Audit {
   static get meta() {

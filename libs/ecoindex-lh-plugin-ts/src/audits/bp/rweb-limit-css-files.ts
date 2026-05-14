@@ -11,7 +11,7 @@ const UIStrings = {
   displayValue: '{count} CSS stylesheet(s)',
   colLabelStylesheetUrl: 'Stylesheet URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-css-files.js', UIStrings)
 
 class BPRwebLimitCssFiles extends Audit {
   static get meta() {

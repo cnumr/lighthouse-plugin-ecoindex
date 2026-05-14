@@ -25,7 +25,7 @@ const UIStrings = {
   colLabelLosslessPolicyHeader:
     'Recommended Feature Policy header for lossless compression',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/unoptimized-images.js', UIStrings)
 
 const roundUp = (decimal: number) => {
   return Math.ceil(decimal * 100) / 100

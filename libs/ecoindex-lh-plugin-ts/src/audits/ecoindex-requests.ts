@@ -18,7 +18,7 @@ const UIStrings = {
   description:
     'The number of `Network.loadingFinished` logs indicates the number of requests made to external resources. [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-requests.js', UIStrings)
 
 class EcoindexRequestsAudit extends Audit {
   static get meta() {

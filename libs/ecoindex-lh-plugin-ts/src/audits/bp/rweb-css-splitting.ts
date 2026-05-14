@@ -24,7 +24,7 @@ const UIStrings = {
   displayValueFail: '{count} large CSS file(s) without media targeting',
   colLabelCssUrl: 'CSS URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-css-splitting.js', UIStrings)
 
 class BPRwebCssSplitting extends Audit {
   static get meta() {

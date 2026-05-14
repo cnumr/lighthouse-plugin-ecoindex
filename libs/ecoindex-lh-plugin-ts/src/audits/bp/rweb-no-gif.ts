@@ -17,7 +17,7 @@ const UIStrings = {
   displayValuePass: 'No GIFs detected',
   displayValueFail: '{count} GIF(s) detected',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-gif.js', UIStrings)
 
 class BPRwebNoGif extends Audit {
   static get meta() {

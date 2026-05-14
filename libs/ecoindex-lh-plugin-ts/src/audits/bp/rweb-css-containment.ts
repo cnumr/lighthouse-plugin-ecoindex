@@ -11,7 +11,7 @@ const UIStrings = {
   displayValue:
     "{count} CSS file(s) loaded — verify 'contain' property usage manually.",
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-css-containment.js', UIStrings)
 
 class BPRwebCssContainment extends Audit {
   static get meta() {

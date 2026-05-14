@@ -17,7 +17,7 @@ const UIStrings = {
   description:
     'The sum of all the `encodedDataLengths` of these same requests + the html size of the page itself calculates the page weight. [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-size.js', UIStrings)
 
 class EcoindexSizeAudit extends Audit {
   static get meta() {

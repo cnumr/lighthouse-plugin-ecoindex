@@ -17,7 +17,7 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelUncompressedUrl: 'Uncompressed URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-http-compression.js', UIStrings)
 
 class BPRwebHttpCompression extends Audit {
   static get meta() {

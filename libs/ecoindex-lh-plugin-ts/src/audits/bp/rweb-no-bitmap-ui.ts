@@ -23,7 +23,7 @@ const UIStrings = {
   colLabelImageUrl: 'Image URL',
   colLabelContainer: 'Container',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-bitmap-ui.js', UIStrings)
 
 class BPRwebNoBitmapUi extends Audit {
   static get meta() {

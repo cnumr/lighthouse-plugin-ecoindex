@@ -21,7 +21,7 @@ const UIStrings = {
   displayValueFail: '{count} render-blocking external script(s)',
   colLabelScriptUrl: 'Script URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-unused-code.js', UIStrings)
 
 class BPRwebNoUnusedCode extends Audit {
   static get meta() {

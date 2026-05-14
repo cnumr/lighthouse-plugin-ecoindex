@@ -12,7 +12,10 @@ const UIStrings = {
   displayValuePass: 'No static resources with Cookie header',
   displayValueFail: '{count} static resource(s) sent with Cookie header',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn(
+  'audits/bp/rweb-no-cookie-on-static.js',
+  UIStrings,
+)
 
 class BPRwebNoCookieOnStatic extends Audit {
   static get meta() {

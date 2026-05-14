@@ -24,7 +24,7 @@ const UIStrings = {
   colLabelContext: 'Context',
   colLabelElementSnippet: 'Element snippet',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-prefer-css.js', UIStrings)
 
 class BPRwebPreferCss extends Audit {
   static get meta() {

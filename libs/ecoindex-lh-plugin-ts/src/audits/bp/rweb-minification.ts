@@ -29,7 +29,7 @@ const UIStrings = {
   colLabelType: 'Type',
   colLabelContentSnippet: 'Content snippet',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-minification.js', UIStrings)
 
 class BPRwebMinification extends Audit {
   static get meta() {

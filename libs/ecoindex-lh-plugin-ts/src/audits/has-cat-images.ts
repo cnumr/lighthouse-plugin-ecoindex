@@ -11,7 +11,7 @@ const UIStrings = {
   failureTitle: 'Page does not have at least one cat image',
   description: 'Check whether the page contains at least one cat image.',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/has-cat-images.js', UIStrings)
 
 class CatAudit extends Audit {
   static get meta() {

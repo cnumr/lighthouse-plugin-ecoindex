@@ -19,7 +19,7 @@ const UIStrings = {
     'Reduce the number of unique domains serving page resources. [See RWEB_0082](https://rweb.greenit.fr/en/fiches/RWEB_0082-limit-the-number-of-domains-serving-resources)',
   displayValue: '{count} unique domain(s)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-domains.js', UIStrings)
 
 class BPRwebLimitDomains extends Audit {
   static get meta() {

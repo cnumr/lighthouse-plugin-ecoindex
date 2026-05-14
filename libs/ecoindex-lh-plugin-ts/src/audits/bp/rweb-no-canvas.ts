@@ -17,7 +17,7 @@ const UIStrings = {
   displayValuePass: 'No canvas elements',
   displayValueFail: '{count} canvas element(s) found',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-canvas.js', UIStrings)
 
 class BPRwebNoCanvas extends Audit {
   static get meta() {

@@ -30,7 +30,7 @@ const UIStrings = {
     'Limit analytics tools to one per page. [See RWEB_0111](https://rweb.greenit.fr/es/fiches/RWEB_0111-limitar-las-herramientas-de-analisis-y-los-datos-recopilados)',
   displayValue: '{count} analytics tool(s) detected',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-analytics.js', UIStrings)
 
 class BPRwebLimitAnalytics extends Audit {
   static get meta() {

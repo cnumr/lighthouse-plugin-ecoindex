@@ -16,7 +16,7 @@ const UIStrings = {
   displayValuePass: 'Title and meta description present',
   displayValueFail: 'Missing title or meta description',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-title-meta.js', UIStrings)
 
 class BPRwebTitleMeta extends Audit {
   static get meta() {

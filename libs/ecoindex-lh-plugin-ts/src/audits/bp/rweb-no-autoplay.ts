@@ -16,7 +16,7 @@ const UIStrings = {
     'Avoid autoplay on video and audio elements. [See RWEB_0106](https://rweb.greenit.fr/es/fiches/RWEB_0106-evitar-la-reproduccion-y-carga-automatica-de-videos-y-sonidos)',
   displayValue: '{count} autoplay element(s)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-autoplay.js', UIStrings)
 
 class BPRwebNoAutoplay extends Audit {
   static get meta() {

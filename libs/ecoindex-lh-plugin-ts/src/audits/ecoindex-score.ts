@@ -17,7 +17,7 @@ const UIStrings = {
   description:
     'The EcoIndex score evaluating the environmental impact of the page. [Learn more about the Ecoindex, Calculating the EcoIndex](https://www.ecoindex.fr/comment-ca-marche/#le-calcul-de-lecoindex)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-score.js', UIStrings)
 
 class EcoindexScoreAudit extends Audit {
   static get meta() {

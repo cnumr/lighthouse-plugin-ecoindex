@@ -17,7 +17,7 @@ const UIStrings = {
   description:
     'Explication: Counting all the DOM nodes on the page, excluding the child nodes of `svg` elements, gives us the number of DOM elements on the page. This method encourages you not to replace a complex svg with an image, simply to obtain a better score. [Learn more about the Ecoindex, Analysis methodology](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-nodes.js', UIStrings)
 
 class EcoindexNodesAudit extends Audit {
   static get meta() {

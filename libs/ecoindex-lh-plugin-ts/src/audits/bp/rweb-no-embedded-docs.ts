@@ -16,7 +16,7 @@ const UIStrings = {
   displayValuePass: 'No embedded documents detected',
   displayValueFail: '{count} embedded document(s) found',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-embedded-docs.js', UIStrings)
 
 class BPRwebNoEmbeddedDocs extends Audit {
   static get meta() {

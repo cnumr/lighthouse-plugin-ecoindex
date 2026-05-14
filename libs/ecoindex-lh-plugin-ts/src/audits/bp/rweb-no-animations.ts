@@ -17,7 +17,7 @@ const UIStrings = {
   displayValuePass: 'No animated elements',
   displayValueFail: '{count} animated element(s) found',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-animations.js', UIStrings)
 
 class BPRwebNoAnimations extends Audit {
   static get meta() {

@@ -37,7 +37,7 @@ const UIStrings = {
   displayValueServiceUnavailable:
     'Service Green Web Foundation is not available or send an error.',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/thegreenwebfoundation.js', UIStrings)
 
 type TheGreenWebFoundationResponse = {
   green: boolean

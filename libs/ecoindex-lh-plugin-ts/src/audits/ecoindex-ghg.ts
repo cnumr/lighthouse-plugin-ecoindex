@@ -18,7 +18,7 @@ const UIStrings = {
   description:
     'Greenhouse Gas Emission (eqCO2) of your page. [Learn more about the Ecoindex, Environmental footprint](https://www.ecoindex.fr/comment-ca-marche/#lempreinte-environnementale)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-ghg.js', UIStrings)
 
 class EcoindexGreenhouseGasEmissionAudit extends Audit {
   static get meta() {

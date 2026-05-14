@@ -19,7 +19,7 @@ const UIStrings = {
     'Reduce HTTP redirects to avoid unnecessary round trips. [See RWEB_0112](https://rweb.greenit.fr/en/fiches/RWEB_0112-avoir-redirections)',
   displayValue: '{count} redirect(s)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-redirects.js', UIStrings)
 
 class BPRwebNoRedirects extends Audit {
   static get meta() {

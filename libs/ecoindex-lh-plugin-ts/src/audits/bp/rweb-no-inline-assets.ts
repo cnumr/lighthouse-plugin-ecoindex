@@ -17,7 +17,7 @@ const UIStrings = {
   displayValuePass: 'No inline assets',
   displayValueFail: '{count} inline asset(s) found',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-no-inline-assets.js', UIStrings)
 
 class BPRwebNoInlineAssets extends Audit {
   static get meta() {

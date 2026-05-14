@@ -10,7 +10,7 @@ const UIStrings = {
   displayValuePass: 'HSTS header is present',
   displayValueFail: 'HSTS header is missing',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-hsts.js', UIStrings)
 
 class BPRwebHsts extends Audit {
   static get meta() {

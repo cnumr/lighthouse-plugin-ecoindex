@@ -17,7 +17,7 @@ const UIStrings = {
   description:
     'The quantity of water consumed by the page. [Learn more about the Ecoindex, Environmental footprint](https://www.ecoindex.fr/comment-ca-marche/#lempreinte-environnementale)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/ecoindex-water.js', UIStrings)
 
 class EcoindexWaterConsumptionAudit extends Audit {
   static get meta() {

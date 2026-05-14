@@ -15,7 +15,7 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelSize: 'Size (bytes)',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-optimize-svg.js', UIStrings)
 
 class BPRwebOptimizeSvg extends Audit {
   static get meta() {

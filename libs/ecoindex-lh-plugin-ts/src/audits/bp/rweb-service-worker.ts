@@ -17,7 +17,7 @@ const UIStrings = {
   displayValuePass: 'Service Worker active',
   displayValueFail: 'No Service Worker',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-service-worker.js', UIStrings)
 
 class BPRwebServiceWorker extends Audit {
   static get meta() {

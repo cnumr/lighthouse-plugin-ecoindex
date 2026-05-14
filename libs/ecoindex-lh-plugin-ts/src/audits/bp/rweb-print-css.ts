@@ -15,7 +15,7 @@ const UIStrings = {
     'A print css must be implemented to hide useless elements when printing. [See RWEB_0031](https://rweb.greenit.fr/en/fiches/RWEB_0031-provide-a-css-print)',
   displayValue: 'Print CSS count: {count}',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-print-css.js', UIStrings)
 
 class BPRwebPrintCss extends Audit {
   static get meta() {

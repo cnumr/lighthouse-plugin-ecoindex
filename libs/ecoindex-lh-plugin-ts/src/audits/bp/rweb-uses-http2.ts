@@ -12,7 +12,7 @@ const UIStrings = {
   displayValueFail: '{count} resource(s) on HTTP/1',
   colLabelUrl: 'URL',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-uses-http2.js', UIStrings)
 
 class BPRwebUsesHttp2 extends Audit {
   static get meta() {

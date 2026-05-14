@@ -20,7 +20,7 @@ const UIStrings = {
   displayValue:
     '{count, plural, one {# external font family} other {# external font families}}',
 }
-const str_ = createIcuMessageFn(import.meta.url, UIStrings)
+const str_ = createIcuMessageFn('audits/bp/rweb-limit-fonts.js', UIStrings)
 
 const FONT_DOMAINS = [
   'fonts.googleapis.com',
