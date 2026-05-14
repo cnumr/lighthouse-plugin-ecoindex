@@ -19,6 +19,7 @@ const cliFlags = {
   ],
   // auditCategory: ['accessibility', 'lighthouse-plugin-ecoindex-core'],
   exportPath: resolve(__dirname, './reports/obj'),
+  lang: 'fr',
   output: ['html'],
   'audit-category': ['accessibility', 'lighthouse-plugin-ecoindex-core'],
   'extra-header':
