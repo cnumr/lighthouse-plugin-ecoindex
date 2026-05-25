@@ -9,6 +9,7 @@ import {
 import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
+
 const UIStrings = {
   title: 'RWEB_0099 - Avoid using GIFs',
   failureTitle: 'RWEB_0099 - GIFs detected',
@@ -16,6 +17,7 @@ const UIStrings = {
     'Avoid using GIFs for animations or images; use modern formats instead. [See RWEB_0099](https://rweb.greenit.fr/en/fiches/RWEB_0099-limit-the-use-of-animated-gif)',
   displayValuePass: 'No GIFs detected',
   displayValueFail: '{count} GIF(s) detected',
+  colLabelUrl: 'GIF URL',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-gif.js', UIStrings)
 
@@ -41,22 +43,20 @@ class BPRwebNoGif extends Audit {
     )
     const html = artifacts.MainDocumentContent || ''
 
-    let gifCount = 0
-
-    // Check network records for .gif URLs
+    const gifRecords: string[] = []
     for (const record of networkRecords) {
       if (NetworkRequest.isNonNetworkRequest(record)) continue
       if (record.url.toLowerCase().endsWith('.gif')) {
-        gifCount++
+        gifRecords.push(record.url)
       }
     }
 
-    // Check HTML for inline <img> tags with .gif src
-    const gifPattern = /src\s*=\s*["']([^"']*\.gif)["']/gi
-    const matches = html.match(gifPattern)
-    if (matches) {
-      gifCount += matches.length
-    }
+    // Count inline <img src="*.gif"> in HTML for the score only (paths are relative, not listable as URLs)
+    const htmlGifPattern = /src\s*=\s*["']([^"']*\.gif)["']/gi
+    const htmlMatches = html.match(htmlGifPattern)
+    const htmlGifCount = htmlMatches ? htmlMatches.length : 0
+
+    const gifCount = gifRecords.length + htmlGifCount
 
     return {
       score: gifCount === 0 ? 1 : 0,
@@ -70,6 +70,17 @@ class BPRwebNoGif extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
+        items: gifRecords.map(url => ({ url })),
+      } as LH.Audit.Details.Table,
     }
   }
 }

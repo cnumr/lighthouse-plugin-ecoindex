@@ -13,6 +13,7 @@ const UIStrings = {
   displayValuePass: 'No carousel libraries detected',
   displayValueFail:
     '{count, plural, one {# carousel library detected} other {# carousel libraries detected}}',
+  colLabelUrl: 'Carousel library URL',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-carousel.js', UIStrings)
 
@@ -33,9 +34,8 @@ class BPRwebNoCarousel extends Audit {
       context,
     )
 
-    let carouselCount = 0
+    const carouselUrls: string[] = []
 
-    // Check network records for carousel library scripts
     for (const record of networkRecords) {
       if (NetworkRequest.isNonNetworkRequest(record)) continue
       if (record.resourceType !== 'Script') continue
@@ -43,24 +43,35 @@ class BPRwebNoCarousel extends Audit {
       const urlLower = record.url.toLowerCase()
       for (const lib of CAROUSEL_LIBS) {
         if (urlLower.includes(lib)) {
-          carouselCount++
-          break // Count each URL only once
+          carouselUrls.push(record.url)
+          break
         }
       }
     }
 
     return {
-      score: carouselCount === 0 ? 1 : 0,
+      score: carouselUrls.length === 0 ? 1 : 0,
       displayValue:
-        carouselCount === 0
+        carouselUrls.length === 0
           ? str_(UIStrings.displayValuePass)
-          : str_(UIStrings.displayValueFail, { count: carouselCount }),
-      numericValue: carouselCount,
+          : str_(UIStrings.displayValueFail, { count: carouselUrls.length }),
+      numericValue: carouselUrls.length,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
+        items: carouselUrls.map(url => ({ url })),
+      } as LH.Audit.Details.Table,
     }
   }
 }

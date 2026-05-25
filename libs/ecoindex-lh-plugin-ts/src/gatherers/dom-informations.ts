@@ -16,7 +16,7 @@ import { getVersion } from '../utils/index.js'
  */
 class DOMInformations extends Gatherer {
   meta: LH.Gatherer.GathererMeta = {
-    supportedModes: ['navigation', 'timespan', 'snapshot'],
+    supportedModes: ['navigation', 'timespan', 'snapshot'] as const,
   }
 
   /**

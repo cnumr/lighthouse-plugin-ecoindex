@@ -24,6 +24,7 @@ const UIStrings = {
   description:
     'Replace official social network buttons with static links to reduce third-party requests. [See RWEB_0059](https://rweb.greenit.fr/en/fiches/RWEB_0059-replace-the-official-social-network-sharing-buttons)',
   displayValue: '{count} social SDK request(s) detected',
+  colLabelUrl: 'SDK URL',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-social-sdk.js', UIStrings)
 
@@ -58,6 +59,17 @@ class BPRwebNoSocialSdk extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
+        items: sdkRequests.map(r => ({ url: r.url })),
+      } as LH.Audit.Details.Table,
     }
   }
 }

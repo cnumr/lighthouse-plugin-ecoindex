@@ -29,6 +29,7 @@ const UIStrings = {
   description:
     'Limit analytics tools to one per page. [See RWEB_0111](https://rweb.greenit.fr/es/fiches/RWEB_0111-limitar-las-herramientas-de-analisis-y-los-datos-recopilados)',
   displayValue: '{count} analytics tool(s) detected',
+  colLabelDomain: 'Analytics domain',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-limit-analytics.js', UIStrings)
 
@@ -70,6 +71,17 @@ class BPRwebLimitAnalytics extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'domain',
+            label: str_(UIStrings.colLabelDomain),
+            valueType: 'text' as const,
+          },
+        ],
+        items: [...matchedDomains].map(domain => ({ domain })),
+      } as LH.Audit.Details.Table,
     }
   }
 }

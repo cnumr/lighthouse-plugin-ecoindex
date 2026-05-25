@@ -4,7 +4,7 @@ import { Gatherer } from 'lighthouse'
 
 class BPGatherer extends Gatherer {
   meta: LH.Gatherer.GathererMeta = {
-    supportedModes: ['navigation', 'timespan', 'snapshot'],
+    supportedModes: ['navigation', 'timespan', 'snapshot'] as const,
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,18 +15,25 @@ class BPGatherer extends Gatherer {
     function collectBPData() {
       if (typeof document === 'undefined') {
         return {
-          autoplaying: 0,
           serviceWorkerActive: false,
-          canvasCount: 0,
-          inlineScripts: 0,
-          inlineStyles: 0,
-          animatedElements: 0,
+          inlineScriptDetails: [],
+          inlineStyleDetails: [],
+          animatedElementDetails: [],
+          autoplayDetails: [],
+          canvasDetails: [],
         }
       }
 
-      const autoplaying = document.querySelectorAll(
-        'video[autoplay], audio[autoplay], video[preload="auto"], audio[preload="auto"]',
-      ).length
+      const SNIPPET_LEN = 120
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      function buildSelector(el: any) {
+        let sel = el.tagName.toLowerCase()
+        if (el.id) sel += `#${el.id}`
+        if (el.classList.length > 0)
+          sel += '.' + Array.from(el.classList).join('.')
+        return sel
+      }
 
       const serviceWorkerActive = Boolean(
         'serviceWorker' in navigator &&
@@ -34,23 +41,26 @@ class BPGatherer extends Gatherer {
         navigator.serviceWorker.controller,
       )
 
-      const canvasCount = document.querySelectorAll('canvas').length
-
-      const inlineScripts = Array.from(
+      const inlineScriptDetails = Array.from(
         document.querySelectorAll('script:not([src])'),
-      ).filter(
-        s =>
-          s.getAttribute('type') !== 'application/ld+json' &&
-          (s.textContent || '').trim().length > 0,
-      ).length
+      )
+        .filter(
+          s =>
+            s.getAttribute('type') !== 'application/ld+json' &&
+            (s.textContent || '').trim().length > 0,
+        )
+        .map(s => ({
+          snippet: (s.textContent || '').trim().slice(0, SNIPPET_LEN),
+        }))
 
-      const inlineStyles = Array.from(
-        document.querySelectorAll('style'),
-      ).filter(s => (s.textContent || '').trim().length > 0).length
+      const inlineStyleDetails = Array.from(document.querySelectorAll('style'))
+        .filter(s => (s.textContent || '').trim().length > 0)
+        .map(s => ({
+          snippet: (s.textContent || '').trim().slice(0, SNIPPET_LEN),
+        }))
 
-      let animatedElements = 0
-      const allElements = Array.from(document.querySelectorAll('*'))
-      for (const el of allElements) {
+      const animatedElementDetails = []
+      for (const el of Array.from(document.querySelectorAll('*'))) {
         const cs = window.getComputedStyle(el)
         const hasAnimation =
           cs.animationName !== 'none' && cs.animationName !== ''
@@ -58,16 +68,34 @@ class BPGatherer extends Gatherer {
           cs.transitionProperty !== 'none' &&
           cs.transitionProperty !== '' &&
           cs.transitionDuration !== '0s'
-        if (hasAnimation || hasTransition) animatedElements++
+        if (hasAnimation || hasTransition) {
+          const property = hasAnimation
+            ? `animation: ${cs.animationName}`
+            : `transition: ${cs.transitionProperty}`
+          animatedElementDetails.push({ selector: buildSelector(el), property })
+        }
       }
 
+      const autoplayDetails = Array.from(
+        document.querySelectorAll(
+          'video[autoplay], audio[autoplay], video[preload="auto"], audio[preload="auto"]',
+        ),
+      ).map(el => ({
+        selector: buildSelector(el),
+        src: el.getAttribute('src') || '',
+      }))
+
+      const canvasDetails = Array.from(document.querySelectorAll('canvas')).map(
+        el => ({ selector: buildSelector(el) }),
+      )
+
       return {
-        autoplaying,
         serviceWorkerActive,
-        canvasCount,
-        inlineScripts,
-        inlineStyles,
-        animatedElements,
+        inlineScriptDetails,
+        inlineStyleDetails,
+        animatedElementDetails: animatedElementDetails.slice(0, 50),
+        autoplayDetails,
+        canvasDetails,
       }
     }
 

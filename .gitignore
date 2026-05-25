@@ -30,7 +30,7 @@ private-*
 
 # claude
 CLAUDE.md
-.claude
+!.claude/settings.json
 
 # graphify
 graphify-*

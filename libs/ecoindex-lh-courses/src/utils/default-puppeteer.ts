@@ -3,17 +3,14 @@ import type * as LH from 'lighthouse/types/lh.js'
 import { Auth } from '../types/index.js'
 import { exit } from 'process'
 import logSymbols from 'log-symbols'
-import puppeteer from 'puppeteer'
+import type { Browser, CDPSession, Page } from 'puppeteer'
 
 /**
  * Init Ecoindex flow. Wait 3s, then navigate to bottom of page.
- * @param {puppeteer.Page} page
- * @param {puppeteer.CDPSession} session
+ * @param {Page} page
+ * @param {CDPSession} session
  */
-async function startEcoindexPageMesure(
-  page: puppeteer.Page,
-  session: puppeteer.CDPSession,
-) {
+async function startEcoindexPageMesure(page: Page, session: CDPSession) {
   page.setViewport({
     width: 1920,
     height: 1080,
@@ -69,10 +66,10 @@ async function endEcoindexPageMesure(
  * @param {object} authenticate
  */
 async function authenticateEcoindexPageMesure(
-  page: puppeteer.Page,
+  page: Page,
   authenticate: Auth,
-  _browser: puppeteer.Browser,
-  session: puppeteer.CDPSession,
+  _browser: Browser,
+  session: CDPSession,
   flow: LH.UserFlow,
 ) {
   await page.setViewport({
@@ -83,7 +80,7 @@ async function authenticateEcoindexPageMesure(
     await page.type(authenticate.user.target, authenticate.user.value)
     const searchValue = await page.$eval(
       authenticate.user.target,
-      el => (el as HTMLInputElement).value,
+      (el: Element) => (el as HTMLInputElement).value,
     )
     console.log(
       `${logSymbols.info} (test) ${authenticate.user.target} setted with`,

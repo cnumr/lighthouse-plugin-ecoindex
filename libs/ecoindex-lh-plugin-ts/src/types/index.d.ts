@@ -60,10 +60,10 @@ export interface BPArtifacts extends Artifacts {
 }
 
 export interface BPGathererResult {
-  autoplaying: number
   serviceWorkerActive: boolean
-  canvasCount: number
-  inlineScripts: number
-  inlineStyles: number
-  animatedElements: number
+  inlineScriptDetails: { snippet: string }[]
+  inlineStyleDetails: { snippet: string }[]
+  animatedElementDetails: { selector: string; property: string }[]
+  autoplayDetails: { selector: string; src: string }[]
+  canvasDetails: { selector: string }[]
 }
