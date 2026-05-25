@@ -4,7 +4,7 @@ import { Gatherer } from 'lighthouse'
 
 class BPGatherer extends Gatherer {
   meta: LH.Gatherer.GathererMeta = {
-    supportedModes: ['navigation', 'timespan', 'snapshot'],
+    supportedModes: ['navigation', 'timespan', 'snapshot'] as const,
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
