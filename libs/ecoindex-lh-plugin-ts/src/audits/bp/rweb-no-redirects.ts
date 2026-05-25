@@ -18,6 +18,8 @@ const UIStrings = {
   description:
     'Reduce HTTP redirects to avoid unnecessary round trips. [See RWEB_0112](https://rweb.greenit.fr/en/fiches/RWEB_0112-avoir-redirections)',
   displayValue: '{count} redirect(s)',
+  colLabelUrl: 'URL',
+  colLabelStatus: 'HTTP Status',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-redirects.js', UIStrings)
 
@@ -52,6 +54,25 @@ class BPRwebNoRedirects extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+          {
+            key: 'statusCode',
+            label: str_(UIStrings.colLabelStatus),
+            valueType: 'text' as const,
+          },
+        ],
+        items: redirects.map(r => ({
+          url: r.url,
+          statusCode: String(r.statusCode),
+        })),
+      } as LH.Audit.Details.Table,
     }
   }
 }
