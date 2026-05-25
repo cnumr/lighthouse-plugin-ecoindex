@@ -1,5 +1,25 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 7.3.0
+
+### Minor Changes
+
+- 51d7ccb: feat(i18n): add --lang option and propagate locale to Lighthouse settings
+
+### Patch Changes
+
+- Updated dependencies [215fe14]
+- Updated dependencies [72f6457]
+- Updated dependencies [e7c0cf7]
+  - lighthouse-plugin-ecoindex-core@7.3.0
+
+## 7.2.2
+
+### Patch Changes
+
+- Updated dependencies [b830700]
+  - lighthouse-plugin-ecoindex-core@7.2.2
+
 ## 7.2.1
 
 ### Patch Changes

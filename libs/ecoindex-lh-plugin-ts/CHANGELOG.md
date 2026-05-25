@@ -1,5 +1,33 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.3.0
+
+### Minor Changes
+
+- 215fe14: i18n: migrate all bp audit runtime strings to Lighthouse native i18n system
+
+  All hardcoded `displayValue`, `displayValuePass`, `displayValueFail`, and table column `label` strings in every bp audit file are now wrapped with `createIcuMessageFn` / `str_()`. English and French translations added to `en.json` and `fr.json`.
+
+- e7c0cf7: i18n: translate table-helper strings + add network resource table to requests/size audits
+
+  All hardcoded strings in `table-helper.ts` (column headers, row labels, threshold descriptions) are now wrapped with `createIcuMessageFn` / `str_()`. English and French translations added to `en.json` and `fr.json`.
+
+  The `requests` and `size` audits now display a second table listing each network resource (URL, domain, transfer size in KiB) sorted by size descending, combined with the existing info table via `Audit.makeListDetails`.
+
+### Patch Changes
+
+- 72f6457: fix(i18n): fix French locale registration and fr.json format
+
+  Two fixes applied:
+  - `registerLocaleData` now spreads `lhLocales['fr']` before adding plugin strings, preserving Lighthouse core French translations
+  - Fixed 11 doubly-wrapped `{ message: { message: "..." } }` entries in `fr.json` (plugin.js group/category strings) that caused `message.replace is not a function` at runtime
+
+## 7.2.2
+
+### Patch Changes
+
+- b830700: Remove legacy directory and commented-out dead code in plugin.ts
+
 ## 7.2.1
 
 ## 7.2.0
