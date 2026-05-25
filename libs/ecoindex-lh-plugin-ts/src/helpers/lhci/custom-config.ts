@@ -39,5 +39,5 @@ export default {
         implementation: bpGatherer,
       },
     },
-  ] as const,
+  ],
 }
