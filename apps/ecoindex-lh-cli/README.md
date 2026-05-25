@@ -1,37 +1,82 @@
 ![Summary of results](../../docs/static/ecoindex-intro.png)
 _Summary of results_
 
-# `LHEx` — lighthouse-plugin-ecoindex
+# `lighthouse-plugin-ecoindex`
 
-| Package                              | Version                                                                                                    |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `lighthouse-plugin-ecoindex`         | ![npm lighthouse-plugin-ecoindex](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex)                 |
-| `lighthouse-plugin-ecoindex-core`    | ![npm lighthouse-plugin-ecoindex-core](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex-core)       |
-| `lighthouse-plugin-ecoindex-courses` | ![npm lighthouse-plugin-ecoindex-courses](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex-courses) |
-
+![npm lighthouse-plugin-ecoindex](https://img.shields.io/npm/v/lighthouse-plugin-ecoindex)
 ![GitHub License](https://img.shields.io/github/license/cnumr/lighthouse-plugin-ecoindex)
+
+## Description
+
+CLI pour lancer des audits Lighthouse avec le plugin Ecoindex et générer des rapports d'impact environnemental.
 
 ![Details of plugin results](../../docs/static/ecoindex-results.png)
 _Details of plugin results_
 
 [Full documentation and examples](https://cnumr.github.io/lighthouse-plugin-ecoindex/)
 
-## CHANGELOG
+## Changelog
 
-- `BREAKING CHANGES` between V5 and V6:
-  - Switch to a monorepo
-  - Using `lighthouse-plugin-ecoindex-core` instead of `lighthouse-plugin-ecoindex` in CI/CD see [Usage with lighthouse-ci in CI/CD](https://lighthouse-ecoindex.greenit.eco/guides/3-lighthouse-ci/)
-- `BREAKING CHANGES` between V4 and V5 see: [commit description](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/e4fe1d6f754dda828ab3e46584bd21ef55c35ada)
-- `BREAKING CHANGES` between V3 and V4 see: [commit description](https://github.com/cnumr/lighthouse-plugin-ecoindex/commit/77775177677b6499b8be04a8146d97ee1529a76a)
+Voir le [changelog](./CHANGELOG.md)
 
-## FILES
+## Installation
 
-> CHANGELOG auto-generate: [CHANGELOG.md](./lighthouse-plugin-ecoindex/CHANGELOG.md)  
-> CONTRIBUTING: [CONTRIBUTING.md](./CONTRIBUTING.md)
+```bash
+npm install -g lighthouse-plugin-ecoindex
+```
 
-![Details of plugin results](../../docs/static/ecoindex-results.png)
-_Details of plugin results_
+## Commands
 
-## Stack
+### `collect`
 
-![documentation](../../docs/static/stack.excalidraw.png)
+Run Lighthouse and save the results to a local folder.
+
+```bash
+# Demo mode
+lighthouse-ecoindex collect --demo
+
+# One or more URLs
+lighthouse-ecoindex collect --url https://ecoindex.fr/
+lighthouse-ecoindex collect --url https://ecoindex.fr/ --url https://www.ecoindex.fr/a-propos/
+
+# From a structured JSON file (multiple courses)
+lighthouse-ecoindex collect --json-file ./input-file.json
+```
+
+**Options:**
+
+| Option               | Alias | Description                                                     |
+| -------------------- | ----- | --------------------------------------------------------------- |
+| `--url`              | `-u`  | URL(s) to process                                               |
+| `--json-file`        | `-j`  | Path to a structured input file                                 |
+| `--output`           | `-o`  | Output format(s): `html`, `json`, `statement` (default: `html`) |
+| `--output-path`      | `-p`  | Output folder (default: `./reports`)                            |
+| `--lang`             |       | Report language: `en` or `fr` (default: `en`)                   |
+| `--extra-header`     | `-h`  | Extra headers as JSON string or path to a JSON file             |
+| `--puppeteer-script` |       | Path to a custom Puppeteer script                               |
+| `--user-agent`       |       | User agent string (default: `random`)                           |
+| `--demo`             | `-d`  | Use demo configuration                                          |
+
+### `convert`
+
+Convert JSON report(s) to an Environmental Statement file.
+
+```bash
+lighthouse-ecoindex convert --input-report ./lh-export-1.json --input-report ./lh-export-2.json
+```
+
+### `browser-install`
+
+Install the Puppeteer browser required by the CLI.
+
+```bash
+lighthouse-ecoindex browser-install
+```
+
+### `browser-check`
+
+Check if the Puppeteer browser is installed.
+
+```bash
+lighthouse-ecoindex browser-check
+```

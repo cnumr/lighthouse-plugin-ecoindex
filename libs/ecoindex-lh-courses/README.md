@@ -14,7 +14,7 @@ _Details of plugin results_
 
 ## changelog
 
-Voir le [changelog](./libs/ecoindex-lh-courses/CHANGELOG.md)
+Voir le [changelog](./CHANGELOG.md)
 
 ## Installation
 
