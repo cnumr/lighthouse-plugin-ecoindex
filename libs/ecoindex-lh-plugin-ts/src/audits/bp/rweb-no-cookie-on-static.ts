@@ -11,6 +11,7 @@ const UIStrings = {
     'Avoid sending cookies with static resources (images, CSS, JS, fonts). [See RWEB_0081](https://rweb.greenit.fr/en/fiches/RWEB_0081-host-static-resources-on-a-cookie-free-domain)',
   displayValuePass: 'No static resources with Cookie header',
   displayValueFail: '{count} static resource(s) sent with Cookie header',
+  colLabelUrl: 'Resource URL',
 }
 const str_ = createIcuMessageFn(
   'audits/bp/rweb-no-cookie-on-static.js',
@@ -61,6 +62,17 @@ class BPRwebNoCookieOnStatic extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'url',
+            label: str_(UIStrings.colLabelUrl),
+            valueType: 'url' as const,
+          },
+        ],
+        items: staticWithCookie.map(r => ({ url: r.url })),
+      } as LH.Audit.Details.Table,
     }
   }
 }
