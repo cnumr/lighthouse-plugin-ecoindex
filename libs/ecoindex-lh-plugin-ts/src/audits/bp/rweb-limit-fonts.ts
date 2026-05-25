@@ -19,6 +19,7 @@ const UIStrings = {
     'Reduce the number of external font families loaded. [See RWEB_0032](https://rweb.greenit.fr/en/fiches/RWEB_0032-prefer-standard-fonts)',
   displayValue:
     '{count, plural, one {# external font family} other {# external font families}}',
+  colLabelDomain: 'Font domain',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-limit-fonts.js', UIStrings)
 
@@ -73,6 +74,17 @@ class BPRwebLimitFonts extends Audit {
         | 'byte'
         | 'millisecond'
         | 'element',
+      details: {
+        type: 'table' as const,
+        headings: [
+          {
+            key: 'domain',
+            label: str_(UIStrings.colLabelDomain),
+            valueType: 'text' as const,
+          },
+        ],
+        items: [...fontFamilies].map(domain => ({ domain })),
+      } as LH.Audit.Details.Table,
     }
   }
 }
