@@ -38,6 +38,13 @@
       "urls": ["http://localhost:3000/heavy"]
     },
     {
+      "name": "BP Violations Test",
+      "target": "Test BP audit violations detection",
+      "course": "Verify that BP audits correctly detect inline assets, animations, canvas, autoplay, GIFs and other violations",
+      "is-best-pages": false,
+      "urls": ["http://localhost:3000/bp-violations"]
+    },
+    {
       "name": "Complete Test Suite",
       "target": "Run all test pages",
       "course": "Full validation of DOM counting logic",
