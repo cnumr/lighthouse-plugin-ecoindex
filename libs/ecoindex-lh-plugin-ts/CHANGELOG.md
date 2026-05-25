@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.3.1
+
+### Patch Changes
+
+- 3dc823e: feat(bp): add details tables to 12 BP audits — now exposing domains, URLs, CSS selectors and code snippets alongside the score
+
 ## 7.3.0
 
 ### Minor Changes
