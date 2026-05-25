@@ -15,6 +15,8 @@ const UIStrings = {
   description:
     'Avoid autoplay on video and audio elements. [See RWEB_0106](https://rweb.greenit.fr/es/fiches/RWEB_0106-evitar-la-reproduccion-y-carga-automatica-de-videos-y-sonidos)',
   displayValue: '{count} autoplay element(s)',
+  colLabelElement: 'Element',
+  colLabelSrc: 'Source',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-autoplay.js', UIStrings)
 
@@ -34,17 +36,39 @@ class BPRwebNoAutoplay extends Audit {
   }
 
   static audit(artifacts: LH.Artifacts & BPArtifacts) {
-    const { autoplaying } = artifacts.BPGatherer
+    const { autoplayDetails } = artifacts.BPGatherer
+    const count = autoplayDetails.length
 
     return {
-      score: autoplaying === 0 ? 1 : 0,
-      displayValue: str_(UIStrings.displayValue, { count: autoplaying }),
-      numericValue: autoplaying,
+      score: count === 0 ? 1 : 0,
+      displayValue: str_(UIStrings.displayValue, { count }),
+      numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
         | 'millisecond'
         | 'element',
+      ...(count > 0 && {
+        details: {
+          type: 'table' as const,
+          headings: [
+            {
+              key: 'selector',
+              label: str_(UIStrings.colLabelElement),
+              valueType: 'text' as const,
+            },
+            {
+              key: 'src',
+              label: str_(UIStrings.colLabelSrc),
+              valueType: 'text' as const,
+            },
+          ],
+          items: autoplayDetails.map(d => ({
+            selector: d.selector,
+            src: d.src || '—',
+          })),
+        } as LH.Audit.Details.Table,
+      }),
     }
   }
 }

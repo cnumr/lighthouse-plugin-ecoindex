@@ -16,6 +16,8 @@ const UIStrings = {
     'Avoid animations and transitions to reduce CPU and battery usage. [See RWEB_0009](https://rweb.greenit.fr/en/fiches/RWEB_0009-avoid-javascriptcss-animations)',
   displayValuePass: 'No animated elements',
   displayValueFail: '{count} animated element(s) found',
+  colLabelElement: 'Element',
+  colLabelProperty: 'Property',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-animations.js', UIStrings)
 
@@ -35,20 +37,42 @@ class BPRwebNoAnimations extends Audit {
   }
 
   static audit(artifacts: LH.Artifacts & BPArtifacts): LH.Audit.Product {
-    const { animatedElements } = artifacts.BPGatherer
+    const { animatedElementDetails } = artifacts.BPGatherer
+    const count = animatedElementDetails.length
 
     return {
-      score: animatedElements === 0 ? 1 : 0,
+      score: count === 0 ? 1 : 0,
       displayValue:
-        animatedElements === 0
+        count === 0
           ? str_(UIStrings.displayValuePass)
-          : str_(UIStrings.displayValueFail, { count: animatedElements }),
-      numericValue: animatedElements,
+          : str_(UIStrings.displayValueFail, { count }),
+      numericValue: count,
       numericUnit: 'unitless' as
         | 'unitless'
         | 'byte'
         | 'millisecond'
         | 'element',
+      ...(count > 0 && {
+        details: {
+          type: 'table' as const,
+          headings: [
+            {
+              key: 'selector',
+              label: str_(UIStrings.colLabelElement),
+              valueType: 'text' as const,
+            },
+            {
+              key: 'property',
+              label: str_(UIStrings.colLabelProperty),
+              valueType: 'text' as const,
+            },
+          ],
+          items: animatedElementDetails.map(d => ({
+            selector: d.selector,
+            property: d.property,
+          })),
+        } as LH.Audit.Details.Table,
+      }),
     }
   }
 }
