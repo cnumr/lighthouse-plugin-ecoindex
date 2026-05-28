@@ -28,7 +28,7 @@
 
 **Écart** : l'audit mesure le _nombre de fichiers CSS_, la fiche mesure l'_usage de la propriété CSS `contain`_. Ce sont deux métriques sans rapport.
 
-**Correction recommandée** : Option A — remapper cet audit sur RWEB_0052 (qui concerne la réduction du nombre de CSS). Option B — implémenter la vraie détection de `contain` via CDP `getComputedStyle`.
+**Correction recommandée** : rendre l'audit autonome — supprimer le préfixe RWEB_0039 du titre et mettre à jour la description pour refléter ce qu'il détecte réellement (nombre de fichiers CSS chargés). RWEB_0052 (repaint/reflow) a été évalué mais rejeté : comptage de fichiers CSS ≠ réduction de repaint. Un vrai audit RWEB_0039 (propriété `contain`) nécessiterait un gatherer CDP dédié — à traiter ultérieurement.
 
 ---
 
@@ -40,7 +40,7 @@
 
 **Écart** : l'API `doc-write` est un accès bloquant au document, pas une modification pendant traversée d'arbre. Ce sont deux anti-patterns JS différents.
 
-**Correction recommandée** : identifier la fiche RWEB correcte pour cette API (candidat : RWEB_0057 — réduire les accès DOM) et corriger le mapping.
+**Correction recommandée** : rendre l'audit autonome — supprimer le préfixe RWEB_0044 du titre et mettre à jour la description pour décrire précisément ce qui est détecté (usage de l'API d'écriture DOM bloquante dans les scripts inline). RWEB_0057 (réduire les accès DOM via JS) a été évalué mais rejeté : son périmètre est plus large que le seul pattern détecté ici.
 
 ---
 
