@@ -60,7 +60,7 @@
     "message": "URL"
   },
   "audits/bp/bp-cookie-size.js | description": {
-    "message": "Keep Cookie request headers under 512 bytes to reduce HTTP overhead. [See RWEB_0062](https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size)"
+    "message": "Keep Cookie request headers under 512 bytes to reduce HTTP overhead."
   },
   "audits/bp/bp-cookie-size.js | displayValueFail": {
     "message": "{count} request(s) with oversized Cookie header"
@@ -69,10 +69,10 @@
     "message": "No Cookie header exceeds 512 bytes"
   },
   "audits/bp/bp-cookie-size.js | failureTitle": {
-    "message": "RWEB_0062 - Cookie header exceeds 512 bytes"
+    "message": "Cookie header exceeds 512 bytes"
   },
   "audits/bp/bp-cookie-size.js | title": {
-    "message": "RWEB_0062 - Cookie size ≤ 512 bytes"
+    "message": "Cookie size ≤ 512 bytes"
   },
   "audits/bp/bp-css-containment.js | description": {
     "message": "This audit counts CSS files loaded. It cannot automatically verify the CSS `contain` property (RWEB_0039 requires CDP introspection). Review your stylesheets manually to ensure key layout elements use `contain: layout` or `contain: paint`."
