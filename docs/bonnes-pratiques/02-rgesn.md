@@ -33,7 +33,7 @@ order: 200
 
 ==- RGESN v0 au format "JSON"
 
-> https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1
+> ~~https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1~~ https://github.com/DISIC/NumEcoDiag/blob/main/public/rgesn/v1.json
 
 **Attention, il est indique v1 dans le fichier, mais c'est la v0.**
 
