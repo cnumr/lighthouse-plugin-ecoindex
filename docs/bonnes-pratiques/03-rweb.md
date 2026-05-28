@@ -1,5 +1,5 @@
 ---
-label: 29 audits RWEB
+label: 28 audits RWEB
 icon: shield-check
 order: 300
 ---
@@ -29,7 +29,6 @@ Ces audits s'exécutent automatiquement lors de chaque mesure Lighthouse.
 | `rweb-no-canvas`           | RWEB_0055 | Limiter le recours aux canvas                                |
 | `rweb-no-social-sdk`       | RWEB_0059 | Remplacer les boutons officiels de partage social            |
 | `rweb-service-worker`      | RWEB_0060 | Économiser de la bande passante via un Service Worker        |
-| `rweb-cookie-size`         | RWEB_0062 | Limiter la taille des cookies (≤ 512 octets)                 |
 | `rweb-cache-control`       | RWEB_0075 | Ajouter des en-têtes `cache-control`                         |
 | `rweb-http-compression`    | RWEB_0076 | Compresser les ressources (≥ 95 %)                           |
 | `rweb-minification`        | RWEB_0077 | Minification des CSS et JS                                   |
