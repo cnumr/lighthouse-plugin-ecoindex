@@ -1,163 +1,338 @@
-# Rapport de cohérence — Audits RWEB vs Fiches MCP GreenIT
+# Rapport de cohérence — Audits BP vs fiches RWEB
 
-> Généré le 2026-05-28 · 36 audits RWEB analysés · Référentiel MCP GreenIT
-
----
-
-## Résumé exécutif
-
-| Statut                    | Nb  | Description                                           |
-| ------------------------- | --- | ----------------------------------------------------- |
-| 🟢 Cohérent               | 7   | Implémentation alignée avec la fiche RWEB             |
-| 🟡 Partiellement cohérent | 14  | Détection partielle ou seuils approximatifs           |
-| 🔴 Incohérent             | 6   | Fiche testée ≠ fiche implémentée, ou logique inversée |
-| ⚪ Sans fiche RWEB        | 3   | Audits sans correspondance dans le référentiel        |
+**Date** : 2026-05-28  
+**Méthode** : lecture de chaque fichier source d'audit + appel MCP `obtenir_fiche_complete` pour chaque RWEB ID référencé, puis comparaison implémentation ↔ règle de validation.  
+**Périmètre** : 39 audits dans `libs/ecoindex-lh-plugin-ts/src/audits/bp/`
 
 ---
 
-## Tableau de synthèse
+## Synthèse
 
-| Fichier audit              | ID RWEB référencé | Titre fiche                             | Statut | Problème principal                                                   |
-| -------------------------- | ----------------- | --------------------------------------- | ------ | -------------------------------------------------------------------- |
-| rweb-no-document-write     | RWEB_0044         | Éviter la manipulation DOM en traversal | 🔴     | Fiche RWEB concerne les manipulations DOM, pas `document.write`      |
-| rweb-no-unused-code        | RWEB_0046         | Éviter les scripts bloquants            | 🔴     | Fiche concerne le render-blocking, audit détecte absence async/defer |
-| rweb-no-js-errors          | RWEB_0043         | Pas d'erreurs JS console                | 🟢     | Aligné                                                               |
-| rweb-css-containment       | RWEB_0039         | CSS containment                         | 🔴     | Audit compte les fichiers CSS, fiche concerne la prop `contain`      |
-| rweb-combine-assets        | RWEB_0078         | Combiner les assets                     | 🟡     | Seuils (10/15) non documentés dans la fiche                          |
-| rweb-minification          | RWEB_0077         | Minification                            | 🔴     | Audit vérifie seulement les blocs inline, pas les fichiers externes  |
-| rweb-no-animations         | RWEB_0011         | Pas d'animations non-essentielles       | 🟡     | Détection CSS uniquement, JS non couvert                             |
-| rweb-no-autoplay           | RWEB_0114         | Pas d'autoplay                          | 🟢     | Aligné                                                               |
-| rweb-no-bitmap-ui          | RWEB_0032         | Pas d'images bitmap pour l'UI           | 🟡     | Détecte `<img>` mais pas les `background-image` CSS                  |
-| rweb-no-canvas             | RWEB_0007         | Pas de canvas                           | 🟢     | Aligné                                                               |
-| rweb-no-carousel           | RWEB_0019         | Pas de carrousel                        | 🟡     | Détection heuristique (classe CSS), non exhaustif                    |
-| rweb-no-cookie-on-static   | RWEB_0071         | Pas de cookies sur ressources statiques | 🟡     | Vérifie les headers réseau mais pas le domaine                       |
-| rweb-no-embedded-docs      | RWEB_0034         | Pas de docs embarqués                   | 🟢     | Aligné                                                               |
-| rweb-no-gif                | RWEB_0030         | Pas de GIF animés                       | 🟢     | Aligné                                                               |
-| rweb-no-hidden-images      | RWEB_0020         | Pas d'images cachées                    | 🟡     | CSS `display:none` détecté, `visibility:hidden` non                  |
-| rweb-no-inline-assets      | RWEB_0100         | Pas d'assets inline                     | 🟡     | Seuil de taille non documenté                                        |
-| rweb-no-plugins            | RWEB_0002         | Pas de plugins                          | 🟢     | Aligné                                                               |
-| rweb-no-redirects          | RWEB_0061         | Pas de redirections                     | 🟡     | Redirections chaînées non comptées                                   |
-| rweb-no-social-sdk         | RWEB_0086         | Pas de SDK sociaux                      | 🟡     | Liste de domaines à maintenir manuellement                           |
-| rweb-cache-control         | RWEB_0066         | Cache-Control                           | 🟡     | Vérifie la présence du header, pas la valeur                         |
-| rweb-cookie-size           | RWEB_0067         | Taille des cookies                      | 🟡     | Seuil (512 octets) à confirmer dans la fiche                         |
-| rweb-css-splitting         | RWEB_0053         | CSS splitting                           | 🟡     | Compte les fichiers mais pas leur taille relative                    |
-| rweb-hsts                  | RWEB_0063         | HSTS                                    | 🟢     | Aligné                                                               |
-| rweb-http-compression      | RWEB_0072         | Compression HTTP                        | 🟡     | Vérifie Content-Encoding mais pas le taux                            |
-| rweb-lazy-loading          | RWEB_0021         | Lazy loading                            | 🟡     | `loading="lazy"` HTML uniquement, JS lazy non couvert                |
-| rweb-limit-analytics       | RWEB_0087         | Limiter les analytics                   | 🟡     | Liste de domaines à maintenir manuellement                           |
-| rweb-limit-css-files       | RWEB_0052         | Limiter les fichiers CSS                | 🟢     | Aligné                                                               |
-| rweb-limit-domains         | RWEB_0079         | Limiter les domaines                    | 🟡     | Seuils à confirmer                                                   |
-| rweb-limit-fonts           | RWEB_0075         | Limiter les polices                     | 🟡     | Compte les fichiers font, pas les font-face déclarées                |
-| rweb-no-http-errors        | RWEB_0059         | Pas d'erreurs HTTP                      | 🟡     | 4xx/5xx détectés, redirections (3xx) non comptées comme erreur       |
-| rweb-optimize-svg          | RWEB_0097         | Optimiser les SVG                       | 🟡     | Taille seulement, contenu SVG non inspecté                           |
-| rweb-prefer-css            | RWEB_0010         | Préférer CSS                            | 🔴     | Fiche concerne les effets CSS vs JS, audit détecte autre chose       |
-| rweb-print-css             | RWEB_0099         | CSS d'impression                        | 🟡     | Présence de `@media print`, pas la pertinence du contenu             |
-| rweb-service-worker        | RWEB_0062         | Service Worker                          | 🟢     | Aligné                                                               |
-| rweb-uses-http2            | RWEB_0064         | Utiliser HTTP/2                         | 🟢     | Aligné                                                               |
-| rweb-no-unused-css (alias) | —                 | —                                       | ⚪     | Pas de fiche RWEB directe                                            |
-| no-carousel (sans rweb-)   | —                 | —                                       | ⚪     | Doubloon avec rweb-no-carousel                                       |
-| ecoindex-\* (4 audits)     | —                 | —                                       | ⚪     | Audits Ecoindex propres, hors référentiel RWEB                       |
+| Statut                                                                   | Nb     |
+| ------------------------------------------------------------------------ | ------ |
+| 🔴 Incohérence critique (logique ou mapping erroné)                      | 5      |
+| 🟡 Partiel (concept correct, implémentation incomplète ou seuil déviant) | 17     |
+| ✅ Aligné                                                                | 10     |
+| ➖ Sans référence RWEB (BP autonome)                                     | 7      |
+| **Total**                                                                | **39** |
 
 ---
 
-## Incohérences critiques 🔴
+## 🔴 Incohérences critiques
 
-### 1. `rweb-no-document-write` — ID RWEB_0044
+### 1. `rweb-css-containment.ts` → RWEB_0039
 
-**Ce que fait l'audit :** détecte la présence de `document.write` dans les scripts inline du HTML.
+**Ce que fait l'audit** : compte les fichiers CSS chargés via NetworkRecords (`scoreDisplayMode: 'manual'`). Le `displayValue` indique de vérifier manuellement l'usage de `contain`.
 
-**Ce que dit la fiche RWEB_0044 :** "Éviter la manipulation du DOM lors de la traversée" — concerne les modifications DOM pendant un parcours d'arbre (ex. boucle sur `childNodes`), pas l'usage de `document.write`.
+**Ce que dit la fiche** : RWEB_0039 = éléments DOM non isolés via la propriété CSS `contain`. `maxValue = 20%` d'éléments sans `contain`.
 
-**Recommandation :** Soit mapper cet audit sur la fiche RWEB correcte pour l'usage de `document.write`, soit corriger le titre pour refléter RWEB_0044.
+**Écart** : l'audit mesure le _nombre de fichiers CSS_, la fiche mesure l'_usage de la propriété CSS `contain`_. Ce sont deux métriques sans rapport.
 
----
-
-### 2. `rweb-no-unused-code` — ID RWEB_0046
-
-**Ce que fait l'audit :** détecte les balises `<script src>` sans attribut `async` ou `defer`.
-
-**Ce que dit la fiche RWEB_0046 :** "Éviter les scripts externes bloquant le rendu" — c'est cohérent en intention mais la fiche valide via la couverture de code (code mort), pas via les attributs de chargement.
-
-**Recommandation :** Renommer l'audit en `rweb-no-render-blocking-scripts` et créer un audit séparé pour le code mort (unused coverage).
+**Correction recommandée** : Option A — remapper cet audit sur RWEB_0052 (qui concerne la réduction du nombre de CSS). Option B — implémenter la vraie détection de `contain` via CDP `getComputedStyle`.
 
 ---
 
-### 3. `rweb-css-containment` — ID RWEB_0039
+### 2. `rweb-no-document-write.ts` → RWEB_0044
 
-**Ce que fait l'audit :** compte le nombre de fichiers CSS chargés (`scoreDisplayMode: 'manual'`).
+**Ce que fait l'audit** : regex sur les scripts inline pour détecter l'appel à l'API `doc-write` (via `BLOCKING_WRITE_RE`).
 
-**Ce que dit la fiche RWEB_0039 :** concerne la propriété CSS `contain` (layout/style/paint) pour limiter les recalculs de style.
+**Ce que dit la fiche** : RWEB_0044 = modifications DOM pendant une traversée de l'arbre DOM (boucle sur `childNodes`). `maxValue = 0` insertions pendant traversée.
 
-**Recommandation :** Cet audit teste en réalité RWEB_0052 (limiter les fichiers CSS). Il faut soit le re-mapper sur RWEB_0052, soit implémenter la vraie détection de la propriété `contain`.
+**Écart** : l'API `doc-write` est un accès bloquant au document, pas une modification pendant traversée d'arbre. Ce sont deux anti-patterns JS différents.
 
----
-
-### 4. `rweb-minification` — ID RWEB_0077
-
-**Ce que fait l'audit :** vérifie la minification des blocs `<style>` et `<script>` inline uniquement.
-
-**Ce que dit la fiche RWEB_0077 :** couvre la minification de tous les assets (CSS et JS), y compris les fichiers externes.
-
-**Recommandation :** Étendre l'audit aux ressources réseau (NetworkRecords) pour vérifier la minification des fichiers CSS/JS externes via leur Content-Encoding ou leur ratio taille/contenu.
+**Correction recommandée** : identifier la fiche RWEB correcte pour cette API (candidat : RWEB_0057 — réduire les accès DOM) et corriger le mapping.
 
 ---
 
-### 5. `rweb-prefer-css` — ID RWEB_0010
+### 3. `rweb-combine-assets.ts` → RWEB_0078
 
-**Ce que fait l'audit :** détecte certains patterns JS qui pourraient être remplacés par CSS.
+**Ce que fait l'audit** : score 1 si `max(nbCSS, nbJS) ≤ 10`, score 0.5 si ≤ 15, score 0 sinon.
 
-**Ce que dit la fiche RWEB_0010 :** "Préférer CSS aux scripts" — valide que les effets visuels (transitions, animations) sont en CSS plutôt qu'en JS.
+**Ce que dit la fiche** : RWEB_0078 = fichiers CSS et JS non combinés. `maxValue = 2` (combinaisons de fichiers).
 
-**Recommandation :** Revoir la logique de détection pour cibler spécifiquement les animations/transitions JS remplaçables par CSS.
+**Écart** : le seuil de l'audit (≤ 10 / ≤ 15 fichiers) est 5× à 7× supérieur au `maxValue = 2` de la fiche.
 
----
-
-### 6. `rweb-combine-assets` (seuils non documentés) — ID RWEB_0078
-
-**Ce que fait l'audit :** score 1 si ≤10 requêtes, 0.5 si ≤15, 0 si >15.
-
-**Ce que dit la fiche RWEB_0078 :** `maxValue: 2` requêtes — seuils très différents.
-
-**Recommandation :** Aligner les seuils sur la valeur de la fiche (`maxValue: 2`) ou documenter explicitement pourquoi les seuils divergent.
+**Correction recommandée** : aligner sur `maxValue = 2` ou documenter explicitement l'écart si la fiche est jugée trop contraignante pour le contexte réel.
 
 ---
 
-## Partielles notables 🟡
+### 4. `rweb-no-unused-code.ts` → RWEB_0046
 
-### `rweb-cache-control`
+**Ce que fait l'audit** : regex sur le HTML pour détecter les `<script src="...">` sans attribut `async` ou `defer` (scripts bloquants).
 
-Vérifie seulement la **présence** du header `Cache-Control`, pas sa valeur. La fiche RWEB_0066 recommande une durée minimale. L'audit devrait vérifier `max-age` > 0.
+**Ce que dit la fiche** : RWEB_0046 = ressources chargées qui ne sont pas immédiatement utilisées. `maxValue = 0` ressources chargées inutilement.
 
-### `rweb-no-hidden-images`
+**Écart** : un script bloquant (sans async/defer) n'est pas forcément inutile — il est simplement mal chargé. La fiche concerne le chargement de ressources non nécessaires, pas leur mode de chargement.
 
-Détecte `display:none` mais pas `visibility:hidden` ni `opacity:0`. Ces trois techniques cachent visuellement une image tout en la chargeant.
-
-### `rweb-lazy-loading`
-
-Ne couvre que l'attribut HTML `loading="lazy"`. Le lazy loading JS (IntersectionObserver) n'est pas détecté.
-
-### `rweb-no-social-sdk`
-
-La liste des domaines SDK sociaux est codée en dur dans l'audit. Elle doit être maintenue manuellement au fil des évolutions des plateformes.
+**Correction recommandée** : remapper l'audit sur une fiche concernant le render-blocking. Créer un audit distinct pour les ressources réellement inutilisées (Coverage API).
 
 ---
 
-## Audits sans fiche RWEB ⚪
+### 5. `rweb-no-js-errors.ts` → RWEB_0043
 
-| Audit                                                                 | Commentaire                                               |
-| --------------------------------------------------------------------- | --------------------------------------------------------- |
-| Audits `ecoindex-*` (score, grade, nodes, requests, size, water, GHG) | Propres au score Ecoindex, hors référentiel RWEB — normal |
-| `rweb-no-unused-css`                                                  | Pas de fiche RWEB identifiée — potentiellement RWEB_0046  |
+**Ce que fait l'audit** : détecte les `ConsoleMessages` de niveau `error` (erreurs runtime JS dans la console).
+
+**Ce que dit la fiche** : RWEB_0043 = lignes non validées par ESLint. `maxValue = 0` lignes en erreur ESLint (analyse statique).
+
+**Écart** : erreurs runtime console ≠ erreurs de linting statique ESLint. L'audit détecte des bugs à l'exécution, la fiche concerne la qualité statique du code.
+
+**Correction recommandée** : mapper sur une fiche de qualité runtime, ou renommer le titre pour refléter l'usage réel (détection des erreurs console JS).
 
 ---
 
-## Recommandations prioritaires
+## 🟡 Partiels
 
-| Priorité | Action                                                                             | Impact                     |
-| -------- | ---------------------------------------------------------------------------------- | -------------------------- |
-| 🔴 P1    | Corriger le mapping `rweb-css-containment` → RWEB_0052, créer vrai audit RWEB_0039 | Faux positif architectural |
-| 🔴 P1    | Corriger le mapping `rweb-no-document-write` → bonne fiche RWEB                    | Confusion référentiel      |
-| 🔴 P2    | Aligner seuils `rweb-combine-assets` sur `maxValue` de la fiche                    | Seuils arbitraires         |
-| 🟡 P2    | Étendre `rweb-minification` aux fichiers externes                                  | Couverture incomplète      |
-| 🟡 P3    | Ajouter vérification valeur `max-age` dans `rweb-cache-control`                    | Faux positifs              |
-| 🟡 P3    | Étendre `rweb-no-hidden-images` à `visibility:hidden` et `opacity:0`               | Couverture incomplète      |
+### 6. `rweb-minification.ts` → RWEB_0077
+
+**Ce que fait l'audit** : vérifie uniquement les blocs `<style>` et `<script>` inline via une heuristique `avgCharsPerLine < 80`.
+
+**Ce que dit la fiche** : RWEB_0077 = fichiers CSS, JS, HTML et SVG non minifiés. `maxValue = 0`.
+
+**Écart** : les fichiers CSS/JS/HTML/SVG externes ne sont pas vérifiés. L'audit ne couvre que l'inline.
+
+---
+
+### 7. `rweb-cache-control.ts` → RWEB_0075
+
+**Ce que fait l'audit** : vérifie la présence du header `Cache-Control` sur les ressources Document/Stylesheet/Script/Font.
+
+**Ce que dit la fiche** : RWEB_0075 = entêtes manquantes `Expires` ou `Cache-Control`. `maxValue = 0`.
+
+**Écarts** :
+
+- Le header `Expires` n'est pas vérifié
+- Un `Cache-Control: max-age=0` est un faux positif (compte comme valide)
+
+---
+
+### 8. `rweb-limit-css-files.ts` → RWEB_0035
+
+**Ce que fait l'audit** : score 1 si ≤ 7 CSS, score 0.5 si ≤ 10, score 0 si > 10.
+
+**Ce que dit la fiche** : RWEB_0035 = fichiers CSS entre 3 et 10 (range bidirectionnel : trop peu = mauvais aussi).
+
+**Écart** : l'audit ne pénalise pas si < 3 CSS (CSS non splitté). Le seuil haut (7 vs 10) est aussi plus strict que la fiche.
+
+---
+
+### 9. `rweb-no-autoplay.ts` → RWEB_0106
+
+**Ce que fait l'audit** : utilise BPGatherer `autoplayDetails` — détecte uniquement l'attribut `autoplay` sur `<video>` et `<audio>`.
+
+**Ce que dit la fiche** : RWEB_0106 = éléments video/audio sans `preload="none"` ou `autoplay`. `maxValue = 0`.
+
+**Écart** : l'audit ne vérifie pas l'absence de `preload="none"`. Un élément sans `autoplay` mais avec `preload="eager"` passe l'audit mais viole la fiche.
+
+---
+
+### 10. `rweb-http-compression.ts` → RWEB_0076
+
+**Ce que fait l'audit** : vérifie la compression (gzip/br/deflate/zstd) sur Document/Stylesheet/Script. Seuil : score 1 si ≥ 95% des ressources compressées.
+
+**Ce que dit la fiche** : RWEB_0076 = fichiers CSS, JS, HTML et SVG non compressés. `maxValue = 0`.
+
+**Écarts** :
+
+- Les SVG ne sont pas inclus dans la vérification
+- La tolérance de 5% (seuil 95%) n'est pas alignée sur `maxValue = 0`
+
+---
+
+### 11. `rweb-lazy-loading.ts` → RWEB_0051
+
+**Ce que fait l'audit** : vérifie que _toutes_ les `<img>` ont `loading="lazy"`.
+
+**Ce que dit la fiche** : RWEB_0051 = images, iframes et vidéos below the fold sans lazy loading. `maxValue = 0`.
+
+**Écart** : l'audit pénalise aussi les images above-the-fold (qui ne devraient _pas_ avoir `lazy`). La fiche concerne uniquement les éléments hors viewport initial. Les iframes et vidéos sont également ignorées.
+
+---
+
+### 12. `rweb-limit-fonts.ts` → RWEB_0032
+
+**Ce que fait l'audit** : détecte les polices chargées depuis des domaines de service connus (fonts.googleapis.com, fonts.gstatic.com, use.typekit.net…).
+
+**Ce que dit la fiche** : RWEB_0032 = polices téléchargées. `maxValue = 2`.
+
+**Écart** : les polices auto-hébergées (servies depuis le même domaine ou un CDN propre) ne sont pas détectées. Le comptage est incomplet.
+
+---
+
+### 13. `rweb-no-animations.ts` → RWEB_0009
+
+**Ce que fait l'audit** : utilise BPGatherer `animatedElementDetails`. Score 0 si _une seule_ animation est trouvée.
+
+**Ce que dit la fiche** : RWEB_0009 = animations JS/CSS par page. `maxValue = 2`.
+
+**Écart** : le seuil est 0 dans l'audit vs 2 dans la fiche (2 animations tolérées).
+
+---
+
+### 14. `rweb-no-bitmap-ui.ts` → RWEB_0038
+
+**Ce que fait l'audit** : détecte les images PNG/JPG/WebP/BMP _à l'intérieur_ des conteneurs `<header>`, `<nav>`, `<footer>`, `<button>`.
+
+**Ce que dit la fiche** : RWEB_0038 = images matricielles pour l'URL testée. `maxValue = 5`.
+
+**Écart** : l'audit restreint la détection aux conteneurs UI spécifiques. La fiche porte sur _toutes_ les images matricielles de la page, avec un seuil de 5.
+
+---
+
+### 15. `rweb-no-carousel.ts` → RWEB_0010
+
+**Ce que fait l'audit** : détecte le chargement de librairies carousel connues (swiper, slick, owl, splide, glide) dans les NetworkRecords.
+
+**Ce que dit la fiche** : RWEB_0010 = carrousels présents sur la page. `maxValue = 1`.
+
+**Écarts** :
+
+- Un carrousel codé sans librairie (vanilla JS) n'est pas détecté
+- Une librairie chargée mais non utilisée serait un faux positif
+- Le seuil de l'audit est 0 (binary) vs `maxValue = 1` de la fiche
+
+---
+
+### 16. `rweb-no-cookie-on-static.ts` → RWEB_0081
+
+**Ce que fait l'audit** : compte le nombre de _ressources_ statiques individuelles envoyées avec un header Cookie.
+
+**Ce que dit la fiche** : RWEB_0081 = domaines servant des ressources statiques avec cookie. `maxValue = 1`.
+
+**Écart** : la fiche mesure le nombre de _domaines_ concernés, l'audit mesure le nombre de _ressources_ individuelles. Un seul CDN mal configuré peut déclencher des dizaines de violations.
+
+---
+
+### 17. `rweb-limit-analytics.ts` → RWEB_0111
+
+**Ce que fait l'audit** : détecte les requêtes vers 12 domaines analytics hardcodés (Google Analytics, Matomo, Plausible, etc.). Score 1 si ≤ 1 domaine détecté.
+
+**Ce que dit la fiche** : RWEB_0111 = outils d'analytics. `maxValue = 1`.
+
+**Écart** : la liste est incomplète (Mixpanel, Amplitude, Hotjar, PostHog, Segment, etc. absents). Des outils non listés passeraient l'audit.
+
+---
+
+### 18. `rweb-optimize-svg.ts` → RWEB_0100
+
+**Ce que fait l'audit** : marque un SVG comme non optimisé si sa taille est > 2048 octets et ne contient pas de marqueur SVGO (`<!--!-->`) ou de minification évidente.
+
+**Ce que dit la fiche** : RWEB_0100 = images non optimisées. `maxValue = 0%`.
+
+**Écart** : le seuil de 2 Ko est arbitraire — un SVG complexe peut légitimement dépasser 2 Ko même optimisé. L'heuristique SVGO marker est fragile et contournable.
+
+---
+
+### 19. `rweb-no-social-sdk.ts` → RWEB_0059
+
+**Ce que fait l'audit** : filtre les requêtes vers 6 domaines SDK sociaux hardcodés (Facebook, Twitter/X, LinkedIn, Google+, Instagram).
+
+**Ce que dit la fiche** : RWEB_0059 = bibliothèques externes des réseaux sociaux. `maxValue = 0`.
+
+**Écart** : liste incomplète (TikTok, Pinterest, YouTube embed, Snapchat, etc. absents). Le concept est correct mais la couverture est partielle.
+
+---
+
+### 20. `rweb-prefer-css.ts` → RWEB_0037
+
+**Ce que fait l'audit** : regex sur le HTML pour détecter les `<img>` à l'intérieur de `<button>` et `<a>` uniquement.
+
+**Ce que dit la fiche** : RWEB_0037 = images remplaçables par CSS. `maxValue = 0`.
+
+**Écart** : la détection est très restrictive. Les images dans `<header>`, `<nav>`, les `<img>` servant d'icônes hors boutons/liens, et les `background-image` CSS non nécessaires ne sont pas couverts.
+
+---
+
+### 21. `rweb-hsts.ts` → RWEB_0084
+
+**Ce que fait l'audit** : vérifie la présence du header `Strict-Transport-Security` sur la réponse du document principal.
+
+**Ce que dit la fiche** : RWEB_0084 = non activations de HSTS (favoriser le HSTS preload). `maxValue = 0`.
+
+**Écart** : l'audit ne vérifie pas la valeur du header. Un `max-age=0` ou l'absence de `preload` passerait l'audit alors que la fiche insiste sur le HSTS preload list.
+
+---
+
+### 22. `rweb-css-splitting.ts` → RWEB_0036
+
+**Ce que fait l'audit** : détecte les fichiers CSS > 10 Ko sans attribut `media` ciblé dans leur `<link>`.
+
+**Ce que dit la fiche** : RWEB_0036 = diviser CSS. `maxValue` entre 2 et 5 bibliothèques CSS.
+
+**Écart** : l'audit vérifie le ciblage media des CSS (splitting contextuel), alors que la fiche mesure le nombre de fichiers CSS dans une plage acceptable (2 à 5). Ces deux métriques sont liées mais distinctes. Le seuil binaire (0 violations) ne reflète pas le range 2–5 de la fiche.
+
+---
+
+## ✅ Alignés
+
+| Fichier                    | RWEB ID   | Justification                                                                                                  |
+| -------------------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
+| `rweb-limit-domains.ts`    | RWEB_0082 | Compte les hostnames uniques, score 1 si ≤ 5. Aligné sur maxValue = 5.                                         |
+| `rweb-no-embedded-docs.ts` | RWEB_0033 | Détecte `<embed>`, `<object>`, `<iframe src="*.pdf">`. Score 1 si 0. Aligné sur maxValue = 0.                  |
+| `rweb-no-gif.ts`           | RWEB_0099 | Détecte les .gif via NetworkRecords et HTML. Score 1 si 0. Aligné sur maxValue = 0.                            |
+| `rweb-no-inline-assets.ts` | RWEB_0042 | Compte les scripts/styles inline via BPGatherer. Score 1 si ≤ 2. Aligné sur maxValue = 2.                      |
+| `rweb-no-redirects.ts`     | RWEB_0112 | Détecte les 301/302/307/308. Score 1 si ≤ 1. Aligné sur maxValue = 1.                                          |
+| `rweb-no-canvas.ts`        | RWEB_0055 | Détecte tout `<canvas>` via BPGatherer. Score 1 si 0. Aligné sur maxValue = 0 (conservateur mais acceptable).  |
+| `rweb-print-css.ts`        | RWEB_0031 | Vérifie la présence d'un `<link rel="stylesheet" media="print">`. Score 1 si présent. Aligné sur maxValue = 1. |
+| `rweb-service-worker.ts`   | RWEB_0060 | Vérifie si un Service Worker est actif (BPGatherer.serviceWorkerActive). Score binaire. Aligné.                |
+| `rweb-title-meta.ts`       | RWEB_0011 | Vérifie `<title>` non vide ET `<meta name="description">` non vide. Score binaire. Aligné.                     |
+| `rweb-uses-http2.ts`       | RWEB_0083 | Compte les requêtes avec protocol ≠ h2/h3. Score 1 si 0. Aligné sur maxValue = 0.                              |
+
+---
+
+## ➖ Sans référence RWEB (BP autonomes)
+
+| Fichier                    | Description                                                             | Candidat RWEB                        |
+| -------------------------- | ----------------------------------------------------------------------- | ------------------------------------ |
+| `badly-sized-images.ts`    | Détecte les images affichées à une taille > 5% de leur taille naturelle | RWEB_0048 (non implémentée)          |
+| `rweb-cookie-size.ts`      | Cookie request header > 512 octets                                      | RWEB_0062 ref supprimée — à vérifier |
+| `rweb-no-hidden-images.ts` | Images avec clientRect width ou height = 0                              | RWEB_0045 (partiel)                  |
+| `rweb-no-http-errors.ts`   | Ressources avec statusCode ≥ 400                                        | Pas de fiche RWEB directe            |
+| `rweb-no-plugins.ts`       | Détecte Flash/Silverlight/Java MIME types                               | Technologie obsolète                 |
+| `thegreenwebfoundation.ts` | Vérifie si l'hébergeur est dans la base TGWF                            | RWEB_0096 (non implémentée)          |
+| `unoptimized-images.ts`    | Utilise l'artefact `OptimizedImages` (deprecated)                       | À migrer ou supprimer                |
+
+---
+
+## Tableau récapitulatif complet
+
+| Fichier                       | RWEB ID   | Statut       | Problème principal                                                      |
+| ----------------------------- | --------- | ------------ | ----------------------------------------------------------------------- |
+| `rweb-css-containment.ts`     | RWEB_0039 | 🔴 CRITIQUE  | Compte des fichiers CSS au lieu de vérifier la propriété `contain`      |
+| `rweb-no-document-write.ts`   | RWEB_0044 | 🔴 CRITIQUE  | Détecte l'API doc-write au lieu des mutations DOM pendant traversée     |
+| `rweb-combine-assets.ts`      | RWEB_0078 | 🔴 CRITIQUE  | Seuils ≤10/15 vs maxValue=2 de la fiche                                 |
+| `rweb-no-unused-code.ts`      | RWEB_0046 | 🔴 CRITIQUE  | Détecte les scripts bloquants, pas les ressources inutiles              |
+| `rweb-no-js-errors.ts`        | RWEB_0043 | 🔴 CRITIQUE  | Erreurs runtime console vs linting ESLint statique                      |
+| `rweb-minification.ts`        | RWEB_0077 | 🟡 PARTIEL   | Inline uniquement, fichiers externes ignorés                            |
+| `rweb-cache-control.ts`       | RWEB_0075 | 🟡 PARTIEL   | Pas de vérif. Expires, pas de vérif. max-age > 0                        |
+| `rweb-limit-css-files.ts`     | RWEB_0035 | 🟡 PARTIEL   | Seuil ≤7 vs plage 3–10, pas de pénalité si < 3                          |
+| `rweb-no-autoplay.ts`         | RWEB_0106 | 🟡 PARTIEL   | Manque vérif. `preload="none"`                                          |
+| `rweb-http-compression.ts`    | RWEB_0076 | 🟡 PARTIEL   | SVG exclus, tolérance 5% non alignée sur maxValue=0                     |
+| `rweb-lazy-loading.ts`        | RWEB_0051 | 🟡 PARTIEL   | Toutes les images (pas seulement below-fold), iframes/vidéos ignorées   |
+| `rweb-limit-fonts.ts`         | RWEB_0032 | 🟡 PARTIEL   | Polices auto-hébergées non détectées                                    |
+| `rweb-no-animations.ts`       | RWEB_0009 | 🟡 PARTIEL   | Seuil 0 vs maxValue=2                                                   |
+| `rweb-no-bitmap-ui.ts`        | RWEB_0038 | 🟡 PARTIEL   | Restreint aux conteneurs UI, fiche couvre toute la page (maxValue=5)    |
+| `rweb-no-carousel.ts`         | RWEB_0010 | 🟡 PARTIEL   | Librairies seulement, pas les carousels vanilla ; seuil 0 vs maxValue=1 |
+| `rweb-no-cookie-on-static.ts` | RWEB_0081 | 🟡 PARTIEL   | Compte des ressources, fiche compte des domaines                        |
+| `rweb-limit-analytics.ts`     | RWEB_0111 | 🟡 PARTIEL   | Liste de domaines analytics incomplète                                  |
+| `rweb-optimize-svg.ts`        | RWEB_0100 | 🟡 PARTIEL   | Seuil 2 Ko arbitraire, heuristique fragile                              |
+| `rweb-no-social-sdk.ts`       | RWEB_0059 | 🟡 PARTIEL   | Liste de domaines SDK sociaux incomplète                                |
+| `rweb-prefer-css.ts`          | RWEB_0037 | 🟡 PARTIEL   | Seulement `<img>` dans `<button>/<a>`, pas les autres contextes         |
+| `rweb-hsts.ts`                | RWEB_0084 | 🟡 PARTIEL   | Présence du header vérifiée, pas sa valeur (max-age, preload)           |
+| `rweb-css-splitting.ts`       | RWEB_0036 | 🟡 PARTIEL   | Media targeting vs comptage de fichiers ; seuils non alignés            |
+| `rweb-limit-domains.ts`       | RWEB_0082 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-no-embedded-docs.ts`    | RWEB_0033 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-no-gif.ts`              | RWEB_0099 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-no-inline-assets.ts`    | RWEB_0042 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-no-redirects.ts`        | RWEB_0112 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-no-canvas.ts`           | RWEB_0055 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-print-css.ts`           | RWEB_0031 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-service-worker.ts`      | RWEB_0060 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-title-meta.ts`          | RWEB_0011 | ✅ ALIGNÉ    | —                                                                       |
+| `rweb-uses-http2.ts`          | RWEB_0083 | ✅ ALIGNÉ    | —                                                                       |
+| `badly-sized-images.ts`       | —         | ➖ SANS RWEB | (RWEB_0048 candidat)                                                    |
+| `rweb-cookie-size.ts`         | —         | ➖ SANS RWEB | RWEB_0062 ref supprimée                                                 |
+| `rweb-no-hidden-images.ts`    | —         | ➖ SANS RWEB | (RWEB_0045 candidat partiel)                                            |
+| `rweb-no-http-errors.ts`      | —         | ➖ SANS RWEB | Pas de fiche RWEB directe                                               |
+| `rweb-no-plugins.ts`          | —         | ➖ SANS RWEB | Technologie obsolète                                                    |
+| `thegreenwebfoundation.ts`    | —         | ➖ SANS RWEB | (RWEB_0096 candidat)                                                    |
+| `unoptimized-images.ts`       | —         | ➖ SANS RWEB | Artefact deprecated                                                     |
