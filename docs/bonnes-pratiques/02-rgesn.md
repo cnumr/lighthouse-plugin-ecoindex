@@ -1,7 +1,7 @@
 ---
 label: Ref. RGESN v0
 icon: file-badge
-order: 200
+order: 100
 ---
 
 # Référentiel général d'écoconception de services numériques (RGESN)
