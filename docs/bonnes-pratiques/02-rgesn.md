@@ -6,7 +6,7 @@ order: 100
 
 # Référentiel général d'écoconception de services numériques (RGESN)
 
-[!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/)
+[!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://www.arcep.fr/mes-demarches-et-services/entreprises/fiches-pratiques/referentiel-general-ecoconception-services-numeriques.html)
 
 ## Liste (partielle) des critères RGESN v0
 

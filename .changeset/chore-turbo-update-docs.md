@@ -8,3 +8,4 @@
 - Add `docs/bonnes-pratiques/04-bp.md` listing all 10 `bp/` audits without a RWEB reference (`unoptimized-images`, `badly-sized-images`, `bp-thegreenwebfoundation` included)
 - Remove stale `has-cat-images` demo audit and its locale entries
 - Fix `libs/ecoindex-lh-plugin-ts/README.md`: update RWEB audit table from 18 to 29 entries, add missing 12 audits, fix `rweb-css-containment` → `bp-css-containment`, add BP audits section
+- Update RGESN reference URL in `docs/bonnes-pratiques/02-rgesn.md`
