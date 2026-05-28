@@ -19,39 +19,31 @@ Ce document organise le backlog en deux parties : corrections des audits existan
 
 ## Partie 1 — Corrections des audits existants
 
-### 1.1 `rweb-css-containment` → remapping sur RWEB_0052 (P1 🔴)
+### 1.1 `rweb-css-containment` → rendre autonome, supprimer la référence RWEB_0039 (P1 🔴)
 
-**Problème** : l'audit compte les fichiers CSS chargés (`scoreDisplayMode: 'manual'`), ce qui correspond à RWEB_0052, pas à RWEB_0039 (propriété CSS `contain`).
+**Problème** : l'audit compte les fichiers CSS chargés (`scoreDisplayMode: 'manual'`), ce qui ne correspond ni à RWEB_0039 (propriété CSS `contain`) ni à RWEB_0052 (réduction repaint/reflow). Forcer un remapping serait trompeur.
 
-**Actions** :
+**Décision** : rendre l'audit autonome et informatif — supprimer le préfixe RWEB_0039 du titre, mettre à jour la description pour refléter ce qu'il détecte réellement (nombre de fichiers CSS chargés). L'`id` et l'entrée dans `plugin.ts` restent inchangés.
 
-- Option A — Remapper l'audit sur `RWEB_0052`, mettre à jour `id`, `title`, l'entrée dans `plugin.ts` et `refs-urls.ts`
-- Option B — Implémenter la vraie détection RWEB_0039 : vérifier via CDP ou `getComputedStyle` que les éléments clés du DOM utilisent la propriété `contain`
-
-**Recommandation** : Option A (Option B nécessite un gatherer CDP dédié). Créer ensuite un vrai audit `rweb-css-containment` (RWEB_0039) séparément.
+> ⚠️ RWEB_0052 (repaint/reflow) a été évalué comme candidat mais rejeté : comptage de fichiers CSS ≠ réduction de repaint. Un vrai audit RWEB_0039 (propriété `contain`) nécessiterait un gatherer CDP dédié — à traiter en Phase 3+.
 
 **Fichiers** :
 
-- `audits/bp/rweb-css-containment.ts` — mise à jour `id` et `title`
-- `plugin.ts` — mise à jour `auditRefs`
-- `locales/fr.json` — mise à jour clés
+- `audits/bp/rweb-css-containment.ts` — mise à jour `title` et `description` uniquement
+- `locales/fr.json` — mise à jour clés FR
 
 ---
 
-### 1.2 `rweb-no-document-write` → corriger le mapping RWEB (P1 🔴)
+### 1.2 `rweb-no-document-write` → rendre autonome, supprimer la référence RWEB_0044 (P1 🔴)
 
-**Problème** : l'audit détecte l'usage de l'API `doc-write` dans les scripts inline. Or RWEB_0044 concerne les modifications DOM pendant une traversée d'arbre (boucle sur `childNodes`), ce qui est différent.
+**Problème** : l'audit détecte l'usage de l'API `doc-write` dans les scripts inline. Or RWEB_0044 concerne les modifications DOM pendant une traversée d'arbre (boucle sur `childNodes`) — concept distinct. RWEB_0057 (réduire les accès DOM via JS) a été évalué comme candidat mais couvre un périmètre plus large que le seul pattern `document.write`.
 
-**Actions** :
-
-- Identifier la fiche RWEB correcte pour cette API (candidat : RWEB_0057 — réduire les accès DOM via JS)
-- Mettre à jour `title`, `description`, l'ID RWEB référencé, et `refs-urls.ts`
+**Décision** : rendre l'audit autonome — supprimer le préfixe RWEB_0044, mettre à jour `title` et `description` pour décrire précisément ce qui est détecté. L'`id` et l'entrée dans `plugin.ts` restent inchangés.
 
 **Fichiers** :
 
-- `audits/bp/rweb-no-document-write.ts`
-- `plugin.ts`
-- `locales/fr.json`
+- `audits/bp/rweb-no-document-write.ts` — mise à jour `title` et `description`
+- `locales/fr.json` — mise à jour clés FR
 
 ---
 
@@ -282,38 +274,38 @@ Triés par score impact × priorité. Chaque audit suit le pattern standard : fi
 
 ## Fichiers à créer / modifier
 
-| Fichier                                 | Action                                       |
-| --------------------------------------- | -------------------------------------------- |
-| `audits/bp/rweb-css-containment.ts`     | Remapping RWEB_0052 (correction P1 🔴)       |
-| `audits/bp/rweb-no-document-write.ts`   | Correction mapping RWEB_0044 (P1 🔴)         |
-| `audits/bp/rweb-combine-assets.ts`      | Alignement seuils maxValue=2 (P1 🔴)         |
-| `audits/bp/rweb-no-unused-code.ts`      | Correction mapping RWEB_0046 (P1 🔴)         |
-| `audits/bp/rweb-no-js-errors.ts`        | Correction mapping RWEB_0043 (P1 🔴)         |
-| `audits/bp/rweb-minification.ts`        | Extension NetworkRecords (P2 🟡)             |
-| `audits/bp/rweb-cache-control.ts`       | Vérification max-age + Expires (P2 🟡)       |
-| `audits/bp/rweb-no-hidden-images.ts`    | Extension visibility/opacity (P3 🟡)         |
-| `audits/bp/rweb-lazy-loading.ts`        | Restreindre aux images below-fold (P2 🟡)    |
-| `audits/bp/rweb-no-animations.ts`       | Aligner seuil maxValue=2 (P2 🟡)             |
-| `audits/bp/rweb-no-autoplay.ts`         | Ajouter vérif preload="none" (P2 🟡)         |
-| `audits/bp/rweb-no-cookie-on-static.ts` | Passer au comptage par domaine (P2 🟡)       |
-| `gatherers/bp-gatherer.ts`              | Extension autoplayDetails (P2 🟡)            |
-| `audits/bp/rweb-library-coverage.ts`    | Nouveau — RWEB_0015                          |
-| `audits/bp/rweb-image-sizing.ts`        | Nouveau — RWEB_0048                          |
-| `audits/bp/rweb-optimize-images.ts`     | Nouveau — RWEB_0049                          |
-| `audits/bp/rweb-prefer-glyphs.ts`       | Nouveau — RWEB_0050                          |
-| `audits/bp/rweb-total-blocking-time.ts` | Nouveau — RWEB_0053 (wrapper LH natif)       |
-| `audits/bp/rweb-event-delegation.ts`    | Nouveau — RWEB_0056 (CDP)                    |
-| `audits/bp/rweb-media-transcription.ts` | Nouveau — RWEB_0030                          |
-| `audits/bp/rweb-http-requests.ts`       | Nouveau — RWEB_0047                          |
-| `audits/bp/rweb-http-cache.ts`          | Nouveau — RWEB_0074                          |
-| `audits/bp/rweb-pagination.ts`          | Nouveau — RWEB_0013 (heuristique)            |
-| `audits/bp/rweb-local-storage.ts`       | Nouveau — RWEB_0064                          |
-| `audits/bp/rweb-bfcache.ts`             | Nouveau — RWEB_0008 (wrapper LH natif)       |
-| `audits/bp/rweb-api-cache.ts`           | Nouveau — RWEB_0021                          |
-| `audits/bp/rweb-dom-access.ts`          | Nouveau — RWEB_0057 (AST inline)             |
-| `plugin.ts`                             | Enregistrement de tous les nouveaux audits   |
-| `locales/fr.json`                       | Traductions FR pour tous les nouveaux audits |
-| `refs-urls.ts`                          | Ajout des nouveaux IDs RWEB                  |
+| Fichier                                 | Action                                            |
+| --------------------------------------- | ------------------------------------------------- |
+| `audits/bp/rweb-css-containment.ts`     | Rendre autonome — supprimer ref RWEB_0039 (P1 🔴) |
+| `audits/bp/rweb-no-document-write.ts`   | Rendre autonome — supprimer ref RWEB_0044 (P1 🔴) |
+| `audits/bp/rweb-combine-assets.ts`      | Alignement seuils maxValue=2 (P1 🔴)              |
+| `audits/bp/rweb-no-unused-code.ts`      | Correction mapping RWEB_0046 (P1 🔴)              |
+| `audits/bp/rweb-no-js-errors.ts`        | Correction mapping RWEB_0043 (P1 🔴)              |
+| `audits/bp/rweb-minification.ts`        | Extension NetworkRecords (P2 🟡)                  |
+| `audits/bp/rweb-cache-control.ts`       | Vérification max-age + Expires (P2 🟡)            |
+| `audits/bp/rweb-no-hidden-images.ts`    | Extension visibility/opacity (P3 🟡)              |
+| `audits/bp/rweb-lazy-loading.ts`        | Restreindre aux images below-fold (P2 🟡)         |
+| `audits/bp/rweb-no-animations.ts`       | Aligner seuil maxValue=2 (P2 🟡)                  |
+| `audits/bp/rweb-no-autoplay.ts`         | Ajouter vérif preload="none" (P2 🟡)              |
+| `audits/bp/rweb-no-cookie-on-static.ts` | Passer au comptage par domaine (P2 🟡)            |
+| `gatherers/bp-gatherer.ts`              | Extension autoplayDetails (P2 🟡)                 |
+| `audits/bp/rweb-library-coverage.ts`    | Nouveau — RWEB_0015                               |
+| `audits/bp/rweb-image-sizing.ts`        | Nouveau — RWEB_0048                               |
+| `audits/bp/rweb-optimize-images.ts`     | Nouveau — RWEB_0049                               |
+| `audits/bp/rweb-prefer-glyphs.ts`       | Nouveau — RWEB_0050                               |
+| `audits/bp/rweb-total-blocking-time.ts` | Nouveau — RWEB_0053 (wrapper LH natif)            |
+| `audits/bp/rweb-event-delegation.ts`    | Nouveau — RWEB_0056 (CDP)                         |
+| `audits/bp/rweb-media-transcription.ts` | Nouveau — RWEB_0030                               |
+| `audits/bp/rweb-http-requests.ts`       | Nouveau — RWEB_0047                               |
+| `audits/bp/rweb-http-cache.ts`          | Nouveau — RWEB_0074                               |
+| `audits/bp/rweb-pagination.ts`          | Nouveau — RWEB_0013 (heuristique)                 |
+| `audits/bp/rweb-local-storage.ts`       | Nouveau — RWEB_0064                               |
+| `audits/bp/rweb-bfcache.ts`             | Nouveau — RWEB_0008 (wrapper LH natif)            |
+| `audits/bp/rweb-api-cache.ts`           | Nouveau — RWEB_0021                               |
+| `audits/bp/rweb-dom-access.ts`          | Nouveau — RWEB_0057 (AST inline)                  |
+| `plugin.ts`                             | Enregistrement de tous les nouveaux audits        |
+| `locales/fr.json`                       | Traductions FR pour tous les nouveaux audits      |
+| `refs-urls.ts`                          | Ajout des nouveaux IDs RWEB                       |
 
 ---
 
