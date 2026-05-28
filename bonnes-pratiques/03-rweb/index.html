@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.833047125302">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.833316205992">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>Audits RWEB — R&#233;f&#233;rentiel GreenIT - Ecoindex Lighthouse Plugin</title>
@@ -39,12 +39,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/greenit_icone_intro-alt.png" />
-    <link href="../../resources/css/retype.css?v=4.5.3.833047125302" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.833316205992" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.833047125302" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.833047125302" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.5.3.833047125302" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.833316205992" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.833316205992" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.833316205992" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -233,6 +233,43 @@
 </blockquote>
 <h2 id="détection-automatique">Détection automatique</h2>
 <p>Ces audits s&#x27;exécutent automatiquement lors de chaque mesure Lighthouse.</p>
+<retype-table copy-text="| ID audit                   | RWEB      | Description                                                           |
+| -------------------------- | --------- | --------------------------------------------------------------------- |
+| `rweb-no-animations`       | RWEB_0009 | Éviter les animations CSS/JS                                          |
+| `rweb-no-carousel`         | RWEB_0010 | Limiter le recours aux carrousels                                     |
+| `rweb-title-meta`          | RWEB_0011 | Titre de page et meta description pertinents                          |
+| `rweb-print-css`           | RWEB_0031 | Fournir une feuille de style pour l'impression                        |
+| `rweb-limit-fonts`         | RWEB_0032 | Préférer les polices standard                                         |
+| `rweb-no-embedded-docs`    | RWEB_0033 | Ne pas afficher de documents dans les pages                           |
+| `rweb-limit-css-files`     | RWEB_0035 | Limiter les fichiers de feuilles de style (≤ 10)                      |
+| `rweb-css-splitting`       | RWEB_0036 | Découper les CSS                                                      |
+| `rweb-prefer-css`          | RWEB_0037 | Préférer les CSS aux images                                           |
+| `rweb-no-bitmap-ui`        | RWEB_0038 | Éviter les images matricielles pour l'interface                       |
+| `rweb-no-inline-assets`    | RWEB_0042 | Externaliser les CSS et JavaScript                                    |
+| `rweb-no-js-errors`        | —         | Détecter les erreurs JavaScript à l'exécution dans la console         |
+| `rweb-no-document-write`   | —         | Détecter les appels à l'API d'écriture DOM dans les scripts inline    |
+| `rweb-no-unused-code`      | —         | Détecter les scripts externes bloquant le rendu (sans async ni defer) |
+| `rweb-lazy-loading`        | RWEB_0051 | Utiliser le chargement paresseux                                      |
+| `rweb-no-canvas`           | RWEB_0055 | Limiter le recours aux canvas                                         |
+| `rweb-no-social-sdk`       | RWEB_0059 | Remplacer les boutons officiels de partage social                     |
+| `rweb-service-worker`      | RWEB_0060 | Économiser de la bande passante via un Service Worker                 |
+| `rweb-cookie-size`         | RWEB_0062 | Limiter la taille des cookies (≤ 512 octets)                          |
+| `rweb-cache-control`       | RWEB_0075 | Ajouter des en-têtes `cache-control`                                  |
+| `rweb-http-compression`    | RWEB_0076 | Compresser les ressources (≥ 95 %)                                    |
+| `rweb-minification`        | RWEB_0077 | Minification des CSS et JS                                            |
+| `rweb-combine-assets`      | RWEB_0078 | Combiner les fichiers CSS et JavaScript                               |
+| `rweb-no-cookie-on-static` | RWEB_0081 | Héberger les ressources statiques sur un domaine sans cookie          |
+| `rweb-limit-domains`       | RWEB_0082 | Limiter le nombre de domaines servant les ressources                  |
+| `rweb-uses-http2`          | RWEB_0083 | Utiliser HTTP/2 au lieu de HTTP/1                                     |
+| `rweb-hsts`                | RWEB_0084 | Favoriser HSTS preload aux redirections 301                           |
+| `rweb-no-gif`              | RWEB_0099 | Limiter l'utilisation des GIFs animés                                 |
+| `rweb-optimize-svg`        | RWEB_0100 | Optimiser les images SVG (&lt; 2 Ko)                                     |
+| `rweb-no-autoplay`         | RWEB_0106 | Éviter la lecture automatique des vidéos et sons                      |
+| `rweb-limit-analytics`     | RWEB_0111 | Limiter les outils d'analytics et les données collectées              |
+| `rweb-no-redirects`        | RWEB_0112 | Éviter les redirections                                               |
+| `rweb-no-http-errors`      | —         | Éviter les erreurs de requête HTTP (4xx/5xx)                          |
+| `rweb-no-hidden-images`    | —         | Ne pas télécharger d'images inutiles (cachées)                        |
+| `rweb-no-plugins`          | —         | Ne pas utiliser de plugins (Flash, Silverlight, Java)                 |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -300,18 +337,18 @@
 </tr>
 <tr>
 <td><code translate="no" v-pre>rweb-no-js-errors</code></td>
-<td>RWEB_0043</td>
-<td>Valider les JavaScript (pas d&#x27;erreurs console)</td>
+<td>—</td>
+<td>Détecter les erreurs JavaScript à l&#x27;exécution dans la console</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>rweb-no-document-write</code></td>
-<td>RWEB_0044</td>
-<td>Éviter les modifications DOM bloquantes</td>
+<td>—</td>
+<td>Détecter les appels à l&#x27;API d&#x27;écriture DOM dans les scripts inline</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>rweb-no-unused-code</code></td>
-<td>RWEB_0046</td>
-<td>Ne charger du code que lorsque c&#x27;est indispensable</td>
+<td>—</td>
+<td>Détecter les scripts externes bloquant le rendu (sans async ni defer)</td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>rweb-lazy-loading</code></td>
@@ -421,8 +458,12 @@
 </tbody>
 </table>
 </div>
+</retype-table>
 <h2 id="vérification-manuelle">Vérification manuelle</h2>
 <p>Cet audit ne peut pas être vérifié automatiquement et indique le nombre de fichiers CSS chargés.</p>
+<retype-table copy-text="| ID audit               | RWEB | Description                                                                        |
+| ---------------------- | ---- | ---------------------------------------------------------------------------------- |
+| `rweb-css-containment` | —    | Compter les fichiers CSS chargés — vérification manuelle de la propriété `contain` |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -435,12 +476,13 @@
 <tbody>
 <tr>
 <td><code translate="no" v-pre>rweb-css-containment</code></td>
-<td>RWEB_0039</td>
-<td>Utiliser la propriété CSS <code translate="no" v-pre>contain</code> pour optimiser le rendu</td>
+<td>—</td>
+<td>Compter les fichiers CSS chargés — vérification manuelle de la propriété <code translate="no" v-pre>contain</code></td>
 </tr>
 </tbody>
 </table>
 </div>
+</retype-table>
 <h2 id="mettre-à-jour-les-urls-de-référence">Mettre à jour les URLs de référence</h2>
 <p>Les URLs de documentation de chaque fiche RWEB sont stockées dans <code translate="no" v-pre>libs/ecoindex-lh-plugin-ts/src/audits/bp/refs-urls.ts</code>.</p>
 <p>Pour les régénérer depuis l&#x27;API <code translate="no" v-pre>rweb.greenit.fr</code> :</p>

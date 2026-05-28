@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.833047125302">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.833316205992">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>Utilisation de lighthouse-ecoindex - Ecoindex Lighthouse Plugin</title>
@@ -39,12 +39,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/greenit_icone_intro-alt.png" />
-    <link href="../../resources/css/retype.css?v=4.5.3.833047125302" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.833316205992" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.833047125302" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.833047125302" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.5.3.833047125302" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.833316205992" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.833316205992" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.833316205992" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -440,6 +440,27 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
 </doc-codeblock></div>
 </doc-panel>
 <h5 id="explications">Explications</h5>
+<retype-table copy-text="| Propriété               | Type      | Description                                                                                                                     |
+| ----------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `extra-header`          | `object`  | Les informations nécessaires pour votre audit (authentification, cookies, etc).                                                 |
+| `output`                | `array`   | Les types d'export souhaités : `&quot;html&quot;, &quot;json&quot;, &quot;statement&quot;` (statement = déclation environnementale).                          |
+| `user-agent`            | `string`  | `&quot;random&quot;` ou un user agent spécifique. Utilisez `&quot;random&quot;` pour ne pas vous faire détecter et bloquer par les anti-bot.        |
+| `output-path`           | `string`  | Dossier ou exporter les rapports.                                                                                               |
+| `puppeteer-script`      | `string`  | Chemin vers un script puppeteer à utiliser pour les mesures (pratique pour les authentifications complexes).                    |
+| `courses`               | `array`   | Les parcours à auditer.                                                                                                         |
+| `courses.name`          | `string`  | nom du parcours, qui sera affiché dans la déclaration en environnementale.                                                      |
+| `courses.target`        | `string`  | Objectif du parcours, qui sera affiché dans la déclaration en environnementale.                                                 |
+| `courses.course`        | `string`  | Parcours cible. Rapide liste des pages parcourues, qui sera affichée dans la déclaration en environnementale.                   |
+| `courses.is-best-pages` | `boolean` | Indique si ce parcours est celui utilisé dans la déclaration environnementale comme les 5 pages les plus visitées du site.      |
+| `courses.urls`          | `array`   | Liste des urls à mesurer.                                                                                                       |
+| `auth`                  | `object`  | Gestion de l'authentification.                                                                                                  |
+| `auth.url`              | `string`  | Url de la page d'authentification (**MANDATORY** Cette URL doit aussi être indiquée dans les URLs à mesurer dans les parcours). |
+| `auth.user`             | `object`  | Identifiant de l'utilisateur.                                                                                                   |
+| `auth.user.target`      | `string`  | Target (.class ou #id) du champs de l'identifiant de l'utilisateur.                                                             |
+| `auth.user.value`       | `string`  | Valeur de l'identifiant de l'utilisateur.                                                                                       |
+| `auth.pass`             | `object`  | Password de l'utilisateur.                                                                                                      |
+| `auth.pass.target`      | `string`  | Target (.class ou #id) du champs du password de l'utilisateur.                                                                  |
+| `auth.pass.value`       | `string`  | Valeur du password de l'utilisateur.                                                                                            |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -548,6 +569,7 @@ npx lighthouse-plugin-ecoindex collect --url https://ecoindex.fr/ --url https://
 </tbody>
 </table>
 </div>
+</retype-table>
 <h3 id="command-convert">command <code translate="no" v-pre>convert</code></h3>
 <p><code translate="no" v-pre>npx lighthouse-plugin-ecoindex convert &lt;options&gt;</code></p>
 <p>Sert à générer la Déclaration Environnementale de votre site – Environmental Impact Statement (EIS) – l&#x27;initiative de GreenIT.fr® au format JSON, HTML et Markdown, si elle n&#x27;a pas été générée lors de la collecte.</p>
