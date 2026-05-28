@@ -53,25 +53,25 @@
   "audits/bp/rweb-combine-assets.js | title": {
     "message": "RWEB_0078 - Combine CSS and JS files (≤2 each)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
+  "audits/bp/bp-cookie-size.js | colLabelCookieSize": {
     "message": "Cookie size (bytes)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelUrl": {
+  "audits/bp/bp-cookie-size.js | colLabelUrl": {
     "message": "URL"
   },
-  "audits/bp/rweb-cookie-size.js | description": {
+  "audits/bp/bp-cookie-size.js | description": {
     "message": "Keep Cookie request headers under 512 bytes to reduce HTTP overhead. [See RWEB_0062](https://rweb.greenit.fr/en/fiches/RWEB_0062-optimise-cookie-size)"
   },
-  "audits/bp/rweb-cookie-size.js | displayValueFail": {
+  "audits/bp/bp-cookie-size.js | displayValueFail": {
     "message": "{count} request(s) with oversized Cookie header"
   },
-  "audits/bp/rweb-cookie-size.js | displayValuePass": {
+  "audits/bp/bp-cookie-size.js | displayValuePass": {
     "message": "No Cookie header exceeds 512 bytes"
   },
-  "audits/bp/rweb-cookie-size.js | failureTitle": {
+  "audits/bp/bp-cookie-size.js | failureTitle": {
     "message": "RWEB_0062 - Cookie header exceeds 512 bytes"
   },
-  "audits/bp/rweb-cookie-size.js | title": {
+  "audits/bp/bp-cookie-size.js | title": {
     "message": "RWEB_0062 - Cookie size ≤ 512 bytes"
   },
   "audits/bp/bp-css-containment.js | description": {

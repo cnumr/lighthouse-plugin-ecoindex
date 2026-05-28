@@ -116,7 +116,7 @@ export default {
       path: `${__dirname}/audits/bp/rweb-uses-http2.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-cookie-size.js`,
+      path: `${__dirname}/audits/bp/bp-cookie-size.js`,
     },
     {
       path: `${__dirname}/audits/bp/bp-no-http-errors.js`,

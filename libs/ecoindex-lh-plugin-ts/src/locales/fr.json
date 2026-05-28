@@ -53,25 +53,25 @@
   "audits/bp/rweb-combine-assets.js | title": {
     "message": "RWEB_0078 - Combiner les fichiers CSS et JS (≤2 chacun)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
+  "audits/bp/bp-cookie-size.js | colLabelCookieSize": {
     "message": "Taille du cookie (octets)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelUrl": {
+  "audits/bp/bp-cookie-size.js | colLabelUrl": {
     "message": "URL"
   },
-  "audits/bp/rweb-cookie-size.js | description": {
+  "audits/bp/bp-cookie-size.js | description": {
     "message": "Maintenez les en-têtes de requête Cookie sous 512 octets pour réduire la surcharge HTTP."
   },
-  "audits/bp/rweb-cookie-size.js | displayValueFail": {
+  "audits/bp/bp-cookie-size.js | displayValueFail": {
     "message": "{count} requête(s) avec en-tête Cookie surdimensionné"
   },
-  "audits/bp/rweb-cookie-size.js | displayValuePass": {
+  "audits/bp/bp-cookie-size.js | displayValuePass": {
     "message": "Aucun en-tête Cookie ne dépasse 512 octets"
   },
-  "audits/bp/rweb-cookie-size.js | failureTitle": {
+  "audits/bp/bp-cookie-size.js | failureTitle": {
     "message": "L'en-tête Cookie dépasse 512 octets"
   },
-  "audits/bp/rweb-cookie-size.js | title": {
+  "audits/bp/bp-cookie-size.js | title": {
     "message": "Taille des cookies ≤ 512 octets"
   },
   "audits/bp/bp-css-containment.js | description": {
