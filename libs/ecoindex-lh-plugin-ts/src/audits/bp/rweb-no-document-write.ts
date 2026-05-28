@@ -17,12 +17,12 @@ const BLOCKING_WRITE_RE = new RegExp(
   'g',
 )
 const UIStrings = {
-  title: 'RWEB_0044 - Avoid DOM manipulation during traversal',
-  failureTitle: 'RWEB_0044 - Blocking DOM write detected in inline scripts',
+  title: 'Avoid blocking DOM write API in inline scripts',
+  failureTitle: 'Blocking DOM write API detected in inline scripts',
   description:
-    'Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal)',
-  displayValuePass: 'No blocking DOM write detected',
-  displayValueFail: '{count} blocking DOM write(s) in inline scripts',
+    'Using the deprecated DOM write API blocks HTML parsing and forces a full browser re-parse. Replace it with modern DOM manipulation methods (e.g. element.insertAdjacentHTML or appendChild).',
+  displayValuePass: 'No blocking DOM write API detected',
+  displayValueFail: '{count} blocking DOM write API call(s) in inline scripts',
   colLabelScriptSnippet: 'Script snippet',
 }
 const str_ = createIcuMessageFn(

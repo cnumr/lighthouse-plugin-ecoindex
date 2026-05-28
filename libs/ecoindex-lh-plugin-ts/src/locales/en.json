@@ -327,19 +327,19 @@
     "message": "Script snippet"
   },
   "audits/bp/rweb-no-document-write.js | description": {
-    "message": "Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal)"
+    "message": "Using the deprecated DOM write API blocks HTML parsing and forces a full browser re-parse. Replace it with modern DOM manipulation methods (e.g. element.insertAdjacentHTML or appendChild)."
   },
   "audits/bp/rweb-no-document-write.js | displayValueFail": {
-    "message": "{count} blocking DOM write(s) in inline scripts"
+    "message": "{count} blocking DOM write API call(s) in inline scripts"
   },
   "audits/bp/rweb-no-document-write.js | displayValuePass": {
-    "message": "No blocking DOM write detected"
+    "message": "No blocking DOM write API detected"
   },
   "audits/bp/rweb-no-document-write.js | failureTitle": {
-    "message": "RWEB_0044 - Blocking DOM write detected in inline scripts"
+    "message": "Blocking DOM write API detected in inline scripts"
   },
   "audits/bp/rweb-no-document-write.js | title": {
-    "message": "RWEB_0044 - Avoid DOM manipulation during traversal"
+    "message": "Avoid blocking DOM write API in inline scripts"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
     "message": "Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](https://rweb.greenit.fr/en/fiches/RWEB_0033-do-not-display-documents-within-pages)"

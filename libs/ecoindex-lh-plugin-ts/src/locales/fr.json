@@ -327,19 +327,19 @@
     "message": "Extrait de script"
   },
   "audits/bp/rweb-no-document-write.js | description": {
-    "message": "Évitez d'utiliser des appels DOM bloquants dans les scripts inline car ils bloquent le parsing et forcent un nouveau parcours du DOM. [Voir RWEB_0044](https://rweb.greenit.fr/fr/fiches/RWEB_0044-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse)"
+    "message": "L'utilisation de l'API DOM d'écriture dépréciée bloque l'analyse HTML et force un re-parsing complet. Remplacez-la par des méthodes modernes (ex: element.insertAdjacentHTML ou appendChild)."
   },
   "audits/bp/rweb-no-document-write.js | displayValueFail": {
-    "message": "{count} écriture(s) DOM bloquante(s) dans les scripts inline"
+    "message": "{count} appel(s) à l'API d'écriture DOM dans les scripts inline"
   },
   "audits/bp/rweb-no-document-write.js | displayValuePass": {
-    "message": "Aucune écriture DOM bloquante détectée"
+    "message": "Aucun appel à l'API d'écriture DOM détecté"
   },
   "audits/bp/rweb-no-document-write.js | failureTitle": {
-    "message": "RWEB_0044 - Écriture DOM bloquante détectée dans les scripts inline"
+    "message": "API d'écriture DOM bloquante détectée dans les scripts inline"
   },
   "audits/bp/rweb-no-document-write.js | title": {
-    "message": "RWEB_0044 - Éviter la manipulation du DOM pendant le parcours"
+    "message": "Éviter l'API d'écriture DOM dans les scripts inline"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
     "message": "Évitez d'intégrer des documents (PDF, Word, etc.) directement dans le HTML. Utilisez des liens à la place. [Voir RWEB_0033](https://rweb.greenit.fr/fr/fiches/RWEB_0033-ne-pas-afficher-les-documents-a-l-interieur-des-pages)"
