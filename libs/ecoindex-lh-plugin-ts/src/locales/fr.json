@@ -489,7 +489,7 @@
     "message": "URL du script"
   },
   "audits/bp/rweb-no-unused-code.js | description": {
-    "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. [Voir RWEB_0046](https://rweb.greenit.fr/fr/fiches/RWEB_0046-ne-charger-des-donneesdu-code-que-lorsqu-elles-sontil-est-necessaire)"
+    "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. Les scripts bloquants retardent l'affichage de la page et augmentent inutilement la consommation CPU."
   },
   "audits/bp/rweb-no-unused-code.js | displayValueFail": {
     "message": "{count} script(s) externe(s) bloquant(s) le rendu"
@@ -498,10 +498,10 @@
     "message": "Aucun script externe bloquant le rendu"
   },
   "audits/bp/rweb-no-unused-code.js | failureTitle": {
-    "message": "RWEB_0046 - Scripts externes bloquants détectés"
+    "message": "Scripts externes bloquants le rendu détectés"
   },
   "audits/bp/rweb-no-unused-code.js | title": {
-    "message": "RWEB_0046 - Éviter les scripts externes bloquants"
+    "message": "Éviter les scripts externes bloquants le rendu"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {
     "message": "Taille (octets)"

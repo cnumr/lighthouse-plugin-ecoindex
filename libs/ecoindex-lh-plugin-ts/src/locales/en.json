@@ -489,7 +489,7 @@
     "message": "Script URL"
   },
   "audits/bp/rweb-no-unused-code.js | description": {
-    "message": "Add async or defer to external scripts to prevent blocking the critical rendering path. [See RWEB_0046](https://rweb.greenit.fr/en/fiches/RWEB_0046-only-load-datacode-when-necessary)"
+    "message": "Add async or defer to external scripts to prevent blocking the critical rendering path. Render-blocking scripts delay page display and increase CPU usage unnecessarily."
   },
   "audits/bp/rweb-no-unused-code.js | displayValueFail": {
     "message": "{count} render-blocking external script(s)"
@@ -498,10 +498,10 @@
     "message": "No render-blocking external scripts"
   },
   "audits/bp/rweb-no-unused-code.js | failureTitle": {
-    "message": "RWEB_0046 - Blocking external scripts detected"
+    "message": "Render-blocking external scripts detected"
   },
   "audits/bp/rweb-no-unused-code.js | title": {
-    "message": "RWEB_0046 - Avoid render-blocking external scripts"
+    "message": "Avoid render-blocking external scripts"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {
     "message": "Size (bytes)"
