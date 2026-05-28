@@ -306,7 +306,7 @@ export default {
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-cookie-size',
+        id: 'bp-cookie-size',
         weight: 0,
         group: 'ecoindex-best-practices',
       },

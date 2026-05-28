@@ -21,7 +21,7 @@ const str_ = createIcuMessageFn('audits/bp/bp-cookie-size.js', UIStrings)
 class BPRwebCookieSize extends Audit {
   static get meta() {
     return {
-      id: 'rweb-cookie-size',
+      id: 'bp-cookie-size',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

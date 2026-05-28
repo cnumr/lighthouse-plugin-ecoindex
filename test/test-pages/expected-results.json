@@ -123,7 +123,7 @@
       "rweb-no-cookie-on-static": 1,
       "rweb-http-compression": 0,
       "rweb-uses-http2": 0,
-      "rweb-cookie-size": 1,
+      "bp-cookie-size": 1,
       "bp-no-http-errors": 0,
       "rweb-limit-css-files": 0.5,
       "rweb-combine-assets": 0,
