@@ -8,6 +8,7 @@
   "scripts": {
     "pretest": "rimraf ./reports",
     "test": "pnpm run test:browser && pnpm run test:obj:custom-puppeteer && pnpm run test:obj && pnpm run test:file",
+    "test:unit": "node --test test-templates.mjs",
     "test:file": "node test-file-esm.mjs",
     "test:obj": "node test-obj-esm.mjs",
     "test:obj:custom-puppeteer": "node test-obj-esm-custom-puppeteer.mjs",

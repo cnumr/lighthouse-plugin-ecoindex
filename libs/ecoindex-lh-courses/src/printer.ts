@@ -13,27 +13,12 @@ import {
   SummaryToPrintItem,
 } from './types/index.js'
 
-import Handlebars from 'handlebars'
 import logSymbols from 'log-symbols'
 import { fileURLToPath } from 'url'
-import { B_TO_KB } from './utils/index.js'
+import { renderHtml, renderMarkdown } from './templates/fr_FR/index.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 const _dirname = fileURLToPath(dirname(import.meta.url))
-
-Handlebars.registerHelper('toDateString', function (date) {
-  const _date = new Date(date)
-  return _date.toDateString()
-})
-Handlebars.registerHelper('plus1', function (n) {
-  return Number(n) + 1
-})
-Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this)
-})
-Handlebars.registerHelper('convertPageSize', function (size) {
-  return (size / B_TO_KB).toFixed(3)
-})
 
 /**
  * Prepare folder and naming files.
@@ -252,15 +237,10 @@ async function printEnvStatementDocuments(cliFlags: CliFlags) {
   }
 
   const jsonFile = fs.readFileSync(envStatementsObj.statements.json, 'utf8')
+  const statementData = JSON.parse(jsonFile)
 
-  // Markdown
   try {
-    const sourceMD = fs.readFileSync(
-      cleanPath(path.join(_dirname, `templates/fr_FR/markdown.handlebars`)),
-      'utf8',
-    )
-    const templateMD = Handlebars.compile(sourceMD)
-    const mdContent = templateMD(JSON.parse(jsonFile))
+    const mdContent = renderMarkdown(statementData)
     writeFileSync(envStatementsObj.statements.md, mdContent)
     if (cliFlags['outputFiles']['statements'] === undefined) {
       cliFlags['outputFiles']['statements'] = []
@@ -273,12 +253,7 @@ async function printEnvStatementDocuments(cliFlags: CliFlags) {
     console.error(`${logSymbols.error} ${error}`)
   }
   try {
-    const sourceHTML = fs.readFileSync(
-      cleanPath(path.join(_dirname, `templates/fr_FR/html.handlebars`)),
-      'utf8',
-    )
-    const templateHTML = Handlebars.compile(sourceHTML)
-    const htmlContent = templateHTML(JSON.parse(jsonFile))
+    const htmlContent = renderHtml(statementData)
     writeFileSync(envStatementsObj.statements.html, htmlContent)
     if (cliFlags['outputFiles']['statements'] === undefined) {
       cliFlags['outputFiles']['statements'] = []

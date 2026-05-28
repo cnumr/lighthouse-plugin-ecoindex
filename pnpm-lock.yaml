@@ -103,9 +103,6 @@ importers:
       ecoindex:
         specifier: ^2.0.1
         version: 2.0.1
-      handlebars:
-        specifier: ^4.7.8
-        version: 4.7.8
       lighthouse:
         specifier: 13.3.0
         version: 13.3.0
@@ -3495,11 +3492,6 @@ packages:
     resolution: {integrity: sha512-zkypuxNu0u53rhiS9PpP0ih8gZTmy/+yxHU6U+isWBX311YcE2nzn9xA4prkGsNYf5d8Q5MF2duVbvS/HMm9cw==}
     peerDependencies:
       '@grpc/grpc-js': ^1.14.3
-
-  handlebars@4.7.8:
-    resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
-    engines: {node: '>=0.4.7'}
-    hasBin: true
 
   handlebars@4.7.9:
     resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
@@ -8393,7 +8385,7 @@ snapshots:
       '@usebruno/js': 0.47.0(debug@4.4.3)(encoding@0.1.13)
       '@usebruno/lang': 0.36.0
       '@usebruno/requests': 0.17.0
-      aws4-axios: 3.4.0(axios@1.13.6)
+      aws4-axios: 3.4.0(axios@1.13.6(debug@4.4.3))
       axios: 1.13.6(debug@4.4.3)
       axios-ntlm: 1.4.4(debug@4.4.3)
       chai: 4.5.0
@@ -8619,7 +8611,7 @@ snapshots:
       stubborn-fs: 1.2.5
       when-exit: 2.1.4
 
-  aws4-axios@3.4.0(axios@1.13.6):
+  aws4-axios@3.4.0(axios@1.13.6(debug@4.4.3)):
     dependencies:
       '@aws-sdk/client-sts': 3.806.0
       aws4: 1.13.2
@@ -9877,15 +9869,6 @@ snapshots:
       google-protobuf: 4.0.2
       lodash: 4.18.1
       protobufjs: 8.0.3
-
-  handlebars@4.7.8:
-    dependencies:
-      minimist: 1.2.8
-      neo-async: 2.6.2
-      source-map: 0.6.1
-      wordwrap: 1.0.0
-    optionalDependencies:
-      uglify-js: 3.19.3
 
   handlebars@4.7.9:
     dependencies:

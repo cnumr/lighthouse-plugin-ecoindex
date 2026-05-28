@@ -2,16 +2,12 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig([
   {
-    entry: ['src/**/*', '!src/templates/**/*', '!src/types/**/*'],
+    entry: ['src/**/*', '!src/types/**/*', '!src/templates/**/docs/**/*'],
     dts: true,
     format: ['esm'],
     shims: true,
     clean: false,
     splitting: true,
-    loader: {
-      '.handlebars': 'text',
-      '.md': 'text',
-    },
   },
   // // Configuration pour ESM (.mjs)
   // {

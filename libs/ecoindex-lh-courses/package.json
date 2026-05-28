@@ -54,6 +54,10 @@
       "types": "./dist/install-browser.d.ts",
       "default": "./dist/install-browser.js"
     },
+    "./templates": {
+      "types": "./dist/templates/fr_FR/index.d.ts",
+      "default": "./dist/templates/fr_FR/index.js"
+    },
     "./auto-install": {
       "types": "./dist/auto-install.d.ts",
       "import": "./auto-install.js"
@@ -64,9 +68,8 @@
     "test": "echo \"No test specified in lighthouse-plugin-ecoindex-courses\"",
     "prebuild": "rimraf ./dist",
     "build": "tsup",
-    "postbuild": "pnpm copy-types && pnpm copy-directory-templates",
+    "postbuild": "pnpm copy-types",
     "copy-types": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
-    "copy-directory-templates": "copyfiles -u 1 \"src/templates/**/*\" dist",
     "dev": "tsup --watch",
     "lint": "eslint --config eslint.config.js",
     "lint:fix": "eslint --config eslint.config.js --fix",
@@ -77,7 +80,6 @@
   "dependencies": {
     "@puppeteer/browsers": "3.0.4",
     "ecoindex": "^2.0.1",
-    "handlebars": "^4.7.8",
     "lighthouse": "13.3.0",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
     "log-symbols": "4.1.0",
