@@ -9,12 +9,12 @@ import {
 import { Audit } from 'lighthouse'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
-  title: 'RWEB_0043 - No JavaScript errors in console',
-  failureTitle: 'RWEB_0043 - JavaScript errors detected',
+  title: 'No JavaScript runtime errors in console',
+  failureTitle: 'JavaScript runtime errors detected in console',
   description:
-    'Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)',
-  displayValuePass: 'No JavaScript errors',
-  displayValueFail: '{count} JavaScript error(s)',
+    'Fix JavaScript errors detected at runtime. These are console.error() calls recorded during page load and indicate broken features. Unlike static linting (RWEB_0043), this check does not cover code style or syntax issues.',
+  displayValuePass: 'No JavaScript runtime errors',
+  displayValueFail: '{count} JavaScript runtime error(s)',
   colLabelErrorMessage: 'Error message',
 }
 const str_ = createIcuMessageFn('audits/bp/rweb-no-js-errors.js', UIStrings)

@@ -13,10 +13,10 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const BLOCKING_SCRIPT_RE =
   /<script\b(?=[^>]*\bsrc\b)(?![^>]*\b(?:async|defer)\b)[^>]*>/gi
 const UIStrings = {
-  title: 'RWEB_0046 - Avoid render-blocking external scripts',
-  failureTitle: 'RWEB_0046 - Blocking external scripts detected',
+  title: 'Avoid render-blocking external scripts',
+  failureTitle: 'Render-blocking external scripts detected',
   description:
-    'Add async or defer to external scripts to prevent blocking the critical rendering path. [See RWEB_0046](https://rweb.greenit.fr/en/fiches/RWEB_0046-only-load-datacode-when-necessary)',
+    'Add async or defer to external scripts to prevent blocking the critical rendering path. Render-blocking scripts delay page display and increase CPU usage unnecessarily.',
   displayValuePass: 'No render-blocking external scripts',
   displayValueFail: '{count} render-blocking external script(s)',
   colLabelScriptUrl: 'Script URL',

@@ -1,11 +1,5 @@
 import * as LH from 'lighthouse/types/lh.js'
 
-import {
-  ContextualBaseArtifacts,
-  UniversalBaseArtifacts,
-} from 'lighthouse/types/artifacts.js'
-
-import type { GathererArtifacts } from 'lighthouse'
 import { Audit } from 'lighthouse'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
@@ -25,12 +19,7 @@ class BPRwebPrintCss extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
 
-      // The name of the custom gatherer class that provides input to this audit.
-      requiredArtifacts: ['LinkElements', 'DOMStats', 'devtoolsLogs'] as (
-        | keyof UniversalBaseArtifacts
-        | keyof ContextualBaseArtifacts
-        | keyof GathererArtifacts
-      )[],
+      requiredArtifacts: ['LinkElements'] as (keyof LH.Artifacts)[],
     }
   }
 

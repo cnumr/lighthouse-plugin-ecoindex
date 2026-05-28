@@ -56,6 +56,12 @@ app.get('/bp-violations', (req, res) => {
   res.sendFile(path.join(__dirname, 'bp-violations.html'))
 })
 
+// Deliberately served without Cache-Control to trigger rweb-cache-control (RWEB_0075)
+app.get('/styles/no-cache-control.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css')
+  res.send('/* no-cache-control test asset */')
+})
+
 // Serve static files (for any other assets)
 app.use(express.static(__dirname))
 

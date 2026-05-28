@@ -51,7 +51,7 @@
     "message": "RWEB_0078 - Too many separate CSS/JS files"
   },
   "audits/bp/rweb-combine-assets.js | title": {
-    "message": "RWEB_0078 - Combine CSS and JS files (≤ 10 each)"
+    "message": "RWEB_0078 - Combine CSS and JS files (≤2 each)"
   },
   "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
     "message": "Cookie size (bytes)"
@@ -75,16 +75,16 @@
     "message": "RWEB_0062 - Cookie size ≤ 512 bytes"
   },
   "audits/bp/rweb-css-containment.js | description": {
-    "message": "Use CSS containment property to optimize rendering performance. [See RWEB_0039](https://rweb.greenit.fr/en/fiches/RWEB_0039-use-css-containment)"
+    "message": "This audit counts CSS files loaded. It cannot automatically verify the CSS `contain` property (RWEB_0039 requires CDP introspection). Review your stylesheets manually to ensure key layout elements use `contain: layout` or `contain: paint`."
   },
   "audits/bp/rweb-css-containment.js | displayValue": {
     "message": "{count} CSS file(s) loaded — verify 'contain' property usage manually."
   },
   "audits/bp/rweb-css-containment.js | failureTitle": {
-    "message": "RWEB_0039 - CSS containment not verified"
+    "message": "CSS containment requires manual review"
   },
   "audits/bp/rweb-css-containment.js | title": {
-    "message": "RWEB_0039 - Use CSS containment"
+    "message": "CSS files loaded — manual containment review"
   },
   "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
     "message": "CSS URL"
@@ -327,19 +327,19 @@
     "message": "Script snippet"
   },
   "audits/bp/rweb-no-document-write.js | description": {
-    "message": "Avoid using blocking DOM write calls in inline scripts as they block parsing and force DOM re-traversal. [See RWEB_0044](https://rweb.greenit.fr/en/fiches/RWEB_0044-avoid-updates-during-dom-traversal)"
+    "message": "Using the deprecated DOM write API blocks HTML parsing and forces a full browser re-parse. Replace it with modern DOM manipulation methods (e.g. element.insertAdjacentHTML or appendChild)."
   },
   "audits/bp/rweb-no-document-write.js | displayValueFail": {
-    "message": "{count} blocking DOM write(s) in inline scripts"
+    "message": "{count} blocking DOM write API call(s) in inline scripts"
   },
   "audits/bp/rweb-no-document-write.js | displayValuePass": {
-    "message": "No blocking DOM write detected"
+    "message": "No blocking DOM write API detected"
   },
   "audits/bp/rweb-no-document-write.js | failureTitle": {
-    "message": "RWEB_0044 - Blocking DOM write detected in inline scripts"
+    "message": "Blocking DOM write API detected in inline scripts"
   },
   "audits/bp/rweb-no-document-write.js | title": {
-    "message": "RWEB_0044 - Avoid DOM manipulation during traversal"
+    "message": "Avoid blocking DOM write API in inline scripts"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
     "message": "Avoid embedding documents (PDF, Word, etc.) directly in HTML. Use links instead. [See RWEB_0033](https://rweb.greenit.fr/en/fiches/RWEB_0033-do-not-display-documents-within-pages)"
@@ -429,19 +429,19 @@
     "message": "Error message"
   },
   "audits/bp/rweb-no-js-errors.js | description": {
-    "message": "Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)"
+    "message": "Fix JavaScript errors detected at runtime. These are console.error() calls recorded during page load and indicate broken features. Unlike static linting (RWEB_0043), this check does not cover code style or syntax issues."
   },
   "audits/bp/rweb-no-js-errors.js | displayValueFail": {
-    "message": "{count} JavaScript error(s)"
+    "message": "{count} JavaScript runtime error(s)"
   },
   "audits/bp/rweb-no-js-errors.js | displayValuePass": {
-    "message": "No JavaScript errors"
+    "message": "No JavaScript runtime errors"
   },
   "audits/bp/rweb-no-js-errors.js | failureTitle": {
-    "message": "RWEB_0043 - JavaScript errors detected"
+    "message": "JavaScript runtime errors detected in console"
   },
   "audits/bp/rweb-no-js-errors.js | title": {
-    "message": "RWEB_0043 - No JavaScript errors in console"
+    "message": "No JavaScript runtime errors in console"
   },
   "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
     "message": "Plugin element"
@@ -489,7 +489,7 @@
     "message": "Script URL"
   },
   "audits/bp/rweb-no-unused-code.js | description": {
-    "message": "Add async or defer to external scripts to prevent blocking the critical rendering path. [See RWEB_0046](https://rweb.greenit.fr/en/fiches/RWEB_0046-only-load-datacode-when-necessary)"
+    "message": "Add async or defer to external scripts to prevent blocking the critical rendering path. Render-blocking scripts delay page display and increase CPU usage unnecessarily."
   },
   "audits/bp/rweb-no-unused-code.js | displayValueFail": {
     "message": "{count} render-blocking external script(s)"
@@ -498,10 +498,10 @@
     "message": "No render-blocking external scripts"
   },
   "audits/bp/rweb-no-unused-code.js | failureTitle": {
-    "message": "RWEB_0046 - Blocking external scripts detected"
+    "message": "Render-blocking external scripts detected"
   },
   "audits/bp/rweb-no-unused-code.js | title": {
-    "message": "RWEB_0046 - Avoid render-blocking external scripts"
+    "message": "Avoid render-blocking external scripts"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {
     "message": "Size (bytes)"

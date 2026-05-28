@@ -51,7 +51,7 @@
     "message": "RWEB_0078 - Trop de fichiers CSS/JS séparés"
   },
   "audits/bp/rweb-combine-assets.js | title": {
-    "message": "RWEB_0078 - Combiner les fichiers CSS et JS (≤ 10 chacun)"
+    "message": "RWEB_0078 - Combiner les fichiers CSS et JS (≤2 chacun)"
   },
   "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
     "message": "Taille du cookie (octets)"
@@ -60,7 +60,7 @@
     "message": "URL"
   },
   "audits/bp/rweb-cookie-size.js | description": {
-    "message": "Maintenez les en-têtes de requête Cookie sous 512 octets pour réduire la surcharge HTTP. [Voir RWEB_0062](https://rweb.greenit.fr/fr/fiches/RWEB_0062-optimiser-la-taille-des-cookies)"
+    "message": "Maintenez les en-têtes de requête Cookie sous 512 octets pour réduire la surcharge HTTP."
   },
   "audits/bp/rweb-cookie-size.js | displayValueFail": {
     "message": "{count} requête(s) avec en-tête Cookie surdimensionné"
@@ -69,22 +69,22 @@
     "message": "Aucun en-tête Cookie ne dépasse 512 octets"
   },
   "audits/bp/rweb-cookie-size.js | failureTitle": {
-    "message": "RWEB_0062 - L'en-tête cookie dépasse 512 octets"
+    "message": "L'en-tête Cookie dépasse 512 octets"
   },
   "audits/bp/rweb-cookie-size.js | title": {
-    "message": "RWEB_0062 - Taille des cookies ≤ 512 octets"
+    "message": "Taille des cookies ≤ 512 octets"
   },
   "audits/bp/rweb-css-containment.js | description": {
-    "message": "Utilisez la propriété CSS containment pour optimiser les performances de rendu. [Voir RWEB_0039](https://rweb.greenit.fr/fr/fiches/RWEB_0039-utiliser-les-compartiments-css)"
+    "message": "Cet audit compte les fichiers CSS chargés. Il ne peut pas vérifier automatiquement la propriété CSS `contain` (RWEB_0039 nécessite une inspection CDP). Vérifiez manuellement que les éléments de mise en page principaux utilisent `contain: layout` ou `contain: paint`."
   },
   "audits/bp/rweb-css-containment.js | displayValue": {
     "message": "{count} fichier(s) CSS chargé(s) — vérifiez l'utilisation de la propriété 'contain' manuellement."
   },
   "audits/bp/rweb-css-containment.js | failureTitle": {
-    "message": "RWEB_0039 - Confinement CSS non vérifié"
+    "message": "Le confinement CSS nécessite une vérification manuelle"
   },
   "audits/bp/rweb-css-containment.js | title": {
-    "message": "RWEB_0039 - Utiliser le confinement CSS"
+    "message": "Fichiers CSS chargés — vérification manuelle du confinement"
   },
   "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
     "message": "URL CSS"
@@ -327,19 +327,19 @@
     "message": "Extrait de script"
   },
   "audits/bp/rweb-no-document-write.js | description": {
-    "message": "Évitez d'utiliser des appels DOM bloquants dans les scripts inline car ils bloquent le parsing et forcent un nouveau parcours du DOM. [Voir RWEB_0044](https://rweb.greenit.fr/fr/fiches/RWEB_0044-ne-pas-faire-de-modification-du-dom-lorsquon-le-traverse)"
+    "message": "L'utilisation de l'API DOM d'écriture dépréciée bloque l'analyse HTML et force un re-parsing complet. Remplacez-la par des méthodes modernes (ex: element.insertAdjacentHTML ou appendChild)."
   },
   "audits/bp/rweb-no-document-write.js | displayValueFail": {
-    "message": "{count} écriture(s) DOM bloquante(s) dans les scripts inline"
+    "message": "{count} appel(s) à l'API d'écriture DOM dans les scripts inline"
   },
   "audits/bp/rweb-no-document-write.js | displayValuePass": {
-    "message": "Aucune écriture DOM bloquante détectée"
+    "message": "Aucun appel à l'API d'écriture DOM détecté"
   },
   "audits/bp/rweb-no-document-write.js | failureTitle": {
-    "message": "RWEB_0044 - Écriture DOM bloquante détectée dans les scripts inline"
+    "message": "API d'écriture DOM bloquante détectée dans les scripts inline"
   },
   "audits/bp/rweb-no-document-write.js | title": {
-    "message": "RWEB_0044 - Éviter la manipulation du DOM pendant le parcours"
+    "message": "Éviter l'API d'écriture DOM dans les scripts inline"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
     "message": "Évitez d'intégrer des documents (PDF, Word, etc.) directement dans le HTML. Utilisez des liens à la place. [Voir RWEB_0033](https://rweb.greenit.fr/fr/fiches/RWEB_0033-ne-pas-afficher-les-documents-a-l-interieur-des-pages)"
@@ -429,19 +429,19 @@
     "message": "Message d'erreur"
   },
   "audits/bp/rweb-no-js-errors.js | description": {
-    "message": "Corrigez les erreurs JavaScript pour éviter des fonctionnalités cassées et du traitement inutile. [Voir RWEB_0043](https://rweb.greenit.fr/fr/fiches/RWEB_0043-valider-votre-code-avec-un-linter)"
+    "message": "Corrigez les erreurs JavaScript détectées à l'exécution. Il s'agit d'appels à console.error() enregistrés pendant le chargement de la page, indiquant des fonctionnalités cassées. Contrairement à l'analyse statique (RWEB_0043), cette vérification ne couvre pas les problèmes de style de code ou de syntaxe."
   },
   "audits/bp/rweb-no-js-errors.js | displayValueFail": {
-    "message": "{count} erreur(s) JavaScript"
+    "message": "{count} erreur(s) JavaScript à l'exécution"
   },
   "audits/bp/rweb-no-js-errors.js | displayValuePass": {
-    "message": "Aucune erreur JavaScript"
+    "message": "Aucune erreur JavaScript à l'exécution"
   },
   "audits/bp/rweb-no-js-errors.js | failureTitle": {
-    "message": "RWEB_0043 - Erreurs JavaScript détectées"
+    "message": "Des erreurs JavaScript à l'exécution ont été détectées dans la console"
   },
   "audits/bp/rweb-no-js-errors.js | title": {
-    "message": "RWEB_0043 - Pas d'erreurs JavaScript dans la console"
+    "message": "Aucune erreur JavaScript à l'exécution dans la console"
   },
   "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
     "message": "Élément plugin"
@@ -489,7 +489,7 @@
     "message": "URL du script"
   },
   "audits/bp/rweb-no-unused-code.js | description": {
-    "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. [Voir RWEB_0046](https://rweb.greenit.fr/fr/fiches/RWEB_0046-ne-charger-des-donneesdu-code-que-lorsqu-elles-sontil-est-necessaire)"
+    "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. Les scripts bloquants retardent l'affichage de la page et augmentent inutilement la consommation CPU."
   },
   "audits/bp/rweb-no-unused-code.js | displayValueFail": {
     "message": "{count} script(s) externe(s) bloquant(s) le rendu"
@@ -498,10 +498,10 @@
     "message": "Aucun script externe bloquant le rendu"
   },
   "audits/bp/rweb-no-unused-code.js | failureTitle": {
-    "message": "RWEB_0046 - Scripts externes bloquants détectés"
+    "message": "Scripts externes bloquants le rendu détectés"
   },
   "audits/bp/rweb-no-unused-code.js | title": {
-    "message": "RWEB_0046 - Éviter les scripts externes bloquants"
+    "message": "Éviter les scripts externes bloquants le rendu"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {
     "message": "Taille (octets)"
@@ -918,4 +918,3 @@
     "message": "Taille transférée (Kio)"
   }
 }
-
