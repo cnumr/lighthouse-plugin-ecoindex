@@ -4,7 +4,7 @@ import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
-  title: 'RWEB_0078 - Combine CSS and JS files (≤ 10 each)',
+  title: 'RWEB_0078 - Combine CSS and JS files (≤2 each)',
   failureTitle: 'RWEB_0078 - Too many separate CSS/JS files',
   description:
     'Concatenate CSS and JS files to reduce HTTP requests. [See RWEB_0078](https://rweb.greenit.fr/en/fiches/RWEB_0078-combining-css-and-javascript-files)',
@@ -40,14 +40,7 @@ class BPRwebCombineAssets extends Audit {
     const cssCount = assets.filter(a => a.type === 'CSS').length
     const jsCount = assets.filter(a => a.type === 'JS').length
     const max = Math.max(cssCount, jsCount)
-    let score: number
-    if (max <= 10) {
-      score = 1
-    } else if (max <= 15) {
-      score = 0.5
-    } else {
-      score = 0
-    }
+    const score = max <= 2 ? 1 : 0
 
     return {
       score,

@@ -126,7 +126,7 @@
       "rweb-cookie-size": 1,
       "rweb-no-http-errors": 0,
       "rweb-limit-css-files": 0.5,
-      "rweb-combine-assets": 1,
+      "rweb-combine-assets": 0,
       "rweb-lazy-loading": 0,
       "rweb-no-document-write": 0,
       "rweb-no-hidden-images": 1,
