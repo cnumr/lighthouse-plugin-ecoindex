@@ -1,90 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- No <title> intentionally: triggers rweb-title-meta -->
     <!-- No <meta name="description"> intentionally: triggers rweb-title-meta -->
 
     <!-- Inline styles (×2): triggers rweb-no-inline-assets, rweb-minification -->
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        p { margin: 0; }
-        h1 { color: #333; }
-        h2 { color: #666; }
-        div { box-sizing: border-box; }
-        span { display: inline-block; }
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      p {
+        margin: 0;
+      }
+      h1 {
+        color: #333;
+      }
+      h2 {
+        color: #666;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      span {
+        display: inline-block;
+      }
     </style>
     <style>
-        .animated {
-            animation: spin 1s infinite;
+      .animated {
+        animation: spin 1s infinite;
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
         }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        to {
+          transform: rotate(360deg);
         }
-        .box { width: 100px; height: 100px; background: red; }
-        .flex { display: flex; gap: 8px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; }
-        .hidden { display: none; }
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
+      .flex {
+        display: flex;
+        gap: 8px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .hidden {
+        display: none;
+      }
     </style>
 
+    <!-- No Cache-Control header: triggers rweb-cache-control (RWEB_0075) -->
+    <link rel="stylesheet" href="/styles/no-cache-control.css" />
+
     <!-- External CSS (×8): triggers rweb-limit-css-files (score 0.5), rweb-combine-assets, rweb-css-splitting -->
-    <link rel="stylesheet" href="/styles/style1.css">
-    <link rel="stylesheet" href="/styles/style2.css">
-    <link rel="stylesheet" href="/styles/style3.css">
-    <link rel="stylesheet" href="/styles/style4.css">
-    <link rel="stylesheet" href="/styles/style5.css">
-    <link rel="stylesheet" href="/styles/style6.css">
-    <link rel="stylesheet" href="/styles/style7.css">
-    <link rel="stylesheet" href="/styles/style8.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/styles/style1.css" />
+    <link rel="stylesheet" href="/styles/style2.css" />
+    <link rel="stylesheet" href="/styles/style3.css" />
+    <link rel="stylesheet" href="/styles/style4.css" />
+    <link rel="stylesheet" href="/styles/style5.css" />
+    <link rel="stylesheet" href="/styles/style6.css" />
+    <link rel="stylesheet" href="/styles/style7.css" />
+    <link rel="stylesheet" href="/styles/style8.css" />
+  </head>
+  <body>
     <!-- Inline scripts (×3): triggers rweb-no-inline-assets, rweb-minification -->
-    <script>console.log('inline script 1 — padding for minification test')</script>
     <script>
-        var x = 1;
-        var y = 2;
-        var z = x + y;
-        console.log('inline script 2 with multiple lines for minification heuristic');
-        console.log('line 3');
-        console.log('line 4');
-        console.log('line 5');
-        console.log('line 6');
-        console.log('line 7');
-        console.log('line 8');
-        console.log('line 9');
-        console.log('line 10');
+      console.log('inline script 1 — padding for minification test')
     </script>
     <script>
-        var a = 'hello';
-        var b = 'world';
-        var c = a + ' ' + b;
-        console.log('inline script 3 with multiple lines for minification heuristic');
-        console.log('line 3');
-        console.log('line 4');
-        console.log('line 5');
-        console.log('line 6');
-        console.log('line 7');
-        console.log('line 8');
-        console.log('line 9');
-        console.log('line 10');
+      var x = 1
+      var y = 2
+      var z = x + y
+      console.log(
+        'inline script 2 with multiple lines for minification heuristic',
+      )
+      console.log('line 3')
+      console.log('line 4')
+      console.log('line 5')
+      console.log('line 6')
+      console.log('line 7')
+      console.log('line 8')
+      console.log('line 9')
+      console.log('line 10')
+    </script>
+    <script>
+      var a = 'hello'
+      var b = 'world'
+      var c = a + ' ' + b
+      console.log(
+        'inline script 3 with multiple lines for minification heuristic',
+      )
+      console.log('line 3')
+      console.log('line 4')
+      console.log('line 5')
+      console.log('line 6')
+      console.log('line 7')
+      console.log('line 8')
+      console.log('line 9')
+      console.log('line 10')
     </script>
 
     <!-- Blocking DOM write: triggers rweb-no-document-write -->
     <script>
-        var msg = 'test';
-        /* The next call is intentionally unsafe for audit testing */
-        document['write']('<p>blocking write test</p>');
+      var msg = 'test'
+      /* The next call is intentionally unsafe for audit testing */
+      document['write']('<p>blocking write test</p>')
     </script>
 
     <!-- JS error: triggers rweb-no-js-errors -->
     <script>
-        try {
-            undefinedFunctionThatDoesNotExist();
-        } catch(e) {
-            console.error('Intentional JS error for audit test:', e.message);
-        }
+      try {
+        undefinedFunctionThatDoesNotExist()
+      } catch (e) {
+        console.error('Intentional JS error for audit test:', e.message)
+      }
     </script>
 
     <!-- External scripts without async/defer (×3): triggers rweb-no-unused-code, rweb-combine-assets -->
@@ -93,43 +131,67 @@
     <script src="/js/lib3.js"></script>
 
     <h1>BP Violations Test Page</h1>
-    <p>This page intentionally triggers BP audit violations detectable without external network calls.</p>
+    <p>
+      This page intentionally triggers BP audit violations detectable without
+      external network calls.
+    </p>
 
     <!-- canvas: triggers rweb-no-canvas -->
     <canvas id="test-canvas" width="200" height="100"></canvas>
 
     <!-- video autoplay: triggers rweb-no-autoplay -->
     <video autoplay muted width="200">
-        <source src="data:video/mp4;base64,AAAAHG" type="video/mp4">
+      <source src="data:video/mp4;base64,AAAAHG" type="video/mp4" />
     </video>
 
     <!-- GIF image (no lazy): triggers rweb-no-gif, rweb-lazy-loading -->
-    <img src="placeholder.gif" alt="placeholder gif" width="10" height="10">
+    <img src="placeholder.gif" alt="placeholder gif" width="10" height="10" />
 
     <!-- Hidden image: triggers rweb-no-hidden-images -->
-    <img src="placeholder.gif" alt="hidden image" style="display:none" width="100" height="100">
+    <img
+      src="placeholder.gif"
+      alt="hidden image"
+      style="display: none"
+      width="100"
+      height="100"
+    />
 
     <!-- 404 image: triggers rweb-no-http-errors -->
-    <img src="/this-image-does-not-exist-404.png" alt="404 test" width="1" height="1">
+    <img
+      src="/this-image-does-not-exist-404.png"
+      alt="404 test"
+      width="1"
+      height="1"
+    />
 
     <!-- Embedded document: triggers rweb-no-embedded-docs -->
-    <embed src="doc.pdf" type="application/pdf" width="400" height="300">
+    <embed src="doc.pdf" type="application/pdf" width="400" height="300" />
 
     <!-- Flash plugin: triggers rweb-no-plugins -->
-    <object type="application/x-shockwave-flash" data="movie.swf" width="1" height="1"></object>
+    <object
+      type="application/x-shockwave-flash"
+      data="movie.swf"
+      width="1"
+      height="1"
+    ></object>
 
     <!-- Animated element: triggers rweb-no-animations -->
     <div class="animated">Spinning element</div>
 
     <!-- Unoptimized SVG: triggers rweb-optimize-svg -->
-    <img src="/images/unoptimized.svg" alt="unoptimized svg" width="100" height="100">
+    <img
+      src="/images/unoptimized.svg"
+      alt="unoptimized svg"
+      width="100"
+      height="100"
+    />
 
     <!-- Bitmap icon in button: triggers rweb-prefer-css -->
-    <button><img src="/images/icon.png" alt="icon"></button>
+    <button><img src="/images/icon.png" alt="icon" /></button>
 
     <!-- Bitmap image in header: triggers rweb-no-bitmap-ui -->
     <header>
-        <img src="/images/logo.png" alt="logo">
+      <img src="/images/logo.png" alt="logo" />
     </header>
-</body>
+  </body>
 </html>
