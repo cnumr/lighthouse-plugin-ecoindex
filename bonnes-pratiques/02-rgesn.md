@@ -1,6 +1,6 @@
 # Référentiel général d'écoconception de services numériques (RGESN)
 
-[!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/)
+[!ref icon="file-badge" target="blank" text="Référentiel RGESN"](https://www.arcep.fr/mes-demarches-et-services/entreprises/fiches-pratiques/referentiel-general-ecoconception-services-numeriques.html)
 
 ## Liste (partielle) des critères RGESN v0
 
@@ -27,7 +27,7 @@
 
 ==- RGESN v0 au format "JSON"
 
-> https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1
+> ~~https://www.data.gouv.fr/fr/datasets/r/d76e723d-543b-400d-95d3-3c7bcc2187c1~~ https://github.com/DISIC/NumEcoDiag/blob/main/public/rgesn/v1.json
 
 **Attention, il est indique v1 dans le fichier, mais c'est la v0.**
 
