@@ -25,15 +25,12 @@ const UIStrings = {
   displayValueFail: '{count} blocking DOM write API call(s) in inline scripts',
   colLabelScriptSnippet: 'Script snippet',
 }
-const str_ = createIcuMessageFn(
-  'audits/bp/rweb-no-document-write.js',
-  UIStrings,
-)
+const str_ = createIcuMessageFn('audits/bp/bp-no-document-write.js', UIStrings)
 
 class BPRwebNoDocumentWrite extends Audit {
   static get meta() {
     return {
-      id: 'rweb-no-document-write',
+      id: 'bp-no-document-write',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

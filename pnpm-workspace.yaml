@@ -5,3 +5,6 @@ packages:
   - 'libs/*'
   - 'test/*'
   - 'tools/*'
+
+settings:
+  minimumReleaseAge: 20160 # 2 weeks in minutes

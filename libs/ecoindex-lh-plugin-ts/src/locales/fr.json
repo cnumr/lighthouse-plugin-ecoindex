@@ -53,37 +53,37 @@
   "audits/bp/rweb-combine-assets.js | title": {
     "message": "RWEB_0078 - Combiner les fichiers CSS et JS (≤2 chacun)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
+  "audits/bp/bp-cookie-size.js | colLabelCookieSize": {
     "message": "Taille du cookie (octets)"
   },
-  "audits/bp/rweb-cookie-size.js | colLabelUrl": {
+  "audits/bp/bp-cookie-size.js | colLabelUrl": {
     "message": "URL"
   },
-  "audits/bp/rweb-cookie-size.js | description": {
+  "audits/bp/bp-cookie-size.js | description": {
     "message": "Maintenez les en-têtes de requête Cookie sous 512 octets pour réduire la surcharge HTTP."
   },
-  "audits/bp/rweb-cookie-size.js | displayValueFail": {
+  "audits/bp/bp-cookie-size.js | displayValueFail": {
     "message": "{count} requête(s) avec en-tête Cookie surdimensionné"
   },
-  "audits/bp/rweb-cookie-size.js | displayValuePass": {
+  "audits/bp/bp-cookie-size.js | displayValuePass": {
     "message": "Aucun en-tête Cookie ne dépasse 512 octets"
   },
-  "audits/bp/rweb-cookie-size.js | failureTitle": {
+  "audits/bp/bp-cookie-size.js | failureTitle": {
     "message": "L'en-tête Cookie dépasse 512 octets"
   },
-  "audits/bp/rweb-cookie-size.js | title": {
+  "audits/bp/bp-cookie-size.js | title": {
     "message": "Taille des cookies ≤ 512 octets"
   },
-  "audits/bp/rweb-css-containment.js | description": {
+  "audits/bp/bp-css-containment.js | description": {
     "message": "Cet audit compte les fichiers CSS chargés. Il ne peut pas vérifier automatiquement la propriété CSS `contain` (RWEB_0039 nécessite une inspection CDP). Vérifiez manuellement que les éléments de mise en page principaux utilisent `contain: layout` ou `contain: paint`."
   },
-  "audits/bp/rweb-css-containment.js | displayValue": {
+  "audits/bp/bp-css-containment.js | displayValue": {
     "message": "{count} fichier(s) CSS chargé(s) — vérifiez l'utilisation de la propriété 'contain' manuellement."
   },
-  "audits/bp/rweb-css-containment.js | failureTitle": {
+  "audits/bp/bp-css-containment.js | failureTitle": {
     "message": "Le confinement CSS nécessite une vérification manuelle"
   },
-  "audits/bp/rweb-css-containment.js | title": {
+  "audits/bp/bp-css-containment.js | title": {
     "message": "Fichiers CSS chargés — vérification manuelle du confinement"
   },
   "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
@@ -323,22 +323,22 @@
   "audits/bp/rweb-no-cookie-on-static.js | title": {
     "message": "RWEB_0081 - Pas de cookies sur les ressources statiques"
   },
-  "audits/bp/rweb-no-document-write.js | colLabelScriptSnippet": {
+  "audits/bp/bp-no-document-write.js | colLabelScriptSnippet": {
     "message": "Extrait de script"
   },
-  "audits/bp/rweb-no-document-write.js | description": {
+  "audits/bp/bp-no-document-write.js | description": {
     "message": "L'utilisation de l'API DOM d'écriture dépréciée bloque l'analyse HTML et force un re-parsing complet. Remplacez-la par des méthodes modernes (ex: element.insertAdjacentHTML ou appendChild)."
   },
-  "audits/bp/rweb-no-document-write.js | displayValueFail": {
+  "audits/bp/bp-no-document-write.js | displayValueFail": {
     "message": "{count} appel(s) à l'API d'écriture DOM dans les scripts inline"
   },
-  "audits/bp/rweb-no-document-write.js | displayValuePass": {
+  "audits/bp/bp-no-document-write.js | displayValuePass": {
     "message": "Aucun appel à l'API d'écriture DOM détecté"
   },
-  "audits/bp/rweb-no-document-write.js | failureTitle": {
+  "audits/bp/bp-no-document-write.js | failureTitle": {
     "message": "API d'écriture DOM bloquante détectée dans les scripts inline"
   },
-  "audits/bp/rweb-no-document-write.js | title": {
+  "audits/bp/bp-no-document-write.js | title": {
     "message": "Éviter l'API d'écriture DOM dans les scripts inline"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
@@ -371,43 +371,43 @@
   "audits/bp/rweb-no-gif.js | title": {
     "message": "RWEB_0099 - Éviter l'utilisation de GIFs"
   },
-  "audits/bp/rweb-no-hidden-images.js | colLabelImageUrl": {
+  "audits/bp/bp-no-hidden-images.js | colLabelImageUrl": {
     "message": "URL de l'image"
   },
-  "audits/bp/rweb-no-hidden-images.js | description": {
+  "audits/bp/bp-no-hidden-images.js | description": {
     "message": "Les images téléchargées mais masquées gaspillent de la bande passante. Utilisez le chargement différé ou supprimez-les."
   },
-  "audits/bp/rweb-no-hidden-images.js | displayValueFail": {
+  "audits/bp/bp-no-hidden-images.js | displayValueFail": {
     "message": "{count} image(s) téléchargée(s) mais non affichée(s)"
   },
-  "audits/bp/rweb-no-hidden-images.js | displayValuePass": {
+  "audits/bp/bp-no-hidden-images.js | displayValuePass": {
     "message": "Aucune image masquée téléchargée"
   },
-  "audits/bp/rweb-no-hidden-images.js | failureTitle": {
+  "audits/bp/bp-no-hidden-images.js | failureTitle": {
     "message": "Images téléchargées mais non affichées détectées"
   },
-  "audits/bp/rweb-no-hidden-images.js | title": {
+  "audits/bp/bp-no-hidden-images.js | title": {
     "message": "Éviter de télécharger des images non affichées"
   },
-  "audits/bp/rweb-no-http-errors.js | colLabelStatusCode": {
+  "audits/bp/bp-no-http-errors.js | colLabelStatusCode": {
     "message": "Code de statut"
   },
-  "audits/bp/rweb-no-http-errors.js | colLabelUrl": {
+  "audits/bp/bp-no-http-errors.js | colLabelUrl": {
     "message": "URL"
   },
-  "audits/bp/rweb-no-http-errors.js | description": {
+  "audits/bp/bp-no-http-errors.js | description": {
     "message": "Corrigez les ressources cassées (404, 500…) pour éviter une charge réseau inutile et améliorer l'expérience utilisateur."
   },
-  "audits/bp/rweb-no-http-errors.js | displayValueFail": {
+  "audits/bp/bp-no-http-errors.js | displayValueFail": {
     "message": "{count} erreur(s) HTTP détectée(s)"
   },
-  "audits/bp/rweb-no-http-errors.js | displayValuePass": {
+  "audits/bp/bp-no-http-errors.js | displayValuePass": {
     "message": "Aucune erreur HTTP"
   },
-  "audits/bp/rweb-no-http-errors.js | failureTitle": {
+  "audits/bp/bp-no-http-errors.js | failureTitle": {
     "message": "Erreurs de requêtes HTTP détectées (4xx/5xx)"
   },
-  "audits/bp/rweb-no-http-errors.js | title": {
+  "audits/bp/bp-no-http-errors.js | title": {
     "message": "Éviter les erreurs de requêtes HTTP (4xx/5xx)"
   },
   "audits/bp/rweb-no-inline-assets.js | description": {
@@ -425,40 +425,40 @@
   "audits/bp/rweb-no-inline-assets.js | title": {
     "message": "RWEB_0042 - Minimiser les ressources inline"
   },
-  "audits/bp/rweb-no-js-errors.js | colLabelErrorMessage": {
+  "audits/bp/bp-no-js-errors.js | colLabelErrorMessage": {
     "message": "Message d'erreur"
   },
-  "audits/bp/rweb-no-js-errors.js | description": {
+  "audits/bp/bp-no-js-errors.js | description": {
     "message": "Corrigez les erreurs JavaScript détectées à l'exécution. Il s'agit d'appels à console.error() enregistrés pendant le chargement de la page, indiquant des fonctionnalités cassées. Contrairement à l'analyse statique (RWEB_0043), cette vérification ne couvre pas les problèmes de style de code ou de syntaxe."
   },
-  "audits/bp/rweb-no-js-errors.js | displayValueFail": {
+  "audits/bp/bp-no-js-errors.js | displayValueFail": {
     "message": "{count} erreur(s) JavaScript à l'exécution"
   },
-  "audits/bp/rweb-no-js-errors.js | displayValuePass": {
+  "audits/bp/bp-no-js-errors.js | displayValuePass": {
     "message": "Aucune erreur JavaScript à l'exécution"
   },
-  "audits/bp/rweb-no-js-errors.js | failureTitle": {
+  "audits/bp/bp-no-js-errors.js | failureTitle": {
     "message": "Des erreurs JavaScript à l'exécution ont été détectées dans la console"
   },
-  "audits/bp/rweb-no-js-errors.js | title": {
+  "audits/bp/bp-no-js-errors.js | title": {
     "message": "Aucune erreur JavaScript à l'exécution dans la console"
   },
-  "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
+  "audits/bp/bp-no-plugins.js | colLabelPluginElement": {
     "message": "Élément plugin"
   },
-  "audits/bp/rweb-no-plugins.js | description": {
+  "audits/bp/bp-no-plugins.js | description": {
     "message": "Supprimez les éléments Flash, Silverlight et Java applet — ces plugins sont obsolètes, non sécurisés et non supportés."
   },
-  "audits/bp/rweb-no-plugins.js | displayValueFail": {
+  "audits/bp/bp-no-plugins.js | displayValueFail": {
     "message": "{count} plugin(s) navigateur détecté(s)"
   },
-  "audits/bp/rweb-no-plugins.js | displayValuePass": {
+  "audits/bp/bp-no-plugins.js | displayValuePass": {
     "message": "Aucun plugin navigateur détecté"
   },
-  "audits/bp/rweb-no-plugins.js | failureTitle": {
+  "audits/bp/bp-no-plugins.js | failureTitle": {
     "message": "Plugin navigateur détecté (Flash, Silverlight, Java)"
   },
-  "audits/bp/rweb-no-plugins.js | title": {
+  "audits/bp/bp-no-plugins.js | title": {
     "message": "Ne pas utiliser de plugins navigateur (Flash, Silverlight, Java)"
   },
   "audits/bp/rweb-no-redirects.js | description": {
@@ -485,22 +485,22 @@
   "audits/bp/rweb-no-social-sdk.js | title": {
     "message": "RWEB_0059 - Pas de boutons officiels de réseaux sociaux"
   },
-  "audits/bp/rweb-no-unused-code.js | colLabelScriptUrl": {
+  "audits/bp/bp-no-unused-code.js | colLabelScriptUrl": {
     "message": "URL du script"
   },
-  "audits/bp/rweb-no-unused-code.js | description": {
+  "audits/bp/bp-no-unused-code.js | description": {
     "message": "Ajoutez async ou defer aux scripts externes pour éviter de bloquer le chemin de rendu critique. Les scripts bloquants retardent l'affichage de la page et augmentent inutilement la consommation CPU."
   },
-  "audits/bp/rweb-no-unused-code.js | displayValueFail": {
+  "audits/bp/bp-no-unused-code.js | displayValueFail": {
     "message": "{count} script(s) externe(s) bloquant(s) le rendu"
   },
-  "audits/bp/rweb-no-unused-code.js | displayValuePass": {
+  "audits/bp/bp-no-unused-code.js | displayValuePass": {
     "message": "Aucun script externe bloquant le rendu"
   },
-  "audits/bp/rweb-no-unused-code.js | failureTitle": {
+  "audits/bp/bp-no-unused-code.js | failureTitle": {
     "message": "Scripts externes bloquants le rendu détectés"
   },
-  "audits/bp/rweb-no-unused-code.js | title": {
+  "audits/bp/bp-no-unused-code.js | title": {
     "message": "Éviter les scripts externes bloquants le rendu"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {
@@ -749,15 +749,7 @@
   "audits/ecoindex-water.js | title": {
     "message": "Consommation d'eau."
   },
-  "audits/has-cat-images.js | description": {
-    "message": "Les pages doivent avoir de nombreuses images de chats pour rendre les utilisateurs heureux. Envisagez d'ajouter une image de chat à votre page pour améliorer l'engagement."
-  },
-  "audits/has-cat-images.js | failureTitle": {
-    "message": "La page n'a pas au moins une image de chat"
-  },
-  "audits/has-cat-images.js | title": {
-    "message": "La page a au moins une image de chat"
-  },
+
   "audits/warn-nodes-count.js | description": {
     "message": "Green IT souhaite que les concepteurs de services web favorisent l'utilisation des SVG plutôt que des images bitmap (PNG, GIF, JPEG), qui alourdissent la page. Pour encourager cette pratique, Green IT a adapté sa méthode de calcul du DOM, ce qui explique pourquoi les résultats de Lighthouse et d'Ecoindex diffèrent parfois. 1re différence : Pour maximiser l'utilisation des SVG, qui impactent le DOM, la méthode de calcul de Green IT exclut les sous-éléments d'une balise SVG. Lighthouse, lui, n'exclut aucun élément ⇒ DOM.Lighthouse > DOM.Ecoindex. 2e différence : Lighthouse effectue son calcul lors du rendu de la page, mais ne prend pas en compte les éléments ajoutés ou modifiés en JavaScript, contrairement au moteur de calcul Ecoindex ⇒ DOM.Lighthouse < DOM.Ecoindex.  [En savoir plus sur l'Ecoindex, Méthodologie d'analyse](https://www.ecoindex.fr/comment-ca-marche/#m%C3%A9thodologie-danalyse)"
   },

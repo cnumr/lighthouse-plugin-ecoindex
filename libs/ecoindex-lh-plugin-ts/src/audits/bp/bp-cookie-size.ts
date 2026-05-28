@@ -16,12 +16,12 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelCookieSize: 'Cookie size (bytes)',
 }
-const str_ = createIcuMessageFn('audits/bp/rweb-cookie-size.js', UIStrings)
+const str_ = createIcuMessageFn('audits/bp/bp-cookie-size.js', UIStrings)
 
 class BPRwebCookieSize extends Audit {
   static get meta() {
     return {
-      id: 'rweb-cookie-size',
+      id: 'bp-cookie-size',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

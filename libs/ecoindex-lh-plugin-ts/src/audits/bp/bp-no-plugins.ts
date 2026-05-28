@@ -9,24 +9,33 @@ import {
 import { Audit } from 'lighthouse'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
-// External scripts without async or defer block the parser
-const BLOCKING_SCRIPT_RE =
-  /<script\b(?=[^>]*\bsrc\b)(?![^>]*\b(?:async|defer)\b)[^>]*>/gi
-const UIStrings = {
-  title: 'Avoid render-blocking external scripts',
-  failureTitle: 'Render-blocking external scripts detected',
-  description:
-    'Add async or defer to external scripts to prevent blocking the critical rendering path. Render-blocking scripts delay page display and increase CPU usage unnecessarily.',
-  displayValuePass: 'No render-blocking external scripts',
-  displayValueFail: '{count} render-blocking external script(s)',
-  colLabelScriptUrl: 'Script URL',
-}
-const str_ = createIcuMessageFn('audits/bp/rweb-no-unused-code.js', UIStrings)
+const PLUGIN_MIME_TYPES = [
+  'application/x-shockwave-flash',
+  'application/x-silverlight',
+  'application/x-silverlight-2',
+  'application/java-applet',
+  'application/x-java-applet',
+]
 
-class BPRwebNoUnusedCode extends Audit {
+const PLUGIN_PATTERN = new RegExp(
+  `<(?:object|embed)\\b[^>]*type\\s*=\\s*["'](${PLUGIN_MIME_TYPES.map(t => t.replace(/\//g, '\\/')).join('|')})["'][^>]*>`,
+  'gi',
+)
+const UIStrings = {
+  title: 'Do not use browser plugins (Flash, Silverlight, Java)',
+  failureTitle: 'Browser plugin detected (Flash, Silverlight, Java)',
+  description:
+    'Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported.',
+  displayValuePass: 'No browser plugins detected',
+  displayValueFail: '{count} browser plugin(s) detected',
+  colLabelPluginElement: 'Plugin element',
+}
+const str_ = createIcuMessageFn('audits/bp/bp-no-plugins.js', UIStrings)
+
+class BPRwebNoPlugins extends Audit {
   static get meta() {
     return {
-      id: 'rweb-no-unused-code',
+      id: 'bp-no-plugins',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
@@ -40,8 +49,8 @@ class BPRwebNoUnusedCode extends Audit {
 
   static audit(artifacts: LH.Artifacts) {
     const html = artifacts.MainDocumentContent || ''
-    const blocking = html.match(BLOCKING_SCRIPT_RE) ?? []
-    const count = blocking.length
+    const found = html.match(PLUGIN_PATTERN) ?? []
+    const count = found.length
 
     return {
       score: count === 0 ? 1 : 0,
@@ -59,18 +68,15 @@ class BPRwebNoUnusedCode extends Audit {
         type: 'table' as const,
         headings: [
           {
-            key: 'url',
-            label: str_(UIStrings.colLabelScriptUrl),
-            valueType: 'url' as const,
+            key: 'element',
+            label: str_(UIStrings.colLabelPluginElement),
+            valueType: 'text' as const,
           },
         ],
-        items: blocking.map(tag => {
-          const srcMatch = tag.match(/src\s*=\s*["']([^"']+)["']/i)
-          return { url: srcMatch ? srcMatch[1] : tag.slice(0, 100) }
-        }),
+        items: found.map(el => ({ element: el.slice(0, 150) })),
       } as LH.Audit.Details.Table,
     }
   }
 }
 
-export default BPRwebNoUnusedCode
+export default BPRwebNoPlugins

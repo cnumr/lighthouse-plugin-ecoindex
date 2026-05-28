@@ -29,10 +29,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lighthouse": "13.2.0",
+    "lighthouse": "13.3.0",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
     "lighthouse-plugin-ecoindex-courses": "workspace:*",
-    "puppeteer": "24.42.0",
+    "puppeteer": "25.1.0",
     "puppeteer-core": "24.8.0"
   },
   "devDependencies": {
