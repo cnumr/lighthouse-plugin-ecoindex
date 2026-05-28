@@ -25,7 +25,7 @@ Ces audits s'exécutent automatiquement lors de chaque mesure Lighthouse.
 | `rweb-prefer-css`          | RWEB_0037 | Préférer les CSS aux images                                           |
 | `rweb-no-bitmap-ui`        | RWEB_0038 | Éviter les images matricielles pour l'interface                       |
 | `rweb-no-inline-assets`    | RWEB_0042 | Externaliser les CSS et JavaScript                                    |
-| `rweb-no-js-errors`        | RWEB_0043 | Valider les JavaScript (pas d'erreurs console)                        |
+| `rweb-no-js-errors`        | —         | Détecter les erreurs JavaScript à l'exécution dans la console         |
 | `rweb-no-document-write`   | —         | Détecter les appels à l'API d'écriture DOM dans les scripts inline    |
 | `rweb-no-unused-code`      | —         | Détecter les scripts externes bloquant le rendu (sans async ni defer) |
 | `rweb-lazy-loading`        | RWEB_0051 | Utiliser le chargement paresseux                                      |

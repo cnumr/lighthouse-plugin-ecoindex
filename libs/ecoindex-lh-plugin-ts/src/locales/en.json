@@ -429,19 +429,19 @@
     "message": "Error message"
   },
   "audits/bp/rweb-no-js-errors.js | description": {
-    "message": "Fix JavaScript errors to avoid broken features and wasted processing. [See RWEB_0043](https://rweb.greenit.fr/en/fiches/RWEB_0043-validate-your-code-with-a-linter)"
+    "message": "Fix JavaScript errors detected at runtime. These are console.error() calls recorded during page load and indicate broken features. Unlike static linting (RWEB_0043), this check does not cover code style or syntax issues."
   },
   "audits/bp/rweb-no-js-errors.js | displayValueFail": {
-    "message": "{count} JavaScript error(s)"
+    "message": "{count} JavaScript runtime error(s)"
   },
   "audits/bp/rweb-no-js-errors.js | displayValuePass": {
-    "message": "No JavaScript errors"
+    "message": "No JavaScript runtime errors"
   },
   "audits/bp/rweb-no-js-errors.js | failureTitle": {
-    "message": "RWEB_0043 - JavaScript errors detected"
+    "message": "JavaScript runtime errors detected in console"
   },
   "audits/bp/rweb-no-js-errors.js | title": {
-    "message": "RWEB_0043 - No JavaScript errors in console"
+    "message": "No JavaScript runtime errors in console"
   },
   "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
     "message": "Plugin element"

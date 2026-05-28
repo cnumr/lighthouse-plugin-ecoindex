@@ -429,19 +429,19 @@
     "message": "Message d'erreur"
   },
   "audits/bp/rweb-no-js-errors.js | description": {
-    "message": "Corrigez les erreurs JavaScript pour éviter des fonctionnalités cassées et du traitement inutile. [Voir RWEB_0043](https://rweb.greenit.fr/fr/fiches/RWEB_0043-valider-votre-code-avec-un-linter)"
+    "message": "Corrigez les erreurs JavaScript détectées à l'exécution. Il s'agit d'appels à console.error() enregistrés pendant le chargement de la page, indiquant des fonctionnalités cassées. Contrairement à l'analyse statique (RWEB_0043), cette vérification ne couvre pas les problèmes de style de code ou de syntaxe."
   },
   "audits/bp/rweb-no-js-errors.js | displayValueFail": {
-    "message": "{count} erreur(s) JavaScript"
+    "message": "{count} erreur(s) JavaScript à l'exécution"
   },
   "audits/bp/rweb-no-js-errors.js | displayValuePass": {
-    "message": "Aucune erreur JavaScript"
+    "message": "Aucune erreur JavaScript à l'exécution"
   },
   "audits/bp/rweb-no-js-errors.js | failureTitle": {
-    "message": "RWEB_0043 - Erreurs JavaScript détectées"
+    "message": "Des erreurs JavaScript à l'exécution ont été détectées dans la console"
   },
   "audits/bp/rweb-no-js-errors.js | title": {
-    "message": "RWEB_0043 - Pas d'erreurs JavaScript dans la console"
+    "message": "Aucune erreur JavaScript à l'exécution dans la console"
   },
   "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
     "message": "Élément plugin"
