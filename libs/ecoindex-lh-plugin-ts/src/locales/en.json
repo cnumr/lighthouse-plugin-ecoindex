@@ -51,7 +51,7 @@
     "message": "RWEB_0078 - Too many separate CSS/JS files"
   },
   "audits/bp/rweb-combine-assets.js | title": {
-    "message": "RWEB_0078 - Combine CSS and JS files (≤ 10 each)"
+    "message": "RWEB_0078 - Combine CSS and JS files (≤2 each)"
   },
   "audits/bp/rweb-cookie-size.js | colLabelCookieSize": {
     "message": "Cookie size (bytes)"
