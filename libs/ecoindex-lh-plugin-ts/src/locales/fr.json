@@ -75,16 +75,16 @@
     "message": "Taille des cookies ≤ 512 octets"
   },
   "audits/bp/rweb-css-containment.js | description": {
-    "message": "Utilisez la propriété CSS containment pour optimiser les performances de rendu. [Voir RWEB_0039](https://rweb.greenit.fr/fr/fiches/RWEB_0039-utiliser-les-compartiments-css)"
+    "message": "Cet audit compte les fichiers CSS chargés. Il ne peut pas vérifier automatiquement la propriété CSS `contain` (RWEB_0039 nécessite une inspection CDP). Vérifiez manuellement que les éléments de mise en page principaux utilisent `contain: layout` ou `contain: paint`."
   },
   "audits/bp/rweb-css-containment.js | displayValue": {
     "message": "{count} fichier(s) CSS chargé(s) — vérifiez l'utilisation de la propriété 'contain' manuellement."
   },
   "audits/bp/rweb-css-containment.js | failureTitle": {
-    "message": "RWEB_0039 - Confinement CSS non vérifié"
+    "message": "Le confinement CSS nécessite une vérification manuelle"
   },
   "audits/bp/rweb-css-containment.js | title": {
-    "message": "RWEB_0039 - Utiliser le confinement CSS"
+    "message": "Fichiers CSS chargés — vérification manuelle du confinement"
   },
   "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
     "message": "URL CSS"

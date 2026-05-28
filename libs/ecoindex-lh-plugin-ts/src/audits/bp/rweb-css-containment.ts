@@ -4,10 +4,10 @@ import { Audit, NetworkRecords } from 'lighthouse'
 import { NetworkRequest } from 'lighthouse/core/lib/network-request.js'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
-  title: 'RWEB_0039 - Use CSS containment',
-  failureTitle: 'RWEB_0039 - CSS containment not verified',
+  title: 'CSS files loaded — manual containment review',
+  failureTitle: 'CSS containment requires manual review',
   description:
-    'Use CSS containment property to optimize rendering performance. [See RWEB_0039](https://rweb.greenit.fr/en/fiches/RWEB_0039-use-css-containment)',
+    'This audit counts CSS files loaded. It cannot automatically verify the CSS `contain` property (RWEB_0039 requires CDP introspection). Review your stylesheets manually to ensure key layout elements use `contain: layout` or `contain: paint`.',
   displayValue:
     "{count} CSS file(s) loaded — verify 'contain' property usage manually.",
 }
