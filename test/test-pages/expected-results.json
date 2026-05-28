@@ -140,8 +140,10 @@
       "rweb-css-splitting": 0,
       "rweb-limit-fonts": 1,
       "rweb-no-carousel": 1,
-      "rweb-css-containment": null
+      "rweb-css-containment": null,
+      "rweb-print-css": 0,
+      "rweb-cache-control": 0
     },
-    "note": "RWEB_0059/0084/0081 score 1 on local pages (no social CDN, HSTS absent on localhost is expected)"
+    "note": "RWEB_0059/0084/0081 score 1 on local pages (no social CDN, HSTS absent on localhost is expected). rweb-cache-control=0 because the embedded doc.pdf 404s without Cache-Control. rweb-print-css=0 because no <link media=\"print\"> is present."
   }
 }
