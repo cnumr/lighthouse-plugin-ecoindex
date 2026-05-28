@@ -98,7 +98,7 @@ export default {
       path: `${__dirname}/audits/bp/rweb-no-embedded-docs.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-css-containment.js`,
+      path: `${__dirname}/audits/bp/bp-css-containment.js`,
     },
     {
       path: `${__dirname}/audits/bp/rweb-hsts.js`,
@@ -119,7 +119,7 @@ export default {
       path: `${__dirname}/audits/bp/rweb-cookie-size.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-http-errors.js`,
+      path: `${__dirname}/audits/bp/bp-no-http-errors.js`,
     },
     {
       path: `${__dirname}/audits/bp/rweb-limit-css-files.js`,
@@ -131,16 +131,16 @@ export default {
       path: `${__dirname}/audits/bp/rweb-lazy-loading.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-document-write.js`,
+      path: `${__dirname}/audits/bp/bp-no-document-write.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-hidden-images.js`,
+      path: `${__dirname}/audits/bp/bp-no-hidden-images.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-js-errors.js`,
+      path: `${__dirname}/audits/bp/bp-no-js-errors.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-plugins.js`,
+      path: `${__dirname}/audits/bp/bp-no-plugins.js`,
     },
     {
       path: `${__dirname}/audits/bp/rweb-minification.js`,
@@ -155,7 +155,7 @@ export default {
       path: `${__dirname}/audits/bp/rweb-no-bitmap-ui.js`,
     },
     {
-      path: `${__dirname}/audits/bp/rweb-no-unused-code.js`,
+      path: `${__dirname}/audits/bp/bp-no-unused-code.js`,
     },
     {
       path: `${__dirname}/audits/bp/rweb-css-splitting.js`,
@@ -280,7 +280,7 @@ export default {
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-css-containment',
+        id: 'bp-css-containment',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
@@ -311,7 +311,7 @@ export default {
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-http-errors',
+        id: 'bp-no-http-errors',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
@@ -331,22 +331,22 @@ export default {
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-document-write',
+        id: 'bp-no-document-write',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-hidden-images',
+        id: 'bp-no-hidden-images',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-js-errors',
+        id: 'bp-no-js-errors',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-plugins',
+        id: 'bp-no-plugins',
         weight: 0,
         group: 'ecoindex-best-practices',
       },
@@ -371,7 +371,7 @@ export default {
         group: 'ecoindex-best-practices',
       },
       {
-        id: 'rweb-no-unused-code',
+        id: 'bp-no-unused-code',
         weight: 0,
         group: 'ecoindex-best-practices',
       },

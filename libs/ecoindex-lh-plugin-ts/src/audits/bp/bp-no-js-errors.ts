@@ -17,12 +17,12 @@ const UIStrings = {
   displayValueFail: '{count} JavaScript runtime error(s)',
   colLabelErrorMessage: 'Error message',
 }
-const str_ = createIcuMessageFn('audits/bp/rweb-no-js-errors.js', UIStrings)
+const str_ = createIcuMessageFn('audits/bp/bp-no-js-errors.js', UIStrings)
 
 class BPRwebNoJsErrors extends Audit {
   static get meta() {
     return {
-      id: 'rweb-no-js-errors',
+      id: 'bp-no-js-errors',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

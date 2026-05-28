@@ -17,12 +17,12 @@ const UIStrings = {
   displayValueFail: '{count} image(s) downloaded but not displayed',
   colLabelImageUrl: 'Image URL',
 }
-const str_ = createIcuMessageFn('audits/bp/rweb-no-hidden-images.js', UIStrings)
+const str_ = createIcuMessageFn('audits/bp/bp-no-hidden-images.js', UIStrings)
 
 class BPRwebNoHiddenImages extends Audit {
   static get meta() {
     return {
-      id: 'rweb-no-hidden-images',
+      id: 'bp-no-hidden-images',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

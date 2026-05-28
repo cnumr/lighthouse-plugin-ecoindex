@@ -74,16 +74,16 @@
   "audits/bp/rweb-cookie-size.js | title": {
     "message": "RWEB_0062 - Cookie size ≤ 512 bytes"
   },
-  "audits/bp/rweb-css-containment.js | description": {
+  "audits/bp/bp-css-containment.js | description": {
     "message": "This audit counts CSS files loaded. It cannot automatically verify the CSS `contain` property (RWEB_0039 requires CDP introspection). Review your stylesheets manually to ensure key layout elements use `contain: layout` or `contain: paint`."
   },
-  "audits/bp/rweb-css-containment.js | displayValue": {
+  "audits/bp/bp-css-containment.js | displayValue": {
     "message": "{count} CSS file(s) loaded — verify 'contain' property usage manually."
   },
-  "audits/bp/rweb-css-containment.js | failureTitle": {
+  "audits/bp/bp-css-containment.js | failureTitle": {
     "message": "CSS containment requires manual review"
   },
-  "audits/bp/rweb-css-containment.js | title": {
+  "audits/bp/bp-css-containment.js | title": {
     "message": "CSS files loaded — manual containment review"
   },
   "audits/bp/rweb-css-splitting.js | colLabelCssUrl": {
@@ -323,22 +323,22 @@
   "audits/bp/rweb-no-cookie-on-static.js | title": {
     "message": "RWEB_0081 - No cookies on static resources"
   },
-  "audits/bp/rweb-no-document-write.js | colLabelScriptSnippet": {
+  "audits/bp/bp-no-document-write.js | colLabelScriptSnippet": {
     "message": "Script snippet"
   },
-  "audits/bp/rweb-no-document-write.js | description": {
+  "audits/bp/bp-no-document-write.js | description": {
     "message": "Using the deprecated DOM write API blocks HTML parsing and forces a full browser re-parse. Replace it with modern DOM manipulation methods (e.g. element.insertAdjacentHTML or appendChild)."
   },
-  "audits/bp/rweb-no-document-write.js | displayValueFail": {
+  "audits/bp/bp-no-document-write.js | displayValueFail": {
     "message": "{count} blocking DOM write API call(s) in inline scripts"
   },
-  "audits/bp/rweb-no-document-write.js | displayValuePass": {
+  "audits/bp/bp-no-document-write.js | displayValuePass": {
     "message": "No blocking DOM write API detected"
   },
-  "audits/bp/rweb-no-document-write.js | failureTitle": {
+  "audits/bp/bp-no-document-write.js | failureTitle": {
     "message": "Blocking DOM write API detected in inline scripts"
   },
-  "audits/bp/rweb-no-document-write.js | title": {
+  "audits/bp/bp-no-document-write.js | title": {
     "message": "Avoid blocking DOM write API in inline scripts"
   },
   "audits/bp/rweb-no-embedded-docs.js | description": {
@@ -371,43 +371,43 @@
   "audits/bp/rweb-no-gif.js | title": {
     "message": "RWEB_0099 - Avoid using GIFs"
   },
-  "audits/bp/rweb-no-hidden-images.js | colLabelImageUrl": {
+  "audits/bp/bp-no-hidden-images.js | colLabelImageUrl": {
     "message": "Image URL"
   },
-  "audits/bp/rweb-no-hidden-images.js | description": {
+  "audits/bp/bp-no-hidden-images.js | description": {
     "message": "Images that are downloaded but hidden waste bandwidth. Use lazy loading or remove them."
   },
-  "audits/bp/rweb-no-hidden-images.js | displayValueFail": {
+  "audits/bp/bp-no-hidden-images.js | displayValueFail": {
     "message": "{count} image(s) downloaded but not displayed"
   },
-  "audits/bp/rweb-no-hidden-images.js | displayValuePass": {
+  "audits/bp/bp-no-hidden-images.js | displayValuePass": {
     "message": "No hidden downloaded images"
   },
-  "audits/bp/rweb-no-hidden-images.js | failureTitle": {
+  "audits/bp/bp-no-hidden-images.js | failureTitle": {
     "message": "Images downloaded but not displayed detected"
   },
-  "audits/bp/rweb-no-hidden-images.js | title": {
+  "audits/bp/bp-no-hidden-images.js | title": {
     "message": "Avoid downloading images that are not displayed"
   },
-  "audits/bp/rweb-no-http-errors.js | colLabelStatusCode": {
+  "audits/bp/bp-no-http-errors.js | colLabelStatusCode": {
     "message": "Status code"
   },
-  "audits/bp/rweb-no-http-errors.js | colLabelUrl": {
+  "audits/bp/bp-no-http-errors.js | colLabelUrl": {
     "message": "URL"
   },
-  "audits/bp/rweb-no-http-errors.js | description": {
+  "audits/bp/bp-no-http-errors.js | description": {
     "message": "Fix broken resources (404, 500…) to avoid unnecessary network load and improve user experience."
   },
-  "audits/bp/rweb-no-http-errors.js | displayValueFail": {
+  "audits/bp/bp-no-http-errors.js | displayValueFail": {
     "message": "{count} HTTP error(s) detected"
   },
-  "audits/bp/rweb-no-http-errors.js | displayValuePass": {
+  "audits/bp/bp-no-http-errors.js | displayValuePass": {
     "message": "No HTTP errors"
   },
-  "audits/bp/rweb-no-http-errors.js | failureTitle": {
+  "audits/bp/bp-no-http-errors.js | failureTitle": {
     "message": "HTTP request errors detected (4xx/5xx)"
   },
-  "audits/bp/rweb-no-http-errors.js | title": {
+  "audits/bp/bp-no-http-errors.js | title": {
     "message": "Avoid HTTP request errors (4xx/5xx)"
   },
   "audits/bp/rweb-no-inline-assets.js | description": {
@@ -425,40 +425,40 @@
   "audits/bp/rweb-no-inline-assets.js | title": {
     "message": "RWEB_0042 - Minimize inline assets"
   },
-  "audits/bp/rweb-no-js-errors.js | colLabelErrorMessage": {
+  "audits/bp/bp-no-js-errors.js | colLabelErrorMessage": {
     "message": "Error message"
   },
-  "audits/bp/rweb-no-js-errors.js | description": {
+  "audits/bp/bp-no-js-errors.js | description": {
     "message": "Fix JavaScript errors detected at runtime. These are console.error() calls recorded during page load and indicate broken features. Unlike static linting (RWEB_0043), this check does not cover code style or syntax issues."
   },
-  "audits/bp/rweb-no-js-errors.js | displayValueFail": {
+  "audits/bp/bp-no-js-errors.js | displayValueFail": {
     "message": "{count} JavaScript runtime error(s)"
   },
-  "audits/bp/rweb-no-js-errors.js | displayValuePass": {
+  "audits/bp/bp-no-js-errors.js | displayValuePass": {
     "message": "No JavaScript runtime errors"
   },
-  "audits/bp/rweb-no-js-errors.js | failureTitle": {
+  "audits/bp/bp-no-js-errors.js | failureTitle": {
     "message": "JavaScript runtime errors detected in console"
   },
-  "audits/bp/rweb-no-js-errors.js | title": {
+  "audits/bp/bp-no-js-errors.js | title": {
     "message": "No JavaScript runtime errors in console"
   },
-  "audits/bp/rweb-no-plugins.js | colLabelPluginElement": {
+  "audits/bp/bp-no-plugins.js | colLabelPluginElement": {
     "message": "Plugin element"
   },
-  "audits/bp/rweb-no-plugins.js | description": {
+  "audits/bp/bp-no-plugins.js | description": {
     "message": "Remove Flash, Silverlight and Java applet elements — these plugins are obsolete, insecure and unsupported."
   },
-  "audits/bp/rweb-no-plugins.js | displayValueFail": {
+  "audits/bp/bp-no-plugins.js | displayValueFail": {
     "message": "{count} browser plugin(s) detected"
   },
-  "audits/bp/rweb-no-plugins.js | displayValuePass": {
+  "audits/bp/bp-no-plugins.js | displayValuePass": {
     "message": "No browser plugins detected"
   },
-  "audits/bp/rweb-no-plugins.js | failureTitle": {
+  "audits/bp/bp-no-plugins.js | failureTitle": {
     "message": "Browser plugin detected (Flash, Silverlight, Java)"
   },
-  "audits/bp/rweb-no-plugins.js | title": {
+  "audits/bp/bp-no-plugins.js | title": {
     "message": "Do not use browser plugins (Flash, Silverlight, Java)"
   },
   "audits/bp/rweb-no-redirects.js | description": {
@@ -485,22 +485,22 @@
   "audits/bp/rweb-no-social-sdk.js | title": {
     "message": "RWEB_0059 - No official social network buttons"
   },
-  "audits/bp/rweb-no-unused-code.js | colLabelScriptUrl": {
+  "audits/bp/bp-no-unused-code.js | colLabelScriptUrl": {
     "message": "Script URL"
   },
-  "audits/bp/rweb-no-unused-code.js | description": {
+  "audits/bp/bp-no-unused-code.js | description": {
     "message": "Add async or defer to external scripts to prevent blocking the critical rendering path. Render-blocking scripts delay page display and increase CPU usage unnecessarily."
   },
-  "audits/bp/rweb-no-unused-code.js | displayValueFail": {
+  "audits/bp/bp-no-unused-code.js | displayValueFail": {
     "message": "{count} render-blocking external script(s)"
   },
-  "audits/bp/rweb-no-unused-code.js | displayValuePass": {
+  "audits/bp/bp-no-unused-code.js | displayValuePass": {
     "message": "No render-blocking external scripts"
   },
-  "audits/bp/rweb-no-unused-code.js | failureTitle": {
+  "audits/bp/bp-no-unused-code.js | failureTitle": {
     "message": "Render-blocking external scripts detected"
   },
-  "audits/bp/rweb-no-unused-code.js | title": {
+  "audits/bp/bp-no-unused-code.js | title": {
     "message": "Avoid render-blocking external scripts"
   },
   "audits/bp/rweb-optimize-svg.js | colLabelSize": {

@@ -13,12 +13,12 @@ const UIStrings = {
   colLabelUrl: 'URL',
   colLabelStatusCode: 'Status code',
 }
-const str_ = createIcuMessageFn('audits/bp/rweb-no-http-errors.js', UIStrings)
+const str_ = createIcuMessageFn('audits/bp/bp-no-http-errors.js', UIStrings)
 
 class BPRwebNoHttpErrors extends Audit {
   static get meta() {
     return {
-      id: 'rweb-no-http-errors',
+      id: 'bp-no-http-errors',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

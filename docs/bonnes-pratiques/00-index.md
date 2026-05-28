@@ -14,8 +14,9 @@ Pour être ajoutées comme audits, les bonnes pratiques doivent être mesurables
 
 <!-- [!ref icon="file-badge" text="Les « 115 bonnes pratiques » du Collectif GreenIT"](./01-bp-greenit.md) -->
 
-[!ref icon="shield-check" text="36 audits RWEB — Référentiel GreenIT 5.0"](./03-rweb.md)
+[!ref icon="shield-check" text="29 audits RWEB — Référentiel GreenIT 5.0"](./03-rweb.md)
 [!ref icon="file-badge" text="Référentiel général d'écoconception de services numériques (RGESN)"](./02-rgesn.md)
+[!ref icon="file-badge" text="7 audits BP — Bonnes pratiques sans référentiel associé"](./04-bp.md)
 
 ## Autres Audits / Bonnes pratiques
 

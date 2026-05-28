@@ -11,12 +11,12 @@ const UIStrings = {
   displayValue:
     "{count} CSS file(s) loaded — verify 'contain' property usage manually.",
 }
-const str_ = createIcuMessageFn('audits/bp/rweb-css-containment.js', UIStrings)
+const str_ = createIcuMessageFn('audits/bp/bp-css-containment.js', UIStrings)
 
 class BPRwebCssContainment extends Audit {
   static get meta() {
     return {
-      id: 'rweb-css-containment',
+      id: 'bp-css-containment',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
