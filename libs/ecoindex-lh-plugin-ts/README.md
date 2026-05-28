@@ -30,7 +30,7 @@ Voir le projet [@ecoindex-lh-test/plugin-core (test-ecoindex-lh-plugin-ts)](../.
 
 ## Audits RWEB — Référentiel GreenIT 5.0
 
-Le plugin inclut 29 audits basés sur le [référentiel RWEB 5.0](https://rweb.greenit.fr) :
+Le plugin inclut 28 audits basés sur le [référentiel RWEB 5.0](https://rweb.greenit.fr) :
 
 | ID audit                   | RWEB      | Description                                                  |
 | -------------------------- | --------- | ------------------------------------------------------------ |
@@ -49,7 +49,6 @@ Le plugin inclut 29 audits basés sur le [référentiel RWEB 5.0](https://rweb.g
 | `rweb-no-canvas`           | RWEB_0055 | Limiter le recours aux canvas                                |
 | `rweb-no-social-sdk`       | RWEB_0059 | Remplacer les boutons officiels de partage social            |
 | `rweb-service-worker`      | RWEB_0060 | Économiser de la bande passante via un Service Worker        |
-| `rweb-cookie-size`         | RWEB_0062 | Limiter la taille des cookies (≤ 512 octets)                 |
 | `rweb-cache-control`       | RWEB_0075 | Ajouter des en-têtes `cache-control`                         |
 | `rweb-http-compression`    | RWEB_0076 | Compresser les ressources (≥ 95 %)                           |
 | `rweb-minification`        | RWEB_0077 | Minification des CSS et JS                                   |
@@ -66,12 +65,13 @@ Le plugin inclut 29 audits basés sur le [référentiel RWEB 5.0](https://rweb.g
 
 ## Audits BP — Bonnes pratiques sans référentiel associé
 
-Le plugin inclut 10 audits de bonnes pratiques sans correspondance dans le référentiel RWEB :
+Le plugin inclut 11 audits de bonnes pratiques sans correspondance dans le référentiel RWEB :
 
 | ID audit                   | Description                                                                        |
 | -------------------------- | ---------------------------------------------------------------------------------- |
 | `unoptimized-images`       | Détecter les images non optimisées (via feature policy)                            |
 | `badly-sized-images`       | Ne pas redimensionner les images dans le navigateur                                |
+| `bp-cookie-size`           | Limiter la taille des cookies (≤ 512 octets)                                       |
 | `bp-no-http-errors`        | Éviter les erreurs de requête HTTP (4xx/5xx)                                       |
 | `bp-no-document-write`     | Éviter les appels à l'API d'écriture DOM bloquante dans les scripts inline         |
 | `bp-no-hidden-images`      | Ne pas télécharger d'images inutiles (cachées ou de taille nulle)                  |
