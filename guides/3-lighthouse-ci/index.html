@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.833322659760">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.833368798170">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -39,12 +39,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/greenit_icone_intro-alt.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.833322659760" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.833368798170" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.833322659760" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.833368798170" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.833322659760" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.833322659760" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.833368798170" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.833368798170" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -262,16 +262,59 @@ npm install lighthouse lighthouse-plugin-ecoindex-core puppeteer --save-dev</cod
     <template #title>Modèle de fichier de configuration de Lighthouse</template>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-javascript"><code v-pre class="language-javascript">const path = require('path')
+const fs = require('fs')
+const os = require('os')
 
-/**
- * Get the path to the custom Lighthouse config file.
- * @returns {string} The path to the custom Lighthouse config file.
- */
 const getLighthouseConfig = () =&gt; {
   return path.join(
     require.resolve('lighthouse-plugin-ecoindex-core'),
     '../helpers/lhci/custom-config.js',
   )
+}
+
+/**
+ * Find the Chrome for Testing executable installed by auto-install.js
+ * (via @puppeteer/browsers in ~/.cache/puppeteer/chrome/).
+ * @returns {string | undefined}
+ */
+function findInstalledChrome() {
+  const cacheDir = path.join(os.homedir(), '.cache', 'puppeteer', 'chrome')
+  if (!fs.existsSync(cacheDir)) return undefined
+
+  const versions = fs
+    .readdirSync(cacheDir)
+    .filter(d =&gt; fs.statSync(path.join(cacheDir, d)).isDirectory())
+    .sort()
+    .reverse()
+
+  for (const version of versions) {
+    const candidates = [
+      path.join(
+        cacheDir,
+        version,
+        'chrome-mac-arm64',
+        'Google Chrome for Testing.app',
+        'Contents',
+        'MacOS',
+        'Google Chrome for Testing',
+      ),
+      path.join(
+        cacheDir,
+        version,
+        'chrome-mac-x64',
+        'Google Chrome for Testing.app',
+        'Contents',
+        'MacOS',
+        'Google Chrome for Testing',
+      ),
+      path.join(cacheDir, version, 'chrome-linux64', 'chrome'),
+      path.join(cacheDir, version, 'chrome-win64', 'chrome.exe'),
+    ]
+    for (const candidate of candidates) {
+      if (fs.existsSync(candidate)) return candidate
+    }
+  }
+  return undefined
 }
 
 module.exports = {
@@ -290,20 +333,18 @@ module.exports = {
       startServerCommand: 'node ../../test/ensure-test-server.mjs start',
       startServerReadyPattern: 'Test server ready',
       startServerReadyTimeout: 30000,
+      chromePath: findInstalledChrome(),
       settings: {
         configPath: getLighthouseConfig(),
         locale: 'fr',
+        screenEmulation: {
+          mobile: false,
+          width: 1920,
+          height: 1080,
+          deviceScaleFactor: 1,
+          disabled: false,
+        },
       },
-      puppeteerLaunchOptions: {
-        headless: 'new',
-        args: [
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--disable-setuid-sandbox',
-          '--no-sandbox',
-        ],
-      },
-      puppeteerScript: './.puppeteerrc.cjs',
     },
     assert: {
       preset: 'lighthouse:default',
@@ -541,26 +582,70 @@ lighthouse:
   &quot;author&quot;: &quot;&quot;,
   &quot;license&quot;: &quot;ISC&quot;,
   &quot;dependencies&quot;: {
-    &quot;@lhci/cli&quot;: &quot;^0.14.0&quot;,
-    &quot;lighthouse-plugin-ecoindex-core&quot;: &quot;^5.0.0&quot;,
-    &quot;puppeteer&quot;: &quot;^23.3.0&quot;,
-    &quot;puppeteer-core&quot;: &quot;^23.3.0&quot;
+    &quot;@lhci/cli&quot;: &quot;^0.14.0&quot;, // &lt;-- mettre à jour la version de LHCI avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    &quot;lighthouse&quot;: &quot;^10.0.0&quot;, // &lt;-- mettre à jour la version de Lighthouse avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    &quot;lighthouse-plugin-ecoindex-core&quot;: &quot;^5.0.0&quot;, // &lt;-- mettre à jour la version du plugin lighthouse-ecoindex-core avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    &quot;puppeteer&quot;: &quot;^23.3.0&quot;, // &lt;-- mettre à jour la version de Puppeteer avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    &quot;puppeteer-core&quot;: &quot;^23.3.0&quot; // &lt;-- mettre à jour la version de Puppeteer-core avec celles utilisees par les packages de ce plugin lighouse-ecoindex
   }
 }</code></pre>
 </doc-codeblock></div>
 <p><code translate="no" v-pre>.lighthouserc.js</code></p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-javascript"><code v-pre class="language-javascript">const path = require('path')
+const fs = require('fs')
+const os = require('os')
 
-/**
- * Get the path to the custom Lighthouse config file.
- * @returns {string} The path to the custom Lighthouse config file.
- */
 const getLighthouseConfig = () =&gt; {
   return path.join(
     require.resolve('lighthouse-plugin-ecoindex-core'),
     '../helpers/lhci/custom-config.js',
   )
+}
+
+/**
+ * Find the Chrome for Testing executable installed by auto-install.js
+ * (via @puppeteer/browsers in ~/.cache/puppeteer/chrome/).
+ * @returns {string | undefined}
+ */
+function findInstalledChrome() {
+  const cacheDir = path.join(os.homedir(), '.cache', 'puppeteer', 'chrome')
+  if (!fs.existsSync(cacheDir)) return undefined
+
+  const versions = fs
+    .readdirSync(cacheDir)
+    .filter(d =&gt; fs.statSync(path.join(cacheDir, d)).isDirectory())
+    .sort()
+    .reverse()
+
+  for (const version of versions) {
+    const candidates = [
+      path.join(
+        cacheDir,
+        version,
+        'chrome-mac-arm64',
+        'Google Chrome for Testing.app',
+        'Contents',
+        'MacOS',
+        'Google Chrome for Testing',
+      ),
+      path.join(
+        cacheDir,
+        version,
+        'chrome-mac-x64',
+        'Google Chrome for Testing.app',
+        'Contents',
+        'MacOS',
+        'Google Chrome for Testing',
+      ),
+      path.join(cacheDir, version, 'chrome-linux64', 'chrome'),
+      path.join(cacheDir, version, 'chrome-win64', 'chrome.exe'),
+    ]
+    for (const candidate of candidates) {
+      if (fs.existsSync(candidate)) return candidate
+    }
+  }
+  return undefined
 }
 
 module.exports = {
@@ -579,20 +664,18 @@ module.exports = {
       startServerCommand: 'node ../../test/ensure-test-server.mjs start',
       startServerReadyPattern: 'Test server ready',
       startServerReadyTimeout: 30000,
+      chromePath: findInstalledChrome(),
       settings: {
         configPath: getLighthouseConfig(),
         locale: 'fr',
+        screenEmulation: {
+          mobile: false,
+          width: 1920,
+          height: 1080,
+          deviceScaleFactor: 1,
+          disabled: false,
+        },
       },
-      puppeteerLaunchOptions: {
-        headless: 'new',
-        args: [
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--disable-setuid-sandbox',
-          '--no-sandbox',
-        ],
-      },
-      puppeteerScript: './.puppeteerrc.cjs',
     },
     assert: {
       preset: 'lighthouse:default',
