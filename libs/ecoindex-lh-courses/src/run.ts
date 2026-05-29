@@ -85,9 +85,8 @@ async function runCourse(
   // Get a session handle to be able to send protocol commands to the page.
   const session = await page.createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flow = await startFlow(
-    page as any,
+    page as unknown as Parameters<typeof startFlow>[0],
     getLighthouseConfig(
       true, // try to avoid Invalid dependency graph created, cycle detected
       `Warm Navigation: ${uniqUrls[0]}`,
