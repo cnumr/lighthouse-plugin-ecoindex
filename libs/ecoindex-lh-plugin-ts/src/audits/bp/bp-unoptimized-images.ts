@@ -34,7 +34,7 @@ const roundUp = (decimal: number) => {
 class UnoptimizedImage extends Audit {
   static get meta() {
     return {
-      id: 'unoptimized-images',
+      id: 'bp-unoptimized-images',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

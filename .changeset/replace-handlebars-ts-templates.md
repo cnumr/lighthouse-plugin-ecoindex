@@ -1,7 +1,15 @@
 ---
 'lighthouse-plugin-ecoindex-courses': patch
+'lighthouse-plugin-ecoindex-core': patch
 'lighthouse-plugin-ecoindex': patch
 ---
+
+**lighthouse-plugin-ecoindex-core**
+
+- Renomme les fichiers d'audit `badly-sized-images`, `unoptimized-images` et `thegreenwebfoundation` avec le préfixe `bp-` pour cohérence avec les autres audits du dossier
+- Corrige les IDs correspondants (`bp-badly-sized-images`, `bp-unoptimized-images`) dans `plugin.ts`
+- Réorganise les audits `rweb-*` dans `plugin.ts` par ordre croissant de leur identifiant RWEB (RWEB_0009 → RWEB_0112)
+- Sépare clairement les sections `rweb-*` et `bp-*` dans `audits` et `auditRefs`
 
 **lighthouse-plugin-ecoindex-courses**
 

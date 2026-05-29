@@ -10,17 +10,13 @@
           },
           {
             "type": "command",
-            "command": "python3 -c \"\nimport json, sys, re\ntry:\n    d = json.load(sys.stdin)\nexcept:\n    sys.exit(0)\ncmd = d.get('tool_input', d).get('command', '')\nif re.search(r'(^|[;&|]+)\\\\s*git commit', cmd) and \\\"<<\\\\'EOF\\\\'\\\" not in cmd:\n    print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': '\\u274c git commit direct bloqu\\u00e9. Utilise le skill /git-commit (g\\u00e9n\\u00e8re le message en HEREDOC).')}))\n    sys.exit(2)\n\"",
-            "statusMessage": "Vérification git commit → skill requis"
+            "command": "python3 -c \"\nimport json, sys, subprocess, re\ntry:\n    d = json.load(sys.stdin)\nexcept:\n    sys.exit(0)\ncmd = d.get('tool_input', d).get('command', '')\nif not re.search(r'(^|[;&|]+)\\\\s*git commit', cmd):\n    sys.exit(0)\nif \"<<'EOF'\" not in cmd:\n    print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': '\\u274c git commit direct bloqu\\u00e9. Ce projet requiert : (1) mettre \\u00e0 jour .changeset/*.md, (2) lancer les quality checks. Utilise /git-commit.'}}))\n    sys.exit(2)\nr = subprocess.run(['git', 'diff', '--cached', '--name-only'], capture_output=True, text=True)\nlines = r.stdout.splitlines()\npublished = [l for l in lines if l.startswith('libs/') or l.startswith('apps/')]\nchangeset = [l for l in lines if l.startswith('.changeset/')]\nif published and not changeset:\n    print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': '\\u274c Changeset non mis \\u00e0 jour ! Packages modifi\\u00e9s : ' + ', '.join(published)}}))\n    sys.exit(2)\n\"",
+            "statusMessage": "Vérification git commit et changeset..."
           },
           {
             "type": "command",
-            "command": "python3 -c \"\nimport json, sys, subprocess, re\ntry:\n    d = json.load(sys.stdin)\nexcept:\n    sys.exit(0)\ncmd = d.get('tool_input', d).get('command', '')\nif re.search(r'(^|[;&|]+)\\\\s*git commit', cmd):\n    r = subprocess.run(['git','diff','--cached','--name-only'], capture_output=True, text=True)\n    lines = r.stdout.splitlines()\n    published = [l for l in lines if l.startswith('libs/') or l.startswith('apps/')]\n    changeset = [l for l in lines if l.startswith('.changeset/')]\n    if published and not changeset:\n        msg = '\\u274c Changeset non mis \\u00e0 jour !\\\\nPackages publi\\u00e9s modifi\\u00e9s : ' + ', '.join(published)\n        print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'deny', 'permissionDecisionReason': msg}}))\n        sys.exit(2)\n\"",
-            "statusMessage": "Vérification changeset..."
-          },
-          {
-            "type": "command",
-            "command": "CMD=$(python3 -c \"import json,sys; d=json.load(sys.stdin); print(d.get('tool_input',d).get('command',''))\" 2>/dev/null || true); case \"$CMD\" in *git\\ commit*) cd /Users/renaudheluin/DEV/DEV_GREENIT/ecoindex-lighthouse/lighthouse-plugin-ecoindex && pnpm format:check && pnpm typecheck && pnpm lint && pnpm typecheck:strict ;; esac"
+            "command": "CMD=$(python3 -c \"import json,sys; d=json.load(sys.stdin); print(d.get('tool_input',d).get('command',''))\" 2>/dev/null || true); case \"$CMD\" in *git\\ commit*) cd /Users/renaudheluin/DEV/DEV_GREENIT/ecoindex-lighthouse/lighthouse-plugin-ecoindex && pnpm format:check && pnpm typecheck && pnpm lint && pnpm typecheck:strict ;; esac",
+            "statusMessage": "Quality checks pre-commit..."
           }
         ]
       }
