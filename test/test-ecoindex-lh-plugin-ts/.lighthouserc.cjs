@@ -2,10 +2,6 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 
-/**
- * Get the path to the custom Lighthouse config file.
- * @returns {string} The path to the custom Lighthouse config file.
- */
 const getLighthouseConfig = () => {
   return path.join(
     require.resolve('lighthouse-plugin-ecoindex-core'),
@@ -16,7 +12,6 @@ const getLighthouseConfig = () => {
 /**
  * Find the Chrome for Testing executable installed by auto-install.js
  * (via @puppeteer/browsers in ~/.cache/puppeteer/chrome/).
- * Returns undefined if not found — lhci will fall back to its own Chromium.
  * @returns {string | undefined}
  */
 function findInstalledChrome() {
@@ -59,11 +54,6 @@ function findInstalledChrome() {
   return undefined
 }
 
-const chromePath = findInstalledChrome()
-// Make puppeteer@21 (CJS, required by @lhci/cli) use the same Chrome
-// instead of downloading its own version.
-if (chromePath) process.env.PUPPETEER_EXECUTABLE_PATH = chromePath
-
 module.exports = {
   ci: {
     collect: {
@@ -80,21 +70,18 @@ module.exports = {
       startServerCommand: 'node ../../test/ensure-test-server.mjs start',
       startServerReadyPattern: 'Test server ready',
       startServerReadyTimeout: 30000,
+      chromePath: findInstalledChrome(),
       settings: {
         configPath: getLighthouseConfig(),
         locale: 'fr',
+        screenEmulation: {
+          mobile: false,
+          width: 1920,
+          height: 1080,
+          deviceScaleFactor: 1,
+          disabled: false,
+        },
       },
-      puppeteerLaunchOptions: {
-        headless: 'new',
-        executablePath: chromePath,
-        args: [
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--disable-setuid-sandbox',
-          '--no-sandbox',
-        ],
-      },
-      puppeteerScript: './.puppeteerrc.cjs',
     },
     assert: {
       preset: 'lighthouse:default',

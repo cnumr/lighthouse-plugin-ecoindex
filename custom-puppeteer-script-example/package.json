@@ -13,7 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.7.4",
-    "puppeteer": "^24.26.1"
+    "puppeteer": "^25.1.0"
   },
   "dependencies": {
     "log-symbols": "^7.0.1"

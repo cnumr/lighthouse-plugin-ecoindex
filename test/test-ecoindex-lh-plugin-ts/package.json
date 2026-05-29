@@ -23,8 +23,7 @@
   "dependencies": {
     "@lhci/cli": "0.15.1",
     "lighthouse": "13.3.0",
-    "lighthouse-plugin-ecoindex-core": "workspace:*",
-    "puppeteer": "21.11.0"
+    "lighthouse-plugin-ecoindex-core": "workspace:*"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
