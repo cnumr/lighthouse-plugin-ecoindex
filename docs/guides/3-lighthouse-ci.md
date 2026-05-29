@@ -125,10 +125,11 @@ lighthouse:
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lhci/cli": "^0.14.0",
-    "lighthouse-plugin-ecoindex-core": "^5.0.0",
-    "puppeteer": "^23.3.0",
-    "puppeteer-core": "^23.3.0"
+    "@lhci/cli": "^0.14.0", // <-- mettre à jour la version de LHCI avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    "lighthouse": "^10.0.0", // <-- mettre à jour la version de Lighthouse avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    "lighthouse-plugin-ecoindex-core": "^5.0.0", // <-- mettre à jour la version du plugin lighthouse-ecoindex-core avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    "puppeteer": "^23.3.0", // <-- mettre à jour la version de Puppeteer avec celles utilisees par les packages de ce plugin lighouse-ecoindex
+    "puppeteer-core": "^23.3.0" // <-- mettre à jour la version de Puppeteer-core avec celles utilisees par les packages de ce plugin lighouse-ecoindex
   }
 }
 ```

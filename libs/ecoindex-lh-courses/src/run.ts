@@ -86,7 +86,7 @@ async function runCourse(
   const session = await page.createCDPSession()
   // Get a flow handle to be able to send protocol commands to the page.
   const flow = await startFlow(
-    page,
+    page as unknown as Parameters<typeof startFlow>[0],
     getLighthouseConfig(
       true, // try to avoid Invalid dependency graph created, cycle detected
       `Warm Navigation: ${uniqUrls[0]}`,

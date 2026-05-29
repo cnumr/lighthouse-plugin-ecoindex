@@ -28,17 +28,6 @@ module.exports = {
         disableStorageReset: true,
         preset: 'desktop',
       },
-      puppeteerLaunchOptions: {
-        headless: 'new',
-        args: [
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--disable-setuid-sandbox',
-          '--no-sandbox',
-        ],
-      },
-      puppeteerScript:
-        './node_modules/lighthouse-plugin-ecoindex/helpers/.puppeteerrc.cjs',
     },
     assert: {
       preset: 'lighthouse:default',

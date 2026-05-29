@@ -23,7 +23,7 @@ const str_ = createIcuMessageFn('audits/bp/badly-sized-images.js', UIStrings)
 class BadlySizedImage extends Audit {
   static get meta() {
     return {
-      id: 'badly-sized-images',
+      id: 'bp-badly-sized-images',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),

@@ -29,7 +29,6 @@ private-*
 .turbo
 
 # claude
-CLAUDE.md
 !.claude/settings.json
 
 # graphify

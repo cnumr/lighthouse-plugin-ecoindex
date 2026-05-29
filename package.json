@@ -29,9 +29,10 @@
   "main": "index.js",
   "scripts": {
     "doc": "cd docs && retype start",
-    "update:libs": "pnpm update:puppeteer && pnpm update:lighthouse",
+    "update:libs": "pnpm update:puppeteer && pnpm update:lighthouse && pnpm update:lhci",
     "update:puppeteer": "sh scripts/update-puppeteer.sh",
     "update:lighthouse": "sh scripts/update-lighthouse.sh",
+    "update:lhci": "sh scripts/update-lhci.sh",
     "clean": "pnpm clean:npm && pnpm clean:lighthouseci",
     "clean:npm": "find . -maxdepth 3 -iname 'node_modules' | xargs rm -rf",
     "clean:dist": "find . -maxdepth 3 -iname 'dist' | xargs rm -rf",
