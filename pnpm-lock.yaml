@@ -261,7 +261,7 @@ importers:
   test/test-ecoindex-lh-plugin-ts:
     dependencies:
       '@lhci/cli':
-        specifier: ^0.15.1
+        specifier: 0.15.1
         version: 0.15.1(encoding@0.1.13)
       lighthouse:
         specifier: 13.3.0
@@ -270,7 +270,7 @@ importers:
         specifier: workspace:*
         version: link:../../libs/ecoindex-lh-plugin-ts
       puppeteer:
-        specifier: ^21.11.0
+        specifier: 21.11.0
         version: 21.11.0(encoding@0.1.13)(typescript@5.9.3)
     devDependencies:
       rimraf:

@@ -1,8 +1,9 @@
 # Update Lighthouse across all packages (apps + libs + tests).
-# Usage: sh scripts/update-lighthouse.sh <version>
+# Usage: sh scripts/update-lighthouse.sh [version]
+# Default: latest
 # Example: sh scripts/update-lighthouse.sh 13.3.0
 
-LIGHTHOUSE_VERSION="${1:?Usage: sh scripts/update-lighthouse.sh <version>}"
+LIGHTHOUSE_VERSION="${1:-latest}"
 
 # Apps
 pnpm --filter lighthouse-plugin-ecoindex add lighthouse@${LIGHTHOUSE_VERSION} -E
