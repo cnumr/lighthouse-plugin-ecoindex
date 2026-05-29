@@ -21,10 +21,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lhci/cli": "^0.14.0",
+    "@lhci/cli": "^0.15.1",
     "lighthouse": "13.3.0",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
-    "puppeteer": "^25.1.0"
+    "puppeteer": "^21.11.0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
