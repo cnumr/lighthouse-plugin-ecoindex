@@ -4,12 +4,12 @@ Plugin Lighthouse qui intègre les résultats Ecoindex. Monorepo pnpm · TypeScr
 
 ## Monorepo
 
-| Package                              | Workspace                      | Rôle                                  |
-| ------------------------------------ | ------------------------------ | ------------------------------------- |
-| `lighthouse-plugin-ecoindex`         | `apps/ecoindex-lh-cli`         | CLI principal (publié)                |
-| `lighthouse-plugin-ecoindex-core`    | `libs/ecoindex-lh-plugin-ts`   | Plugin Lighthouse core (publié)       |
-| `lighthouse-plugin-ecoindex-courses` | `libs/ecoindex-lh-courses`     | Scénarios de parcours (publié)        |
-| `lighthouse-plugin-ecoindex-bps`     | `libs/ecoindex-js-bps`         | Bonnes pratiques (publié)             |
+| Package                              | Workspace                    | Rôle                            |
+| ------------------------------------ | ---------------------------- | ------------------------------- |
+| `lighthouse-plugin-ecoindex`         | `apps/ecoindex-lh-cli`       | CLI principal (publié)          |
+| `lighthouse-plugin-ecoindex-core`    | `libs/ecoindex-lh-plugin-ts` | Plugin Lighthouse core (publié) |
+| `lighthouse-plugin-ecoindex-courses` | `libs/ecoindex-lh-courses`   | Scénarios de parcours (publié)  |
+| `lighthouse-plugin-ecoindex-bps`     | `libs/ecoindex-js-bps`       | Bonnes pratiques (publié)       |
 
 Les packages de test sont dans `test/` (non publiés).
 
@@ -41,6 +41,7 @@ pnpm doc
 Les tests doivent tourner **séquentiellement** via `pnpm test` — ne pas lancer `turbo test` directement.
 
 Ordre obligatoire :
+
 1. `@ecoindex-lh-test/courses` — installe le browser Puppeteer
 2. `@ecoindex-lh-test/plugin-core`
 3. `@ecoindex-lh-test/cli`
@@ -61,11 +62,19 @@ Ne jamais lancer `pnpm changeset version` ni `pnpm version` — le bot GitHub g�
 
 **Pre-commit** — les checks `format:check`, `typecheck`, `lint`, `typecheck:strict` sont exécutés automatiquement par le hook Claude avant chaque `git commit`.
 
+## superpowers
+
+Les specs et plans sont dans `.superpowers/` (racine du projet), **jamais** dans `docs/superpowers/`.
+
+- Specs : `.superpowers/specs/`
+- Plans : `.superpowers/plans/`
+
 ## graphify
 
 Ce projet a un graphe de connaissance dans `graphify-out/`.
 
 Règles :
+
 - Avant de répondre à des questions d'architecture ou de codebase, lire `graphify-out/GRAPH_REPORT.md`
 - Si `graphify-out/wiki/index.md` existe, le naviguer plutôt que lire les fichiers bruts
 - Pour les questions "comment X est relié à Y", préférer `graphify query "<question>"`, `graphify path "<A>" "<B>"` ou `graphify explain "<concept>"` — ces commandes traversent le graphe au lieu de scanner les fichiers
