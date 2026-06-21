@@ -10,7 +10,7 @@
     "test:collect": "lhci collect",
     "verify": "node ../test-pages/verify-results.js ./.lighthouseci",
     "lhci": "lhci",
-    "lhci:upload": "dotenv -- lhci upload --serverBaseUrl=http://localhost:9001 --token=$LHCI_TOKEN",
+    "lhci:upload": "dotenv -- sh -c 'lhci upload --serverBaseUrl=http://localhost:9001 --token=$LHCI_TOKEN'",
     "build": "echo \"No build because this is test project\"",
     "lint": "echo \"No lint because this is test project\"",
     "lint:fix": "echo \"No lint:fix because this is test project\"",
