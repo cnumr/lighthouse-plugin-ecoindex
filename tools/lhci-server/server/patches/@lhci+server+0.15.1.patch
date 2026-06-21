@@ -1,9 +1,9 @@
 diff --git a/node_modules/@lhci/server/src/api/statistic-definitions.js b/node_modules/@lhci/server/src/api/statistic-definitions.js
-index 3408f54..3dfc310 100644
+index 0000000..0000000 100644
 --- a/node_modules/@lhci/server/src/api/statistic-definitions.js
 +++ b/node_modules/@lhci/server/src/api/statistic-definitions.js
-@@ -119,6 +119,67 @@ function auditGroupCountOfMedianLhr(groupId, type) {
-
+@@ -119,6 +119,67 @@
+ 
  /** @type {Record<LHCI.ServerCommand.StatisticName, StatisticFn>} */
  const definitions = {
 +  // custom statistics
