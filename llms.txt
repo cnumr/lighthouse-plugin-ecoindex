@@ -45,9 +45,3 @@
 - [Format HTML](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-html.md): Rapport HTML Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
 - [Format JSON Simplifé](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary.md): Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
 - [Format JSON Complet](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json.md): Rapport JSON Lighthouse complet avec l'intégration des mesures et bonnes pratiques Écoindex.
-
-## Superpowers
-
-### Plans
-
-- [Corrections RWEB Phase 1 — Incohérences critiques](https://cnumr.github.io/lighthouse-plugin-ecoindex/superpowers/plans/2026-05-28-rweb-corrections-phase1-critiques.md): For agentic workers: REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task.
