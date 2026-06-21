@@ -2,8 +2,8 @@ diff --git a/node_modules/@lhci/server/src/api/statistic-definitions.js b/node_m
 index 3408f54..3dfc310 100644
 --- a/node_modules/@lhci/server/src/api/statistic-definitions.js
 +++ b/node_modules/@lhci/server/src/api/statistic-definitions.js
-@@ -119,6 +119,79 @@ function auditGroupCountOfMedianLhr(groupId, type) {
- 
+@@ -119,6 +119,67 @@ function auditGroupCountOfMedianLhr(groupId, type) {
+
  /** @type {Record<LHCI.ServerCommand.StatisticName, StatisticFn>} */
  const definitions = {
 +  // custom statistics
@@ -52,18 +52,6 @@ index 3408f54..3dfc310 100644
 +  ),
 +  'auditgroup_ecoindex-best-practices_na': auditGroupCountOfMedianLhr(
 +    'ecoindex-best-practices',
-+    'na',
-+  ),
-+  'auditgroup_ecoindex-rgesn-practices_pass': auditGroupCountOfMedianLhr(
-+    'ecoindex-rgesn-practices',
-+    'pass',
-+  ),
-+  'auditgroup_ecoindex-rgesn-practices_fail': auditGroupCountOfMedianLhr(
-+    'ecoindex-rgesn-practices',
-+    'fail',
-+  ),
-+  'auditgroup_ecoindex-rgesn-practices_na': auditGroupCountOfMedianLhr(
-+    'ecoindex-rgesn-practices',
 +    'na',
 +  ),
 +  'auditgroup_ecoindex-other-practices_pass': auditGroupCountOfMedianLhr(

@@ -7,8 +7,8 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@lhci/cli": "0.13.0",
-    "@lhci/server": "0.13.0",
+    "@lhci/cli": "0.15.1",
+    "@lhci/server": "0.15.1",
     "mysql2": "^2.1.0",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
