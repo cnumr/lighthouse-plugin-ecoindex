@@ -74,4 +74,32 @@ Supprimer `data/lhci.db` puis relancer `docker compose up`. Refaire le [premier 
 
 ## Patch appliqué sur `@lhci/server`
 
-Le fichier `server/patches/@lhci+server+0.15.1.patch` ajoute les statistiques personnalisées pour les groupes d'audits du plugin ecoindex (`ecoindex-ecologic`, `ecoindex-technic`, `ecoindex-best-practices`, `ecoindex-other-practices`). Ce patch est appliqué automatiquement via `patch-package` lors du `npm install` dans le Docker.
+Par défaut, LHCI Server ne connaît que les catégories Lighthouse natives (`performance`, `accessibility`, `best-practices`, `seo`). Pour afficher la timeline et les groupes d'audits de la catégorie ecoindex, il faut déclarer des statistiques personnalisées dans `node_modules/@lhci/server/src/api/statistic-definitions.js`.
+
+Le fichier `server/patches/@lhci+server+0.15.1.patch` ajoute ces entrées via [`patch-package`](https://github.com/ds300/patch-package), qui applique automatiquement le patch après chaque `npm install` (hook `postinstall`). Cela évite de modifier manuellement les `node_modules` et garantit que la modification survit aux rebuilds Docker.
+
+### IDs utilisés
+
+Les IDs dans les LHR produits par `lighthouse-plugin-ecoindex-core` sont préfixés par le nom du plugin :
+
+| Type      | ID dans le LHR                                             |
+| --------- | ---------------------------------------------------------- |
+| Catégorie | `lighthouse-plugin-ecoindex-core`                          |
+| Groupe    | `lighthouse-plugin-ecoindex-core-ecoindex-ecologic`        |
+| Groupe    | `lighthouse-plugin-ecoindex-core-ecoindex-technic`         |
+| Groupe    | `lighthouse-plugin-ecoindex-core-ecoindex-best-practices`  |
+| Groupe    | `lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices` |
+| Groupe    | `lighthouse-plugin-ecoindex-core-ecoindex-other-practices` |
+
+Le patch ajoute les statistiques `category_lighthouse-plugin-ecoindex-core_median/min/max` et `auditgroup_<groupId>_pass/fail/na` pour chacun de ces groupes.
+
+### Mettre à jour le patch
+
+Si `@lhci/server` est mis à jour, régénérer le patch :
+
+```bash
+cd tools/lhci-server/server
+# Vérifier que les fonctions (categoryScoreMedian, auditGroupCountOfMedianLhr…) existent toujours
+npm pack @lhci/server@<version> --quiet
+# Éditer le fichier patch pour la nouvelle version, renommer le fichier
+```
