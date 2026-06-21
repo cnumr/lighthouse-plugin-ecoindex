@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   lhserver:
     platform: linux/amd64
@@ -8,8 +6,8 @@ services:
       context: ./server
       dockerfile: Dockerfile.lhci-server
     command: sleep infinity
-    # ports:
-    #   - '9001:9001'
+    ports:
+      - '9001:9001'
     volumes:
       # - lhci-data-silicon:/data
       - ./data:/data
