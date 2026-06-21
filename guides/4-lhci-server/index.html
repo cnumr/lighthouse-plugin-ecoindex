@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/lighthouse-plugin-ecoindex">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.833368929632">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.835368007472">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -39,12 +39,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/greenit_icone_intro-alt.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.833368929632" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.835368007472" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.833368929632" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.835368007472" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.833368929632" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.833368929632" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.835368007472" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.835368007472" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -273,9 +273,9 @@
         <span class="inline-block font-medium ml-2">Exemple d&#x27;un <code translate="no" v-pre>LHCI Server Docker</code>, avec ecoindex</span>
     </div>
     <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
-        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/.devcontainer/intel/lhci-server</span>
+        <span>https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/tools/lhci-server</span>
     </div>
-    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/.devcontainer/intel/lhci-server" target="_blank" class="absolute block inset-0"></a>
+    <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/tools/lhci-server" target="_blank" class="absolute block inset-0"></a>
 </div>
 </p>
 <div class="flex mb-6">
@@ -296,24 +296,101 @@
         </div>
     </div>
 </div>
+<p>LHCI Server ne connaît pas les catégories et groupes du plugin ecoindex. Il faut déclarer des statistiques personnalisées dans <code translate="no" v-pre>node_modules/@lhci/server/src/api/statistic-definitions.js</code>.</p>
+<p>Les IDs des catégories et groupes dans les LHR produits par <code translate="no" v-pre>lighthouse-plugin-ecoindex-core</code> sont préfixés par le nom du plugin :</p>
 <ol>
 <li>Editer ce fichier : <code translate="no" v-pre>/usr/src/lhci/node_modules/@lhci/server/src/api/statistic-definitions.js</code> (suivant votre installation, le chemin peut varier).</li>
-<li>Ajouter ces lignes :</li>
+<li>Ajouter ces lignes dans l&#x27;objet <code translate="no" v-pre>definitions</code> :</li>
 </ol>
 <div id="important-configuration-pour-afficher-les-résultats-des-audits-ecoindex-dans-les-graphs-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-javascript"><code v-pre class="language-javascript">const definitions = {
   // ...
-  'category_lighthouse-plugin-ecoindex_median': categoryScoreMedian(
-    'lighthouse-plugin-ecoindex',
+  'category_lighthouse-plugin-ecoindex-core_median': categoryScoreMedian(
+    'lighthouse-plugin-ecoindex-core',
   ),
-  'category_lighthouse-plugin-ecoindex_min': categoryScoreMinOrMax(
-    'lighthouse-plugin-ecoindex',
+  'category_lighthouse-plugin-ecoindex-core_min': categoryScoreMinOrMax(
+    'lighthouse-plugin-ecoindex-core',
     'min',
   ),
-  'category_lighthouse-plugin-ecoindex_max': categoryScoreMinOrMax(
-    'lighthouse-plugin-ecoindex',
+  'category_lighthouse-plugin-ecoindex-core_max': categoryScoreMinOrMax(
+    'lighthouse-plugin-ecoindex-core',
     'max',
   ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-ecologic_pass':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-ecologic',
+      'pass',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-ecologic_fail':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-ecologic',
+      'fail',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-ecologic_na':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-ecologic',
+      'na',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-technic_pass':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-technic',
+      'pass',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-technic_fail':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-technic',
+      'fail',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-technic_na':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-technic',
+      'na',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-best-practices_pass':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-best-practices',
+      'pass',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-best-practices_fail':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-best-practices',
+      'fail',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-best-practices_na':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-best-practices',
+      'na',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices_pass':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices',
+      'pass',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices_fail':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices',
+      'fail',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices_na':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-rgesn-practices',
+      'na',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-other-practices_pass':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-other-practices',
+      'pass',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-other-practices_fail':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-other-practices',
+      'fail',
+    ),
+  'auditgroup_lighthouse-plugin-ecoindex-core-ecoindex-other-practices_na':
+    auditGroupCountOfMedianLhr(
+      'lighthouse-plugin-ecoindex-core-ecoindex-other-practices',
+      'na',
+    ),
   // ...
 }</code></pre>
 </doc-codeblock></div>
@@ -332,7 +409,7 @@
         <div class="pr-5 ml-3 w-full">
             <h5>warning</h5>
 <p><strong>Si vous utilisez Docker, cette configuration sera parfois perdue</strong>.<br />
-Pour palier à ce problème, vous pouvez créer un script qui modifie/remplace le fichier de configuration à chaque redémarrage du conteneur, ou utiliser <code translate="no" v-pre>patch-package</code> pour patcher le fichier de configuration (cf. <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/.devcontainer/intel/lhci-server">Exemple d&#x27;un <code translate="no" v-pre>LHCI Server Docker</code>, avec ecoindex</a>).</p>
+Pour palier à ce problème, vous pouvez utiliser <code translate="no" v-pre>patch-package</code> pour patcher le fichier de configuration (cf. <a href="https://github.com/cnumr/lighthouse-plugin-ecoindex/tree/main/tools/lhci-server">Exemple d&#x27;un <code translate="no" v-pre>LHCI Server Docker</code>, avec ecoindex</a>).</p>
         </div>
     </div>
 </div>
