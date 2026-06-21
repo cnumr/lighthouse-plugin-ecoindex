@@ -35,7 +35,11 @@ Répondre aux questions :
 | Where is the project's code hosted?                        | `https://github.com/cnumr/lighthouse-plugin-ecoindex` |
 | What branch is considered the repo's trunk or main branch? | `main`                                                |
 
-Le wizard affiche un **build token** — le noter dans `server/token` et mettre à jour le script `lhci:upload` dans `test/test-ecoindex-lh-plugin-ts/package.json`.
+Le wizard affiche un **build token** — le noter dans `test/test-ecoindex-lh-plugin-ts/.env` (non versionné) :
+
+```
+LHCI_TOKEN=<build-token>
+```
 
 ### 3. Alimenter le serveur
 
