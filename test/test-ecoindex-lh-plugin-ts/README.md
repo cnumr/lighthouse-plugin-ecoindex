@@ -21,4 +21,20 @@ pnpm --filter @ecoindex-lh-test/plugin-core test
 
 > `.puppeteerrc.cjs` est un fichier de configuration de Puppeteer. Il peut être adapté pour passer la sécurité de la page web. La liste des pages à tester (dans le fichier `.lighthouserc.cjs`) conserveront les cookies et autres informations de connexion.
 
+## Envoyer les résultats au serveur LHCI local
+
+Pour visualiser les résultats dans le [serveur LHCI local](../../tools/lhci-server/README.md), créer un fichier `.env` dans ce dossier :
+
+```
+LHCI_TOKEN=<build-token>
+```
+
+Le token est obtenu lors de la création du projet via `lhci wizard` (voir le [README du serveur LHCI](../../tools/lhci-server/README.md)).
+
+Puis lancer l'upload (nécessite le serveur Docker démarré) :
+
+```bash
+pnpm --filter @ecoindex-lh-test/plugin-core lhci:upload
+```
+
 Voir le projet [lighthouse-plugin-ecoindex-core](../../libs/ecoindex-lh-plugin-ts/README.md)
