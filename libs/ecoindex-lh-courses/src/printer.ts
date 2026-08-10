@@ -41,11 +41,7 @@ async function preparareReports(
   // Create the output folder if it doesn't exist.
   const exportPath = cliFlags['exportPath']
 
-  if (course) {
-    await fs.mkdirSync(cleanPath(`${exportPath}/statements`), {
-      recursive: true,
-    })
-  } else {
+  if (!course) {
     await fs.mkdirSync(cleanPath(`${exportPath}`), {
       recursive: true,
     })
@@ -187,6 +183,7 @@ async function printEnvStatementReport(cliFlags: CliFlags, type = 'json-file') {
     }
   }
   // 5. Generate report
+  fs.mkdirSync(dirname(envStatementsObj.statements.json), { recursive: true })
   writeFileSync(
     envStatementsObj.statements.json,
     JSON.stringify(output, null, '\t'),
