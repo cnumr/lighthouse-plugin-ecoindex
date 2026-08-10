@@ -155,8 +155,14 @@ function convertBestPracticeAudit(
 ): BestPracticeAudit | undefined {
   if (audit.score !== 0 && audit.score !== 1) return undefined
 
-  const { details, scoreDisplayMode, numericValue, numericUnit, ...bestPractice } =
-    audit
+  const bestPractice = Object.fromEntries(
+    Object.entries(audit).filter(
+      ([key]) =>
+        !['details', 'scoreDisplayMode', 'numericValue', 'numericUnit'].includes(
+          key,
+        ),
+    ),
+  )
 
   return {
     ...bestPractice,
