@@ -5,10 +5,10 @@ order: 850
 ---
 
 !!!info
-Les rapports agrégés des bonnes pratiques sont générés dans `summary/best-practices.report.json` et `summary/best-practices.report.md` lorsqu'au moins un rapport source JSON existe, y compris avec le mode de sortie `statement`.
+Les rapports agrégés des bonnes pratiques sont générés dans `summary/best-practices.report.json` et `summary/best-practices.report.md` lors d'une mesure de parcours (`cliFlags.url === undefined`) lorsqu'au moins un rapport source JSON existe, y compris avec le mode de sortie `statement`.
 !!!
 
-Ils ne sont pas générés avec une sortie HTML seule. Le répertoire réservé `summary/` évite les collisions avec les noms des rapports de parcours.
+Ils ne sont pas générés lors d'une mesure d'URL directe ni avec une sortie HTML seule. Le répertoire réservé `summary/` évite les collisions avec les noms des rapports de parcours.
 
 Les deux formats regroupent les résultats par parcours, puis par page. Chaque page sépare les bonnes pratiques RWEB, dont les identifiants commencent par `rweb-`, et les bonnes pratiques génériques, dont les identifiants commencent par `bp-`.
 
