@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.4.0
+
+### Patch Changes
+
+- 35c6299: Update Puppeteer, Lighthouse, and Lighthouse CI dependencies.
+
 ## 7.3.4
 
 ### Patch Changes
