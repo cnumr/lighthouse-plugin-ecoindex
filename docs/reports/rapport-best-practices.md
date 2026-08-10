@@ -16,4 +16,4 @@ Le statut ne retient que les scores exacts `1` et `0` : `1` devient `OK` et `0` 
 
 Le rapport JSON exclut les champs `details`, `scoreDisplayMode`, `numericValue` et `numericUnit`.
 
-Le rapport Markdown affiche `displayValue` sous le titre de chaque audit. Lorsque des détails Lighthouse sont disponibles, ils sont affichés dans un bloc natif fermé `<details>`.
+Le rapport Markdown affiche `displayValue` sous le titre de chaque audit. Lorsque des détails Lighthouse sont disponibles, ils sont affichés dans un bloc natif fermé `<details>` uniquement pour les audits `KO`.

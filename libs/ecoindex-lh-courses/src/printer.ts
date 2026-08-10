@@ -365,7 +365,7 @@ function renderBestPractice(
       .map(([key, value]) => `- ${key}: ${formatMarkdownValue(value)}`),
   ]
 
-  if (detail !== undefined) {
+  if (bestPractice.status === 'KO' && detail !== undefined) {
     lines.push(
       '<details>',
       "<summary>Details de l'audit</summary>",
