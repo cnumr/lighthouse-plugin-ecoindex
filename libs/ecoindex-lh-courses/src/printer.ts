@@ -361,7 +361,7 @@ function renderBestPractice(
     displayValue === undefined ? '' : String(displayValue),
     `- status: ${bestPractice.status}`,
     ...Object.entries(properties)
-      .filter(([key]) => key !== 'status')
+      .filter(([key]) => key !== 'status' && key !== 'score')
       .map(([key, value]) => `- ${key}: ${formatMarkdownValue(value)}`),
   ]
 
