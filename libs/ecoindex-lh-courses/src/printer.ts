@@ -286,6 +286,13 @@ function formatMarkdownValue(value: unknown): string {
     : String(value)
 }
 
+function escapeMarkdownTableCell(value: unknown): string {
+  return formatMarkdownValue(value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('|', '\\|')
+    .replace(/\r\n|\r|\n/g, '<br>')
+}
+
 function renderDetails(details: unknown): string {
   if (typeof details !== 'object' || details === null) {
     return `\`\`\`json\n${JSON.stringify(details, null, 2)}\n\`\`\``
@@ -302,20 +309,20 @@ function renderDetails(details: unknown): string {
     detail.headings &&
     detail.items
   ) {
-    const headings = detail.headings.map(
-      heading => heading.text ?? heading.key ?? '',
+    const headings = detail.headings.map(heading =>
+      escapeMarkdownTableCell(heading.text ?? heading.key ?? ''),
     )
     const rows = detail.items.map(item => {
-      if (Array.isArray(item)) return item.map(formatMarkdownValue)
+      if (Array.isArray(item)) return item.map(escapeMarkdownTableCell)
       if (typeof item === 'object' && item !== null) {
         const values = item as Record<string, unknown>
         return (
           detail.headings?.map(heading =>
-            formatMarkdownValue(values[heading.key ?? '']),
+            escapeMarkdownTableCell(values[heading.key ?? '']),
           ) ?? []
         )
       }
-      return [formatMarkdownValue(item)]
+      return [escapeMarkdownTableCell(item)]
     })
     return [
       `| ${headings.join(' | ')} |`,
@@ -427,12 +434,13 @@ async function printBestPracticesReport(cliFlags: CliFlags): Promise<void> {
   })
 
   const exportPath = cliFlags['exportPath']
+  const summaryPath = cleanPath(`${exportPath}/summary`)
   writeFileSync(
-    cleanPath(`${exportPath}/best-practices.report.json`),
+    cleanPath(`${summaryPath}/best-practices.report.json`),
     JSON.stringify({ courses }, null, '\t'),
   )
   writeFileSync(
-    cleanPath(`${exportPath}/best-practices.report.md`),
+    cleanPath(`${summaryPath}/best-practices.report.md`),
     renderBestPracticesMarkdown(courses, flows),
   )
 }
@@ -508,11 +516,13 @@ async function printSummary(cliFlags: CliFlags): Promise<void> {
     output.push(datas)
   })
   const exportPath = cliFlags['exportPath']
+  const summaryPath = cleanPath(`${exportPath}/summary`)
+  fs.mkdirSync(summaryPath, { recursive: true })
   writeFileSync(
-    cleanPath(`${exportPath}/summary.report.json`),
+    cleanPath(`${summaryPath}/report.json`),
     JSON.stringify(output, null, '\t'),
   )
-  console.log(`Summary report generated: ${exportPath}/summary.report.json`)
+  console.log(`Summary report generated: ${summaryPath}/report.json`)
   await printBestPracticesReport(cliFlags)
   console.log(`${logSymbols.success} Generating Summary report ended 🎉`)
 }
