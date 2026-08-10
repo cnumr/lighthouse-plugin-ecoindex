@@ -1,5 +1,5 @@
 !!!info
-Rapport JSON **Summary/Simplifié** contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
+Rapport JSON **Summary/Simplifié** contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex. Il est généré dans `summary/report.json`.
 
 Utile, par exemple, pour faire des rapports d'audit automatisé à une date précise, sans charger les rapports Lighthouse + Ecoindex complet.
 !!!
@@ -11,5 +11,6 @@ Ce fichier n'est généré que lors de la mesure d'un parcours avec la commande
 [!ref Collect d'un parcours](../guides/1-lighthouse-ecoindex-cli.md/#command-collect)
 !!!
 
-Exemple de fichier généré lors d'une mesure de parcours.
-:::code source="../static/summary.report.json" :::
+Les rapports agrégés sont générés lorsqu'au moins un rapport source JSON est disponible, y compris avec le mode de sortie `statement`. Ils ne sont pas générés avec une sortie HTML seule.
+
+Le répertoire réservé `summary/` évite les collisions avec les noms des rapports de parcours.

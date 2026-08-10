@@ -43,5 +43,6 @@
 ## Annexes: Types de rapports générés
 
 - [Format HTML](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-html.md): Rapport HTML Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
-- [Format JSON Simplifé](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary.md): Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex.
+- [Format JSON Simplifé](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json-summary.md): Rapport JSON Summary/Simplifié contenant les données essentielles de Lighthouse avec l'intégration des mesures et bonnes pratiques Écoindex. Il est généré dans summary/report.json.
+- [Rapport des bonnes pratiques](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-best-practices.md): Les rapports des bonnes pratiques sont générés aux formats JSON (summary/best-practices.report.json) et Markdown (summary/best-practices.report.md) lors d'une mesure de parcours.
 - [Format JSON Complet](https://cnumr.github.io/lighthouse-plugin-ecoindex/reports/rapport-json.md): Rapport JSON Lighthouse complet avec l'intégration des mesures et bonnes pratiques Écoindex.

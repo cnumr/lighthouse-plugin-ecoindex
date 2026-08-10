@@ -91,7 +91,7 @@ Vous pouvez ajouter et retirer des parcours, selon vos besoins.
 - `*.report.json` : Les rapports Lighthouse+ecoindex JSON :
   - best-pages.report.json ;
   - discovery.report.json ;
-- `summary.report.json` : Une version simplifié et fusionné des fichiers `*.report.json` ;
+- `summary/report.json` : Une version simplifié et fusionné des fichiers `*.report.json` ;
 - Fichiers statements pour la déclaration environnementale (EIS) :
   - Un fichier `README.md` expliquant comment utiliser l'EIS ;
   - Un dossier `assets` contenant des éléments images ;
@@ -109,3 +109,4 @@ Ce fichier est généré en prévision d'une lecture automatisée des EIS par de
 [!ref Rapports au format HTML](../reports/rapport-html.md)
 [!ref Rapports au format JSON Simplifié](../reports/rapport-json-summary.md)
 [!ref Rapports au format JSON Complet](../reports/rapport-json.md)
+[!ref Rapport des bonnes pratiques](../reports/rapport-best-practices.md)
