@@ -30,11 +30,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lighthouse": "13.3.0",
+    "lighthouse": "13.4.1",
     "lighthouse-plugin-ecoindex-core": "workspace:*",
     "lighthouse-plugin-ecoindex-courses": "workspace:*",
-    "puppeteer": "25.1.0",
-    "puppeteer-core": "25.1.0"
+    "puppeteer": "25.5.0",
+    "puppeteer-core": "25.5.0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"

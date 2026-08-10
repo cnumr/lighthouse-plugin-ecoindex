@@ -23,7 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@lhci/cli": "0.15.1",
-    "lighthouse": "13.3.0",
+    "lighthouse": "13.4.1",
     "lighthouse-plugin-ecoindex-core": "workspace:*"
   },
   "devDependencies": {
