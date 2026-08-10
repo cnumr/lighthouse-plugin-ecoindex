@@ -1,5 +1,17 @@
 # lighthouse-plugin-ecoindex-courses
 
+## 7.4.0
+
+### Minor Changes
+
+- 319c8e1: Generate JSON and Markdown reports of RWEB and generic eco-design best-practice results by course and page.
+
+### Patch Changes
+
+- 35c6299: Update Puppeteer, Lighthouse, and Lighthouse CI dependencies.
+- Updated dependencies [35c6299]
+  - lighthouse-plugin-ecoindex-core@7.4.0
+
 ## 7.3.4
 
 ### Patch Changes
