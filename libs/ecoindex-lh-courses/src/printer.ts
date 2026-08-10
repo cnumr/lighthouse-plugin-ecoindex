@@ -3,10 +3,18 @@ import type * as LH from 'lighthouse/types/lh.js'
 import fs, { writeFileSync } from 'fs'
 import path, { dirname } from 'path'
 import { getEnvStatementsObj, slugify } from './commands.js'
-import { cleanPath, convertCourseResults } from './converters.js'
 import {
+  cleanPath,
+  convertBestPracticesPageResults,
+  convertCourseResults,
+} from './converters.js'
+import {
+  BestPracticeAudit,
+  BestPracticeSection,
+  BestPracticesCourseReport,
   CliFlags,
   Course,
+  Flows,
   PrinterOutput,
   StatementsReport,
   SummaryToPrint,
@@ -19,6 +27,7 @@ import { renderHtml, renderMarkdown } from './templates/fr_FR/index.js'
 
 const SEPARATOR = '\n---------------------------------\n'
 const _dirname = fileURLToPath(dirname(import.meta.url))
+type FlowStep = Flows['steps'][number]
 
 /**
  * Prepare folder and naming files.
@@ -32,14 +41,11 @@ async function preparareReports(
   // Create the output folder if it doesn't exist.
   const exportPath = cliFlags['exportPath']
 
-  if (course) {
-    await fs.mkdirSync(cleanPath(`${exportPath}/statements`), {
-      recursive: true,
-    })
-  } else {
-    await fs.mkdirSync(cleanPath(`${exportPath}`), {
-      recursive: true,
-    })
+  await fs.mkdirSync(cleanPath(`${exportPath}`), {
+    recursive: true,
+  })
+
+  if (!course) {
     console.log(
       `${logSymbols.info} With \`url\` option, generic report(s) are generated.`,
     )
@@ -178,6 +184,7 @@ async function printEnvStatementReport(cliFlags: CliFlags, type = 'json-file') {
     }
   }
   // 5. Generate report
+  fs.mkdirSync(dirname(envStatementsObj.statements.json), { recursive: true })
   writeFileSync(
     envStatementsObj.statements.json,
     JSON.stringify(output, null, '\t'),
@@ -271,6 +278,173 @@ async function printEnvStatementDocuments(cliFlags: CliFlags) {
   console.log(SEPARATOR)
 }
 
+function formatMarkdownValue(value: unknown): string {
+  return typeof value === 'object' && value !== null
+    ? JSON.stringify(value)
+    : String(value)
+}
+
+function escapeMarkdownTableCell(value: unknown): string {
+  return formatMarkdownValue(value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('|', '\\|')
+    .replace(/\r\n|\r|\n/g, '<br>')
+}
+
+function renderDetails(details: unknown): string {
+  if (typeof details !== 'object' || details === null) {
+    return `\`\`\`json\n${JSON.stringify(details, null, 2)}\n\`\`\``
+  }
+
+  const detail = details as {
+    type?: string
+    headings?: Array<{ label?: string; text?: string; key?: string }>
+    items?: unknown[]
+  }
+
+  if (
+    (detail.type === 'table' || detail.type === 'opportunity') &&
+    detail.headings &&
+    detail.items
+  ) {
+    const headings = detail.headings.map(heading =>
+      escapeMarkdownTableCell(
+        heading.label ?? heading.text ?? heading.key ?? '',
+      ),
+    )
+    const rows = detail.items.map(item => {
+      if (Array.isArray(item)) return item.map(escapeMarkdownTableCell)
+      if (typeof item === 'object' && item !== null) {
+        const values = item as Record<string, unknown>
+        return (
+          detail.headings?.map(heading =>
+            escapeMarkdownTableCell(values[heading.key ?? '']),
+          ) ?? []
+        )
+      }
+      return [escapeMarkdownTableCell(item)]
+    })
+    return [
+      `| ${headings.join(' | ')} |`,
+      `| ${headings.map(() => '---').join(' | ')} |`,
+      ...rows.map(row => `| ${row.join(' | ')} |`),
+    ].join('\n')
+  }
+
+  if (detail.type === 'list' && detail.items) {
+    return detail.items
+      .map(item => {
+        if (typeof item === 'object' && item !== null && 'text' in item) {
+          return `- ${formatMarkdownValue((item as { text: unknown }).text)}`
+        }
+        return `- ${formatMarkdownValue(item)}`
+      })
+      .join('\n')
+  }
+
+  return `\`\`\`json\n${JSON.stringify(details, null, 2)}\n\`\`\``
+}
+
+function renderBestPractice(
+  bestPractice: BestPracticeAudit,
+  sourceAudits: LH.Result['audits'],
+): string {
+  const { title, displayValue, ...properties } = bestPractice
+  const detail =
+    typeof bestPractice.id === 'string'
+      ? sourceAudits[bestPractice.id]?.details
+      : undefined
+  const lines = [
+    `##### [${bestPractice.status}] ${title ?? ''}`,
+    displayValue === undefined ? '' : String(displayValue),
+    `- status: ${bestPractice.status}`,
+    ...Object.entries(properties)
+      .filter(([key]) => key !== 'status' && key !== 'score')
+      .map(([key, value]) => `- ${key}: ${formatMarkdownValue(value)}`),
+  ]
+
+  if (bestPractice.status === 'KO' && detail !== undefined) {
+    lines.push(
+      '<details>',
+      "<summary>Details de l'audit</summary>",
+      '',
+      renderDetails(detail),
+      '',
+      '</details>',
+    )
+  }
+
+  return lines.join('\n')
+}
+
+function renderBestPracticeSection(
+  section: BestPracticeSection,
+  sourceAudits: LH.Result['audits'],
+): string {
+  if (section.bestPractices.length === 0) {
+    return `#### ${section.title}\n\nAucune bonne pratique n'est disponible.`
+  }
+
+  return `#### ${section.title}\n\n${section.bestPractices
+    .map(bestPractice => renderBestPractice(bestPractice, sourceAudits))
+    .join('\n\n')}`
+}
+
+function renderBestPracticesMarkdown(
+  courses: BestPracticesCourseReport[],
+  flows: FlowStep[][],
+): string {
+  const content = courses.map((course, courseIndex) => {
+    const navigationSteps = flows[courseIndex].filter(
+      step => step.lhr.gatherMode === 'navigation',
+    )
+    const pages = course.pages.map((page, pageIndex) => {
+      const sourceAudits = navigationSteps[pageIndex].lhr.audits
+      return [
+        `### Page : ${page.url}`,
+        renderBestPracticeSection(page.rweb, sourceAudits),
+        renderBestPracticeSection(page.bp, sourceAudits),
+      ].join('\n\n')
+    })
+    return `## Parcours : ${course.report}\n\n${pages.join('\n\n')}`
+  })
+
+  return `# Rapport des bonnes pratiques d'ecoconception\n\n${content.join('\n\n')}`
+}
+
+async function printBestPracticesReport(cliFlags: CliFlags): Promise<void> {
+  const jsonFiles = cliFlags['outputFiles']['json']
+  if (!jsonFiles || jsonFiles.length === 0) return
+
+  const courses: BestPracticesCourseReport[] = []
+  const flows: FlowStep[][] = []
+
+  jsonFiles.forEach(jsonFile => {
+    const flow = JSON.parse(fs.readFileSync(jsonFile, 'utf8')) as Flows
+    const navigationSteps = flow.steps.filter(
+      step => step.lhr.gatherMode === 'navigation',
+    )
+    courses.push({
+      report: path.basename(jsonFile),
+      pages: navigationSteps.map(step =>
+        convertBestPracticesPageResults(step.lhr),
+      ),
+    })
+    flows.push(flow.steps)
+  })
+
+  const exportPath = cliFlags['exportPath']
+  const summaryPath = cleanPath(`${exportPath}/summary`)
+  writeFileSync(
+    cleanPath(`${summaryPath}/best-practices.report.json`),
+    JSON.stringify({ courses }, null, '\t'),
+  )
+  writeFileSync(
+    cleanPath(`${summaryPath}/best-practices.report.md`),
+    renderBestPracticesMarkdown(courses, flows),
+  )
+}
+
 /**
  * Generate Summary report from JSON
  * @param {*} cliFlags
@@ -342,11 +516,14 @@ async function printSummary(cliFlags: CliFlags): Promise<void> {
     output.push(datas)
   })
   const exportPath = cliFlags['exportPath']
+  const summaryPath = cleanPath(`${exportPath}/summary`)
+  fs.mkdirSync(summaryPath, { recursive: true })
   writeFileSync(
-    cleanPath(`${exportPath}/summary.report.json`),
+    cleanPath(`${summaryPath}/report.json`),
     JSON.stringify(output, null, '\t'),
   )
-  console.log(`Summary report generated: ${exportPath}/summary.report.json`)
+  console.log(`Summary report generated: ${summaryPath}/report.json`)
+  await printBestPracticesReport(cliFlags)
   console.log(`${logSymbols.success} Generating Summary report ended 🎉`)
 }
 

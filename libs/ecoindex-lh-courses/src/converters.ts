@@ -1,7 +1,14 @@
 import type * as LH from 'lighthouse/types/lh.js'
 import * as path from 'node:path'
 
-import { Course, CourseResultConverted, Flows, Summary } from './types/index.js'
+import {
+  BestPracticeAudit,
+  BestPracticesPage,
+  Course,
+  CourseResultConverted,
+  Flows,
+  Summary,
+} from './types/index.js'
 
 import { getEcoIndexGrade } from 'ecoindex'
 
@@ -143,8 +150,55 @@ function convertPagesResults(lhr: LH.Result): Summary {
   }
 }
 
+function convertBestPracticeAudit(
+  audit: LH.Result['audits'][string],
+): BestPracticeAudit | undefined {
+  if (audit.score !== 0 && audit.score !== 1) return undefined
+
+  const bestPractice = Object.fromEntries(
+    Object.entries(audit).filter(
+      ([key]) =>
+        ![
+          'details',
+          'scoreDisplayMode',
+          'numericValue',
+          'numericUnit',
+        ].includes(key),
+    ),
+  )
+
+  return {
+    ...bestPractice,
+    status: audit.score === 1 ? 'OK' : 'KO',
+  }
+}
+
+function convertBestPracticesPageResults(lhr: LH.Result): BestPracticesPage {
+  const page: BestPracticesPage = {
+    url: lhr.requestedUrl,
+    rweb: {
+      title: 'Bonnes pratiques RWEB',
+      bestPractices: [],
+    },
+    bp: {
+      title: "Bonnes pratiques generiques d'ecoconception",
+      bestPractices: [],
+    },
+  }
+
+  for (const [auditId, audit] of Object.entries(lhr.audits)) {
+    const bestPractice = convertBestPracticeAudit(audit)
+    if (!bestPractice) continue
+
+    if (auditId.startsWith('rweb-')) page.rweb.bestPractices.push(bestPractice)
+    if (auditId.startsWith('bp-')) page.bp.bestPractices.push(bestPractice)
+  }
+
+  return page
+}
+
 function cleanPath(thePath: string) {
   return thePath.replace(/\//gm, path.sep)
 }
 
-export { cleanPath, convertCourseResults }
+export { cleanPath, convertBestPracticesPageResults, convertCourseResults }

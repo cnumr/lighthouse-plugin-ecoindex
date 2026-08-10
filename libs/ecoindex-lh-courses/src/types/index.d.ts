@@ -160,3 +160,24 @@ export interface SummaryToPrintItem {
   }
   ecoindex: { [key: string]: { score: string; displayValue: string } }
 }
+
+export interface BestPracticeAudit {
+  status: 'OK' | 'KO'
+  [key: string]: unknown
+}
+
+export interface BestPracticeSection {
+  title: string
+  bestPractices: BestPracticeAudit[]
+}
+
+export interface BestPracticesPage {
+  url: string
+  rweb: BestPracticeSection
+  bp: BestPracticeSection
+}
+
+export interface BestPracticesCourseReport {
+  report: string
+  pages: BestPracticesPage[]
+}

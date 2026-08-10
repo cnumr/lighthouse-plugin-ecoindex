@@ -394,7 +394,10 @@ async function runCourses(cliFlags: CliFlags) {
     await printEnvStatementReport(cliFlags)
     await printEnvStatementDocuments(cliFlags)
   }
-  if (cliFlags['output'].includes('json') && cliFlags['url'] === undefined) {
+  if (
+    cliFlags['outputFiles']['json']?.length &&
+    cliFlags['url'] === undefined
+  ) {
     await printSummary(cliFlags)
   }
 }
