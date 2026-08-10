@@ -41,10 +41,11 @@ async function preparareReports(
   // Create the output folder if it doesn't exist.
   const exportPath = cliFlags['exportPath']
 
+  await fs.mkdirSync(cleanPath(`${exportPath}`), {
+    recursive: true,
+  })
+
   if (!course) {
-    await fs.mkdirSync(cleanPath(`${exportPath}`), {
-      recursive: true,
-    })
     console.log(
       `${logSymbols.info} With \`url\` option, generic report(s) are generated.`,
     )
