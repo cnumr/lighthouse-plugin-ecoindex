@@ -300,7 +300,7 @@ function renderDetails(details: unknown): string {
 
   const detail = details as {
     type?: string
-    headings?: Array<{ text?: string; key?: string }>
+    headings?: Array<{ label?: string; text?: string; key?: string }>
     items?: unknown[]
   }
 
@@ -310,7 +310,9 @@ function renderDetails(details: unknown): string {
     detail.items
   ) {
     const headings = detail.headings.map(heading =>
-      escapeMarkdownTableCell(heading.text ?? heading.key ?? ''),
+      escapeMarkdownTableCell(
+        heading.label ?? heading.text ?? heading.key ?? '',
+      ),
     )
     const rows = detail.items.map(item => {
       if (Array.isArray(item)) return item.map(escapeMarkdownTableCell)
