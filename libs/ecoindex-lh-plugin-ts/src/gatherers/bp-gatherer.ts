@@ -21,6 +21,8 @@ class BPGatherer extends Gatherer {
           animatedElementDetails: [],
           autoplayDetails: [],
           canvasDetails: [],
+          pageTitle: '',
+          metaDescription: '',
         }
       }
 
@@ -89,6 +91,14 @@ class BPGatherer extends Gatherer {
         el => ({ selector: buildSelector(el) }),
       )
 
+      const pageTitle = document.title
+      const metaDescription =
+        Array.from(
+          document.querySelectorAll<HTMLMetaElement>(
+            'meta[name="description" i]',
+          ),
+        ).find(meta => meta.content.trim().length > 0)?.content || ''
+
       return {
         serviceWorkerActive,
         inlineScriptDetails,
@@ -96,6 +106,8 @@ class BPGatherer extends Gatherer {
         animatedElementDetails: animatedElementDetails.slice(0, 50),
         autoplayDetails,
         canvasDetails,
+        pageTitle,
+        metaDescription,
       }
     }
 

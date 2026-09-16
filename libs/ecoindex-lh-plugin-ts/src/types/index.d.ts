@@ -66,4 +66,6 @@ export interface BPGathererResult {
   animatedElementDetails: { selector: string; property: string }[]
   autoplayDetails: { selector: string; src: string }[]
   canvasDetails: { selector: string }[]
+  pageTitle: string
+  metaDescription: string
 }
