@@ -4,6 +4,10 @@
 echo "🧹 Cleaning cache..."
 rm -rf ~/.cache/puppeteer/* -y
 
+echo "🧪 Running audit regression tests..."
+pnpm --filter lighthouse-plugin-ecoindex-core build || exit 1
+node --test test/*.test.mjs || exit 1
+
 # Start test server for the entire session
 echo "🚀 Starting test server..."
 node ./test/ensure-test-server.mjs start
