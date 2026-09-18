@@ -12,6 +12,9 @@
     "expectedRequests": {
       "value": 1,
       "tolerance": 1
+    },
+    "expectedBPAudits": {
+      "rweb-title-meta": 1
     }
   },
   "svg": {

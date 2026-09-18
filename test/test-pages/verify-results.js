@@ -129,7 +129,8 @@ function verifyResultsWithLHR(lhr, expectedResultsKey) {
     for (const [auditId, expectedScore] of Object.entries(expected.expectedBPAudits)) {
       const audit = lhr.audits[auditId]
       if (!audit) {
-        console.log(`⚠️  BP audit not found: ${auditId}`)
+        console.error(`❌ BP audit not found: ${auditId}`)
+        allPassed = false
         continue
       }
       const actualScore = audit.score

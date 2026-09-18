@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Test Page - Ecoindex</title>
+    <title data-rh="true">Simple Test Page - Ecoindex</title>
+    <meta name="description" content="">
+    <script>
+        const description = document.createElement('meta');
+        description.name = 'description';
+        description.content = 'A minimal page used to test Ecoindex audits.';
+        document.head.append(description);
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;

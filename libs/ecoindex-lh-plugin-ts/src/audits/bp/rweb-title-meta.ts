@@ -6,6 +6,7 @@ import {
   UniversalBaseArtifacts,
 } from 'lighthouse/types/artifacts.js'
 
+import type { BPArtifacts } from '../../types/index.js'
 import { Audit } from 'lighthouse'
 import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 const UIStrings = {
@@ -25,7 +26,7 @@ class BPRwebTitleMeta extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['MainDocumentContent'] as (
+      requiredArtifacts: ['BPGatherer'] as unknown as (
         | keyof UniversalBaseArtifacts
         | keyof ContextualBaseArtifacts
         | keyof GathererArtifacts
@@ -33,26 +34,10 @@ class BPRwebTitleMeta extends Audit {
     }
   }
 
-  static audit(artifacts: LH.Artifacts): LH.Audit.Product {
-    const html = artifacts.MainDocumentContent
-
-    // Check <title>
-    const titleMatch = html.match(/<title>([^<]+)<\/title>/i)
-    const hasTitle = !!(titleMatch && titleMatch[1].trim().length > 0)
-
-    // Check <meta name="description" content="..."> — handle both attribute orders and both quote types
-    const metaTagMatch = html.match(/<meta[^>]+>/gi)
-    let hasMetaDescription = false
-    if (metaTagMatch) {
-      for (const tag of metaTagMatch) {
-        const hasName = /name=["']description["']/i.test(tag)
-        const contentMatch = tag.match(/content=["']([^"']*)["']/i)
-        if (hasName && contentMatch && contentMatch[1].trim().length > 0) {
-          hasMetaDescription = true
-          break
-        }
-      }
-    }
+  static audit(artifacts: LH.Artifacts & BPArtifacts): LH.Audit.Product {
+    const { pageTitle, metaDescription } = artifacts.BPGatherer
+    const hasTitle = pageTitle.trim().length > 0
+    const hasMetaDescription = metaDescription.trim().length > 0
 
     const hasBoth = hasTitle && hasMetaDescription
 
