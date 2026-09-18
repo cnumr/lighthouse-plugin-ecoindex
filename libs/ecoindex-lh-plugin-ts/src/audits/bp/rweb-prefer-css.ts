@@ -11,9 +11,9 @@ import { createIcuMessageFn } from 'lighthouse/core/lib/i18n/i18n.js'
 
 // Detect <img> directly inside <button> or <a> — likely icon usage replaceable by CSS
 const ICON_IMG_IN_BUTTON =
-  /<button\b[^>]*>(?:[^<]|<(?!img\b))*<img\b[^>]*>(?:[^<]|<(?!\/button))*<\/button>/gi
+  /<button\b[^>]*>(?:<!--[\s\S]*?-->|[^<]|<(?!img\b|\/button\s*>))*<img\b[^>]*>(?:<!--[\s\S]*?-->|[^<]|<(?!\/button\s*>))*<\/button\s*>/gi
 const ICON_IMG_IN_ANCHOR =
-  /<a\b[^>]*>(?:[^<]|<(?!img\b))*<img\b[^>]*>(?:[^<]|<(?!\/a))*<\/a>/gi
+  /<a\b[^>]*>(?:<!--[\s\S]*?-->|[^<]|<(?!img\b|\/a\s*>))*<img\b[^>]*>(?:<!--[\s\S]*?-->|[^<]|<(?!\/a\s*>))*<\/a\s*>/gi
 const UIStrings = {
   title: 'RWEB_0037 - Prefer CSS over images for UI elements',
   failureTitle: 'RWEB_0037 - Images used for UI icons (prefer CSS)',
