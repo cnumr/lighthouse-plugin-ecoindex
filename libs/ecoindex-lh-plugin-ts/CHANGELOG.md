@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.4.2
+
+### Patch Changes
+
+- 1b03763: Prevent RWEB_0037 from associating inline SVG controls with images outside those controls.
+
 ## 7.4.1
 
 ### Patch Changes
