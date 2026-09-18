@@ -1,5 +1,13 @@
 # lighthouse-plugin-ecoindex
 
+## 7.4.2
+
+### Patch Changes
+
+- Updated dependencies [1b03763]
+  - lighthouse-plugin-ecoindex-core@7.4.2
+  - lighthouse-plugin-ecoindex-courses@7.4.2
+
 ## 7.4.1
 
 ### Patch Changes
