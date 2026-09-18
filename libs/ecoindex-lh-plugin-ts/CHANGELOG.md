@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.4.1
+
+### Patch Changes
+
+- 93e371b: Fix RWEB_0011 false negatives by checking the rendered title and all meta descriptions.
+
 ## 7.4.0
 
 ### Patch Changes
