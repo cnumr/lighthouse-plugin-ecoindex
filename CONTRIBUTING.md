@@ -89,3 +89,15 @@ Chaque librairie et l'application CLI, ont leurs propres tests.
 - [`prettier`](https://prettier.io/docs/en/options) pour le formatage.
 - [`eslint`](https://eslint.org/docs/latest/use/getting-started) pour le lint.
 - [`lhci-server`](https://github.com/GoogleChrome/lighthouse-ci/tree/main/packages/server) pour le serveur lhci.
+
+### Mettre à jour les URLs de référence RWEB
+
+Les URLs des fiches RWEB sont stockées dans `libs/ecoindex-lh-plugin-ts/src/audits/bp/refs-urls.ts`. Pour les régénérer depuis l'API `rweb.greenit.fr` :
+
+```bash
+# Version latest
+pnpm refs:update
+
+# Version spécifique du référentiel
+pnpm refs:update:version -- 2.0.0
+```
