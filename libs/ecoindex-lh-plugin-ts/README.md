@@ -80,15 +80,3 @@ Le plugin inclut 11 audits de bonnes pratiques sans correspondance dans le réf�
 | `bp-no-unused-code`        | Éviter les scripts externes bloquant le rendu (sans attribut `async` ni `defer`)   |
 | `bp-thegreenwebfoundation` | Vérifier si le domaine est alimenté en énergie verte (The Green Web Foundation)    |
 | `bp-css-containment`       | Compter les fichiers CSS chargés — vérification manuelle de la propriété `contain` |
-
-### Mettre à jour les URLs de référence RWEB
-
-Les URLs des fiches RWEB sont stockées dans `src/audits/bp/refs-urls.ts`. Pour les régénérer depuis l'API `rweb.greenit.fr` :
-
-```bash
-# Version latest
-pnpm refs:update
-
-# Version spécifique du référentiel
-pnpm refs:update:version -- 2.0.0
-```
