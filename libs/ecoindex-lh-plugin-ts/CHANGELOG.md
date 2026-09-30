@@ -1,5 +1,11 @@
 # lighthouse-plugin-ecoindex-core
 
+## 7.4.3
+
+### Patch Changes
+
+- f0a7f35: Remove contributor-only RWEB maintenance instructions from the package README.
+
 ## 7.4.2
 
 ### Patch Changes
